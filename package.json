@@ -1,0 +1,13 @@
+{
+  "name": "code",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "serve": "echo 'Please configure the serve script in package.json'",
+    "dev": "echo 'Please configure the dev script in package.json'",
+    "start": "echo 'Please configure the start script in package.json'"
+  },
+  "dependencies": {},
+  "devDependencies": {}
+}
