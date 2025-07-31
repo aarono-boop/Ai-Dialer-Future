@@ -2,18 +2,21 @@
   "name": "code",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "type": "module",
   "scripts": {
-    "serve": "npx http-server . -p 3000",
-    "dev": "npx http-server . -p 3000",
-    "start": "npx http-server . -p 3000"
+    "dev": "vite --port 3000",
+    "build": "vite build",
+    "preview": "vite preview --port 3000",
+    "serve": "vite --port 3000"
   },
   "dependencies": {
-    "@primevue/themes": "^4.3.7",
-    "@vitejs/plugin-vue": "^6.0.1",
+    "vue": "^3.5.12",
+    "primevue": "^4.2.2",
     "primeicons": "^7.0.0",
-    "primevue": "^4.3.7",
-    "vite": "^7.0.6",
-    "vue": "^3.5.18"
+    "@primevue/themes": "^4.2.2"
+  },
+  "devDependencies": {
+    "vite": "^6.0.1",
+    "@vitejs/plugin-vue": "^5.2.1"
   }
 }
