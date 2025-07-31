@@ -10,13 +10,13 @@
     "serve": "vite --port 3000"
   },
   "dependencies": {
-    "vue": "^3.5.12",
-    "primevue": "^4.2.2",
+    "@primevue/themes": "^4.2.2",
     "primeicons": "^7.0.0",
-    "@primevue/themes": "^4.2.2"
+    "primevue": "^4.2.2",
+    "vue": "^3.5.12"
   },
   "devDependencies": {
-    "vite": "^6.0.1",
-    "@vitejs/plugin-vue": "^5.2.1"
+    "@vitejs/plugin-vue": "^6.0.1",
+    "vite": "^6.0.1"
   }
 }
