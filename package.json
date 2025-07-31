@@ -8,6 +8,7 @@
     "dev": "npx http-server . -p 8080",
     "start": "npx http-server . -p 8080"
   },
-  "dependencies": {},
-  "devDependencies": {}
+  "devDependencies": {
+    "http-server": "^14.1.1"
+  }
 }
