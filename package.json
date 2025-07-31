@@ -4,9 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "serve": "echo 'Please configure the serve script in package.json'",
-    "dev": "echo 'Please configure the dev script in package.json'",
-    "start": "echo 'Please configure the start script in package.json'"
+    "serve": "npx http-server . -p 8080",
+    "dev": "npx http-server . -p 8080",
+    "start": "npx http-server . -p 8080"
   },
   "dependencies": {},
   "devDependencies": {}
