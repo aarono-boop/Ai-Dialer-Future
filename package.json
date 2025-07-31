@@ -4,11 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "serve": "npx http-server . -p 8080",
-    "dev": "npx http-server . -p 8080",
-    "start": "npx http-server . -p 8080"
+    "serve": "npx http-server . -p 3000",
+    "dev": "npx http-server . -p 3000",
+    "start": "npx http-server . -p 3000"
   },
-  "devDependencies": {
-    "http-server": "^14.1.1"
-  }
+  "dependencies": {},
+  "devDependencies": {}
 }
