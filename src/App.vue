@@ -394,7 +394,25 @@ const handleGoogleSignup = () => {
 }
 
 const handleEmailSignup = () => {
-  addAIMessage('📧 Let\'s get you set up with email! What\'s your email address?')
+  showSignupModal.value = true
+}
+
+const closeSignupModal = () => {
+  showSignupModal.value = false
+  signupEmail.value = ''
+  signupPassword.value = ''
+  rememberMe.value = false
+}
+
+const handleSignupSubmit = () => {
+  // Simulate successful signup
+  closeSignupModal()
+  addAIMessage('🎉 Welcome to ARKON! Your account has been created successfully. Let\'s start your first smart calling session!')
+}
+
+const switchToSignin = () => {
+  // Could implement signin modal here
+  addAIMessage('Sign in functionality would redirect to login page.')
 }
 </script>
 
