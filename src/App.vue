@@ -502,6 +502,11 @@ const handleVoiceInput = () => {
   margin: 1.5rem 0;
 }
 
+.upload-section-inline {
+  width: 100%;
+  margin: 1.5rem 0;
+}
+
 .upload-area {
   border: 2px dashed rgba(255, 255, 255, 0.3);
   border-radius: 8px;
