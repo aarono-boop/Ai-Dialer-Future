@@ -46,8 +46,13 @@
           <div class="chat-messages" ref="chatMessages">
             <template v-for="(message, index) in messages" :key="index">
               <div :class="['message-container', message.type === 'user' ? 'user-message' : 'ai-message-container']">
-                <div v-if="message.type === 'ai'" :class="['message-bubble', 'ai-message']">
-                  <p v-for="(line, lineIndex) in message.content" :key="lineIndex" v-html="line"></p>
+                <div v-if="message.type === 'ai'">
+                  <div class="ai-avatar">
+                    <i class="pi pi-robot"></i>
+                  </div>
+                  <div :class="['message-bubble', 'ai-message']">
+                    <p v-for="(line, lineIndex) in message.content" :key="lineIndex" v-html="line"></p>
+                  </div>
                 </div>
                 <div v-else>
                   <div :class="['message-bubble', 'user-message-bubble']">
