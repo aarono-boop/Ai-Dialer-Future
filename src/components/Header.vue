@@ -25,9 +25,8 @@
           class="text-white font-medium hover:text-purple-400 transition-colors"
           @click="$emit('login')"
         />
-        <Button 
-          label="Switch to Vulcan?" 
-          text 
+        <Button
+          text
           class="text-gray-400 font-medium hover:text-purple-400 transition-colors"
           @click="$emit('switch-to-vulcan')"
         />
