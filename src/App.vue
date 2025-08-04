@@ -85,7 +85,7 @@
           </div>
 
           <!-- Signup Buttons -->
-          <div class="signup-buttons-section">
+          <div v-if="showSignupButtons" class="signup-buttons-section">
             <Button
               class="signup-button google-signup"
               @click="handleGoogleSignup"
