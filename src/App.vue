@@ -864,6 +864,59 @@ const handleActionButton = (action) => {
   margin: 0;
 }
 
+/* Action Buttons */
+.action-buttons-section {
+  margin: 1.5rem 0;
+}
+
+.action-buttons-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.75rem;
+}
+
+.action-button {
+  background: rgba(55, 65, 81, 0.8) !important;
+  border: 1px solid rgba(75, 85, 99, 0.6) !important;
+  color: rgba(255, 255, 255, 0.9) !important;
+  padding: 0.875rem 1rem !important;
+  border-radius: 8px !important;
+  font-weight: 500 !important;
+  font-size: 0.875rem !important;
+  text-align: center !important;
+  transition: all 0.3s ease !important;
+  backdrop-filter: blur(10px) !important;
+  min-height: 48px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+.action-button:hover {
+  background: rgba(75, 85, 99, 0.8) !important;
+  border-color: rgba(107, 114, 128, 0.8) !important;
+  color: #ffffff !important;
+  transform: translateY(-1px);
+}
+
+@media (max-width: 768px) {
+  .action-buttons-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.5rem;
+  }
+
+  .action-button {
+    font-size: 0.8rem !important;
+    padding: 0.75rem 0.5rem !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .action-buttons-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
 /* Signup Buttons */
 .signup-buttons-section {
   display: flex;
