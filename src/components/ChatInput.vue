@@ -54,7 +54,7 @@ const prompts: string[] = [
 ]
 
 // Animation logic
-const startTypingAnimation = () => {
+const startTypingAnimation = (): void => {
   if (!isAnimating.value) return
 
   animationInterval = setInterval(() => {
