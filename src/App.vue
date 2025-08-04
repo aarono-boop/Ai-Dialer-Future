@@ -219,15 +219,8 @@ const simulateFileUpload = () => {
 
   // Simulate AI analysis
   setTimeout(() => {
-    addAIMessage([
-      'I found <strong>847 contacts</strong> in your spreadsheet.',
-      '<strong>23 contacts</strong> are most likely to pick up right now based on optimal calling times.'
-    ])
-
-    // Show signup prompt after analysis
-    setTimeout(() => {
-      addAIMessage('Great! To get your free trial started and see it in action, how would you like to sign up?')
-    }, 1500)
+    // Show signup prompt directly after upload message
+    addAIMessage('Great! To get your free trial started and see it in action, how would you like to sign up?')
   }, 2000)
 }
 
