@@ -736,18 +736,23 @@ const handleActionButton = (action) => {
 
 
 
-@media (max-width: 480px) {
-  .action-buttons-grid {
-    grid-template-columns: 1fr;
+/* Responsive grid adjustments */
+@media (max-width: 768px) {
+  .grid-cols-3 {
+    grid-template-columns: repeat(2, 1fr) !important;
   }
 }
 
-/* Signup Buttons */
-.signup-buttons-section {
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
-  margin: 1.5rem 0 1rem 0;
+@media (max-width: 480px) {
+  .grid-cols-3 {
+    grid-template-columns: repeat(1, 1fr) !important;
+  }
+}
+
+/* Custom PrimeVue overrides */
+::deep(.p-fileupload) {
+  background: transparent;
+  border: none;
 }
 
 .signup-button {
