@@ -690,9 +690,8 @@ const handleActionButton = (action) => {
 }
 
 
-}
 
-.arkon-app::before {
+/* Custom PrimeVue overrides */
   content: '';
   position: absolute;
   top: 0;
