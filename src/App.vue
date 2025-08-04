@@ -481,7 +481,7 @@ const handleTermsAgree = () => {
   if (agreeToTerms.value) {
     closeTermsModal()
     isSignedIn.value = true
-    addAIMessage('🎉 Welcome to ARKON! Your account has been created successfully. Let\'s start your first smart calling session!')
+    addAIMessage('🎉 Welcome to ARKON! Your account has been created successfully. Let\'s start your first smart calling session! What are you trying to accomplish?')
   }
 }
 </script>
