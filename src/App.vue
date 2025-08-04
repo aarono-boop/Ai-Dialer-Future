@@ -355,8 +355,18 @@ const handleVoiceInput = () => {
   z-index: 5;
 }
 
-.conversation-container {
+.chat-container-card {
   max-width: 600px;
+  width: 100%;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  padding: 2.5rem;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+}
+
+.conversation-container {
   width: 100%;
   display: flex;
   flex-direction: column;
