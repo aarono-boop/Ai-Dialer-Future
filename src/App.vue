@@ -727,27 +727,8 @@ const handleActionButton = (action) => {
 }
 }
 
-.ai-avatar {
-  background: linear-gradient(135deg, #7b68ee, #9932cc);
-}
-
-.user-avatar {
-  background: linear-gradient(135deg, #4facfe, #00f2fe);
-}
-
-.ai-avatar i, .user-avatar i {
-  color: white;
-  font-size: 1.1rem;
-}
-
-/* Message Bubbles */
-.message-bubble {
-  max-width: 80%;
-  border-radius: 16px;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
-}
-
-.ai-message.message-bubble {
+/* Message bubble text styling */
+.message-bubble p {
   padding: 20px 18px 20px 20px;
 }
 
