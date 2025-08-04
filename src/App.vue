@@ -379,7 +379,7 @@ const sendMessage = () => {
 }
 
 const handleVoiceInput = () => {
-  addAIMessage('�� Listening... (voice recognition simulated)')
+  addAIMessage('🎤 Listening... (voice recognition simulated)')
 
   // Simulate voice input
   setTimeout(() => {
@@ -415,6 +415,23 @@ const handleSignupSubmit = () => {
 const switchToSignin = () => {
   // Could implement signin modal here
   addAIMessage('Sign in functionality would redirect to login page.')
+}
+
+const closeTermsModal = () => {
+  showTermsModal.value = false
+  agreeToTerms.value = false
+}
+
+const handleTermsCancel = () => {
+  closeTermsModal()
+  // Could optionally show signup modal again
+}
+
+const handleTermsAgree = () => {
+  if (agreeToTerms.value) {
+    closeTermsModal()
+    addAIMessage('🎉 Welcome to ARKON! Your account has been created successfully. Let\'s start your first smart calling session!')
+  }
 }
 </script>
 
