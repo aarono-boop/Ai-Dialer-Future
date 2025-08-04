@@ -41,7 +41,7 @@ let isWaiting: boolean = false
 let isWaitingAtEllipsis: boolean = false
 
 // Animation prompts
-const prompts = [
+const prompts: string[] = [
   'Ask me anything about ARKON...',
   'Ask me how to get connected to more calls...',
   'Ask me to setup a demo...',
