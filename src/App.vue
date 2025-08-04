@@ -722,32 +722,7 @@ const handleActionButton = (action) => {
 
 
 
-/* Main Content */
-.main-content {
-  flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 2rem;
-  position: relative;
-  z-index: 5;
-}
 
-.chat-container-card {
-  max-width: 600px;
-  width: 100%;
-  background: rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 12px;
-  padding: 2.5rem;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
-}
-
-.conversation-container {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
   gap: 2rem;
 }
 
