@@ -116,7 +116,7 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, nextTick } from 'vue'
 import { useToast } from 'primevue/usetoast'
 
 // PrimeVue Components
@@ -125,60 +125,93 @@ import InputText from 'primevue/inputtext'
 import FileUpload from 'primevue/fileupload'
 import Toast from 'primevue/toast'
 
-// Toast functionality
+// Toast functionality (only for login/vulcan actions)
 const toast = useToast()
 
 // Reactive data
 const chatMessage = ref('')
 const fileUpload = ref()
+const chatMessages = ref()
+const hasUploadedFile = ref(false)
+
+// Chat messages array
+const messages = ref([
+  {
+    type: 'ai',
+    content: [
+      'Welcome to PhoneBurner\'s new product called <strong>ARKON</strong>.',
+      'I\'m here to help you start calling smarter.',
+      'Drop your contact file here and I\'ll show you exactly who\'s most likely to pick up right now.'
+    ]
+  }
+])
+
+// Helper function to scroll to bottom of chat
+const scrollToBottom = async () => {
+  await nextTick()
+  if (chatMessages.value) {
+    chatMessages.value.scrollTop = chatMessages.value.scrollHeight
+  }
+}
+
+// Helper function to add AI message
+const addAIMessage = (content) => {
+  const contentArray = Array.isArray(content) ? content : [content]
+  messages.value.push({
+    type: 'ai',
+    content: contentArray
+  })
+  scrollToBottom()
+}
+
+// Helper function to add user message
+const addUserMessage = (content) => {
+  messages.value.push({
+    type: 'user',
+    content: [content]
+  })
+  scrollToBottom()
+}
 
 // Methods
 const handleLogin = () => {
-  toast.add({ 
-    severity: 'info', 
-    summary: 'Login', 
-    detail: 'Login functionality coming soon!', 
-    life: 3000 
+  toast.add({
+    severity: 'info',
+    summary: 'Login',
+    detail: 'Login functionality coming soon!',
+    life: 3000
   })
 }
 
 const handleSwitchToVulcan = () => {
-  toast.add({ 
-    severity: 'info', 
-    summary: 'Switch to Vulcan', 
-    detail: 'Switching to Vulcan...', 
-    life: 3000 
+  toast.add({
+    severity: 'info',
+    summary: 'Switch to Vulcan',
+    detail: 'Switching to Vulcan...',
+    life: 3000
   })
 }
 
 const onFileSelect = (event) => {
   const file = event.files[0]
   if (file) {
-    toast.add({ 
-      severity: 'success', 
-      summary: 'File Selected', 
-      detail: `Selected: ${file.name}`, 
-      life: 3000 
-    })
+    hasUploadedFile.value = true
+    addAIMessage(`Great! I received your file: <strong>${file.name}</strong>. Let me analyze your contacts...`)
+
     // Simulate AI analysis
     setTimeout(() => {
-      toast.add({ 
-        severity: 'success', 
-        summary: 'AI Analysis Complete', 
-        detail: 'I found 847 contacts. 23 are most likely to pick up right now!', 
-        life: 5000 
-      })
+      addAIMessage([
+        'Analysis complete! 📊',
+        'I found <strong>847 contacts</strong> in your file.',
+        '<strong>23 contacts</strong> are most likely to pick up right now based on optimal calling times.',
+        'Would you like me to start calling them, or would you prefer to see the list first?'
+      ])
     }, 2000)
   }
 }
 
 const onFileUpload = (event) => {
-  toast.add({ 
-    severity: 'success', 
-    summary: 'File Uploaded', 
-    detail: 'Processing your contacts...', 
-    life: 3000 
-  })
+  // Handled in onFileSelect
 }
 
 const onDrop = (event) => {
@@ -189,12 +222,7 @@ const onDrop = (event) => {
     if (file.name.match(/\.(csv|xls|xlsx)$/)) {
       onFileSelect({ files: [file] })
     } else {
-      toast.add({ 
-        severity: 'error', 
-        summary: 'Invalid File', 
-        detail: 'Please upload CSV, XLS, or XLSX files only', 
-        life: 3000 
-      })
+      addAIMessage('⚠️ Please upload CSV, XLS, or XLSX files only.')
     }
   }
 }
@@ -210,56 +238,42 @@ const onDragLeave = (event) => {
 const sendMessage = () => {
   if (chatMessage.value.trim()) {
     const message = chatMessage.value.trim()
-    
-    // Simulate AI response
-    toast.add({ 
-      severity: 'info', 
-      summary: 'AI Assistant', 
-      detail: `I heard you say: "${message}". Let me help you with that!`, 
-      life: 4000 
-    })
-    
+
+    // Add user message
+    addUserMessage(message)
+
     // Clear input
     chatMessage.value = ''
-    
+
     // Simulate AI processing
     setTimeout(() => {
       if (message.toLowerCase().includes('jenn')) {
-        toast.add({ 
-          severity: 'success', 
-          summary: 'Found Jenn!', 
-          detail: 'I found Jenn Peterson in your contacts. She has an 89% pickup rate. Ready to call?', 
-          life: 5000 
-        })
+        addAIMessage([
+          'Found Jenn! 🎯',
+          'I found <strong>Jenn Peterson</strong> in your contacts.',
+          'She has an <strong>89% pickup rate</strong> and is most likely available now.',
+          'Ready to call Jenn?'
+        ])
+      } else if (message.toLowerCase().includes('call') || message.toLowerCase().includes('start')) {
+        addAIMessage([
+          'Perfect! Let\'s start calling. 📞',
+          'I\'ll prioritize contacts with the highest pickup probability.',
+          'Shall I begin with the top 23 most likely to answer?'
+        ])
       } else {
-        toast.add({ 
-          severity: 'info', 
-          summary: 'AI Assistant', 
-          detail: 'I can help you find contacts, start calling, or analyze your data. What would you like to do?', 
-          life: 4000 
-        })
+        addAIMessage('I can help you find specific contacts, start calling sessions, or analyze your data. What would you like to do?')
       }
-    }, 1500)
+    }, 1000)
   }
 }
 
 const handleVoiceInput = () => {
-  toast.add({ 
-    severity: 'info', 
-    summary: 'Voice Input', 
-    detail: 'Voice recognition starting... (simulated)', 
-    life: 3000 
-  })
-  
+  addAIMessage('🎤 Listening... (voice recognition simulated)')
+
   // Simulate voice input
   setTimeout(() => {
     chatMessage.value = "Call my highest priority contacts"
-    toast.add({ 
-      severity: 'success', 
-      summary: 'Voice Recognized', 
-      detail: 'Voice input captured!', 
-      life: 2000 
-    })
+    addAIMessage('Voice captured! I heard: "Call my highest priority contacts"')
   }, 2000)
 }
 </script>
