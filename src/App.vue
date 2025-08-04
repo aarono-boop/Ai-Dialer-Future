@@ -233,7 +233,7 @@
 
             <Button
               type="submit"
-              class="w-full bg-gradient-to-r from-indigo-600 to-purple-600 border-none rounded-lg py-3.5 px-6 text-white font-semibold text-sm flex items-center justify-center gap-2 mt-2 transition-all duration-300 hover:from-indigo-700 hover:to-purple-700 hover:-translate-y-0.5 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
+              class="w-full bg-gradient-to-r from-indigo-600 to-purple-600 border-none rounded-lg py-3.5 px-6 text-white font-semibold text-sm flex items-center justify-center gap-2 mt-2 transition-all duration-300 hover:from-indigo-700 hover:to-purple-700 disabled:opacity-50 disabled:cursor-not-allowed"
               :disabled="!signupEmail || !signupPassword"
             >
               <i class="pi pi-user"></i>
