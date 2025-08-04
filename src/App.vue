@@ -755,29 +755,14 @@ const handleActionButton = (action) => {
   border: none;
 }
 
-.signup-button {
-  width: 100%;
-  padding: 0.875rem 1.5rem !important;
-  border-radius: 8px !important;
-  font-weight: 500 !important;
-  font-size: 0.9rem !important;
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  gap: 0.75rem !important;
-  transition: all 0.3s ease !important;
-  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+::deep(.p-fileupload-buttonbar) {
+  display: none;
 }
 
-.google-signup {
-  background: rgba(234, 67, 53, 0.1) !important;
-  color: #ea4335 !important;
-  border-color: rgba(234, 67, 53, 0.3) !important;
-}
-
-.google-signup:hover {
-  background: rgba(234, 67, 53, 0.2) !important;
-  border-color: rgba(234, 67, 53, 0.5) !important;
+::deep(.p-fileupload-content) {
+  background: transparent;
+  border: none;
+  padding: 0;
   color: #ffffff !important;
 }
 
