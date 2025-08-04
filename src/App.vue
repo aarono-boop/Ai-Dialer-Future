@@ -764,25 +764,6 @@ const handleActionButton = (action) => {
   border: none;
   padding: 0;
 }
-
-
-}
-
-.chat-input {
-  flex: 1;
-  background: transparent !important;
-  border: none !important;
-  color: #ffffff !important;
-  font-size: 1rem;
-  padding: 0.75rem 1rem !important;
-}
-
-.chat-input::placeholder {
-  color: #a0a0a0;
-}
-
-.chat-input:focus {
-  box-shadow: none !important;
 }
 
 .mic-button, .send-button {
