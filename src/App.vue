@@ -201,7 +201,6 @@ const onFileInputChange = (event) => {
 const onFileSelect = (event) => {
   const file = event.files[0]
   if (file) {
-    hasUploadedFile.value = true
     addAIMessage(`Great! I received your file: <strong>${file.name}</strong>. Let me analyze your contacts...`)
 
     // Simulate AI analysis
