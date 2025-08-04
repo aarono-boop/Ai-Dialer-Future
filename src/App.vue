@@ -89,37 +89,37 @@
           <div v-if="showActionButtons" class="my-6">
             <div class="grid grid-cols-3 gap-3 md:gap-3 sm:grid-cols-2 xs:grid-cols-1">
               <Button
-                class="bg-gray-700/80 border border-gray-600/60 text-white/90 px-4 py-3.5 rounded-lg font-medium text-sm text-center transition-all duration-300 backdrop-blur-[10px] min-h-[48px] flex items-center justify-center hover:bg-gray-600/80 hover:border-gray-500/80 hover:text-white hover:-translate-y-0.5"
+                class="bg-gray-700/80 border border-gray-600/60 text-white/90 px-4 py-3.5 rounded-lg font-medium text-sm text-center transition-all duration-300 backdrop-blur-[10px] min-h-[48px] flex items-center justify-center hover:bg-gray-600/80 hover:border-gray-500/80 hover:text-white"
                 @click="handleActionButton('Set Appointments')"
               >
                 Set Appointments
               </Button>
               <Button
-                class="bg-gray-700/80 border border-gray-600/60 text-white/90 px-4 py-3.5 rounded-lg font-medium text-sm text-center transition-all duration-300 backdrop-blur-[10px] min-h-[48px] flex items-center justify-center hover:bg-gray-600/80 hover:border-gray-500/80 hover:text-white hover:-translate-y-0.5"
+                class="bg-gray-700/80 border border-gray-600/60 text-white/90 px-4 py-3.5 rounded-lg font-medium text-sm text-center transition-all duration-300 backdrop-blur-[10px] min-h-[48px] flex items-center justify-center hover:bg-gray-600/80 hover:border-gray-500/80 hover:text-white"
                 @click="handleActionButton('Close Live Sales')"
               >
                 Close Live Sales
               </Button>
               <Button
-                class="bg-gray-700/80 border border-gray-600/60 text-white/90 px-4 py-3.5 rounded-lg font-medium text-sm text-center transition-all duration-300 backdrop-blur-[10px] min-h-[48px] flex items-center justify-center hover:bg-gray-600/80 hover:border-gray-500/80 hover:text-white hover:-translate-y-0.5"
+                class="bg-gray-700/80 border border-gray-600/60 text-white/90 px-4 py-3.5 rounded-lg font-medium text-sm text-center transition-all duration-300 backdrop-blur-[10px] min-h-[48px] flex items-center justify-center hover:bg-gray-600/80 hover:border-gray-500/80 hover:text-white"
                 @click="handleActionButton('Create Opportunities')"
               >
                 Create Opportunities
               </Button>
               <Button
-                class="bg-gray-700/80 border border-gray-600/60 text-white/90 px-4 py-3.5 rounded-lg font-medium text-sm text-center transition-all duration-300 backdrop-blur-[10px] min-h-[48px] flex items-center justify-center hover:bg-gray-600/80 hover:border-gray-500/80 hover:text-white hover:-translate-y-0.5"
+                class="bg-gray-700/80 border border-gray-600/60 text-white/90 px-4 py-3.5 rounded-lg font-medium text-sm text-center transition-all duration-300 backdrop-blur-[10px] min-h-[48px] flex items-center justify-center hover:bg-gray-600/80 hover:border-gray-500/80 hover:text-white"
                 @click="handleActionButton('Set Follow Ups')"
               >
                 Set Follow Ups
               </Button>
               <Button
-                class="bg-gray-700/80 border border-gray-600/60 text-white/90 px-4 py-3.5 rounded-lg font-medium text-sm text-center transition-all duration-300 backdrop-blur-[10px] min-h-[48px] flex items-center justify-center hover:bg-gray-600/80 hover:border-gray-500/80 hover:text-white hover:-translate-y-0.5"
+                class="bg-gray-700/80 border border-gray-600/60 text-white/90 px-4 py-3.5 rounded-lg font-medium text-sm text-center transition-all duration-300 backdrop-blur-[10px] min-h-[48px] flex items-center justify-center hover:bg-gray-600/80 hover:border-gray-500/80 hover:text-white"
                 @click="handleActionButton('Make Live Transfers')"
               >
                 Make Live Transfers
               </Button>
               <Button
-                class="bg-gray-700/80 border border-gray-600/60 text-white/90 px-4 py-3.5 rounded-lg font-medium text-sm text-center transition-all duration-300 backdrop-blur-[10px] min-h-[48px] flex items-center justify-center hover:bg-gray-600/80 hover:border-gray-500/80 hover:text-white hover:-translate-y-0.5"
+                class="bg-gray-700/80 border border-gray-600/60 text-white/90 px-4 py-3.5 rounded-lg font-medium text-sm text-center transition-all duration-300 backdrop-blur-[10px] min-h-[48px] flex items-center justify-center hover:bg-gray-600/80 hover:border-gray-500/80 hover:text-white"
                 @click="handleActionButton('Live Conversations')"
               >
                 Live Conversations
