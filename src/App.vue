@@ -720,30 +720,7 @@ const handleActionButton = (action) => {
   }
 }
 
-.tagline {
-  font-size: 1rem;
-  color: #a0a0a0;
-  font-weight: 500;
-}
 
-.nav-actions {
-  display: flex;
-  gap: 1rem;
-  align-items: center;
-}
-
-.nav-button {
-  color: #ffffff !important;
-  font-weight: 500;
-}
-
-.nav-button.secondary {
-  color: #a0a0a0 !important;
-}
-
-.nav-button:hover {
-  color: #7b68ee !important;
-}
 
 /* Main Content */
 .main-content {
