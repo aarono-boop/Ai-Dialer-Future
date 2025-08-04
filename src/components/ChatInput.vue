@@ -142,7 +142,7 @@ onUnmounted(() => {
 
 // Expose methods to parent if needed
 defineExpose({
-  setInputValue: (value) => {
+  setInputValue: (value: string) => {
     inputValue.value = value
   },
   clearInput: () => {
