@@ -235,6 +235,7 @@ const onFileInputChange = (event) => {
 const simulateFileUpload = () => {
   // Go directly to signup prompt
   addAIMessage('Great! To get your free trial started and see it in action, how would you like to sign up?')
+  showSignupButtons.value = true
 }
 
 const onFileSelect = (event) => {
