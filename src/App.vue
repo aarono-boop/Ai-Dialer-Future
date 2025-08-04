@@ -11,42 +11,46 @@
     <!-- Main Content -->
     <main class="flex-1 flex items-start justify-center p-8 relative z-[5]">
       <div class="max-w-[900px] w-full min-h-[80vh] mt-2.5 bg-white/5 backdrop-blur-[20px] border border-white/10 rounded-xl p-5 shadow-2xl">
-        <div class="w-full flex flex-col gap-8">
+        <div class="w-full h-full flex flex-col justify-between">
+          <!-- Top content area -->
+          <div class="flex flex-col gap-8">
+            <!-- Chat Messages Area -->
+            <div class="max-h-[700px] overflow-y-auto flex flex-col mb-4 pr-2 scrollbar-thin scrollbar-track-white/10 scrollbar-thumb-white/30 hover:scrollbar-thumb-white/50" ref="chatMessages">
+              <template v-for="(message, index) in messages" :key="index">
+                <ChatMessage :message="message" />
 
-          <!-- Chat Messages Area -->
-          <div class="max-h-[900px] overflow-y-auto flex flex-col mb-4 pr-2 scrollbar-thin scrollbar-track-white/10 scrollbar-thumb-white/30 hover:scrollbar-thumb-white/50" ref="chatMessages">
-            <template v-for="(message, index) in messages" :key="index">
-              <ChatMessage :message="message" />
+                <!-- File Upload Area - shown after first message (welcome message) only -->
+                <FileUpload
+                  v-if="index === 0"
+                  @trigger-upload="simulateFileUpload"
+                  @file-selected="onFileSelect"
+                  @file-dropped="simulateFileUpload"
+                />
+              </template>
+            </div>
 
-              <!-- File Upload Area - shown after first message (welcome message) only -->
-              <FileUpload 
-                v-if="index === 0" 
-                @trigger-upload="simulateFileUpload"
-                @file-selected="onFileSelect"
-                @file-dropped="simulateFileUpload"
-              />
-            </template>
+            <!-- Action Buttons -->
+            <ActionButtons
+              v-if="showActionButtons"
+              @action-selected="handleActionButton"
+            />
+
+            <!-- Signup Buttons -->
+            <SignupButtons
+              v-if="showSignupButtons && !isSignedIn"
+              @google-signup="handleGoogleSignup"
+              @email-signup="handleEmailSignup"
+            />
           </div>
 
-          <!-- Action Buttons -->
-          <ActionButtons 
-            v-if="showActionButtons"
-            @action-selected="handleActionButton"
-          />
-
-          <!-- Signup Buttons -->
-          <SignupButtons 
-            v-if="showSignupButtons && !isSignedIn"
-            @google-signup="handleGoogleSignup"
-            @email-signup="handleEmailSignup"
-          />
-
-          <!-- Chat Input -->
-          <ChatInput 
-            ref="chatInputRef"
-            @send-message="sendMessage"
-            @voice-input="handleVoiceInput"
-          />
+          <!-- Chat Input - positioned at bottom -->
+          <div class="mt-auto">
+            <ChatInput
+              ref="chatInputRef"
+              @send-message="sendMessage"
+              @voice-input="handleVoiceInput"
+            />
+          </div>
 
         </div>
       </div>
