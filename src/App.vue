@@ -729,25 +729,8 @@ const handleActionButton = (action) => {
 
 /* Message bubble text styling */
 .message-bubble p {
-  padding: 20px 18px 20px 20px;
-}
-
-.user-message-bubble.message-bubble {
-  padding: 1.25rem 1.5rem;
-}
-
-.ai-message {
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 8px 8px 8px 0;
-  font-size: 14px;
-}
-
-.user-message-bubble {
-  background: linear-gradient(135deg, #7b68ee, #9932cc);
-  border-bottom-right-radius: 4px;
-  color: white;
+  margin: 0 0 0.5rem 0;
+  line-height: 1.6;
 }
 
 .message-bubble p {
