@@ -54,21 +54,24 @@ import { ref } from 'vue'
 import Button from 'primevue/button'
 
 // Define props
-defineProps({
-  visible: {
-    type: Boolean,
-    default: false
-  }
-})
+interface Props {
+  visible?: boolean
+}
+
+defineProps<Props>()
 
 // Define emits
-const emit = defineEmits(['close', 'cancel', 'agree'])
+const emit = defineEmits<{
+  close: []
+  cancel: []
+  agree: []
+}>()
 
 // Reactive data
-const agreeToTerms = ref(false)
+const agreeToTerms = ref<boolean>(false)
 
 // Methods
-const handleAgree = () => {
+const handleAgree = (): void => {
   if (agreeToTerms.value) {
     emit('agree')
     agreeToTerms.value = false
