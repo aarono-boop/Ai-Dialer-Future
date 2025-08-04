@@ -76,12 +76,12 @@ const startTypingAnimation = () => {
         animatedPlaceholder.value = currentPrompt.substring(0, currentCharIndex + 1)
         currentCharIndex++
       } else {
-        // Wait for 2 seconds before starting to delete
+        // Wait for 1 second before starting to delete
         isWaiting = true
         setTimeout(() => {
           isWaiting = false
           isTypingForward = false
-        }, 2000)
+        }, 1000)
       }
     } else {
       if (currentCharIndex > baseText.length) {
