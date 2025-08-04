@@ -193,14 +193,96 @@ const sendMessage = (message) => {
 
   // Simulate AI processing
   setTimeout(() => {
-    if (message.toLowerCase().includes('jenn')) {
+    const lowerMessage = message.toLowerCase()
+
+    if (lowerMessage.includes('anything about arkon')) {
+      addAIMessage([
+        '🚀 ARKON is PhoneBurner\'s revolutionary AI-powered dialer!',
+        'It uses advanced algorithms to predict the best times to call prospects, automatically prioritizes your contact list, and helps you connect with more people in less time.',
+        'Key features include smart scheduling, real-time connect predictions, and personalized calling strategies.',
+        'What specific aspect of ARKON would you like to know more about?'
+      ])
+    } else if (lowerMessage.includes('connected to more calls') || lowerMessage.includes('get connected')) {
+      addAIMessage([
+        '📈 Great question! Here are ARKON\'s proven strategies to boost your connect rates:',
+        '• <strong>Smart Timing:</strong> Calls prospects when they\'re most likely to answer',
+        '• <strong>Local Presence:</strong> Uses local numbers to increase pickup rates',
+        '• <strong>Voicemail Drop:</strong> Leaves personalized messages when they don\'t answer',
+        '• <strong>Follow-up Sequences:</strong> Automatically schedules optimal callback times',
+        'On average, users see a 40% increase in connect rates within their first week!'
+      ])
+    } else if (lowerMessage.includes('setup a demo') || lowerMessage.includes('demo')) {
+      addAIMessage([
+        '✨ I\'d love to show you ARKON in action!',
+        'Let me set up a personalized demo where you can see:',
+        '• Live contact scoring and prioritization',
+        '• Real-time dialing with connect predictions',
+        '• Smart call disposition and follow-up automation',
+        'What\'s your preferred time? I can schedule something for today or tomorrow.'
+      ])
+    } else if (lowerMessage.includes('who i should call now') || lowerMessage.includes('who should i call')) {
+      addAIMessage([
+        '🎯 Based on your contact data and current time analysis:',
+        '<strong>Top 3 prospects to call right now:</strong>',
+        '1. Sarah Johnson - 92% connect probability (last spoke 3 days ago)',
+        '2. Mike Chen - 89% connect probability (opened your email yesterday)',
+        '3. Jennifer Martinez - 84% connect probability (perfect timing window)',
+        'Should I dial Sarah first? She\'s showing the highest engagement score today.'
+      ])
+    } else if (lowerMessage.includes('fire up a dial session') || lowerMessage.includes('dial session')) {
+      addAIMessage([
+        '🔥 Let\'s fire up a power dialing session!',
+        'I can configure your session with:',
+        '• <strong>Target audience:</strong> High-priority prospects, warm leads, or follow-ups',
+        '• <strong>Call duration:</strong> 30 min, 1 hour, or 2-hour session',
+        '• <strong>Connect goals:</strong> Number of conversations you want to have',
+        'What type of prospects do you want to focus on for this session?'
+      ])
+    } else if (lowerMessage.includes('set a reminder') || lowerMessage.includes('reminder')) {
+      addAIMessage([
+        '⏰ I\'ll help you set up smart reminders!',
+        'ARKON can remind you to:',
+        '• Follow up with specific prospects at optimal times',
+        '• Call back prospects who didn\'t answer',
+        '• Review and update your call notes',
+        '• Start your daily calling sessions',
+        'What would you like to be reminded about and when?'
+      ])
+    } else if (lowerMessage.includes('practice a call') || lowerMessage.includes('practice')) {
+      addAIMessage([
+        '🎭 Great idea! Call practice makes perfect.',
+        'ARKON\'s practice mode can help you:',
+        '• Rehearse your opening pitch with AI feedback',
+        '• Practice handling common objections',
+        '• Test different conversation flows',
+        '• Record and review your delivery',
+        'Would you like to practice a cold call opening or work on handling objections?'
+      ])
+    } else if (lowerMessage.includes('appointments') && lowerMessage.includes('today')) {
+      addAIMessage([
+        '📅 Here\'s your schedule for today:',
+        '<strong>Upcoming appointments:</strong>',
+        '• 2:00 PM - Demo call with Sarah Johnson (confirmed)',
+        '• 3:30 PM - Follow-up with ABC Corp (needs confirmation)',
+        '• 4:15 PM - Discovery call with new lead Mike Chen',
+        'You have 45 minutes before your next call. Perfect time for some prospecting!'
+      ])
+    } else if (lowerMessage.includes('tell a joke') || lowerMessage.includes('joke')) {
+      addAIMessage([
+        '😄 Why did the salesperson bring a ladder to work?',
+        'Because they heard the job was about making <strong>high-level</strong> connections!',
+        '',
+        '🎯 Speaking of connections, did you know ARKON users make 3x more meaningful connections than traditional dialers?',
+        'Ready to elevate your calling game?'
+      ])
+    } else if (lowerMessage.includes('jenn')) {
       addAIMessage([
         'Found Jenn! 🎯',
         'I found <strong>Jenn Peterson</strong> in your contacts.',
         'She has an <strong>89% pickup rate</strong> and is most likely available now.',
         'Ready to call Jenn?'
       ])
-    } else if (message.toLowerCase().includes('call') || message.toLowerCase().includes('start')) {
+    } else if (lowerMessage.includes('call') || lowerMessage.includes('start')) {
       addAIMessage([
         'Perfect! Let\'s start calling. 📞',
         'I\'ll prioritize contacts with the highest pickup probability.',
