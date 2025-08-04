@@ -106,7 +106,7 @@ const startTypingAnimation = () => {
         animatedPlaceholder.value = baseText
       }
     }
-  }, 60) // Typing speed
+  }, 40) // Typing speed
 }
 
 const pauseAnimation = () => {
