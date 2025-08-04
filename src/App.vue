@@ -176,7 +176,7 @@ const simulateFileUpload = () => {
   showSignupButtons.value = true
 }
 
-const onFileSelect = (file) => {
+const onFileSelect = (file: File): void => {
   addAIMessage(`Great! I received your file: <strong>${file.name}</strong>. Let me analyze your contacts...`)
 
   // Simulate AI analysis
