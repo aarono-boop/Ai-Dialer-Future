@@ -64,9 +64,7 @@ const startTypingAnimation = () => {
 
   animationInterval = setInterval(() => {
     if (isWaiting) {
-      isWaiting = false
-      isTypingForward = false
-      return
+      return // Stay in waiting state
     }
 
     if (isWaitingAtEllipsis) {
@@ -81,16 +79,15 @@ const startTypingAnimation = () => {
         animatedPlaceholder.value = currentPrompt.substring(0, currentCharIndex + 1)
         currentCharIndex++
 
-        // Check if we just typed the complete "..." (ellipsis) and haven't paused yet
-        const currentText = animatedPlaceholder.value
-        if (currentText.endsWith('...') && currentCharIndex >= currentPrompt.length && !isWaitingAtEllipsis) {
+        // Check if we just completed typing and the prompt ends with "..."
+        if (currentCharIndex === currentPrompt.length && currentPrompt.endsWith('...')) {
           isWaitingAtEllipsis = true
           setTimeout(() => {
             isWaitingAtEllipsis = false
           }, 1000) // 1 second pause at ellipsis
         }
       } else {
-        // Wait for 2 seconds before starting to delete
+        // Finished typing, wait for 2 seconds before starting to delete
         isWaiting = true
         setTimeout(() => {
           isWaiting = false
