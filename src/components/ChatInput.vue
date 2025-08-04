@@ -50,7 +50,7 @@ const prompts = [
   'Ask me anything about ARKON...',
   'Ask me how to get connected to more calls...',
   'Ask me to setup a demo...',
-  'Ask me who I should call now...',
+  'Ask me who I should call right now...',
   'Ask me to fire up a dial session with specifics...',
   'Ask me to set a reminder...',
   'Ask me to practice a call...',
