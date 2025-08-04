@@ -764,7 +764,6 @@ const handleActionButton = (action) => {
   border: none;
   padding: 0;
 }
-}
 
 .mic-button, .send-button {
   width: 40px;
