@@ -454,7 +454,7 @@ const sendMessage = () => {
     setTimeout(() => {
       if (message.toLowerCase().includes('jenn')) {
         addAIMessage([
-          'Found Jenn! 🎯',
+          'Found Jenn! ���',
           'I found <strong>Jenn Peterson</strong> in your contacts.',
           'She has an <strong>89% pickup rate</strong> and is most likely available now.',
           'Ready to call Jenn?'
@@ -650,7 +650,45 @@ const handleActionButton = (action) => {
 </script>
 
 <style scoped>
-.arkon-app {
+/* Message bubble text styling */
+.message-bubble p {
+  margin: 0 0 0.5rem 0;
+  line-height: 1.6;
+}
+
+.message-bubble p:last-child {
+  margin-bottom: 0;
+}
+
+/* Custom PrimeVue overrides */
+::deep(.p-fileupload) {
+  background: transparent;
+  border: none;
+}
+
+::deep(.p-fileupload-buttonbar) {
+  display: none;
+}
+
+::deep(.p-fileupload-content) {
+  background: transparent;
+  border: none;
+  padding: 0;
+}
+
+/* Responsive grid adjustments */
+@media (max-width: 768px) {
+  .grid-cols-3 {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .grid-cols-3 {
+    grid-template-columns: repeat(1, 1fr) !important;
+  }
+}
+.dummy-old-class {
   min-height: 100vh;
   background:
     radial-gradient(circle at 1px 1px, rgba(255,255,255,0.15) 1px, transparent 0),
