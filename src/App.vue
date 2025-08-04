@@ -528,6 +528,42 @@ const handleTermsAgree = () => {
     addAIMessage('🎉 Welcome to ARKON! Your account has been created successfully. Let\'s start your first smart calling session! What are you trying to accomplish?')
   }
 }
+
+const handleActionButton = (action) => {
+  // Hide action buttons after selection
+  showActionButtons.value = false
+
+  // Add user message showing their selection
+  addUserMessage(`I want to ${action.toLowerCase()}`)
+
+  // Add AI response based on the action
+  setTimeout(() => {
+    let response = ''
+    switch (action) {
+      case 'Set Appointments':
+        response = 'Perfect! I\'ll help you set appointments. Let me analyze your contacts to find the best prospects for scheduling meetings.'
+        break
+      case 'Close Live Sales':
+        response = 'Great choice! I\'ll prioritize contacts who are ready to buy and most likely to close today.'
+        break
+      case 'Create Opportunities':
+        response = 'Excellent! I\'ll identify warm leads and prospects that could become new opportunities for your pipeline.'
+        break
+      case 'Set Follow Ups':
+        response = 'Smart strategy! I\'ll help you reconnect with previous contacts and schedule strategic follow-ups.'
+        break
+      case 'Make Live Transfers':
+        response = 'Perfect! I\'ll find contacts who are ready for immediate transfer to your sales team.'
+        break
+      case 'Live Conversations':
+        response = 'Let\'s get you talking! I\'ll connect you with contacts who are most likely to have meaningful conversations right now.'
+        break
+      default:
+        response = `I\'ll help you with ${action.toLowerCase()}. Let me prepare your optimal calling strategy.`
+    }
+    addAIMessage(response)
+  }, 1000)
+}
 </script>
 
 <style scoped>
