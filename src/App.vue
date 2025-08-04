@@ -286,7 +286,7 @@
               Cancel
             </Button>
             <Button
-              class="bg-gradient-to-r from-indigo-600 to-purple-600 border-none text-white px-6 py-3 rounded-md text-sm font-semibold transition-all duration-300 hover:from-indigo-700 hover:to-purple-700 hover:-translate-y-0.5 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
+              class="bg-gradient-to-r from-indigo-600 to-purple-600 border-none text-white px-6 py-3 rounded-md text-sm font-semibold transition-all duration-300 hover:from-indigo-700 hover:to-purple-700 disabled:opacity-50 disabled:cursor-not-allowed"
               @click="handleTermsAgree"
               :disabled="!agreeToTerms"
             >
