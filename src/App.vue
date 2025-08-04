@@ -353,7 +353,7 @@ const handleTermsAgree = () => {
 }
 
 // Action Button Methods
-const handleActionButton = (action) => {
+const handleActionButton = (action: string): void => {
   // Hide action buttons after selection
   showActionButtons.value = false
   
