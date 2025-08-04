@@ -9,8 +9,8 @@
     />
 
     <!-- Main Content -->
-    <main class="flex-1 flex items-center justify-center p-8 relative z-[5]">
-      <div class="max-w-[900px] w-full bg-white/5 backdrop-blur-[20px] border border-white/10 rounded-xl p-5 shadow-2xl">
+    <main class="flex-1 flex items-start justify-center p-8 relative z-[5]">
+      <div class="max-w-[900px] w-full min-h-[80vh] bg-white/5 backdrop-blur-[20px] border border-white/10 rounded-xl p-5 shadow-2xl">
         <div class="w-full flex flex-col gap-8">
 
           <!-- Chat Messages Area -->
