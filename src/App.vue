@@ -339,8 +339,9 @@ const handleVoiceInput = () => {
 }
 
 .logo-icon {
-  font-size: 1.5rem;
-  color: #7b68ee;
+  width: 24px;
+  height: 24px;
+  fill: #7b68ee;
 }
 
 .logo-text {
