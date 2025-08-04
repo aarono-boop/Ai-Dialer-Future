@@ -104,17 +104,17 @@ interface Message {
 const toast = useToast()
 
 // Reactive data
-const chatInputRef = ref()
-const chatMessages = ref()
-const hasUploadedFile = ref(false)
-const showSignupButtons = ref(false)
-const showSignupModal = ref(false)
-const showTermsModal = ref(false)
-const isSignedIn = ref(false)
-const showActionButtons = ref(false)
+const chatInputRef = ref<any>(null)
+const chatMessages = ref<HTMLElement | null>(null)
+const hasUploadedFile = ref<boolean>(false)
+const showSignupButtons = ref<boolean>(false)
+const showSignupModal = ref<boolean>(false)
+const showTermsModal = ref<boolean>(false)
+const isSignedIn = ref<boolean>(false)
+const showActionButtons = ref<boolean>(false)
 
 // Chat messages array
-const messages = ref([
+const messages: Ref<Message[]> = ref([
   {
     type: 'ai',
     content: [
