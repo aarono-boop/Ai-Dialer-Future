@@ -204,6 +204,55 @@
         </div>
       </div>
     </div>
+
+    <!-- Terms of Service Modal -->
+    <div v-if="showTermsModal" class="modal-overlay" @click="closeTermsModal">
+      <div class="terms-modal" @click.stop>
+        <div class="terms-header">
+          <h2 class="terms-title">Terms of Service</h2>
+          <button class="modal-close-button" @click="closeTermsModal">
+            <i class="pi pi-times"></i>
+          </button>
+        </div>
+
+        <div class="terms-content">
+          <p class="terms-description">
+            To create your PhoneBurner account and start your free trial, please review and agree to our policies.
+          </p>
+
+          <div class="terms-checkbox-container">
+            <input
+              type="checkbox"
+              id="agreeTerms"
+              v-model="agreeToTerms"
+              class="terms-checkbox"
+            />
+            <label for="agreeTerms" class="terms-checkbox-label">
+              I agree with PhoneBurner's
+              <a href="#" class="terms-link">terms of service</a>,
+              <a href="#" class="terms-link">privacy policy</a>
+              and <a href="#" class="terms-link">acceptable use policy</a>.
+            </label>
+          </div>
+
+          <div class="terms-buttons">
+            <Button
+              class="terms-cancel-button"
+              @click="handleTermsCancel"
+            >
+              Cancel
+            </Button>
+            <Button
+              class="terms-agree-button"
+              @click="handleTermsAgree"
+              :disabled="!agreeToTerms"
+            >
+              Agree and Continue
+            </Button>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
