@@ -14,7 +14,7 @@
         <span class="text-2xl font-bold tracking-wider bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">ARKON</span>
       </div>
       
-      <div class="text-gray-400 font-medium">
+      <div class="text-gray-400 font-light italic">
         Calling made smarter
       </div>
       
