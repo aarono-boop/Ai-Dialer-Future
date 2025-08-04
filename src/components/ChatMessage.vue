@@ -1,6 +1,6 @@
 <template>
   <div :class="['flex items-start mb-4', message.type === 'user' ? 'justify-end' : 'justify-start']">
-    <div v-if="message.type === 'ai'" class="flex gap-2 items-start w-full">
+    <div v-if="message.type === 'ai'" class="flex gap-[10px] items-start w-full">
       <div class="w-10 h-10 flex items-start justify-center flex-shrink-0 pt-1">
         <i class="pi pi-sparkles text-purple-500 text-lg -ml-5"></i>
       </div>
