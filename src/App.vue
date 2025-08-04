@@ -719,11 +719,6 @@ const handleActionButton = (action) => {
     grid-template-columns: repeat(1, 1fr) !important;
   }
 }
-  position: relative;
-  z-index: 10;
-  padding: 1.5rem 2rem;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-  background-color: #1f2937;
 }
 
 .header-content {
