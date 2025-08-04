@@ -3,6 +3,7 @@ import PrimeVue from 'primevue/config'
 import ToastService from 'primevue/toastservice'
 import Aura from '@primevue/themes/aura'
 import 'primeicons/primeicons.css'
+import './style.css'
 import App from './App.vue'
 
 const app = createApp(App)
