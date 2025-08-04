@@ -538,31 +538,113 @@ const handleActionButton = (action) => {
 
   // Add AI response based on the action
   setTimeout(() => {
-    let response = ''
+    let response = []
+    const sampleContacts = `
+      <div style="margin: 1rem 0; background: rgba(255,255,255,0.05); border-radius: 8px; padding: 1rem; overflow-x: auto;">
+        <table style="width: 100%; border-collapse: collapse; font-size: 0.85rem;">
+          <thead>
+            <tr style="border-bottom: 1px solid rgba(255,255,255,0.2);">
+              <th style="text-align: left; padding: 0.5rem; color: #60a5fa;">Name</th>
+              <th style="text-align: left; padding: 0.5rem; color: #60a5fa;">Phone</th>
+              <th style="text-align: left; padding: 0.5rem; color: #60a5fa;">Connect Score</th>
+              <th style="text-align: left; padding: 0.5rem; color: #60a5fa;">Best Time</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr style="border-bottom: 1px solid rgba(255,255,255,0.1);">
+              <td style="padding: 0.5rem; color: #ffffff;">Sarah Johnson</td>
+              <td style="padding: 0.5rem; color: #ffffff;">(555) 123-4567</td>
+              <td style="padding: 0.5rem; color: #10b981;">92%</td>
+              <td style="padding: 0.5rem; color: #ffffff;">2:00 PM</td>
+            </tr>
+            <tr style="border-bottom: 1px solid rgba(255,255,255,0.1);">
+              <td style="padding: 0.5rem; color: #ffffff;">Mike Chen</td>
+              <td style="padding: 0.5rem; color: #ffffff;">(555) 987-6543</td>
+              <td style="padding: 0.5rem; color: #10b981;">89%</td>
+              <td style="padding: 0.5rem; color: #ffffff;">10:30 AM</td>
+            </tr>
+            <tr style="border-bottom: 1px solid rgba(255,255,255,0.1);">
+              <td style="padding: 0.5rem; color: #ffffff;">Jennifer Martinez</td>
+              <td style="padding: 0.5rem; color: #ffffff;">(555) 456-7890</td>
+              <td style="padding: 0.5rem; color: #f59e0b;">76%</td>
+              <td style="padding: 0.5rem; color: #ffffff;">3:15 PM</td>
+            </tr>
+            <tr style="border-bottom: 1px solid rgba(255,255,255,0.1);">
+              <td style="padding: 0.5rem; color: #ffffff;">David Wilson</td>
+              <td style="padding: 0.5rem; color: #ffffff;">(555) 321-0987</td>
+              <td style="padding: 0.5rem; color: #10b981;">84%</td>
+              <td style="padding: 0.5rem; color: #ffffff;">11:00 AM</td>
+            </tr>
+            <tr>
+              <td style="padding: 0.5rem; color: #ffffff;">Lisa Thompson</td>
+              <td style="padding: 0.5rem; color: #ffffff;">(555) 654-3210</td>
+              <td style="padding: 0.5rem; color: #10b981;">91%</td>
+              <td style="padding: 0.5rem; color: #ffffff;">1:45 PM</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>`
+
     switch (action) {
       case 'Set Appointments':
-        response = 'Perfect! I\'ll help you set appointments. Let me analyze your contacts to find the best prospects for scheduling meetings.'
+        response = [
+          'Excellent! Setting appointments is our bread and butter. We\'ll help you fill your calendar.',
+          '',
+          'Your trial is ready! I\'ve analyzed your contacts and checked phone numbers with Connect Score.',
+          'Here\'s a preview of your data. Does this look correct?',
+          sampleContacts
+        ]
         break
       case 'Close Live Sales':
-        response = 'Great choice! I\'ll prioritize contacts who are ready to buy and most likely to close today.'
+        response = [
+          'Outstanding! Closing live sales is where the magic happens. We\'ll get you connected with your hottest prospects.',
+          '',
+          'Your trial is ready! I\'ve analyzed your contacts and prioritized those ready to buy with Connect Score.',
+          'Here\'s a preview of your highest-intent prospects. Does this look correct?',
+          sampleContacts
+        ]
         break
       case 'Create Opportunities':
-        response = 'Excellent! I\'ll identify warm leads and prospects that could become new opportunities for your pipeline.'
+        response = [
+          'Perfect! Creating opportunities is all about finding the right prospects at the right time. We\'ll build your pipeline.',
+          '',
+          'Your trial is ready! I\'ve analyzed your contacts and identified potential opportunities with Connect Score.',
+          'Here\'s a preview of your warmest leads. Does this look correct?',
+          sampleContacts
+        ]
         break
       case 'Set Follow Ups':
-        response = 'Smart strategy! I\'ll help you reconnect with previous contacts and schedule strategic follow-ups.'
+        response = [
+          'Smart choice! Follow-ups are where deals are won. We\'ll help you reconnect with precision timing.',
+          '',
+          'Your trial is ready! I\'ve analyzed your contacts and optimized follow-up timing with Connect Score.',
+          'Here\'s a preview of your follow-up targets. Does this look correct?',
+          sampleContacts
+        ]
         break
       case 'Make Live Transfers':
-        response = 'Perfect! I\'ll find contacts who are ready for immediate transfer to your sales team.'
+        response = [
+          'Brilliant! Live transfers maximize your team\'s efficiency. We\'ll connect you with prospects ready to talk.',
+          '',
+          'Your trial is ready! I\'ve analyzed your contacts and identified transfer-ready prospects with Connect Score.',
+          'Here\'s a preview of your transfer candidates. Does this look correct?',
+          sampleContacts
+        ]
         break
       case 'Live Conversations':
-        response = 'Let\'s get you talking! I\'ll connect you with contacts who are most likely to have meaningful conversations right now.'
+        response = [
+          'Fantastic! Live conversations are the heart of great sales. We\'ll get you talking to the right people.',
+          '',
+          'Your trial is ready! I\'ve analyzed your contacts and found conversation-ready prospects with Connect Score.',
+          'Here\'s a preview of your best conversation targets. Does this look correct?',
+          sampleContacts
+        ]
         break
       default:
-        response = `I\'ll help you with ${action.toLowerCase()}. Let me prepare your optimal calling strategy.`
+        response = [`I\'ll help you with ${action.toLowerCase()}. Let me prepare your optimal calling strategy.`]
     }
     addAIMessage(response)
-  }, 1000)
+  }, 1500)
 }
 </script>
 
