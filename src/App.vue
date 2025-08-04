@@ -689,15 +689,7 @@ const handleActionButton = (action) => {
   }
 }
 
-  background:
-    radial-gradient(circle at 1px 1px, rgba(255,255,255,0.15) 1px, transparent 0),
-    linear-gradient(135deg, #1a1a2e 0%, #141A2A 50%, #0f0f23 100%);
-  background-size: 20px 20px, 100% 100%;
-  color: #ffffff;
-  display: flex;
-  flex-direction: column;
-  position: relative;
-  overflow-x: hidden;
+
 }
 
 .arkon-app::before {
