@@ -53,3 +53,22 @@ defineExpose({
   }
 })
 </script>
+
+<style scoped>
+/* Ensure PrimeVue input styling doesn't override our dark theme */
+:deep(.p-inputtext) {
+  background-color: transparent !important;
+  color: white !important;
+  border: none !important;
+}
+
+:deep(.p-inputtext:focus) {
+  outline: none !important;
+  box-shadow: none !important;
+  border: none !important;
+}
+
+:deep(.p-inputtext::placeholder) {
+  color: rgb(209 213 219) !important; /* gray-300 */
+}
+</style>
