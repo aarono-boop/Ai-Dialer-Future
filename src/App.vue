@@ -187,6 +187,17 @@ const handleSwitchToVulcan = () => {
   })
 }
 
+const triggerFileInput = () => {
+  fileInput.value.click()
+}
+
+const onFileInputChange = (event) => {
+  const file = event.target.files[0]
+  if (file) {
+    onFileSelect({ files: [file] })
+  }
+}
+
 const onFileSelect = (event) => {
   const file = event.files[0]
   if (file) {
