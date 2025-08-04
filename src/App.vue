@@ -707,8 +707,18 @@ const handleActionButton = (action) => {
   padding: 0;
 }
 
-/* Header */
-.app-header {
+/* Responsive grid adjustments */
+@media (max-width: 768px) {
+  .grid-cols-3 {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .grid-cols-3 {
+    grid-template-columns: repeat(1, 1fr) !important;
+  }
+}
   position: relative;
   z-index: 10;
   padding: 1.5rem 2rem;
