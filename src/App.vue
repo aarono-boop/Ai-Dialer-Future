@@ -255,15 +255,8 @@ const onFileUpload = (event) => {
 
 const onDrop = (event) => {
   event.preventDefault()
-  const files = event.dataTransfer.files
-  if (files.length > 0) {
-    const file = files[0]
-    if (file.name.match(/\.(csv|xls|xlsx)$/)) {
-      onFileSelect({ files: [file] })
-    } else {
-      addAIMessage('⚠️ Please upload CSV, XLS, or XLSX files only.')
-    }
-  }
+  // Simulate file upload instead of processing actual files
+  simulateFileUpload()
 }
 
 const onDragOver = (event) => {
