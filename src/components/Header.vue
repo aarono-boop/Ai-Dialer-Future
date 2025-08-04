@@ -35,7 +35,7 @@
   </header>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import Button from 'primevue/button'
 
 // Define emits for parent component communication
