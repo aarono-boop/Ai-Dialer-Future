@@ -623,6 +623,56 @@ const handleEmailSignup = () => {
   margin: 0;
 }
 
+/* Signup Buttons */
+.signup-buttons-section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin: 1.5rem 0 1rem 0;
+}
+
+.signup-button {
+  width: 100%;
+  padding: 0.875rem 1.5rem !important;
+  border-radius: 8px !important;
+  font-weight: 500 !important;
+  font-size: 0.9rem !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 0.75rem !important;
+  transition: all 0.3s ease !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+}
+
+.google-signup {
+  background: rgba(234, 67, 53, 0.1) !important;
+  color: #ea4335 !important;
+  border-color: rgba(234, 67, 53, 0.3) !important;
+}
+
+.google-signup:hover {
+  background: rgba(234, 67, 53, 0.2) !important;
+  border-color: rgba(234, 67, 53, 0.5) !important;
+  color: #ffffff !important;
+}
+
+.email-signup {
+  background: rgba(123, 104, 238, 0.1) !important;
+  color: #7b68ee !important;
+  border-color: rgba(123, 104, 238, 0.3) !important;
+}
+
+.email-signup:hover {
+  background: rgba(123, 104, 238, 0.2) !important;
+  border-color: rgba(123, 104, 238, 0.5) !important;
+  color: #ffffff !important;
+}
+
+.signup-button i {
+  font-size: 1rem !important;
+}
+
 /* Chat Input */
 .chat-input-section {
   margin-top: 1rem;
