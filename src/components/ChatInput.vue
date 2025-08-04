@@ -3,10 +3,12 @@
     <div class="flex items-center bg-gray-800 backdrop-blur-[10px] border border-gray-600 rounded-xl px-3 py-2 gap-2">
       <InputText
         v-model="inputValue"
-        placeholder="Ask me to talk to Jenn"
+        :placeholder="animatedPlaceholder"
         class="flex-1 bg-transparent border-none text-white text-base px-4 py-3 placeholder-gray-300 focus:outline-none focus:ring-0"
         style="background-color: transparent !important; color: white !important;"
         @keyup.enter="handleSend"
+        @focus="pauseAnimation"
+        @blur="resumeAnimation"
       />
       <Button
         icon="pi pi-microphone"
