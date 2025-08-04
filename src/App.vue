@@ -84,6 +84,48 @@
             </template>
           </div>
 
+          <!-- Action Buttons -->
+          <div v-if="showActionButtons" class="action-buttons-section">
+            <div class="action-buttons-grid">
+              <Button
+                class="action-button"
+                @click="handleActionButton('Set Appointments')"
+              >
+                Set Appointments
+              </Button>
+              <Button
+                class="action-button"
+                @click="handleActionButton('Close Live Sales')"
+              >
+                Close Live Sales
+              </Button>
+              <Button
+                class="action-button"
+                @click="handleActionButton('Create Opportunities')"
+              >
+                Create Opportunities
+              </Button>
+              <Button
+                class="action-button"
+                @click="handleActionButton('Set Follow Ups')"
+              >
+                Set Follow Ups
+              </Button>
+              <Button
+                class="action-button"
+                @click="handleActionButton('Make Live Transfers')"
+              >
+                Make Live Transfers
+              </Button>
+              <Button
+                class="action-button"
+                @click="handleActionButton('Live Conversations')"
+              >
+                Live Conversations
+              </Button>
+            </div>
+          </div>
+
           <!-- Signup Buttons -->
           <div v-if="showSignupButtons && !isSignedIn" class="signup-buttons-section">
             <Button
