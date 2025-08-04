@@ -50,24 +50,24 @@
               <div v-if="message.type === 'user'" class="user-avatar">
                 <i class="pi pi-user"></i>
               </div>
+            </div>
 
-              <!-- File Upload Area - shown after welcome message -->
-              <div v-if="index === 0" class="upload-section-inline">
-                <div class="upload-area" @click="triggerFileInput" @drop="onDrop" @dragover="onDragOver" @dragleave="onDragLeave">
-                  <i class="pi pi-cloud-upload upload-icon"></i>
-                  <p class="upload-text">
-                    <span class="upload-link">Click to upload</span> or drag and drop
-                  </p>
-                  <p class="upload-hint">CSV, XLS, or XLSX files</p>
-                </div>
-                <input
-                  ref="fileInput"
-                  type="file"
-                  accept=".csv,.xls,.xlsx"
-                  @change="onFileInputChange"
-                  style="display: none;"
-                />
+            <!-- File Upload Area - shown after welcome message -->
+            <div v-if="messages.length > 0" class="upload-section-inline">
+              <div class="upload-area" @click="triggerFileInput" @drop="onDrop" @dragover="onDragOver" @dragleave="onDragLeave">
+                <i class="pi pi-cloud-upload upload-icon"></i>
+                <p class="upload-text">
+                  <span class="upload-link">Click to upload</span> or drag and drop
+                </p>
+                <p class="upload-hint">CSV, XLS, or XLSX files</p>
               </div>
+              <input
+                ref="fileInput"
+                type="file"
+                accept=".csv,.xls,.xlsx"
+                @change="onFileInputChange"
+                style="display: none;"
+              />
             </div>
           </div>
 
