@@ -1,5 +1,5 @@
 <template>
-  <header class="relative z-10 py-1 px-6 lg:px-8 border-b border-white/10 bg-gray-800">
+  <header class="relative z-10 py-3.5 px-6 lg:px-8 border-b border-white/10 bg-gray-800">
     <div class="flex justify-between items-center max-w-6xl mx-auto">
       <div class="flex items-center gap-3">
         <svg class="logo-icon" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px">
