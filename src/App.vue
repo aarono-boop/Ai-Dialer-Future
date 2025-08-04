@@ -724,9 +724,6 @@ const handleActionButton = (action) => {
 
 
 
-}
-}
-
 /* Message bubble text styling */
 .message-bubble p {
   margin: 0 0 0.5rem 0;
