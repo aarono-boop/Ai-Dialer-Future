@@ -312,6 +312,17 @@ const handleVoiceInput = () => {
     addAIMessage('Voice captured! I heard: "Call my highest priority contacts"')
   }, 2000)
 }
+
+const handleGoogleSignup = () => {
+  addAIMessage('🚀 Great choice! Setting up your Google account integration...')
+  setTimeout(() => {
+    addAIMessage('Perfect! Your trial is ready. Let\'s start with your first smart calling session!')
+  }, 1500)
+}
+
+const handleEmailSignup = () => {
+  addAIMessage('📧 Let\'s get you set up with email! What\'s your email address?')
+}
 </script>
 
 <style scoped>
