@@ -220,7 +220,6 @@ const simulateFileUpload = () => {
   // Simulate AI analysis
   setTimeout(() => {
     addAIMessage([
-      'Analysis complete! 📊',
       'I found <strong>847 contacts</strong> in your spreadsheet.',
       '<strong>23 contacts</strong> are most likely to pick up right now based on optimal calling times.'
     ])
