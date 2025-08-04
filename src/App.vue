@@ -201,14 +201,35 @@ const handleSwitchToVulcan = () => {
 }
 
 const triggerFileInput = () => {
-  fileInput.value.click()
+  // Simulate file upload instead of opening file dialog
+  simulateFileUpload()
 }
 
 const onFileInputChange = (event) => {
+  // This won't be called since we're simulating the upload
   const file = event.target.files[0]
   if (file) {
     onFileSelect({ files: [file] })
   }
+}
+
+const simulateFileUpload = () => {
+  // Simulate uploading a spreadsheet
+  addAIMessage(`Great! I can see you want to upload your contact file. Let me analyze that for you...`)
+
+  // Simulate AI analysis
+  setTimeout(() => {
+    addAIMessage([
+      'Analysis complete! 📊',
+      'I found <strong>847 contacts</strong> in your spreadsheet.',
+      '<strong>23 contacts</strong> are most likely to pick up right now based on optimal calling times.'
+    ])
+
+    // Show signup prompt after analysis
+    setTimeout(() => {
+      addAIMessage('Great! To get your free trial started and see it in action, how would you like to sign up?')
+    }, 1500)
+  }, 2000)
 }
 
 const onFileSelect = (event) => {
