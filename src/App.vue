@@ -84,6 +84,24 @@
             </template>
           </div>
 
+          <!-- Signup Buttons -->
+          <div class="signup-buttons-section">
+            <Button
+              class="signup-button google-signup"
+              @click="handleGoogleSignup"
+            >
+              <i class="pi pi-google"></i>
+              Continue with Google
+            </Button>
+            <Button
+              class="signup-button email-signup"
+              @click="handleEmailSignup"
+            >
+              <i class="pi pi-envelope"></i>
+              Continue with Email
+            </Button>
+          </div>
+
           <!-- Chat Input -->
           <div class="chat-input-section">
             <div class="input-container">
