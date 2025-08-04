@@ -11,10 +11,11 @@
         @blur="resumeAnimation"
       />
       <Button
-        icon="pi pi-microphone"
-        class="w-10 h-10 rounded-full flex items-center justify-center text-purple-400 transition-all duration-300 hover:bg-purple-400/20 hover:text-white"
+        icon="pi pi-send"
+        class="w-10 h-10 rounded-full flex items-center justify-center text-purple-400 transition-all duration-300 hover:bg-purple-400/20 hover:text-white disabled:opacity-50 disabled:text-gray-600"
+        :disabled="!inputValue.trim()"
         text
-        @click="$emit('voice-input')"
+        @click="handleSend"
       />
     </div>
   </div>
