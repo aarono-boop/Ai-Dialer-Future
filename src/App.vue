@@ -14,7 +14,7 @@
         <div class="w-full flex flex-col gap-8">
 
           <!-- Chat Messages Area -->
-          <div class="max-h-[700px] overflow-y-auto flex flex-col mb-4 pr-2 scrollbar-thin scrollbar-track-white/10 scrollbar-thumb-white/30 hover:scrollbar-thumb-white/50" ref="chatMessages">
+          <div class="max-h-[900px] overflow-y-auto flex flex-col mb-4 pr-2 scrollbar-thin scrollbar-track-white/10 scrollbar-thumb-white/30 hover:scrollbar-thumb-white/50" ref="chatMessages">
             <template v-for="(message, index) in messages" :key="index">
               <ChatMessage :message="message" />
 
