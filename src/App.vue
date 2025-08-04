@@ -763,19 +763,6 @@ const handleActionButton = (action) => {
   background: transparent;
   border: none;
   padding: 0;
-  color: #ffffff !important;
-}
-
-.email-signup {
-  background: rgba(123, 104, 238, 0.1) !important;
-  color: #7b68ee !important;
-  border-color: rgba(123, 104, 238, 0.3) !important;
-}
-
-.email-signup:hover {
-  background: rgba(123, 104, 238, 0.2) !important;
-  border-color: rgba(123, 104, 238, 0.5) !important;
-  color: #ffffff !important;
 }
 
 .signup-button i {
