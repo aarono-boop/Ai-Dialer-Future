@@ -55,26 +55,20 @@
 
           <!-- File Upload Area -->
           <div v-if="!hasUploadedFile" class="upload-section">
-            <FileUpload
-              ref="fileUpload"
-              mode="basic"
-              :auto="false"
-              :multiple="false"
+            <div class="upload-area" @click="triggerFileInput" @drop="onDrop" @dragover="onDragOver" @dragleave="onDragLeave">
+              <i class="pi pi-cloud-upload upload-icon"></i>
+              <p class="upload-text">
+                <span class="upload-link">Click to upload</span> or drag and drop
+              </p>
+              <p class="upload-hint">CSV, XLS, or XLSX files</p>
+            </div>
+            <input
+              ref="fileInput"
+              type="file"
               accept=".csv,.xls,.xlsx"
-              :maxFileSize="10000000"
-              @select="onFileSelect"
-              @upload="onFileUpload"
-              class="custom-file-upload"
-              chooseLabel="Click to upload or drag and drop"
-            >
-              <template #empty>
-                <div class="upload-area" @drop="onDrop" @dragover="onDragOver" @dragleave="onDragLeave">
-                  <i class="pi pi-cloud-upload upload-icon"></i>
-                  <p class="upload-text">Click to upload or drag and drop</p>
-                  <p class="upload-hint">CSV, XLS or XLSX files</p>
-                </div>
-              </template>
-            </FileUpload>
+              @change="onFileInputChange"
+              style="display: none;"
+            />
           </div>
 
           <!-- Chat Input -->
