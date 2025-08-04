@@ -69,6 +69,10 @@ const startTypingAnimation = () => {
       return
     }
 
+    if (isWaitingAtEllipsis) {
+      return // Stay paused at ellipsis
+    }
+
     const currentPrompt = prompts[currentPromptIndex]
     const baseText = 'Ask me'
 
@@ -76,6 +80,15 @@ const startTypingAnimation = () => {
       if (currentCharIndex < currentPrompt.length) {
         animatedPlaceholder.value = currentPrompt.substring(0, currentCharIndex + 1)
         currentCharIndex++
+
+        // Check if we just typed the complete "..." (ellipsis)
+        const currentText = animatedPlaceholder.value
+        if (currentText.endsWith('...') && !isWaitingAtEllipsis) {
+          isWaitingAtEllipsis = true
+          setTimeout(() => {
+            isWaitingAtEllipsis = false
+          }, 1000) // 1 second pause at ellipsis
+        }
       } else {
         // Wait for 2 seconds before starting to delete
         isWaiting = true
