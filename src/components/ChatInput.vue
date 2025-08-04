@@ -81,9 +81,9 @@ const startTypingAnimation = () => {
         animatedPlaceholder.value = currentPrompt.substring(0, currentCharIndex + 1)
         currentCharIndex++
 
-        // Check if we just typed the complete "..." (ellipsis)
+        // Check if we just typed the complete "..." (ellipsis) and haven't paused yet
         const currentText = animatedPlaceholder.value
-        if (currentText.endsWith('...') && !isWaitingAtEllipsis) {
+        if (currentText.endsWith('...') && currentCharIndex >= currentPrompt.length && !isWaitingAtEllipsis) {
           isWaitingAtEllipsis = true
           setTimeout(() => {
             isWaitingAtEllipsis = false
