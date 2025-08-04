@@ -394,45 +394,101 @@ const handleVoiceInput = () => {
   gap: 2rem;
 }
 
-/* AI Message */
-.ai-message-container {
+/* Chat Messages Area */
+.chat-messages {
+  max-height: 400px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  padding-right: 0.5rem;
+}
+
+.chat-messages::-webkit-scrollbar {
+  width: 6px;
+}
+
+.chat-messages::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 3px;
+}
+
+.chat-messages::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 3px;
+}
+
+.chat-messages::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.5);
+}
+
+/* Message Containers */
+.message-container {
   display: flex;
   gap: 1rem;
   align-items: flex-start;
 }
 
-.ai-avatar {
+.user-message {
+  justify-content: flex-end;
+}
+
+.ai-message-container {
+  justify-content: flex-start;
+}
+
+/* Avatars */
+.ai-avatar, .user-avatar {
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  background: linear-gradient(135deg, #7b68ee, #9932cc);
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
 }
 
-.ai-avatar i {
+.ai-avatar {
+  background: linear-gradient(135deg, #7b68ee, #9932cc);
+}
+
+.user-avatar {
+  background: linear-gradient(135deg, #4facfe, #00f2fe);
+}
+
+.ai-avatar i, .user-avatar i {
   color: white;
   font-size: 1.1rem;
+}
+
+/* Message Bubbles */
+.message-bubble {
+  max-width: 80%;
+  padding: 1.25rem 1.5rem;
+  border-radius: 16px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
 }
 
 .ai-message {
   background: rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 16px;
-  padding: 1.5rem;
-  flex: 1;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  border-bottom-left-radius: 4px;
 }
 
-.ai-message p {
-  margin: 0 0 0.75rem 0;
+.user-message-bubble {
+  background: linear-gradient(135deg, #7b68ee, #9932cc);
+  border-bottom-right-radius: 4px;
+  color: white;
+}
+
+.message-bubble p {
+  margin: 0 0 0.5rem 0;
   line-height: 1.6;
 }
 
-.ai-message p:last-child {
+.message-bubble p:last-child {
   margin-bottom: 0;
 }
 
