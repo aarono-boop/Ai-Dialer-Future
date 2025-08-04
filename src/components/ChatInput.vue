@@ -1,6 +1,6 @@
 <template>
   <div class="mt-4">
-    <div class="flex items-center bg-gray-900/90 backdrop-blur-[10px] border border-gray-600/40 rounded-xl px-3 py-2 gap-2">
+    <div class="flex items-center bg-gray-800 backdrop-blur-[10px] border border-gray-600 rounded-xl px-3 py-2 gap-2">
       <InputText
         v-model="inputValue"
         placeholder="Ask me to talk to Jenn"
