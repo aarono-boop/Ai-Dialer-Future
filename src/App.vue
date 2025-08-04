@@ -214,14 +214,8 @@ const onFileInputChange = (event) => {
 }
 
 const simulateFileUpload = () => {
-  // Simulate uploading a spreadsheet
-  addAIMessage(`Great! I can see you want to upload your contact file. Let me analyze that for you...`)
-
-  // Simulate AI analysis
-  setTimeout(() => {
-    // Show signup prompt directly after upload message
-    addAIMessage('Great! To get your free trial started and see it in action, how would you like to sign up?')
-  }, 2000)
+  // Go directly to signup prompt
+  addAIMessage('Great! To get your free trial started and see it in action, how would you like to sign up?')
 }
 
 const onFileSelect = (event) => {
