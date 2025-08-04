@@ -39,40 +39,40 @@
     </header>
 
     <!-- Main Content -->
-    <main class="main-content">
-      <div class="chat-container-card">
-        <div class="conversation-container">
+    <main class="flex-1 flex items-center justify-center p-8 relative z-[5]">
+      <div class="max-w-2xl w-full bg-white/5 backdrop-blur-[20px] border border-white/10 rounded-xl p-10 shadow-2xl">
+        <div class="w-full flex flex-col gap-8">
 
           <!-- Chat Messages Area -->
-          <div class="chat-messages" ref="chatMessages">
+          <div class="max-h-96 overflow-y-auto flex flex-col mb-4 pr-2 scrollbar-thin scrollbar-track-white/10 scrollbar-thumb-white/30 hover:scrollbar-thumb-white/50" ref="chatMessages">
             <template v-for="(message, index) in messages" :key="index">
-              <div :class="['message-container', message.type === 'user' ? 'user-message' : 'ai-message-container']">
-                <div v-if="message.type === 'ai'">
-                  <div class="ai-avatar">
-                    <i class="pi pi-robot"></i>
+              <div :class="['flex items-start mb-4', message.type === 'user' ? 'justify-end' : 'justify-start']">
+                <div v-if="message.type === 'ai'" class="flex gap-4 items-start w-full">
+                  <div class="w-10 h-10 rounded-full bg-gradient-to-br from-purple-500 to-purple-700 flex items-center justify-center flex-shrink-0">
+                    <i class="pi pi-robot text-white text-lg"></i>
                   </div>
-                  <div :class="['message-bubble', 'ai-message']">
+                  <div class="max-w-[80%] bg-white/10 backdrop-blur-[10px] border border-white/20 rounded-lg rounded-tl-none p-5 text-sm">
                     <p v-for="(line, lineIndex) in message.content" :key="lineIndex" v-html="line"></p>
                   </div>
                 </div>
-                <div v-else class="user-message-wrapper">
-                  <div class="user-avatar">
-                    <i class="pi pi-user"></i>
+                <div v-else class="flex gap-4 items-start flex-row-reverse">
+                  <div class="w-10 h-10 rounded-full bg-gradient-to-br from-blue-400 to-cyan-400 flex items-center justify-center flex-shrink-0">
+                    <i class="pi pi-user text-white text-lg"></i>
                   </div>
-                  <div :class="['message-bubble', 'user-message-bubble']">
+                  <div class="max-w-[80%] bg-gradient-to-br from-purple-500 to-purple-700 rounded-lg rounded-br-sm p-5 text-white">
                     <p v-for="(line, lineIndex) in message.content" :key="lineIndex" v-html="line"></p>
                   </div>
                 </div>
               </div>
 
               <!-- File Upload Area - shown after first message (welcome message) only -->
-              <div v-if="index === 0" class="upload-section-inline">
-                <div class="upload-area" @click="triggerFileInput" @drop="onDrop" @dragover="onDragOver" @dragleave="onDragLeave">
-                  <i class="pi pi-cloud-upload upload-icon"></i>
-                  <p class="upload-text">
-                    <span class="upload-link">Click to upload</span> or drag and drop
+              <div v-if="index === 0" class="max-w-[80%] my-6 flex flex-col justify-start items-start gap-4">
+                <div class="border-2 border-dashed border-white/30 rounded-lg p-10 text-center bg-transparent transition-all duration-300 cursor-pointer w-full hover:border-purple-400/60 hover:bg-white/[0.02]" @click="triggerFileInput" @drop="onDrop" @dragover="onDragOver" @dragleave="onDragLeave">
+                  <i class="pi pi-cloud-upload text-4xl text-gray-500 mb-4 block"></i>
+                  <p class="text-base mb-2 text-white">
+                    <span class="text-blue-400 hover:text-blue-300 no-underline">Click to upload</span> or drag and drop
                   </p>
-                  <p class="upload-hint">CSV, XLS, or XLSX files</p>
+                  <p class="text-sm text-gray-400 m-0">CSV, XLS, or XLSX files</p>
                 </div>
                 <input
                   ref="fileInput"
@@ -526,7 +526,7 @@ const handleTermsAgree = () => {
     closeTermsModal()
     isSignedIn.value = true
     showActionButtons.value = true
-    addAIMessage('��� Welcome to ARKON! Your account has been created successfully. Let\'s start your first smart calling session! What are you trying to accomplish?')
+    addAIMessage('🎉 Welcome to ARKON! Your account has been created successfully. Let\'s start your first smart calling session! What are you trying to accomplish?')
   }
 }
 
