@@ -529,7 +529,7 @@ const handleVoiceInput = () => {
   background: transparent;
   transition: all 0.3s ease;
   cursor: pointer;
-  max-width: 80%;
+  width: 100%;
 }
 
 .upload-area:hover {
