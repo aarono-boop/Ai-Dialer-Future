@@ -1,8 +1,8 @@
 <template>
   <div :class="['flex items-start mb-4', message.type === 'user' ? 'justify-end' : 'justify-start']">
     <div v-if="message.type === 'ai'" class="flex gap-[10px] items-start w-full">
-      <div class="w-10 h-10 flex items-start justify-center flex-shrink-0 pt-1">
-        <i class="pi pi-sparkles text-purple-500 text-lg -ml-5"></i>
+      <div class="flex items-start justify-center flex-shrink-0 pt-1">
+        <i class="pi pi-sparkles text-purple-500 text-lg"></i>
       </div>
       <div class="max-w-[80%] bg-white/10 backdrop-blur-[10px] border border-white/20 rounded-lg rounded-tl-none p-5 text-sm">
         <p v-for="(line, lineIndex) in message.content" :key="lineIndex" v-html="line"></p>
