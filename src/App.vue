@@ -736,33 +736,7 @@ const handleActionButton = (action) => {
 .message-bubble p:last-child {
   margin-bottom: 0;
 }
-  color: #6b7280;
-  margin-bottom: 1rem;
-  display: block;
-}
 
-.upload-text {
-  font-size: 1rem;
-  margin: 0 0 0.5rem 0;
-  color: #ffffff;
-}
-
-.upload-link {
-  color: #60a5fa;
-  text-decoration: none;
-}
-
-.upload-link:hover {
-  color: #93c5fd;
-}
-
-.upload-hint {
-  font-size: 0.875rem;
-  color: #9ca3af;
-  margin: 0;
-}
-
-/* Action Buttons */
 .action-buttons-section {
   margin: 1.5rem 0;
 }
