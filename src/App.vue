@@ -733,21 +733,9 @@ const handleActionButton = (action) => {
   line-height: 1.6;
 }
 
-.message-bubble p {
-  margin: 0 0 0.5rem 0;
-  line-height: 1.6;
-}
-
 .message-bubble p:last-child {
   margin-bottom: 0;
 }
-
-/* Upload Section */
-.upload-section {
-  margin: 1.5rem 0;
-}
-
-.upload-section-inline {
   max-width: 80%;
   margin: 1.5rem 0;
   display: flex;
