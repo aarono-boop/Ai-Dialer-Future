@@ -470,9 +470,16 @@ const handleVoiceInput = () => {
 /* Message Bubbles */
 .message-bubble {
   max-width: 80%;
-  padding: 1.25rem 1.5rem;
   border-radius: 16px;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+}
+
+.ai-message.message-bubble {
+  padding: 20px 18px 20px 20px;
+}
+
+.user-message-bubble.message-bubble {
+  padding: 1.25rem 1.5rem;
 }
 
 .ai-message {
