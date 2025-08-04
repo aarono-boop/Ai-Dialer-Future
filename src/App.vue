@@ -1,4 +1,5 @@
 <template>
+  <!-- Test change for PR functionality -->
   <div class="arkon-app">
     <!-- Header -->
     <header class="app-header">
