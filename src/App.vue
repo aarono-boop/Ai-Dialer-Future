@@ -453,7 +453,13 @@ const handleVoiceInput = () => {
 
 .user-message {
   justify-content: flex-end;
+}
+
+.user-message-wrapper {
+  display: flex;
   gap: 1rem;
+  align-items: flex-start;
+  flex-direction: row-reverse;
 }
 
 .ai-message-container {
