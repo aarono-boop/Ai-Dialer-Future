@@ -30,15 +30,15 @@ import InputText from 'primevue/inputtext'
 const emit = defineEmits(['send-message', 'voice-input'])
 
 // Reactive data
-const inputValue = ref('')
-const animatedPlaceholder = ref('Ask me')
-const isAnimating = ref(true)
-let animationInterval = null
-let currentPromptIndex = 0
-let currentCharIndex = 0
-let isTypingForward = true
-let isWaiting = false
-let isWaitingAtEllipsis = false
+const inputValue = ref<string>('')
+const animatedPlaceholder = ref<string>('Ask me')
+const isAnimating = ref<boolean>(true)
+let animationInterval: number | null = null
+let currentPromptIndex: number = 0
+let currentCharIndex: number = 0
+let isTypingForward: boolean = true
+let isWaiting: boolean = false
+let isWaitingAtEllipsis: boolean = false
 
 // Animation prompts
 const prompts = [
