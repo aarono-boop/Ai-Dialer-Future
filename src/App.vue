@@ -765,24 +765,7 @@ const handleActionButton = (action) => {
   padding: 0;
 }
 
-.signup-button i {
-  font-size: 1rem !important;
-}
 
-/* Chat Input */
-.chat-input-section {
-  margin-top: 1rem;
-}
-
-.input-container {
-  display: flex;
-  align-items: center;
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 12px;
-  padding: 0.5rem 0.75rem;
-  gap: 0.5rem;
 }
 
 .chat-input {
