@@ -692,7 +692,7 @@ const handleActionButton = (action) => {
 
 
 /* Custom PrimeVue overrides */
-  content: '';
+::deep(.p-fileupload) {
   position: absolute;
   top: 0;
   left: 0;
