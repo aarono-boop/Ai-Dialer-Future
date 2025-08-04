@@ -512,8 +512,13 @@ const handleVoiceInput = () => {
 }
 
 .upload-section-inline {
-  width: 100%;
+  width: auto;
   margin: 1.5rem 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 1rem;
 }
 
 .upload-area {
