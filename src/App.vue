@@ -447,16 +447,24 @@ const handleVoiceInput = () => {
 /* Message Containers */
 .message-container {
   display: flex;
-  gap: 1rem;
   align-items: flex-start;
+  margin-bottom: 1rem;
 }
 
 .user-message {
   justify-content: flex-end;
+  gap: 1rem;
 }
 
 .ai-message-container {
   justify-content: flex-start;
+}
+
+.ai-message-container > div {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+  width: 100%;
 }
 
 /* Avatars */
