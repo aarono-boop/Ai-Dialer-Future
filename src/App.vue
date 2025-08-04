@@ -725,49 +725,6 @@ const handleActionButton = (action) => {
 
 
 }
-
-.chat-messages::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 255, 255, 0.5);
-}
-
-/* Message Containers */
-.message-container {
-  display: flex;
-  align-items: flex-start;
-  margin-bottom: 1rem;
-}
-
-.user-message {
-  justify-content: flex-end;
-}
-
-.user-message-wrapper {
-  display: flex;
-  gap: 1rem;
-  align-items: flex-start;
-  flex-direction: row-reverse;
-}
-
-.ai-message-container {
-  justify-content: flex-start;
-}
-
-.ai-message-container > div {
-  display: flex;
-  gap: 1rem;
-  align-items: flex-start;
-  width: 100%;
-}
-
-/* Avatars */
-.ai-avatar, .user-avatar {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
 }
 
 .ai-avatar {
