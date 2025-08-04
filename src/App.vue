@@ -44,13 +44,11 @@
           </div>
 
           <!-- Chat Input - positioned at bottom -->
-          <div class="mt-auto">
-            <ChatInput
-              ref="chatInputRef"
-              @send-message="sendMessage"
-              @voice-input="handleVoiceInput"
-            />
-          </div>
+          <ChatInput
+            ref="chatInputRef"
+            @send-message="sendMessage"
+            @voice-input="handleVoiceInput"
+          />
 
         </div>
       </div>
