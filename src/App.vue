@@ -480,6 +480,7 @@ const handleTermsCancel = () => {
 const handleTermsAgree = () => {
   if (agreeToTerms.value) {
     closeTermsModal()
+    isSignedIn.value = true
     addAIMessage('🎉 Welcome to ARKON! Your account has been created successfully. Let\'s start your first smart calling session!')
   }
 }
