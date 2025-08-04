@@ -21,8 +21,16 @@
 </template>
 
 <script setup lang="ts">
+// Types
+interface Message {
+  type: 'ai' | 'user'
+  content: string[]
+}
+
 // Define props
-defineProps({
+defineProps<{
+  message: Message
+}>()
   message: {
     type: Object,
     required: true,
