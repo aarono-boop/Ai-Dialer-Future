@@ -2,7 +2,7 @@
   <div :class="['flex items-start mb-4', message.type === 'user' ? 'justify-end' : 'justify-start']">
     <div v-if="message.type === 'ai'" class="flex gap-4 items-start w-full">
       <div class="w-10 h-10 rounded-full bg-gradient-to-br from-purple-500 to-purple-700 flex items-center justify-center flex-shrink-0">
-        <i class="pi pi-robot text-white text-lg"></i>
+        <i class="pi pi-sparkles text-white text-lg"></i>
       </div>
       <div class="max-w-[80%] bg-white/10 backdrop-blur-[10px] border border-white/20 rounded-lg rounded-tl-none p-5 text-sm">
         <p v-for="(line, lineIndex) in message.content" :key="lineIndex" v-html="line"></p>
