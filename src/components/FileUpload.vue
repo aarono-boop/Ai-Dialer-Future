@@ -31,29 +31,30 @@ import { ref } from 'vue'
 const emit = defineEmits(['trigger-upload', 'file-selected', 'file-dropped'])
 
 // Refs
-const fileInput = ref()
+const fileInput = ref<HTMLInputElement | null>(null)
 
 // Methods
-const onFileInputChange = (event) => {
-  const file = event.target.files[0]
+const onFileInputChange = (event: Event): void => {
+  const target = event.target as HTMLInputElement
+  const file = target.files?.[0]
   if (file) {
     emit('file-selected', file)
   }
 }
 
-const onDrop = (event) => {
+const onDrop = (event: DragEvent): void => {
   event.preventDefault()
-  const files = event.dataTransfer.files
-  if (files.length > 0) {
+  const files = event.dataTransfer?.files
+  if (files && files.length > 0) {
     emit('file-dropped', files[0])
   }
 }
 
-const onDragOver = (event) => {
+const onDragOver = (event: DragEvent): void => {
   event.preventDefault()
 }
 
-const onDragLeave = (event) => {
+const onDragLeave = (event: DragEvent): void => {
   event.preventDefault()
 }
 
