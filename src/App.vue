@@ -480,6 +480,7 @@ const handleVoiceInput = () => {
   backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.2);
   border-bottom-left-radius: 4px;
+  font-size: 14px;
 }
 
 .user-message-bubble {
