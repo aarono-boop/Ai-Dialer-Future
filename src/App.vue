@@ -34,20 +34,27 @@
       <div class="chat-container-card">
         <div class="conversation-container">
 
-          <!-- AI Welcome Message -->
-          <div class="ai-message-container">
-            <div class="ai-avatar">
-              <i class="pi pi-user"></i>
-            </div>
-            <div class="ai-message">
-              <p>Welcome to PhoneBurner's new product called <strong>ARKON</strong>.</p>
-              <p>I'm here to help you start calling smarter.</p>
-              <p>Drop your contact file here and I'll show you exactly who's most likely to pick up right now.</p>
+          <!-- Chat Messages Area -->
+          <div class="chat-messages" ref="chatMessages">
+            <div
+              v-for="(message, index) in messages"
+              :key="index"
+              :class="['message-container', message.type === 'user' ? 'user-message' : 'ai-message-container']"
+            >
+              <div v-if="message.type === 'ai'" class="ai-avatar">
+                <i class="pi pi-user"></i>
+              </div>
+              <div :class="['message-bubble', message.type === 'user' ? 'user-message-bubble' : 'ai-message']">
+                <p v-for="(line, lineIndex) in message.content" :key="lineIndex" v-html="line"></p>
+              </div>
+              <div v-if="message.type === 'user'" class="user-avatar">
+                <i class="pi pi-user"></i>
+              </div>
             </div>
           </div>
 
           <!-- File Upload Area -->
-          <div class="upload-section">
+          <div v-if="!hasUploadedFile" class="upload-section">
             <FileUpload
               ref="fileUpload"
               mode="basic"
