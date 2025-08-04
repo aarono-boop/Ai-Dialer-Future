@@ -347,13 +347,16 @@ const handleVoiceInput = () => {
 .logo-icon {
   width: 24px;
   height: 24px;
-  fill: #7b68ee;
 }
 
 .logo-text {
   font-size: 1.5rem;
   font-weight: 700;
   letter-spacing: 0.1em;
+  background: linear-gradient(135deg, #60a5fa, #7b68ee);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 .tagline {
