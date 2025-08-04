@@ -112,9 +112,7 @@ const messages = ref([
   {
     type: 'ai',
     content: [
-      'Welcome to PhoneBurner\'s new product called <strong>ARKON</strong>.',
-      'I\'m here to help you start calling smarter.',
-      'Drop your contact file here and I\'ll show you exactly who\'s most likely to pick up right now.'
+      'Welcome to PhoneBurner\'s new product called <strong>ARKON</strong>.<br><br>I\'m here to help you start calling smarter.<br><br>Drop your contact file here and I\'ll show you exactly who\'s most likely to pick up right now.'
     ]
   }
 ])
