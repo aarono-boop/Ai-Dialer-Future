@@ -1,5 +1,5 @@
 <template>
-  <footer class="text-center p-6 text-white text-sm relative z-[5] backdrop-blur-sm">
+  <footer class="text-center p-6 text-white text-sm relative z-[5]">
     <p>&copy; 2024 PhoneBurner. All rights reserved.</p>
   </footer>
 </template>
