@@ -100,7 +100,7 @@ const password = ref<string>('')
 const rememberMe = ref<boolean>(false)
 
 // Methods
-const handleSubmit = () => {
+const handleSubmit = (): void => {
   emit('submit', {
     email: email.value,
     password: password.value,
