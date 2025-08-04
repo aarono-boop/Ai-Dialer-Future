@@ -94,6 +94,12 @@ import Footer from './components/Footer.vue'
 // PrimeVue Components
 import Toast from 'primevue/toast'
 
+// Types
+interface Message {
+  type: 'ai' | 'user'
+  content: string[]
+}
+
 // Toast functionality (only for login/vulcan actions)
 const toast = useToast()
 
