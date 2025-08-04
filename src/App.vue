@@ -44,41 +44,39 @@
 
           <!-- Chat Messages Area -->
           <div class="chat-messages" ref="chatMessages">
-            <div
-              v-for="(message, index) in messages"
-              :key="index"
-              :class="['message-container', message.type === 'user' ? 'user-message' : 'ai-message-container']"
-            >
-              <div v-if="message.type === 'ai'" :class="['message-bubble', 'ai-message']">
-                <p v-for="(line, lineIndex) in message.content" :key="lineIndex" v-html="line"></p>
-              </div>
-              <div v-else>
-                <div :class="['message-bubble', 'user-message-bubble']">
+            <template v-for="(message, index) in messages" :key="index">
+              <div :class="['message-container', message.type === 'user' ? 'user-message' : 'ai-message-container']">
+                <div v-if="message.type === 'ai'" :class="['message-bubble', 'ai-message']">
                   <p v-for="(line, lineIndex) in message.content" :key="lineIndex" v-html="line"></p>
                 </div>
-                <div class="user-avatar">
-                  <i class="pi pi-user"></i>
+                <div v-else>
+                  <div :class="['message-bubble', 'user-message-bubble']">
+                    <p v-for="(line, lineIndex) in message.content" :key="lineIndex" v-html="line"></p>
+                  </div>
+                  <div class="user-avatar">
+                    <i class="pi pi-user"></i>
+                  </div>
                 </div>
               </div>
-            </div>
 
-            <!-- File Upload Area - shown after welcome message -->
-            <div v-if="messages.length > 0" class="upload-section-inline">
-              <div class="upload-area" @click="triggerFileInput" @drop="onDrop" @dragover="onDragOver" @dragleave="onDragLeave">
-                <i class="pi pi-cloud-upload upload-icon"></i>
-                <p class="upload-text">
-                  <span class="upload-link">Click to upload</span> or drag and drop
-                </p>
-                <p class="upload-hint">CSV, XLS, or XLSX files</p>
+              <!-- File Upload Area - shown after first message (welcome message) only -->
+              <div v-if="index === 0" class="upload-section-inline">
+                <div class="upload-area" @click="triggerFileInput" @drop="onDrop" @dragover="onDragOver" @dragleave="onDragLeave">
+                  <i class="pi pi-cloud-upload upload-icon"></i>
+                  <p class="upload-text">
+                    <span class="upload-link">Click to upload</span> or drag and drop
+                  </p>
+                  <p class="upload-hint">CSV, XLS, or XLSX files</p>
+                </div>
+                <input
+                  ref="fileInput"
+                  type="file"
+                  accept=".csv,.xls,.xlsx"
+                  @change="onFileInputChange"
+                  style="display: none;"
+                />
               </div>
-              <input
-                ref="fileInput"
-                type="file"
-                accept=".csv,.xls,.xlsx"
-                @change="onFileInputChange"
-                style="display: none;"
-              />
-            </div>
+            </template>
           </div>
 
           <!-- Chat Input -->
