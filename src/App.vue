@@ -191,7 +191,7 @@ const onFileSelect = (file: File): void => {
 }
 
 // Chat Input Methods
-const sendMessage = (message) => {
+const sendMessage = (message: string): void => {
   // Add user message
   addUserMessage(message)
 
