@@ -16,22 +16,25 @@
 import Button from 'primevue/button'
 
 // Define props
-defineProps({
-  actions: {
-    type: Array,
-    default: () => [
-      'Set Appointments',
-      'Close Live Sales',
-      'Create Opportunities',
-      'Set Follow Ups',
-      'Make Live Transfers',
-      'Live Conversations'
-    ]
-  }
+interface Props {
+  actions?: string[]
+}
+
+withDefaults(defineProps<Props>(), {
+  actions: () => [
+    'Set Appointments',
+    'Close Live Sales',
+    'Create Opportunities',
+    'Set Follow Ups',
+    'Make Live Transfers',
+    'Live Conversations'
+  ]
 })
 
 // Define emits
-defineEmits(['action-selected'])
+defineEmits<{
+  'action-selected': [action: string]
+}>()
 </script>
 
 <style scoped>
