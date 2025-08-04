@@ -86,40 +86,40 @@
           </div>
 
           <!-- Action Buttons -->
-          <div v-if="showActionButtons" class="action-buttons-section">
-            <div class="action-buttons-grid">
+          <div v-if="showActionButtons" class="my-6">
+            <div class="grid grid-cols-3 gap-3 md:gap-3 sm:grid-cols-2 xs:grid-cols-1">
               <Button
-                class="action-button"
+                class="bg-gray-700/80 border border-gray-600/60 text-white/90 px-4 py-3.5 rounded-lg font-medium text-sm text-center transition-all duration-300 backdrop-blur-[10px] min-h-[48px] flex items-center justify-center hover:bg-gray-600/80 hover:border-gray-500/80 hover:text-white hover:-translate-y-0.5"
                 @click="handleActionButton('Set Appointments')"
               >
                 Set Appointments
               </Button>
               <Button
-                class="action-button"
+                class="bg-gray-700/80 border border-gray-600/60 text-white/90 px-4 py-3.5 rounded-lg font-medium text-sm text-center transition-all duration-300 backdrop-blur-[10px] min-h-[48px] flex items-center justify-center hover:bg-gray-600/80 hover:border-gray-500/80 hover:text-white hover:-translate-y-0.5"
                 @click="handleActionButton('Close Live Sales')"
               >
                 Close Live Sales
               </Button>
               <Button
-                class="action-button"
+                class="bg-gray-700/80 border border-gray-600/60 text-white/90 px-4 py-3.5 rounded-lg font-medium text-sm text-center transition-all duration-300 backdrop-blur-[10px] min-h-[48px] flex items-center justify-center hover:bg-gray-600/80 hover:border-gray-500/80 hover:text-white hover:-translate-y-0.5"
                 @click="handleActionButton('Create Opportunities')"
               >
                 Create Opportunities
               </Button>
               <Button
-                class="action-button"
+                class="bg-gray-700/80 border border-gray-600/60 text-white/90 px-4 py-3.5 rounded-lg font-medium text-sm text-center transition-all duration-300 backdrop-blur-[10px] min-h-[48px] flex items-center justify-center hover:bg-gray-600/80 hover:border-gray-500/80 hover:text-white hover:-translate-y-0.5"
                 @click="handleActionButton('Set Follow Ups')"
               >
                 Set Follow Ups
               </Button>
               <Button
-                class="action-button"
+                class="bg-gray-700/80 border border-gray-600/60 text-white/90 px-4 py-3.5 rounded-lg font-medium text-sm text-center transition-all duration-300 backdrop-blur-[10px] min-h-[48px] flex items-center justify-center hover:bg-gray-600/80 hover:border-gray-500/80 hover:text-white hover:-translate-y-0.5"
                 @click="handleActionButton('Make Live Transfers')"
               >
                 Make Live Transfers
               </Button>
               <Button
-                class="action-button"
+                class="bg-gray-700/80 border border-gray-600/60 text-white/90 px-4 py-3.5 rounded-lg font-medium text-sm text-center transition-all duration-300 backdrop-blur-[10px] min-h-[48px] flex items-center justify-center hover:bg-gray-600/80 hover:border-gray-500/80 hover:text-white hover:-translate-y-0.5"
                 @click="handleActionButton('Live Conversations')"
               >
                 Live Conversations
@@ -128,16 +128,16 @@
           </div>
 
           <!-- Signup Buttons -->
-          <div v-if="showSignupButtons && !isSignedIn" class="signup-buttons-section">
+          <div v-if="showSignupButtons && !isSignedIn" class="flex flex-col gap-3 my-6">
             <Button
-              class="signup-button google-signup"
+              class="w-full py-3.5 px-6 rounded-lg font-medium text-sm flex items-center justify-center gap-3 transition-all duration-300 border border-red-400/30 bg-red-500/10 text-red-400 hover:bg-red-500/20 hover:border-red-400/50 hover:text-white"
               @click="handleGoogleSignup"
             >
               <i class="pi pi-google"></i>
               Continue with Google
             </Button>
             <Button
-              class="signup-button email-signup"
+              class="w-full py-3.5 px-6 rounded-lg font-medium text-sm flex items-center justify-center gap-3 transition-all duration-300 border border-purple-400/30 bg-purple-500/10 text-purple-400 hover:bg-purple-500/20 hover:border-purple-400/50 hover:text-white"
               @click="handleEmailSignup"
             >
               <i class="pi pi-envelope"></i>
@@ -146,23 +146,23 @@
           </div>
 
           <!-- Chat Input -->
-          <div class="chat-input-section">
-            <div class="input-container">
+          <div class="mt-4">
+            <div class="flex items-center bg-white/10 backdrop-blur-[10px] border border-white/20 rounded-xl px-3 py-2 gap-2">
               <InputText
                 v-model="chatMessage"
                 placeholder="Ask me to talk to Jenn"
-                class="chat-input"
+                class="flex-1 bg-transparent border-none text-white text-base px-4 py-3 placeholder-gray-400 focus:outline-none focus:ring-0"
                 @keyup.enter="sendMessage"
               />
               <Button
                 icon="pi pi-microphone"
-                class="mic-button"
+                class="w-10 h-10 rounded-full flex items-center justify-center text-purple-400 transition-all duration-300 hover:bg-purple-400/20 hover:text-white"
                 text
                 @click="handleVoiceInput"
               />
               <Button
                 icon="pi pi-send"
-                class="send-button"
+                class="w-10 h-10 rounded-full flex items-center justify-center text-purple-400 transition-all duration-300 hover:bg-purple-400/20 hover:text-white disabled:opacity-50 disabled:text-gray-600"
                 @click="sendMessage"
                 :disabled="!chatMessage.trim()"
               />
@@ -174,7 +174,7 @@
     </main>
 
     <!-- Footer -->
-    <footer class="app-footer">
+    <footer class="text-center p-6 text-gray-500 text-sm relative z-[5]">
       <p>&copy; 2024 PhoneBurner. All rights reserved.</p>
     </footer>
 
