@@ -10,7 +10,7 @@
 
     <!-- Main Content -->
     <main class="flex-1 flex items-start justify-center p-8 relative z-[5]">
-      <div class="max-w-[900px] w-full min-h-[80vh] mt-2.5 bg-white/5 backdrop-blur-[20px] border border-white/10 rounded-xl p-5 shadow-2xl">
+      <div class="max-w-[900px] w-full h-[80vh] mt-2.5 bg-white/5 backdrop-blur-[20px] border border-white/10 rounded-xl p-5 shadow-2xl">
         <div class="w-full h-full flex flex-col">
           <!-- Top content area -->
           <div class="flex flex-col gap-8 flex-1">
