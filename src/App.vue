@@ -1,6 +1,6 @@
 <template>
   <!-- Test change for PR functionality -->
-  <div class="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 text-white flex flex-col relative overflow-x-hidden bg-[radial-gradient(circle_at_1px_1px,rgba(255,255,255,0.15)_1px,transparent_0)] bg-[length:20px_20px] before:content-[''] before:absolute before:inset-0 before:bg-[radial-gradient(circle_at_20%_50%,rgba(120,119,198,0.05)_0%,transparent_50%),radial-gradient(circle_at_80%_20%,rgba(255,119,198,0.05)_0%,transparent_50%),radial-gradient(circle_at_40%_80%,rgba(75,0,130,0.05)_0%,transparent_50%)] before:pointer-events-none">
+  <div class="min-h-screen bg-slate-900 text-white flex flex-col">
     <!-- Header -->
     <header class="relative z-10 p-6 lg:px-8 border-b border-white/10 bg-gray-800">
       <div class="flex justify-between items-center max-w-6xl mx-auto">
