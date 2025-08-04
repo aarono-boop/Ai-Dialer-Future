@@ -142,7 +142,7 @@ const addAIMessage = (content: string | string[]): void => {
 }
 
 // Helper function to add user message
-const addUserMessage = (content) => {
+const addUserMessage = (content: string): void => {
   messages.value.push({
     type: 'user',
     content: [content]
@@ -249,7 +249,7 @@ const sendMessage = (message) => {
         '• Follow up with specific prospects at optimal times',
         '• Call back prospects who didn\'t answer',
         '• Review and update your call notes',
-        '��� Start your daily calling sessions',
+        '• Start your daily calling sessions',
         'What would you like to be reminded about and when?'
       ])
     } else if (lowerMessage.includes('practice a call') || lowerMessage.includes('practice')) {
