@@ -81,20 +81,23 @@ import Button from 'primevue/button'
 import InputText from 'primevue/inputtext'
 
 // Define props
-defineProps({
-  visible: {
-    type: Boolean,
-    default: false
-  }
-})
+interface Props {
+  visible?: boolean
+}
+
+defineProps<Props>()
 
 // Define emits
-const emit = defineEmits(['close', 'submit', 'switch-to-signin'])
+const emit = defineEmits<{
+  close: []
+  submit: [{ email: string; password: string; rememberMe: boolean }]
+  'switch-to-signin': []
+}>()
 
 // Reactive data
-const email = ref('')
-const password = ref('')
-const rememberMe = ref(false)
+const email = ref<string>('')
+const password = ref<string>('')
+const rememberMe = ref<boolean>(false)
 
 // Methods
 const handleSubmit = () => {
