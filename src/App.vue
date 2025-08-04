@@ -736,33 +736,6 @@ const handleActionButton = (action) => {
 .message-bubble p:last-child {
   margin-bottom: 0;
 }
-  max-width: 80%;
-  margin: 1.5rem 0;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: flex-start;
-  gap: 1rem;
-}
-
-.upload-area {
-  border: 2px dashed rgba(255, 255, 255, 0.3);
-  border-radius: 8px;
-  padding: 2.5rem 2rem;
-  text-align: center;
-  background: transparent;
-  transition: all 0.3s ease;
-  cursor: pointer;
-  width: 100%;
-}
-
-.upload-area:hover {
-  border-color: rgba(123, 104, 238, 0.6);
-  background: rgba(255, 255, 255, 0.02);
-}
-
-.upload-icon {
-  font-size: 2.5rem;
   color: #6b7280;
   margin-bottom: 1rem;
   display: block;
