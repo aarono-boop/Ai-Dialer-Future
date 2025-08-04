@@ -43,6 +43,7 @@ let currentPromptIndex = 0
 let currentCharIndex = 0
 let isTypingForward = true
 let isWaiting = false
+let isWaitingAtEllipsis = false
 
 // Animation prompts
 const prompts = [
