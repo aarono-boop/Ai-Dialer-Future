@@ -41,14 +41,16 @@
               :key="index"
               :class="['message-container', message.type === 'user' ? 'user-message' : 'ai-message-container']"
             >
-              <div v-if="message.type === 'ai'" class="ai-avatar">
-                <i class="pi pi-user"></i>
-              </div>
-              <div :class="['message-bubble', message.type === 'user' ? 'user-message-bubble' : 'ai-message']">
+              <div v-if="message.type === 'ai'" :class="['message-bubble', 'ai-message']">
                 <p v-for="(line, lineIndex) in message.content" :key="lineIndex" v-html="line"></p>
               </div>
-              <div v-if="message.type === 'user'" class="user-avatar">
-                <i class="pi pi-user"></i>
+              <div v-else>
+                <div :class="['message-bubble', 'user-message-bubble']">
+                  <p v-for="(line, lineIndex) in message.content" :key="lineIndex" v-html="line"></p>
+                </div>
+                <div class="user-avatar">
+                  <i class="pi pi-user"></i>
+                </div>
               </div>
             </div>
 
