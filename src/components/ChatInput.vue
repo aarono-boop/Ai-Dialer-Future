@@ -27,7 +27,7 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, onMounted, onUnmounted } from 'vue'
 import Button from 'primevue/button'
 import InputText from 'primevue/inputtext'
 
@@ -36,6 +36,84 @@ const emit = defineEmits(['send-message', 'voice-input'])
 
 // Reactive data
 const inputValue = ref('')
+const animatedPlaceholder = ref('Ask me')
+const isAnimating = ref(true)
+let animationInterval = null
+let currentPromptIndex = 0
+let currentCharIndex = 0
+let isTypingForward = true
+let isWaiting = false
+
+// Animation prompts
+const prompts = [
+  'Ask me anything about ARKON...',
+  'Ask me how to get connected to more calls...',
+  'Ask me to setup a demo...',
+  'Ask me who I should call now...',
+  'Ask me to fire up a dial session with specifics...',
+  'Ask me to set a reminder...',
+  'Ask me to practice a call...',
+  'Ask me what appointments I have today...',
+  'Ask me to tell a joke...'
+]
+
+// Animation logic
+const startTypingAnimation = () => {
+  if (!isAnimating.value) return
+
+  animationInterval = setInterval(() => {
+    if (isWaiting) {
+      isWaiting = false
+      isTypingForward = false
+      return
+    }
+
+    const currentPrompt = prompts[currentPromptIndex]
+    const baseText = 'Ask me'
+
+    if (isTypingForward) {
+      if (currentCharIndex < currentPrompt.length) {
+        animatedPlaceholder.value = currentPrompt.substring(0, currentCharIndex + 1)
+        currentCharIndex++
+      } else {
+        // Wait for 2 seconds before starting to delete
+        isWaiting = true
+        setTimeout(() => {
+          isWaiting = false
+          isTypingForward = false
+        }, 2000)
+      }
+    } else {
+      if (currentCharIndex > baseText.length) {
+        currentCharIndex--
+        animatedPlaceholder.value = currentPrompt.substring(0, currentCharIndex)
+      } else {
+        // Move to next prompt
+        currentPromptIndex = (currentPromptIndex + 1) % prompts.length
+        currentCharIndex = baseText.length
+        isTypingForward = true
+        animatedPlaceholder.value = baseText
+      }
+    }
+  }, 100) // Typing speed
+}
+
+const pauseAnimation = () => {
+  isAnimating.value = false
+  if (animationInterval) {
+    clearInterval(animationInterval)
+    animationInterval = null
+  }
+  animatedPlaceholder.value = 'Type your message...'
+}
+
+const resumeAnimation = () => {
+  if (inputValue.value === '') {
+    isAnimating.value = true
+    animatedPlaceholder.value = 'Ask me'
+    startTypingAnimation()
+  }
+}
 
 // Methods
 const handleSend = () => {
@@ -44,6 +122,17 @@ const handleSend = () => {
     inputValue.value = ''
   }
 }
+
+// Lifecycle
+onMounted(() => {
+  startTypingAnimation()
+})
+
+onUnmounted(() => {
+  if (animationInterval) {
+    clearInterval(animationInterval)
+  }
+})
 
 // Expose methods to parent if needed
 defineExpose({
