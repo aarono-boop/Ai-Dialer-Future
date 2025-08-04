@@ -818,6 +818,199 @@ const switchToSignin = () => {
   color: #666 !important;
 }
 
+/* Signup Modal */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background:
+    radial-gradient(circle at 1px 1px, rgba(255,255,255,0.15) 1px, transparent 0),
+    linear-gradient(135deg, #1a1a2e 0%, #141A2A 50%, #0f0f23 100%);
+  background-size: 20px 20px, 100% 100%;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+}
+
+.modal-overlay::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image:
+    radial-gradient(circle at 20% 50%, rgba(120, 119, 198, 0.05) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.05) 0%, transparent 50%),
+    radial-gradient(circle at 40% 80%, rgba(75, 0, 130, 0.05) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+.signup-modal {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  padding: 2.5rem;
+  max-width: 400px;
+  width: 100%;
+  position: relative;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+}
+
+.modal-close-button {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: none;
+  border: none;
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 1.25rem;
+  cursor: pointer;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+}
+
+.modal-close-button:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.modal-content {
+  text-align: center;
+}
+
+.modal-logo {
+  margin-bottom: 1.5rem;
+  display: flex;
+  justify-content: center;
+}
+
+.modal-logo-icon {
+  width: 40px;
+  height: 40px;
+}
+
+.modal-title {
+  color: #ffffff;
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin: 0 0 2rem 0;
+}
+
+.signup-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  text-align: left;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.form-label {
+  color: #ffffff;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.form-input {
+  background: rgba(255, 255, 255, 0.05) !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  border-radius: 8px !important;
+  padding: 0.875rem 1rem !important;
+  color: #ffffff !important;
+  font-size: 0.9rem !important;
+}
+
+.form-input::placeholder {
+  color: rgba(255, 255, 255, 0.4) !important;
+}
+
+.form-input:focus {
+  border-color: rgba(123, 104, 238, 0.5) !important;
+  box-shadow: 0 0 0 2px rgba(123, 104, 238, 0.1) !important;
+}
+
+.form-checkbox {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0.5rem 0;
+}
+
+.form-checkbox input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 3px;
+  accent-color: #7b68ee;
+}
+
+.form-checkbox label {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 0.875rem;
+  cursor: pointer;
+}
+
+.signup-submit-button {
+  width: 100% !important;
+  background: linear-gradient(135deg, #4f46e5, #7c3aed) !important;
+  border: none !important;
+  border-radius: 8px !important;
+  padding: 0.875rem 1.5rem !important;
+  color: #ffffff !important;
+  font-weight: 600 !important;
+  font-size: 0.9rem !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 0.5rem !important;
+  margin-top: 0.5rem !important;
+  transition: all 0.3s ease !important;
+}
+
+.signup-submit-button:hover:not(:disabled) {
+  background: linear-gradient(135deg, #4338ca, #6d28d9) !important;
+  transform: translateY(-1px);
+}
+
+.signup-submit-button:disabled {
+  opacity: 0.5 !important;
+  cursor: not-allowed !important;
+}
+
+.signin-link {
+  text-align: center;
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 0.875rem;
+  margin: 1rem 0 0 0;
+}
+
+.signin-link a {
+  color: #7b68ee;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.signin-link a:hover {
+  color: #9f7aea;
+  text-decoration: underline;
+}
+
 /* Footer */
 .app-footer {
   text-align: center;
