@@ -500,44 +500,49 @@ const handleVoiceInput = () => {
 
 /* Upload Section */
 .upload-section {
-  margin: 1rem 0;
-}
-
-.custom-file-upload {
-  width: 100%;
+  margin: 1.5rem 0;
 }
 
 .upload-area {
-  border: 2px dashed rgba(123, 104, 238, 0.5);
-  border-radius: 12px;
-  padding: 3rem 2rem;
+  border: 2px dashed rgba(255, 255, 255, 0.3);
+  border-radius: 8px;
+  padding: 2.5rem 2rem;
   text-align: center;
-  background: rgba(255, 255, 255, 0.05);
+  background: transparent;
   transition: all 0.3s ease;
   cursor: pointer;
 }
 
 .upload-area:hover {
-  border-color: rgba(123, 104, 238, 0.8);
-  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(123, 104, 238, 0.6);
+  background: rgba(255, 255, 255, 0.02);
 }
 
 .upload-icon {
-  font-size: 3rem;
-  color: #7b68ee;
+  font-size: 2.5rem;
+  color: #6b7280;
   margin-bottom: 1rem;
   display: block;
 }
 
 .upload-text {
-  font-size: 1.1rem;
+  font-size: 1rem;
   margin: 0 0 0.5rem 0;
   color: #ffffff;
 }
 
+.upload-link {
+  color: #60a5fa;
+  text-decoration: none;
+}
+
+.upload-link:hover {
+  color: #93c5fd;
+}
+
 .upload-hint {
-  font-size: 0.9rem;
-  color: #a0a0a0;
+  font-size: 0.875rem;
+  color: #9ca3af;
   margin: 0;
 }
 
