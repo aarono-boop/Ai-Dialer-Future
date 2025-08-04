@@ -4,7 +4,7 @@
       <InputText
         v-model="inputValue"
         placeholder="Ask me to talk to Jenn"
-        class="flex-1 bg-transparent border-none text-white text-base px-4 py-3 placeholder-gray-400 focus:outline-none focus:ring-0"
+        class="flex-1 bg-transparent border-none text-white text-base px-4 py-3 placeholder-gray-300 focus:outline-none focus:ring-0"
         @keyup.enter="handleSend"
       />
       <Button
