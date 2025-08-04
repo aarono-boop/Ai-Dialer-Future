@@ -31,14 +31,6 @@ interface Message {
 defineProps<{
   message: Message
 }>()
-  message: {
-    type: Object,
-    required: true,
-    validator: (message) => {
-      return message.type && message.content && ['ai', 'user'].includes(message.type)
-    }
-  }
-})
 </script>
 
 <style scoped>
