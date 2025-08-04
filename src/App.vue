@@ -54,12 +54,12 @@
                     <p v-for="(line, lineIndex) in message.content" :key="lineIndex" v-html="line"></p>
                   </div>
                 </div>
-                <div v-else>
-                  <div :class="['message-bubble', 'user-message-bubble']">
-                    <p v-for="(line, lineIndex) in message.content" :key="lineIndex" v-html="line"></p>
-                  </div>
+                <div v-else class="user-message-wrapper">
                   <div class="user-avatar">
                     <i class="pi pi-user"></i>
+                  </div>
+                  <div :class="['message-bubble', 'user-message-bubble']">
+                    <p v-for="(line, lineIndex) in message.content" :key="lineIndex" v-html="line"></p>
                   </div>
                 </div>
               </div>
