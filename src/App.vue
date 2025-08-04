@@ -159,6 +159,7 @@ const fileUpload = ref()
 const fileInput = ref()
 const chatMessages = ref()
 const hasUploadedFile = ref(false)
+const showSignupButtons = ref(false)
 
 // Chat messages array
 const messages = ref([
