@@ -1,6 +1,6 @@
 <template>
   <!-- Test change for PR functionality -->
-  <div class="min-h-screen bg-slate-900 text-white flex flex-col">
+  <div class="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 text-white flex flex-col relative overflow-x-hidden">
     <!-- Header -->
     <header class="relative z-10 p-6 lg:px-8 border-b border-white/10 bg-gray-800">
       <div class="flex justify-between items-center max-w-6xl mx-auto">
