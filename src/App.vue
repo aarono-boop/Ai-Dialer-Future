@@ -228,6 +228,9 @@ const chatMessages = ref()
 const hasUploadedFile = ref(false)
 const showSignupButtons = ref(false)
 const showSignupModal = ref(false)
+const signupEmail = ref('')
+const signupPassword = ref('')
+const rememberMe = ref(false)
 
 // Chat messages array
 const messages = ref([
