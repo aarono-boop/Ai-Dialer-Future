@@ -125,6 +125,7 @@ const toast = useToast()
 // Reactive data
 const chatMessage = ref('')
 const fileUpload = ref()
+const fileInput = ref()
 const chatMessages = ref()
 const hasUploadedFile = ref(false)
 
