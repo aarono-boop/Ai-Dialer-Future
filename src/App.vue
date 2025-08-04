@@ -54,7 +54,7 @@
           </div>
 
           <!-- File Upload Area -->
-          <div v-if="!hasUploadedFile" class="upload-section">
+          <div class="upload-section">
             <div class="upload-area" @click="triggerFileInput" @drop="onDrop" @dragover="onDragOver" @dragleave="onDragLeave">
               <i class="pi pi-cloud-upload upload-icon"></i>
               <p class="upload-text">
