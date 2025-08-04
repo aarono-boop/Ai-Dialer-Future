@@ -4,6 +4,6 @@
   </footer>
 </template>
 
-<script setup>
+<script setup lang="ts">
 // Simple footer component - no props or emits needed
 </script>
