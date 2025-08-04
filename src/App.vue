@@ -31,68 +31,70 @@
 
     <!-- Main Content -->
     <main class="main-content">
-      <div class="conversation-container">
-        
-        <!-- AI Welcome Message -->
-        <div class="ai-message-container">
-          <div class="ai-avatar">
-            <i class="pi pi-user"></i>
-          </div>
-          <div class="ai-message">
-            <p>Welcome to PhoneBurner's new product called <strong>ARKON</strong>.</p>
-            <p>I'm here to help you start calling smarter.</p>
-            <p>Drop your contact file here and I'll show you exactly who's most likely to pick up right now.</p>
-          </div>
-        </div>
+      <div class="chat-container-card">
+        <div class="conversation-container">
 
-        <!-- File Upload Area -->
-        <div class="upload-section">
-          <FileUpload
-            ref="fileUpload"
-            mode="basic"
-            :auto="false"
-            :multiple="false"
-            accept=".csv,.xls,.xlsx"
-            :maxFileSize="10000000"
-            @select="onFileSelect"
-            @upload="onFileUpload"
-            class="custom-file-upload"
-            chooseLabel="Click to upload or drag and drop"
-          >
-            <template #empty>
-              <div class="upload-area" @drop="onDrop" @dragover="onDragOver" @dragleave="onDragLeave">
-                <i class="pi pi-cloud-upload upload-icon"></i>
-                <p class="upload-text">Click to upload or drag and drop</p>
-                <p class="upload-hint">CSV, XLS or XLSX files</p>
-              </div>
-            </template>
-          </FileUpload>
-        </div>
-
-        <!-- Chat Input -->
-        <div class="chat-input-section">
-          <div class="input-container">
-            <InputText 
-              v-model="chatMessage"
-              placeholder="Ask me to talk to Jenn"
-              class="chat-input"
-              @keyup.enter="sendMessage"
-            />
-            <Button
-              icon="pi pi-microphone"
-              class="mic-button"
-              text
-              @click="handleVoiceInput"
-            />
-            <Button
-              icon="pi pi-send"
-              class="send-button"
-              @click="sendMessage"
-              :disabled="!chatMessage.trim()"
-            />
+          <!-- AI Welcome Message -->
+          <div class="ai-message-container">
+            <div class="ai-avatar">
+              <i class="pi pi-user"></i>
+            </div>
+            <div class="ai-message">
+              <p>Welcome to PhoneBurner's new product called <strong>ARKON</strong>.</p>
+              <p>I'm here to help you start calling smarter.</p>
+              <p>Drop your contact file here and I'll show you exactly who's most likely to pick up right now.</p>
+            </div>
           </div>
-        </div>
 
+          <!-- File Upload Area -->
+          <div class="upload-section">
+            <FileUpload
+              ref="fileUpload"
+              mode="basic"
+              :auto="false"
+              :multiple="false"
+              accept=".csv,.xls,.xlsx"
+              :maxFileSize="10000000"
+              @select="onFileSelect"
+              @upload="onFileUpload"
+              class="custom-file-upload"
+              chooseLabel="Click to upload or drag and drop"
+            >
+              <template #empty>
+                <div class="upload-area" @drop="onDrop" @dragover="onDragOver" @dragleave="onDragLeave">
+                  <i class="pi pi-cloud-upload upload-icon"></i>
+                  <p class="upload-text">Click to upload or drag and drop</p>
+                  <p class="upload-hint">CSV, XLS or XLSX files</p>
+                </div>
+              </template>
+            </FileUpload>
+          </div>
+
+          <!-- Chat Input -->
+          <div class="chat-input-section">
+            <div class="input-container">
+              <InputText
+                v-model="chatMessage"
+                placeholder="Ask me to talk to Jenn"
+                class="chat-input"
+                @keyup.enter="sendMessage"
+              />
+              <Button
+                icon="pi pi-microphone"
+                class="mic-button"
+                text
+                @click="handleVoiceInput"
+              />
+              <Button
+                icon="pi pi-send"
+                class="send-button"
+                @click="sendMessage"
+                :disabled="!chatMessage.trim()"
+              />
+            </div>
+          </div>
+
+        </div>
       </div>
     </main>
 
