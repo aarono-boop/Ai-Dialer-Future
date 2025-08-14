@@ -171,11 +171,11 @@
 import Button from 'primevue/button'
 
 // Define emits
-const emit = defineEmits(['upgrade-selected', 'close'])
+const emit = defineEmits(['upgrade-selected', 'close', 'show-payment'])
 
 // Methods
 const handleUpgrade = () => {
-  emit('upgrade-selected')
+  emit('show-payment')
 }
 </script>
 
