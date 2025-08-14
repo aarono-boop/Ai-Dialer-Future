@@ -296,9 +296,14 @@ const sendMessage = (message: string): void => {
   if (verificationStep.value === 'enter-code') {
     showVerificationButtons.value = false
     verificationStep.value = 'default'
+    showStartDialingButton.value = true
 
     setTimeout(() => {
-      addAIMessage('Excellent! Your phone number has been verified successfully. You\'re now ready to start making calls!')
+      addAIMessage([
+        `Great! Your number ${enteredPhoneNumber.value} is verified and set as your Caller ID.`,
+        '',
+        'As the dialer calls each person, their contact information will be displayed. The first contact that will be called is Sam Sample.'
+      ])
     }, 1000)
     return
   }
@@ -319,7 +324,7 @@ const sendMessage = (message: string): void => {
         '📈 Great question! Here are ARKON\'s proven strategies to boost your connect rates:',
         '• <strong>Smart Timing:</strong> Calls prospects when they\'re most likely to answer',
         '• <strong>Local Presence:</strong> Uses local numbers to increase pickup rates',
-        '�� <strong>Voicemail Drop:</strong> Leaves personalized messages when they don\'t answer',
+        '• <strong>Voicemail Drop:</strong> Leaves personalized messages when they don\'t answer',
         '• <strong>Follow-up Sequences:</strong> Automatically schedules optimal callback times',
         'On average, users see a 40% increase in connect rates within their first week!'
       ])
