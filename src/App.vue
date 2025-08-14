@@ -28,7 +28,7 @@
 
                 <!-- File Upload Area - shown after first message (welcome message) only -->
                 <FileUpload
-                  v-if="index === 0"
+                  v-if="index === 0 && !isSignedIn"
                   @trigger-upload="simulateFileUpload"
                   @file-selected="onFileSelect"
                   @file-dropped="simulateFileUpload"
