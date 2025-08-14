@@ -592,7 +592,7 @@ const sendMessage = (message: string): void => {
 }
 
 const handleVoiceInput = () => {
-  addAIMessage('�� Listening... (voice recognition simulated)')
+  addAIMessage('🎤 Listening... (voice recognition simulated)')
 
   // Simulate voice input
   setTimeout(() => {
@@ -809,6 +809,61 @@ const handleHold = (onHold: boolean): void => {
 
 const handleKeypad = (): void => {
   addAIMessage('📱 Keypad opened')
+}
+
+const handlePauseQueue = (): void => {
+  // Stop timers
+  if (callTimer) {
+    clearInterval(callTimer)
+    callTimer = null
+  }
+  if (queueTimer) {
+    clearInterval(queueTimer)
+    queueTimer = null
+  }
+
+  // Hide dialer and show session summary
+  showDialer.value = false
+  showSessionSummary.value = true
+
+  addAIMessage('⏸️ Queue paused. You can review your session summary.')
+}
+
+const closeSessionSummary = (): void => {
+  showSessionSummary.value = false
+}
+
+const continueQueue = (): void => {
+  showSessionSummary.value = false
+  showDialer.value = true
+
+  // Restart queue timer
+  queueTimer = setInterval(() => {
+    queueTime.value++
+  }, 1000)
+
+  addAIMessage('▶️ Resuming call queue where you left off.')
+}
+
+const loadNewFile = (): void => {
+  showSessionSummary.value = false
+  showDialer.value = false
+  hasUploadedFile.value = false
+
+  // Reset all state
+  currentContactIndex.value = 0
+  callState.value = 'ended'
+  callDuration.value = 0
+  queueTime.value = 0
+  totalCalls.value = 0
+  connectedCalls.value = 0
+  callLog.value = []
+
+  addAIMessage('📁 Ready to load a new file. Please upload your contact list to start a new dialing session.')
+}
+
+const exportFile = (): void => {
+  addAIMessage('📊 Exporting your enriched contact file with Connect Scores and call results...')
 }
 
 const handleDisposition = (disposition: string): void => {
