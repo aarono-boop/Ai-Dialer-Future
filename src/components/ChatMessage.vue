@@ -4,7 +4,7 @@
       <div class="flex items-start justify-center flex-shrink-0 pt-1">
         <i class="pi pi-sparkles text-purple-500 text-lg"></i>
       </div>
-      <div class="max-w-[80%] border border-white/20 rounded-lg p-5 text-sm overflow-hidden">
+      <div class="max-w-[80%] bg-gray-800/90 border border-white/20 rounded-lg p-5 text-sm overflow-hidden">
         <p v-for="(line, lineIndex) in message.content" :key="lineIndex" v-html="line"></p>
       </div>
     </div>
