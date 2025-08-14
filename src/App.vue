@@ -93,6 +93,13 @@
       @close="closePricingPage"
     />
 
+    <!-- Payment Page -->
+    <PaymentPage
+      v-if="showPaymentPage"
+      @purchase-completed="handlePurchaseCompleted"
+      @close="closePaymentPage"
+    />
+
     <!-- Toast for notifications -->
     <Toast />
   </div>
