@@ -36,6 +36,14 @@
               </template>
             </div>
 
+            <!-- File Upload for Returning Users -->
+            <FileUpload
+              v-if="showFileUploadForReturningUser"
+              @trigger-upload="simulateFileUpload"
+              @file-selected="onFileSelect"
+              @file-dropped="simulateFileUpload"
+            />
+
             <!-- Action Buttons -->
             <ActionButtons
               v-if="showActionButtons"
@@ -594,7 +602,7 @@ const sendMessage = (message: string): void => {
       ])
     } else if (lowerMessage.includes('fire up a dial session') || lowerMessage.includes('dial session')) {
       addAIMessage([
-        '🔥 Let\'s fire up a power dialing session!',
+        '�� Let\'s fire up a power dialing session!',
         'I can configure your session with:',
         '• <strong>Target audience:</strong> High-priority prospects, warm leads, or follow-ups',
         '• <strong>Call duration:</strong> 30 min, 1 hour, or 2-hour session',
