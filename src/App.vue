@@ -186,23 +186,15 @@ const handleSwitchToVulcan = () => {
 
 // File Upload Methods
 const simulateFileUpload = () => {
-  addAIMessage('Great! I\'ve received your file. Let me analyze your contacts...')
   hasUploadedFile.value = true
-
-  // Show account creation page after a brief moment
-  setTimeout(() => {
-    showAccountCreation.value = true
-  }, 1500)
+  // Go directly to account creation
+  showAccountCreation.value = true
 }
 
 const onFileSelect = (file: File): void => {
-  addAIMessage(`Great! I received your file: <strong>${file.name}</strong>. Let me analyze your contacts...`)
   hasUploadedFile.value = true
-
-  // Show account creation page after a brief moment
-  setTimeout(() => {
-    showAccountCreation.value = true
-  }, 1500)
+  // Go directly to account creation
+  showAccountCreation.value = true
 }
 
 // Chat Input Methods
