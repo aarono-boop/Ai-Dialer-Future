@@ -3,7 +3,8 @@
   <div class="min-h-screen text-white flex flex-col relative overflow-x-hidden" style="background-image: url('https://cdn.builder.io/api/v1/image/assets%2F5aeb07ce25f84dbc869290880d07b71e%2F3a359e22506049ea806e50e85c0e7711?format=webp&width=800'); background-size: cover; background-position: center; background-repeat: no-repeat;">
     
     <!-- Header -->
-    <Header 
+    <Header
+      :isSignedIn="isSignedIn"
       @login="handleLogin"
       @switch-to-vulcan="handleSwitchToVulcan"
     />
