@@ -17,26 +17,46 @@ body {
 
 /* Custom dark scrollbar styling */
 * {
-  scrollbar-width: thin;
-  scrollbar-color: #4b5563 #1f2937;
+  scrollbar-width: thick !important;
+  scrollbar-color: #4b5563 #1f2937 !important;
 }
 
 /* Webkit scrollbar styling for dark theme */
 *::-webkit-scrollbar {
-  width: 32px;
-  height: 32px;
+  width: 64px !important;
+  height: 64px !important;
 }
 
 *::-webkit-scrollbar-track {
-  background: #1f2937;
-  border-radius: 4px;
+  background: #1f2937 !important;
+  border-radius: 8px !important;
 }
 
 *::-webkit-scrollbar-thumb {
-  background: #4b5563;
-  border-radius: 4px;
+  background: #4b5563 !important;
+  border-radius: 8px !important;
 }
 
 *::-webkit-scrollbar-thumb:hover {
-  background: #6b7280;
+  background: #6b7280 !important;
+}
+
+/* More specific targeting for the chat area */
+div[class*="overflow-y-auto"]::-webkit-scrollbar {
+  width: 64px !important;
+  height: 64px !important;
+}
+
+div[class*="overflow-y-auto"]::-webkit-scrollbar-track {
+  background: #1f2937 !important;
+  border-radius: 8px !important;
+}
+
+div[class*="overflow-y-auto"]::-webkit-scrollbar-thumb {
+  background: #4b5563 !important;
+  border-radius: 8px !important;
+}
+
+div[class*="overflow-y-auto"]::-webkit-scrollbar-thumb:hover {
+  background: #6b7280 !important;
 }
