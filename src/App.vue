@@ -229,6 +229,15 @@
       @load-new-file="loadNewFile"
       @export-file="exportFile"
     />
+
+    <!-- Login Modal -->
+    <LoginModal
+      v-if="showLoginModal"
+      @close="closeLoginModal"
+      @google-signin="handleGoogleSignin"
+      @login-success="handleLoginSuccess"
+      @show-signup="showSignupFromLogin"
+    />
   </div>
 </template>
 
