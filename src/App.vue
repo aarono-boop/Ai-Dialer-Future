@@ -698,7 +698,10 @@ const handleHangUp = (): void => {
   }
 
   callState.value = 'ended'
+  showDispositionButtons.value = true
+
   addAIMessage(`📞 Call with ${currentContact.value.name} ended. Duration: ${Math.floor(callDuration.value / 60)}:${(callDuration.value % 60).toString().padStart(2, '0')}`)
+  addAIMessage('Please select a disposition for this call:')
 }
 
 const handleMute = (muted: boolean): void => {
