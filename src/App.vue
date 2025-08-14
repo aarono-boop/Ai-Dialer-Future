@@ -44,12 +44,6 @@
               @file-dropped="simulateFileUpload"
             />
 
-            <!-- Action Buttons -->
-            <ActionButtons
-              v-if="showActionButtons"
-              @action-selected="handleActionButton"
-            />
-
             <!-- Contact Preview Buttons -->
             <div v-if="showContactPreviewButtons" class="flex gap-3 w-full">
               <button
