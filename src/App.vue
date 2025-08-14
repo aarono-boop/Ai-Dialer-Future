@@ -460,6 +460,34 @@ const handleSwitchToVulcan = () => {
   })
 }
 
+// Login Modal Methods
+const closeLoginModal = (): void => {
+  showLoginModal.value = false
+}
+
+const handleGoogleSignin = (): void => {
+  showLoginModal.value = false
+  isSignedIn.value = true
+  addAIMessage('🚀 Welcome back! You\'re signed in with Google.')
+  setTimeout(() => {
+    addAIMessage('Ready to upload your contact file and start dialing?')
+  }, 1000)
+}
+
+const handleLoginSuccess = (userData: any): void => {
+  showLoginModal.value = false
+  isSignedIn.value = true
+
+  // Since they're a returning user who has already set goals,
+  // skip directly to file upload stage
+  addAIMessage(`Welcome back, ${userData.name}! Ready to upload your contact file and start dialing?`)
+}
+
+const showSignupFromLogin = (): void => {
+  showLoginModal.value = false
+  showSignupModal.value = true
+}
+
 // File Upload Methods
 const simulateFileUpload = () => {
   hasUploadedFile.value = true
