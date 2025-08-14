@@ -593,6 +593,7 @@ const handleLooksGood = (): void => {
 
     // Show phone verification button after the message
     showPhoneVerificationButton.value = true
+    scrollToBottom()
   }, 1000)
 }
 
