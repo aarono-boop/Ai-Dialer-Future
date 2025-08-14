@@ -211,7 +211,7 @@ const props = defineProps<{
 }>()
 
 // Define emits
-const emit = defineEmits(['call-back', 'next-contact', 'hang-up', 'mute', 'hold', 'keypad', 'pause-queue'])
+const emit = defineEmits(['call-back', 'next-contact', 'hang-up', 'mute', 'hold', 'keypad', 'pause-queue', 'complete-queue'])
 
 // Reactive data
 const isMuted = ref(false)
