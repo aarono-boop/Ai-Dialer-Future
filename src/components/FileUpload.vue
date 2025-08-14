@@ -38,27 +38,59 @@
 </template>
 
 <script setup lang="ts">
-import FileUpload from 'primevue/fileupload'
+import { ref } from 'vue'
 
 // Define emits
 const emit = defineEmits(['trigger-upload', 'file-selected', 'file-dropped'])
 
+// Template refs
+const fileInput = ref<HTMLInputElement | null>(null)
+
 // Methods
-const onFileSelect = (event: any): void => {
-  const file = event.files[0]
+const triggerFileInput = (): void => {
+  fileInput.value?.click()
+}
+
+const onFileInputChange = (event: Event): void => {
+  const target = event.target as HTMLInputElement
+  const file = target.files?.[0]
   if (file) {
     emit('file-selected', file)
-    // Also emit file-dropped for backward compatibility
     emit('file-dropped', file)
+  }
+}
+
+const handleDragOver = (event: DragEvent): void => {
+  event.preventDefault()
+  event.stopPropagation()
+}
+
+const handleDragLeave = (event: DragEvent): void => {
+  event.preventDefault()
+  event.stopPropagation()
+}
+
+const handleDrop = (event: DragEvent): void => {
+  event.preventDefault()
+  event.stopPropagation()
+
+  const files = event.dataTransfer?.files
+  if (files && files.length > 0) {
+    const file = files[0]
+    // Check file type
+    const allowedTypes = ['.csv', '.xls', '.xlsx']
+    const fileExtension = '.' + file.name.split('.').pop()?.toLowerCase()
+
+    if (allowedTypes.includes(fileExtension)) {
+      emit('file-selected', file)
+      emit('file-dropped', file)
+    }
   }
 }
 
 // Expose triggerFileInput method to parent for backward compatibility
 defineExpose({
-  triggerFileInput: () => {
-    // PrimeVue FileUpload doesn't expose direct trigger method
-    // The component handles clicks automatically
-  }
+  triggerFileInput
 })
 </script>
 
