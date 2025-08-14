@@ -506,7 +506,7 @@ const sendMessage = (message: string): void => {
       ])
     } else if (lowerMessage.includes('set a reminder') || lowerMessage.includes('reminder')) {
       addAIMessage([
-        '��� I\'ll help you set up smart reminders!',
+        '⏰ I\'ll help you set up smart reminders!',
         'ARKON can remind you to:',
         '• Follow up with specific prospects at optimal times',
         '• Call back prospects who didn\'t answer',
@@ -1060,6 +1060,7 @@ const handleActionButton = (action: string): void => {
         response = [`I\'ll help you with ${action.toLowerCase()}. Let me prepare your optimal calling strategy.`]
     }
     addAIMessage(response)
+    scrollToBottom()
   }, 1500)
 }
 </script>
