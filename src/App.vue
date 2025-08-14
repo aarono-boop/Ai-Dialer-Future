@@ -16,7 +16,7 @@
         <div :class="showDialer ? 'w-2/3' : 'w-full max-w-6xl mx-auto'" class="rounded-xl p-5">
           <div class="w-full h-full flex flex-col">
           <!-- Top content area - scrollable -->
-          <div class="flex-1 overflow-y-auto flex flex-col gap-8 pr-2 pb-4 scrollbar-thin scrollbar-track-white/10 scrollbar-thumb-white/30 hover:scrollbar-thumb-white/50" ref="chatMessages">
+          <div class="flex-1 overflow-y-auto flex flex-col gap-8 pr-2 pb-4 scrollbar-thin scrollbar-track-gray-800 scrollbar-thumb-gray-600 hover:scrollbar-thumb-gray-500" ref="chatMessages">
             <!-- Chat Messages Area -->
             <div class="flex flex-col">
               <template v-for="(message, index) in messages" :key="index">
@@ -881,7 +881,7 @@ const handleLooksGood = (): void => {
         'I\'ve prioritized the phone numbers most likely to connect so you spend time talking, not hitting dead lines.',
         '',
         'Here\'s what I found:',
-        '�� 40 numbers have \'High\' Connect Scores and show consistent calling activity in the last 12 months. These are highly likely to be connected and assigned to active subscribers.',
+        '• 40 numbers have \'High\' Connect Scores and show consistent calling activity in the last 12 months. These are highly likely to be connected and assigned to active subscribers.',
         '• 67 numbers have \'Medium\' Connect Scores and are worth calling after you exhaust your \'High\' Connect Score numbers.',
         '• 54 numbers have \'Low\' Connect Scores and are likely disconnected or inactive lines that won\'t answer when dialed.'
       ])
