@@ -89,6 +89,34 @@
               </button>
             </div>
 
+            <!-- Disposition Buttons -->
+            <div v-if="showDispositionButtons" class="grid grid-cols-4 gap-3 w-full">
+              <button
+                @click="handleDisposition('Follow up')"
+                class="bg-gray-700 hover:bg-gray-600 text-white py-3 px-4 rounded-lg font-medium transition-all duration-200 cursor-pointer"
+              >
+                Follow up
+              </button>
+              <button
+                @click="handleDisposition('Not interested')"
+                class="bg-gray-700 hover:bg-gray-600 text-white py-3 px-4 rounded-lg font-medium transition-all duration-200 cursor-pointer"
+              >
+                Not interested
+              </button>
+              <button
+                @click="handleDisposition('Do Not Call')"
+                class="bg-gray-700 hover:bg-gray-600 text-white py-3 px-4 rounded-lg font-medium transition-all duration-200 cursor-pointer"
+              >
+                Do Not Call
+              </button>
+              <button
+                @click="handleDisposition('Set Appointment')"
+                class="bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white py-3 px-4 rounded-lg font-medium transition-all duration-200 cursor-pointer"
+              >
+                Set Appointment
+              </button>
+            </div>
+
             <!-- Signup Buttons -->
             <SignupButtons
               v-if="showSignupButtons && !isSignedIn"
