@@ -447,70 +447,71 @@ const handleActionButton = (action: string): void => {
   setTimeout(() => {
     let response = []
     const sampleContacts = `
-      <div style="margin: 1rem 0; background: rgba(255,255,255,0.05); border-radius: 8px; padding: 1.5rem; max-width: 500px;">
-        <div style="border-bottom: 2px solid #60a5fa; padding-bottom: 1rem; margin-bottom: 1.5rem;">
-          <h3 style="color: #60a5fa; margin: 0; font-size: 1.2rem; font-weight: 600;">Contact Preview</h3>
-          <p style="color: #ffffff; margin: 0.5rem 0 0 0; font-size: 1.1rem; font-weight: 500;">Sarah Johnson</p>
+      <div style="margin: 1rem 0; background: rgba(255,255,255,0.05); border-radius: 8px; padding: 1.5rem; max-width: 400px;">
+        <div style="margin-bottom: 1.5rem;">
+          <h3 style="color: #ffffff; margin: 0; font-size: 1.1rem; font-weight: 600;">Sarah Johnson</h3>
+          <p style="color: #9ca3af; margin: 0.25rem 0 0 0; font-size: 0.9rem;">Sales Development Representative</p>
+          <p style="color: #60a5fa; margin: 0.25rem 0 0 0; font-size: 0.9rem;">TechCorp Inc.</p>
         </div>
 
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem 2rem; font-size: 0.9rem;">
-          <div style="display: flex; flex-direction: column; gap: 0.25rem;">
-            <span style="color: #9ca3af; font-size: 0.8rem;">HOME PHONE</span>
-            <span style="color: #ffffff;">(555) 123-4567</span>
+        <div style="display: flex; flex-direction: column; gap: 1rem; font-size: 0.9rem;">
+          <div>
+            <span style="color: #9ca3af;">Home Phone: </span>
+            <span style="color: #60a5fa;">(555) 123-4567</span>
           </div>
 
-          <div style="display: flex; flex-direction: column; gap: 0.25rem;">
-            <span style="color: #9ca3af; font-size: 0.8rem;">CONNECT SCORE</span>
-            <span style="color: #10b981; font-weight: 600;">92%</span>
+          <div>
+            <span style="color: #9ca3af;">Connect Score: </span>
+            <span style="color: #10b981; font-weight: 600;">High</span>
           </div>
 
-          <div style="display: flex; flex-direction: column; gap: 0.25rem;">
-            <span style="color: #9ca3af; font-size: 0.8rem;">MOBILE PHONE</span>
-            <span style="color: #ffffff;">(555) 123-4568</span>
+          <div>
+            <span style="color: #9ca3af;">Mobile Phone: </span>
+            <span style="color: #60a5fa;">(555) 123-4568</span>
           </div>
 
-          <div style="display: flex; flex-direction: column; gap: 0.25rem;">
-            <span style="color: #9ca3af; font-size: 0.8rem;">CONNECT SCORE</span>
-            <span style="color: #10b981; font-weight: 600;">87%</span>
+          <div>
+            <span style="color: #9ca3af;">Connect Score: </span>
+            <span style="color: #f59e0b; font-weight: 600;">Medium</span>
           </div>
 
-          <div style="display: flex; flex-direction: column; gap: 0.25rem;">
-            <span style="color: #9ca3af; font-size: 0.8rem;">EMAIL</span>
-            <span style="color: #ffffff;">sarah.johnson@techcorp.com</span>
+          <div>
+            <span style="color: #9ca3af;">Email: </span>
+            <span style="color: #60a5fa;">sarah.johnson@techcorp.com</span>
           </div>
 
-          <div style="display: flex; flex-direction: column; gap: 0.25rem;">
-            <span style="color: #9ca3af; font-size: 0.8rem;">ADDRESS</span>
+          <div>
+            <span style="color: #9ca3af;">Address: </span>
             <span style="color: #ffffff;">1234 Main St, Dallas, TX</span>
           </div>
 
-          <div style="display: flex; flex-direction: column; gap: 0.25rem;">
-            <span style="color: #9ca3af; font-size: 0.8rem;">LOCAL TIME</span>
+          <div>
+            <span style="color: #9ca3af;">Local Time: </span>
             <span style="color: #ffffff;">2:45 PM CST</span>
           </div>
 
-          <div style="display: flex; flex-direction: column; gap: 0.25rem;">
-            <span style="color: #9ca3af; font-size: 0.8rem;">WEBSITE</span>
+          <div>
+            <span style="color: #9ca3af;">Website: </span>
             <span style="color: #60a5fa;">techcorp.com</span>
           </div>
 
-          <div style="display: flex; flex-direction: column; gap: 0.25rem;">
-            <span style="color: #9ca3af; font-size: 0.8rem;">LINKEDIN PROFILE</span>
+          <div>
+            <span style="color: #9ca3af;">LinkedIn Profile: </span>
             <span style="color: #60a5fa;">linkedin.com/in/sarahjohnson</span>
           </div>
 
-          <div style="display: flex; flex-direction: column; gap: 0.25rem;">
-            <span style="color: #9ca3af; font-size: 0.8rem;">INDUSTRY</span>
+          <div>
+            <span style="color: #9ca3af;">Industry: </span>
             <span style="color: #ffffff;">Technology</span>
           </div>
 
-          <div style="display: flex; flex-direction: column; gap: 0.25rem;">
-            <span style="color: #9ca3af; font-size: 0.8rem;">COMPANY SIZE</span>
+          <div>
+            <span style="color: #9ca3af;">Company Size: </span>
             <span style="color: #ffffff;">250-500 employees</span>
           </div>
 
-          <div style="display: flex; flex-direction: column; gap: 0.25rem;">
-            <span style="color: #9ca3af; font-size: 0.8rem;">LEAD SOURCE</span>
+          <div>
+            <span style="color: #9ca3af;">Lead Source: </span>
             <span style="color: #ffffff;">Webinar Registration</span>
           </div>
         </div>
