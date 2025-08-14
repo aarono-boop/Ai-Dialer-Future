@@ -132,6 +132,15 @@
             />
           </div>
 
+          <!-- Action Buttons - positioned above chat input -->
+          <div v-if="showActionButtons" class="mt-4 flex justify-center">
+            <div class="w-[70%]">
+              <ActionButtons
+                @action-selected="handleActionButton"
+              />
+            </div>
+          </div>
+
           <!-- Chat Input - positioned at bottom -->
           <div class="mt-4 pt-4">
             <ChatInput
