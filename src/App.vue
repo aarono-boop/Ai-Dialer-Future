@@ -85,6 +85,13 @@
       @show-terms="showTermsFromAccount"
     />
 
+    <!-- Pricing Page -->
+    <PricingPage
+      v-if="showPricingPage"
+      @upgrade-selected="handleUpgradeSelected"
+      @close="closePricingPage"
+    />
+
     <!-- Toast for notifications -->
     <Toast />
   </div>
