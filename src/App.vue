@@ -90,7 +90,7 @@
             <div v-if="showStartDialingButton" class="flex justify-center w-full">
               <button
                 @click="handleStartDialing"
-                class="w-1/2 bg-gradient-to-r from-green-500 to-green-600 text-white border-0 py-3 rounded-lg font-semibold hover:from-green-600 hover:to-green-700 transition-all duration-200 cursor-pointer"
+                class="w-1/2 btn-primary py-3 rounded-lg font-semibold cursor-pointer"
               >
                 Start Dialing
               </button>
