@@ -289,7 +289,7 @@ const sendMessage = (message: string): void => {
       ])
     } else if (lowerMessage.includes('jenn')) {
       addAIMessage([
-        'Found Jenn! 🎯',
+        'Found Jenn! ����',
         'I found <strong>Jenn Peterson</strong> in your contacts.',
         'She has an <strong>89% pickup rate</strong> and is most likely available now.',
         'Ready to call Jenn?'
@@ -370,6 +370,11 @@ const handleAccountCreated = (accountData: any) => {
   isSignedIn.value = true
   showActionButtons.value = true
   addAIMessage('🎉 Welcome to ARKON! Your account has been created successfully. Let\'s start your first smart calling session! What are you trying to accomplish?')
+}
+
+const showTermsFromAccount = () => {
+  showAccountCreation.value = false
+  showTermsModal.value = true
 }
 
 const handleGoogleSignupFromAccount = () => {
