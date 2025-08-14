@@ -8,10 +8,10 @@
           <span class="text-white font-medium">Dial Queue</span>
         </div>
       </div>
-      
+
       <div class="flex items-center justify-between mt-3">
         <div class="text-gray-400 text-sm">
-          Queue Time: <span class="text-white">00:14</span>
+          Queue Time: <span class="text-white">{{ formatTime(queueTime) }}</span>
         </div>
         <button class="bg-gray-700 hover:bg-gray-600 text-white px-3 py-1 rounded text-sm transition-colors">
           Pause Queue
@@ -21,9 +21,27 @@
 
     <!-- Call Status -->
     <div class="p-4 border-b border-gray-700">
-      <div class="bg-red-900/50 border border-red-700 rounded-lg p-3 text-center">
+      <!-- Call Ended State -->
+      <div v-if="callState === 'ended'" class="bg-red-900/50 border border-red-700 rounded-lg p-3 text-center">
         <div class="text-red-400 font-medium">Call Ended</div>
         <div class="text-gray-300 text-sm">(312) 586-9748</div>
+      </div>
+
+      <!-- Ringing State -->
+      <div v-else-if="callState === 'ringing'" class="bg-yellow-900/50 border border-yellow-700 rounded-lg p-3 text-center">
+        <div class="text-yellow-400 font-medium">Calling...</div>
+        <div class="text-gray-300 text-sm">{{ currentContact.phone }}</div>
+        <div class="flex justify-center mt-2">
+          <div class="animate-pulse w-2 h-2 bg-yellow-400 rounded-full mx-1"></div>
+          <div class="animate-pulse w-2 h-2 bg-yellow-400 rounded-full mx-1" style="animation-delay: 0.2s"></div>
+          <div class="animate-pulse w-2 h-2 bg-yellow-400 rounded-full mx-1" style="animation-delay: 0.4s"></div>
+        </div>
+      </div>
+
+      <!-- Connected State -->
+      <div v-else-if="callState === 'connected'" class="bg-green-900/50 border border-green-700 rounded-lg p-3 text-center">
+        <div class="text-green-400 font-medium">Live Call: {{ formatTime(callDuration) }}</div>
+        <div class="text-gray-300 text-sm">{{ currentContact.phone }}</div>
       </div>
     </div>
 
