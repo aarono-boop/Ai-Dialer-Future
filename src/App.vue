@@ -810,7 +810,7 @@ const handleHangUp = (): void => {
 }
 
 const handleMute = (muted: boolean): void => {
-  addAIMessage(muted ? '🔇 Microphone muted' : '🎤 Microphone unmuted')
+  addAIMessage(muted ? '��� Microphone muted' : '🎤 Microphone unmuted')
 }
 
 const handleHold = (onHold: boolean): void => {
@@ -879,6 +879,12 @@ const exportFile = (): void => {
 const handleDisposition = (disposition: string): void => {
   // Hide disposition buttons
   showDispositionButtons.value = false
+
+  // Update the last call log entry with the disposition
+  if (callLog.value.length > 0) {
+    const lastCall = callLog.value[callLog.value.length - 1]
+    lastCall.disposition = disposition
+  }
 
   // Add user message showing what disposition was selected
   addUserMessage(disposition)
