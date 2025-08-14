@@ -1,5 +1,5 @@
 <template>
-  <div class="my-6">
+  <div>
     <div class="grid grid-cols-3 gap-3 md:gap-3 sm:grid-cols-2 xs:grid-cols-1">
       <Button
         v-for="action in actions"
