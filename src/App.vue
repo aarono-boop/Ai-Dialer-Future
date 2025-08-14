@@ -372,11 +372,6 @@ const closeAccountCreation = () => {
   showAccountCreation.value = false
 }
 
-const switchToSignin = () => {
-  showAccountCreation.value = false
-  showSignupModal.value = true
-}
-
 const handleAccountCreated = (accountData: any) => {
   closeAccountCreation()
   isSignedIn.value = true
