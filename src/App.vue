@@ -398,7 +398,7 @@ const handlePurchaseCompleted = () => {
   showPricingPage.value = false
   isSignedIn.value = true
   showActionButtons.value = true
-  addAIMessage('🎉 Welcome to ARKON! Your account has been created successfully. Let\'s start your first smart calling session! What are you trying to accomplish?')
+  addAIMessage('🎉 Congratulations! You\'ve successfully upgraded to the Pro plan and have unlimited access to all features. To help us understand what your goals are, what are you trying to accomplish?')
 }
 
 const handleUpgradeSelected = () => {
