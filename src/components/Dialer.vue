@@ -50,64 +50,62 @@
       <div class="space-y-4">
         <!-- Contact Header -->
         <div>
-          <h3 class="text-white text-lg font-semibold">Sam Sample</h3>
-          <p class="text-gray-400 text-sm">Sales Development Representative at <span class="text-blue-400">Innovate Inc.</span></p>
+          <h3 class="text-white text-lg font-semibold">{{ currentContact.name }}</h3>
+          <p class="text-gray-400 text-sm">{{ currentContact.title }} at <span class="text-blue-400">{{ currentContact.company }}</span></p>
         </div>
 
         <!-- Contact Details -->
         <div class="space-y-3 text-sm">
           <div class="flex justify-between">
-            <span class="text-gray-400">Home Phone:</span>
+            <span class="text-gray-400">Phone:</span>
             <div class="text-right">
-              <div class="text-blue-400">(312) 586-9748</div>
+              <div class="text-blue-400">{{ currentContact.phone }}</div>
             </div>
           </div>
-          
+
           <div class="flex justify-between">
             <span class="text-gray-400">Connect Score:</span>
-            <span class="text-green-400 font-medium">High</span>
+            <span :class="getConnectScoreColor(currentContact.connectScore)" class="font-medium">{{ currentContact.connectScore }}</span>
           </div>
-          
-          <div class="flex justify-between">
-            <span class="text-gray-400">Mobile Phone:</span>
-            <div class="text-right">
-              <div class="text-blue-400">(312) 555-0199</div>
-            </div>
-          </div>
-          
-          <div class="flex justify-between">
-            <span class="text-gray-400">Connect Score:</span>
-            <span class="text-yellow-400 font-medium">Medium</span>
-          </div>
-          
+
           <div class="flex justify-between">
             <span class="text-gray-400">Email:</span>
-            <span class="text-blue-400">samsample@getitonline.com</span>
+            <span class="text-blue-400">{{ currentContact.email }}</span>
           </div>
-          
+
           <div class="flex justify-between">
             <span class="text-gray-400">Address:</span>
-            <span class="text-white">Address 1, Apt/Suite, CHICAGO, Illinois 60606</span>
+            <span class="text-white">{{ currentContact.address }}</span>
           </div>
-          
+
           <div class="flex justify-between">
             <span class="text-gray-400">Local Time:</span>
-            <span class="text-white">12:59 PM (CHICAGO, IL)</span>
+            <span class="text-white">{{ currentContact.localTime }}</span>
           </div>
-          
+
           <div class="flex justify-between">
             <span class="text-gray-400">Website:</span>
-            <span class="text-blue-400">https://www.innovate.com</span>
+            <span class="text-blue-400">{{ currentContact.website }}</span>
           </div>
-          
+
           <div class="flex justify-between">
             <span class="text-gray-400">LinkedIn Profile:</span>
-            <span class="text-blue-400">https://www.linkedin.com/in/samsample-fake</span>
+            <span class="text-blue-400">{{ currentContact.linkedin }}</span>
           </div>
-          
+
           <div class="flex justify-between">
             <span class="text-gray-400">Industry:</span>
-            <span class="text-white">Technology / SaaS</span>
+            <span class="text-white">{{ currentContact.industry }}</span>
+          </div>
+
+          <div class="flex justify-between">
+            <span class="text-gray-400">Company Size:</span>
+            <span class="text-white">{{ currentContact.companySize }}</span>
+          </div>
+
+          <div class="flex justify-between">
+            <span class="text-gray-400">Lead Source:</span>
+            <span class="text-white">{{ currentContact.leadSource }}</span>
           </div>
         </div>
       </div>
