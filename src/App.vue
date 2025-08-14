@@ -68,11 +68,20 @@
     />
 
     <!-- Terms of Service Modal -->
-    <TermsModal 
+    <TermsModal
       :visible="showTermsModal"
       @close="closeTermsModal"
       @cancel="handleTermsCancel"
       @agree="handleTermsAgree"
+    />
+
+    <!-- Account Creation Modal -->
+    <AccountCreation
+      v-if="showAccountCreation"
+      @close="closeAccountCreation"
+      @switch-to-signin="switchToSignin"
+      @account-created="handleAccountCreated"
+      @google-signup="handleGoogleSignupFromAccount"
     />
 
     <!-- Toast for notifications -->
