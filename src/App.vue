@@ -292,6 +292,36 @@ const contacts = [
     industry: 'Marketing & Advertising',
     companySize: '11-50 employees',
     leadSource: 'Conference Booth'
+  },
+  {
+    name: 'Jennifer Martinez',
+    title: 'VP of Sales',
+    company: 'TechFlow Inc.',
+    phone: '(555) 456-7890',
+    connectScore: 'Medium',
+    email: 'jennifer@techflow.com',
+    address: '456 Business Ave, San Francisco, CA 94102',
+    localTime: '11:15 AM (SAN FRANCISCO, CA)',
+    website: 'https://www.techflow.com',
+    linkedin: 'https://www.linkedin.com/in/jennifermartinez',
+    industry: 'Software Development',
+    companySize: '100-250 employees',
+    leadSource: 'LinkedIn Outreach'
+  },
+  {
+    name: 'David Wilson',
+    title: 'Operations Director',
+    company: 'Global Systems',
+    phone: '(555) 321-0987',
+    connectScore: 'High',
+    email: 'david@globalsystems.com',
+    address: '789 Corporate Blvd, Austin, TX 78701',
+    localTime: '1:30 PM (AUSTIN, TX)',
+    website: 'https://www.globalsystems.com',
+    linkedin: 'https://www.linkedin.com/in/davidwilson',
+    industry: 'Enterprise Solutions',
+    companySize: '500+ employees',
+    leadSource: 'Trade Show'
   }
 ]
 
