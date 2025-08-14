@@ -95,34 +95,20 @@ defineExpose({
 </script>
 
 <style scoped>
-/* Override PrimeVue FileUpload styles to match our dark theme */
-:deep(.p-fileupload-basic) {
-  background: transparent !important;
-  border: none !important;
-  padding: 0 !important;
+/* Custom file upload styles */
+.file-upload-area {
+  background-color: rgba(31, 41, 55, 0.5);
+  border: 1px solid rgb(75, 85, 99);
 }
 
-:deep(.p-fileupload-basic .p-button) {
-  background: transparent !important;
-  border: 2px dashed rgba(255, 255, 255, 0.3) !important;
-  border-radius: 0.5rem !important;
-  padding: 2.5rem !important;
-  color: white !important;
-  width: 100% !important;
-  transition: all 0.3s ease !important;
+.file-upload-area:hover {
+  background-color: rgba(31, 41, 55, 0.7);
 }
 
-:deep(.p-fileupload-basic .p-button:hover) {
-  border-color: rgba(168, 85, 247, 0.6) !important;
-  background: rgba(255, 255, 255, 0.02) !important;
-}
-
-:deep(.p-fileupload-basic .p-button:focus) {
-  box-shadow: none !important;
-  border-color: rgba(168, 85, 247, 0.6) !important;
-}
-
-:deep(.p-fileupload-basic .p-button .p-button-label) {
-  display: none !important;
+/* Ensure the hidden input doesn't interfere */
+input[type="file"] {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
 }
 </style>
