@@ -364,9 +364,7 @@ const handleTermsCancel = () => {
 
 const handleTermsAgree = () => {
   closeTermsModal()
-  isSignedIn.value = true
-  showActionButtons.value = true
-  addAIMessage('🎉 Welcome to ARKON! Your account has been created successfully. Let\'s start your first smart calling session! What are you trying to accomplish?')
+  showPricingPage.value = true
 }
 
 // Account Creation Methods
