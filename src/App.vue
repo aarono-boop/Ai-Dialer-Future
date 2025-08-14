@@ -404,6 +404,19 @@ const handleTryAgain = (): void => {
   }, 1000)
 }
 
+const handlePhoneVerification = (): void => {
+  // Hide phone verification button
+  showPhoneVerificationButton.value = false
+
+  // Add user message showing what button was clicked
+  addUserMessage('Now lets verify my phone number')
+
+  // Add AI response after a delay (placeholder for now)
+  setTimeout(() => {
+    addAIMessage('Perfect! Let\'s verify your phone number to ensure you can receive calls and notifications.')
+  }, 1000)
+}
+
 // Signup Methods
 const handleGoogleSignup = () => {
   addAIMessage('🚀 Great choice! Setting up your Google account integration...')
