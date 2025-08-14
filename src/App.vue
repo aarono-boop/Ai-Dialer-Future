@@ -223,6 +223,47 @@ const callState = ref<string>('ended') // 'ended', 'ringing', 'connected'
 const callDuration = ref<number>(0)
 const queueTime = ref<number>(14)
 
+// Contact data
+const contacts = [
+  {
+    name: 'Sam Sample',
+    title: 'Sales Development Representative',
+    company: 'Innovate Inc.',
+    phone: '(312) 586-9748',
+    connectScore: 'High',
+    email: 'samsample@getitonline.com',
+    address: 'Address 1, Apt/Suite, CHICAGO, Illinois 60606',
+    localTime: '12:59 PM (CHICAGO, IL)',
+    website: 'https://www.innovate.com',
+    linkedin: 'https://www.linkedin.com/in/samsample-fake',
+    industry: 'Technology / SaaS',
+    companySize: '250-500 employees',
+    leadSource: 'Webinar Registration'
+  },
+  {
+    name: 'George Sample',
+    title: 'Marketing Manager',
+    company: 'Solutions Co.',
+    phone: '(202) 744-9556',
+    connectScore: 'High',
+    email: 'george@solutions.co',
+    address: '123 Fake Street, Suite 100, Washington, DC 20001',
+    localTime: '1:59 PM (WASHINGTON, DC)',
+    website: 'https://www.solutions.co',
+    linkedin: 'https://www.linkedin.com/in/georgesample-fake',
+    industry: 'Marketing & Advertising',
+    companySize: '11-50 employees',
+    leadSource: 'Conference Booth'
+  }
+]
+
+const currentContactIndex = ref<number>(0)
+const currentContact = computed(() => contacts[currentContactIndex.value])
+const nextContactName = computed(() => {
+  const nextIndex = currentContactIndex.value + 1
+  return nextIndex < contacts.length ? contacts[nextIndex].name : 'No more contacts'
+})
+
 // Chat messages array
 const messages: Ref<Message[]> = ref([
   {
