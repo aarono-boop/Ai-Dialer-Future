@@ -506,7 +506,7 @@ const sendMessage = (message: string): void => {
       ])
     } else if (lowerMessage.includes('set a reminder') || lowerMessage.includes('reminder')) {
       addAIMessage([
-        '⏰ I\'ll help you set up smart reminders!',
+        '��� I\'ll help you set up smart reminders!',
         'ARKON can remind you to:',
         '• Follow up with specific prospects at optimal times',
         '• Call back prospects who didn\'t answer',
@@ -721,6 +721,7 @@ const simulateCall = (): void => {
 
     // Show AI message that call connected
     addAIMessage(`📞 Connected! You're now speaking with ${currentContact.value.name}.`)
+    scrollToBottom()
   }, 3000)
 }
 
@@ -789,6 +790,7 @@ const handleDisposition = (disposition: string): void => {
   // Add AI response about the disposition
   setTimeout(() => {
     addAIMessage(`✅ ${disposition} disposition saved for ${currentContact.value.name}.`)
+    scrollToBottom()
 
     // Move to next contact if available
     if (currentContactIndex.value < contacts.length - 1) {
@@ -797,6 +799,7 @@ const handleDisposition = (disposition: string): void => {
       setTimeout(() => {
         // Add separator message instead of regular AI message
         addSeparatorMessage(currentContact.value.name)
+        scrollToBottom()
 
         // Start calling the next contact after a brief pause
         setTimeout(() => {
@@ -806,6 +809,7 @@ const handleDisposition = (disposition: string): void => {
     } else {
       addAIMessage('📋 All contacts have been processed. Dialing session complete!')
       showDialer.value = false
+      scrollToBottom()
 
       // Stop queue timer
       if (queueTimer) {
