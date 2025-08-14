@@ -91,6 +91,78 @@
           </div>
         </div>
       </div>
+
+      <!-- Built Different Section -->
+      <section class="text-center max-w-4xl mx-auto mt-20 mb-16 px-6">
+        <h3 class="text-3xl font-bold text-white mb-6">Built different from the ground up</h3>
+        <p class="text-slate-400 text-lg leading-relaxed">
+          Unlike traditional dialers with AI features bolted on, ARKON is an AI assistant that uses proven dialer
+          technology. Every interaction delivers more value than you put in—upload a contact list, get back
+          intelligence that transforms how you call. No training required. No complex setup. Just upload your
+          contacts and start calling smarter immediately.
+        </p>
+      </section>
+
+      <!-- FAQ Section -->
+      <section class="max-w-6xl mx-auto px-6 pb-16">
+        <h3 class="text-3xl font-bold text-white text-center mb-12">FAQ</h3>
+
+        <div class="grid md:grid-cols-2 gap-8">
+          <!-- Left Column -->
+          <div class="space-y-8">
+            <!-- Question 1 -->
+            <div>
+              <h4 class="text-white font-semibold text-lg mb-3">How is this different from my current dialer?</h4>
+              <p class="text-slate-400 text-sm leading-relaxed">
+                Most dialers add AI features on top of old technology.
+                ARKON is built from the ground up as an AI assistant that
+                happens to use proven dialer technology. Instead of just
+                making calls faster, ARKON tells you who to call, when to
+                call them, and why they're likely to answer.
+              </p>
+            </div>
+
+            <!-- Question 2 -->
+            <div>
+              <h4 class="text-white font-semibold text-lg mb-3">How accurate is the Connect Score?</h4>
+              <p class="text-slate-400 text-sm leading-relaxed">
+                Connect Score analyzes recent phone engagement to
+                identify which numbers are actively used. Each contact is
+                rated as High, Medium, or Low activity based on calling
+                patterns and carrier signals. While no prediction is 100%
+                accurate, our beta users consistently see higher
+                connected calls when they prioritize High and Medium
+                activity contacts using ARKON's recommendations.
+              </p>
+            </div>
+          </div>
+
+          <!-- Right Column -->
+          <div class="space-y-8">
+            <!-- Question 3 -->
+            <div>
+              <h4 class="text-white font-semibold text-lg mb-3">What file formats do you support?</h4>
+              <p class="text-slate-400 text-sm leading-relaxed">
+                Upload your contact lists in CSV, XLS, or XLSX format.
+                ARKON automatically enhances your data and analyzes
+                each contact for their Connect Score—no formatting or
+                cleanup required on your end.
+              </p>
+            </div>
+
+            <!-- Question 4 -->
+            <div>
+              <h4 class="text-white font-semibold text-lg mb-3">Can I cancel anytime?</h4>
+              <p class="text-slate-400 text-sm leading-relaxed">
+                Yes, absolutely. Cancel your Pro subscription anytime
+                with no penalties or fees. Your data remains accessible
+                during your billing period, and you can export your
+                enriched contact lists before canceling.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
     </main>
   </div>
 </template>
