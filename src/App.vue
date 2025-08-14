@@ -507,12 +507,14 @@ const showSignupFromLogin = (): void => {
 // File Upload Methods
 const simulateFileUpload = () => {
   hasUploadedFile.value = true
+  showFileUploadForReturningUser.value = false
 
   if (isSignedIn.value) {
     // User is already signed in, go directly to contact preview
     setTimeout(() => {
       addAIMessage('Perfect! I\'ve analyzed your contact file. Here\'s a preview of your data. Does this look correct?')
       showContactPreviewButtons.value = true
+      scrollToBottom()
     }, 1500)
   } else {
     // New user, go to account creation
@@ -522,12 +524,14 @@ const simulateFileUpload = () => {
 
 const onFileSelect = (file: File): void => {
   hasUploadedFile.value = true
+  showFileUploadForReturningUser.value = false
 
   if (isSignedIn.value) {
     // User is already signed in, go directly to contact preview
     setTimeout(() => {
       addAIMessage('Perfect! I\'ve analyzed your contact file. Here\'s a preview of your data. Does this look correct?')
       showContactPreviewButtons.value = true
+      scrollToBottom()
     }, 1500)
   } else {
     // New user, go to account creation
@@ -1009,7 +1013,7 @@ const handleDisposition = (disposition: string): void => {
         }, 1000)
       }, 1500)
     } else {
-      addAIMessage('��� All contacts have been processed. Dialing session complete!')
+      addAIMessage('📋 All contacts have been processed. Dialing session complete!')
       showDialer.value = false
       scrollToBottom()
 
