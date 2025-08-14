@@ -1,6 +1,6 @@
 <template>
   <!-- Test change for PR functionality -->
-  <div class="min-h-screen text-white flex flex-col relative overflow-x-hidden" style="background-image: url('https://cdn.builder.io/api/v1/image/assets%2F5aeb07ce25f84dbc869290880d07b71e%2F3a359e22506049ea806e50e85c0e7711?format=webp&width=800'); background-size: cover; background-position: center; background-repeat: no-repeat;">
+  <div class="min-h-screen text-white flex flex-col relative overflow-x-hidden">
     
     <!-- Header -->
     <Header
@@ -773,7 +773,7 @@ const sendMessage = (message: string): void => {
       ])
     } else if (lowerMessage.includes('set a reminder') || lowerMessage.includes('reminder')) {
       addAIMessage([
-        '��� I\'ll help you set up smart reminders!',
+        '⏰ I\'ll help you set up smart reminders!',
         'ARKON can remind you to:',
         '• Follow up with specific prospects at optimal times',
         '• Call back prospects who didn\'t answer',
@@ -802,7 +802,7 @@ const sendMessage = (message: string): void => {
       ])
     } else if (lowerMessage.includes('tell a joke') || lowerMessage.includes('joke')) {
       addAIMessage([
-        '���� Why did the salesperson bring a ladder to work?',
+        '😄 Why did the salesperson bring a ladder to work?',
         'Because they heard the job was about making <strong>high-level</strong> connections!',
         '',
         '🎯 Speaking of connections, did you know ARKON users make 3x more meaningful connections than traditional dialers?',
