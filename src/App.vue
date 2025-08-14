@@ -491,14 +491,32 @@ const showSignupFromLogin = (): void => {
 // File Upload Methods
 const simulateFileUpload = () => {
   hasUploadedFile.value = true
-  // Go directly to account creation
-  showAccountCreation.value = true
+
+  if (isSignedIn.value) {
+    // User is already signed in, go directly to contact preview
+    setTimeout(() => {
+      addAIMessage('Perfect! I\'ve analyzed your contact file. Here\'s a preview of your data. Does this look correct?')
+      showContactPreviewButtons.value = true
+    }, 1500)
+  } else {
+    // New user, go to account creation
+    showAccountCreation.value = true
+  }
 }
 
 const onFileSelect = (file: File): void => {
   hasUploadedFile.value = true
-  // Go directly to account creation
-  showAccountCreation.value = true
+
+  if (isSignedIn.value) {
+    // User is already signed in, go directly to contact preview
+    setTimeout(() => {
+      addAIMessage('Perfect! I\'ve analyzed your contact file. Here\'s a preview of your data. Does this look correct?')
+      showContactPreviewButtons.value = true
+    }, 1500)
+  } else {
+    // New user, go to account creation
+    showAccountCreation.value = true
+  }
 }
 
 // Chat Input Methods
