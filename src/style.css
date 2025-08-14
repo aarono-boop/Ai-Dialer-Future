@@ -23,8 +23,8 @@ body {
 
 /* Webkit scrollbar styling for dark theme */
 *::-webkit-scrollbar {
-  width: 16px;
-  height: 16px;
+  width: 24px;
+  height: 24px;
 }
 
 *::-webkit-scrollbar-track {
