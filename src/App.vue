@@ -475,7 +475,7 @@ const sendMessage = (message: string): void => {
         'Let me set up a personalized demo where you can see:',
         '• Live contact scoring and prioritization',
         '• Real-time dialing with connect predictions',
-        '• Smart call disposition and follow-up automation',
+        '�� Smart call disposition and follow-up automation',
         'What\'s your preferred time? I can schedule something for today or tomorrow.'
       ])
     } else if (lowerMessage.includes('who i should call now') || lowerMessage.includes('who should i call')) {
@@ -670,8 +670,16 @@ const handleStartDialing = (): void => {
   // Add AI response after a delay
   setTimeout(() => {
     addAIMessage('🎯 Starting your dialing session! Connecting you to your first contact...')
-    // Start the call simulation
-    simulateCall()
+
+    // Add separator for the first call
+    setTimeout(() => {
+      addSeparatorMessage(contacts[1].name) // George Sample (since we start at index 1)
+
+      // Start the call simulation after showing separator
+      setTimeout(() => {
+        simulateCall()
+      }, 500)
+    }, 1000)
   }, 1000)
 }
 
