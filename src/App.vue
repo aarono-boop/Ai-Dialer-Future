@@ -270,7 +270,29 @@ const sendMessage = (message: string): void => {
   // Add user message
   addUserMessage(message)
 
-  // Simulate AI processing
+  // Handle verification flow
+  if (verificationStep.value === 'enter-phone') {
+    enteredPhoneNumber.value = message
+    verificationStep.value = 'enter-code'
+    showVerificationButtons.value = true
+
+    setTimeout(() => {
+      addAIMessage(`Perfect. We've sent a text with 6-digit verification code to ${message}. Please enter it below to continue.`)
+    }, 1000)
+    return
+  }
+
+  if (verificationStep.value === 'enter-code') {
+    showVerificationButtons.value = false
+    verificationStep.value = 'default'
+
+    setTimeout(() => {
+      addAIMessage('Excellent! Your phone number has been verified successfully. You\'re now ready to start making calls!')
+    }, 1000)
+    return
+  }
+
+  // Simulate AI processing for regular messages
   setTimeout(() => {
     const lowerMessage = message.toLowerCase()
 
