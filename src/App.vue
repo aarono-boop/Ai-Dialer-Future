@@ -36,16 +36,16 @@
             />
 
             <!-- Contact Preview Buttons -->
-            <div v-if="showContactPreviewButtons" class="flex gap-4 justify-center">
+            <div v-if="showContactPreviewButtons" class="flex gap-3 w-full">
               <button
                 @click="handleLooksGood"
-                class="bg-gradient-to-r from-green-500 to-green-600 text-white border-0 px-6 py-3 rounded-lg font-semibold hover:from-green-600 hover:to-green-700 transition-all duration-200 cursor-pointer"
+                class="flex-1 bg-gradient-to-r from-green-500 to-green-600 text-white border-0 px-6 py-3 rounded-lg font-semibold hover:from-green-600 hover:to-green-700 transition-all duration-200 cursor-pointer"
               >
                 Looks Good
               </button>
               <button
                 @click="handleTryAgain"
-                class="bg-white/10 text-white border border-white/30 px-6 py-3 rounded-lg font-semibold hover:bg-white/20 transition-all duration-200 cursor-pointer"
+                class="flex-1 bg-white/10 text-white border border-white/30 px-6 py-3 rounded-lg font-semibold hover:bg-white/20 transition-all duration-200 cursor-pointer"
               >
                 Try Again
               </button>
