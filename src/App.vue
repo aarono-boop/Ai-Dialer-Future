@@ -744,6 +744,7 @@ const simulateCall = (): void => {
     // Contact answers
     callState.value = 'connected'
     callDuration.value = 0
+    connectedCalls.value++
 
     // Start call duration timer
     callTimer = setInterval(() => {
@@ -810,7 +811,7 @@ const handleHangUp = (): void => {
 }
 
 const handleMute = (muted: boolean): void => {
-  addAIMessage(muted ? '��� Microphone muted' : '🎤 Microphone unmuted')
+  addAIMessage(muted ? '🔇 Microphone muted' : '🎤 Microphone unmuted')
 }
 
 const handleHold = (onHold: boolean): void => {
