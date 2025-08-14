@@ -206,6 +206,7 @@ const verificationStep = ref<string>('default') // 'default', 'enter-phone', 'en
 const enteredPhoneNumber = ref<string>('')
 const showVerificationButtons = ref<boolean>(false)
 const showStartDialingButton = ref<boolean>(false)
+const showDialer = ref<boolean>(false)
 
 // Chat messages array
 const messages: Ref<Message[]> = ref([
