@@ -896,6 +896,11 @@ const handleUpgradeSelected = () => {
   isSignedIn.value = true
   showActionButtons.value = true
   addAIMessage('🎉 Welcome to ARKON! Your account has been created successfully. Let\'s start your first smart calling session! What are you trying to accomplish?')
+
+  // Ensure scroll happens after action buttons are rendered
+  setTimeout(() => {
+    scrollToBottom()
+  }, 200)
 }
 
 // Account Creation Methods
