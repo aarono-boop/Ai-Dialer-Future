@@ -1,29 +1,39 @@
 <template>
-  <div class="max-w-[80%] my-6 flex flex-col justify-start items-start gap-4">
-    <FileUpload
-      mode="basic"
-      :auto="false"
-      :multiple="false"
-      accept=".csv,.xls,.xlsx"
-      :maxFileSize="10000000"
-      @select="onFileSelect"
-      :pt="{
-        root: { class: 'w-full' },
-        basicButton: { 
-          class: 'border-2 border-dashed border-white/30 rounded-lg p-10 text-center bg-transparent transition-all duration-300 cursor-pointer w-full hover:border-purple-400/60 hover:bg-white/[0.02] flex flex-col items-center justify-center'
-        }
-      }"
+  <div class="max-w-[90%] my-6 flex flex-col justify-start items-start gap-4">
+    <div
+      @dragover.prevent="handleDragOver"
+      @dragleave="handleDragLeave"
+      @drop.prevent="handleDrop"
+      @click="triggerFileInput"
+      class="w-full h-32 bg-gray-800/50 border border-gray-600 rounded-lg relative cursor-pointer hover:bg-gray-800/70 transition-all duration-300 flex items-center justify-center"
     >
-      <template #empty>
-        <div class="flex flex-col items-center">
-          <i class="pi pi-cloud-upload text-4xl text-gray-500 mb-4 block"></i>
-          <p class="text-base mb-2 text-white">
-            <span class="text-blue-400 hover:text-blue-300 no-underline">Click to upload</span> or drag and drop
-          </p>
-          <p class="text-sm text-gray-400 m-0">CSV, XLS, or XLSX files</p>
+      <!-- Plus icon in top left -->
+      <div class="absolute top-3 left-3">
+        <i class="pi pi-plus text-gray-400 text-lg"></i>
+      </div>
+
+      <!-- Center content -->
+      <div class="flex flex-col items-center">
+        <!-- Upload icon in circle -->
+        <div class="w-12 h-12 border border-gray-400 rounded-full flex items-center justify-center mb-3">
+          <i class="pi pi-cloud-upload text-gray-400 text-lg"></i>
         </div>
-      </template>
-    </FileUpload>
+
+        <!-- Upload text -->
+        <p class="text-gray-300 text-sm">
+          Drag and drop your contact file to here to upload.
+        </p>
+      </div>
+
+      <!-- Hidden file input -->
+      <input
+        ref="fileInput"
+        type="file"
+        accept=".csv,.xls,.xlsx"
+        @change="onFileInputChange"
+        class="hidden"
+      />
+    </div>
   </div>
 </template>
 
