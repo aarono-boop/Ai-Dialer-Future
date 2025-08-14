@@ -72,7 +72,7 @@ import { ref } from 'vue'
 import InputText from 'primevue/inputtext'
 
 // Define emits
-defineEmits(['close', 'google-signin', 'login-success', 'show-signup'])
+const emit = defineEmits(['close', 'google-signin', 'login-success', 'show-signup'])
 
 // Reactive data
 const email = ref('')
@@ -89,14 +89,14 @@ const handleLogin = () => {
       name: email.value.split('@')[0], // Simple name extraction
       hasSetGoals: true // Assuming returning users have already set goals
     }
-    
+
     // Clear form
     email.value = ''
     password.value = ''
-    
+
     // Emit login success
     setTimeout(() => {
-      $emit('login-success', userData)
+      emit('login-success', userData)
     }, 1000)
   }
 }
