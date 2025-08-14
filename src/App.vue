@@ -112,6 +112,7 @@ import SignupModal from './components/SignupModal.vue'
 import TermsModal from './components/TermsModal.vue'
 import AccountCreation from './components/AccountCreation.vue'
 import PricingPage from './components/PricingPage.vue'
+import PaymentPage from './components/PaymentPage.vue'
 import Footer from './components/Footer.vue'
 
 // PrimeVue Components
