@@ -219,6 +219,9 @@ const enteredPhoneNumber = ref<string>('')
 const showVerificationButtons = ref<boolean>(false)
 const showStartDialingButton = ref<boolean>(false)
 const showDialer = ref<boolean>(false)
+const callState = ref<string>('ended') // 'ended', 'ringing', 'connected'
+const callDuration = ref<number>(0)
+const queueTime = ref<number>(14)
 
 // Chat messages array
 const messages: Ref<Message[]> = ref([
