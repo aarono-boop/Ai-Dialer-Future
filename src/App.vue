@@ -436,6 +436,7 @@ const sendMessage = (message: string): void => {
 
     setTimeout(() => {
       addAIMessage(`Perfect. We've sent a text with 6-digit verification code to ${message}. Please enter it below to continue.`)
+      scrollToBottom()
     }, 1000)
     return
   }
@@ -451,6 +452,7 @@ const sendMessage = (message: string): void => {
         '',
         'As the dialer calls each person, their contact information will be displayed. The first contact that will be called is Sam Sample.'
       ])
+      scrollToBottom()
     }, 1000)
     return
   }
