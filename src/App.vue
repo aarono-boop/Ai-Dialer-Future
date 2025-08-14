@@ -106,7 +106,7 @@
               </button>
               <button
                 @click="handleDisposition('Not interested')"
-                class="bg-gray-700 hover:bg-gray-600 text-white py-3 px-4 rounded-lg font-medium transition-all duration-200 cursor-pointer"
+                class="btn-secondary py-3 px-4 rounded-lg font-medium cursor-pointer"
               >
                 Not interested
               </button>
@@ -118,7 +118,7 @@
               </button>
               <button
                 @click="handleDisposition('Set Appointment')"
-                class="bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white py-3 px-4 rounded-lg font-medium transition-all duration-200 cursor-pointer"
+                class="btn-primary py-3 px-4 rounded-lg font-medium cursor-pointer"
               >
                 Set Appointment
               </button>
