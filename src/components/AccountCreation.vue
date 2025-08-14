@@ -14,7 +14,7 @@
 
       <!-- Google Sign Up Button -->
       <Button
-        class="w-full mb-6 py-3 bg-slate-700 hover:bg-slate-600 border border-slate-600 text-white rounded-lg transition-all duration-200"
+        class="btn-primary w-full mb-6 py-3 rounded-lg"
         @click="handleGoogleSignup"
       >
         <div class="flex items-center justify-center gap-3">
@@ -100,7 +100,7 @@
         <!-- Sign Up Button -->
         <Button
           type="submit"
-          class="w-full py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium transition-all duration-200 mt-6"
+          class="btn-secondary w-full py-3 rounded-lg font-medium mt-6"
           :disabled="!isFormValid"
         >
           Sign up
