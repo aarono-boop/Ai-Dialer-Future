@@ -175,6 +175,9 @@ const isSignedIn = ref<boolean>(false)
 const showActionButtons = ref<boolean>(false)
 const showContactPreviewButtons = ref<boolean>(false)
 const showPhoneVerificationButton = ref<boolean>(false)
+const verificationStep = ref<string>('default') // 'default', 'enter-phone', 'enter-code'
+const enteredPhoneNumber = ref<string>('')
+const showVerificationButtons = ref<boolean>(false)
 
 // Chat messages array
 const messages: Ref<Message[]> = ref([
@@ -304,7 +307,7 @@ const sendMessage = (message: string): void => {
         '• Follow up with specific prospects at optimal times',
         '• Call back prospects who didn\'t answer',
         '• Review and update your call notes',
-        '• Start your daily calling sessions',
+        '��� Start your daily calling sessions',
         'What would you like to be reminded about and when?'
       ])
     } else if (lowerMessage.includes('practice a call') || lowerMessage.includes('practice')) {
