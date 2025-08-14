@@ -495,10 +495,7 @@ const handleActionButton = (action: string): void => {
     switch (action) {
       case 'Set Appointments':
         response = [
-          'Excellent! Setting appointments is our bread and butter. We\'ll help you fill your calendar.',
-          '',
-          'Your trial is ready! I\'ve analyzed your contacts and checked phone numbers with Connect Score.',
-          'Here\'s a preview of your data. Does this look correct?',
+          'Perfect! Setting appointments is our bread and butter. We\'ll help you fill your calendar.<br><br>I\'ve analyzed your contacts and checked phone numbers with Connect Score. Here\'s a preview of your data. Does this look correct?',
           sampleContacts
         ]
         break
