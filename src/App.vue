@@ -19,7 +19,11 @@
             <!-- Chat Messages Area -->
             <div class="flex flex-col" ref="chatMessages">
               <template v-for="(message, index) in messages" :key="index">
-                <ChatMessage :message="message" />
+                <!-- Regular Chat Message -->
+                <ChatMessage v-if="message.type !== 'separator'" :message="message" />
+
+                <!-- Call Separator -->
+                <CallSeparator v-else-if="message.type === 'separator'" :contactName="message.contactName || ''" />
 
                 <!-- File Upload Area - shown after first message (welcome message) only -->
                 <FileUpload
