@@ -301,7 +301,7 @@ const sendMessage = (message: string): void => {
       addAIMessage([
         '⏰ I\'ll help you set up smart reminders!',
         'ARKON can remind you to:',
-        '�� Follow up with specific prospects at optimal times',
+        '• Follow up with specific prospects at optimal times',
         '• Call back prospects who didn\'t answer',
         '• Review and update your call notes',
         '• Start your daily calling sessions',
@@ -383,6 +383,9 @@ const handleLooksGood = (): void => {
       '• 67 numbers have \'Medium\' Connect Scores and are worth calling after you exhaust your \'High\' Connect Score numbers.',
       '• 54 numbers have \'Low\' Connect Scores and are likely disconnected or inactive lines that won\'t answer when dialed.'
     ])
+
+    // Show phone verification button after the message
+    showPhoneVerificationButton.value = true
   }, 1000)
 }
 
