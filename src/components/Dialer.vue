@@ -14,6 +14,7 @@
           Queue Time: <span class="text-white">{{ formatTime(queueTime) }}</span>
         </div>
         <button
+          v-if="!shouldCompleteQueue"
           @click="pauseQueue"
           class="bg-gray-700 hover:bg-gray-600 text-white px-3 py-1 rounded text-sm transition-colors"
         >
