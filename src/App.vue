@@ -222,6 +222,7 @@
       :connectedCalls="connectedCalls"
       :skippedNumbers="skippedNumbers"
       :callLog="callLog"
+      :isQueueComplete="shouldCompleteQueue"
       @close="closeSessionSummary"
       @continue-queue="continueQueue"
       @load-new-file="loadNewFile"
