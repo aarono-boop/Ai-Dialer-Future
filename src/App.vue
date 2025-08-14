@@ -82,6 +82,7 @@
       @switch-to-signin="switchToSignin"
       @account-created="handleAccountCreated"
       @google-signup="handleGoogleSignupFromAccount"
+      @show-terms="showTermsFromAccount"
     />
 
     <!-- Toast for notifications -->
