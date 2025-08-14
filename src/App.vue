@@ -490,6 +490,7 @@ const handleGoogleSignin = (): void => {
 const handleLoginSuccess = (userData: any): void => {
   showLoginModal.value = false
   isSignedIn.value = true
+  isReturningUser.value = true // This is a returning user
 
   // Since they're a returning user who has already set goals,
   // skip directly to file upload stage
