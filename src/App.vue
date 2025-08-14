@@ -279,6 +279,7 @@ const showPricingPage = ref<boolean>(false)
 const showPaymentPage = ref<boolean>(false)
 const isSignedIn = ref<boolean>(false)
 const showActionButtons = ref<boolean>(false)
+const showLoginModal = ref<boolean>(false)
 const showContactPreviewButtons = ref<boolean>(false)
 const showPhoneVerificationButton = ref<boolean>(false)
 const verificationStep = ref<string>('default') // 'default', 'enter-phone', 'enter-code'
@@ -787,7 +788,7 @@ const handleNextContact = (): void => {
   // Move to next contact
   if (currentContactIndex.value < contacts.length - 1) {
     currentContactIndex.value++
-    addAIMessage(`➡��� Moving to next contact: ${currentContact.value.name}. Preparing to dial...`)
+    addAIMessage(`➡️ Moving to next contact: ${currentContact.value.name}. Preparing to dial...`)
     callState.value = 'ended'
     callDuration.value = 0
 
