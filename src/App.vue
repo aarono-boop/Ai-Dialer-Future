@@ -746,6 +746,39 @@ const handleKeypad = (): void => {
   addAIMessage('📱 Keypad opened')
 }
 
+const handleDisposition = (disposition: string): void => {
+  // Hide disposition buttons
+  showDispositionButtons.value = false
+
+  // Add user message showing what disposition was selected
+  addUserMessage(disposition)
+
+  // Add AI response about the disposition
+  setTimeout(() => {
+    addAIMessage(`✅ ${disposition} disposition saved for ${currentContact.value.name}.`)
+
+    // Move to next contact if available
+    if (currentContactIndex.value < contacts.length - 1) {
+      currentContactIndex.value++
+
+      setTimeout(() => {
+        addAIMessage(`🔄 Moving to next contact: ${currentContact.value.name}. Starting dial...`)
+        // Start calling the next contact
+        simulateCall()
+      }, 1500)
+    } else {
+      addAIMessage('📋 All contacts have been processed. Dialing session complete!')
+      showDialer.value = false
+
+      // Stop queue timer
+      if (queueTimer) {
+        clearInterval(queueTimer)
+        queueTimer = null
+      }
+    }
+  }, 1000)
+}
+
 // Signup Methods
 const handleGoogleSignup = () => {
   addAIMessage('🚀 Great choice! Setting up your Google account integration...')
