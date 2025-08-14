@@ -773,7 +773,7 @@ const sendMessage = (message: string): void => {
       ])
     } else if (lowerMessage.includes('set a reminder') || lowerMessage.includes('reminder')) {
       addAIMessage([
-        '⏰ I\'ll help you set up smart reminders!',
+        '��� I\'ll help you set up smart reminders!',
         'ARKON can remind you to:',
         '• Follow up with specific prospects at optimal times',
         '• Call back prospects who didn\'t answer',
@@ -802,7 +802,7 @@ const sendMessage = (message: string): void => {
       ])
     } else if (lowerMessage.includes('tell a joke') || lowerMessage.includes('joke')) {
       addAIMessage([
-        '😄 Why did the salesperson bring a ladder to work?',
+        '���� Why did the salesperson bring a ladder to work?',
         'Because they heard the job was about making <strong>high-level</strong> connections!',
         '',
         '🎯 Speaking of connections, did you know ARKON users make 3x more meaningful connections than traditional dialers?',
@@ -845,8 +845,8 @@ const handleLooksGood = (): void => {
   // Add user message showing what button was clicked
   addUserMessage('Looks Good')
 
-  if (isSignedIn.value) {
-    // Skip phone verification for returning users
+  if (isReturningUser.value) {
+    // Skip phone verification for returning users (logged in users)
     setTimeout(() => {
       addAIMessage([
         'I\'ve analyzed your contact\'s phone numbers using real connection data from 900M+ calls, recent phone engagement, calling patterns, and carrier signals—so you only dial numbers likely to connect.',
