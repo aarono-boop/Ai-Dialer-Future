@@ -1,6 +1,6 @@
 <template>
   <footer class="text-center p-6 text-white text-sm relative z-[5] -mt-[25px]">
-    <p>&copy; 2024 PhoneBurner. All rights reserved.</p>
+    <p>&copy; 2025 ARKON. All rights reserved.</p>
   </footer>
 </template>
 
