@@ -204,6 +204,8 @@ const props = defineProps<{
     leadSource: string
   }
   nextContactName: string
+  shouldCompleteQueue: boolean
+  isLastContact: boolean
 }>()
 
 // Define emits
