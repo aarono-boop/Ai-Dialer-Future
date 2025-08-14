@@ -842,23 +842,52 @@ const handleLooksGood = (): void => {
   // Add user message showing what button was clicked
   addUserMessage('Looks Good')
 
-  // Add AI response after a delay
-  setTimeout(() => {
-    addAIMessage([
-      'I\'ve analyzed your contact\'s phone numbers using real connection data from 900M+ calls, recent phone engagement, calling patterns, and carrier signals—so you only dial numbers likely to connect.',
-      '',
-      'I\'ve prioritized the phone numbers most likely to connect so you spend time talking, not hitting dead lines.',
-      '',
-      'Here\'s what I found:',
-      '• 40 numbers have \'High\' Connect Scores and show consistent calling activity in the last 12 months. These are highly likely to be connected and assigned to active subscribers.',
-      '• 67 numbers have \'Medium\' Connect Scores and are worth calling after you exhaust your \'High\' Connect Score numbers.',
-      '• 54 numbers have \'Low\' Connect Scores and are likely disconnected or inactive lines that won\'t answer when dialed.'
-    ])
+  if (isSignedIn.value) {
+    // Skip phone verification for returning users
+    setTimeout(() => {
+      addAIMessage([
+        'I\'ve analyzed your contact\'s phone numbers using real connection data from 900M+ calls, recent phone engagement, calling patterns, and carrier signals—so you only dial numbers likely to connect.',
+        '',
+        'I\'ve prioritized the phone numbers most likely to connect so you spend time talking, not hitting dead lines.',
+        '',
+        'Here\'s what I found:',
+        '• 40 numbers have \'High\' Connect Scores and show consistent calling activity in the last 12 months. These are highly likely to be connected and assigned to active subscribers.',
+        '• 67 numbers have \'Medium\' Connect Scores and are worth calling after you exhaust your \'High\' Connect Score numbers.',
+        '• 54 numbers have \'Low\' Connect Scores and are likely disconnected or inactive lines that won\'t answer when dialed.'
+      ])
 
-    // Show phone verification button after the message
-    showPhoneVerificationButton.value = true
-    scrollToBottom()
-  }, 1000)
+      // Skip directly to verified phone and start dialing
+      setTimeout(() => {
+        addAIMessage([
+          'Great! Your number (971) 235-1723 is verified and set as your Caller ID.',
+          '',
+          'As the dialer calls each person, their contact information will be displayed. The first contact that will be called is Sam Sample.'
+        ])
+        showStartDialingButton.value = true
+        scrollToBottom()
+      }, 1500)
+
+      scrollToBottom()
+    }, 1000)
+  } else {
+    // Regular flow for new users
+    setTimeout(() => {
+      addAIMessage([
+        'I\'ve analyzed your contact\'s phone numbers using real connection data from 900M+ calls, recent phone engagement, calling patterns, and carrier signals—so you only dial numbers likely to connect.',
+        '',
+        'I\'ve prioritized the phone numbers most likely to connect so you spend time talking, not hitting dead lines.',
+        '',
+        'Here\'s what I found:',
+        '• 40 numbers have \'High\' Connect Scores and show consistent calling activity in the last 12 months. These are highly likely to be connected and assigned to active subscribers.',
+        '• 67 numbers have \'Medium\' Connect Scores and are worth calling after you exhaust your \'High\' Connect Score numbers.',
+        '• 54 numbers have \'Low\' Connect Scores and are likely disconnected or inactive lines that won\'t answer when dialed.'
+      ])
+
+      // Show phone verification button after the message
+      showPhoneVerificationButton.value = true
+      scrollToBottom()
+    }, 1000)
+  }
 }
 
 const handleTryAgain = (): void => {
