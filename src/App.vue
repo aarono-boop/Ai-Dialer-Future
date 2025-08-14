@@ -113,8 +113,17 @@
         <!-- Dialer Container -->
         <div v-if="showDialer" class="w-1/3">
           <Dialer
+            :callState="callState"
+            :callDuration="callDuration"
+            :queueTime="queueTime"
+            :currentContact="currentContact"
+            :nextContactName="nextContactName"
             @call-back="handleCallBack"
             @next-contact="handleNextContact"
+            @hang-up="handleHangUp"
+            @mute="handleMute"
+            @hold="handleHold"
+            @keypad="handleKeypad"
           />
         </div>
       </div>
