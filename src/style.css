@@ -15,6 +15,25 @@ body {
   background-size: 100% 100%, 16px 16px;
 }
 
+/* CSS Variables */
+:root {
+  --c-primary-700: #7c3aed;
+}
+
+/* Primary Button Styling */
+.btn-primary {
+  background-color: var(--c-primary-700);
+  background-image: radial-gradient(circle at 0 0, #9500ff, #6000bf);
+  transition: all .5s ease-in-out;
+  border: none;
+  color: white;
+}
+
+.btn-primary:hover {
+  background-image: radial-gradient(circle at 0 0, #a500ff, #7000cf);
+  transform: translateY(-1px);
+}
+
 /* Custom dark scrollbar styling */
 * {
   scrollbar-width: thick !important;
