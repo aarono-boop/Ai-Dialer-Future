@@ -41,7 +41,7 @@
           <!-- Upgrade Button -->
           <Button
             label="Upgrade to Pro"
-            class="w-full py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium transition-all duration-200"
+            class="btn-primary w-full py-3 rounded-lg font-medium"
             @click="handleUpgrade"
           />
         </div>
