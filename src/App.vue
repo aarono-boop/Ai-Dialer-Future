@@ -351,13 +351,21 @@ const messages: Ref<Message[]> = ref([
 // Helper function to scroll to bottom of chat
 const scrollToBottom = async () => {
   await nextTick()
-  // Wait a bit more for DOM updates, especially for complex content
+  // Wait for DOM updates and then scroll multiple times to ensure it works
   setTimeout(() => {
     if (chatMessages.value) {
-      chatMessages.value.scrollTo({
-        top: chatMessages.value.scrollHeight,
-        behavior: 'smooth'
-      })
+      // First scroll immediately
+      chatMessages.value.scrollTop = chatMessages.value.scrollHeight
+
+      // Then scroll smoothly after a short delay
+      setTimeout(() => {
+        if (chatMessages.value) {
+          chatMessages.value.scrollTo({
+            top: chatMessages.value.scrollHeight,
+            behavior: 'smooth'
+          })
+        }
+      }, 100)
     }
   }, 50)
 }
