@@ -794,8 +794,18 @@ const handleHangUp = (): void => {
 
   callState.value = 'ended'
   showDispositionButtons.value = true
+  totalCalls.value++
 
-  addAIMessage(`📞 Call with ${currentContact.value.name} ended. Duration: ${Math.floor(callDuration.value / 60)}:${(callDuration.value % 60).toString().padStart(2, '0')}`)
+  // Add to call log with temporary entry (will be updated when disposition is set)
+  const duration = `${Math.floor(callDuration.value / 60).toString().padStart(2, '0')}:${(callDuration.value % 60).toString().padStart(2, '0')}`
+  callLog.value.push({
+    contact: currentContact.value.name,
+    duration: duration,
+    disposition: 'No Disposition Set',
+    notes: ''
+  })
+
+  addAIMessage(`📞 Call with ${currentContact.value.name} ended. Duration: ${duration}`)
   addAIMessage('Please select a disposition for this call:')
 }
 
