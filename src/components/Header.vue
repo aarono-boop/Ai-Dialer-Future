@@ -19,12 +19,22 @@
       </div>
       
       <div class="flex gap-4 items-center">
-        <Button 
-          label="Login" 
-          text 
+        <!-- Avatar when signed in -->
+        <div v-if="isSignedIn" class="flex items-center gap-3">
+          <div class="w-8 h-8 rounded-full bg-gradient-to-r from-blue-500 to-purple-600 flex items-center justify-center">
+            <i class="pi pi-user text-white text-sm"></i>
+          </div>
+        </div>
+
+        <!-- Login button when not signed in -->
+        <Button
+          v-else
+          label="Login"
+          text
           class="text-white font-medium hover:text-purple-400 transition-colors"
           @click="$emit('login')"
         />
+
         <Button
           text
           class="text-gray-400 font-medium hover:text-purple-400 transition-colors"
