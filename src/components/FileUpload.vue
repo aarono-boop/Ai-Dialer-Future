@@ -5,7 +5,7 @@
       @dragleave="handleDragLeave"
       @drop.prevent="handleDrop"
       @click="triggerFileInput"
-      class="w-full h-32 bg-gray-800/50 border border-gray-600 rounded-lg relative cursor-pointer hover:bg-gray-800/70 transition-all duration-300 flex items-center justify-center"
+      class="w-full h-32 border border-gray-600 rounded-lg relative cursor-pointer hover:bg-gray-800/30 transition-all duration-300 flex items-center justify-center"
     >
       <!-- Plus icon in top left -->
       <div class="absolute top-3 left-3">
