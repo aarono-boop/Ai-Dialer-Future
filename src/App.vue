@@ -896,7 +896,7 @@ const handlePurchaseCompleted = () => {
   // Ensure scroll happens after action buttons are rendered
   setTimeout(() => {
     scrollToBottom()
-  }, 200)
+  }, 500)
 }
 
 const handleUpgradeSelected = () => {
@@ -908,7 +908,7 @@ const handleUpgradeSelected = () => {
   // Ensure scroll happens after action buttons are rendered
   setTimeout(() => {
     scrollToBottom()
-  }, 200)
+  }, 500)
 }
 
 // Account Creation Methods
@@ -925,7 +925,7 @@ const handleAccountCreated = (accountData: any) => {
   // Ensure scroll happens after action buttons are rendered
   setTimeout(() => {
     scrollToBottom()
-  }, 200)
+  }, 500)
 }
 
 const showTermsFromAccount = () => {
@@ -942,9 +942,9 @@ const handleGoogleSignupFromAccount = () => {
     addAIMessage('🎉 Welcome to ARKON! Your account has been created successfully. Let\'s start your first smart calling session! What are you trying to accomplish?')
 
     // Ensure scroll happens after action buttons are rendered
-    setTimeout(() => {
-      scrollToBottom()
-    }, 200)
+  setTimeout(() => {
+    scrollToBottom()
+  }, 500)
   }, 2000)
 }
 
