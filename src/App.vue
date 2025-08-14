@@ -77,6 +77,16 @@
               </button>
             </div>
 
+            <!-- Start Dialing Button -->
+            <div v-if="showStartDialingButton" class="flex justify-center w-full">
+              <button
+                @click="handleStartDialing"
+                class="bg-gradient-to-r from-green-500 to-green-600 text-white border-0 px-8 py-3 rounded-lg font-semibold hover:from-green-600 hover:to-green-700 transition-all duration-200 cursor-pointer"
+              >
+                Start Dialing
+              </button>
+            </div>
+
             <!-- Signup Buttons -->
             <SignupButtons
               v-if="showSignupButtons && !isSignedIn"
@@ -309,7 +319,7 @@ const sendMessage = (message: string): void => {
         '📈 Great question! Here are ARKON\'s proven strategies to boost your connect rates:',
         '• <strong>Smart Timing:</strong> Calls prospects when they\'re most likely to answer',
         '• <strong>Local Presence:</strong> Uses local numbers to increase pickup rates',
-        '• <strong>Voicemail Drop:</strong> Leaves personalized messages when they don\'t answer',
+        '�� <strong>Voicemail Drop:</strong> Leaves personalized messages when they don\'t answer',
         '• <strong>Follow-up Sequences:</strong> Automatically schedules optimal callback times',
         'On average, users see a 40% increase in connect rates within their first week!'
       ])
