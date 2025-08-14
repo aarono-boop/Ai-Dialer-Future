@@ -346,8 +346,8 @@ const handleSignupSubmit = () => {
 }
 
 const switchToSignin = () => {
-  // Could implement signin modal here
-  addAIMessage('Sign in functionality would redirect to login page.')
+  showAccountCreation.value = false
+  showSignupModal.value = true
 }
 
 // Terms Modal Methods
