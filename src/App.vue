@@ -48,7 +48,7 @@
             <div v-if="showContactPreviewButtons" class="flex gap-3 w-full">
               <button
                 @click="handleLooksGood"
-                class="flex-1 bg-gradient-to-r from-emerald-500 to-emerald-600 text-white border-0 px-6 py-3 rounded-lg font-semibold hover:from-emerald-600 hover:to-emerald-700 transition-all duration-200 cursor-pointer"
+                class="flex-1 btn-primary px-6 py-3 rounded-lg font-semibold cursor-pointer"
               >
                 Looks Good
               </button>
