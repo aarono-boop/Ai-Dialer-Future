@@ -289,6 +289,7 @@ const showPaymentPage = ref<boolean>(false)
 const isSignedIn = ref<boolean>(false)
 const showActionButtons = ref<boolean>(false)
 const showLoginModal = ref<boolean>(false)
+const showFileUploadForReturningUser = ref<boolean>(false)
 const showContactPreviewButtons = ref<boolean>(false)
 const showPhoneVerificationButton = ref<boolean>(false)
 const verificationStep = ref<string>('default') // 'default', 'enter-phone', 'enter-code'
