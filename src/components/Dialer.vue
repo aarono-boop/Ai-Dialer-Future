@@ -178,16 +178,78 @@
 </template>
 
 <script setup lang="ts">
+import { ref } from 'vue'
+
+// Define props
+const props = defineProps<{
+  callState: string
+  callDuration: number
+  queueTime: number
+  currentContact: {
+    name: string
+    title: string
+    company: string
+    phone: string
+    connectScore: string
+    email: string
+    address: string
+    localTime: string
+    website: string
+    linkedin: string
+    industry: string
+    companySize: string
+    leadSource: string
+  }
+  nextContactName: string
+}>()
+
 // Define emits
-const emit = defineEmits(['call-back', 'next-contact'])
+const emit = defineEmits(['call-back', 'next-contact', 'hang-up', 'mute', 'hold', 'keypad'])
+
+// Reactive data
+const isMuted = ref(false)
+const isOnHold = ref(false)
 
 // Methods
+const formatTime = (seconds: number): string => {
+  const mins = Math.floor(seconds / 60)
+  const secs = seconds % 60
+  return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`
+}
+
+const getConnectScoreColor = (score: string): string => {
+  switch (score.toLowerCase()) {
+    case 'high': return 'text-green-400'
+    case 'medium': return 'text-yellow-400'
+    case 'low': return 'text-red-400'
+    default: return 'text-gray-400'
+  }
+}
+
 const callBack = () => {
   emit('call-back')
 }
 
 const nextContact = () => {
   emit('next-contact')
+}
+
+const hangUp = () => {
+  emit('hang-up')
+}
+
+const toggleMute = () => {
+  isMuted.value = !isMuted.value
+  emit('mute', isMuted.value)
+}
+
+const toggleHold = () => {
+  isOnHold.value = !isOnHold.value
+  emit('hold', isOnHold.value)
+}
+
+const showKeypad = () => {
+  emit('keypad')
 }
 </script>
 
