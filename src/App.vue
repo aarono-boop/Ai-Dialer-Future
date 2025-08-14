@@ -516,6 +516,19 @@ const handleTryAnotherNumber = (): void => {
   }, 1000)
 }
 
+const handleStartDialing = (): void => {
+  // Hide start dialing button
+  showStartDialingButton.value = false
+
+  // Add user message showing what button was clicked
+  addUserMessage('Start Dialing')
+
+  // Add AI response after a delay (placeholder for now)
+  setTimeout(() => {
+    addAIMessage('🎯 Starting your dialing session! Connecting you to your first contact...')
+  }, 1000)
+}
+
 // Signup Methods
 const handleGoogleSignup = () => {
   addAIMessage('🚀 Great choice! Setting up your Google account integration...')
