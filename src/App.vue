@@ -156,6 +156,7 @@
             @mute="handleMute"
             @hold="handleHold"
             @keypad="handleKeypad"
+            @pause-queue="handlePauseQueue"
           />
         </div>
       </div>
@@ -591,7 +592,7 @@ const sendMessage = (message: string): void => {
 }
 
 const handleVoiceInput = () => {
-  addAIMessage('🎤 Listening... (voice recognition simulated)')
+  addAIMessage('�� Listening... (voice recognition simulated)')
 
   // Simulate voice input
   setTimeout(() => {
