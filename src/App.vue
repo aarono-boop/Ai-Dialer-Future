@@ -61,6 +61,22 @@
               </button>
             </div>
 
+            <!-- Verification Code Buttons -->
+            <div v-if="showVerificationButtons" class="flex gap-3 w-full">
+              <button
+                @click="handleResendCode"
+                class="flex-1 bg-white/10 text-white border border-white/30 px-6 py-3 rounded-lg font-semibold hover:bg-white/20 transition-all duration-200 cursor-pointer"
+              >
+                Resend Code
+              </button>
+              <button
+                @click="handleTryAnotherNumber"
+                class="flex-1 bg-white/10 text-white border border-white/30 px-6 py-3 rounded-lg font-semibold hover:bg-white/20 transition-all duration-200 cursor-pointer"
+              >
+                Try Another Number
+              </button>
+            </div>
+
             <!-- Signup Buttons -->
             <SignupButtons
               v-if="showSignupButtons && !isSignedIn"
