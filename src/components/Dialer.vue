@@ -170,11 +170,12 @@
         </button>
 
         <button
-          @click="nextContact"
-          class="w-full bg-gray-700 hover:bg-gray-600 text-white py-3 px-4 rounded-lg flex items-center justify-center gap-2 transition-colors"
+          @click="shouldCompleteQueue ? completeQueue() : nextContact()"
+          :class="shouldCompleteQueue ? 'bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700' : 'bg-gray-700 hover:bg-gray-600'"
+          class="w-full text-white py-3 px-4 rounded-lg flex items-center justify-center gap-2 transition-colors"
         >
-          <i class="pi pi-arrow-right"></i>
-          Next: {{ nextContactName }}
+          <i :class="shouldCompleteQueue ? 'pi pi-check' : 'pi pi-arrow-right'"></i>
+          {{ shouldCompleteQueue ? 'Complete Queue' : `Next: ${nextContactName}` }}
         </button>
       </div>
     </div>
