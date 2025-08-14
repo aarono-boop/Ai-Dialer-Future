@@ -1,5 +1,5 @@
 <template>
-  <div class="max-w-[80%] my-6 flex flex-col justify-start items-start gap-4">
+  <div class="max-w-[80%] my-6 ml-[34px] flex flex-col justify-start items-start gap-4">
     <div
       @dragover.prevent="handleDragOver"
       @dragleave="handleDragLeave"
