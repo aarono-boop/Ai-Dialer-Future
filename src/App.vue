@@ -252,6 +252,7 @@ import Footer from './components/Footer.vue'
 import Dialer from './components/Dialer.vue'
 import CallSeparator from './components/CallSeparator.vue'
 import SessionSummary from './components/SessionSummary.vue'
+import LoginModal from './components/LoginModal.vue'
 
 // PrimeVue Components
 import Toast from 'primevue/toast'
@@ -786,7 +787,7 @@ const handleNextContact = (): void => {
   // Move to next contact
   if (currentContactIndex.value < contacts.length - 1) {
     currentContactIndex.value++
-    addAIMessage(`➡️ Moving to next contact: ${currentContact.value.name}. Preparing to dial...`)
+    addAIMessage(`➡��� Moving to next contact: ${currentContact.value.name}. Preparing to dial...`)
     callState.value = 'ended'
     callDuration.value = 0
 
