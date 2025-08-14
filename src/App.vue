@@ -492,6 +492,11 @@ const handleLoginSuccess = (userData: any): void => {
   // Since they're a returning user who has already set goals,
   // skip directly to file upload stage
   addAIMessage(`Welcome back, ${userData.name}! Ready to upload your contact file and start dialing?`)
+
+  setTimeout(() => {
+    showFileUploadForReturningUser.value = true
+    scrollToBottom()
+  }, 500)
 }
 
 const showSignupFromLogin = (): void => {
@@ -1004,7 +1009,7 @@ const handleDisposition = (disposition: string): void => {
         }, 1000)
       }, 1500)
     } else {
-      addAIMessage('📋 All contacts have been processed. Dialing session complete!')
+      addAIMessage('��� All contacts have been processed. Dialing session complete!')
       showDialer.value = false
       scrollToBottom()
 
