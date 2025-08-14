@@ -13,7 +13,10 @@
         <div class="text-gray-400 text-sm">
           Queue Time: <span class="text-white">{{ formatTime(queueTime) }}</span>
         </div>
-        <button class="bg-gray-700 hover:bg-gray-600 text-white px-3 py-1 rounded text-sm transition-colors">
+        <button
+          @click="pauseQueue"
+          class="bg-gray-700 hover:bg-gray-600 text-white px-3 py-1 rounded text-sm transition-colors"
+        >
           Pause Queue
         </button>
       </div>
