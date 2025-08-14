@@ -64,7 +64,7 @@
             <div v-if="showPhoneVerificationButton" class="flex justify-center w-full">
               <button
                 @click="handlePhoneVerification"
-                class="bg-gradient-to-r from-blue-500 to-blue-600 text-white border-0 px-8 py-3 rounded-lg font-semibold hover:from-blue-600 hover:to-blue-700 transition-all duration-200 cursor-pointer"
+                class="btn-primary px-8 py-3 rounded-lg font-semibold cursor-pointer"
               >
                 Now lets verify my phone number
               </button>
