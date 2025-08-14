@@ -363,6 +363,33 @@ const handleTermsAgree = () => {
   addAIMessage('🎉 Welcome to ARKON! Your account has been created successfully. Let\'s start your first smart calling session! What are you trying to accomplish?')
 }
 
+// Account Creation Methods
+const closeAccountCreation = () => {
+  showAccountCreation.value = false
+}
+
+const switchToSignin = () => {
+  showAccountCreation.value = false
+  showSignupModal.value = true
+}
+
+const handleAccountCreated = (accountData: any) => {
+  closeAccountCreation()
+  isSignedIn.value = true
+  showActionButtons.value = true
+  addAIMessage('🎉 Welcome to ARKON! Your account has been created successfully. Let\'s start your first smart calling session! What are you trying to accomplish?')
+}
+
+const handleGoogleSignupFromAccount = () => {
+  closeAccountCreation()
+  addAIMessage('🚀 Great choice! Setting up your Google account integration...')
+  setTimeout(() => {
+    isSignedIn.value = true
+    showActionButtons.value = true
+    addAIMessage('🎉 Welcome to ARKON! Your account has been created successfully. Let\'s start your first smart calling session! What are you trying to accomplish?')
+  }, 2000)
+}
+
 // Action Button Methods
 const handleActionButton = (action: string): void => {
   // Hide action buttons after selection
