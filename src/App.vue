@@ -186,9 +186,13 @@ const handleSwitchToVulcan = () => {
 
 // File Upload Methods
 const simulateFileUpload = () => {
-  // Go directly to signup prompt
-  addAIMessage('Great! To get your free trial started and see it in action, how would you like to sign up?')
-  showSignupButtons.value = true
+  addAIMessage('Great! I\'ve received your file. Let me analyze your contacts...')
+  hasUploadedFile.value = true
+
+  // Show account creation page after a brief moment
+  setTimeout(() => {
+    showAccountCreation.value = true
+  }, 1500)
 }
 
 const onFileSelect = (file: File): void => {
