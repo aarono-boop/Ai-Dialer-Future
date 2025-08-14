@@ -354,6 +354,9 @@ const handleVoiceInput = () => {
 
 // Contact Preview Button Methods
 const handleLooksGood = (): void => {
+  // Hide contact preview buttons
+  showContactPreviewButtons.value = false
+
   addAIMessage([
     'I\'ve analyzed your contact\'s phone numbers using real connection data from 900M+ calls, recent phone engagement, calling patterns, and carrier signals—so you only dial numbers likely to connect.',
     '',
@@ -367,14 +370,13 @@ const handleLooksGood = (): void => {
 }
 
 const handleTryAgain = (): void => {
+  // Hide contact preview buttons
+  showContactPreviewButtons.value = false
+
   addAIMessage('What didn\'t look right previously that I can fix?')
   // Reset the file upload state to show the upload area again
   hasUploadedFile.value = false
 }
-
-// Make functions globally available for onclick handlers
-;(window as any).handleLooksGood = handleLooksGood
-;(window as any).handleTryAgain = handleTryAgain
 
 // Signup Methods
 const handleGoogleSignup = () => {
