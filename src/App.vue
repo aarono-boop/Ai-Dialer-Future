@@ -448,12 +448,7 @@ const addSeparatorMessage = (contactName: string): void => {
 
 // Header Methods
 const handleLogin = () => {
-  toast.add({
-    severity: 'info',
-    summary: 'Login',
-    detail: 'Login functionality coming soon!',
-    life: 3000
-  })
+  showLoginModal.value = true
 }
 
 const handleSwitchToVulcan = () => {
