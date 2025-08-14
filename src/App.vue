@@ -295,6 +295,7 @@ const showAccountCreation = ref<boolean>(false)
 const showPricingPage = ref<boolean>(false)
 const showPaymentPage = ref<boolean>(false)
 const isSignedIn = ref<boolean>(false)
+const isReturningUser = ref<boolean>(false) // Track if user logged in vs created new account
 const showActionButtons = ref<boolean>(false)
 const showLoginModal = ref<boolean>(false)
 const showFileUploadForReturningUser = ref<boolean>(false)
