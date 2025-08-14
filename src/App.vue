@@ -13,7 +13,7 @@
     <main class="flex-1 flex items-start justify-center p-8 relative z-[5]">
       <div class="flex gap-6 w-full max-w-[1400px] h-[80vh] mt-2.5">
         <!-- Chat Container -->
-        <div :class="showDialer ? 'w-2/3' : 'w-full max-w-[900px] mx-auto'" class="border border-white/10 rounded-xl p-5 shadow-2xl">
+        <div :class="showDialer ? 'w-2/3' : 'w-full max-w-[900px] mx-auto'" class="rounded-xl p-5 shadow-2xl">
           <div class="w-full h-full flex flex-col">
           <!-- Top content area - scrollable -->
           <div class="flex-1 overflow-y-auto flex flex-col gap-8 pr-2 pb-4 scrollbar-thin scrollbar-track-white/10 scrollbar-thumb-white/30 hover:scrollbar-thumb-white/50" ref="chatMessages">
