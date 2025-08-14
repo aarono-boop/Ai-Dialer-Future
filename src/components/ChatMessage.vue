@@ -2,7 +2,7 @@
   <div :class="['flex items-start mb-4', message.type === 'user' ? 'justify-end' : 'justify-start']">
     <div v-if="message.type === 'ai'" class="flex gap-[10px] items-start w-full">
       <div class="flex items-start justify-center flex-shrink-0 pt-1">
-        <svg xmlns="http://www.w3.org/2000/svg" height="18px" viewBox="0 -960 960 960" width="18px">
+        <svg xmlns="http://www.w3.org/2000/svg" height="32px" viewBox="0 -960 960 960" width="32px">
           <defs>
             <linearGradient id="arkonGradientChat" x1="0%" y1="0%" x2="100%" y2="100%">
               <stop offset="0%" style="stop-color:#60a5fa;stop-opacity:1" />
