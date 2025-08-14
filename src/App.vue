@@ -382,6 +382,23 @@ const closePricingPage = () => {
   showPricingPage.value = false
 }
 
+const showPaymentFromPricing = () => {
+  showPricingPage.value = false
+  showPaymentPage.value = true
+}
+
+const closePaymentPage = () => {
+  showPaymentPage.value = false
+  showPricingPage.value = true
+}
+
+const handlePurchaseCompleted = () => {
+  closePaymentPage()
+  isSignedIn.value = true
+  showActionButtons.value = true
+  addAIMessage('🎉 Welcome to ARKON! Your account has been created successfully. Let\'s start your first smart calling session! What are you trying to accomplish?')
+}
+
 const handleUpgradeSelected = () => {
   closePricingPage()
   isSignedIn.value = true
