@@ -350,7 +350,7 @@ const closeTermsModal = () => {
 
 const handleTermsCancel = () => {
   closeTermsModal()
-  // Could optionally show signup modal again
+  showAccountCreation.value = true
 }
 
 const handleTermsAgree = () => {
