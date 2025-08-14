@@ -1,6 +1,6 @@
 <template>
   <div class="mt-4">
-    <div class="flex items-center bg-gray-800 backdrop-blur-[10px] border border-gray-600 rounded-xl px-3 py-2 gap-2 w-1/2 mx-auto">
+    <div class="flex items-center bg-gray-800 backdrop-blur-[10px] border border-gray-600 rounded-xl px-3 py-2 gap-2 w-[70%] mx-auto">
       <InputText
         v-model="inputValue"
         :placeholder="props.customPlaceholder || animatedPlaceholder"
