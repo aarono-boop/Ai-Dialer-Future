@@ -367,6 +367,18 @@ const handleTermsAgree = () => {
   showPricingPage.value = true
 }
 
+// Pricing Page Methods
+const closePricingPage = () => {
+  showPricingPage.value = false
+}
+
+const handleUpgradeSelected = () => {
+  closePricingPage()
+  isSignedIn.value = true
+  showActionButtons.value = true
+  addAIMessage('🎉 Welcome to ARKON! Your account has been created successfully. Let\'s start your first smart calling session! What are you trying to accomplish?')
+}
+
 // Account Creation Methods
 const closeAccountCreation = () => {
   showAccountCreation.value = false
