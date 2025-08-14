@@ -54,7 +54,7 @@
               </button>
               <button
                 @click="handleTryAgain"
-                class="flex-1 bg-white/10 text-white border border-white/30 px-6 py-3 rounded-lg font-semibold hover:bg-white/20 transition-all duration-200 cursor-pointer"
+                class="btn-secondary flex-1 px-6 py-3 rounded-lg font-semibold cursor-pointer"
               >
                 Try Again
               </button>
@@ -74,13 +74,13 @@
             <div v-if="showVerificationButtons" class="flex gap-3 w-full">
               <button
                 @click="handleResendCode"
-                class="flex-1 bg-white/10 text-white border border-white/30 px-6 py-3 rounded-lg font-semibold hover:bg-white/20 transition-all duration-200 cursor-pointer"
+                class="btn-secondary flex-1 px-6 py-3 rounded-lg font-semibold cursor-pointer"
               >
                 Resend Code
               </button>
               <button
                 @click="handleTryAnotherNumber"
-                class="flex-1 bg-white/10 text-white border border-white/30 px-6 py-3 rounded-lg font-semibold hover:bg-white/20 transition-all duration-200 cursor-pointer"
+                class="btn-secondary flex-1 px-6 py-3 rounded-lg font-semibold cursor-pointer"
               >
                 Try Another Number
               </button>
