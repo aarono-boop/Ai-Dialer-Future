@@ -89,6 +89,7 @@
     <PricingPage
       v-if="showPricingPage"
       @upgrade-selected="handleUpgradeSelected"
+      @show-payment="showPaymentFromPricing"
       @close="closePricingPage"
     />
 
