@@ -515,6 +515,15 @@ const handleActionButton = (action: string): void => {
             <span style="color: #ffffff;">Webinar Registration</span>
           </div>
         </div>
+
+        <div style="margin-top: 1.5rem; display: flex; gap: 1rem; justify-content: center;">
+          <button onclick="handleLooksGood()" style="background: linear-gradient(135deg, #10b981, #059669); color: white; border: none; padding: 0.75rem 1.5rem; border-radius: 8px; font-weight: 600; cursor: pointer; transition: all 0.2s ease;">
+            Looks Good
+          </button>
+          <button onclick="handleTryAgain()" style="background: rgba(255,255,255,0.1); color: white; border: 1px solid rgba(255,255,255,0.3); padding: 0.75rem 1.5rem; border-radius: 8px; font-weight: 600; cursor: pointer; transition: all 0.2s ease;">
+            Try Again
+          </button>
+        </div>
       </div>`
     
     switch (action) {
