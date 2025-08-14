@@ -480,6 +480,8 @@ const handleGoogleSignupFromAccount = () => {
 const handleActionButton = (action: string): void => {
   // Hide action buttons after selection
   showActionButtons.value = false
+  // Show contact preview buttons
+  showContactPreviewButtons.value = true
   
   // Add user message showing their selection
   addUserMessage(`I want to ${action.toLowerCase()}`)
