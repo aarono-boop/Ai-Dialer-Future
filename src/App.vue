@@ -536,7 +536,10 @@ const handleStartDialing = (): void => {
   // Add user message showing what button was clicked
   addUserMessage('Start Dialing')
 
-  // Add AI response after a delay (placeholder for now)
+  // Show the dialer
+  showDialer.value = true
+
+  // Add AI response after a delay
   setTimeout(() => {
     addAIMessage('🎯 Starting your dialing session! Connecting you to your first contact...')
   }, 1000)
