@@ -26,6 +26,11 @@ import { ref, onMounted, onUnmounted } from 'vue'
 import Button from 'primevue/button'
 import InputText from 'primevue/inputtext'
 
+// Define props
+const props = defineProps<{
+  customPlaceholder?: string
+}>()
+
 // Define emits
 const emit = defineEmits(['send-message', 'voice-input'])
 
