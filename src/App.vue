@@ -93,6 +93,7 @@ import SignupButtons from './components/SignupButtons.vue'
 import ChatInput from './components/ChatInput.vue'
 import SignupModal from './components/SignupModal.vue'
 import TermsModal from './components/TermsModal.vue'
+import AccountCreation from './components/AccountCreation.vue'
 import Footer from './components/Footer.vue'
 
 // PrimeVue Components
@@ -114,6 +115,7 @@ const hasUploadedFile = ref<boolean>(false)
 const showSignupButtons = ref<boolean>(false)
 const showSignupModal = ref<boolean>(false)
 const showTermsModal = ref<boolean>(false)
+const showAccountCreation = ref<boolean>(false)
 const isSignedIn = ref<boolean>(false)
 const showActionButtons = ref<boolean>(false)
 
@@ -182,16 +184,12 @@ const simulateFileUpload = () => {
 
 const onFileSelect = (file: File): void => {
   addAIMessage(`Great! I received your file: <strong>${file.name}</strong>. Let me analyze your contacts...`)
+  hasUploadedFile.value = true
 
-  // Simulate AI analysis
+  // Show account creation page after a brief moment
   setTimeout(() => {
-    addAIMessage([
-      'Analysis complete! 📊',
-      'I found <strong>847 contacts</strong> in your file.',
-      '<strong>23 contacts</strong> are most likely to pick up right now based on optimal calling times.',
-      'Would you like me to start calling them, or would you prefer to see the list first?'
-    ])
-  }, 2000)
+    showAccountCreation.value = true
+  }, 1500)
 }
 
 // Chat Input Methods
