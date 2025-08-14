@@ -51,6 +51,16 @@
               </button>
             </div>
 
+            <!-- Phone Verification Button -->
+            <div v-if="showPhoneVerificationButton" class="flex justify-center w-full">
+              <button
+                @click="handlePhoneVerification"
+                class="bg-gradient-to-r from-blue-500 to-blue-600 text-white border-0 px-8 py-3 rounded-lg font-semibold hover:from-blue-600 hover:to-blue-700 transition-all duration-200 cursor-pointer"
+              >
+                Now lets verify my phone number
+              </button>
+            </div>
+
             <!-- Signup Buttons -->
             <SignupButtons
               v-if="showSignupButtons && !isSignedIn"
@@ -291,7 +301,7 @@ const sendMessage = (message: string): void => {
       addAIMessage([
         '⏰ I\'ll help you set up smart reminders!',
         'ARKON can remind you to:',
-        '• Follow up with specific prospects at optimal times',
+        '�� Follow up with specific prospects at optimal times',
         '• Call back prospects who didn\'t answer',
         '• Review and update your call notes',
         '• Start your daily calling sessions',
