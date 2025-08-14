@@ -60,7 +60,7 @@ const prompts: string[] = [
 
 // Animation logic
 const startTypingAnimation = (): void => {
-  if (!isAnimating.value) return
+  if (!isAnimating.value || props.customPlaceholder) return
 
   animationInterval = setInterval(() => {
     if (isWaiting) {
