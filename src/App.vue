@@ -357,25 +357,37 @@ const handleLooksGood = (): void => {
   // Hide contact preview buttons
   showContactPreviewButtons.value = false
 
-  addAIMessage([
-    'I\'ve analyzed your contact\'s phone numbers using real connection data from 900M+ calls, recent phone engagement, calling patterns, and carrier signals—so you only dial numbers likely to connect.',
-    '',
-    'I\'ve prioritized the phone numbers most likely to connect so you spend time talking, not hitting dead lines.',
-    '',
-    'Here\'s what I found:',
-    '• 40 numbers have \'High\' Connect Scores and show consistent calling activity in the last 12 months. These are highly likely to be connected and assigned to active subscribers.',
-    '• 67 numbers have \'Medium\' Connect Scores and are worth calling after you exhaust your \'High\' Connect Score numbers.',
-    '• 54 numbers have \'Low\' Connect Scores and are likely disconnected or inactive lines that won\'t answer when dialed.'
-  ])
+  // Add user message showing what button was clicked
+  addUserMessage('Looks Good')
+
+  // Add AI response after a delay
+  setTimeout(() => {
+    addAIMessage([
+      'I\'ve analyzed your contact\'s phone numbers using real connection data from 900M+ calls, recent phone engagement, calling patterns, and carrier signals—so you only dial numbers likely to connect.',
+      '',
+      'I\'ve prioritized the phone numbers most likely to connect so you spend time talking, not hitting dead lines.',
+      '',
+      'Here\'s what I found:',
+      '• 40 numbers have \'High\' Connect Scores and show consistent calling activity in the last 12 months. These are highly likely to be connected and assigned to active subscribers.',
+      '• 67 numbers have \'Medium\' Connect Scores and are worth calling after you exhaust your \'High\' Connect Score numbers.',
+      '• 54 numbers have \'Low\' Connect Scores and are likely disconnected or inactive lines that won\'t answer when dialed.'
+    ])
+  }, 1000)
 }
 
 const handleTryAgain = (): void => {
   // Hide contact preview buttons
   showContactPreviewButtons.value = false
 
-  addAIMessage('What didn\'t look right previously that I can fix?')
-  // Reset the file upload state to show the upload area again
-  hasUploadedFile.value = false
+  // Add user message showing what button was clicked
+  addUserMessage('Try Again')
+
+  // Add AI response after a delay
+  setTimeout(() => {
+    addAIMessage('What didn\'t look right previously that I can fix?')
+    // Reset the file upload state to show the upload area again
+    hasUploadedFile.value = false
+  }, 1000)
 }
 
 // Signup Methods
