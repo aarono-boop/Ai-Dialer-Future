@@ -2,7 +2,7 @@
   <div :class="['flex items-start mb-4', message.type === 'user' ? 'justify-end' : 'justify-start']">
     <div v-if="message.type === 'ai'" class="flex gap-[10px] items-start w-full">
       <div class="flex items-start justify-center flex-shrink-0 pt-1">
-        <svg xmlns="http://www.w3.org/2000/svg" height="32px" viewBox="0 -960 960 960" width="32px">
+        <svg xmlns="http://www.w3.org/2000/svg" height="26px" viewBox="0 -960 960 960" width="26px">
           <defs>
             <linearGradient id="arkonGradientChat" x1="0%" y1="0%" x2="100%" y2="100%">
               <stop offset="0%" style="stop-color:#60a5fa;stop-opacity:1" />
@@ -18,7 +18,7 @@
     </div>
     
     <div v-else class="flex gap-4 items-start flex-row-reverse">
-      <div class="w-8 h-8 rounded-full bg-gradient-to-r from-blue-500 to-purple-600 flex items-center justify-center flex-shrink-0">
+      <div class="w-[26px] h-[26px] rounded-full bg-gradient-to-r from-blue-500 to-purple-600 flex items-center justify-center flex-shrink-0">
         <i class="pi pi-user text-white text-sm"></i>
       </div>
       <div class="max-w-[95%] bg-gradient-to-br from-purple-500 to-purple-700 rounded-lg rounded-br-sm p-5 text-white text-sm">
