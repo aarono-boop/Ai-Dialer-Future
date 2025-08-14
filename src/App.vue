@@ -231,8 +231,9 @@ import Toast from 'primevue/toast'
 
 // Types
 interface Message {
-  type: 'ai' | 'user'
+  type: 'ai' | 'user' | 'separator'
   content: string[]
+  contactName?: string
 }
 
 // Toast functionality (only for login/vulcan actions)
