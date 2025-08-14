@@ -888,6 +888,24 @@ const exportFile = (): void => {
   addAIMessage('📊 Exporting your enriched contact file with Connect Scores and call results...')
 }
 
+const handleCompleteQueue = (): void => {
+  // Stop timers
+  if (callTimer) {
+    clearInterval(callTimer)
+    callTimer = null
+  }
+  if (queueTimer) {
+    clearInterval(queueTimer)
+    queueTimer = null
+  }
+
+  // Hide dialer and show session summary
+  showDialer.value = false
+  showSessionSummary.value = true
+
+  addAIMessage('🎉 Congratulations! You have completed your entire call queue. All contacts have been processed.')
+}
+
 const handleDisposition = (disposition: string): void => {
   // Hide disposition buttons
   showDispositionButtons.value = false
