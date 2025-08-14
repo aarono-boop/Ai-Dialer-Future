@@ -150,6 +150,8 @@
             :queueTime="queueTime"
             :currentContact="currentContact"
             :nextContactName="nextContactName"
+            :shouldCompleteQueue="shouldCompleteQueue"
+            :isLastContact="isLastContact"
             @call-back="handleCallBack"
             @next-contact="handleNextContact"
             @hang-up="handleHangUp"
@@ -157,6 +159,7 @@
             @hold="handleHold"
             @keypad="handleKeypad"
             @pause-queue="handlePauseQueue"
+            @complete-queue="handleCompleteQueue"
           />
         </div>
       </div>
