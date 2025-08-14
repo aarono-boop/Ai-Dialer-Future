@@ -143,6 +143,7 @@ defineProps<{
     disposition: string
     notes: string
   }>
+  isQueueComplete?: boolean
 }>()
 
 // Define emits
