@@ -100,7 +100,7 @@
             <div v-if="showDispositionButtons" class="grid grid-cols-4 gap-3 w-full">
               <button
                 @click="handleDisposition('Follow up')"
-                class="bg-gray-700 hover:bg-gray-600 text-white py-3 px-4 rounded-lg font-medium transition-all duration-200 cursor-pointer"
+                class="btn-secondary py-3 px-4 rounded-lg font-medium cursor-pointer"
               >
                 Follow up
               </button>
@@ -112,7 +112,7 @@
               </button>
               <button
                 @click="handleDisposition('Do Not Call')"
-                class="bg-gray-700 hover:bg-gray-600 text-white py-3 px-4 rounded-lg font-medium transition-all duration-200 cursor-pointer"
+                class="btn-secondary py-3 px-4 rounded-lg font-medium cursor-pointer"
               >
                 Do Not Call
               </button>
