@@ -431,9 +431,50 @@ const handlePhoneVerification = (): void => {
   // Add user message showing what button was clicked
   addUserMessage('Now lets verify my phone number')
 
-  // Add AI response after a delay (placeholder for now)
+  // Set verification step to enter phone
+  verificationStep.value = 'enter-phone'
+
+  // Add AI response after a delay
   setTimeout(() => {
-    addAIMessage('Perfect! Let\'s verify your phone number to ensure you can receive calls and notifications.')
+    addAIMessage('Great! To start dialing, you need to add a verified phone number to your account. What number would you like to use?')
+  }, 1000)
+}
+
+const getPlaceholderText = (): string => {
+  switch (verificationStep.value) {
+    case 'enter-phone':
+      return 'Enter your business phone number'
+    case 'enter-code':
+      return 'Enter 6-digit verification code'
+    default:
+      return ''
+  }
+}
+
+const handleResendCode = (): void => {
+  // Add user message
+  addUserMessage('Resend Code')
+
+  // Add AI response
+  setTimeout(() => {
+    addAIMessage(`We've sent a new verification code to ${enteredPhoneNumber.value}. Please check your messages.`)
+  }, 1000)
+}
+
+const handleTryAnotherNumber = (): void => {
+  // Hide verification buttons
+  showVerificationButtons.value = false
+
+  // Add user message
+  addUserMessage('Try Another Number')
+
+  // Reset to phone entry step
+  verificationStep.value = 'enter-phone'
+  enteredPhoneNumber.value = ''
+
+  // Add AI response
+  setTimeout(() => {
+    addAIMessage('No problem! Please enter a different phone number you\'d like to use for verification.')
   }, 1000)
 }
 
