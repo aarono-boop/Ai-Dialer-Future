@@ -148,7 +148,7 @@ const isFormValid = computed(() => {
 
 // Methods
 const handleGoogleSignup = () => {
-  emit('google-signup')
+  emit('show-terms')
 }
 
 const handleSubmit = () => {
