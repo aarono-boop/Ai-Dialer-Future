@@ -262,6 +262,10 @@ const showKeypad = () => {
 const pauseQueue = () => {
   emit('pause-queue')
 }
+
+const completeQueue = () => {
+  emit('complete-queue')
+}
 </script>
 
 <style scoped>
