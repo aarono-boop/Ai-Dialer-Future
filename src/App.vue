@@ -127,6 +127,7 @@ const showSignupButtons = ref<boolean>(false)
 const showSignupModal = ref<boolean>(false)
 const showTermsModal = ref<boolean>(false)
 const showAccountCreation = ref<boolean>(false)
+const showPricingPage = ref<boolean>(false)
 const isSignedIn = ref<boolean>(false)
 const showActionButtons = ref<boolean>(false)
 
