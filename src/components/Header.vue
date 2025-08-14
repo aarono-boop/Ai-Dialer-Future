@@ -38,6 +38,11 @@
 <script setup lang="ts">
 import Button from 'primevue/button'
 
+// Define props
+defineProps<{
+  isSignedIn?: boolean
+}>()
+
 // Define emits for parent component communication
 defineEmits(['login', 'switch-to-vulcan'])
 </script>
