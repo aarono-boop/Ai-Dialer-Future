@@ -207,6 +207,22 @@
 
     <!-- Toast for notifications -->
     <Toast />
+
+    <!-- Session Summary Modal -->
+    <SessionSummary
+      v-if="showSessionSummary"
+      :contactsLeft="contacts.length - currentContactIndex - 1"
+      :contactsDialed="currentContactIndex"
+      :queueDuration="queueTime"
+      :totalCalls="totalCalls"
+      :connectedCalls="connectedCalls"
+      :skippedNumbers="skippedNumbers"
+      :callLog="callLog"
+      @close="closeSessionSummary"
+      @continue-queue="continueQueue"
+      @load-new-file="loadNewFile"
+      @export-file="exportFile"
+    />
   </div>
 </template>
 
