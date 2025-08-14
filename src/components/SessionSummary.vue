@@ -112,7 +112,7 @@
       <div v-if="isQueueComplete" class="flex justify-center">
         <button
           @click="$emit('load-new-file')"
-          class="bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white py-3 px-8 rounded-lg font-semibold transition-all duration-200"
+          class="btn-secondary py-3 px-8 rounded-lg font-semibold"
         >
           Load New File
         </button>
@@ -121,14 +121,14 @@
       <div v-else class="flex gap-4">
         <button
           @click="$emit('continue-queue')"
-          class="flex-1 bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white py-3 px-6 rounded-lg font-semibold transition-all duration-200"
+          class="btn-primary flex-1 py-3 px-6 rounded-lg font-semibold"
         >
           Continue Call Queue
         </button>
 
         <button
           @click="$emit('load-new-file')"
-          class="flex-1 bg-gray-700 hover:bg-gray-600 text-white py-3 px-6 rounded-lg font-semibold transition-all duration-200"
+          class="btn-secondary flex-1 py-3 px-6 rounded-lg font-semibold"
         >
           Load New File
         </button>
