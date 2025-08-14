@@ -147,6 +147,7 @@ const showPricingPage = ref<boolean>(false)
 const showPaymentPage = ref<boolean>(false)
 const isSignedIn = ref<boolean>(false)
 const showActionButtons = ref<boolean>(false)
+const showContactPreviewButtons = ref<boolean>(false)
 
 // Chat messages array
 const messages: Ref<Message[]> = ref([
