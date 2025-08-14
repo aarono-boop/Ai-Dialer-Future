@@ -112,22 +112,67 @@
     </div>
 
     <!-- Action Buttons -->
-    <div class="p-4 space-y-2 border-t border-gray-700">
-      <button 
-        @click="callBack"
-        class="w-full bg-gray-700 hover:bg-gray-600 text-white py-3 px-4 rounded-lg flex items-center justify-center gap-2 transition-colors"
-      >
-        <i class="pi pi-phone"></i>
-        Call Sam Sample (Home) Back
-      </button>
-      
-      <button 
-        @click="nextContact"
-        class="w-full bg-gray-700 hover:bg-gray-600 text-white py-3 px-4 rounded-lg flex items-center justify-center gap-2 transition-colors"
-      >
-        <i class="pi pi-arrow-right"></i>
-        Next: George Sample
-      </button>
+    <div class="p-4 border-t border-gray-700">
+      <!-- Call Controls (when connected) -->
+      <div v-if="callState === 'connected'" class="space-y-3">
+        <!-- Call Control Buttons -->
+        <div class="grid grid-cols-3 gap-3">
+          <button
+            @click="toggleMute"
+            :class="isMuted ? 'bg-red-700 hover:bg-red-600' : 'bg-gray-700 hover:bg-gray-600'"
+            class="text-white py-3 px-4 rounded-lg flex flex-col items-center justify-center gap-1 transition-colors"
+          >
+            <i class="pi pi-microphone-slash" v-if="isMuted"></i>
+            <i class="pi pi-microphone" v-else></i>
+            <span class="text-xs">{{ isMuted ? 'Unmute' : 'Mute' }}</span>
+          </button>
+
+          <button
+            @click="showKeypad"
+            class="bg-gray-700 hover:bg-gray-600 text-white py-3 px-4 rounded-lg flex flex-col items-center justify-center gap-1 transition-colors"
+          >
+            <i class="pi pi-th"></i>
+            <span class="text-xs">Keypad</span>
+          </button>
+
+          <button
+            @click="toggleHold"
+            :class="isOnHold ? 'bg-yellow-700 hover:bg-yellow-600' : 'bg-gray-700 hover:bg-gray-600'"
+            class="text-white py-3 px-4 rounded-lg flex flex-col items-center justify-center gap-1 transition-colors"
+          >
+            <i class="pi pi-pause"></i>
+            <span class="text-xs">{{ isOnHold ? 'Resume' : 'Hold' }}</span>
+          </button>
+        </div>
+
+        <!-- Hang Up Button -->
+        <button
+          @click="hangUp"
+          class="w-full bg-red-600 hover:bg-red-700 text-white py-3 px-4 rounded-lg flex items-center justify-center gap-2 transition-colors"
+        >
+          <i class="pi pi-phone" style="transform: rotate(135deg);"></i>
+          Hang Up
+        </button>
+      </div>
+
+      <!-- Regular Action Buttons (when not connected) -->
+      <div v-else class="space-y-2">
+        <button
+          @click="callBack"
+          class="w-full bg-gray-700 hover:bg-gray-600 text-white py-3 px-4 rounded-lg flex items-center justify-center gap-2 transition-colors"
+        >
+          <i class="pi pi-phone"></i>
+          Call {{ currentContact.name }} Back
+        </button>
+
+        <button
+          @click="nextContact"
+          class="w-full bg-gray-700 hover:bg-gray-600 text-white py-3 px-4 rounded-lg flex items-center justify-center gap-2 transition-colors"
+        >
+          <i class="pi pi-arrow-right"></i>
+          Next: {{ nextContactName }}
+        </button>
+      </div>
     </div>
   </div>
 </template>
