@@ -10,8 +10,10 @@
 
     <!-- Main Content -->
     <main class="flex-1 flex items-start justify-center p-8 relative z-[5]">
-      <div class="max-w-[900px] w-full h-[80vh] mt-2.5 bg-white/5 backdrop-blur-[20px] border border-white/10 rounded-xl p-5 shadow-2xl">
-        <div class="w-full h-full flex flex-col">
+      <div class="flex gap-6 w-full max-w-[1400px] h-[80vh] mt-2.5">
+        <!-- Chat Container -->
+        <div :class="showDialer ? 'w-2/3' : 'w-full max-w-[900px] mx-auto'" class="bg-white/5 backdrop-blur-[20px] border border-white/10 rounded-xl p-5 shadow-2xl">
+          <div class="w-full h-full flex flex-col">
           <!-- Top content area - scrollable -->
           <div class="flex-1 overflow-y-auto flex flex-col gap-8 pr-2 scrollbar-thin scrollbar-track-white/10 scrollbar-thumb-white/30 hover:scrollbar-thumb-white/50">
             <!-- Chat Messages Area -->
@@ -105,6 +107,15 @@
             />
           </div>
 
+          </div>
+        </div>
+
+        <!-- Dialer Container -->
+        <div v-if="showDialer" class="w-1/3">
+          <Dialer
+            @call-back="handleCallBack"
+            @next-contact="handleNextContact"
+          />
         </div>
       </div>
     </main>
