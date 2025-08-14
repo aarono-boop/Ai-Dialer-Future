@@ -545,6 +545,15 @@ const handleStartDialing = (): void => {
   }, 1000)
 }
 
+// Dialer Methods
+const handleCallBack = (): void => {
+  addAIMessage('📞 Calling Sam Sample back on his home number...')
+}
+
+const handleNextContact = (): void => {
+  addAIMessage('➡️ Moving to next contact: George Sample. Preparing to dial...')
+}
+
 // Signup Methods
 const handleGoogleSignup = () => {
   addAIMessage('🚀 Great choice! Setting up your Google account integration...')
