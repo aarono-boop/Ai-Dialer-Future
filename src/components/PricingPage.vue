@@ -16,7 +16,7 @@
     </header>
 
     <!-- Main Content -->
-    <main class="flex flex-col items-center justify-center px-6 py-16 max-w-4xl mx-auto">
+    <main class="flex flex-col items-center px-6 py-16 max-w-4xl mx-auto">
       <!-- Title Section -->
       <div class="text-center mb-16">
         <h2 class="text-4xl font-bold text-white mb-4">Pricing</h2>
