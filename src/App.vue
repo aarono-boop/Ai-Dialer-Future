@@ -595,16 +595,93 @@ const handleStartDialing = (): void => {
   // Add AI response after a delay
   setTimeout(() => {
     addAIMessage('🎯 Starting your dialing session! Connecting you to your first contact...')
+    // Start the call simulation
+    simulateCall()
   }, 1000)
+}
+
+// Call simulation
+let callTimer: number | null = null
+let queueTimer: number | null = null
+
+const simulateCall = (): void => {
+  // Move to next contact (George Sample)
+  currentContactIndex.value = 1
+
+  // Start ringing
+  callState.value = 'ringing'
+
+  // Start queue timer
+  queueTimer = setInterval(() => {
+    queueTime.value++
+  }, 1000)
+
+  // Simulate ringing for 3-5 seconds
+  setTimeout(() => {
+    // Contact answers
+    callState.value = 'connected'
+    callDuration.value = 0
+
+    // Start call duration timer
+    callTimer = setInterval(() => {
+      callDuration.value++
+    }, 1000)
+
+    // Show AI message that call connected
+    addAIMessage(`📞 Connected! You're now speaking with ${currentContact.value.name}.`)
+  }, 3000)
 }
 
 // Dialer Methods
 const handleCallBack = (): void => {
-  addAIMessage('📞 Calling Sam Sample back on his home number...')
+  addAIMessage(`📞 Calling ${currentContact.value.name} back on their number...`)
+  simulateCall()
 }
 
 const handleNextContact = (): void => {
-  addAIMessage('➡️ Moving to next contact: George Sample. Preparing to dial...')
+  // Stop current timers
+  if (callTimer) {
+    clearInterval(callTimer)
+    callTimer = null
+  }
+
+  // Move to next contact
+  if (currentContactIndex.value < contacts.length - 1) {
+    currentContactIndex.value++
+    addAIMessage(`➡️ Moving to next contact: ${currentContact.value.name}. Preparing to dial...`)
+    callState.value = 'ended'
+    callDuration.value = 0
+
+    // Start new call after a moment
+    setTimeout(() => {
+      simulateCall()
+    }, 2000)
+  } else {
+    addAIMessage('📋 No more contacts in the queue.')
+  }
+}
+
+const handleHangUp = (): void => {
+  // Stop timers
+  if (callTimer) {
+    clearInterval(callTimer)
+    callTimer = null
+  }
+
+  callState.value = 'ended'
+  addAIMessage(`📞 Call with ${currentContact.value.name} ended. Duration: ${Math.floor(callDuration.value / 60)}:${(callDuration.value % 60).toString().padStart(2, '0')}`)
+}
+
+const handleMute = (muted: boolean): void => {
+  addAIMessage(muted ? '🔇 Microphone muted' : '🎤 Microphone unmuted')
+}
+
+const handleHold = (onHold: boolean): void => {
+  addAIMessage(onHold ? '⏸️ Call placed on hold' : '▶️ Call resumed')
+}
+
+const handleKeypad = (): void => {
+  addAIMessage('📱 Keypad opened')
 }
 
 // Signup Methods
