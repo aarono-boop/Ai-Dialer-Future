@@ -447,49 +447,73 @@ const handleActionButton = (action: string): void => {
   setTimeout(() => {
     let response = []
     const sampleContacts = `
-      <div style="margin: 1rem 0; background: rgba(255,255,255,0.05); border-radius: 8px; padding: 1rem; overflow-x: auto;">
-        <table style="width: 100%; border-collapse: collapse; font-size: 0.85rem;">
-          <thead>
-            <tr style="border-bottom: 1px solid rgba(255,255,255,0.2);">
-              <th style="text-align: left; padding: 0.5rem; color: #60a5fa;">Name</th>
-              <th style="text-align: left; padding: 0.5rem; color: #60a5fa;">Phone</th>
-              <th style="text-align: left; padding: 0.5rem; color: #60a5fa;">Connect Score</th>
-              <th style="text-align: left; padding: 0.5rem; color: #60a5fa;">Best Time</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr style="border-bottom: 1px solid rgba(255,255,255,0.1);">
-              <td style="padding: 0.5rem; color: #ffffff;">Sarah Johnson</td>
-              <td style="padding: 0.5rem; color: #ffffff;">(555) 123-4567</td>
-              <td style="padding: 0.5rem; color: #10b981;">92%</td>
-              <td style="padding: 0.5rem; color: #ffffff;">2:00 PM</td>
-            </tr>
-            <tr style="border-bottom: 1px solid rgba(255,255,255,0.1);">
-              <td style="padding: 0.5rem; color: #ffffff;">Mike Chen</td>
-              <td style="padding: 0.5rem; color: #ffffff;">(555) 987-6543</td>
-              <td style="padding: 0.5rem; color: #10b981;">89%</td>
-              <td style="padding: 0.5rem; color: #ffffff;">10:30 AM</td>
-            </tr>
-            <tr style="border-bottom: 1px solid rgba(255,255,255,0.1);">
-              <td style="padding: 0.5rem; color: #ffffff;">Jennifer Martinez</td>
-              <td style="padding: 0.5rem; color: #ffffff;">(555) 456-7890</td>
-              <td style="padding: 0.5rem; color: #f59e0b;">76%</td>
-              <td style="padding: 0.5rem; color: #ffffff;">3:15 PM</td>
-            </tr>
-            <tr style="border-bottom: 1px solid rgba(255,255,255,0.1);">
-              <td style="padding: 0.5rem; color: #ffffff;">David Wilson</td>
-              <td style="padding: 0.5rem; color: #ffffff;">(555) 321-0987</td>
-              <td style="padding: 0.5rem; color: #10b981;">84%</td>
-              <td style="padding: 0.5rem; color: #ffffff;">11:00 AM</td>
-            </tr>
-            <tr>
-              <td style="padding: 0.5rem; color: #ffffff;">Lisa Thompson</td>
-              <td style="padding: 0.5rem; color: #ffffff;">(555) 654-3210</td>
-              <td style="padding: 0.5rem; color: #10b981;">91%</td>
-              <td style="padding: 0.5rem; color: #ffffff;">1:45 PM</td>
-            </tr>
-          </tbody>
-        </table>
+      <div style="margin: 1rem 0; background: rgba(255,255,255,0.05); border-radius: 8px; padding: 1.5rem; max-width: 500px;">
+        <div style="border-bottom: 2px solid #60a5fa; padding-bottom: 1rem; margin-bottom: 1.5rem;">
+          <h3 style="color: #60a5fa; margin: 0; font-size: 1.2rem; font-weight: 600;">Contact Preview</h3>
+          <p style="color: #ffffff; margin: 0.5rem 0 0 0; font-size: 1.1rem; font-weight: 500;">Sarah Johnson</p>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem 2rem; font-size: 0.9rem;">
+          <div style="display: flex; flex-direction: column; gap: 0.25rem;">
+            <span style="color: #9ca3af; font-size: 0.8rem;">HOME PHONE</span>
+            <span style="color: #ffffff;">(555) 123-4567</span>
+          </div>
+
+          <div style="display: flex; flex-direction: column; gap: 0.25rem;">
+            <span style="color: #9ca3af; font-size: 0.8rem;">CONNECT SCORE</span>
+            <span style="color: #10b981; font-weight: 600;">92%</span>
+          </div>
+
+          <div style="display: flex; flex-direction: column; gap: 0.25rem;">
+            <span style="color: #9ca3af; font-size: 0.8rem;">MOBILE PHONE</span>
+            <span style="color: #ffffff;">(555) 123-4568</span>
+          </div>
+
+          <div style="display: flex; flex-direction: column; gap: 0.25rem;">
+            <span style="color: #9ca3af; font-size: 0.8rem;">CONNECT SCORE</span>
+            <span style="color: #10b981; font-weight: 600;">87%</span>
+          </div>
+
+          <div style="display: flex; flex-direction: column; gap: 0.25rem;">
+            <span style="color: #9ca3af; font-size: 0.8rem;">EMAIL</span>
+            <span style="color: #ffffff;">sarah.johnson@techcorp.com</span>
+          </div>
+
+          <div style="display: flex; flex-direction: column; gap: 0.25rem;">
+            <span style="color: #9ca3af; font-size: 0.8rem;">ADDRESS</span>
+            <span style="color: #ffffff;">1234 Main St, Dallas, TX</span>
+          </div>
+
+          <div style="display: flex; flex-direction: column; gap: 0.25rem;">
+            <span style="color: #9ca3af; font-size: 0.8rem;">LOCAL TIME</span>
+            <span style="color: #ffffff;">2:45 PM CST</span>
+          </div>
+
+          <div style="display: flex; flex-direction: column; gap: 0.25rem;">
+            <span style="color: #9ca3af; font-size: 0.8rem;">WEBSITE</span>
+            <span style="color: #60a5fa;">techcorp.com</span>
+          </div>
+
+          <div style="display: flex; flex-direction: column; gap: 0.25rem;">
+            <span style="color: #9ca3af; font-size: 0.8rem;">LINKEDIN PROFILE</span>
+            <span style="color: #60a5fa;">linkedin.com/in/sarahjohnson</span>
+          </div>
+
+          <div style="display: flex; flex-direction: column; gap: 0.25rem;">
+            <span style="color: #9ca3af; font-size: 0.8rem;">INDUSTRY</span>
+            <span style="color: #ffffff;">Technology</span>
+          </div>
+
+          <div style="display: flex; flex-direction: column; gap: 0.25rem;">
+            <span style="color: #9ca3af; font-size: 0.8rem;">COMPANY SIZE</span>
+            <span style="color: #ffffff;">250-500 employees</span>
+          </div>
+
+          <div style="display: flex; flex-direction: column; gap: 0.25rem;">
+            <span style="color: #9ca3af; font-size: 0.8rem;">LEAD SOURCE</span>
+            <span style="color: #ffffff;">Webinar Registration</span>
+          </div>
+        </div>
       </div>`
     
     switch (action) {
