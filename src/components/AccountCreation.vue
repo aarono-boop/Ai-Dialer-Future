@@ -135,7 +135,7 @@ const confirmPassword = ref('')
 const showPassword = ref(false)
 
 // Define emits
-const emit = defineEmits(['close', 'switch-to-signin', 'account-created', 'google-signup'])
+const emit = defineEmits(['close', 'switch-to-signin', 'account-created', 'google-signup', 'show-terms'])
 
 // Computed properties
 const isFormValid = computed(() => {
