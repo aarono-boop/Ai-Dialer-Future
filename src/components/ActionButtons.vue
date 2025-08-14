@@ -5,7 +5,7 @@
         v-for="action in actions"
         :key="action"
         :label="action"
-        class="bg-gray-700/80 border border-gray-600/60 text-white/90 px-4 py-3.5 rounded-lg font-medium text-sm text-center transition-all duration-300 backdrop-blur-[10px] min-h-[48px] flex items-center justify-center hover:bg-gray-600/80 hover:border-gray-500/80 hover:text-white"
+        class="btn-primary px-4 py-3.5 rounded-lg font-medium text-sm text-center min-h-[48px] flex items-center justify-center"
         @click="$emit('action-selected', action)"
       />
     </div>
