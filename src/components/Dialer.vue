@@ -254,6 +254,10 @@ const toggleHold = () => {
 const showKeypad = () => {
   emit('keypad')
 }
+
+const pauseQueue = () => {
+  emit('pause-queue')
+}
 </script>
 
 <style scoped>
