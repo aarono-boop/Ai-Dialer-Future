@@ -18,7 +18,7 @@
     </div>
     
     <div v-else class="flex gap-4 items-start flex-row-reverse">
-      <div class="w-[26px] h-[26px] rounded-full bg-gradient-to-r from-blue-500 to-purple-600 flex items-center justify-center flex-shrink-0">
+      <div class="w-[23px] h-[23px] rounded-full bg-gradient-to-r from-blue-500 to-purple-600 flex items-center justify-center flex-shrink-0">
         <i class="pi pi-user text-white text-sm"></i>
       </div>
       <div class="max-w-[95%] bg-gradient-to-br from-purple-500 to-purple-700 rounded-lg rounded-br-sm p-5 text-white text-sm">
