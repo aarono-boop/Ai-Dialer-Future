@@ -375,6 +375,16 @@ const addUserMessage = (content: string): void => {
   scrollToBottom()
 }
 
+// Helper function to add separator message
+const addSeparatorMessage = (contactName: string): void => {
+  messages.value.push({
+    type: 'separator',
+    content: [],
+    contactName: contactName
+  })
+  scrollToBottom()
+}
+
 // Header Methods
 const handleLogin = () => {
   toast.add({
@@ -736,7 +746,7 @@ const handleHangUp = (): void => {
   callState.value = 'ended'
   showDispositionButtons.value = true
 
-  addAIMessage(`📞 Call with ${currentContact.value.name} ended. Duration: ${Math.floor(callDuration.value / 60)}:${(callDuration.value % 60).toString().padStart(2, '0')}`)
+  addAIMessage(`�� Call with ${currentContact.value.name} ended. Duration: ${Math.floor(callDuration.value / 60)}:${(callDuration.value % 60).toString().padStart(2, '0')}`)
   addAIMessage('Please select a disposition for this call:')
 }
 
