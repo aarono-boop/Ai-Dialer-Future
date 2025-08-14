@@ -361,6 +361,14 @@ const nextContactName = computed(() => {
   return nextIndex < contacts.length ? contacts[nextIndex].name : 'No more contacts'
 })
 
+const shouldCompleteQueue = computed(() => {
+  return callLog.value.length >= 4 || currentContactIndex.value >= 3
+})
+
+const isLastContact = computed(() => {
+  return currentContactIndex.value >= contacts.length - 1
+})
+
 // Chat messages array
 const messages: Ref<Message[]> = ref([
   {
