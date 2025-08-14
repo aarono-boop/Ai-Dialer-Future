@@ -139,7 +139,7 @@
           </div>
 
           <!-- Chat Input - positioned at bottom -->
-          <div class="mt-4 pt-4 border-t border-white/10">
+          <div class="mt-4 pt-4">
             <ChatInput
               ref="chatInputRef"
               :customPlaceholder="getPlaceholderText()"
