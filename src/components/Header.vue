@@ -61,12 +61,6 @@
           tabindex="3"
         />
 
-        <Button
-          text
-          class="text-gray-400 font-medium hover:text-purple-400 transition-colors"
-          @click="$emit('switch-to-vulcan')"
-          aria-label="Switch to Vulcan application"
-        />
       </div>
     </nav>
   </header>
