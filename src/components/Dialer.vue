@@ -447,10 +447,81 @@ const handleKeypadKeydown = (event: KeyboardEvent) => {
     }
   }
 
+  // Handle arrow key navigation
+  if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(key)) {
+    event.preventDefault()
+    handleArrowNavigation(key)
+  }
+
   // Handle Escape key to close keypad
   if (key === 'Escape') {
     event.preventDefault()
     closeKeypad()
+  }
+}
+
+const handleArrowNavigation = (direction: string) => {
+  // Get currently focused element
+  const focused = document.activeElement as HTMLElement
+  const currentKey = focused?.getAttribute('data-keypad-key')
+
+  // If not focused on a keypad button, focus on center button (5)
+  if (!currentKey) {
+    const centerButton = document.querySelector('[data-keypad-key="5"]') as HTMLElement
+    if (centerButton) {
+      centerButton.focus()
+    }
+    return
+  }
+
+  // Define keypad grid layout
+  const keypadGrid = [
+    ['1', '2', '3'],
+    ['4', '5', '6'],
+    ['7', '8', '9'],
+    ['*', '0', '#']
+  ]
+
+  // Find current position
+  let currentRow = -1
+  let currentCol = -1
+
+  for (let row = 0; row < keypadGrid.length; row++) {
+    for (let col = 0; col < keypadGrid[row].length; col++) {
+      if (keypadGrid[row][col] === currentKey) {
+        currentRow = row
+        currentCol = col
+        break
+      }
+    }
+  }
+
+  if (currentRow === -1) return // Current key not found
+
+  // Calculate new position based on direction
+  let newRow = currentRow
+  let newCol = currentCol
+
+  switch (direction) {
+    case 'ArrowUp':
+      newRow = currentRow > 0 ? currentRow - 1 : keypadGrid.length - 1 // Wrap to bottom
+      break
+    case 'ArrowDown':
+      newRow = currentRow < keypadGrid.length - 1 ? currentRow + 1 : 0 // Wrap to top
+      break
+    case 'ArrowLeft':
+      newCol = currentCol > 0 ? currentCol - 1 : keypadGrid[currentRow].length - 1 // Wrap to right
+      break
+    case 'ArrowRight':
+      newCol = currentCol < keypadGrid[currentRow].length - 1 ? currentCol + 1 : 0 // Wrap to left
+      break
+  }
+
+  // Focus the new button
+  const newKey = keypadGrid[newRow][newCol]
+  const newButton = document.querySelector(`[data-keypad-key="${newKey}"]`) as HTMLElement
+  if (newButton) {
+    newButton.focus()
   }
 }
 
