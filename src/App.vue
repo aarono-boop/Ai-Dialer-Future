@@ -67,12 +67,14 @@
               <button
                 @click="handleLooksGood"
                 class="flex-1 btn-primary px-6 py-3 rounded-lg font-semibold cursor-pointer"
+                tabindex="3"
               >
                 Looks Good
               </button>
               <button
                 @click="handleTryAgain"
                 class="btn-secondary flex-1 px-6 py-3 rounded-lg font-semibold cursor-pointer"
+                tabindex="4"
               >
                 Try Again
               </button>
