@@ -303,6 +303,22 @@ const handleNextContactTab = (event: KeyboardEvent) => {
   }
   // For Shift+Tab (backward), let default behavior handle it
 }
+
+const handleMuteKeydown = (event: KeyboardEvent) => {
+  if (event.key === 'Enter') {
+    event.preventDefault()
+    toggleMute()
+  }
+  // Let Tab key work normally for navigation
+}
+
+const handleHoldKeydown = (event: KeyboardEvent) => {
+  if (event.key === 'Enter') {
+    event.preventDefault()
+    toggleHold()
+  }
+  // Let Tab key work normally for navigation
+}
 </script>
 
 <style scoped>
