@@ -698,6 +698,49 @@ const showSignupFromLogin = (): void => {
   })
 }
 
+const handleGoogleSignupFromSignup = (): void => {
+  currentPage.value = 'main'
+  isSignedIn.value = true
+  isReturningUser.value = false // This is a new user
+  showActionButtons.value = true
+  addAIMessage('🎉 Welcome to ARKON! Your account has been created successfully. Let\'s start your first smart calling session! What are you trying to accomplish?')
+
+  // Clear any existing focus when navigating back to main app
+  nextTick(() => {
+    if (document.activeElement instanceof HTMLElement) {
+      document.activeElement.blur()
+    }
+    setTimeout(() => {
+      if (headerRef.value && headerRef.value.establishFocusContext) {
+        headerRef.value.establishFocusContext()
+      }
+    }, 100)
+    announceToScreenReader('Account created successfully. Returned to main application.')
+  })
+
+  // Ensure scroll happens after action buttons are rendered
+  setTimeout(() => {
+    scrollToBottom()
+  }, 500)
+}
+
+const switchToSigninFromSignup = (): void => {
+  currentPage.value = 'login'
+
+  // Clear any existing focus when navigating to login page
+  nextTick(() => {
+    if (document.activeElement instanceof HTMLElement) {
+      document.activeElement.blur()
+    }
+    setTimeout(() => {
+      if (headerRef.value && headerRef.value.establishFocusContext) {
+        headerRef.value.establishFocusContext()
+      }
+    }, 100)
+    announceToScreenReader('Navigated to login page. Press Tab to navigate with keyboard.')
+  })
+}
+
 // File Upload Methods
 const simulateFileUpload = () => {
   hasUploadedFile.value = true
@@ -906,7 +949,7 @@ const sendMessage = (message: string): void => {
         '😄 Why did the salesperson bring a ladder to work?',
         'Because they heard the job was about making <strong>high-level</strong> connections!',
         '',
-        '������ Speaking of connections, did you know ARKON users make 3x more meaningful connections than traditional dialers?',
+        '���� Speaking of connections, did you know ARKON users make 3x more meaningful connections than traditional dialers?',
         'Ready to elevate your calling game?'
       ])
     } else if (lowerMessage.includes('jenn')) {
