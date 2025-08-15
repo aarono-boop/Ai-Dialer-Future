@@ -266,11 +266,13 @@ const toggleMute = () => {
   isMuted.value = !isMuted.value
   emit('mute', isMuted.value)
 
-  // Maintain focus using template ref
+  // Maintain focus using template ref with multiple fallbacks
   nextTick(() => {
-    if (muteButtonRef.value) {
-      muteButtonRef.value.focus()
-    }
+    setTimeout(() => {
+      if (muteButtonRef.value) {
+        muteButtonRef.value.focus()
+      }
+    }, 100)
   })
 }
 
@@ -278,11 +280,13 @@ const toggleHold = () => {
   isOnHold.value = !isOnHold.value
   emit('hold', isOnHold.value)
 
-  // Maintain focus using template ref
+  // Maintain focus using template ref with multiple fallbacks
   nextTick(() => {
-    if (holdButtonRef.value) {
-      holdButtonRef.value.focus()
-    }
+    setTimeout(() => {
+      if (holdButtonRef.value) {
+        holdButtonRef.value.focus()
+      }
+    }, 100)
   })
 }
 
