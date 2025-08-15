@@ -120,7 +120,7 @@
               <button
                 @click="handleStartDialing"
                 class="w-1/2 btn-primary py-3 rounded-lg font-semibold cursor-pointer mx-auto block"
-                tabindex="5"
+                tabindex="3"
               >
                 Start Dialing
               </button>
