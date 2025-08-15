@@ -786,7 +786,7 @@ const simulateFileUpload = () => {
       </div>`
 
       addAIMessage([
-        'Perfect! I\'ve analyzed your contact file. Here\'s a preview of your data. Does this look correct?',
+        'Perfect! I\'ve analyzed your contact file. Here\'s a preview of your data. Does this look correct?<br><br>',
         sampleContacts
       ])
       showContactPreviewButtons.value = true
