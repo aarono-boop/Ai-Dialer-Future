@@ -114,7 +114,7 @@
         <!-- Call Control Buttons -->
         <div class="grid grid-cols-3 gap-3">
           <button
-            @click="toggleMute"
+            @click="toggleMute($event)"
             @keydown="handleMuteKeydown"
             tabindex="9"
             :class="isMuted ? 'bg-red-700 hover:bg-red-600' : 'bg-gray-700 hover:bg-gray-600'"
@@ -135,7 +135,7 @@
           </button>
 
           <button
-            @click="toggleHold"
+            @click="toggleHold($event)"
             @keydown="handleHoldKeydown"
             tabindex="11"
             :class="isOnHold ? 'bg-yellow-700 hover:bg-yellow-600' : 'bg-gray-700 hover:bg-gray-600'"
