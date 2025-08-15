@@ -143,6 +143,20 @@ import Button from 'primevue/button'
 
 // Define emits
 defineEmits(['go-to-app'])
+
+// Handle tab key to create circular navigation back to ARKON logo
+const handleTabKey = (event: KeyboardEvent) => {
+  // If not holding Shift (forward tab), focus ARKON logo
+  if (!event.shiftKey) {
+    event.preventDefault()
+    // Find and focus the ARKON logo button (tabindex="1")
+    const arkonLogo = document.querySelector('[tabindex="1"]') as HTMLElement
+    if (arkonLogo) {
+      arkonLogo.focus()
+    }
+  }
+  // For Shift+Tab (backward), let default behavior handle it
+}
 </script>
 
 <style scoped>
