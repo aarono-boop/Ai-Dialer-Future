@@ -16,6 +16,7 @@
         <button
           v-if="!shouldCompleteQueue"
           @click="pauseQueue"
+          tabindex="6"
           class="bg-gray-700 hover:bg-gray-600 text-white px-3 py-1 rounded text-sm transition-colors"
         >
           Pause Queue
@@ -114,6 +115,7 @@
         <div class="grid grid-cols-3 gap-3">
           <button
             @click="toggleMute"
+            tabindex="7"
             :class="isMuted ? 'bg-red-700 hover:bg-red-600' : 'bg-gray-700 hover:bg-gray-600'"
             class="text-white py-3 px-4 rounded-lg flex flex-col items-center justify-center gap-1 transition-colors"
           >
@@ -124,6 +126,7 @@
 
           <button
             @click="showKeypad"
+            tabindex="8"
             class="bg-gray-700 hover:bg-gray-600 text-white py-3 px-4 rounded-lg flex flex-col items-center justify-center gap-1 transition-colors"
           >
             <i class="pi pi-th"></i>
@@ -132,6 +135,7 @@
 
           <button
             @click="toggleHold"
+            tabindex="9"
             :class="isOnHold ? 'bg-yellow-700 hover:bg-yellow-600' : 'bg-gray-700 hover:bg-gray-600'"
             class="text-white py-3 px-4 rounded-lg flex flex-col items-center justify-center gap-1 transition-colors"
           >
@@ -143,6 +147,7 @@
         <!-- Hang Up Button -->
         <button
           @click="hangUp"
+          tabindex="10"
           class="w-full bg-red-600 hover:bg-red-700 text-white py-3 px-4 rounded-lg flex items-center justify-center gap-2 transition-colors"
         >
           <i class="pi pi-phone" style="transform: rotate(135deg);"></i>
