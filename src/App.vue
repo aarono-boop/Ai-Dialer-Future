@@ -515,20 +515,19 @@ const showProductPage = () => {
 
   // Reset focus and ensure ARKON logo gets focus first when tab is pressed
   nextTick(() => {
-    // Clear any current focus
-    if (document.activeElement instanceof HTMLElement) {
-      document.activeElement.blur()
-    }
-
-    // Explicitly focus the ARKON logo to ensure it's the starting point for tab navigation
+    // Wait for DOM to update, then focus the ARKON logo
     setTimeout(() => {
-      const arkonLogo = document.querySelector('[tabindex="1"]') as HTMLElement
+      // Remove focus from any current element
+      if (document.activeElement instanceof HTMLElement) {
+        document.activeElement.blur()
+      }
+
+      // Find and focus the ARKON logo button
+      const arkonLogo = document.querySelector('button[tabindex="1"]') as HTMLElement
       if (arkonLogo) {
         arkonLogo.focus()
-        // Force a blur and then the next tab will go to the ARKON logo first
-        arkonLogo.blur()
       }
-    }, 100)
+    }, 200)
 
     // Announce page change to screen readers
     announceToScreenReader('Navigated to product page. Press Tab to navigate with keyboard.')
@@ -1197,7 +1196,7 @@ const handleDisposition = (disposition: string): void => {
 
   // Add AI response about the disposition
   setTimeout(() => {
-    addAIMessage(`�� ${disposition} disposition saved for ${currentContact.value.name}.`)
+    addAIMessage(`✅ ${disposition} disposition saved for ${currentContact.value.name}.`)
     scrollToBottom()
 
     // Move to next contact if available
