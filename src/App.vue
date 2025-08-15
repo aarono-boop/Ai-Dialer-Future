@@ -873,6 +873,11 @@ const sendMessage = (message: string): void => {
     setTimeout(() => {
       addAIMessage(`Perfect. We've sent a text with 6-digit verification code to ${message}. Please enter it below to continue.`)
       scrollToBottom()
+
+      // Focus the chat input after the AI message appears
+      setTimeout(() => {
+        chatInputRef.value?.focus()
+      }, 100)
     }, 1000)
     return
   }
