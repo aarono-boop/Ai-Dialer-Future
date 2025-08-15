@@ -205,6 +205,15 @@
     <!-- Footer -->
     <Footer v-if="currentPage === 'main'" />
 
+    <!-- Screen Reader Live Region for Announcements -->
+    <div
+      id="sr-announcements"
+      aria-live="polite"
+      aria-atomic="true"
+      class="sr-only"
+      ref="screenReaderAnnouncements"
+    ></div>
+
     <!-- Signup Modal -->
     <SignupModal 
       :visible="showSignupModal"
@@ -693,7 +702,7 @@ const sendMessage = (message: string): void => {
         '✨ I\'d love to show you ARKON in action!',
         'Let me set up a personalized demo where you can see:',
         '• Live contact scoring and prioritization',
-        '��� Real-time dialing with connect predictions',
+        '• Real-time dialing with connect predictions',
         '�� Smart call disposition and follow-up automation',
         'What\'s your preferred time? I can schedule something for today or tomorrow.'
       ])
