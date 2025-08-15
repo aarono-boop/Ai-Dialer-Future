@@ -219,6 +219,10 @@ const emit = defineEmits(['call-back', 'next-contact', 'hang-up', 'mute', 'hold'
 const isMuted = ref(false)
 const isOnHold = ref(false)
 
+// Template refs for buttons
+const muteButtonRef = ref<HTMLButtonElement | null>(null)
+const holdButtonRef = ref<HTMLButtonElement | null>(null)
+
 // Methods
 const formatTime = (seconds: number): string => {
   const mins = Math.floor(seconds / 60)
