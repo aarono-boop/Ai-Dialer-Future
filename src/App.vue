@@ -324,7 +324,7 @@ interface Message {
 const toast = useToast()
 
 // Reactive data
-const currentPage = ref<string>('main') // 'main', 'product'
+const currentPage = ref<string>('main') // 'main', 'product', 'login'
 const chatInputRef = ref<any>(null)
 const chatMessages = ref<HTMLElement | null>(null)
 const screenReaderAnnouncements = ref<HTMLElement | null>(null)
@@ -885,7 +885,7 @@ const handleLooksGood = (): void => {
         '',
         'Here\'s what I found:',
         '• 40 numbers have \'High\' Connect Scores and show consistent calling activity in the last 12 months. These are highly likely to be connected and assigned to active subscribers.',
-        '��� 67 numbers have \'Medium\' Connect Scores and are worth calling after you exhaust your \'High\' Connect Score numbers.',
+        '• 67 numbers have \'Medium\' Connect Scores and are worth calling after you exhaust your \'High\' Connect Score numbers.',
         '• 54 numbers have \'Low\' Connect Scores and are likely disconnected or inactive lines that won\'t answer when dialed.'
       ])
 
