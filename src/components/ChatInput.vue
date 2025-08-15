@@ -154,6 +154,9 @@ defineExpose({
   },
   clearInput: () => {
     inputValue.value = ''
+  },
+  focus: () => {
+    inputRef.value?.$el?.focus()
   }
 })
 </script>
