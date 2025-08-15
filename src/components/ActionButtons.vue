@@ -7,7 +7,7 @@
         :label="action"
         class="btn-secondary px-4 py-3.5 rounded-lg font-medium text-sm text-center min-h-[48px] flex items-center justify-center"
         @click="$emit('action-selected', action)"
-        :tabindex="5 + index"
+        :tabindex="3 + index"
       />
     </div>
   </div>
