@@ -116,7 +116,7 @@
           <button
             ref="muteButtonRef"
             @click="toggleMute"
-            @keydown="handleMuteKeydown"
+            @keyup="handleMuteKeydown"
             tabindex="9"
             :class="isMuted ? 'bg-red-700 hover:bg-red-600' : 'bg-gray-700 hover:bg-gray-600'"
             class="text-white py-3 px-4 rounded-lg flex flex-col items-center justify-center gap-1 transition-colors"
@@ -138,7 +138,7 @@
           <button
             ref="holdButtonRef"
             @click="toggleHold"
-            @keydown="handleHoldKeydown"
+            @keyup="handleHoldKeydown"
             tabindex="11"
             :class="isOnHold ? 'bg-yellow-700 hover:bg-yellow-600' : 'bg-gray-700 hover:bg-gray-600'"
             class="text-white py-3 px-4 rounded-lg flex flex-col items-center justify-center gap-1 transition-colors"
