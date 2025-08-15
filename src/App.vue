@@ -87,7 +87,7 @@
               <button
                 @click="handlePhoneVerification"
                 class="w-1/2 btn-primary px-8 py-3 rounded-lg font-semibold cursor-pointer mx-auto block"
-                tabindex="7"
+                tabindex="3"
               >
                 Now lets verify my phone number
               </button>
@@ -1195,7 +1195,7 @@ const simulateCall = (): void => {
     }, 1000)
 
     // Show AI message that call connected
-    addAIMessage(`���� Connected! You're now speaking with ${currentContact.value.name}.`)
+    addAIMessage(`📞 Connected! You're now speaking with ${currentContact.value.name}.`)
     scrollToBottom()
   }, 3000)
 }
