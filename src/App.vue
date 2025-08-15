@@ -1,6 +1,6 @@
 <template>
   <!-- Test change for PR functionality -->
-  <div class="min-h-screen text-white flex flex-col relative overflow-x-hidden">
+  <div class="min-h-screen text-white flex flex-col relative overflow-x-hidden" :class="showDialer ? 'dialer-active' : ''">
     
     <!-- Header -->
     <Header
