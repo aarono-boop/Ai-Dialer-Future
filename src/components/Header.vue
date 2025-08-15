@@ -74,6 +74,7 @@
 </template>
 
 <script setup lang="ts">
+import { ref } from 'vue'
 import Button from 'primevue/button'
 
 // Define props
@@ -83,6 +84,22 @@ defineProps<{
 
 // Define emits for parent component communication
 defineEmits(['login', 'switch-to-vulcan', 'show-product', 'go-home'])
+
+// Template ref
+const focusAnchor = ref<HTMLElement | null>(null)
+
+// Method to establish focus context (mimics clicking in header)
+const establishFocusContext = () => {
+  if (focusAnchor.value) {
+    focusAnchor.value.focus()
+    focusAnchor.value.blur()
+  }
+}
+
+// Expose method to parent
+defineExpose({
+  establishFocusContext
+})
 </script>
 
 <style scoped>
