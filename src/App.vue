@@ -213,6 +213,13 @@
       @show-signup="showSignupFromLogin"
     />
 
+    <!-- Signup Page -->
+    <SignupPage
+      v-if="currentPage === 'signup'"
+      @google-signup="handleGoogleSignupFromSignup"
+      @switch-to-signin="switchToSigninFromSignup"
+    />
+
     <!-- Footer -->
     <Footer v-if="currentPage === 'main'" />
 
