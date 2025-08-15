@@ -335,6 +335,7 @@ const currentPage = ref<string>('main') // 'main', 'product'
 const chatInputRef = ref<any>(null)
 const chatMessages = ref<HTMLElement | null>(null)
 const screenReaderAnnouncements = ref<HTMLElement | null>(null)
+const tabTrap = ref<HTMLElement | null>(null)
 const hasUploadedFile = ref<boolean>(false)
 const showSignupButtons = ref<boolean>(false)
 const showSignupModal = ref<boolean>(false)
