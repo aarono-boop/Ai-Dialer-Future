@@ -397,6 +397,45 @@ const pressKey = (key: string) => {
   emit('keypad-press', key)
 }
 
+const pressKeyWithFeedback = (key: string, event: Event) => {
+  // Trigger the key press
+  pressKey(key)
+
+  // Add visual feedback
+  const button = event.target as HTMLElement
+  if (button) {
+    addVisualFeedback(button)
+  }
+}
+
+const handleKeypadButtonKeydown = (key: string, event: KeyboardEvent) => {
+  // Handle Enter and Space key presses on keypad buttons
+  if (event.key === 'Enter' || event.key === ' ') {
+    event.preventDefault()
+
+    // Trigger the key press
+    pressKey(key)
+
+    // Add the same visual feedback as direct keyboard input
+    const button = event.target as HTMLElement
+    if (button) {
+      addVisualFeedback(button)
+    }
+  }
+  // Let other keys (like Tab) work normally
+}
+
+const addVisualFeedback = (button: HTMLElement) => {
+  // Add visual feedback animation
+  button.style.transform = 'scale(0.95)'
+  button.style.backgroundColor = 'rgb(75, 85, 99)' // gray-600
+
+  setTimeout(() => {
+    button.style.transform = ''
+    button.style.backgroundColor = ''
+  }, 150)
+}
+
 const handleHashTab = (event: KeyboardEvent) => {
   // From # button (tabindex 112), go to close button (tabindex 113)
   if (!event.shiftKey) {
