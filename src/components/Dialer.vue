@@ -390,6 +390,28 @@ const pressKey = (key: string) => {
   emit('keypad-press', key)
 }
 
+const handleHashTab = (event: KeyboardEvent) => {
+  // From # button (tabindex 12), go to close button (tabindex 13)
+  if (!event.shiftKey) {
+    event.preventDefault()
+    const closeButton = document.querySelector('[tabindex="13"]') as HTMLElement
+    if (closeButton) {
+      closeButton.focus()
+    }
+  }
+}
+
+const handleCloseButtonTab = (event: KeyboardEvent) => {
+  // From close button (tabindex 13), cycle back to 1 button (tabindex 1)
+  if (!event.shiftKey) {
+    event.preventDefault()
+    const firstButton = document.querySelector('[data-keypad-key="1"]') as HTMLElement
+    if (firstButton) {
+      firstButton.focus()
+    }
+  }
+}
+
 const pauseQueue = () => {
   emit('pause-queue')
 }
