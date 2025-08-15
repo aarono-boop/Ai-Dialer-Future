@@ -78,6 +78,88 @@
             </div>
           </div>
 
+          <!-- Phone Verification Button - always visible when active -->
+          <div v-if="showPhoneVerificationButton" class="mt-4 flex justify-center">
+            <div class="w-[70%]">
+              <button
+                @click="handlePhoneVerification"
+                class="w-full btn-primary px-8 py-3 rounded-lg font-semibold cursor-pointer"
+              >
+                Now lets verify my phone number
+              </button>
+            </div>
+          </div>
+
+          <!-- Verification Code Buttons - always visible when active -->
+          <div v-if="showVerificationButtons" class="mt-4 flex justify-center">
+            <div class="w-[70%] flex gap-3">
+              <button
+                @click="handleResendCode"
+                class="btn-secondary flex-1 px-6 py-3 rounded-lg font-semibold cursor-pointer"
+              >
+                Resend Code
+              </button>
+              <button
+                @click="handleTryAnotherNumber"
+                class="btn-secondary flex-1 px-6 py-3 rounded-lg font-semibold cursor-pointer"
+              >
+                Try Another Number
+              </button>
+            </div>
+          </div>
+
+          <!-- Start Dialing Button - always visible when active -->
+          <div v-if="showStartDialingButton" class="mt-4 flex justify-center">
+            <div class="w-[70%]">
+              <button
+                @click="handleStartDialing"
+                class="w-1/2 btn-primary py-3 rounded-lg font-semibold cursor-pointer mx-auto"
+              >
+                Start Dialing
+              </button>
+            </div>
+          </div>
+
+          <!-- Disposition Buttons - always visible when active -->
+          <div v-if="showDispositionButtons" class="mt-4 flex justify-center">
+            <div class="w-[70%] grid grid-cols-4 gap-3">
+              <button
+                @click="handleDisposition('Follow up')"
+                class="btn-secondary py-3 px-4 rounded-lg font-medium cursor-pointer"
+              >
+                Follow up
+              </button>
+              <button
+                @click="handleDisposition('Not interested')"
+                class="btn-secondary py-3 px-4 rounded-lg font-medium cursor-pointer"
+              >
+                Not interested
+              </button>
+              <button
+                @click="handleDisposition('Do Not Call')"
+                class="btn-secondary py-3 px-4 rounded-lg font-medium cursor-pointer"
+              >
+                Do Not Call
+              </button>
+              <button
+                @click="handleDisposition('Set Appointment')"
+                class="btn-primary py-3 px-4 rounded-lg font-medium cursor-pointer"
+              >
+                Set Appointment
+              </button>
+            </div>
+          </div>
+
+          <!-- Signup Buttons - always visible when active -->
+          <div v-if="showSignupButtons && !isSignedIn" class="mt-4 flex justify-center">
+            <div class="w-[70%]">
+              <SignupButtons
+                @google-signup="handleGoogleSignup"
+                @email-signup="handleEmailSignup"
+              />
+            </div>
+          </div>
+
           <!-- Chat Input - positioned at bottom -->
           <div class="mt-4 pt-4">
             <ChatInput
@@ -942,7 +1024,7 @@ const handleMute = (muted: boolean): void => {
 }
 
 const handleHold = (onHold: boolean): void => {
-  addAIMessage(onHold ? '⏸️ Call placed on hold' : '▶��� Call resumed')
+  addAIMessage(onHold ? '⏸️ Call placed on hold' : '▶️ Call resumed')
 }
 
 const handleKeypad = (): void => {
