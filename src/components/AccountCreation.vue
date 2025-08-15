@@ -44,48 +44,14 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue'
 import Button from 'primevue/button'
-import InputText from 'primevue/inputtext'
-import Password from 'primevue/password'
-import Checkbox from 'primevue/checkbox'
-
-// Reactive data
-const email = ref('')
-const password = ref('')
-const confirmPassword = ref('')
-const showPassword = ref(false)
 
 // Define emits
-const emit = defineEmits(['close', 'switch-to-signin', 'account-created', 'google-signup', 'show-terms'])
-
-// Computed properties
-const isFormValid = computed(() => {
-  return email.value && 
-         password.value && 
-         confirmPassword.value && 
-         password.value === confirmPassword.value &&
-         email.value.includes('@')
-})
+defineEmits(['close', 'switch-to-signin', 'show-terms'])
 
 // Methods
 const handleGoogleSignup = () => {
   emit('show-terms')
-}
-
-const handleSubmit = () => {
-  if (!isFormValid.value) return
-  
-  if (password.value !== confirmPassword.value) {
-    alert('Passwords do not match')
-    return
-  }
-
-  // Emit account creation with form data
-  emit('account-created', {
-    email: email.value,
-    password: password.value
-  })
 }
 </script>
 
