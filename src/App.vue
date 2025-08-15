@@ -4,6 +4,7 @@
     
     <!-- Header -->
     <Header
+      ref="headerRef"
       :isSignedIn="isSignedIn"
       @login="handleLogin"
       @switch-to-vulcan="handleSwitchToVulcan"
