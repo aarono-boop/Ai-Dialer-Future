@@ -224,7 +224,7 @@
     />
 
     <!-- Footer -->
-    <Footer v-if="currentPage === 'main'" />
+    <Footer v-if="currentPage === 'main'" :style="showDialer ? 'margin-right: 33.333333%' : ''" />
 
     <!-- Screen Reader Live Region for Announcements -->
     <div
