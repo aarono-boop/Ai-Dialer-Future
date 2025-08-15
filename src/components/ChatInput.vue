@@ -13,7 +13,7 @@
         @blur="resumeAnimation"
         aria-label="Type your message or question"
         aria-describedby="chat-input-help"
-        tabindex="5"
+        tabindex="4"
       />
       <Button
         icon="pi pi-send"
