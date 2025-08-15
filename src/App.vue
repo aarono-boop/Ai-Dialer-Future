@@ -639,8 +639,23 @@ const handleLoginSuccess = (userData: any): void => {
 }
 
 const showSignupFromLogin = (): void => {
-  showLoginModal.value = false
+  currentPage.value = 'main'
   showSignupModal.value = true
+
+  // Clear any existing focus when navigating back to main app
+  nextTick(() => {
+    if (document.activeElement instanceof HTMLElement) {
+      document.activeElement.blur()
+    }
+    setTimeout(() => {
+      const arkonLogo = document.querySelector('[tabindex="1"]') as HTMLElement
+      if (arkonLogo) {
+        arkonLogo.focus()
+        arkonLogo.blur()
+      }
+    }, 50)
+    announceToScreenReader('Returned to main application. Signup modal opened.')
+  })
 }
 
 // File Upload Methods
