@@ -220,6 +220,7 @@ const emit = defineEmits(['call-back', 'next-contact', 'hang-up', 'mute', 'hold'
 // Reactive data
 const isMuted = ref(false)
 const isOnHold = ref(false)
+const showKeypadModal = ref(false)
 
 // Template refs for buttons
 const muteButtonRef = ref<HTMLButtonElement | null>(null)
