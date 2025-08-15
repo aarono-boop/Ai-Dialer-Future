@@ -110,4 +110,21 @@ button:focus-visible {
   outline: 2px solid #60a5fa !important;
   outline-offset: 2px !important;
 }
+
+/* Ensure ARKON logo button is focusable and has visible focus */
+button[aria-label="Return to ARKON home page"] {
+  pointer-events: auto !important;
+}
+
+button[aria-label="Return to ARKON home page"]:focus {
+  outline: 2px solid #60a5fa !important;
+  outline-offset: 2px !important;
+  background: rgba(96, 165, 250, 0.1) !important;
+}
+
+button[aria-label="Return to ARKON home page"]:focus-visible {
+  outline: 2px solid #60a5fa !important;
+  outline-offset: 2px !important;
+  background: rgba(96, 165, 250, 0.1) !important;
+}
 </style>
