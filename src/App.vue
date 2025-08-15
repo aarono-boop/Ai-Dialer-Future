@@ -693,7 +693,7 @@ const sendMessage = (message: string): void => {
         '✨ I\'d love to show you ARKON in action!',
         'Let me set up a personalized demo where you can see:',
         '• Live contact scoring and prioritization',
-        '• Real-time dialing with connect predictions',
+        '��� Real-time dialing with connect predictions',
         '�� Smart call disposition and follow-up automation',
         'What\'s your preferred time? I can schedule something for today or tomorrow.'
       ])
@@ -865,6 +865,11 @@ const handlePhoneVerification = (): void => {
   // Add AI response after a delay
   setTimeout(() => {
     addAIMessage('Great! To start dialing, you need to add a verified phone number to your account. What number would you like to use?')
+
+    // Focus the chat input after the AI message appears
+    setTimeout(() => {
+      chatInputRef.value?.focus()
+    }, 100)
   }, 1000)
 }
 
