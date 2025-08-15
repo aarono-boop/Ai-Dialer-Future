@@ -59,58 +59,49 @@
         </div>
 
         <!-- Contact Details -->
-        <div class="space-y-3 text-sm">
-          <div class="flex justify-between">
-            <span class="text-gray-400">Phone:</span>
-            <div class="text-right">
-              <div class="text-blue-400">{{ currentContact.phone }}</div>
-            </div>
-          </div>
-
-          <div class="flex justify-between">
-            <span class="text-gray-400">Connect Score:</span>
-            <span :class="getConnectScoreColor(currentContact.connectScore)" class="font-medium">{{ currentContact.connectScore }}</span>
-          </div>
-
-          <div class="flex justify-between">
-            <span class="text-gray-400">Email:</span>
-            <span class="text-blue-400">{{ currentContact.email }}</span>
-          </div>
-
-          <div class="flex justify-between">
-            <span class="text-gray-400">Address:</span>
-            <span class="text-white">{{ currentContact.address }}</span>
-          </div>
-
-          <div class="flex justify-between">
-            <span class="text-gray-400">Local Time:</span>
-            <span class="text-white">{{ currentContact.localTime }}</span>
-          </div>
-
-          <div class="flex justify-between">
-            <span class="text-gray-400">Website:</span>
-            <span class="text-blue-400">{{ currentContact.website }}</span>
-          </div>
-
-          <div class="flex justify-between">
-            <span class="text-gray-400">LinkedIn Profile:</span>
-            <span class="text-blue-400">{{ currentContact.linkedin }}</span>
-          </div>
-
-          <div class="flex justify-between">
-            <span class="text-gray-400">Industry:</span>
-            <span class="text-white">{{ currentContact.industry }}</span>
-          </div>
-
-          <div class="flex justify-between">
-            <span class="text-gray-400">Company Size:</span>
-            <span class="text-white">{{ currentContact.companySize }}</span>
-          </div>
-
-          <div class="flex justify-between">
-            <span class="text-gray-400">Lead Source:</span>
-            <span class="text-white">{{ currentContact.leadSource }}</span>
-          </div>
+        <div class="text-sm">
+          <table style="width: 100%; border-collapse: collapse;">
+            <tr>
+              <td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: rgb(156, 163, 175);">Phone:</td>
+              <td style="padding: 4px 0; color: rgb(96, 165, 250);">{{ currentContact.phone }}</td>
+            </tr>
+            <tr>
+              <td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: rgb(156, 163, 175);">Connect Score:</td>
+              <td style="padding: 4px 0;" :style="{ color: getConnectScoreColorRgb(currentContact.connectScore) }">{{ currentContact.connectScore }}</td>
+            </tr>
+            <tr>
+              <td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: rgb(156, 163, 175);">Email:</td>
+              <td style="padding: 4px 0; color: rgb(96, 165, 250);">{{ currentContact.email }}</td>
+            </tr>
+            <tr>
+              <td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: rgb(156, 163, 175);">Address:</td>
+              <td style="padding: 4px 0; color: rgb(255, 255, 255);">{{ currentContact.address }}</td>
+            </tr>
+            <tr>
+              <td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: rgb(156, 163, 175);">Local Time:</td>
+              <td style="padding: 4px 0; color: rgb(255, 255, 255);">{{ currentContact.localTime }}</td>
+            </tr>
+            <tr>
+              <td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: rgb(156, 163, 175);">Website:</td>
+              <td style="padding: 4px 0; color: rgb(96, 165, 250);">{{ currentContact.website }}</td>
+            </tr>
+            <tr>
+              <td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: rgb(156, 163, 175);">LinkedIn Profile:</td>
+              <td style="padding: 4px 0; color: rgb(96, 165, 250);">{{ currentContact.linkedin }}</td>
+            </tr>
+            <tr>
+              <td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: rgb(156, 163, 175);">Industry:</td>
+              <td style="padding: 4px 0; color: rgb(255, 255, 255);">{{ currentContact.industry }}</td>
+            </tr>
+            <tr>
+              <td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: rgb(156, 163, 175);">Company Size:</td>
+              <td style="padding: 4px 0; color: rgb(255, 255, 255);">{{ currentContact.companySize }}</td>
+            </tr>
+            <tr>
+              <td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: rgb(156, 163, 175);">Lead Source:</td>
+              <td style="padding: 4px 0; color: rgb(255, 255, 255);">{{ currentContact.leadSource }}</td>
+            </tr>
+          </table>
         </div>
       </div>
     </div>
