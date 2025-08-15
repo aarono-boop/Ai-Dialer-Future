@@ -19,6 +19,14 @@
       </div>
       
       <div class="flex gap-4 items-center">
+        <!-- Product link -->
+        <Button
+          label="Product"
+          text
+          class="text-white font-medium hover:text-purple-400 transition-colors"
+          @click="$emit('show-product')"
+        />
+
         <!-- Avatar when signed in -->
         <div v-if="isSignedIn" class="flex items-center gap-3">
           <div class="w-8 h-8 rounded-full bg-gradient-to-r from-blue-500 to-purple-600 flex items-center justify-center">
