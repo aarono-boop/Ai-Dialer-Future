@@ -524,6 +524,13 @@ const addSeparatorMessage = (contactName: string): void => {
   scrollToBottom()
 }
 
+// Helper function to identify if a message is the "Ready to upload" message for returning users
+const isReadyToUploadMessage = (message: Message, index: number): boolean => {
+  if (message.type !== 'ai') return false
+  const content = Array.isArray(message.content) ? message.content[0] : message.content
+  return content.includes('Ready to upload your contact file and start dialing')
+}
+
 // Header Methods
 const handleLogin = () => {
   currentPage.value = 'login'
