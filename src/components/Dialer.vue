@@ -199,55 +199,55 @@
         <!-- Keypad Grid -->
         <div class="grid grid-cols-3 gap-3">
           <!-- Row 1: 1, 2, 3 -->
-          <button @click="pressKey('1')" data-keypad-key="1" tabindex="101" class="keypad-btn">
+          <button @click="pressKeyWithFeedback('1', $event)" @keydown="handleKeypadButtonKeydown('1', $event)" data-keypad-key="1" tabindex="101" class="keypad-btn">
             <span class="text-2xl font-bold">1</span>
           </button>
-          <button @click="pressKey('2')" data-keypad-key="2" tabindex="102" class="keypad-btn">
+          <button @click="pressKeyWithFeedback('2', $event)" @keydown="handleKeypadButtonKeydown('2', $event)" data-keypad-key="2" tabindex="102" class="keypad-btn">
             <span class="text-2xl font-bold">2</span>
             <span class="text-xs text-gray-400">ABC</span>
           </button>
-          <button @click="pressKey('3')" data-keypad-key="3" tabindex="103" class="keypad-btn">
+          <button @click="pressKeyWithFeedback('3', $event)" @keydown="handleKeypadButtonKeydown('3', $event)" data-keypad-key="3" tabindex="103" class="keypad-btn">
             <span class="text-2xl font-bold">3</span>
             <span class="text-xs text-gray-400">DEF</span>
           </button>
 
           <!-- Row 2: 4, 5, 6 -->
-          <button @click="pressKey('4')" data-keypad-key="4" tabindex="104" class="keypad-btn">
+          <button @click="pressKeyWithFeedback('4', $event)" @keydown="handleKeypadButtonKeydown('4', $event)" data-keypad-key="4" tabindex="104" class="keypad-btn">
             <span class="text-2xl font-bold">4</span>
             <span class="text-xs text-gray-400">GHI</span>
           </button>
-          <button @click="pressKey('5')" data-keypad-key="5" tabindex="105" class="keypad-btn">
+          <button @click="pressKeyWithFeedback('5', $event)" @keydown="handleKeypadButtonKeydown('5', $event)" data-keypad-key="5" tabindex="105" class="keypad-btn">
             <span class="text-2xl font-bold">5</span>
             <span class="text-xs text-gray-400">JKL</span>
           </button>
-          <button @click="pressKey('6')" data-keypad-key="6" tabindex="106" class="keypad-btn">
+          <button @click="pressKeyWithFeedback('6', $event)" @keydown="handleKeypadButtonKeydown('6', $event)" data-keypad-key="6" tabindex="106" class="keypad-btn">
             <span class="text-2xl font-bold">6</span>
             <span class="text-xs text-gray-400">MNO</span>
           </button>
 
           <!-- Row 3: 7, 8, 9 -->
-          <button @click="pressKey('7')" data-keypad-key="7" tabindex="107" class="keypad-btn">
+          <button @click="pressKeyWithFeedback('7', $event)" @keydown="handleKeypadButtonKeydown('7', $event)" data-keypad-key="7" tabindex="107" class="keypad-btn">
             <span class="text-2xl font-bold">7</span>
             <span class="text-xs text-gray-400">PQRS</span>
           </button>
-          <button @click="pressKey('8')" data-keypad-key="8" tabindex="108" class="keypad-btn">
+          <button @click="pressKeyWithFeedback('8', $event)" @keydown="handleKeypadButtonKeydown('8', $event)" data-keypad-key="8" tabindex="108" class="keypad-btn">
             <span class="text-2xl font-bold">8</span>
             <span class="text-xs text-gray-400">TUV</span>
           </button>
-          <button @click="pressKey('9')" data-keypad-key="9" tabindex="109" class="keypad-btn">
+          <button @click="pressKeyWithFeedback('9', $event)" @keydown="handleKeypadButtonKeydown('9', $event)" data-keypad-key="9" tabindex="109" class="keypad-btn">
             <span class="text-2xl font-bold">9</span>
             <span class="text-xs text-gray-400">WXYZ</span>
           </button>
 
           <!-- Row 4: *, 0, # -->
-          <button @click="pressKey('*')" data-keypad-key="*" tabindex="110" class="keypad-btn">
+          <button @click="pressKeyWithFeedback('*', $event)" @keydown="handleKeypadButtonKeydown('*', $event)" data-keypad-key="*" tabindex="110" class="keypad-btn">
             <span class="text-2xl font-bold">*</span>
           </button>
-          <button @click="pressKey('0')" data-keypad-key="0" tabindex="111" class="keypad-btn">
+          <button @click="pressKeyWithFeedback('0', $event)" @keydown="handleKeypadButtonKeydown('0', $event)" data-keypad-key="0" tabindex="111" class="keypad-btn">
             <span class="text-2xl font-bold">0</span>
             <span class="text-xs text-gray-400">+</span>
           </button>
-          <button @click="pressKey('#')" @keydown.tab="handleHashTab" data-keypad-key="#" tabindex="112" class="keypad-btn">
+          <button @click="pressKeyWithFeedback('#', $event)" @keydown="handleKeypadButtonKeydown('#', $event)" @keydown.tab="handleHashTab" data-keypad-key="#" tabindex="112" class="keypad-btn">
             <span class="text-2xl font-bold">#</span>
           </button>
         </div>
