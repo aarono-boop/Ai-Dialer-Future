@@ -442,4 +442,17 @@ const handleHoldKeydown = (event: KeyboardEvent) => {
 ::-webkit-scrollbar-thumb:hover {
   background: rgba(255, 255, 255, 0.5);
 }
+
+/* Keypad button styles */
+.keypad-btn {
+  @apply bg-gray-700 hover:bg-gray-600 active:bg-gray-500 text-white rounded-lg py-4 px-3 flex flex-col items-center justify-center gap-1 transition-colors min-h-16;
+}
+
+.keypad-btn:hover {
+  transform: translateY(-1px);
+}
+
+.keypad-btn:active {
+  transform: translateY(0);
+}
 </style>
