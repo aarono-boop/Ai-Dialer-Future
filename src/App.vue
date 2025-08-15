@@ -41,13 +41,7 @@
               </template>
             </div>
 
-            <!-- File Upload for Returning Users -->
-            <FileUpload
-              v-if="showFileUploadForReturningUser"
-              @trigger-upload="simulateFileUpload"
-              @file-selected="onFileSelect"
-              @file-dropped="simulateFileUpload"
-            />
+            <!-- File Upload for Returning Users - now embedded in chat message instead -->
 
 
           </div>
