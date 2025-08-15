@@ -1,14 +1,6 @@
 <template>
   <!-- Test change for PR functionality -->
   <div class="min-h-screen text-white flex flex-col relative overflow-x-hidden">
-    <!-- Hidden tab trap to ensure proper tab order starts with ARKON logo -->
-    <button
-      ref="tabTrap"
-      class="sr-only"
-      tabindex="0"
-      @focus="redirectToArkonLogo"
-      aria-hidden="true"
-    >Tab trap</button>
     
     <!-- Header -->
     <Header
