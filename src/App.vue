@@ -133,28 +133,28 @@
               <button
                 @click="handleDisposition('Follow up')"
                 class="btn-secondary py-3 px-4 rounded-lg font-medium cursor-pointer"
-                tabindex="5"
+                tabindex="3"
               >
                 Follow up
               </button>
               <button
                 @click="handleDisposition('Not interested')"
                 class="btn-secondary py-3 px-4 rounded-lg font-medium cursor-pointer"
-                tabindex="6"
+                tabindex="4"
               >
                 Not interested
               </button>
               <button
                 @click="handleDisposition('Do Not Call')"
                 class="btn-secondary py-3 px-4 rounded-lg font-medium cursor-pointer"
-                tabindex="7"
+                tabindex="5"
               >
                 Do Not Call
               </button>
               <button
                 @click="handleDisposition('Set Appointment')"
                 class="btn-primary py-3 px-4 rounded-lg font-medium cursor-pointer"
-                tabindex="8"
+                tabindex="6"
               >
                 Set Appointment
               </button>
@@ -702,7 +702,7 @@ const handleGoogleSignupFromSignup = (): void => {
   isSignedIn.value = true
   isReturningUser.value = false // This is a new user
   showActionButtons.value = true
-  addAIMessage('🎉 Welcome to ARKON! Your account has been created successfully. Let\'s start your first smart calling session! What are you trying to accomplish?')
+  addAIMessage('���� Welcome to ARKON! Your account has been created successfully. Let\'s start your first smart calling session! What are you trying to accomplish?')
 
   // Clear any existing focus when navigating back to main app
   nextTick(() => {
