@@ -22,21 +22,6 @@
   border-radius: 4px;
 }
 
-/* Ensure custom tab order is respected - remove from natural tab flow elements without explicit tabindex */
-button:not([tabindex]),
-.p-button:not([tabindex]),
-a:not([tabindex]),
-input:not([tabindex]),
-select:not([tabindex]),
-textarea:not([tabindex]) {
-  tabindex: -1;
-}
-
-/* Re-enable tabbing for elements with explicit tabindex values */
-[tabindex]:not([tabindex="-1"]) {
-  /* These elements should be focusable in the specified order */
-}
-
 /* Button focus states */
 button:focus-visible,
 .p-button:focus-visible {
