@@ -581,10 +581,7 @@ const redirectToArkonLogo = () => {
   }
 }
 
-// Login Modal Methods
-const closeLoginModal = (): void => {
-  showLoginModal.value = false
-}
+// Login Page Methods
 
 const handleGoogleSignin = (): void => {
   showLoginModal.value = false
