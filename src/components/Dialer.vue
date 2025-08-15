@@ -294,6 +294,7 @@ const showKeypadModal = ref(false)
 // Template refs for buttons
 const muteButtonRef = ref<HTMLButtonElement | null>(null)
 const holdButtonRef = ref<HTMLButtonElement | null>(null)
+const keypadButtonRef = ref<HTMLButtonElement | null>(null)
 
 // Methods
 const formatTime = (seconds: number): string => {
