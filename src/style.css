@@ -32,7 +32,6 @@ body {
 .btn-primary:hover {
   background-color: #8000FF !important;
   background-image: none !important;
-  transform: translateY(-1px);
 }
 
 /* Secondary Button Styling */
@@ -45,7 +44,6 @@ body {
 
 .btn-secondary:hover {
   background-color: #475467 !important;
-  transform: translateY(-1px);
 }
 
 /* Tertiary Button Styling - same as header nav buttons */
