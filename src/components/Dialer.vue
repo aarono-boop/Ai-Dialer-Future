@@ -329,21 +329,17 @@ const handleNextContactTab = (event: KeyboardEvent) => {
 }
 
 const handleMuteKeydown = (event: KeyboardEvent) => {
-  if (event.key === 'Enter') {
+  if (event.key === 'Enter' || event.key === ' ') {
     event.preventDefault()
-    event.stopPropagation()
     toggleMute()
-    return false
   }
   // Let Tab key work normally for navigation
 }
 
 const handleHoldKeydown = (event: KeyboardEvent) => {
-  if (event.key === 'Enter') {
+  if (event.key === 'Enter' || event.key === ' ') {
     event.preventDefault()
-    event.stopPropagation()
     toggleHold()
-    return false
   }
   // Let Tab key work normally for navigation
 }
