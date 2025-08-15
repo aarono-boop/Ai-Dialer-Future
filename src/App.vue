@@ -21,18 +21,20 @@
             <div class="flex flex-col">
               <template v-for="(message, index) in messages" :key="index">
                 <!-- Regular Chat Message -->
-                <ChatMessage v-if="message.type !== 'separator'" :message="message" />
+                <ChatMessage v-if="message.type !== 'separator'" :message="message">
+                  <template #additional-content>
+                    <!-- File Upload Area - shown inside first AI message (welcome message) only -->
+                    <FileUpload
+                      v-if="index === 0 && !isSignedIn"
+                      @trigger-upload="simulateFileUpload"
+                      @file-selected="onFileSelect"
+                      @file-dropped="simulateFileUpload"
+                    />
+                  </template>
+                </ChatMessage>
 
                 <!-- Call Separator -->
                 <CallSeparator v-else-if="message.type === 'separator'" :contactName="message.contactName || ''" />
-
-                <!-- File Upload Area - shown after first message (welcome message) only -->
-                <FileUpload
-                  v-if="index === 0 && !isSignedIn"
-                  @trigger-upload="simulateFileUpload"
-                  @file-selected="onFileSelect"
-                  @file-dropped="simulateFileUpload"
-                />
               </template>
             </div>
 
