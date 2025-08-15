@@ -316,7 +316,6 @@ import Footer from './components/Footer.vue'
 import Dialer from './components/Dialer.vue'
 import CallSeparator from './components/CallSeparator.vue'
 import SessionSummary from './components/SessionSummary.vue'
-import LoginModal from './components/LoginModal.vue'
 
 // PrimeVue Components
 import Toast from 'primevue/toast'
@@ -810,7 +809,7 @@ const sendMessage = (message: string): void => {
         '✨ I\'d love to show you ARKON in action!',
         'Let me set up a personalized demo where you can see:',
         '• Live contact scoring and prioritization',
-        '• Real-time dialing with connect predictions',
+        '��� Real-time dialing with connect predictions',
         '�� Smart call disposition and follow-up automation',
         'What\'s your preferred time? I can schedule something for today or tomorrow.'
       ])
