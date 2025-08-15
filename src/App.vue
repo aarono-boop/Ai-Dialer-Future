@@ -301,6 +301,7 @@ import SignupModal from './components/SignupModal.vue'
 import TermsModal from './components/TermsModal.vue'
 import AccountCreation from './components/AccountCreation.vue'
 import ProductPage from './components/ProductPage.vue'
+import LoginPage from './components/LoginPage.vue'
 import PricingPage from './components/PricingPage.vue'
 import PaymentPage from './components/PaymentPage.vue'
 import Footer from './components/Footer.vue'
@@ -884,7 +885,7 @@ const handleLooksGood = (): void => {
         '',
         'Here\'s what I found:',
         '• 40 numbers have \'High\' Connect Scores and show consistent calling activity in the last 12 months. These are highly likely to be connected and assigned to active subscribers.',
-        '• 67 numbers have \'Medium\' Connect Scores and are worth calling after you exhaust your \'High\' Connect Score numbers.',
+        '��� 67 numbers have \'Medium\' Connect Scores and are worth calling after you exhaust your \'High\' Connect Score numbers.',
         '• 54 numbers have \'Low\' Connect Scores and are likely disconnected or inactive lines that won\'t answer when dialed.'
       ])
 
