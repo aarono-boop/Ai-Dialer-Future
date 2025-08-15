@@ -115,7 +115,7 @@
         <div class="grid grid-cols-3 gap-3">
           <button
             @click="toggleMute"
-            tabindex="7"
+            tabindex="9"
             :class="isMuted ? 'bg-red-700 hover:bg-red-600' : 'bg-gray-700 hover:bg-gray-600'"
             class="text-white py-3 px-4 rounded-lg flex flex-col items-center justify-center gap-1 transition-colors"
           >
