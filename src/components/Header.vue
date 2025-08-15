@@ -1,11 +1,12 @@
 <template>
   <header class="relative z-10 py-[9px] px-6 lg:px-8 border-b border-white/10 bg-gray-800" role="banner">
     <nav class="flex justify-between items-center max-w-6xl mx-auto" role="navigation" aria-label="Main navigation">
-      <button 
-        class="flex items-center gap-3 cursor-pointer bg-transparent border-none p-0" 
+      <button
+        class="flex items-center gap-3 cursor-pointer bg-transparent border-none p-0"
         @click="$emit('go-home')"
         aria-label="Return to ARKON home page"
         type="button"
+        tabindex="1"
       >
         <svg 
           class="logo-icon" 
@@ -39,6 +40,7 @@
           class="nav-button"
           @click="$emit('show-product')"
           aria-label="View product information"
+          tabindex="2"
         />
 
         <!-- Avatar when signed in -->
@@ -56,6 +58,7 @@
           class="nav-button"
           @click="$emit('login')"
           aria-label="Sign in to your account"
+          tabindex="3"
         />
 
         <Button
