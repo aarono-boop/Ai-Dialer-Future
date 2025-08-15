@@ -260,9 +260,14 @@ const toggleMute = (event?: Event) => {
   isMuted.value = !isMuted.value
   emit('mute', isMuted.value)
 
-  // Maintain focus on the button after clicking
+  // Maintain focus on the button after clicking using nextTick
   if (event && event.target) {
-    (event.target as HTMLElement).focus()
+    const button = event.target as HTMLElement
+    nextTick(() => {
+      setTimeout(() => {
+        button.focus()
+      }, 10)
+    })
   }
 }
 
@@ -270,9 +275,14 @@ const toggleHold = (event?: Event) => {
   isOnHold.value = !isOnHold.value
   emit('hold', isOnHold.value)
 
-  // Maintain focus on the button after clicking
+  // Maintain focus on the button after clicking using nextTick
   if (event && event.target) {
-    (event.target as HTMLElement).focus()
+    const button = event.target as HTMLElement
+    nextTick(() => {
+      setTimeout(() => {
+        button.focus()
+      }, 10)
+    })
   }
 }
 
