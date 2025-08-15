@@ -682,22 +682,19 @@ const handleLoginSuccess = (userData: any): void => {
 }
 
 const showSignupFromLogin = (): void => {
-  currentPage.value = 'main'
-  showSignupModal.value = true
+  currentPage.value = 'signup'
 
-  // Clear any existing focus when navigating back to main app
+  // Clear any existing focus when navigating to signup page
   nextTick(() => {
     if (document.activeElement instanceof HTMLElement) {
       document.activeElement.blur()
     }
     setTimeout(() => {
-      const arkonLogo = document.querySelector('[tabindex="1"]') as HTMLElement
-      if (arkonLogo) {
-        arkonLogo.focus()
-        arkonLogo.blur()
+      if (headerRef.value && headerRef.value.establishFocusContext) {
+        headerRef.value.establishFocusContext()
       }
-    }, 50)
-    announceToScreenReader('Returned to main application. Signup modal opened.')
+    }, 100)
+    announceToScreenReader('Navigated to signup page. Press Tab to navigate with keyboard.')
   })
 }
 
@@ -909,7 +906,7 @@ const sendMessage = (message: string): void => {
         '😄 Why did the salesperson bring a ladder to work?',
         'Because they heard the job was about making <strong>high-level</strong> connections!',
         '',
-        '���� Speaking of connections, did you know ARKON users make 3x more meaningful connections than traditional dialers?',
+        '������ Speaking of connections, did you know ARKON users make 3x more meaningful connections than traditional dialers?',
         'Ready to elevate your calling game?'
       ])
     } else if (lowerMessage.includes('jenn')) {
