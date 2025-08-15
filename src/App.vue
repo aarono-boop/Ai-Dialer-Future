@@ -52,7 +52,7 @@
           </div>
 
           <!-- Action Buttons - positioned above chat input -->
-          <div v-if="showActionButtons" class="mt-2 pt-2.5 flex justify-center">
+          <div v-if="showActionButtons" class="mt-2 pt-5 flex justify-center">
             <div class="w-[70%]">
               <ActionButtons
                 @action-selected="handleActionButton"
@@ -61,7 +61,7 @@
           </div>
 
           <!-- Contact Preview Buttons - always visible when active -->
-          <div v-if="showContactPreviewButtons" class="mt-2 pt-2.5 flex justify-center">
+          <div v-if="showContactPreviewButtons" class="mt-2 pt-5 flex justify-center">
             <div class="w-[70%] flex gap-3">
               <button
                 @click="handleLooksGood"
@@ -79,7 +79,7 @@
           </div>
 
           <!-- Phone Verification Button - always visible when active -->
-          <div v-if="showPhoneVerificationButton" class="mt-2 pt-2.5 flex justify-center">
+          <div v-if="showPhoneVerificationButton" class="mt-2 pt-5 flex justify-center">
             <div class="w-[70%]">
               <button
                 @click="handlePhoneVerification"
@@ -91,7 +91,7 @@
           </div>
 
           <!-- Verification Code Buttons - always visible when active -->
-          <div v-if="showVerificationButtons" class="mt-2 pt-2.5 flex justify-center">
+          <div v-if="showVerificationButtons" class="mt-2 pt-5 flex justify-center">
             <div class="w-[70%] flex gap-3">
               <button
                 @click="handleResendCode"
@@ -109,7 +109,7 @@
           </div>
 
           <!-- Start Dialing Button - always visible when active -->
-          <div v-if="showStartDialingButton" class="mt-2 pt-2.5 flex justify-center">
+          <div v-if="showStartDialingButton" class="mt-2 pt-5 flex justify-center">
             <div class="w-[70%]">
               <button
                 @click="handleStartDialing"
@@ -121,7 +121,7 @@
           </div>
 
           <!-- Disposition Buttons - always visible when active -->
-          <div v-if="showDispositionButtons" class="mt-2 pt-2.5 flex justify-center">
+          <div v-if="showDispositionButtons" class="mt-2 pt-5 flex justify-center">
             <div class="w-[70%] grid grid-cols-4 gap-3">
               <button
                 @click="handleDisposition('Follow up')"
@@ -151,7 +151,7 @@
           </div>
 
           <!-- Signup Buttons - always visible when active -->
-          <div v-if="showSignupButtons && !isSignedIn" class="mt-2 pt-2.5 flex justify-center">
+          <div v-if="showSignupButtons && !isSignedIn" class="mt-2 pt-5 flex justify-center">
             <div class="w-[70%]">
               <SignupButtons
                 @google-signup="handleGoogleSignup"
