@@ -367,7 +367,7 @@ const showKeypad = () => {
 
   // Focus the first keypad button after modal opens
   nextTick(() => {
-    const firstKeypadButton = document.querySelector('[data-keypad-key="1"]') as HTMLElement
+    const firstKeypadButton = document.querySelector('[tabindex="101"]') as HTMLElement
     if (firstKeypadButton) {
       firstKeypadButton.focus()
     }
