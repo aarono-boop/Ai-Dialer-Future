@@ -609,7 +609,7 @@ const handleGoogleSignin = (): void => {
 }
 
 const handleLoginSuccess = (userData: any): void => {
-  showLoginModal.value = false
+  currentPage.value = 'main'
   isSignedIn.value = true
   isReturningUser.value = true // This is a returning user
 
@@ -621,6 +621,21 @@ const handleLoginSuccess = (userData: any): void => {
     showFileUploadForReturningUser.value = true
     scrollToBottom()
   }, 500)
+
+  // Clear any existing focus when navigating back to main app
+  nextTick(() => {
+    if (document.activeElement instanceof HTMLElement) {
+      document.activeElement.blur()
+    }
+    setTimeout(() => {
+      const arkonLogo = document.querySelector('[tabindex="1"]') as HTMLElement
+      if (arkonLogo) {
+        arkonLogo.focus()
+        arkonLogo.blur()
+      }
+    }, 50)
+    announceToScreenReader('Returned to main application after login.')
+  })
 }
 
 const showSignupFromLogin = (): void => {
