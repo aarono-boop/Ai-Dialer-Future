@@ -508,7 +508,27 @@ const addSeparatorMessage = (contactName: string): void => {
 
 // Header Methods
 const handleLogin = () => {
-  showLoginModal.value = true
+  currentPage.value = 'login'
+
+  // Clear any existing focus when navigating to login page
+  nextTick(() => {
+    // Remove focus from any current element so page loads with no focus
+    if (document.activeElement instanceof HTMLElement) {
+      document.activeElement.blur()
+    }
+
+    // Establish focus context by briefly focusing and blurring the ARKON logo
+    setTimeout(() => {
+      const arkonLogo = document.querySelector('[tabindex="1"]') as HTMLElement
+      if (arkonLogo) {
+        arkonLogo.focus()
+        arkonLogo.blur()
+      }
+    }, 50)
+
+    // Announce page change to screen readers
+    announceToScreenReader('Navigated to login page. Press Tab to navigate with keyboard.')
+  })
 }
 
 const handleSwitchToVulcan = () => {
