@@ -26,9 +26,9 @@
                 <!-- Regular Chat Message -->
                 <ChatMessage v-if="message.type !== 'separator'" :message="message">
                   <template #additional-content>
-                    <!-- File Upload Area - shown inside first AI message (welcome message) only -->
+                    <!-- File Upload Area - shown inside welcome message for new users or ready to upload message for returning users -->
                     <FileUpload
-                      v-if="index === 0 && !isSignedIn"
+                      v-if="(index === 0 && !isSignedIn) || (isSignedIn && showFileUploadForReturningUser && isReadyToUploadMessage(message, index))"
                       @trigger-upload="simulateFileUpload"
                       @file-selected="onFileSelect"
                       @file-dropped="simulateFileUpload"
