@@ -513,21 +513,12 @@ const handleSwitchToVulcan = () => {
 const showProductPage = () => {
   currentPage.value = 'product'
 
-  // Reset focus and ensure ARKON logo gets focus first when tab is pressed
+  // Clear any existing focus when navigating to product page
   nextTick(() => {
-    // Wait for DOM to update, then focus the ARKON logo
-    setTimeout(() => {
-      // Remove focus from any current element
-      if (document.activeElement instanceof HTMLElement) {
-        document.activeElement.blur()
-      }
-
-      // Find and focus the ARKON logo button
-      const arkonLogo = document.querySelector('button[tabindex="1"]') as HTMLElement
-      if (arkonLogo) {
-        arkonLogo.focus()
-      }
-    }, 200)
+    // Remove focus from any current element so page loads with no focus
+    if (document.activeElement instanceof HTMLElement) {
+      document.activeElement.blur()
+    }
 
     // Announce page change to screen readers
     announceToScreenReader('Navigated to product page. Press Tab to navigate with keyboard.')
@@ -537,21 +528,12 @@ const showProductPage = () => {
 const goToMainApp = () => {
   currentPage.value = 'main'
 
-  // Reset focus and ensure ARKON logo gets focus first when tab is pressed
+  // Clear any existing focus when navigating to main app
   nextTick(() => {
-    // Wait for DOM to update, then focus the ARKON logo
-    setTimeout(() => {
-      // Remove focus from any current element
-      if (document.activeElement instanceof HTMLElement) {
-        document.activeElement.blur()
-      }
-
-      // Find and focus the ARKON logo button
-      const arkonLogo = document.querySelector('button[tabindex="1"]') as HTMLElement
-      if (arkonLogo) {
-        arkonLogo.focus()
-      }
-    }, 200)
+    // Remove focus from any current element so page loads with no focus
+    if (document.activeElement instanceof HTMLElement) {
+      document.activeElement.blur()
+    }
 
     // Announce page change to screen readers
     announceToScreenReader('Returned to main application. Press Tab to navigate with keyboard.')
