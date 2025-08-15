@@ -10,6 +10,7 @@
       @switch-to-vulcan="handleSwitchToVulcan"
       @show-product="showProductPage"
       @go-home="goToMainApp"
+      :style="showDialer ? 'margin-right: 33.333333%' : ''"
     />
 
     <!-- Main App Content -->
@@ -1501,7 +1502,7 @@ const handlePurchaseCompleted = () => {
   showPricingPage.value = false
   isSignedIn.value = true
   showActionButtons.value = true
-  addAIMessage('���� Congratulations! You\'ve successfully upgraded to the Pro plan and have unlimited access to all features.<br><br>To help us understand what your goals are, what are you trying to accomplish?')
+  addAIMessage('🎉 Congratulations! You\'ve successfully upgraded to the Pro plan and have unlimited access to all features.<br><br>To help us understand what your goals are, what are you trying to accomplish?')
 
   // Ensure scroll happens after action buttons are rendered
   setTimeout(() => {
