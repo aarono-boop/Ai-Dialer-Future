@@ -541,6 +541,13 @@ const showProductPage = () => {
       document.activeElement.blur()
     }
 
+    // Establish focus context by mimicking header click
+    setTimeout(() => {
+      if (headerRef.value && headerRef.value.establishFocusContext) {
+        headerRef.value.establishFocusContext()
+      }
+    }, 100)
+
     // Announce page change to screen readers
     announceToScreenReader('Navigated to product page. Press Tab to navigate with keyboard.')
   })
@@ -869,7 +876,7 @@ const sendMessage = (message: string): void => {
         '😄 Why did the salesperson bring a ladder to work?',
         'Because they heard the job was about making <strong>high-level</strong> connections!',
         '',
-        '������ Speaking of connections, did you know ARKON users make 3x more meaningful connections than traditional dialers?',
+        '���� Speaking of connections, did you know ARKON users make 3x more meaningful connections than traditional dialers?',
         'Ready to elevate your calling game?'
       ])
     } else if (lowerMessage.includes('jenn')) {
