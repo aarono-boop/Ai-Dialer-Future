@@ -412,6 +412,41 @@ const handleCloseButtonTab = (event: KeyboardEvent) => {
   }
 }
 
+const handleKeypadKeydown = (event: KeyboardEvent) => {
+  // Handle keyboard input for keypad
+  const key = event.key
+
+  // Map keyboard keys to keypad keys
+  const validKeys = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '*', '#']
+
+  if (validKeys.includes(key)) {
+    event.preventDefault()
+
+    // Trigger the key press
+    pressKey(key)
+
+    // Visual feedback: briefly highlight the corresponding button
+    const button = document.querySelector(`[data-keypad-key="${key}"]`) as HTMLElement
+    if (button) {
+      button.focus()
+      // Add visual feedback
+      button.style.transform = 'scale(0.95)'
+      button.style.backgroundColor = 'rgb(75, 85, 99)' // gray-600
+
+      setTimeout(() => {
+        button.style.transform = ''
+        button.style.backgroundColor = ''
+      }, 150)
+    }
+  }
+
+  // Handle Escape key to close keypad
+  if (key === 'Escape') {
+    event.preventDefault()
+    closeKeypad()
+  }
+}
+
 const pauseQueue = () => {
   emit('pause-queue')
 }
