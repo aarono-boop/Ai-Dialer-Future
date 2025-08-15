@@ -154,10 +154,10 @@ const handleTabKey = (event: KeyboardEvent) => {
     event.preventDefault()
 
     // Check if dialer is showing by looking for dialer buttons
-    const dialerButton = document.querySelector('[tabindex="6"]') as HTMLElement
+    const dialerButton = document.querySelector('[tabindex="8"]') as HTMLElement
 
     if (dialerButton) {
-      // Dialer is active, continue to dialer (tabindex="6")
+      // Dialer is active, continue to dialer (tabindex="8")
       dialerButton.focus()
     } else {
       // No dialer, cycle back to ARKON logo (tabindex="1")
