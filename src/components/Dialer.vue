@@ -224,6 +224,15 @@ const getConnectScoreColor = (score: string): string => {
   }
 }
 
+const getConnectScoreColorRgb = (score: string): string => {
+  switch (score.toLowerCase()) {
+    case 'high': return 'rgb(74, 222, 128)'
+    case 'medium': return 'rgb(250, 204, 21)'
+    case 'low': return 'rgb(248, 113, 113)'
+    default: return 'rgb(156, 163, 175)'
+  }
+}
+
 const callBack = () => {
   emit('call-back')
 }
