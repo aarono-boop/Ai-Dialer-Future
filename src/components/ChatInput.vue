@@ -181,7 +181,22 @@ defineExpose({
     inputValue.value = ''
   },
   focus: () => {
-    inputRef.value?.$el?.focus()
+    // Try multiple ways to focus the input
+    if (inputRef.value) {
+      // First try the PrimeVue way
+      if (inputRef.value.$el) {
+        inputRef.value.$el.focus()
+      } else if (inputRef.value.focus) {
+        // If it's a direct input element
+        inputRef.value.focus()
+      } else {
+        // If it's wrapped, find the actual input
+        const inputElement = inputRef.value.$el?.querySelector('input') || inputRef.value
+        if (inputElement && inputElement.focus) {
+          inputElement.focus()
+        }
+      }
+    }
   }
 })
 </script>
