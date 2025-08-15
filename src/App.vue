@@ -49,76 +49,6 @@
             />
 
 
-            <!-- Phone Verification Button -->
-            <div v-if="showPhoneVerificationButton" class="flex justify-center w-full">
-              <button
-                @click="handlePhoneVerification"
-                class="btn-primary px-8 py-3 rounded-lg font-semibold cursor-pointer"
-              >
-                Now lets verify my phone number
-              </button>
-            </div>
-
-            <!-- Verification Code Buttons -->
-            <div v-if="showVerificationButtons" class="flex gap-3 w-full">
-              <button
-                @click="handleResendCode"
-                class="btn-secondary flex-1 px-6 py-3 rounded-lg font-semibold cursor-pointer"
-              >
-                Resend Code
-              </button>
-              <button
-                @click="handleTryAnotherNumber"
-                class="btn-secondary flex-1 px-6 py-3 rounded-lg font-semibold cursor-pointer"
-              >
-                Try Another Number
-              </button>
-            </div>
-
-            <!-- Start Dialing Button -->
-            <div v-if="showStartDialingButton" class="flex justify-center w-full">
-              <button
-                @click="handleStartDialing"
-                class="w-1/2 btn-primary py-3 rounded-lg font-semibold cursor-pointer"
-              >
-                Start Dialing
-              </button>
-            </div>
-
-            <!-- Disposition Buttons -->
-            <div v-if="showDispositionButtons" class="grid grid-cols-4 gap-3 w-full">
-              <button
-                @click="handleDisposition('Follow up')"
-                class="btn-secondary py-3 px-4 rounded-lg font-medium cursor-pointer"
-              >
-                Follow up
-              </button>
-              <button
-                @click="handleDisposition('Not interested')"
-                class="btn-secondary py-3 px-4 rounded-lg font-medium cursor-pointer"
-              >
-                Not interested
-              </button>
-              <button
-                @click="handleDisposition('Do Not Call')"
-                class="btn-secondary py-3 px-4 rounded-lg font-medium cursor-pointer"
-              >
-                Do Not Call
-              </button>
-              <button
-                @click="handleDisposition('Set Appointment')"
-                class="btn-primary py-3 px-4 rounded-lg font-medium cursor-pointer"
-              >
-                Set Appointment
-              </button>
-            </div>
-
-            <!-- Signup Buttons -->
-            <SignupButtons
-              v-if="showSignupButtons && !isSignedIn"
-              @google-signup="handleGoogleSignup"
-              @email-signup="handleEmailSignup"
-            />
           </div>
 
           <!-- Action Buttons - positioned above chat input -->
@@ -1012,7 +942,7 @@ const handleMute = (muted: boolean): void => {
 }
 
 const handleHold = (onHold: boolean): void => {
-  addAIMessage(onHold ? '⏸️ Call placed on hold' : '▶️ Call resumed')
+  addAIMessage(onHold ? '⏸️ Call placed on hold' : '▶��� Call resumed')
 }
 
 const handleKeypad = (): void => {
