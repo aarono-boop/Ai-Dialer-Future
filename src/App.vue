@@ -161,7 +161,7 @@
           </div>
 
           <!-- Chat Input - positioned at bottom -->
-          <div class="mt-4 pt-4">
+          <div class="mt-2 pt-2">
             <ChatInput
               ref="chatInputRef"
               :customPlaceholder="getPlaceholderText()"
