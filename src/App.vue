@@ -573,9 +573,13 @@ const simulateFileUpload = () => {
   hasUploadedFile.value = true
   showFileUploadForReturningUser.value = false
 
+  // Announce to screen readers
+  announceToScreenReader('File uploaded successfully. Analyzing contact data.')
+
   if (isSignedIn.value) {
     // User is already signed in, go directly to contact preview
     setTimeout(() => {
+      announceToScreenReader('Contact file analysis complete. Preview available.')
       const sampleContacts = `
       <div style="color: #ffffff;">
         <div>
@@ -731,7 +735,7 @@ const sendMessage = (message: string): void => {
       ])
     } else if (lowerMessage.includes('fire up a dial session') || lowerMessage.includes('dial session')) {
       addAIMessage([
-        '🔥 Let\'s fire up a power dialing session!',
+        '��� Let\'s fire up a power dialing session!',
         'I can configure your session with:',
         '• <strong>Target audience:</strong> High-priority prospects, warm leads, or follow-ups',
         '• <strong>Call duration:</strong> 30 min, 1 hour, or 2-hour session',
