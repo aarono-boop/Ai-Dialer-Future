@@ -1317,6 +1317,39 @@ const continueQueue = (): void => {
   addAIMessage('▶��� Resuming call queue where you left off.')
 }
 
+const skipToDialer = (): void => {
+  // Skip all setup steps and go directly to dialer for internal testing
+  currentPage.value = 'main'
+  isSignedIn.value = true
+  isReturningUser.value = true
+  hasUploadedFile.value = true
+  showActionButtons.value = false
+  showContactPreviewButtons.value = false
+  showPhoneVerificationButton.value = false
+  showStartDialingButton.value = false
+  showDialer.value = true
+
+  // Initialize dialer state
+  callState.value = 'ended'
+  currentContactIndex.value = 0
+
+  // Clear messages and add dialer message
+  messages.value = []
+  addAIMessage('🎯 Dialer activated for testing! Ready to start calling.')
+
+  // Start queue timer
+  queueTimer = setInterval(() => {
+    queueTime.value++
+  }, 1000)
+
+  // Set focus context for header
+  nextTick(() => {
+    if (headerRef.value?.establishFocusContext) {
+      headerRef.value.establishFocusContext()
+    }
+  })
+}
+
 const loadNewFile = (): void => {
   showSessionSummary.value = false
   showDialer.value = false
