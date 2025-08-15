@@ -186,7 +186,7 @@
     </div>
 
     <!-- Keypad Modal -->
-    <div v-if="showKeypadModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50" @click="closeKeypad">
+    <div v-if="showKeypadModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50" @click="closeKeypad" @keydown="handleKeypadKeydown" tabindex="-1">
       <div class="bg-gray-800 rounded-lg p-6 w-80 max-w-sm mx-4" @click.stop>
         <!-- Modal Header -->
         <div class="flex justify-between items-center mb-6">
