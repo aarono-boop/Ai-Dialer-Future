@@ -202,6 +202,14 @@
       @go-to-app="goToMainApp"
     />
 
+    <!-- Login Page -->
+    <LoginPage
+      v-if="currentPage === 'login'"
+      @google-signin="handleGoogleSignin"
+      @login-success="handleLoginSuccess"
+      @show-signup="showSignupFromLogin"
+    />
+
     <!-- Footer -->
     <Footer v-if="currentPage === 'main'" />
 
