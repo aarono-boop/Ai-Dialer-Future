@@ -364,10 +364,25 @@ const toggleHold = () => {
 
 const showKeypad = () => {
   showKeypadModal.value = true
+
+  // Focus the first keypad button after modal opens
+  nextTick(() => {
+    const firstKeypadButton = document.querySelector('[data-keypad-key="1"]') as HTMLElement
+    if (firstKeypadButton) {
+      firstKeypadButton.focus()
+    }
+  })
 }
 
 const closeKeypad = () => {
   showKeypadModal.value = false
+
+  // Return focus to the keypad button in the dialer
+  nextTick(() => {
+    if (keypadButtonRef.value) {
+      keypadButtonRef.value.focus()
+    }
+  })
 }
 
 const pressKey = (key: string) => {
