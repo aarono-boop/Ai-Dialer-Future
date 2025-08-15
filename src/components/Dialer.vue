@@ -114,6 +114,7 @@
         <!-- Call Control Buttons -->
         <div class="grid grid-cols-3 gap-3">
           <button
+            ref="muteButtonRef"
             @click="toggleMute($event)"
             @keydown="handleMuteKeydown"
             tabindex="9"
@@ -135,6 +136,7 @@
           </button>
 
           <button
+            ref="holdButtonRef"
             @click="toggleHold($event)"
             @keydown="handleHoldKeydown"
             tabindex="11"
