@@ -365,12 +365,19 @@ const toggleHold = () => {
 const showKeypad = () => {
   showKeypadModal.value = true
 
-  // Focus the first keypad button after modal opens
+  // Focus the modal container to enable keyboard events, then focus first button
   nextTick(() => {
-    const firstKeypadButton = document.querySelector('[tabindex="101"]') as HTMLElement
-    if (firstKeypadButton) {
-      firstKeypadButton.focus()
+    const modalContainer = document.querySelector('.fixed.inset-0.bg-black.bg-opacity-50') as HTMLElement
+    if (modalContainer) {
+      modalContainer.focus()
     }
+
+    setTimeout(() => {
+      const firstKeypadButton = document.querySelector('[tabindex="101"]') as HTMLElement
+      if (firstKeypadButton) {
+        firstKeypadButton.focus()
+      }
+    }, 50)
   })
 }
 
