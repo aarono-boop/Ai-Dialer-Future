@@ -36,14 +36,14 @@ body {
 
 /* Secondary Button Styling */
 .btn-secondary {
-  background-color: rgba(255, 255, 255, 0.1) !important;
+  background-color: #344054 !important;
   border: 1px solid rgba(255, 255, 255, 0.3) !important;
   color: white !important;
   transition: all 0.2s ease-in-out !important;
 }
 
 .btn-secondary:hover {
-  background-color: rgba(255, 255, 255, 0.2) !important;
+  background-color: #2d3648 !important;
   transform: translateY(-1px);
 }
 
