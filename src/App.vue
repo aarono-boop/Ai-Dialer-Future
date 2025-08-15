@@ -869,7 +869,7 @@ const sendMessage = (message: string): void => {
         '😄 Why did the salesperson bring a ladder to work?',
         'Because they heard the job was about making <strong>high-level</strong> connections!',
         '',
-        '���� Speaking of connections, did you know ARKON users make 3x more meaningful connections than traditional dialers?',
+        '������ Speaking of connections, did you know ARKON users make 3x more meaningful connections than traditional dialers?',
         'Ready to elevate your calling game?'
       ])
     } else if (lowerMessage.includes('jenn')) {
@@ -1498,18 +1498,13 @@ const handleActionButton = (action: string): void => {
 
 // Lifecycle hook to establish focus context when app loads
 onMounted(() => {
-  // Give the app time to fully render, then establish focus context
+  // Give the app time to fully render, then establish focus context by mimicking header click
   setTimeout(() => {
-    const arkonLogo = document.querySelector('[tabindex="1"]') as HTMLElement
-    if (arkonLogo) {
-      // Briefly focus and blur to establish focus context for tab navigation
-      arkonLogo.focus()
-      arkonLogo.blur()
-      console.log('Focus context established for ARKON logo')
-    } else {
-      console.log('ARKON logo not found')
+    if (headerRef.value && headerRef.value.establishFocusContext) {
+      headerRef.value.establishFocusContext()
+      console.log('Focus context established by mimicking header click')
     }
-  }, 1000)
+  }, 500)
 })
 </script>
 
