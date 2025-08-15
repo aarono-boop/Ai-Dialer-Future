@@ -1433,6 +1433,22 @@ const handleActionButton = (action: string): void => {
     scrollToBottom()
   }, 1500)
 }
+
+// Lifecycle hook to establish focus context when app loads
+onMounted(() => {
+  // Give the app time to fully render, then establish focus context
+  setTimeout(() => {
+    const arkonLogo = document.querySelector('[tabindex="1"]') as HTMLElement
+    if (arkonLogo) {
+      // Briefly focus and blur to establish focus context for tab navigation
+      arkonLogo.focus()
+      arkonLogo.blur()
+      console.log('Focus context established for ARKON logo')
+    } else {
+      console.log('ARKON logo not found')
+    }
+  }, 1000)
+})
 </script>
 
 <style scoped>
