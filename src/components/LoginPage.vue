@@ -36,35 +36,7 @@ import { ref } from 'vue'
 import InputText from 'primevue/inputtext'
 
 // Define emits
-const emit = defineEmits(['google-signin', 'login-success', 'show-signup'])
-
-// Reactive data
-const email = ref('')
-const password = ref('')
-const emailInputRef = ref<any>(null)
-
-// Methods
-const handleLogin = () => {
-  // Simulate login process
-  // In a real app, this would validate credentials with a backend
-  if (email.value && password.value) {
-    // Emit success with user data
-    const userData = {
-      email: email.value,
-      name: email.value.split('@')[0], // Simple name extraction
-      hasSetGoals: true // Assuming returning users have already set goals
-    }
-
-    // Clear form
-    email.value = ''
-    password.value = ''
-
-    // Emit login success
-    setTimeout(() => {
-      emit('login-success', userData)
-    }, 1000)
-  }
-}
+const emit = defineEmits(['google-signin', 'show-signup'])
 
 // Handle tab key to create circular navigation back to ARKON logo
 const handleTabKey = (event: KeyboardEvent) => {
