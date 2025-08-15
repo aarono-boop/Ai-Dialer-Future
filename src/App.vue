@@ -582,6 +582,14 @@ const announceToScreenReader = (message: string) => {
   }
 }
 
+// Redirect focus from tab trap to ARKON logo
+const redirectToArkonLogo = () => {
+  const arkonLogo = document.querySelector('button[aria-label="Return to ARKON home page"]') as HTMLElement
+  if (arkonLogo) {
+    arkonLogo.focus()
+  }
+}
+
 // Login Modal Methods
 const closeLoginModal = (): void => {
   showLoginModal.value = false
