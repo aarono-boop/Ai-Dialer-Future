@@ -525,6 +525,13 @@ const isReadyToUploadMessage = (message: Message, index: number): boolean => {
   return content.includes('Ready to upload your contact file and start dialing')
 }
 
+// Helper function to determine which messages should be wide (for file upload)
+const shouldBeWideMessage = (message: Message, index: number): boolean => {
+  // Make message wide if it contains file upload content
+  return (index === 0 && !isSignedIn.value) || // Welcome message for new users
+         (isSignedIn.value && showFileUploadForReturningUser.value && isReadyToUploadMessage(message, index)) // Upload message for returning users
+}
+
 // Header Methods
 const handleLogin = () => {
   currentPage.value = 'login'
