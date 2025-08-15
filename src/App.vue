@@ -133,24 +133,28 @@
               <button
                 @click="handleDisposition('Follow up')"
                 class="btn-secondary py-3 px-4 rounded-lg font-medium cursor-pointer"
+                tabindex="5"
               >
                 Follow up
               </button>
               <button
                 @click="handleDisposition('Not interested')"
                 class="btn-secondary py-3 px-4 rounded-lg font-medium cursor-pointer"
+                tabindex="6"
               >
                 Not interested
               </button>
               <button
                 @click="handleDisposition('Do Not Call')"
                 class="btn-secondary py-3 px-4 rounded-lg font-medium cursor-pointer"
+                tabindex="7"
               >
                 Do Not Call
               </button>
               <button
                 @click="handleDisposition('Set Appointment')"
                 class="btn-primary py-3 px-4 rounded-lg font-medium cursor-pointer"
+                tabindex="8"
               >
                 Set Appointment
               </button>
