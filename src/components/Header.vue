@@ -117,10 +117,4 @@ button[aria-label="Return to ARKON home page"]:focus-visible {
   outline-offset: 2px !important;
   border-radius: 4px !important;
 }
-
-button[aria-label="Return to ARKON home page"]:hover {
-  background: rgba(96, 165, 250, 0.1) !important;
-  border-radius: 4px !important;
-  transition: background-color 0.2s ease;
-}
 </style>
