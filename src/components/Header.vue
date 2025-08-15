@@ -40,7 +40,7 @@
           class="nav-button"
           @click="$emit('show-product')"
           aria-label="View product information"
-          tabindex="2"
+          tabindex="0"
         />
 
         <!-- Avatar when signed in -->
