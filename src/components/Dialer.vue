@@ -262,34 +262,28 @@ const hangUp = () => {
   emit('hang-up')
 }
 
-const toggleMute = (event?: Event) => {
+const toggleMute = () => {
   isMuted.value = !isMuted.value
   emit('mute', isMuted.value)
 
-  // Maintain focus on the button after clicking using nextTick
-  if (event && event.target) {
-    const button = event.target as HTMLElement
-    nextTick(() => {
-      setTimeout(() => {
-        button.focus()
-      }, 10)
-    })
-  }
+  // Maintain focus using template ref
+  nextTick(() => {
+    if (muteButtonRef.value) {
+      muteButtonRef.value.focus()
+    }
+  })
 }
 
-const toggleHold = (event?: Event) => {
+const toggleHold = () => {
   isOnHold.value = !isOnHold.value
   emit('hold', isOnHold.value)
 
-  // Maintain focus on the button after clicking using nextTick
-  if (event && event.target) {
-    const button = event.target as HTMLElement
-    nextTick(() => {
-      setTimeout(() => {
-        button.focus()
-      }, 10)
-    })
-  }
+  // Maintain focus using template ref
+  nextTick(() => {
+    if (holdButtonRef.value) {
+      holdButtonRef.value.focus()
+    }
+  })
 }
 
 const showKeypad = () => {
