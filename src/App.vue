@@ -989,7 +989,7 @@ const sendMessage = (message: string): void => {
       ])
     } else if (lowerMessage.includes('jenn')) {
       addAIMessage([
-        'Found Jenn! ����',
+        'Found Jenn! �����',
         'I found <strong>Jenn Peterson</strong> in your contacts.',
         'She has an <strong>89% pickup rate</strong> and is most likely available now.',
         'Ready to call Jenn?'
@@ -1155,8 +1155,13 @@ const handleTryAnotherNumber = (): void => {
 
     // Focus the chat input after the AI message appears
     setTimeout(() => {
-      chatInputRef.value?.focus()
-    }, 100)
+      if (chatInputRef.value && chatInputRef.value.focus) {
+        chatInputRef.value.focus()
+        console.log('Auto-focused chat input for try another number')
+      } else {
+        console.log('Chat input ref not available for try another number auto-focus')
+      }
+    }, 500)
   }, 1000)
 }
 
@@ -1316,7 +1321,7 @@ const continueQueue = (): void => {
     queueTime.value++
   }, 1000)
 
-  addAIMessage('▶️ Resuming call queue where you left off.')
+  addAIMessage('▶��� Resuming call queue where you left off.')
 }
 
 const loadNewFile = (): void => {
