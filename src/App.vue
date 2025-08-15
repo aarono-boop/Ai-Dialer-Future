@@ -539,20 +539,19 @@ const goToMainApp = () => {
 
   // Reset focus and ensure ARKON logo gets focus first when tab is pressed
   nextTick(() => {
-    // Clear any current focus
-    if (document.activeElement instanceof HTMLElement) {
-      document.activeElement.blur()
-    }
-
-    // Explicitly reset focus so ARKON logo is the starting point for tab navigation
+    // Wait for DOM to update, then focus the ARKON logo
     setTimeout(() => {
-      const arkonLogo = document.querySelector('[tabindex="1"]') as HTMLElement
+      // Remove focus from any current element
+      if (document.activeElement instanceof HTMLElement) {
+        document.activeElement.blur()
+      }
+
+      // Find and focus the ARKON logo button
+      const arkonLogo = document.querySelector('button[tabindex="1"]') as HTMLElement
       if (arkonLogo) {
         arkonLogo.focus()
-        // Force a blur so the next tab will go to the ARKON logo first
-        arkonLogo.blur()
       }
-    }, 100)
+    }, 200)
 
     // Announce page change to screen readers
     announceToScreenReader('Returned to main application. Press Tab to navigate with keyboard.')
