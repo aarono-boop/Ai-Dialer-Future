@@ -23,7 +23,7 @@
         <Button
           label="Product"
           text
-          class="text-white font-medium hover:text-purple-400 transition-colors"
+          class="text-white font-medium px-3 py-2 rounded-md hover:bg-[#9933FF] transition-all duration-200"
           @click="$emit('show-product')"
         />
 
@@ -39,7 +39,7 @@
           v-else
           label="Login"
           text
-          class="text-white font-medium hover:text-purple-400 transition-colors"
+          class="text-white font-medium px-3 py-2 rounded-md hover:bg-[#9933FF] transition-all duration-200"
           @click="$emit('login')"
         />
 
