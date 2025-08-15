@@ -4,65 +4,21 @@
     <main class="max-w-md mx-auto px-6 py-16">
       <!-- Header -->
       <div class="text-center mb-8">
-        <h1 class="text-3xl font-bold text-white mb-2">Log in</h1>
-        <p class="text-slate-400">Welcome back! Sign in to your account.</p>
+        <h1 class="text-3xl font-bold text-white mb-2">Login</h1>
+        <p class="text-slate-400">Welcome back! Sign in with your Google account.</p>
       </div>
 
       <!-- Login Form Container -->
       <div class="bg-gray-900 border border-gray-700 rounded-xl p-6">
-        <!-- Google Sign In -->
-        <button 
+        <!-- Google Sign In - Primary Button -->
+        <button
           @click="$emit('google-signin')"
           @keydown.tab="handleTabKey"
-          class="w-full bg-gray-800 hover:bg-gray-700 border border-gray-600 text-white py-3 px-4 rounded-lg flex items-center justify-center gap-3 transition-colors mb-6"
+          class="w-full btn-primary py-4 px-6 rounded-lg flex items-center justify-center gap-3 transition-all duration-200 font-semibold text-lg mb-6"
           tabindex="4"
         >
-          <i class="pi pi-google text-lg"></i>
+          <i class="pi pi-google text-xl"></i>
           Sign in with Google
-        </button>
-
-        <!-- Divider -->
-        <div class="flex items-center mb-6">
-          <div class="flex-1 h-px bg-gray-600"></div>
-          <span class="text-gray-400 px-3 text-sm">OR</span>
-          <div class="flex-1 h-px bg-gray-600"></div>
-        </div>
-
-        <!-- Email Field -->
-        <div class="mb-4">
-          <label class="block text-gray-300 text-sm font-medium mb-2">Email</label>
-          <InputText
-            ref="emailInputRef"
-            v-model="email"
-            placeholder="name@host.com"
-            class="w-full bg-gray-800 border border-gray-600 text-white placeholder-gray-400 rounded-lg px-3 py-3 focus:border-blue-500 focus:outline-none"
-            tabindex="0"
-          />
-        </div>
-
-        <!-- Password Field -->
-        <div class="mb-6">
-          <div class="flex items-center justify-between mb-2">
-            <label class="text-gray-300 text-sm font-medium">Password</label>
-            <a href="#" class="text-blue-400 text-sm hover:text-blue-300" tabindex="0">Forgot password?</a>
-          </div>
-          <InputText
-            v-model="password"
-            type="password"
-            placeholder="Enter password"
-            class="w-full bg-gray-800 border border-gray-600 text-white placeholder-gray-400 rounded-lg px-3 py-3 focus:border-blue-500 focus:outline-none"
-            tabindex="0"
-          />
-        </div>
-
-        <!-- Login Button -->
-        <button 
-          @click="handleLogin"
-          :disabled="!email || !password"
-          class="w-full bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 disabled:from-gray-600 disabled:to-gray-700 disabled:cursor-not-allowed text-white py-3 px-4 rounded-lg font-semibold transition-all duration-200 mb-4"
-          tabindex="0"
-        >
-          Log in
         </button>
 
         <!-- Sign Up Link -->
