@@ -6,7 +6,7 @@
         @click="$emit('go-home')"
         aria-label="Return to ARKON home page"
         type="button"
-        tabindex="0"
+        tabindex="1"
       >
         <svg 
           class="logo-icon" 
