@@ -268,6 +268,7 @@ import ChatInput from './components/ChatInput.vue'
 import SignupModal from './components/SignupModal.vue'
 import TermsModal from './components/TermsModal.vue'
 import AccountCreation from './components/AccountCreation.vue'
+import ProductPage from './components/ProductPage.vue'
 import PricingPage from './components/PricingPage.vue'
 import PaymentPage from './components/PaymentPage.vue'
 import Footer from './components/Footer.vue'
@@ -935,7 +936,7 @@ const simulateCall = (): void => {
 
 // Dialer Methods
 const handleCallBack = (): void => {
-  addAIMessage(`📞 Calling ${currentContact.value.name} back on their number...`)
+  addAIMessage(`��� Calling ${currentContact.value.name} back on their number...`)
   simulateCall()
 }
 
