@@ -7,6 +7,8 @@
       :isSignedIn="isSignedIn"
       @login="handleLogin"
       @switch-to-vulcan="handleSwitchToVulcan"
+      @show-product="showProductPage"
+      @go-home="goToMainApp"
     />
 
     <!-- Main Content -->
