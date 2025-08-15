@@ -130,6 +130,24 @@
             </div>
           </div>
 
+          <!-- Contact Preview Buttons - always visible when active -->
+          <div v-if="showContactPreviewButtons" class="mt-4 flex justify-center">
+            <div class="w-[70%] flex gap-3">
+              <button
+                @click="handleLooksGood"
+                class="flex-1 btn-primary px-6 py-3 rounded-lg font-semibold cursor-pointer"
+              >
+                Looks Good
+              </button>
+              <button
+                @click="handleTryAgain"
+                class="btn-secondary flex-1 px-6 py-3 rounded-lg font-semibold cursor-pointer"
+              >
+                Try Again
+              </button>
+            </div>
+          </div>
+
           <!-- Chat Input - positioned at bottom -->
           <div class="mt-4 pt-4">
             <ChatInput
