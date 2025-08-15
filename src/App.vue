@@ -181,8 +181,14 @@
       </div>
     </main>
 
+    <!-- Product Page -->
+    <ProductPage
+      v-if="currentPage === 'product'"
+      @go-to-app="goToMainApp"
+    />
+
     <!-- Footer -->
-    <Footer />
+    <Footer v-if="currentPage === 'main'" />
 
     <!-- Signup Modal -->
     <SignupModal 
