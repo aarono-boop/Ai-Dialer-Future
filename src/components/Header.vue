@@ -1,7 +1,7 @@
 <template>
   <header class="relative z-10 py-[9px] px-6 lg:px-8 border-b border-white/10 bg-gray-800">
     <div class="flex justify-between items-center max-w-6xl mx-auto">
-      <div class="flex items-center gap-3">
+      <div class="flex items-center gap-3 cursor-pointer" @click="$emit('go-home')">
         <svg class="logo-icon" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px">
           <defs>
             <linearGradient id="arkonGradient" x1="0%" y1="0%" x2="100%" y2="100%">
