@@ -1,5 +1,5 @@
 <template>
-  <div class="mt-4">
+  <div class="mt-4" role="region" aria-label="Chat input area">
     <div class="flex items-center bg-gray-800 backdrop-blur-[10px] border border-gray-600 rounded-xl px-3 py-2 gap-2 w-[70%] mx-auto">
       <InputText
         ref="inputRef"
@@ -10,6 +10,8 @@
         @keyup.enter="handleSend"
         @focus="pauseAnimation"
         @blur="resumeAnimation"
+        aria-label="Type your message or question"
+        aria-describedby="chat-input-help"
       />
       <Button
         icon="pi pi-send"
@@ -17,7 +19,15 @@
         :disabled="!inputValue.trim()"
         text
         @click="handleSend"
+        aria-label="Send message"
+        :aria-describedby="!inputValue.trim() ? 'send-button-help' : ''"
       />
+    </div>
+    <div id="chat-input-help" class="sr-only">
+      Press Enter to send your message or use the send button
+    </div>
+    <div id="send-button-help" class="sr-only" v-if="!inputValue.trim()">
+      Enter a message to enable the send button
     </div>
   </div>
 </template>
