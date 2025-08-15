@@ -520,6 +520,16 @@ const showProductPage = () => {
       document.activeElement.blur()
     }
 
+    // Establish focus context by briefly focusing and blurring the ARKON logo
+    // This sets up the tab order to start from the correct element
+    setTimeout(() => {
+      const arkonLogo = document.querySelector('button[aria-label="Return to ARKON home page"]') as HTMLElement
+      if (arkonLogo) {
+        arkonLogo.focus()
+        arkonLogo.blur()
+      }
+    }, 50)
+
     // Announce page change to screen readers
     announceToScreenReader('Navigated to product page. Press Tab to navigate with keyboard.')
   })
