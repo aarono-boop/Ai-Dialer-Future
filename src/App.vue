@@ -307,7 +307,6 @@ import FileUpload from './components/FileUpload.vue'
 import ActionButtons from './components/ActionButtons.vue'
 import SignupButtons from './components/SignupButtons.vue'
 import ChatInput from './components/ChatInput.vue'
-import SignupModal from './components/SignupModal.vue'
 import TermsModal from './components/TermsModal.vue'
 import AccountCreation from './components/AccountCreation.vue'
 import ProductPage from './components/ProductPage.vue'
@@ -1025,7 +1024,7 @@ const handleLooksGood = (): void => {
         'I\'ve prioritized the phone numbers most likely to connect so you spend time talking, not hitting dead lines.',
         '',
         'Here\'s what I found:',
-        '• 40 numbers have \'High\' Connect Scores and show consistent calling activity in the last 12 months. These are highly likely to be connected and assigned to active subscribers.',
+        '�� 40 numbers have \'High\' Connect Scores and show consistent calling activity in the last 12 months. These are highly likely to be connected and assigned to active subscribers.',
         '• 67 numbers have \'Medium\' Connect Scores and are worth calling after you exhaust your \'High\' Connect Score numbers.',
         '• 54 numbers have \'Low\' Connect Scores and are likely disconnected or inactive lines that won\'t answer when dialed.'
       ])
