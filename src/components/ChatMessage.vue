@@ -62,6 +62,7 @@ interface Message {
 // Define props
 defineProps<{
   message: Message
+  isWide?: boolean
 }>()
 </script>
 
