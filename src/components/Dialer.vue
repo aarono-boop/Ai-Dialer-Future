@@ -147,6 +147,7 @@
         <!-- Hang Up Button -->
         <button
           @click="hangUp"
+          @keydown.tab="handleHangUpTab"
           tabindex="12"
           class="w-full bg-red-600 hover:bg-red-700 text-white py-3 px-4 rounded-lg flex items-center justify-center gap-2 transition-colors"
         >
