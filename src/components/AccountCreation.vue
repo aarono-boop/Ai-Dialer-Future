@@ -47,7 +47,7 @@
 import Button from 'primevue/button'
 
 // Define emits
-defineEmits(['close', 'switch-to-signin', 'show-terms'])
+const emit = defineEmits(['close', 'switch-to-signin', 'show-terms'])
 
 // Methods
 const handleGoogleSignup = () => {
