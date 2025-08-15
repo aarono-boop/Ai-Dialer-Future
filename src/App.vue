@@ -67,14 +67,14 @@
               <button
                 @click="handleLooksGood"
                 class="flex-1 btn-primary px-6 py-3 rounded-lg font-semibold cursor-pointer"
-                tabindex="5"
+                tabindex="3"
               >
                 Looks Good
               </button>
               <button
                 @click="handleTryAgain"
                 class="btn-secondary flex-1 px-6 py-3 rounded-lg font-semibold cursor-pointer"
-                tabindex="6"
+                tabindex="4"
               >
                 Try Again
               </button>
@@ -1195,7 +1195,7 @@ const simulateCall = (): void => {
     }, 1000)
 
     // Show AI message that call connected
-    addAIMessage(`📞 Connected! You're now speaking with ${currentContact.value.name}.`)
+    addAIMessage(`���� Connected! You're now speaking with ${currentContact.value.name}.`)
     scrollToBottom()
   }, 3000)
 }
