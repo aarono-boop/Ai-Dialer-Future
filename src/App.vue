@@ -16,7 +16,7 @@
     <main v-if="currentPage === 'main'" class="flex-1 flex items-start justify-center p-8 relative z-[5]">
       <div class="flex gap-6 w-full max-w-[1400px] h-[80vh] mt-2.5">
         <!-- Chat Container -->
-        <div :class="showDialer ? 'w-2/3' : 'w-full max-w-6xl mx-auto'" class="rounded-xl px-5">
+        <div :class="showDialer ? 'w-full' : 'w-full max-w-6xl mx-auto'" class="rounded-xl px-5" :style="showDialer ? 'margin-right: 33.333333%' : ''">
           <div class="w-full h-full flex flex-col">
           <!-- Top content area - scrollable -->
           <div class="flex-1 overflow-y-auto flex flex-col gap-8 pr-2 pb-4" ref="chatMessages">
@@ -924,7 +924,7 @@ const sendMessage = (message: string): void => {
       ])
     } else if (lowerMessage.includes('connected to more calls') || lowerMessage.includes('get connected')) {
       addAIMessage([
-        '�� Great question! Here are ARKON\'s proven strategies to boost your connect rates:',
+        '📈 Great question! Here are ARKON\'s proven strategies to boost your connect rates:',
         '• <strong>Smart Timing:</strong> Calls prospects when they\'re most likely to answer',
         '• <strong>Local Presence:</strong> Uses local numbers to increase pickup rates',
         '• <strong>Voicemail Drop:</strong> Leaves personalized messages when they don\'t answer',
@@ -1501,7 +1501,7 @@ const handlePurchaseCompleted = () => {
   showPricingPage.value = false
   isSignedIn.value = true
   showActionButtons.value = true
-  addAIMessage('🎉 Congratulations! You\'ve successfully upgraded to the Pro plan and have unlimited access to all features.<br><br>To help us understand what your goals are, what are you trying to accomplish?')
+  addAIMessage('���� Congratulations! You\'ve successfully upgraded to the Pro plan and have unlimited access to all features.<br><br>To help us understand what your goals are, what are you trying to accomplish?')
 
   // Ensure scroll happens after action buttons are rendered
   setTimeout(() => {
