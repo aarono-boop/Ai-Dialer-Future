@@ -256,14 +256,24 @@ const hangUp = () => {
   emit('hang-up')
 }
 
-const toggleMute = () => {
+const toggleMute = (event?: Event) => {
   isMuted.value = !isMuted.value
   emit('mute', isMuted.value)
+
+  // Maintain focus on the button after clicking
+  if (event && event.target) {
+    (event.target as HTMLElement).focus()
+  }
 }
 
-const toggleHold = () => {
+const toggleHold = (event?: Event) => {
   isOnHold.value = !isOnHold.value
   emit('hold', isOnHold.value)
+
+  // Maintain focus on the button after clicking
+  if (event && event.target) {
+    (event.target as HTMLElement).focus()
+  }
 }
 
 const showKeypad = () => {
