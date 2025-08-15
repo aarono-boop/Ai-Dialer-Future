@@ -292,7 +292,16 @@ const toggleHold = () => {
 }
 
 const showKeypad = () => {
-  emit('keypad')
+  showKeypadModal.value = true
+}
+
+const closeKeypad = () => {
+  showKeypadModal.value = false
+}
+
+const pressKey = (key: string) => {
+  // Emit the key press for DTMF tone generation or other functionality
+  emit('keypad-press', key)
 }
 
 const pauseQueue = () => {
