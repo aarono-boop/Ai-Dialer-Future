@@ -1,5 +1,5 @@
 <template>
-  <footer class="text-center p-6 text-white text-sm relative z-[5] -mt-[25px]">
+  <footer class="text-center p-6 text-gray-400 text-xs relative z-[5] -mt-[25px]">
     <p>&copy; 2025 ARKON. All rights reserved.</p>
   </footer>
 </template>
