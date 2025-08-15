@@ -518,6 +518,19 @@ const goToMainApp = () => {
   currentPage.value = 'main'
 }
 
+// Accessibility helper for screen reader announcements
+const announceToScreenReader = (message: string) => {
+  if (screenReaderAnnouncements.value) {
+    screenReaderAnnouncements.value.textContent = message
+    // Clear after announcement to allow repeat announcements
+    setTimeout(() => {
+      if (screenReaderAnnouncements.value) {
+        screenReaderAnnouncements.value.textContent = ''
+      }
+    }, 1000)
+  }
+}
+
 // Login Modal Methods
 const closeLoginModal = (): void => {
   showLoginModal.value = false
