@@ -183,6 +183,75 @@
         </button>
       </div>
     </div>
+
+    <!-- Keypad Modal -->
+    <div v-if="showKeypadModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50" @click="closeKeypad">
+      <div class="bg-gray-800 rounded-lg p-6 w-80 max-w-sm mx-4" @click.stop>
+        <!-- Modal Header -->
+        <div class="flex justify-between items-center mb-6">
+          <h3 class="text-white text-lg font-semibold">Keypad</h3>
+          <button @click="closeKeypad" class="text-gray-400 hover:text-white">
+            <i class="pi pi-times text-xl"></i>
+          </button>
+        </div>
+
+        <!-- Keypad Grid -->
+        <div class="grid grid-cols-3 gap-3">
+          <!-- Row 1: 1, 2, 3 -->
+          <button @click="pressKey('1')" class="keypad-btn">
+            <span class="text-2xl font-bold">1</span>
+          </button>
+          <button @click="pressKey('2')" class="keypad-btn">
+            <span class="text-2xl font-bold">2</span>
+            <span class="text-xs text-gray-400">ABC</span>
+          </button>
+          <button @click="pressKey('3')" class="keypad-btn">
+            <span class="text-2xl font-bold">3</span>
+            <span class="text-xs text-gray-400">DEF</span>
+          </button>
+
+          <!-- Row 2: 4, 5, 6 -->
+          <button @click="pressKey('4')" class="keypad-btn">
+            <span class="text-2xl font-bold">4</span>
+            <span class="text-xs text-gray-400">GHI</span>
+          </button>
+          <button @click="pressKey('5')" class="keypad-btn">
+            <span class="text-2xl font-bold">5</span>
+            <span class="text-xs text-gray-400">JKL</span>
+          </button>
+          <button @click="pressKey('6')" class="keypad-btn">
+            <span class="text-2xl font-bold">6</span>
+            <span class="text-xs text-gray-400">MNO</span>
+          </button>
+
+          <!-- Row 3: 7, 8, 9 -->
+          <button @click="pressKey('7')" class="keypad-btn">
+            <span class="text-2xl font-bold">7</span>
+            <span class="text-xs text-gray-400">PQRS</span>
+          </button>
+          <button @click="pressKey('8')" class="keypad-btn">
+            <span class="text-2xl font-bold">8</span>
+            <span class="text-xs text-gray-400">TUV</span>
+          </button>
+          <button @click="pressKey('9')" class="keypad-btn">
+            <span class="text-2xl font-bold">9</span>
+            <span class="text-xs text-gray-400">WXYZ</span>
+          </button>
+
+          <!-- Row 4: *, 0, # -->
+          <button @click="pressKey('*')" class="keypad-btn">
+            <span class="text-2xl font-bold">*</span>
+          </button>
+          <button @click="pressKey('0')" class="keypad-btn">
+            <span class="text-2xl font-bold">0</span>
+            <span class="text-xs text-gray-400">+</span>
+          </button>
+          <button @click="pressKey('#')" class="keypad-btn">
+            <span class="text-2xl font-bold">#</span>
+          </button>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
