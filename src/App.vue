@@ -48,21 +48,6 @@
               @file-dropped="simulateFileUpload"
             />
 
-            <!-- Contact Preview Buttons -->
-            <div v-if="showContactPreviewButtons" class="flex gap-3 w-full">
-              <button
-                @click="handleLooksGood"
-                class="flex-1 btn-primary px-6 py-3 rounded-lg font-semibold cursor-pointer"
-              >
-                Looks Good
-              </button>
-              <button
-                @click="handleTryAgain"
-                class="btn-secondary flex-1 px-6 py-3 rounded-lg font-semibold cursor-pointer"
-              >
-                Try Again
-              </button>
-            </div>
 
             <!-- Phone Verification Button -->
             <div v-if="showPhoneVerificationButton" class="flex justify-center w-full">
