@@ -22,15 +22,16 @@ body {
 
 /* Primary Button Styling */
 .btn-primary {
-  background-color: var(--c-primary-700) !important;
-  background-image: radial-gradient(circle at 0 0, #9500ff, #6000bf) !important;
+  background-color: #9933FF !important;
+  background-image: none !important;
   transition: all .5s ease-in-out !important;
   border: none !important;
   color: white !important;
 }
 
 .btn-primary:hover {
-  background-image: radial-gradient(circle at 0 0, #a500ff, #7000cf) !important;
+  background-color: #8000FF !important;
+  background-image: none !important;
   transform: translateY(-1px);
 }
 
