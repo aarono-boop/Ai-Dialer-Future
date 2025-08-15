@@ -152,8 +152,8 @@ const handleTabKey = (event: KeyboardEvent) => {
   // If not holding Shift (forward tab), focus ARKON logo
   if (!event.shiftKey) {
     event.preventDefault()
-    // Find and focus the ARKON logo button
-    const arkonLogo = document.querySelector('button[aria-label="Return to ARKON home page"]') as HTMLElement
+    // Find and focus the ARKON logo button (tabindex="1")
+    const arkonLogo = document.querySelector('[tabindex="1"]') as HTMLElement
     if (arkonLogo) {
       arkonLogo.focus()
     }
