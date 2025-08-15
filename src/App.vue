@@ -512,6 +512,17 @@ const handleSwitchToVulcan = () => {
 
 const showProductPage = () => {
   currentPage.value = 'product'
+
+  // Reset focus and ensure ARKON logo gets focus first when tab is pressed
+  nextTick(() => {
+    // Clear any current focus
+    if (document.activeElement instanceof HTMLElement) {
+      document.activeElement.blur()
+    }
+
+    // Announce page change to screen readers
+    announceToScreenReader('Navigated to product page. Press Tab to navigate with keyboard.')
+  })
 }
 
 const goToMainApp = () => {
