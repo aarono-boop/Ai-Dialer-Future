@@ -43,7 +43,7 @@
       </div>
 
       <!-- Connected State -->
-      <div v-else-if="callState === 'connected'" class="bg-green-900/50 border border-dashed border-green-400 rounded-lg p-3 text-center animate-pulse">
+      <div v-else-if="callState === 'connected'" class="bg-green-900/50 border border-green-400 rounded-lg p-3 text-center animate-pulse" style="border-width: 1px;">
         <div class="text-green-400 font-medium">Live Call: <span class="font-mono">{{ formatTime(callDuration) }}</span></div>
         <div class="text-gray-300 text-sm">{{ currentContact.phone }}</div>
       </div>
