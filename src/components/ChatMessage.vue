@@ -22,7 +22,7 @@
       <div class="w-[23px] h-[23px] rounded-full bg-gradient-to-r from-blue-500 to-purple-600 flex items-center justify-center flex-shrink-0">
         <i class="pi pi-user text-white text-sm"></i>
       </div>
-      <div class="max-w-[95%] bg-gradient-to-br from-purple-500 to-purple-700 rounded-lg rounded-br-sm p-5 text-white text-sm">
+      <div class="max-w-[95%] bg-gradient-to-br from-blue-400 to-purple-500 rounded-lg rounded-br-sm p-5 text-white text-sm">
         <p v-for="(line, lineIndex) in message.content" :key="lineIndex" v-html="line"></p>
       </div>
     </div>
