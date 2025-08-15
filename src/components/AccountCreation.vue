@@ -14,7 +14,7 @@
 
       <!-- Google Sign Up Button -->
       <Button
-        class="btn-primary w-full mb-6 py-3 rounded-lg"
+        class="btn-primary w-full mb-8 py-3 rounded-lg"
         @click="handleGoogleSignup"
       >
         <div class="flex items-center justify-center gap-3">
@@ -23,89 +23,11 @@
         </div>
       </Button>
 
-      <!-- OR Divider -->
-      <div class="flex items-center mb-6">
-        <div class="flex-1 h-px bg-slate-600"></div>
-        <span class="px-4 text-slate-400 text-sm">OR</span>
-        <div class="flex-1 h-px bg-slate-600"></div>
-      </div>
-
-      <!-- Form -->
-      <form @submit.prevent="handleSubmit" class="space-y-4">
-        <!-- Email Address -->
-        <div>
-          <label class="block text-white text-sm font-medium mb-2">Email address</label>
-          <InputText
-            v-model="email"
-            type="email"
-            placeholder="name@host.com"
-            class="w-full"
-            required
-            :pt="{
-              root: { class: 'w-full bg-slate-900 border border-slate-600 rounded-lg px-4 py-3 text-white placeholder-slate-400 focus:border-blue-500 focus:outline-none' }
-            }"
-          />
-        </div>
-
-        <!-- Password -->
-        <div>
-          <label class="block text-white text-sm font-medium mb-2">Password</label>
-          <Password
-            v-model="password"
-            placeholder="Enter password"
-            :feedback="false"
-            :toggleMask="showPassword"
-            class="w-full"
-            required
-            :pt="{
-              root: { class: 'w-full' },
-              input: { class: 'w-full bg-slate-900 border border-slate-600 rounded-lg px-4 py-3 text-white placeholder-slate-400 focus:border-blue-500 focus:outline-none' }
-            }"
-          />
-        </div>
-
-        <!-- Confirm Password -->
-        <div>
-          <label class="block text-white text-sm font-medium mb-2">Confirm password</label>
-          <Password
-            v-model="confirmPassword"
-            placeholder="Reenter password"
-            :feedback="false"
-            :toggleMask="showPassword"
-            class="w-full"
-            required
-            :pt="{
-              root: { class: 'w-full' },
-              input: { class: 'w-full bg-slate-900 border border-slate-600 rounded-lg px-4 py-3 text-white placeholder-slate-400 focus:border-blue-500 focus:outline-none' }
-            }"
-          />
-        </div>
-
-        <!-- Show Password Checkbox -->
-        <div class="flex items-center gap-2 py-2">
-          <Checkbox
-            v-model="showPassword"
-            :binary="true"
-            :pt="{
-              root: { class: 'w-4 h-4' },
-              box: { class: 'border border-slate-600 bg-slate-900 rounded' },
-              icon: { class: 'text-blue-500' }
-            }"
-          />
-          <label class="text-slate-300 text-sm cursor-pointer" @click="showPassword = !showPassword">
-            Show password
-          </label>
-        </div>
-
-        <!-- Sign Up Button -->
-        <Button
-          type="submit"
-          class="btn-secondary w-full py-3 rounded-lg font-medium mt-6"
-          :disabled="!isFormValid"
-        >
-          Sign up
-        </Button>
-      </form>
+      <!-- Description Text -->
+      <p class="text-center text-slate-400 text-sm mb-6 leading-relaxed">
+        Create your ARKON account quickly and securely with Google.
+        We'll get you started with your AI calling assistant in seconds.
+      </p>
 
       <!-- Sign In Link -->
       <p class="text-center text-slate-400 text-sm mt-6">
