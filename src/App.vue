@@ -179,7 +179,7 @@
         </div>
 
         <!-- Dialer Container -->
-        <div v-if="showDialer" class="w-1/3">
+        <div v-if="showDialer" class="fixed top-0 right-0 w-1/3 h-screen z-20 bg-gray-900">
           <Dialer
             :callState="callState"
             :callDuration="callDuration"
@@ -924,7 +924,7 @@ const sendMessage = (message: string): void => {
       ])
     } else if (lowerMessage.includes('connected to more calls') || lowerMessage.includes('get connected')) {
       addAIMessage([
-        '📈 Great question! Here are ARKON\'s proven strategies to boost your connect rates:',
+        '�� Great question! Here are ARKON\'s proven strategies to boost your connect rates:',
         '• <strong>Smart Timing:</strong> Calls prospects when they\'re most likely to answer',
         '• <strong>Local Presence:</strong> Uses local numbers to increase pickup rates',
         '• <strong>Voicemail Drop:</strong> Leaves personalized messages when they don\'t answer',
