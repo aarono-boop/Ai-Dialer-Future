@@ -1107,8 +1107,13 @@ const handlePhoneVerification = (): void => {
 
     // Focus the chat input after the AI message appears
     setTimeout(() => {
-      chatInputRef.value?.focus()
-    }, 100)
+      if (chatInputRef.value && chatInputRef.value.focus) {
+        chatInputRef.value.focus()
+        console.log('Auto-focused chat input for phone number entry')
+      } else {
+        console.log('Chat input ref not available for phone number auto-focus')
+      }
+    }, 500)
   }, 1000)
 }
 
