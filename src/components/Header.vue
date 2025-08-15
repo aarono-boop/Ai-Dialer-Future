@@ -23,7 +23,7 @@
         <Button
           label="Product"
           text
-          class="text-white font-medium px-3 py-2 rounded-md hover:bg-[#9933FF] transition-all duration-200"
+          class="nav-button"
           @click="$emit('show-product')"
         />
 
