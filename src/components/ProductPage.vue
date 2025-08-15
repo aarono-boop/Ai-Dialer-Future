@@ -130,7 +130,7 @@
           label="Get Started with ARKON"
           class="btn-primary px-8 py-4 rounded-lg font-semibold text-lg"
           @click="$emit('go-to-app')"
-          tabindex="4"
+          tabindex="0"
         />
       </section>
     </main>
