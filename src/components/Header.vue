@@ -114,17 +114,32 @@ button:focus-visible {
 /* Ensure ARKON logo button is focusable and has visible focus */
 button[aria-label="Return to ARKON home page"] {
   pointer-events: auto !important;
+  position: relative !important;
+  z-index: 100 !important;
+  /* Add minimum touch target size */
+  min-width: 44px !important;
+  min-height: 44px !important;
+  /* Ensure it's actually focusable */
+  outline: none;
 }
 
 button[aria-label="Return to ARKON home page"]:focus {
-  outline: 2px solid #60a5fa !important;
+  outline: 3px solid #ff0000 !important;
   outline-offset: 2px !important;
-  background: rgba(96, 165, 250, 0.1) !important;
+  background: rgba(255, 0, 0, 0.2) !important;
+  border-radius: 4px !important;
 }
 
 button[aria-label="Return to ARKON home page"]:focus-visible {
-  outline: 2px solid #60a5fa !important;
+  outline: 3px solid #ff0000 !important;
   outline-offset: 2px !important;
+  background: rgba(255, 0, 0, 0.2) !important;
+  border-radius: 4px !important;
+}
+
+/* Also add hover to test if the button is interactive at all */
+button[aria-label="Return to ARKON home page"]:hover {
   background: rgba(96, 165, 250, 0.1) !important;
+  border-radius: 4px !important;
 }
 </style>
