@@ -1,5 +1,12 @@
 <template>
   <header class="relative z-10 py-[9px] px-6 lg:px-8 border-b border-white/10 bg-gray-800" role="banner">
+    <!-- Hidden focus anchor to establish tab context when needed -->
+    <button
+      ref="focusAnchor"
+      class="sr-only absolute top-0 left-0"
+      tabindex="-1"
+      aria-hidden="true"
+    >Focus anchor</button>
     <nav class="flex justify-between items-center max-w-6xl mx-auto" role="navigation" aria-label="Main navigation">
       <button
         class="flex items-center gap-3 cursor-pointer bg-transparent border-none p-0"
