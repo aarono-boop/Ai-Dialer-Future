@@ -984,7 +984,7 @@ const sendMessage = (message: string): void => {
         '📅 Here\'s your schedule for today:',
         '<strong>Upcoming appointments:</strong>',
         '• 2:00 PM - Demo call with Sarah Johnson (confirmed)',
-        '• 3:30 PM - Follow-up with ABC Corp (needs confirmation)',
+        '��� 3:30 PM - Follow-up with ABC Corp (needs confirmation)',
         '• 4:15 PM - Discovery call with new lead Mike Chen',
         'You have 45 minutes before your next call. Perfect time for some prospecting!'
       ])
@@ -1057,14 +1057,7 @@ const handleLooksGood = (): void => {
     // Regular flow for new users
     setTimeout(() => {
       addAIMessage([
-        'I\'ve analyzed your contact\'s phone numbers using real connection data from 900M+ calls, recent phone engagement, calling patterns, and carrier signals—so you only dial numbers likely to connect.',
-        '',
-        'I\'ve prioritized the phone numbers most likely to connect so you spend time talking, not hitting dead lines.',
-        '',
-        'Here\'s what I found:',
-        '• 40 numbers have \'High\' Connect Scores and show consistent calling activity in the last 12 months. These are highly likely to be connected and assigned to active subscribers.',
-        '• 67 numbers have \'Medium\' Connect Scores and are worth calling after you exhaust your \'High\' Connect Score numbers.',
-        '• 54 numbers have \'Low\' Connect Scores and are likely disconnected or inactive lines that won\'t answer when dialed.'
+        'I\'ve analyzed your contact\'s phone numbers using real connection data from 900M+ calls, recent phone engagement, calling patterns, and carrier signals—so you only dial numbers likely to connect.<br><br>I\'ve prioritized the phone numbers most likely to connect so you spend time talking, not hitting dead lines.<br><br>Here\'s what I found:<br>• 40 numbers have \'High\' Connect Scores and show consistent calling activity in the last 12 months. These are highly likely to be connected and assigned to active subscribers.<br><br>• 67 numbers have \'Medium\' Connect Scores and are worth calling after you exhaust your \'High\' Connect Score numbers.<br>• 54 numbers have \'Low\' Connect Scores and are likely disconnected or inactive lines that won\'t answer when dialed.'
       ])
 
       // Show phone verification button after the message
