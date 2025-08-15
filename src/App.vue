@@ -1333,14 +1333,9 @@ const skipToDialer = (): void => {
   callState.value = 'ended'
   currentContactIndex.value = 0
 
-  // Clear messages and add dialer message
+  // Clear messages and add dialer startup message
   messages.value = []
-  addAIMessage('🎯 Dialer activated for testing! Ready to start calling.')
-
-  // Start queue timer
-  queueTimer = setInterval(() => {
-    queueTime.value++
-  }, 1000)
+  addAIMessage('🎯 Dialer activated for testing! Starting first call...')
 
   // Set focus context for header
   nextTick(() => {
@@ -1348,6 +1343,38 @@ const skipToDialer = (): void => {
       headerRef.value.establishFocusContext()
     }
   })
+
+  // Automatically start a call after a brief delay
+  setTimeout(() => {
+    // Start the call simulation
+    callState.value = 'ringing'
+    currentContactIndex.value = 0 // Start with Sam Sample
+
+    // Start queue timer
+    queueTimer = setInterval(() => {
+      queueTime.value++
+    }, 1000)
+
+    // Add call separator for first contact
+    addCallSeparator(currentContact.value.name)
+
+    // Simulate ringing for 3-5 seconds then connect
+    setTimeout(() => {
+      // Contact answers
+      callState.value = 'connected'
+      callDuration.value = 0
+      connectedCalls.value++
+
+      // Start call duration timer
+      callTimer = setInterval(() => {
+        callDuration.value++
+      }, 1000)
+
+      // Show AI message that call connected
+      addAIMessage(`📞 Connected! You're now speaking with ${currentContact.value.name}.`)
+      scrollToBottom()
+    }, 3000)
+  }, 1500) // Brief delay to show the startup message
 }
 
 const loadNewFile = (): void => {
