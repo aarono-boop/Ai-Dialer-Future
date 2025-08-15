@@ -100,14 +100,14 @@
               <button
                 @click="handleResendCode"
                 class="btn-secondary flex-1 px-6 py-3 rounded-lg font-semibold cursor-pointer"
-                tabindex="5"
+                tabindex="3"
               >
                 Resend Code
               </button>
               <button
                 @click="handleTryAnotherNumber"
                 class="btn-secondary flex-1 px-6 py-3 rounded-lg font-semibold cursor-pointer"
-                tabindex="6"
+                tabindex="4"
               >
                 Try Another Number
               </button>
