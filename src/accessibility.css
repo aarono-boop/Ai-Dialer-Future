@@ -1,0 +1,220 @@
+/* ===========================
+   WCAG AA ACCESSIBILITY STYLES
+   =========================== */
+
+/* Screen reader only utility class */
+.sr-only {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+
+/* Focus management - Enhanced visible focus indicators */
+*:focus-visible {
+  outline: 2px solid #60a5fa !important;
+  outline-offset: 2px !important;
+  border-radius: 4px;
+}
+
+/* Button focus states */
+button:focus-visible,
+.p-button:focus-visible {
+  outline: 2px solid #60a5fa !important;
+  outline-offset: 2px !important;
+}
+
+/* Input focus states */
+input:focus-visible,
+.p-inputtext:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid #60a5fa !important;
+  outline-offset: 2px !important;
+}
+
+/* Link focus states */
+a:focus-visible {
+  outline: 2px solid #60a5fa !important;
+  outline-offset: 2px !important;
+}
+
+/* Modal accessibility improvements */
+.modal-overlay {
+  /* Ensure modals trap focus and are properly announced */
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  * {
+    border-color: currentColor !important;
+  }
+  
+  .btn-primary {
+    background: #000 !important;
+    color: #fff !important;
+    border: 2px solid #fff !important;
+  }
+  
+  .btn-secondary {
+    background: #fff !important;
+    color: #000 !important;
+    border: 2px solid #000 !important;
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Color contrast improvements */
+/* Ensuring minimum 4.5:1 contrast ratio for normal text */
+/* and 3:1 for large text (18pt or 14pt bold) */
+
+/* Text color improvements for better contrast */
+.text-gray-400 {
+  color: #9ca3af !important; /* 4.5:1 contrast on dark backgrounds */
+}
+
+.text-gray-300 {
+  color: #d1d5db !important; /* Better contrast */
+}
+
+/* Primary button contrast validation */
+.btn-primary {
+  /* Purple (#9933FF) has sufficient contrast with white text */
+  background-color: #9933FF !important;
+  color: white !important;
+}
+
+.btn-primary:hover {
+  /* Darker purple maintains contrast */
+  background-color: #8000FF !important;
+}
+
+/* Secondary button contrast validation */
+.btn-secondary {
+  /* Dark gray with white text meets contrast requirements */
+  background-color: #344054 !important;
+  color: white !important;
+}
+
+.btn-secondary:hover {
+  /* Lighter gray maintains contrast */
+  background-color: #475467 !important;
+}
+
+/* Link contrast improvements */
+a {
+  color: #60a5fa !important; /* Blue with good contrast */
+}
+
+a:hover {
+  color: #93c5fd !important; /* Lighter blue for hover */
+}
+
+/* Error and success state colors with proper contrast */
+.text-red-400 {
+  color: #f87171 !important; /* Error red with good contrast */
+}
+
+.text-green-400 {
+  color: #4ade80 !important; /* Success green with good contrast */
+}
+
+/* Keyboard navigation improvements */
+.keyboard-nav {
+  /* Skip links for keyboard users */
+}
+
+.skip-link {
+  position: absolute;
+  top: -40px;
+  left: 6px;
+  background: #000;
+  color: #fff;
+  padding: 8px;
+  text-decoration: none;
+  z-index: 9999;
+  transform: translateY(-100%);
+  transition: transform 0.3s;
+}
+
+.skip-link:focus {
+  transform: translateY(0%);
+}
+
+/* Interactive element sizing - minimum 44x44px touch targets */
+button,
+.p-button,
+input[type="button"],
+input[type="submit"],
+input[type="reset"],
+a[role="button"] {
+  min-height: 44px !important;
+  min-width: 44px !important;
+}
+
+/* Loading and dynamic content announcements */
+.loading-announcer {
+  position: absolute !important;
+  left: -10000px !important;
+  width: 1px !important;
+  height: 1px !important;
+  overflow: hidden !important;
+}
+
+/* Live region for dynamic content updates */
+.live-region {
+  position: absolute !important;
+  left: -10000px !important;
+  width: 1px !important;
+  height: 1px !important;
+  overflow: hidden !important;
+}
+
+[aria-live] {
+  position: absolute !important;
+  left: -10000px !important;
+  width: 1px !important;
+  height: 1px !important;
+  overflow: hidden !important;
+}
+
+/* Form accessibility improvements */
+label {
+  display: block;
+  margin-bottom: 4px;
+}
+
+input:required,
+textarea:required,
+select:required {
+  /* Visual indicator for required fields if needed */
+}
+
+/* Error messaging */
+.error-message {
+  color: #f87171 !important;
+  font-size: 0.875rem;
+  margin-top: 4px;
+}
+
+/* Success messaging */
+.success-message {
+  color: #4ade80 !important;
+  font-size: 0.875rem;
+  margin-top: 4px;
+}
