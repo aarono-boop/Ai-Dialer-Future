@@ -61,7 +61,7 @@ const onFileInputChange = (event: Event): void => {
   const file = target.files?.[0]
   if (file) {
     emit('file-selected', file)
-    emit('file-dropped', file)
+    // Don't emit file-dropped here to avoid duplicate handling
   }
 }
 
