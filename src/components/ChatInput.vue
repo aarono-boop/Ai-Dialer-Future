@@ -189,4 +189,16 @@ defineExpose({
 :deep(.p-inputtext::placeholder) {
   color: rgb(209 213 219) !important; /* gray-300 */
 }
+
+/* Chat input container focus styling to match file upload */
+.chat-input-container:focus-within {
+  outline: 2px solid #60a5fa !important;
+  outline-offset: 2px !important;
+  border-color: #60a5fa !important;
+  transition: all 0.2s ease;
+}
+
+.chat-input-container {
+  transition: all 0.2s ease;
+}
 </style>
