@@ -563,6 +563,13 @@ const goToMainApp = () => {
       document.activeElement.blur()
     }
 
+    // Establish focus context by mimicking header click
+    setTimeout(() => {
+      if (headerRef.value && headerRef.value.establishFocusContext) {
+        headerRef.value.establishFocusContext()
+      }
+    }, 100)
+
     // Announce page change to screen readers
     announceToScreenReader('Returned to main application. Press Tab to navigate with keyboard.')
   })
