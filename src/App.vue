@@ -83,7 +83,7 @@
             <div class="w-[70%]">
               <button
                 @click="handlePhoneVerification"
-                class="w-1/2 btn-primary px-8 py-3 rounded-lg font-semibold cursor-pointer mx-auto"
+                class="w-1/2 btn-primary px-8 py-3 rounded-lg font-semibold cursor-pointer mx-auto block"
               >
                 Now lets verify my phone number
               </button>
