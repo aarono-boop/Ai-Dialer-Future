@@ -8,7 +8,7 @@
       @keydown.enter="triggerFileInput"
       @keydown.space.prevent="triggerFileInput"
       class="w-full h-32 bg-gray-700/50 border border-gray-500 rounded-lg relative cursor-pointer hover:bg-gray-700/70 transition-all duration-300 flex items-center justify-center"
-      tabindex="4"
+      tabindex="0"
       role="button"
       aria-label="Click or drag and drop to upload contact file"
     >
