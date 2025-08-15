@@ -127,6 +127,7 @@
           </button>
 
           <button
+            ref="keypadButtonRef"
             @click="showKeypad"
             tabindex="10"
             class="bg-gray-700 hover:bg-gray-600 text-white py-3 px-4 rounded-lg flex flex-col items-center justify-center gap-1 transition-colors"
