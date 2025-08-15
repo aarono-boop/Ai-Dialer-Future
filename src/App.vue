@@ -843,7 +843,7 @@ const onFileSelect = (file: File): void => {
       </div>`
 
       addAIMessage([
-        'Perfect! I\'ve analyzed your contact file. Here\'s a preview of your data. Does this look correct?',
+        'Perfect! I\'ve analyzed your contact file. Here\'s a preview of your data. Does this look correct?<br><br>',
         sampleContacts
       ])
       showContactPreviewButtons.value = true
@@ -1486,7 +1486,7 @@ const handlePurchaseCompleted = () => {
   showPricingPage.value = false
   isSignedIn.value = true
   showActionButtons.value = true
-  addAIMessage('🎉 Congratulations! You\'ve successfully upgraded to the Pro plan and have unlimited access to all features.<br><br>To help us understand what your goals are, what are you trying to accomplish?')
+  addAIMessage('���� Congratulations! You\'ve successfully upgraded to the Pro plan and have unlimited access to all features.<br><br>To help us understand what your goals are, what are you trying to accomplish?')
 
   // Ensure scroll happens after action buttons are rendered
   setTimeout(() => {
