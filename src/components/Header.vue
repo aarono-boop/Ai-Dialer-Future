@@ -64,3 +64,26 @@ defineProps<{
 // Define emits for parent component communication
 defineEmits(['login', 'switch-to-vulcan', 'show-product', 'go-home'])
 </script>
+
+<style scoped>
+/* Override PrimeVue button styles for Product and Login buttons */
+.p-button-text.nav-button {
+  color: white !important;
+  background: transparent !important;
+  border: none !important;
+  padding: 8px 12px !important;
+  border-radius: 6px !important;
+  transition: all 0.2s ease !important;
+}
+
+.p-button-text.nav-button:hover {
+  background: #9933FF !important;
+  color: white !important;
+}
+
+.p-button-text.nav-button:focus {
+  box-shadow: none !important;
+  background: #9933FF !important;
+  color: white !important;
+}
+</style>
