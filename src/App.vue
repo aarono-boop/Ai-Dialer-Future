@@ -291,6 +291,7 @@ interface Message {
 const toast = useToast()
 
 // Reactive data
+const currentPage = ref<string>('main') // 'main', 'product'
 const chatInputRef = ref<any>(null)
 const chatMessages = ref<HTMLElement | null>(null)
 const hasUploadedFile = ref<boolean>(false)
