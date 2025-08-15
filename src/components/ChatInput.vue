@@ -8,6 +8,7 @@
         class="flex-1 bg-transparent border-none text-white text-base px-4 py-3 placeholder-gray-300 focus:outline-none focus:ring-0"
         style="background-color: transparent !important; color: white !important;"
         @keyup.enter="handleSend"
+        @keydown.tab="handleTabKey"
         @focus="pauseAnimation"
         @blur="resumeAnimation"
         aria-label="Type your message or question"
