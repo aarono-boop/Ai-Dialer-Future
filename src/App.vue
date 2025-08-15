@@ -494,6 +494,15 @@ const addUserMessage = (content: string): void => {
     content: [content]
   })
   scrollToBottom()
+
+  // Establish focus context after new message appears
+  nextTick(() => {
+    setTimeout(() => {
+      if (headerRef.value && headerRef.value.establishFocusContext) {
+        headerRef.value.establishFocusContext()
+      }
+    }, 100)
+  })
 }
 
 // Helper function to add separator message
