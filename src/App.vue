@@ -283,14 +283,6 @@
       @export-file="exportFile"
     />
 
-    <!-- Login Modal -->
-    <LoginModal
-      v-if="showLoginModal"
-      @close="closeLoginModal"
-      @google-signin="handleGoogleSignin"
-      @login-success="handleLoginSuccess"
-      @show-signup="showSignupFromLogin"
-    />
   </div>
 </template>
 
@@ -809,7 +801,7 @@ const sendMessage = (message: string): void => {
         '✨ I\'d love to show you ARKON in action!',
         'Let me set up a personalized demo where you can see:',
         '• Live contact scoring and prioritization',
-        '��� Real-time dialing with connect predictions',
+        '• Real-time dialing with connect predictions',
         '�� Smart call disposition and follow-up automation',
         'What\'s your preferred time? I can schedule something for today or tomorrow.'
       ])
@@ -862,7 +854,7 @@ const sendMessage = (message: string): void => {
       ])
     } else if (lowerMessage.includes('tell a joke') || lowerMessage.includes('joke')) {
       addAIMessage([
-        '😄 Why did the salesperson bring a ladder to work?',
+        '��� Why did the salesperson bring a ladder to work?',
         'Because they heard the job was about making <strong>high-level</strong> connections!',
         '',
         '���� Speaking of connections, did you know ARKON users make 3x more meaningful connections than traditional dialers?',
