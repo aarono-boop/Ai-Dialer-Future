@@ -508,14 +508,12 @@ const handleLogin = () => {
       document.activeElement.blur()
     }
 
-    // Establish focus context by briefly focusing and blurring the ARKON logo
+    // Establish focus context by mimicking header click
     setTimeout(() => {
-      const arkonLogo = document.querySelector('[tabindex="1"]') as HTMLElement
-      if (arkonLogo) {
-        arkonLogo.focus()
-        arkonLogo.blur()
+      if (headerRef.value && headerRef.value.establishFocusContext) {
+        headerRef.value.establishFocusContext()
       }
-    }, 50)
+    }, 100)
 
     // Announce page change to screen readers
     announceToScreenReader('Navigated to login page. Press Tab to navigate with keyboard.')
