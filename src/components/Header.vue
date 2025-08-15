@@ -62,5 +62,5 @@ defineProps<{
 }>()
 
 // Define emits for parent component communication
-defineEmits(['login', 'switch-to-vulcan'])
+defineEmits(['login', 'switch-to-vulcan', 'show-product', 'go-home'])
 </script>
