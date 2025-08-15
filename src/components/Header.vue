@@ -58,7 +58,7 @@
           class="nav-button"
           @click="$emit('login')"
           aria-label="Sign in to your account"
-          tabindex="3"
+          tabindex="0"
         />
 
       </div>
