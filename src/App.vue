@@ -537,6 +537,27 @@ const showProductPage = () => {
 
 const goToMainApp = () => {
   currentPage.value = 'main'
+
+  // Reset focus and ensure ARKON logo gets focus first when tab is pressed
+  nextTick(() => {
+    // Clear any current focus
+    if (document.activeElement instanceof HTMLElement) {
+      document.activeElement.blur()
+    }
+
+    // Explicitly reset focus so ARKON logo is the starting point for tab navigation
+    setTimeout(() => {
+      const arkonLogo = document.querySelector('[tabindex="1"]') as HTMLElement
+      if (arkonLogo) {
+        arkonLogo.focus()
+        // Force a blur so the next tab will go to the ARKON logo first
+        arkonLogo.blur()
+      }
+    }, 100)
+
+    // Announce page change to screen readers
+    announceToScreenReader('Returned to main application. Press Tab to navigate with keyboard.')
+  })
 }
 
 // Accessibility helper for screen reader announcements
@@ -1176,7 +1197,7 @@ const handleDisposition = (disposition: string): void => {
 
   // Add AI response about the disposition
   setTimeout(() => {
-    addAIMessage(`✅ ${disposition} disposition saved for ${currentContact.value.name}.`)
+    addAIMessage(`�� ${disposition} disposition saved for ${currentContact.value.name}.`)
     scrollToBottom()
 
     // Move to next contact if available
