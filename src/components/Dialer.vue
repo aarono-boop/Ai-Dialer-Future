@@ -327,7 +327,9 @@ const handleNextContactTab = (event: KeyboardEvent) => {
 const handleMuteKeydown = (event: KeyboardEvent) => {
   if (event.key === 'Enter') {
     event.preventDefault()
+    event.stopPropagation()
     toggleMute()
+    return false
   }
   // Let Tab key work normally for navigation
 }
@@ -335,7 +337,9 @@ const handleMuteKeydown = (event: KeyboardEvent) => {
 const handleHoldKeydown = (event: KeyboardEvent) => {
   if (event.key === 'Enter') {
     event.preventDefault()
+    event.stopPropagation()
     toggleHold()
+    return false
   }
   // Let Tab key work normally for navigation
 }
