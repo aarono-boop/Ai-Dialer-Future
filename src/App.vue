@@ -1356,7 +1356,7 @@ const skipToDialer = (): void => {
     }, 1000)
 
     // Add call separator for first contact
-    addCallSeparator(currentContact.value.name)
+    addSeparatorMessage(currentContact.value.name)
 
     // Simulate ringing for 3-5 seconds then connect
     setTimeout(() => {
