@@ -37,6 +37,7 @@ const emit = defineEmits(['send-message', 'voice-input'])
 
 // Reactive data
 const inputValue = ref<string>('')
+const inputRef = ref<any>(null)
 const animatedPlaceholder = ref<string>('Ask me')
 const isAnimating = ref<boolean>(true)
 let animationInterval: number | null = null
