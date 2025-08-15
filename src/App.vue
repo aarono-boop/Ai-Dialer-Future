@@ -584,7 +584,7 @@ const redirectToArkonLogo = () => {
 // Login Page Methods
 
 const handleGoogleSignin = (): void => {
-  showLoginModal.value = false
+  currentPage.value = 'main'
   isSignedIn.value = true
   isReturningUser.value = true // This is a returning user
   addAIMessage('🚀 Welcome back! You\'re signed in with Google.')
@@ -593,6 +593,21 @@ const handleGoogleSignin = (): void => {
     showFileUploadForReturningUser.value = true
     scrollToBottom()
   }, 1000)
+
+  // Clear any existing focus when navigating back to main app
+  nextTick(() => {
+    if (document.activeElement instanceof HTMLElement) {
+      document.activeElement.blur()
+    }
+    setTimeout(() => {
+      const arkonLogo = document.querySelector('[tabindex="1"]') as HTMLElement
+      if (arkonLogo) {
+        arkonLogo.focus()
+        arkonLogo.blur()
+      }
+    }, 50)
+    announceToScreenReader('Signed in with Google successfully. Returned to main application.')
+  })
 }
 
 const handleLoginSuccess = (userData: any): void => {
