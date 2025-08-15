@@ -16,7 +16,7 @@
         <button
           v-if="!shouldCompleteQueue"
           @click="pauseQueue"
-          tabindex="6"
+          tabindex="8"
           class="bg-gray-700 hover:bg-gray-600 text-white px-3 py-1 rounded text-sm transition-colors"
         >
           Pause Queue
