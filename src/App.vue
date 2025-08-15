@@ -1043,9 +1043,7 @@ const handleLooksGood = (): void => {
       // Skip directly to verified phone and start dialing
       setTimeout(() => {
         addAIMessage([
-          'Great! Your number (971) 235-1723 is verified and set as your Caller ID.',
-          '',
-          'As the dialer calls each person, their contact information will be displayed. The first contact that will be called is Sam Sample.'
+          'Great! Your number (971) 235-1723 is verified and set as your Caller ID.<br>As the dialer calls each person, their contact information will be displayed. The first contact that will be called is Sam Sample.'
         ])
         showStartDialingButton.value = true
         scrollToBottom()
