@@ -485,6 +485,14 @@ const handleSwitchToVulcan = () => {
   })
 }
 
+const showProductPage = () => {
+  currentPage.value = 'product'
+}
+
+const goToMainApp = () => {
+  currentPage.value = 'main'
+}
+
 // Login Modal Methods
 const closeLoginModal = (): void => {
   showLoginModal.value = false
