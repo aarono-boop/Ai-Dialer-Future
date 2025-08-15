@@ -54,52 +54,52 @@
       <div class="space-y-4">
         <!-- Contact Header -->
         <div>
-          <h3 class="text-white text-lg font-semibold">{{ currentContact.name }}</h3>
-          <p class="text-gray-400 text-sm">{{ currentContact.title }} at <span class="text-blue-400">{{ currentContact.company }}</span></p>
+          <h3 class="text-white text-lg font-bold">{{ currentContact.name }}</h3>
+          <p class="text-white text-sm">{{ currentContact.title }} at {{ currentContact.company }}</p>
         </div>
 
         <!-- Contact Details -->
         <div class="text-sm">
           <table style="width: 100%; border-collapse: collapse;">
             <tr>
-              <td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: rgb(156, 163, 175);">Phone:</td>
-              <td style="padding: 4px 0; color: rgb(96, 165, 250);">{{ currentContact.phone }}</td>
+              <td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: white;">Phone:</td>
+              <td style="padding: 4px 0; color: white;">{{ currentContact.phone }}</td>
             </tr>
             <tr>
-              <td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: rgb(156, 163, 175);">Connect Score:</td>
-              <td style="padding: 4px 0;" :style="{ color: getConnectScoreColorRgb(currentContact.connectScore) }">{{ currentContact.connectScore }}</td>
+              <td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: white;">Connect Score:</td>
+              <td style="padding: 4px 0; color: white;">{{ currentContact.connectScore }}</td>
             </tr>
             <tr>
-              <td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: rgb(156, 163, 175);">Email:</td>
-              <td style="padding: 4px 0; color: rgb(96, 165, 250);">{{ currentContact.email }}</td>
+              <td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: white;">Email:</td>
+              <td style="padding: 4px 0; color: white;">{{ currentContact.email }}</td>
             </tr>
             <tr>
-              <td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: rgb(156, 163, 175);">Address:</td>
-              <td style="padding: 4px 0; color: rgb(255, 255, 255);">{{ currentContact.address }}</td>
+              <td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: white;">Address:</td>
+              <td style="padding: 4px 0; color: white;">{{ currentContact.address }}</td>
             </tr>
             <tr>
-              <td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: rgb(156, 163, 175);">Local Time:</td>
-              <td style="padding: 4px 0; color: rgb(255, 255, 255);">{{ currentContact.localTime }}</td>
+              <td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: white;">Local Time:</td>
+              <td style="padding: 4px 0; color: white;">{{ currentContact.localTime }}</td>
             </tr>
             <tr>
-              <td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: rgb(156, 163, 175);">Website:</td>
-              <td style="padding: 4px 0; color: rgb(96, 165, 250);">{{ currentContact.website }}</td>
+              <td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: white;">Website:</td>
+              <td style="padding: 4px 0; color: white;">{{ currentContact.website }}</td>
             </tr>
             <tr>
-              <td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: rgb(156, 163, 175);">LinkedIn Profile:</td>
-              <td style="padding: 4px 0; color: rgb(96, 165, 250);">{{ currentContact.linkedin }}</td>
+              <td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: white;">LinkedIn Profile:</td>
+              <td style="padding: 4px 0; color: white;">{{ currentContact.linkedin }}</td>
             </tr>
             <tr>
-              <td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: rgb(156, 163, 175);">Industry:</td>
-              <td style="padding: 4px 0; color: rgb(255, 255, 255);">{{ currentContact.industry }}</td>
+              <td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: white;">Industry:</td>
+              <td style="padding: 4px 0; color: white;">{{ currentContact.industry }}</td>
             </tr>
             <tr>
-              <td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: rgb(156, 163, 175);">Company Size:</td>
-              <td style="padding: 4px 0; color: rgb(255, 255, 255);">{{ currentContact.companySize }}</td>
+              <td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: white;">Company Size:</td>
+              <td style="padding: 4px 0; color: white;">{{ currentContact.companySize }}</td>
             </tr>
             <tr>
-              <td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: rgb(156, 163, 175);">Lead Source:</td>
-              <td style="padding: 4px 0; color: rgb(255, 255, 255);">{{ currentContact.leadSource }}</td>
+              <td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: white;">Lead Source:</td>
+              <td style="padding: 4px 0; color: white;">{{ currentContact.leadSource }}</td>
             </tr>
           </table>
         </div>
