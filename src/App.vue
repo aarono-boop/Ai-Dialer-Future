@@ -11,8 +11,8 @@
       @go-home="goToMainApp"
     />
 
-    <!-- Main Content -->
-    <main class="flex-1 flex items-start justify-center p-8 relative z-[5]">
+    <!-- Main App Content -->
+    <main v-if="currentPage === 'main'" class="flex-1 flex items-start justify-center p-8 relative z-[5]">
       <div class="flex gap-6 w-full max-w-[1400px] h-[80vh] mt-2.5">
         <!-- Chat Container -->
         <div :class="showDialer ? 'w-2/3' : 'w-full max-w-6xl mx-auto'" class="rounded-xl p-5">
@@ -720,7 +720,7 @@ const sendMessage = (message: string): void => {
         '😄 Why did the salesperson bring a ladder to work?',
         'Because they heard the job was about making <strong>high-level</strong> connections!',
         '',
-        '🎯 Speaking of connections, did you know ARKON users make 3x more meaningful connections than traditional dialers?',
+        '���� Speaking of connections, did you know ARKON users make 3x more meaningful connections than traditional dialers?',
         'Ready to elevate your calling game?'
       ])
     } else if (lowerMessage.includes('jenn')) {
