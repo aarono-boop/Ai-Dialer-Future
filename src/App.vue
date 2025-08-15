@@ -338,7 +338,6 @@ const showPaymentPage = ref<boolean>(false)
 const isSignedIn = ref<boolean>(false)
 const isReturningUser = ref<boolean>(false) // Track if user logged in vs created new account
 const showActionButtons = ref<boolean>(false)
-const showLoginModal = ref<boolean>(false)
 const showFileUploadForReturningUser = ref<boolean>(false)
 const showContactPreviewButtons = ref<boolean>(false)
 const showPhoneVerificationButton = ref<boolean>(false)
@@ -854,7 +853,7 @@ const sendMessage = (message: string): void => {
       ])
     } else if (lowerMessage.includes('tell a joke') || lowerMessage.includes('joke')) {
       addAIMessage([
-        '��� Why did the salesperson bring a ladder to work?',
+        '😄 Why did the salesperson bring a ladder to work?',
         'Because they heard the job was about making <strong>high-level</strong> connections!',
         '',
         '���� Speaking of connections, did you know ARKON users make 3x more meaningful connections than traditional dialers?',
