@@ -14,6 +14,7 @@
       </div>
       <div class="max-w-[80%] bg-gray-800/90 border border-white/20 rounded-lg p-5 text-sm overflow-hidden">
         <p v-for="(line, lineIndex) in message.content" :key="lineIndex" v-html="line"></p>
+        <slot name="additional-content"></slot>
       </div>
     </div>
     
