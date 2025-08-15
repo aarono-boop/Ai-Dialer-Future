@@ -1375,13 +1375,8 @@ const handleEmailSignup = () => {
   })
 }
 
-const closeSignupModal = () => {
-  showSignupModal.value = false
-}
-
 const handleSignupSubmit = () => {
-  // Close signup modal and show terms modal
-  closeSignupModal()
+  // Show terms modal for signup flow
   showTermsModal.value = true
 }
 
