@@ -1253,25 +1253,25 @@ const handleActionButton = (action: string): void => {
     const sampleContacts = `
       <div style="color: #ffffff;">
         <div>
-          <h3>Sarah Johnson</h3>
+          <h3 style="font-weight: bold; font-size: 1.2em;">Sarah Johnson</h3>
           <p>Sales Development Representative</p>
           <p>TechCorp Inc.</p>
         </div>
-
-        <div>
-          <div>Home Phone: (555) 123-4567</div>
-          <div>Connect Score: High</div>
-          <div>Mobile Phone: (555) 123-4568</div>
-          <div>Connect Score: Medium</div>
-          <div>Email: sarah.johnson@techcorp.com</div>
-          <div>Address: 1234 Main St, Dallas, TX</div>
-          <div>Local Time: 2:45 PM CST</div>
-          <div>Website: techcorp.com</div>
-          <div>LinkedIn Profile: linkedin.com/in/sarahjohnson</div>
-          <div>Industry: Technology</div>
-          <div>Company Size: 250-500 employees</div>
-          <div>Lead Source: Webinar Registration</div>
-        </div>
+        <br>
+        <table style="width: 100%; border-collapse: collapse;">
+          <tr><td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top;">Home Phone:</td><td style="padding: 4px 0;">(555) 123-4567</td></tr>
+          <tr><td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top;">Connect Score:</td><td style="padding: 4px 0;">High</td></tr>
+          <tr><td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top;">Mobile Phone:</td><td style="padding: 4px 0;">(555) 123-4568</td></tr>
+          <tr><td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top;">Connect Score:</td><td style="padding: 4px 0;">Medium</td></tr>
+          <tr><td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top;">Email:</td><td style="padding: 4px 0;">sarah.johnson@techcorp.com</td></tr>
+          <tr><td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top;">Address:</td><td style="padding: 4px 0;">1234 Main St, Dallas, TX</td></tr>
+          <tr><td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top;">Local Time:</td><td style="padding: 4px 0;">2:45 PM CST</td></tr>
+          <tr><td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top;">Website:</td><td style="padding: 4px 0;">techcorp.com</td></tr>
+          <tr><td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top;">LinkedIn Profile:</td><td style="padding: 4px 0;">linkedin.com/in/sarahjohnson</td></tr>
+          <tr><td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top;">Industry:</td><td style="padding: 4px 0;">Technology</td></tr>
+          <tr><td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top;">Company Size:</td><td style="padding: 4px 0;">250-500 employees</td></tr>
+          <tr><td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top;">Lead Source:</td><td style="padding: 4px 0;">Webinar Registration</td></tr>
+        </table>
       </div>`
     
     switch (action) {
