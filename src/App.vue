@@ -1551,7 +1551,7 @@ const handleCompleteQueue = (): void => {
   // Hide dialer
   showDialer.value = false
 
-  addAIMessage('🎉 Congratulations! You have completed your entire call queue. All contacts have been processed.')
+  addAIMessage('Congratulations! You have completed your entire call queue. All contacts have been processed.')
 
   // Add session summary content to chat
   setTimeout(() => {
