@@ -1377,7 +1377,7 @@ const addSessionSummaryToChat = (): void => {
       <!-- Results Section -->
       <div style="background-color: rgb(55, 65, 81); border-radius: 8px; padding: 20px;">
         <div style="display: flex; align-items: flex-start; gap: 16px;">
-          <div style="color: white; font-size: 24px;">📈</div>
+          <div style="color: white; font-size: 24px;"><i class="pi pi-chart-line"></i></div>
           <div style="flex: 1;">
             <h4 style="color: white; font-size: 16px; font-weight: 600; margin-bottom: 8px;">Your Calling Results</h4>
             <p style="color: rgb(209, 213, 219); font-size: 24px; font-weight: bold; line-height: 1.5; margin-bottom: 16px;">
