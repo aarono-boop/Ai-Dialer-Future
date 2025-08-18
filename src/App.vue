@@ -64,7 +64,7 @@
                 @click="continueQueue"
                 class="flex-1 btn-primary px-6 py-3 rounded-lg font-semibold cursor-pointer"
               >
-                ▶️ Continue Call Queue
+                Continue Call Queue
               </button>
               <button
                 v-if="showLoadNewFileButton"
