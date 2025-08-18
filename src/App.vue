@@ -1326,7 +1326,7 @@ const addSessionSummaryToChat = (): void => {
       <!-- Statistics Cards - 6 cards with icon+number above labels -->
       <div style="display: grid; grid-template-columns: repeat(6, 1fr); gap: 8px; margin-bottom: 32px;">
         <div style="background-color: rgb(55, 65, 81); border-radius: 8px; padding: 16px; text-align: center;">
-          <div style="color: rgb(96, 165, 250); font-size: 14px; margin-bottom: 4px;">��� Contacts Left</div>
+          <div style="color: white; font-size: 14px; margin-bottom: 4px;">��� Contacts Left</div>
           <div style="color: white; font-size: 24px; font-weight: bold; margin-bottom: 4px;">${contacts.length - currentContactIndex.value - 1}</div>
         </div>
         <div style="background-color: rgb(55, 65, 81); border-radius: 8px; padding: 16px; text-align: center;">
@@ -1380,7 +1380,7 @@ const addSessionSummaryToChat = (): void => {
       <!-- Results Section -->
       <div style="background-color: rgb(55, 65, 81); border-radius: 8px; padding: 20px;">
         <div style="display: flex; align-items: flex-start; gap: 16px;">
-          <div style="color: rgb(96, 165, 250); font-size: 24px;">📈</div>
+          <div style="color: white; font-size: 24px;">📈</div>
           <div style="flex: 1;">
             <h4 style="color: white; font-size: 16px; font-weight: 600; margin-bottom: 8px;">Your Calling Results</h4>
             <p style="color: rgb(209, 213, 219); font-size: 14px; line-height: 1.5; margin-bottom: 16px;">
