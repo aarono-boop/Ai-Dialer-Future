@@ -1365,10 +1365,10 @@ const addSessionSummaryToChat = (): void => {
           <!-- Table Rows -->
           ${callLog.value.map(call => `
             <div style="display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; padding: 16px; border-bottom: 1px solid rgb(75, 85, 99);">
-              <div style="color: white; font-size: 24px; font-weight: bold;">${call.contact}</div>
-              <div style="color: white; font-size: 24px; font-weight: bold;">${call.duration}</div>
-              <div style="color: white; font-size: 24px; font-weight: bold;">${call.disposition}</div>
-              <div style="color: white; font-size: 24px; font-weight: bold;">${call.notes || ''}</div>
+              <div style="color: white; font-size: 14px; font-weight: normal;">${call.contact}</div>
+              <div style="color: white; font-size: 14px; font-weight: normal;">${call.duration}</div>
+              <div style="color: white; font-size: 14px; font-weight: normal;">${call.disposition}</div>
+              <div style="color: white; font-size: 14px; font-weight: normal;">${call.notes || ''}</div>
             </div>
           `).join('')}
         </div>
