@@ -1431,6 +1431,8 @@ const loadNewFile = (): void => {
   showSessionSummary.value = false
   showDialer.value = false
   hasUploadedFile.value = false
+  showContinueQueueButton.value = false
+  showLoadNewFileButton.value = false
 
   // Reset all state
   currentContactIndex.value = 0
