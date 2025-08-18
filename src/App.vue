@@ -71,7 +71,7 @@
                 @click="loadNewFile"
                 class="flex-1 btn-secondary px-6 py-3 rounded-lg font-semibold cursor-pointer"
               >
-                📁 Load New File
+                Load New File
               </button>
             </div>
           </div>
