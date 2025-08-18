@@ -1271,7 +1271,7 @@ const handleHangUp = (): void => {
     notes: ''
   })
 
-  addAIMessage(`📞 Call with ${currentContact.value.name} ended. Duration: ${duration}`)
+  addAIMessage(`Call with ${currentContact.value.name} ended. Duration: ${duration}`)
   addAIMessage('Please select a disposition for this call:')
 }
 
