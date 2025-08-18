@@ -362,6 +362,7 @@ const showContinueQueueButton = ref<boolean>(false)
 const showLoadNewFileButton = ref<boolean>(false)
 const dispositionSet = ref<boolean>(false)
 const queuePaused = ref<boolean>(false)
+const queueCompletionReady = ref<boolean>(false)
 const callLog = ref<Array<{contact: string, duration: string, disposition: string, notes: string}>>([])
 const totalCalls = ref<number>(0)
 const connectedCalls = ref<number>(0)
@@ -1726,7 +1727,7 @@ const showTermsFromAccount = () => {
 
 const handleGoogleSignupFromAccount = () => {
   closeAccountCreation()
-  addAIMessage('🚀 Great choice! Setting up your Google account integration...')
+  addAIMessage('��� Great choice! Setting up your Google account integration...')
   setTimeout(() => {
     isSignedIn.value = true
     showActionButtons.value = true
