@@ -1288,7 +1288,7 @@ const handleMute = (muted: boolean): void => {
 }
 
 const handleHold = (onHold: boolean): void => {
-  addAIMessage(onHold ? '⏸️ Call placed on hold' : '▶️ Call resumed')
+  addAIMessage(onHold ? '⏸️ Call placed on hold' : '▶�� Call resumed')
 }
 
 const handleKeypad = (): void => {
@@ -1296,6 +1296,9 @@ const handleKeypad = (): void => {
 }
 
 const handlePauseQueue = (): void => {
+  // Set paused state
+  queuePaused.value = true
+
   // Stop timers
   if (callTimer) {
     clearInterval(callTimer)
@@ -1304,6 +1307,12 @@ const handlePauseQueue = (): void => {
   if (queueTimer) {
     clearInterval(queueTimer)
     queueTimer = null
+  }
+
+  // Clear any pending call simulation timeout
+  if (callSimulationTimeout) {
+    clearTimeout(callSimulationTimeout)
+    callSimulationTimeout = null
   }
 
   // Hide dialer
