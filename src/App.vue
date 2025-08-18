@@ -209,6 +209,7 @@
             :nextContactName="nextContactName"
             :shouldCompleteQueue="shouldCompleteQueue"
             :isLastContact="isLastContact"
+            :dispositionSet="dispositionSet"
             @call-back="handleCallBack"
             @next-contact="handleNextContact"
             @hang-up="handleHangUp"
