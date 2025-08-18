@@ -1494,12 +1494,49 @@ const closeTermsModal = () => {
 
 const handleTermsCancel = () => {
   closeTermsModal()
-  showAccountCreation.value = true
+  // Take user back to the start (welcome page)
+  currentPage.value = 'main'
+  isSignedIn.value = false
+  isReturningUser.value = false
+  showActionButtons.value = false
+  // Clear messages and show welcome message
+  messages.value = []
+  addAIMessage('👋 Welcome to ARKON! I\'m your AI calling assistant. I\'ll help you connect with more prospects and close more deals. What would you like to accomplish today?')
+
+  // Set focus context for header
+  nextTick(() => {
+    if (headerRef.value?.establishFocusContext) {
+      headerRef.value.establishFocusContext()
+    }
+  })
 }
 
 const handleTermsAgree = () => {
   closeTermsModal()
-  showPricingPage.value = true
+  // Complete the Google signup process
+  currentPage.value = 'main'
+  isSignedIn.value = true
+  isReturningUser.value = false // This is a new user
+  showActionButtons.value = true
+  addAIMessage('🎉 Welcome to ARKON! Your account has been created successfully. Let\'s start your first smart calling session! What are you trying to accomplish?')
+
+  // Clear any existing focus when navigating back to main app
+  nextTick(() => {
+    if (document.activeElement instanceof HTMLElement) {
+      document.activeElement.blur()
+    }
+    setTimeout(() => {
+      if (headerRef.value && headerRef.value.establishFocusContext) {
+        headerRef.value.establishFocusContext()
+      }
+    }, 100)
+    announceToScreenReader('Account created successfully. Returned to main application.')
+  })
+
+  // Ensure scroll happens after action buttons are rendered
+  setTimeout(() => {
+    scrollToBottom()
+  }, 500)
 }
 
 // Pricing Page Methods
