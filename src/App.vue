@@ -1185,8 +1185,7 @@ let queueTimer: number | null = null
 let callSimulationTimeout: number | null = null
 
 const simulateCall = (): void => {
-  // Move to next contact (George Sample)
-  currentContactIndex.value = 1
+  // Contact index should already be set by handleNextContact or other functions
 
   // Start ringing
   callState.value = 'ringing'
