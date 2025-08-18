@@ -1521,34 +1521,8 @@ const handleDisposition = (disposition: string): void => {
 
   // Add AI response about the disposition
   setTimeout(() => {
-    addAIMessage(`✅ ${disposition} disposition saved for ${currentContact.value.name}.`)
+    addAIMessage(`✅ ${disposition} disposition saved for ${currentContact.value.name}. Click "Next" to continue to the next contact.`)
     scrollToBottom()
-
-    // Move to next contact if available
-    if (currentContactIndex.value < contacts.length - 1) {
-      currentContactIndex.value++
-
-      setTimeout(() => {
-        // Add separator message instead of regular AI message
-        addSeparatorMessage(currentContact.value.name)
-        scrollToBottom()
-
-        // Start calling the next contact after a brief pause
-        setTimeout(() => {
-          simulateCall()
-        }, 1000)
-      }, 1500)
-    } else {
-      addAIMessage('📋 All contacts have been processed. Dialing session complete!')
-      showDialer.value = false
-      scrollToBottom()
-
-      // Stop queue timer
-      if (queueTimer) {
-        clearInterval(queueTimer)
-        queueTimer = null
-      }
-    }
   }, 1000)
 }
 
@@ -1612,7 +1586,7 @@ const handleTermsCancel = () => {
   showActionButtons.value = false
   // Clear messages and show welcome message
   messages.value = []
-  addAIMessage('��� Welcome to ARKON! I\'m your AI calling assistant. I\'ll help you connect with more prospects and close more deals. What would you like to accomplish today?')
+  addAIMessage('���� Welcome to ARKON! I\'m your AI calling assistant. I\'ll help you connect with more prospects and close more deals. What would you like to accomplish today?')
 
   // Set focus context for header
   nextTick(() => {
