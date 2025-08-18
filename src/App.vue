@@ -1320,6 +1320,29 @@ const addSessionSummaryToChat = (): void => {
         </div>
       </div>
 
+      <!-- Call Log Section -->
+      <div style="margin-bottom: 24px;">
+        <h3 style="color: white; font-size: 18px; font-weight: 600; margin-bottom: 16px;">Call Log</h3>
+        <div style="background-color: rgb(55, 65, 81); border-radius: 8px; overflow: hidden;">
+          <!-- Table Header -->
+          <div style="display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; padding: 16px; border-bottom: 1px solid rgb(75, 85, 99); background-color: rgb(45, 55, 72);">
+            <div style="color: rgb(156, 163, 175); font-size: 12px; font-weight: 600; text-transform: uppercase;">CONTACT</div>
+            <div style="color: rgb(156, 163, 175); font-size: 12px; font-weight: 600; text-transform: uppercase;">DURATION</div>
+            <div style="color: rgb(156, 163, 175); font-size: 12px; font-weight: 600; text-transform: uppercase;">DISPOSITION</div>
+            <div style="color: rgb(156, 163, 175); font-size: 12px; font-weight: 600; text-transform: uppercase;">NOTES</div>
+          </div>
+          <!-- Table Rows -->
+          ${callLog.value.map(call => `
+            <div style="display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; padding: 16px; border-bottom: 1px solid rgb(75, 85, 99);">
+              <div style="color: white; font-size: 14px;">${call.contact}</div>
+              <div style="color: white; font-size: 14px;">${call.duration}</div>
+              <div style="color: white; font-size: 14px;">${call.disposition}</div>
+              <div style="color: white; font-size: 14px;">${call.notes || ''}</div>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+
       <!-- Results Section -->
       <div style="background-color: rgb(17, 24, 39); border: 1px solid rgb(75, 85, 99); border-radius: 8px; padding: 16px; margin-bottom: 16px;">
         <h4 style="color: white; font-size: 16px; font-weight: 600; margin-bottom: 8px;">📈 Your Calling Results</h4>
