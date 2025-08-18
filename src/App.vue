@@ -1157,7 +1157,7 @@ const handleStartDialing = (): void => {
 
   // Add AI response after a delay
   setTimeout(() => {
-    addAIMessage('🎯 Starting your dialing session! Connecting you to your first contact...')
+    addAIMessage('Starting your dialing session! Connecting you to your first contact...')
 
     // Add separator for the first call
     setTimeout(() => {
