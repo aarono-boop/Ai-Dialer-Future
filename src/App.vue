@@ -56,6 +56,26 @@
             </div>
           </div>
 
+          <!-- Queue Action Buttons - shown when queue is paused -->
+          <div v-if="showContinueQueueButton || showLoadNewFileButton" class="mt-2 pt-5 flex justify-center">
+            <div class="w-[70%] flex gap-3">
+              <button
+                v-if="showContinueQueueButton"
+                @click="continueQueue"
+                class="flex-1 btn-primary px-6 py-3 rounded-lg font-semibold cursor-pointer"
+              >
+                ▶️ Continue Call Queue
+              </button>
+              <button
+                v-if="showLoadNewFileButton"
+                @click="loadNewFile"
+                class="flex-1 btn-secondary px-6 py-3 rounded-lg font-semibold cursor-pointer"
+              >
+                📁 Load New File
+              </button>
+            </div>
+          </div>
+
           <!-- Contact Preview Buttons - always visible when active -->
           <div v-if="showContactPreviewButtons" class="mt-2 pt-5 flex justify-center">
             <div class="w-[70%] flex gap-3">
@@ -1363,7 +1383,7 @@ const skipToDialer = (): void => {
 
   // Clear messages and add dialer startup message
   messages.value = []
-  addAIMessage('🎯 Dialer activated for testing! Starting first call...')
+  addAIMessage('���� Dialer activated for testing! Starting first call...')
 
   // Set focus context for header
   nextTick(() => {
@@ -1550,7 +1570,7 @@ const handleTermsCancel = () => {
   showActionButtons.value = false
   // Clear messages and show welcome message
   messages.value = []
-  addAIMessage('👋 Welcome to ARKON! I\'m your AI calling assistant. I\'ll help you connect with more prospects and close more deals. What would you like to accomplish today?')
+  addAIMessage('��� Welcome to ARKON! I\'m your AI calling assistant. I\'ll help you connect with more prospects and close more deals. What would you like to accomplish today?')
 
   // Set focus context for header
   nextTick(() => {
