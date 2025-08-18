@@ -1326,7 +1326,7 @@ const addSessionSummaryToChat = (): void => {
       <!-- Statistics Cards - 6 cards with icon+number above labels -->
       <div style="display: grid; grid-template-columns: repeat(6, 1fr); gap: 8px; margin-bottom: 32px;">
         <div style="background-color: rgb(55, 65, 81); border-radius: 8px; padding: 16px; text-align: center;">
-          <div style="color: white; font-size: 14px; margin-bottom: 8px;">��� Contacts Left</div>
+          <div style="color: white; font-size: 14px; margin-bottom: 8px;">��� Contacts Left to Call</div>
           <div style="color: white; font-size: 24px; font-weight: bold; margin-bottom: 8px;">${contacts.length - currentContactIndex.value - 1}</div>
         </div>
         <div style="background-color: rgb(55, 65, 81); border-radius: 8px; padding: 16px; text-align: center;">
@@ -1543,7 +1543,7 @@ const handleDisposition = (disposition: string): void => {
 
   // Add AI response about the disposition
   setTimeout(() => {
-    addAIMessage(`✅ ${disposition} disposition saved for ${currentContact.value.name}. Click "Next" to continue to the next contact.`)
+    addAIMessage(`��� ${disposition} disposition saved for ${currentContact.value.name}. Click "Next" to continue to the next contact.`)
     scrollToBottom()
   }, 1000)
 }
