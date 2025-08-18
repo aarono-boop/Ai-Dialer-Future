@@ -1187,11 +1187,6 @@ let callSimulationTimeout: number | null = null
 const simulateCall = (): void => {
   // Contact index should already be set by handleNextContact or other functions
 
-  // Don't start new calls if queue should be completed
-  if (shouldCompleteQueue.value && queueCompletionReady.value) {
-    return
-  }
-
   // Start ringing
   callState.value = 'ringing'
 
