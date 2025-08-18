@@ -915,7 +915,7 @@ const sendMessage = (message: string): void => {
         '📈 Great question! Here are ARKON\'s proven strategies to boost your connect rates:',
         '• <strong>Smart Timing:</strong> Calls prospects when they\'re most likely to answer',
         '• <strong>Local Presence:</strong> Uses local numbers to increase pickup rates',
-        '����� <strong>Voicemail Drop:</strong> Leaves personalized messages when they don\'t answer',
+        '���� <strong>Voicemail Drop:</strong> Leaves personalized messages when they don\'t answer',
         '• <strong>Follow-up Sequences:</strong> Automatically schedules optimal callback times',
         'On average, users see a 40% increase in connect rates within their first week!'
       ])
@@ -1280,7 +1280,7 @@ const handleMute = (muted: boolean): void => {
 }
 
 const handleHold = (onHold: boolean): void => {
-  addAIMessage(onHold ? '��️ Call placed on hold' : '▶️ Call resumed')
+  addAIMessage(onHold ? '⏸️ Call placed on hold' : '▶️ Call resumed')
 }
 
 const handleKeypad = (): void => {
@@ -1301,7 +1301,7 @@ const handlePauseQueue = (): void => {
   // Hide dialer
   showDialer.value = false
 
-  addAIMessage('⏸️ Queue paused. You can review your session summary.')
+  addAIMessage('Queue paused. You can review your session summary.')
 
   // Add session summary content to chat
   setTimeout(() => {
