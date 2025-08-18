@@ -1344,11 +1344,12 @@ onUnmounted(() => {
   delete (window as any).handleExportFile
 })
 
-const addSessionSummaryToChat = (): void => {
+const addSessionSummaryToChat = (isCompleted: boolean = false): void => {
   // Create session summary content as HTML
+  const title = isCompleted ? 'Queue Completed!' : 'Queue Paused!'
   const summaryHTML = `
     <div style="background-color: rgb(31, 41, 55); border-radius: 12px; padding: 24px; margin: 12px 0;">
-      <h2 style="color: white; font-size: 24px; font-weight: 600; margin-bottom: 24px;">Queue Paused!</h2>
+      <h2 style="color: white; font-size: 24px; font-weight: 600; margin-bottom: 24px;">${title}</h2>
 
       <!-- Statistics Cards - 6 cards with icon+number above labels -->
       <div style="display: grid; grid-template-columns: repeat(6, 1fr); gap: 8px; margin-bottom: 32px;">
