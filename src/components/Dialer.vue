@@ -63,27 +63,27 @@
         <div class="text-sm">
           <table style="width: 100%; border-collapse: collapse;">
             <tr>
-              <td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: white;">Phone:</td>
+              <td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af;">Phone:</td>
               <td style="padding: 4px 0; color: white;">{{ currentContact.phone }}</td>
             </tr>
             <tr>
-              <td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: white;">Connect Score:</td>
+              <td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af;">Connect Score:</td>
               <td style="padding: 4px 0; color: white;">{{ currentContact.connectScore }}</td>
             </tr>
             <tr>
-              <td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: white;">Email:</td>
+              <td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af;">Email:</td>
               <td style="padding: 4px 0; color: white;">{{ currentContact.email }}</td>
             </tr>
             <tr>
-              <td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: white;">Address:</td>
+              <td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af;">Address:</td>
               <td style="padding: 4px 0; color: white;">{{ currentContact.address }}</td>
             </tr>
             <tr>
-              <td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: white;">Local Time:</td>
+              <td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af;">Local Time:</td>
               <td style="padding: 4px 0; color: white;">{{ currentContact.localTime }}</td>
             </tr>
             <tr>
-              <td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: white;">Website:</td>
+              <td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af;">Website:</td>
               <td style="padding: 4px 0; color: white;">{{ currentContact.website }}</td>
             </tr>
             <tr>
