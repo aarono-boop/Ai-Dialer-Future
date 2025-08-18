@@ -60,10 +60,24 @@ interface Message {
 }
 
 // Define props
-defineProps<{
+const props = defineProps<{
   message: Message
   isWide?: boolean
 }>()
+
+// Method to determine message width
+const getMessageWidth = (): string => {
+  // Check if this is a session summary message
+  const isSessionSummary = props.message.content.some(line =>
+    line.includes('Queue Paused!')
+  )
+
+  if (isSessionSummary) {
+    return 'w-full'
+  }
+
+  return props.isWide ? 'w-3/5' : 'max-w-[60%]'
+}
 </script>
 
 <style scoped>
