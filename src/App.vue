@@ -1154,6 +1154,9 @@ const handleStartDialing = (): void => {
   // Hide start dialing button
   showStartDialingButton.value = false
 
+  // Reset queue completion state
+  queueCompletionReady.value = false
+
   // Add user message showing what button was clicked
   addUserMessage('Start Dialing')
 
