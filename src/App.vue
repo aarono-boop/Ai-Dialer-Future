@@ -1218,6 +1218,9 @@ const handleNextContact = (): void => {
     callTimer = null
   }
 
+  // Reset disposition flag for new contact
+  dispositionSet.value = false
+
   // Move to next contact
   if (currentContactIndex.value < contacts.length - 1) {
     currentContactIndex.value++
@@ -1225,12 +1228,26 @@ const handleNextContact = (): void => {
     callState.value = 'ended'
     callDuration.value = 0
 
-    // Start new call after a moment
+    // Add separator message for the new contact
     setTimeout(() => {
-      simulateCall()
-    }, 2000)
+      addSeparatorMessage(currentContact.value.name)
+      scrollToBottom()
+
+      // Start calling the next contact after showing separator
+      setTimeout(() => {
+        simulateCall()
+      }, 1000)
+    }, 1500)
   } else {
-    addAIMessage('📋 No more contacts in the queue.')
+    addAIMessage('📋 All contacts have been processed. Dialing session complete!')
+    showDialer.value = false
+    scrollToBottom()
+
+    // Stop queue timer
+    if (queueTimer) {
+      clearInterval(queueTimer)
+      queueTimer = null
+    }
   }
 }
 
