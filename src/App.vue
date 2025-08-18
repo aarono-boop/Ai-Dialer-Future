@@ -980,7 +980,7 @@ const sendMessage = (message: string): void => {
         '😄 Why did the salesperson bring a ladder to work?',
         'Because they heard the job was about making <strong>high-level</strong> connections!',
         '',
-        '������ Speaking of connections, did you know ARKON users make 3x more meaningful connections than traditional dialers?',
+        '���� Speaking of connections, did you know ARKON users make 3x more meaningful connections than traditional dialers?',
         'Ready to elevate your calling game?'
       ])
     } else if (lowerMessage.includes('jenn')) {
@@ -1505,7 +1505,7 @@ const loadNewFile = (): void => {
   connectedCalls.value = 0
   callLog.value = []
 
-  addAIMessage('📁 Ready to load a new file. Please upload your contact list to start a new dialing session.')
+  addAIMessage('Ready to load a new file. Please upload your contact list to start a new dialing session.')
 }
 
 const exportFile = (): void => {
