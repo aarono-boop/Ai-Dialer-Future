@@ -1334,7 +1334,7 @@ const addSessionSummaryToChat = (): void => {
           <div style="color: white; font-size: 11px; line-height: 1.2;">Contacts Dialed</div>
         </div>
         <div style="background-color: rgb(55, 65, 81); border-radius: 8px; padding: 16px; text-align: center;">
-          <div style="color: white; font-size: 24px; font-weight: bold; margin-bottom: 8px;">📞 ${totalCalls.value}</div>
+          <div style="color: white; font-size: 24px; font-weight: bold; margin-bottom: 8px;">📞 <i class="pi pi-phone"></i> ${totalCalls.value}</div>
           <div style="color: white; font-size: 11px; line-height: 1.2;">Total Calls Made</div>
         </div>
         <div style="background-color: rgb(55, 65, 81); border-radius: 8px; padding: 16px; text-align: center;">
