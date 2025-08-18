@@ -1443,10 +1443,8 @@ const handleDisposition = (disposition: string): void => {
 
 // Signup Methods
 const handleGoogleSignup = () => {
-  addAIMessage('🚀 Great choice! Setting up your Google account integration...')
-  setTimeout(() => {
-    addAIMessage('Perfect! Your trial is ready. Let\'s start with your first smart calling session!')
-  }, 1500)
+  // Show terms modal for new Google signup users
+  showTermsModal.value = true
 }
 
 const handleEmailSignup = () => {
