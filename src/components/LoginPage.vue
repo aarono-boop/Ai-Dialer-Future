@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-screen bg-slate-900 text-white overflow-y-auto">
+  <div class="min-h-screen bg-slate-900 text-white overflow-y-auto login-background">
     <!-- Main Content -->
     <main class="max-w-md mx-auto px-6 py-16">
       <!-- Header -->
