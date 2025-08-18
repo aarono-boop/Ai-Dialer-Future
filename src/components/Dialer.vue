@@ -283,6 +283,7 @@ const props = defineProps<{
   shouldCompleteQueue: boolean
   isLastContact: boolean
   dispositionSet: boolean
+  queueCompletionReady: boolean
 }>()
 
 // Define emits
