@@ -1505,7 +1505,9 @@ const loadNewFile = (): void => {
   connectedCalls.value = 0
   callLog.value = []
 
+  // Show file upload component for new file
   addAIMessage('Ready to load a new file. Please upload your contact list to start a new dialing session.')
+  showFileUploadForReturningUser.value = true
 }
 
 const exportFile = (): void => {
