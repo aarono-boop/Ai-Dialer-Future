@@ -282,6 +282,7 @@ const props = defineProps<{
   nextContactName: string
   shouldCompleteQueue: boolean
   isLastContact: boolean
+  dispositionSet: boolean
 }>()
 
 // Define emits
