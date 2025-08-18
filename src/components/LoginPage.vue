@@ -54,6 +54,17 @@ const handleTabKey = (event: KeyboardEvent) => {
 </script>
 
 <style scoped>
+/* Background pattern */
+.login-background {
+  background-color: #242733;
+  background-image:
+    /* A vignette to create the radial gradient effect for the dots */
+    radial-gradient(ellipse at center, transparent 0%, #242733 80%),
+    /* The dot pattern */
+    radial-gradient(circle, #5D5F69 1px, transparent 1px);
+  background-size: 100% 100%, 16px 16px;
+}
+
 /* Custom input styling */
 :deep(.p-inputtext) {
   background-color: rgb(31 41 55) !important;
