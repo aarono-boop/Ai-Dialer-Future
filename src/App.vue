@@ -930,7 +930,7 @@ const sendMessage = (message: string): void => {
       ])
     } else if (lowerMessage.includes('who i should call now') || lowerMessage.includes('who should i call')) {
       addAIMessage([
-        '🎯 Based on your contact data and current time analysis:',
+        '��� Based on your contact data and current time analysis:',
         '<strong>Top 3 prospects to call right now:</strong>',
         '1. Sarah Johnson - 92% connect probability (last spoke 3 days ago)',
         '2. Mike Chen - 89% connect probability (opened your email yesterday)',
@@ -1335,7 +1335,7 @@ const addSessionSummaryToChat = (): void => {
         </div>
         <div style="background-color: rgb(55, 65, 81); border-radius: 8px; padding: 16px; text-align: center;">
           <div style="color: white; font-size: 24px; font-weight: bold; margin-bottom: 8px;">📞 ${totalCalls.value}</div>
-          <div style="color: white; font-size: 24px; font-weight: bold; margin-bottom: 8px;">${connectedCalls.value}</div>
+          <div style="color: white; font-size: 11px; line-height: 1.2;">Total Calls Made</div>
         </div>
         <div style="background-color: rgb(55, 65, 81); border-radius: 8px; padding: 16px; text-align: center;">
           <div style="color: white; font-size: 18px; margin-bottom: 8px;">⏰</div>
