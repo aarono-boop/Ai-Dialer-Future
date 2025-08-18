@@ -1510,6 +1510,9 @@ const skipToDialer = (): void => {
 }
 
 const loadNewFile = (): void => {
+  // Reset paused state
+  queuePaused.value = false
+
   showSessionSummary.value = false
   showDialer.value = false
   hasUploadedFile.value = false
