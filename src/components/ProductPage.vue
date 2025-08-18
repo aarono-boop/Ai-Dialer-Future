@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-screen bg-slate-900 text-white overflow-y-auto">
+  <div class="min-h-screen bg-slate-900 text-white overflow-y-auto product-background">
     <!-- Main Content -->
     <main class="max-w-4xl mx-auto px-6 py-16">
       <!-- Hero Section -->
