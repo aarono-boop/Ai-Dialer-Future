@@ -960,7 +960,7 @@ const sendMessage = (message: string): void => {
       addAIMessage([
         '🎭 Great idea! Call practice makes perfect.',
         'ARKON\'s practice mode can help you:',
-        '• Rehearse your opening pitch with AI feedback',
+        '��� Rehearse your opening pitch with AI feedback',
         '• Practice handling common objections',
         '• Test different conversation flows',
         '• Record and review your delivery',
@@ -1340,17 +1340,17 @@ const addSessionSummaryToChat = (): void => {
         <div style="background-color: rgb(55, 65, 81); border-radius: 8px; padding: 16px; text-align: center;">
           <div style="color: white; font-size: 18px; margin-bottom: 8px;">⏰</div>
           <div style="color: white; font-size: 24px; font-weight: bold; margin-bottom: 4px;">${queueTime.value}s</div>
-          <div style="color: rgb(156, 163, 175); font-size: 11px; line-height: 1.2;">Queue Duration</div>
+          <div style="color: white; font-size: 11px; line-height: 1.2;">Queue Duration</div>
         </div>
         <div style="background-color: rgb(55, 65, 81); border-radius: 8px; padding: 16px; text-align: center;">
           <div style="color: white; font-size: 18px; margin-bottom: 8px;">💬</div>
           <div style="color: white; font-size: 24px; font-weight: bold; margin-bottom: 4px;">${connectedCalls.value}</div>
-          <div style="color: rgb(156, 163, 175); font-size: 11px; line-height: 1.2;">Connected Calls</div>
+          <div style="color: white; font-size: 11px; line-height: 1.2;">Connected Calls</div>
         </div>
         <div style="background-color: rgb(55, 65, 81); border-radius: 8px; padding: 16px; text-align: center;">
           <div style="color: white; font-size: 18px; margin-bottom: 8px;">⏭️</div>
           <div style="color: white; font-size: 24px; font-weight: bold; margin-bottom: 4px;">${skippedNumbers.value}</div>
-          <div style="color: rgb(156, 163, 175); font-size: 11px; line-height: 1.2;">Skipped Numbers</div>
+          <div style="color: white; font-size: 11px; line-height: 1.2;">Skipped Numbers</div>
         </div>
       </div>
 
@@ -1360,10 +1360,10 @@ const addSessionSummaryToChat = (): void => {
         <div style="background-color: rgb(55, 65, 81); border-radius: 8px; overflow: hidden;">
           <!-- Table Header -->
           <div style="display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; padding: 16px; border-bottom: 1px solid rgb(75, 85, 99); background-color: rgb(45, 55, 72);">
-            <div style="color: rgb(156, 163, 175); font-size: 12px; font-weight: 600; text-transform: uppercase;">CONTACT</div>
-            <div style="color: rgb(156, 163, 175); font-size: 12px; font-weight: 600; text-transform: uppercase;">DURATION</div>
-            <div style="color: rgb(156, 163, 175); font-size: 12px; font-weight: 600; text-transform: uppercase;">DISPOSITION</div>
-            <div style="color: rgb(156, 163, 175); font-size: 12px; font-weight: 600; text-transform: uppercase;">NOTES</div>
+            <div style="color: white; font-size: 12px; font-weight: 600; text-transform: uppercase;">CONTACT</div>
+            <div style="color: white; font-size: 12px; font-weight: 600; text-transform: uppercase;">DURATION</div>
+            <div style="color: white; font-size: 12px; font-weight: 600; text-transform: uppercase;">DISPOSITION</div>
+            <div style="color: white; font-size: 12px; font-weight: 600; text-transform: uppercase;">NOTES</div>
           </div>
           <!-- Table Rows -->
           ${callLog.value.map(call => `
