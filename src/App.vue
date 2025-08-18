@@ -1294,6 +1294,10 @@ const closeSessionSummary = (): void => {
   showSessionSummary.value = false
 }
 
+const handleExportFile = (): void => {
+  addAIMessage('📊 Exporting your enriched contact file with Connect Scores and call results...')
+}
+
 const addSessionSummaryToChat = (): void => {
   // Create session summary content as HTML
   const summaryHTML = `
