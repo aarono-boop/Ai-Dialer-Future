@@ -1288,6 +1288,49 @@ const closeSessionSummary = (): void => {
   showSessionSummary.value = false
 }
 
+const addSessionSummaryToChat = (): void => {
+  // Create session summary content as HTML
+  const summaryHTML = `
+    <div style="background-color: rgb(31, 41, 55); border: 1px solid rgb(75, 85, 99); border-radius: 12px; padding: 24px; margin: 12px 0;">
+      <h3 style="color: white; font-size: 18px; font-weight: 600; margin-bottom: 16px;">📊 Session Summary</h3>
+
+      <!-- Statistics Grid -->
+      <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 24px;">
+        <div style="background-color: rgb(17, 24, 39); border: 1px solid rgb(75, 85, 99); border-radius: 8px; padding: 16px; text-align: center;">
+          <div style="color: rgb(96, 165, 250); font-size: 14px; margin-bottom: 4px;">👥 Contacts Left</div>
+          <div style="color: white; font-size: 20px; font-weight: bold;">${contacts.value.length - currentContactIndex.value - 1}</div>
+        </div>
+        <div style="background-color: rgb(17, 24, 39); border: 1px solid rgb(75, 85, 99); border-radius: 8px; padding: 16px; text-align: center;">
+          <div style="color: rgb(34, 197, 94); font-size: 14px; margin-bottom: 4px;">📞 Total Calls</div>
+          <div style="color: white; font-size: 20px; font-weight: bold;">${totalCalls.value}</div>
+        </div>
+        <div style="background-color: rgb(17, 24, 39); border: 1px solid rgb(75, 85, 99); border-radius: 8px; padding: 16px; text-align: center;">
+          <div style="color: rgb(34, 197, 94); font-size: 14px; margin-bottom: 4px;">✅ Connected</div>
+          <div style="color: white; font-size: 20px; font-weight: bold;">${connectedCalls.value}</div>
+        </div>
+      </div>
+
+      <!-- Results Section -->
+      <div style="background-color: rgb(17, 24, 39); border: 1px solid rgb(75, 85, 99); border-radius: 8px; padding: 16px; margin-bottom: 16px;">
+        <h4 style="color: white; font-size: 16px; font-weight: 600; margin-bottom: 8px;">📈 Your Calling Results</h4>
+        <p style="color: rgb(209, 213, 219); font-size: 14px; line-height: 1.5; margin-bottom: 12px;">
+          Great work! Your queue is paused. While you were calling, I enriched your contact file data with Connect Scores, call outcomes, and notes. You can export your enriched results now or keep calling to build even more value.
+        </p>
+      </div>
+    </div>
+  `
+
+  addAIMessage([summaryHTML])
+
+  // Show action buttons for continuing or loading new file
+  if (shouldCompleteQueue.value) {
+    showLoadNewFileButton.value = true
+  } else {
+    showContinueQueueButton.value = true
+    showLoadNewFileButton.value = true
+  }
+}
+
 const continueQueue = (): void => {
   showSessionSummary.value = false
   showDialer.value = true
