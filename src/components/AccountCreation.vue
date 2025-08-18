@@ -1,5 +1,5 @@
 <template>
-  <div class="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 z-50">
+  <div class="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 z-50 account-background">
     <div class="bg-slate-800 rounded-2xl p-8 max-w-md w-full relative shadow-2xl border border-slate-700">
       <!-- Close Button -->
       <button 
