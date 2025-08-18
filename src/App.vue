@@ -1273,11 +1273,15 @@ const handlePauseQueue = (): void => {
     queueTimer = null
   }
 
-  // Hide dialer and show session summary
+  // Hide dialer
   showDialer.value = false
-  showSessionSummary.value = true
 
   addAIMessage('⏸️ Queue paused. You can review your session summary.')
+
+  // Add session summary content to chat
+  setTimeout(() => {
+    addSessionSummaryToChat()
+  }, 1000)
 }
 
 const closeSessionSummary = (): void => {
