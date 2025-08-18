@@ -74,6 +74,17 @@ const handleOverlayClick = () => {
 </script>
 
 <style scoped>
+/* Background pattern */
+.terms-background {
+  background-color: #242733;
+  background-image:
+    /* A vignette to create the radial gradient effect for the dots */
+    radial-gradient(ellipse at center, transparent 0%, rgba(36, 39, 51, 0.8) 80%),
+    /* The dot pattern */
+    radial-gradient(circle, #5D5F69 1px, transparent 1px);
+  background-size: 100% 100%, 16px 16px;
+}
+
 /* Custom button styling */
 :deep(.p-button) {
   border: none !important;
