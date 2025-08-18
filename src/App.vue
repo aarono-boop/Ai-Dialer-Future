@@ -442,7 +442,7 @@ const nextContactName = computed(() => {
 })
 
 const shouldCompleteQueue = computed(() => {
-  return callLog.value.length >= 4 || currentContactIndex.value >= 3
+  return callLog.value.length >= 3 || currentContactIndex.value >= 2
 })
 
 const isLastContact = computed(() => {
