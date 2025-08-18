@@ -1511,6 +1511,9 @@ const handleDisposition = (disposition: string): void => {
   // Hide disposition buttons
   showDispositionButtons.value = false
 
+  // Set disposition flag to enable next button
+  dispositionSet.value = true
+
   // Update the last call log entry with the disposition
   if (callLog.value.length > 0) {
     const lastCall = callLog.value[callLog.value.length - 1]
