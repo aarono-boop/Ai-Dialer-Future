@@ -1291,7 +1291,7 @@ const handleMute = (muted: boolean): void => {
 }
 
 const handleHold = (onHold: boolean): void => {
-  addAIMessage(onHold ? '⏸️ Call placed on hold' : '▶️ Call resumed')
+  addAIMessage(onHold ? '��️ Call placed on hold' : '▶️ Call resumed')
 }
 
 const handleKeypad = (): void => {
@@ -1581,7 +1581,13 @@ const handleDisposition = (disposition: string): void => {
 
   // Add AI response about the disposition
   setTimeout(() => {
-    addAIMessage(`${disposition} disposition saved for ${currentContact.value.name}. Click "Next" to continue to the next contact.`)
+    // Check if this is the 3rd contact (index 2) - if so, enable queue completion
+    if (currentContactIndex.value >= 2) {
+      queueCompletionReady.value = true
+      addAIMessage(`${disposition} disposition saved for ${currentContact.value.name}. Click "Queue Completed" to finish your dialing session.`)
+    } else {
+      addAIMessage(`${disposition} disposition saved for ${currentContact.value.name}. Click "Next" to continue to the next contact.`)
+    }
     scrollToBottom()
   }, 1000)
 }
