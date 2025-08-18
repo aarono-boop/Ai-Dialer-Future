@@ -69,7 +69,7 @@ const props = defineProps<{
 const getMessageWidth = (): string => {
   // Check if this is a session summary message
   const isSessionSummary = props.message.content.some(line =>
-    line.includes('Queue Paused!')
+    line.includes('Queue Paused!') || line.includes('Queue Completed!')
   )
 
   if (isSessionSummary) {
