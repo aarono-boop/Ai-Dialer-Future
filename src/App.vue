@@ -1344,11 +1344,19 @@ const addSessionSummaryToChat = (): void => {
       </div>
 
       <!-- Results Section -->
-      <div style="background-color: rgb(17, 24, 39); border: 1px solid rgb(75, 85, 99); border-radius: 8px; padding: 16px; margin-bottom: 16px;">
-        <h4 style="color: white; font-size: 16px; font-weight: 600; margin-bottom: 8px;">📈 Your Calling Results</h4>
-        <p style="color: rgb(209, 213, 219); font-size: 14px; line-height: 1.5; margin-bottom: 12px;">
-          Great work! Your queue is paused. While you were calling, I enriched your contact file data with Connect Scores, call outcomes, and notes. You can export your enriched results now or keep calling to build even more value.
-        </p>
+      <div style="background-color: rgb(55, 65, 81); border-radius: 8px; padding: 20px;">
+        <div style="display: flex; align-items: flex-start; gap: 16px;">
+          <div style="color: rgb(96, 165, 250); font-size: 24px;">📈</div>
+          <div style="flex: 1;">
+            <h4 style="color: white; font-size: 16px; font-weight: 600; margin-bottom: 8px;">Your Calling Results</h4>
+            <p style="color: rgb(209, 213, 219); font-size: 14px; line-height: 1.5; margin-bottom: 16px;">
+              Great work! Your queue is paused. While you were calling, I enriched your contact file data with Connect Scores, call outcomes, and notes. You can export your enriched results now or keep calling to build even more value.
+            </p>
+            <button style="background-color: rgb(59, 130, 246); color: white; border: none; border-radius: 6px; padding: 8px 16px; font-size: 14px; font-weight: 500; cursor: pointer; display: inline-flex; align-items: center; gap: 8px;" onclick="handleExportFile()">
+              📁 Export Enriched File
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   `
