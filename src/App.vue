@@ -1276,7 +1276,7 @@ const handleHangUp = (): void => {
 }
 
 const handleMute = (muted: boolean): void => {
-  addAIMessage(muted ? '🔇 Microphone muted' : '🎤 Microphone unmuted')
+  addAIMessage(muted ? '🔇 Microphone muted' : '��� Microphone unmuted')
 }
 
 const handleHold = (onHold: boolean): void => {
@@ -1426,7 +1426,7 @@ const continueQueue = (): void => {
     queueTime.value++
   }, 1000)
 
-  addAIMessage('▶��� Resuming call queue where you left off.')
+  addAIMessage('Resuming call queue where you left off.')
 }
 
 const skipToDialer = (): void => {
