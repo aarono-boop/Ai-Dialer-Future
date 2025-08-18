@@ -1314,7 +1314,7 @@ const closeSessionSummary = (): void => {
 }
 
 const handleExportFile = (): void => {
-  addAIMessage('📊 Exporting your enriched contact file with Connect Scores and call results...')
+  addAIMessage('Exporting your enriched contact file with Connect Scores and call results...')
 }
 
 // Make handleExportFile globally accessible for onclick handlers in HTML strings
@@ -1509,7 +1509,7 @@ const loadNewFile = (): void => {
 }
 
 const exportFile = (): void => {
-  addAIMessage('📊 Exporting your enriched contact file with Connect Scores and call results...')
+  addAIMessage('Exporting your enriched contact file with Connect Scores and call results...')
 }
 
 const handleCompleteQueue = (): void => {
