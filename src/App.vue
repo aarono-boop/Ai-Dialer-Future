@@ -1176,6 +1176,7 @@ const handleStartDialing = (): void => {
 // Call simulation
 let callTimer: number | null = null
 let queueTimer: number | null = null
+let callSimulationTimeout: number | null = null
 
 const simulateCall = (): void => {
   // Move to next contact (George Sample)
