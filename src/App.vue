@@ -1318,6 +1318,21 @@ const addSessionSummaryToChat = (): void => {
           <div style="color: rgb(34, 197, 94); font-size: 14px; margin-bottom: 4px;">✅ Connected</div>
           <div style="color: white; font-size: 20px; font-weight: bold;">${connectedCalls.value}</div>
         </div>
+        <div style="background-color: rgb(55, 65, 81); border-radius: 8px; padding: 16px; text-align: center;">
+          <div style="color: white; font-size: 18px; margin-bottom: 8px;">⏰</div>
+          <div style="color: white; font-size: 24px; font-weight: bold; margin-bottom: 4px;">${queueTime.value}s</div>
+          <div style="color: rgb(156, 163, 175); font-size: 11px; line-height: 1.2;">Queue Duration</div>
+        </div>
+        <div style="background-color: rgb(55, 65, 81); border-radius: 8px; padding: 16px; text-align: center;">
+          <div style="color: white; font-size: 18px; margin-bottom: 8px;">💬</div>
+          <div style="color: white; font-size: 24px; font-weight: bold; margin-bottom: 4px;">${connectedCalls.value}</div>
+          <div style="color: rgb(156, 163, 175); font-size: 11px; line-height: 1.2;">Connected Calls</div>
+        </div>
+        <div style="background-color: rgb(55, 65, 81); border-radius: 8px; padding: 16px; text-align: center;">
+          <div style="color: white; font-size: 18px; margin-bottom: 8px;">⏭️</div>
+          <div style="color: white; font-size: 24px; font-weight: bold; margin-bottom: 4px;">${skippedNumbers.value}</div>
+          <div style="color: rgb(156, 163, 175); font-size: 11px; line-height: 1.2;">Skipped Numbers</div>
+        </div>
       </div>
 
       <!-- Call Log Section -->
