@@ -1297,7 +1297,7 @@ const closeSessionSummary = (): void => {
 const addSessionSummaryToChat = (): void => {
   // Create session summary content as HTML
   const summaryHTML = `
-    <div style="background-color: rgb(31, 41, 55); border: 1px solid rgb(75, 85, 99); border-radius: 12px; padding: 24px; margin: 12px 0;">
+    <div style="background-color: rgb(31, 41, 55); border-radius: 12px; padding: 24px; margin: 12px 0;">
       <h3 style="color: white; font-size: 18px; font-weight: 600; margin-bottom: 16px;">📊 Session Summary</h3>
 
       <!-- Statistics Grid -->
