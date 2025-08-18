@@ -1513,30 +1513,8 @@ const handleTermsCancel = () => {
 
 const handleTermsAgree = () => {
   closeTermsModal()
-  // Complete the Google signup process
-  currentPage.value = 'main'
-  isSignedIn.value = true
-  isReturningUser.value = false // This is a new user
-  showActionButtons.value = true
-  addAIMessage('🎉 Welcome to ARKON! Your account has been created successfully. Let\'s start your first smart calling session! What are you trying to accomplish?')
-
-  // Clear any existing focus when navigating back to main app
-  nextTick(() => {
-    if (document.activeElement instanceof HTMLElement) {
-      document.activeElement.blur()
-    }
-    setTimeout(() => {
-      if (headerRef.value && headerRef.value.establishFocusContext) {
-        headerRef.value.establishFocusContext()
-      }
-    }, 100)
-    announceToScreenReader('Account created successfully. Returned to main application.')
-  })
-
-  // Ensure scroll happens after action buttons are rendered
-  setTimeout(() => {
-    scrollToBottom()
-  }, 500)
+  // Show pricing page after terms agreement
+  showPricingPage.value = true
 }
 
 // Pricing Page Methods
