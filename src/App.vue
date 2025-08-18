@@ -1533,10 +1533,12 @@ const closePaymentPage = () => {
 }
 
 const handlePurchaseCompleted = () => {
-  // Close payment page and go directly to main interface
+  // Close payment page and complete signup flow
   showPaymentPage.value = false
   showPricingPage.value = false
+  currentPage.value = 'main'
   isSignedIn.value = true
+  isReturningUser.value = false // This is a new user
   showActionButtons.value = true
   addAIMessage('���� Congratulations! You\'ve successfully upgraded to the Pro plan and have unlimited access to all features.<br><br>To help us understand what your goals are, what are you trying to accomplish?')
 
