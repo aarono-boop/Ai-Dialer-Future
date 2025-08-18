@@ -1242,6 +1242,15 @@ const handleNextContact = (): void => {
   // Move to next contact
   if (currentContactIndex.value < contacts.length - 1) {
     currentContactIndex.value++
+
+    // Check if we've reached the completion threshold
+    if (shouldCompleteQueue.value) {
+      addAIMessage(`Reached ${currentContact.value.name} (3rd contact). Complete the call and set disposition to finish.`)
+      callState.value = 'ended'
+      callDuration.value = 0
+      return
+    }
+
     addAIMessage(`Moving to next contact: ${currentContact.value.name}. Preparing to dial...`)
     callState.value = 'ended'
     callDuration.value = 0
