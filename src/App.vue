@@ -1552,7 +1552,7 @@ const handleDisposition = (disposition: string): void => {
 
   // Add AI response about the disposition
   setTimeout(() => {
-    addAIMessage(`✅ ${disposition} disposition saved for ${currentContact.value.name}. Click "Next" to continue to the next contact.`)
+    addAIMessage(`${disposition} disposition saved for ${currentContact.value.name}. Click "Next" to continue to the next contact.`)
     scrollToBottom()
   }, 1000)
 }
