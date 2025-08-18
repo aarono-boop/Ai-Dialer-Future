@@ -210,6 +210,7 @@
             :shouldCompleteQueue="shouldCompleteQueue"
             :isLastContact="isLastContact"
             :dispositionSet="dispositionSet"
+            :queueCompletionReady="queueCompletionReady"
             @call-back="handleCallBack"
             @next-contact="handleNextContact"
             @hang-up="handleHangUp"
