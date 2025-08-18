@@ -915,7 +915,7 @@ const sendMessage = (message: string): void => {
         '📈 Great question! Here are ARKON\'s proven strategies to boost your connect rates:',
         '• <strong>Smart Timing:</strong> Calls prospects when they\'re most likely to answer',
         '• <strong>Local Presence:</strong> Uses local numbers to increase pickup rates',
-        '�� <strong>Voicemail Drop:</strong> Leaves personalized messages when they don\'t answer',
+        '���� <strong>Voicemail Drop:</strong> Leaves personalized messages when they don\'t answer',
         '• <strong>Follow-up Sequences:</strong> Automatically schedules optimal callback times',
         'On average, users see a 40% increase in connect rates within their first week!'
       ])
@@ -1384,7 +1384,7 @@ const addSessionSummaryToChat = (): void => {
               Great work! Your queue is paused. While you were calling, I enriched your contact file data with Connect Scores, call outcomes, and notes. You can export your enriched results now or keep calling to build even more value.
             </p>
             <button style="background-color: rgb(59, 130, 246); color: white; border: none; border-radius: 6px; padding: 8px 16px; font-size: 24px; font-weight: bold; font-weight: 500; cursor: pointer; display: inline-flex; align-items: center; gap: 8px;" onclick="handleExportFile()">
-              📁 Export Enriched File
+              <i class="pi pi-download"></i> Export Enriched File
             </button>
           </div>
         </div>
