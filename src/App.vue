@@ -1330,7 +1330,7 @@ const addSessionSummaryToChat = (): void => {
           <div style="color: white; font-size: 24px; font-weight: bold; margin-bottom: 8px;">${contacts.length - currentContactIndex.value - 1}</div>
         </div>
         <div style="background-color: rgb(55, 65, 81); border-radius: 8px; padding: 16px; text-align: center;">
-          <div style="color: white; font-size: 14px; margin-bottom: 8px;">📞 Total Calls</div>
+          <div style="color: white; font-size: 14px; margin-bottom: 8px;">📞 Contacts Dialed</div>
           <div style="color: white; font-size: 24px; font-weight: bold; margin-bottom: 8px;">${totalCalls.value}</div>
         </div>
         <div style="background-color: rgb(55, 65, 81); border-radius: 8px; padding: 16px; text-align: center;">
@@ -1543,7 +1543,7 @@ const handleDisposition = (disposition: string): void => {
 
   // Add AI response about the disposition
   setTimeout(() => {
-    addAIMessage(`��� ${disposition} disposition saved for ${currentContact.value.name}. Click "Next" to continue to the next contact.`)
+    addAIMessage(`✅ ${disposition} disposition saved for ${currentContact.value.name}. Click "Next" to continue to the next contact.`)
     scrollToBottom()
   }, 1000)
 }
