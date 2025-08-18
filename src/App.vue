@@ -359,6 +359,7 @@ const showDispositionButtons = ref<boolean>(false)
 const showSessionSummary = ref<boolean>(false)
 const showContinueQueueButton = ref<boolean>(false)
 const showLoadNewFileButton = ref<boolean>(false)
+const dispositionSet = ref<boolean>(false)
 const callLog = ref<Array<{contact: string, duration: string, disposition: string, notes: string}>>([])
 const totalCalls = ref<number>(0)
 const connectedCalls = ref<number>(0)
@@ -1586,7 +1587,7 @@ const handleTermsCancel = () => {
   showActionButtons.value = false
   // Clear messages and show welcome message
   messages.value = []
-  addAIMessage('���� Welcome to ARKON! I\'m your AI calling assistant. I\'ll help you connect with more prospects and close more deals. What would you like to accomplish today?')
+  addAIMessage('��� Welcome to ARKON! I\'m your AI calling assistant. I\'ll help you connect with more prospects and close more deals. What would you like to accomplish today?')
 
   // Set focus context for header
   nextTick(() => {
