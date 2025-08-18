@@ -1323,7 +1323,7 @@ const addSessionSummaryToChat = (): void => {
     <div style="background-color: rgb(31, 41, 55); border-radius: 12px; padding: 24px; margin: 12px 0;">
       <h2 style="color: white; font-size: 24px; font-weight: 600; margin-bottom: 24px;">Queue Paused!</h2>
 
-      <!-- Statistics Grid - 6 cards in 2 rows -->
+      <!-- Statistics Cards - 6 cards with icon+number above labels -->
       <div style="display: grid; grid-template-columns: repeat(6, 1fr); gap: 8px; margin-bottom: 32px;">
         <div style="background-color: rgb(55, 65, 81); border-radius: 8px; padding: 16px; text-align: center;">
           <div style="color: rgb(96, 165, 250); font-size: 14px; margin-bottom: 4px;">��� Contacts Left</div>
