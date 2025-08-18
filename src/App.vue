@@ -1317,6 +1317,11 @@ const handleExportFile = (): void => {
   addAIMessage('📊 Exporting your enriched contact file with Connect Scores and call results...')
 }
 
+// Make handleExportFile globally accessible for onclick handlers in HTML strings
+onMounted(() => {
+  ;(window as any).handleExportFile = handleExportFile
+})
+
 const addSessionSummaryToChat = (): void => {
   // Create session summary content as HTML
   const summaryHTML = `
