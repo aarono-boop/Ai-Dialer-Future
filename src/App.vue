@@ -1288,7 +1288,7 @@ const handleMute = (muted: boolean): void => {
 }
 
 const handleHold = (onHold: boolean): void => {
-  addAIMessage(onHold ? '⏸️ Call placed on hold' : '▶�� Call resumed')
+  addAIMessage(onHold ? '⏸️ Call placed on hold' : '▶️ Call resumed')
 }
 
 const handleKeypad = (): void => {
@@ -1433,6 +1433,9 @@ const addSessionSummaryToChat = (): void => {
 }
 
 const continueQueue = (): void => {
+  // Reset paused state
+  queuePaused.value = false
+
   showSessionSummary.value = false
   showDialer.value = true
   showContinueQueueButton.value = false
