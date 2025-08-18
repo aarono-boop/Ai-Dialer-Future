@@ -24,7 +24,7 @@
         </svg>
       </div>
       <div
-        :class="['bg-gray-800/90 border border-white/20 rounded-lg p-5 text-sm overflow-hidden', isWide ? 'w-3/5' : 'max-w-[60%]']"
+        :class="['bg-gray-800/90 border border-white/20 rounded-lg p-5 text-sm overflow-hidden', getMessageWidth()]"
         role="region"
         aria-label="AI message content"
       >
