@@ -87,19 +87,19 @@
               <td style="padding: 4px 0; color: white;">{{ currentContact.website }}</td>
             </tr>
             <tr>
-              <td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: white;">LinkedIn Profile:</td>
+              <td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af;">LinkedIn Profile:</td>
               <td style="padding: 4px 0; color: white;">{{ currentContact.linkedin }}</td>
             </tr>
             <tr>
-              <td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: white;">Industry:</td>
+              <td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af;">Industry:</td>
               <td style="padding: 4px 0; color: white;">{{ currentContact.industry }}</td>
             </tr>
             <tr>
-              <td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: white;">Company Size:</td>
+              <td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af;">Company Size:</td>
               <td style="padding: 4px 0; color: white;">{{ currentContact.companySize }}</td>
             </tr>
             <tr>
-              <td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: white;">Lead Source:</td>
+              <td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af;">Lead Source:</td>
               <td style="padding: 4px 0; color: white;">{{ currentContact.leadSource }}</td>
             </tr>
           </table>
