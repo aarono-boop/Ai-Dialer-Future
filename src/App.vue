@@ -1356,6 +1356,8 @@ const addSessionSummaryToChat = (): void => {
 const continueQueue = (): void => {
   showSessionSummary.value = false
   showDialer.value = true
+  showContinueQueueButton.value = false
+  showLoadNewFileButton.value = false
 
   // Restart queue timer
   queueTimer = setInterval(() => {
