@@ -1556,7 +1556,7 @@ const handleCompleteQueue = (): void => {
 
   // Add session summary content to chat
   setTimeout(() => {
-    addSessionSummaryToChat()
+    addSessionSummaryToChat(true)
   }, 1000)
 }
 
