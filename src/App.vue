@@ -1291,7 +1291,7 @@ const handleMute = (muted: boolean): void => {
 }
 
 const handleHold = (onHold: boolean): void => {
-  addAIMessage(onHold ? '��️ Call placed on hold' : '▶️ Call resumed')
+  addAIMessage(onHold ? '⏸️ Call placed on hold' : '▶️ Call resumed')
 }
 
 const handleKeypad = (): void => {
@@ -1516,6 +1516,7 @@ const skipToDialer = (): void => {
 const loadNewFile = (): void => {
   // Reset paused state
   queuePaused.value = false
+  queueCompletionReady.value = false
 
   showSessionSummary.value = false
   showDialer.value = false
