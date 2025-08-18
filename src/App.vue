@@ -1326,30 +1326,30 @@ const addSessionSummaryToChat = (): void => {
       <!-- Statistics Cards - 6 cards with icon+number above labels -->
       <div style="display: grid; grid-template-columns: repeat(6, 1fr); gap: 8px; margin-bottom: 32px;">
         <div style="background-color: rgb(55, 65, 81); border-radius: 8px; padding: 16px; text-align: center;">
-          <div style="color: white; font-size: 14px; margin-bottom: 4px;">��� Contacts Left</div>
-          <div style="color: white; font-size: 24px; font-weight: bold; margin-bottom: 4px;">${contacts.length - currentContactIndex.value - 1}</div>
+          <div style="color: white; font-size: 14px; margin-bottom: 8px;">��� Contacts Left</div>
+          <div style="color: white; font-size: 24px; font-weight: bold; margin-bottom: 8px;">${contacts.length - currentContactIndex.value - 1}</div>
         </div>
         <div style="background-color: rgb(55, 65, 81); border-radius: 8px; padding: 16px; text-align: center;">
-          <div style="color: white; font-size: 14px; margin-bottom: 4px;">📞 Total Calls</div>
-          <div style="color: white; font-size: 24px; font-weight: bold; margin-bottom: 4px;">${totalCalls.value}</div>
+          <div style="color: white; font-size: 14px; margin-bottom: 8px;">📞 Total Calls</div>
+          <div style="color: white; font-size: 24px; font-weight: bold; margin-bottom: 8px;">${totalCalls.value}</div>
         </div>
         <div style="background-color: rgb(55, 65, 81); border-radius: 8px; padding: 16px; text-align: center;">
-          <div style="color: white; font-size: 14px; margin-bottom: 4px;">✅ Connected</div>
-          <div style="color: white; font-size: 24px; font-weight: bold; margin-bottom: 4px;">${connectedCalls.value}</div>
+          <div style="color: white; font-size: 14px; margin-bottom: 8px;">✅ Connected</div>
+          <div style="color: white; font-size: 24px; font-weight: bold; margin-bottom: 8px;">${connectedCalls.value}</div>
         </div>
         <div style="background-color: rgb(55, 65, 81); border-radius: 8px; padding: 16px; text-align: center;">
           <div style="color: white; font-size: 18px; margin-bottom: 8px;">⏰</div>
-          <div style="color: white; font-size: 24px; font-weight: bold; margin-bottom: 4px;">${queueTime.value}s</div>
+          <div style="color: white; font-size: 24px; font-weight: bold; margin-bottom: 8px;">${queueTime.value}s</div>
           <div style="color: white; font-size: 11px; line-height: 1.2;">Queue Duration</div>
         </div>
         <div style="background-color: rgb(55, 65, 81); border-radius: 8px; padding: 16px; text-align: center;">
           <div style="color: white; font-size: 18px; margin-bottom: 8px;">💬</div>
-          <div style="color: white; font-size: 24px; font-weight: bold; margin-bottom: 4px;">${connectedCalls.value}</div>
+          <div style="color: white; font-size: 24px; font-weight: bold; margin-bottom: 8px;">${connectedCalls.value}</div>
           <div style="color: white; font-size: 11px; line-height: 1.2;">Connected Calls</div>
         </div>
         <div style="background-color: rgb(55, 65, 81); border-radius: 8px; padding: 16px; text-align: center;">
           <div style="color: white; font-size: 18px; margin-bottom: 8px;">⏭️</div>
-          <div style="color: white; font-size: 24px; font-weight: bold; margin-bottom: 4px;">${skippedNumbers.value}</div>
+          <div style="color: white; font-size: 24px; font-weight: bold; margin-bottom: 8px;">${skippedNumbers.value}</div>
           <div style="color: white; font-size: 11px; line-height: 1.2;">Skipped Numbers</div>
         </div>
       </div>
