@@ -443,7 +443,8 @@ const nextContactName = computed(() => {
 })
 
 const shouldCompleteQueue = computed(() => {
-  return callLog.value.length >= 3 || currentContactIndex.value >= 2
+  // Show "Queue Completed" button when on 3rd contact (index 2) or have 3+ calls
+  return currentContactIndex.value >= 2 || callLog.value.length >= 3
 })
 
 const isLastContact = computed(() => {
@@ -1727,7 +1728,7 @@ const showTermsFromAccount = () => {
 
 const handleGoogleSignupFromAccount = () => {
   closeAccountCreation()
-  addAIMessage('��� Great choice! Setting up your Google account integration...')
+  addAIMessage('🚀 Great choice! Setting up your Google account integration...')
   setTimeout(() => {
     isSignedIn.value = true
     showActionButtons.value = true
