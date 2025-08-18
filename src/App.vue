@@ -531,7 +531,8 @@ const addSeparatorMessage = (contactName: string): void => {
 const isReadyToUploadMessage = (message: Message, index: number): boolean => {
   if (message.type !== 'ai') return false
   const content = Array.isArray(message.content) ? message.content[0] : message.content
-  return content.includes('Ready to upload your contact file and start dialing')
+  return content.includes('Ready to upload your contact file and start dialing') ||
+         content.includes('Ready to load a new file. Please upload your contact list')
 }
 
 // Helper function to determine which messages should be wide (for file upload)
