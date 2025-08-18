@@ -1322,6 +1322,11 @@ onMounted(() => {
   ;(window as any).handleExportFile = handleExportFile
 })
 
+// Clean up global reference when component is unmounted
+onUnmounted(() => {
+  delete (window as any).handleExportFile
+})
+
 const addSessionSummaryToChat = (): void => {
   // Create session summary content as HTML
   const summaryHTML = `
