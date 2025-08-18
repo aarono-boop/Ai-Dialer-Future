@@ -985,7 +985,7 @@ const sendMessage = (message: string): void => {
       ])
     } else if (lowerMessage.includes('jenn')) {
       addAIMessage([
-        'Found Jenn! �������',
+        'Found Jenn! �����',
         'I found <strong>Jenn Peterson</strong> in your contacts.',
         'She has an <strong>89% pickup rate</strong> and is most likely available now.',
         'Ready to call Jenn?'
@@ -1342,7 +1342,7 @@ const addSessionSummaryToChat = (): void => {
           <div style="color: white; font-size: 11px; line-height: 1.2;">Queue Duration</div>
         </div>
         <div style="background-color: rgb(55, 65, 81); border-radius: 8px; padding: 16px; text-align: center;">
-          <div style="color: white; font-size: 24px; font-weight: bold; margin-bottom: 8px;">💬 <i class="pi pi-comments"></i> ${connectedCalls.value}</div>
+          <div style="color: white; font-size: 24px; font-weight: bold; margin-bottom: 8px;"><i class="pi pi-comments"></i> ${connectedCalls.value}</div>
           <div style="color: white; font-size: 11px; line-height: 1.2;">Connected Calls</div>
         </div>
         <div style="background-color: rgb(55, 65, 81); border-radius: 8px; padding: 16px; text-align: center;">
