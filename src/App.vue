@@ -1308,15 +1308,15 @@ const addSessionSummaryToChat = (): void => {
       <div style="display: grid; grid-template-columns: repeat(6, 1fr); gap: 8px; margin-bottom: 32px;">
         <div style="background-color: rgb(55, 65, 81); border-radius: 8px; padding: 16px; text-align: center;">
           <div style="color: rgb(96, 165, 250); font-size: 14px; margin-bottom: 4px;">��� Contacts Left</div>
-          <div style="color: white; font-size: 20px; font-weight: bold;">${contacts.length - currentContactIndex.value - 1}</div>
+          <div style="color: white; font-size: 24px; font-weight: bold; margin-bottom: 4px;">${contacts.length - currentContactIndex.value - 1}</div>
         </div>
         <div style="background-color: rgb(55, 65, 81); border-radius: 8px; padding: 16px; text-align: center;">
           <div style="color: rgb(34, 197, 94); font-size: 14px; margin-bottom: 4px;">📞 Total Calls</div>
-          <div style="color: white; font-size: 20px; font-weight: bold;">${totalCalls.value}</div>
+          <div style="color: white; font-size: 24px; font-weight: bold; margin-bottom: 4px;">${totalCalls.value}</div>
         </div>
         <div style="background-color: rgb(55, 65, 81); border-radius: 8px; padding: 16px; text-align: center;">
           <div style="color: rgb(34, 197, 94); font-size: 14px; margin-bottom: 4px;">✅ Connected</div>
-          <div style="color: white; font-size: 20px; font-weight: bold;">${connectedCalls.value}</div>
+          <div style="color: white; font-size: 24px; font-weight: bold; margin-bottom: 4px;">${connectedCalls.value}</div>
         </div>
         <div style="background-color: rgb(55, 65, 81); border-radius: 8px; padding: 16px; text-align: center;">
           <div style="color: white; font-size: 18px; margin-bottom: 8px;">⏰</div>
