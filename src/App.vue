@@ -930,7 +930,7 @@ const sendMessage = (message: string): void => {
       ])
     } else if (lowerMessage.includes('who i should call now') || lowerMessage.includes('who should i call')) {
       addAIMessage([
-        '��� Based on your contact data and current time analysis:',
+        '🎯 Based on your contact data and current time analysis:',
         '<strong>Top 3 prospects to call right now:</strong>',
         '1. Sarah Johnson - 92% connect probability (last spoke 3 days ago)',
         '2. Mike Chen - 89% connect probability (opened your email yesterday)',
@@ -1326,11 +1326,11 @@ const addSessionSummaryToChat = (): void => {
       <!-- Statistics Cards - 6 cards with icon+number above labels -->
       <div style="display: grid; grid-template-columns: repeat(6, 1fr); gap: 8px; margin-bottom: 32px;">
         <div style="background-color: rgb(55, 65, 81); border-radius: 8px; padding: 16px; text-align: center;">
-          <div style="color: white; font-size: 14px; margin-bottom: 8px;">��� Contacts Left to Call</div>
+          <div style="color: white; font-size: 24px; font-weight: bold; margin-bottom: 8px;">��� Contacts Left to Call</div>
           <div style="color: white; font-size: 24px; font-weight: bold; margin-bottom: 8px;">${contacts.length - currentContactIndex.value - 1}</div>
         </div>
         <div style="background-color: rgb(55, 65, 81); border-radius: 8px; padding: 16px; text-align: center;">
-          <div style="color: white; font-size: 14px; margin-bottom: 8px;">📞 Contacts Dialed</div>
+          <div style="color: white; font-size: 24px; font-weight: bold; margin-bottom: 8px;">📞 Contacts Dialed</div>
           <div style="color: white; font-size: 24px; font-weight: bold; margin-bottom: 8px;">${totalCalls.value}</div>
         </div>
         <div style="background-color: rgb(55, 65, 81); border-radius: 8px; padding: 16px; text-align: center;">
@@ -1368,10 +1368,10 @@ const addSessionSummaryToChat = (): void => {
           <!-- Table Rows -->
           ${callLog.value.map(call => `
             <div style="display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; padding: 16px; border-bottom: 1px solid rgb(75, 85, 99);">
-              <div style="color: white; font-size: 14px;">${call.contact}</div>
-              <div style="color: white; font-size: 14px;">${call.duration}</div>
-              <div style="color: white; font-size: 14px;">${call.disposition}</div>
-              <div style="color: white; font-size: 14px;">${call.notes || ''}</div>
+              <div style="color: white; font-size: 24px; font-weight: bold;">${call.contact}</div>
+              <div style="color: white; font-size: 24px; font-weight: bold;">${call.duration}</div>
+              <div style="color: white; font-size: 24px; font-weight: bold;">${call.disposition}</div>
+              <div style="color: white; font-size: 24px; font-weight: bold;">${call.notes || ''}</div>
             </div>
           `).join('')}
         </div>
@@ -1383,10 +1383,10 @@ const addSessionSummaryToChat = (): void => {
           <div style="color: white; font-size: 24px;">📈</div>
           <div style="flex: 1;">
             <h4 style="color: white; font-size: 16px; font-weight: 600; margin-bottom: 8px;">Your Calling Results</h4>
-            <p style="color: rgb(209, 213, 219); font-size: 14px; line-height: 1.5; margin-bottom: 16px;">
+            <p style="color: rgb(209, 213, 219); font-size: 24px; font-weight: bold; line-height: 1.5; margin-bottom: 16px;">
               Great work! Your queue is paused. While you were calling, I enriched your contact file data with Connect Scores, call outcomes, and notes. You can export your enriched results now or keep calling to build even more value.
             </p>
-            <button style="background-color: rgb(59, 130, 246); color: white; border: none; border-radius: 6px; padding: 8px 16px; font-size: 14px; font-weight: 500; cursor: pointer; display: inline-flex; align-items: center; gap: 8px;" onclick="handleExportFile()">
+            <button style="background-color: rgb(59, 130, 246); color: white; border: none; border-radius: 6px; padding: 8px 16px; font-size: 24px; font-weight: bold; font-weight: 500; cursor: pointer; display: inline-flex; align-items: center; gap: 8px;" onclick="handleExportFile()">
               📁 Export Enriched File
             </button>
           </div>
