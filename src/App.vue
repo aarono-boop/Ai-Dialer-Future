@@ -1191,7 +1191,12 @@ const simulateCall = (): void => {
   }, 1000)
 
   // Simulate ringing for 3-5 seconds
-  setTimeout(() => {
+  callSimulationTimeout = setTimeout(() => {
+    // Check if queue is still active (not paused)
+    if (queuePaused.value) {
+      return // Don't proceed if queue is paused
+    }
+
     // Contact answers
     callState.value = 'connected'
     callDuration.value = 0
