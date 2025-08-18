@@ -56,6 +56,17 @@ const handleGoogleSignup = () => {
 </script>
 
 <style scoped>
+/* Background pattern */
+.account-background {
+  background-color: #242733;
+  background-image:
+    /* A vignette to create the radial gradient effect for the dots */
+    radial-gradient(ellipse at center, transparent 0%, rgba(36, 39, 51, 0.8) 80%),
+    /* The dot pattern */
+    radial-gradient(circle, #5D5F69 1px, transparent 1px);
+  background-size: 100% 100%, 16px 16px;
+}
+
 /* Custom styles for dark theme */
 :deep(.p-password-input) {
   background-color: rgb(15 23 42) !important;
