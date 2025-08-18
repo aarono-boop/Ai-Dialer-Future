@@ -1,5 +1,5 @@
 <template>
-  <div v-if="visible" class="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 z-50" @click="handleOverlayClick">
+  <div v-if="visible" class="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 z-50 terms-background" @click="handleOverlayClick">
     <div class="bg-slate-800 rounded-2xl p-6 max-w-md w-full relative shadow-2xl border border-slate-700" @click.stop>
       <!-- Header -->
       <div class="flex items-center justify-between mb-6">
