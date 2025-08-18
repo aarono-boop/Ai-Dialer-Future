@@ -1298,10 +1298,10 @@ const addSessionSummaryToChat = (): void => {
   // Create session summary content as HTML
   const summaryHTML = `
     <div style="background-color: rgb(31, 41, 55); border-radius: 12px; padding: 24px; margin: 12px 0;">
-      <h3 style="color: white; font-size: 18px; font-weight: 600; margin-bottom: 16px;">📊 Session Summary</h3>
+      <h2 style="color: white; font-size: 24px; font-weight: 600; margin-bottom: 24px;">Queue Paused!</h2>
 
-      <!-- Statistics Grid -->
-      <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 24px;">
+      <!-- Statistics Grid - 6 cards in 2 rows -->
+      <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 32px;">
         <div style="background-color: rgb(17, 24, 39); border: 1px solid rgb(75, 85, 99); border-radius: 8px; padding: 16px; text-align: center;">
           <div style="color: rgb(96, 165, 250); font-size: 14px; margin-bottom: 4px;">��� Contacts Left</div>
           <div style="color: white; font-size: 20px; font-weight: bold;">${contacts.length - currentContactIndex.value - 1}</div>
