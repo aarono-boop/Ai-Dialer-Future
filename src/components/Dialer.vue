@@ -180,7 +180,7 @@
           class="w-full text-white py-3 px-4 rounded-lg flex items-center justify-center gap-2 transition-colors"
         >
           <i :class="shouldCompleteQueue ? 'pi pi-check' : 'pi pi-arrow-right'"></i>
-          {{ shouldCompleteQueue ? 'Complete Queue' : `Next: ${nextContactName}` }}
+          {{ shouldCompleteQueue ? 'Queue Completed' : `Next: ${nextContactName}` }}
         </button>
       </div>
     </div>
