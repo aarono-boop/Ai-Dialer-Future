@@ -762,18 +762,18 @@ const simulateFileUpload = () => {
         </div>
         <br>
         <table style="width: 100%; border-collapse: collapse;">
-          <tr><td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top;">Home Phone:</td><td style="padding: 4px 0;">(555) 123-4567</td></tr>
-          <tr><td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top;">Connect Score:</td><td style="padding: 4px 0;">High</td></tr>
-          <tr><td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top;">Mobile Phone:</td><td style="padding: 4px 0;">(555) 123-4568</td></tr>
-          <tr><td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top;">Connect Score:</td><td style="padding: 4px 0;">Medium</td></tr>
-          <tr><td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top;">Email:</td><td style="padding: 4px 0;">sarah.johnson@techcorp.com</td></tr>
-          <tr><td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top;">Address:</td><td style="padding: 4px 0;">1234 Main St, Dallas, TX</td></tr>
-          <tr><td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top;">Local Time:</td><td style="padding: 4px 0;">2:45 PM CST</td></tr>
-          <tr><td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top;">Website:</td><td style="padding: 4px 0;">techcorp.com</td></tr>
-          <tr><td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top;">LinkedIn Profile:</td><td style="padding: 4px 0;">linkedin.com/in/sarahjohnson</td></tr>
-          <tr><td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top;">Industry:</td><td style="padding: 4px 0;">Technology</td></tr>
-          <tr><td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top;">Company Size:</td><td style="padding: 4px 0;">250-500 employees</td></tr>
-          <tr><td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top;">Lead Source:</td><td style="padding: 4px 0;">Webinar Registration</td></tr>
+          <tr><td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af;">Home Phone:</td><td style="padding: 4px 0;">(555) 123-4567</td></tr>
+          <tr><td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af;">Connect Score:</td><td style="padding: 4px 0;">High</td></tr>
+          <tr><td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af;">Mobile Phone:</td><td style="padding: 4px 0;">(555) 123-4568</td></tr>
+          <tr><td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af;">Connect Score:</td><td style="padding: 4px 0;">Medium</td></tr>
+          <tr><td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af;">Email:</td><td style="padding: 4px 0;">sarah.johnson@techcorp.com</td></tr>
+          <tr><td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af;">Address:</td><td style="padding: 4px 0;">1234 Main St, Dallas, TX</td></tr>
+          <tr><td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af;">Local Time:</td><td style="padding: 4px 0;">2:45 PM CST</td></tr>
+          <tr><td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af;">Website:</td><td style="padding: 4px 0;">techcorp.com</td></tr>
+          <tr><td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af;">LinkedIn Profile:</td><td style="padding: 4px 0;">linkedin.com/in/sarahjohnson</td></tr>
+          <tr><td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af;">Industry:</td><td style="padding: 4px 0;">Technology</td></tr>
+          <tr><td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af;">Company Size:</td><td style="padding: 4px 0;">250-500 employees</td></tr>
+          <tr><td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af;">Lead Source:</td><td style="padding: 4px 0;">Webinar Registration</td></tr>
         </table>
       </div>`
 
@@ -819,18 +819,18 @@ const onFileSelect = (file: File): void => {
         </div>
         <br>
         <table style="width: 100%; border-collapse: collapse;">
-          <tr><td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top;">Home Phone:</td><td style="padding: 4px 0;">(555) 123-4567</td></tr>
-          <tr><td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top;">Connect Score:</td><td style="padding: 4px 0;">High</td></tr>
-          <tr><td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top;">Mobile Phone:</td><td style="padding: 4px 0;">(555) 123-4568</td></tr>
-          <tr><td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top;">Connect Score:</td><td style="padding: 4px 0;">Medium</td></tr>
-          <tr><td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top;">Email:</td><td style="padding: 4px 0;">sarah.johnson@techcorp.com</td></tr>
-          <tr><td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top;">Address:</td><td style="padding: 4px 0;">1234 Main St, Dallas, TX</td></tr>
-          <tr><td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top;">Local Time:</td><td style="padding: 4px 0;">2:45 PM CST</td></tr>
-          <tr><td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top;">Website:</td><td style="padding: 4px 0;">techcorp.com</td></tr>
-          <tr><td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top;">LinkedIn Profile:</td><td style="padding: 4px 0;">linkedin.com/in/sarahjohnson</td></tr>
-          <tr><td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top;">Industry:</td><td style="padding: 4px 0;">Technology</td></tr>
-          <tr><td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top;">Company Size:</td><td style="padding: 4px 0;">250-500 employees</td></tr>
-          <tr><td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top;">Lead Source:</td><td style="padding: 4px 0;">Webinar Registration</td></tr>
+          <tr><td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af;">Home Phone:</td><td style="padding: 4px 0;">(555) 123-4567</td></tr>
+          <tr><td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af;">Connect Score:</td><td style="padding: 4px 0;">High</td></tr>
+          <tr><td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af;">Mobile Phone:</td><td style="padding: 4px 0;">(555) 123-4568</td></tr>
+          <tr><td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af;">Connect Score:</td><td style="padding: 4px 0;">Medium</td></tr>
+          <tr><td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af;">Email:</td><td style="padding: 4px 0;">sarah.johnson@techcorp.com</td></tr>
+          <tr><td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af;">Address:</td><td style="padding: 4px 0;">1234 Main St, Dallas, TX</td></tr>
+          <tr><td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af;">Local Time:</td><td style="padding: 4px 0;">2:45 PM CST</td></tr>
+          <tr><td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af;">Website:</td><td style="padding: 4px 0;">techcorp.com</td></tr>
+          <tr><td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af;">LinkedIn Profile:</td><td style="padding: 4px 0;">linkedin.com/in/sarahjohnson</td></tr>
+          <tr><td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af;">Industry:</td><td style="padding: 4px 0;">Technology</td></tr>
+          <tr><td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af;">Company Size:</td><td style="padding: 4px 0;">250-500 employees</td></tr>
+          <tr><td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af;">Lead Source:</td><td style="padding: 4px 0;">Webinar Registration</td></tr>
         </table>
       </div>`
 
@@ -1777,18 +1777,18 @@ const handleActionButton = (action: string): void => {
         </div>
         <br>
         <table style="width: 100%; border-collapse: collapse;">
-          <tr><td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top;">Home Phone:</td><td style="padding: 4px 0;">(555) 123-4567</td></tr>
-          <tr><td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top;">Connect Score:</td><td style="padding: 4px 0;">High</td></tr>
-          <tr><td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top;">Mobile Phone:</td><td style="padding: 4px 0;">(555) 123-4568</td></tr>
-          <tr><td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top;">Connect Score:</td><td style="padding: 4px 0;">Medium</td></tr>
-          <tr><td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top;">Email:</td><td style="padding: 4px 0;">sarah.johnson@techcorp.com</td></tr>
-          <tr><td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top;">Address:</td><td style="padding: 4px 0;">1234 Main St, Dallas, TX</td></tr>
-          <tr><td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top;">Local Time:</td><td style="padding: 4px 0;">2:45 PM CST</td></tr>
-          <tr><td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top;">Website:</td><td style="padding: 4px 0;">techcorp.com</td></tr>
-          <tr><td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top;">LinkedIn Profile:</td><td style="padding: 4px 0;">linkedin.com/in/sarahjohnson</td></tr>
-          <tr><td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top;">Industry:</td><td style="padding: 4px 0;">Technology</td></tr>
-          <tr><td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top;">Company Size:</td><td style="padding: 4px 0;">250-500 employees</td></tr>
-          <tr><td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top;">Lead Source:</td><td style="padding: 4px 0;">Webinar Registration</td></tr>
+          <tr><td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af;">Home Phone:</td><td style="padding: 4px 0;">(555) 123-4567</td></tr>
+          <tr><td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af;">Connect Score:</td><td style="padding: 4px 0;">High</td></tr>
+          <tr><td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af;">Mobile Phone:</td><td style="padding: 4px 0;">(555) 123-4568</td></tr>
+          <tr><td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af;">Connect Score:</td><td style="padding: 4px 0;">Medium</td></tr>
+          <tr><td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af;">Email:</td><td style="padding: 4px 0;">sarah.johnson@techcorp.com</td></tr>
+          <tr><td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af;">Address:</td><td style="padding: 4px 0;">1234 Main St, Dallas, TX</td></tr>
+          <tr><td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af;">Local Time:</td><td style="padding: 4px 0;">2:45 PM CST</td></tr>
+          <tr><td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af;">Website:</td><td style="padding: 4px 0;">techcorp.com</td></tr>
+          <tr><td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af;">LinkedIn Profile:</td><td style="padding: 4px 0;">linkedin.com/in/sarahjohnson</td></tr>
+          <tr><td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af;">Industry:</td><td style="padding: 4px 0;">Technology</td></tr>
+          <tr><td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af;">Company Size:</td><td style="padding: 4px 0;">250-500 employees</td></tr>
+          <tr><td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af;">Lead Source:</td><td style="padding: 4px 0;">Webinar Registration</td></tr>
         </table>
       </div>`
     
