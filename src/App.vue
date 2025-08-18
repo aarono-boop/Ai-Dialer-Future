@@ -707,9 +707,8 @@ const showSignupFromLogin = (): void => {
 }
 
 const handleGoogleSignupFromSignup = (): void => {
-  currentPage.value = 'main'
-  isSignedIn.value = true
-  isReturningUser.value = false // This is a new user
+  // Show terms modal for new Google signup users
+  showTermsModal.value = true
   showActionButtons.value = true
   addAIMessage('���� Welcome to ARKON! Your account has been created successfully. Let\'s start your first smart calling session! What are you trying to accomplish?')
 
