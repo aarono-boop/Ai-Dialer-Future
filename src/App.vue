@@ -944,7 +944,7 @@ const sendMessage = (message: string): void => {
   if (waitingForTryAgainResponse.value) {
     waitingForTryAgainResponse.value = false
     setTimeout(() => {
-      addAIMessage('I understand. Let\'s try uploading your contact file again.')
+      addAIMessage('I understand. Let\'s try uploading your contact file again.<br><br>Ready to upload your contact file and start dialing?')
       // Reset states to show file upload
       hasUploadedFile.value = false
       showFileUploadForReturningUser.value = true
