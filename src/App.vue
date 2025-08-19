@@ -1387,30 +1387,35 @@ const addSessionSummaryToChat = (isCompleted: boolean = false): void => {
 
       <!-- Call Log Section -->
       <div style="margin-bottom: 24px;">
-        <h3 style="color: white; font-size: 18px; font-weight: 600; margin-bottom: 16px;"><i class="pi pi-list" style="margin-right: 8px;"></i>Call Log</h3>
-        <div style="background-color: rgb(55, 65, 81); border-radius: 8px; overflow: hidden;">
-          <!-- Table Header -->
-          <div style="display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; padding: 16px; border-bottom: 1px solid rgb(75, 85, 99); background-color: rgb(45, 55, 72);">
-            <div style="color: white; font-size: 12px; font-weight: 600; text-transform: uppercase;">CONTACT</div>
-            <div style="color: white; font-size: 12px; font-weight: 600; text-transform: uppercase;">DURATION</div>
-            <div style="color: white; font-size: 12px; font-weight: 600; text-transform: uppercase;">DISPOSITION</div>
-            <div style="color: white; font-size: 12px; font-weight: 600; text-transform: uppercase;">NOTES</div>
-          </div>
-          <!-- Table Rows -->
-          ${callLog.value.map(call => `
-            <div style="display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; padding: 16px; border-bottom: 1px solid rgb(75, 85, 99);">
-              <div style="color: white; font-size: 14px; font-weight: normal;">${call.contact}</div>
-              <div style="color: white; font-size: 14px; font-weight: normal;">${call.duration}</div>
-              <div style="color: white; font-size: 14px; font-weight: normal;">${call.disposition}</div>
-              <div style="color: white; font-size: 14px; font-weight: normal;">${call.notes || ''}</div>
+        <div onclick="toggleCallLog()" style="cursor: pointer; display: flex; align-items: center; justify-content: space-between; color: white; font-size: 18px; font-weight: 600; margin-bottom: 16px;">
+          <span><i class="pi pi-list" style="margin-right: 8px;"></i>Call Log</span>
+          <i id="callLogChevron" class="pi pi-chevron-right" style="transition: transform 0.2s ease;"></i>
+        </div>
+        <div id="callLogContent" style="display: none;">
+          <div style="background-color: rgb(55, 65, 81); border-radius: 8px; overflow: hidden;">
+            <!-- Table Header -->
+            <div style="display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; padding: 16px; border-bottom: 1px solid rgb(75, 85, 99); background-color: rgb(45, 55, 72);">
+              <div style="color: white; font-size: 12px; font-weight: 600; text-transform: uppercase;">CONTACT</div>
+              <div style="color: white; font-size: 12px; font-weight: 600; text-transform: uppercase;">DURATION</div>
+              <div style="color: white; font-size: 12px; font-weight: 600; text-transform: uppercase;">DISPOSITION</div>
+              <div style="color: white; font-size: 12px; font-weight: 600; text-transform: uppercase;">NOTES</div>
             </div>
-          `).join('')}
+            <!-- Table Rows -->
+            ${callLog.value.map(call => `
+              <div style="display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; padding: 16px; border-bottom: 1px solid rgb(75, 85, 99);">
+                <div style="color: white; font-size: 14px; font-weight: normal;">${call.contact}</div>
+                <div style="color: white; font-size: 14px; font-weight: normal;">${call.duration}</div>
+                <div style="color: white; font-size: 14px; font-weight: normal;">${call.disposition}</div>
+                <div style="color: white; font-size: 14px; font-weight: normal;">${call.notes || ''}</div>
+              </div>
+            `).join('')}
+          </div>
         </div>
       </div>
 
       <!-- Results & Next Steps Section -->
       <div style="margin-bottom: 24px;">
-        <h3 style="color: white; font-size: 18px; font-weight: 600; margin-bottom: 16px;">${isCompleted ? 'Next Steps' : 'Your Calling Results'}</h3>
+        <h3 style="color: white; font-size: 18px; font-weight: 600; margin-bottom: 16px;">${isCompleted ? '<i class="pi pi-check-circle" style="margin-right: 8px;"></i>Next Steps' : 'Your Calling Results'}</h3>
         <div style="background-color: rgb(55, 65, 81); border-radius: 8px; padding: 20px;">
           <div style="color: rgb(209, 213, 219); font-size: 14px; font-weight: normal; line-height: 1.5;">
             ${isCompleted ?
