@@ -597,6 +597,7 @@ const handleLogout = () => {
   dispositionSet.value = false
   queuePaused.value = false
   queueCompletionReady.value = false
+  waitingForTryAgainResponse.value = false
 
   // Clear call log
   callLog.value = []
@@ -1015,7 +1016,7 @@ const sendMessage = (message: string): void => {
       addAIMessage([
         '✨ I\'d love to show you ARKON in action!',
         'Let me set up a personalized demo where you can see:',
-        '• Live contact scoring and prioritization',
+        '��� Live contact scoring and prioritization',
         '• Real-time dialing with connect predictions',
         '�� Smart call disposition and follow-up automation',
         'What\'s your preferred time? I can schedule something for today or tomorrow.'
