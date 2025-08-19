@@ -1373,10 +1373,10 @@ const addSessionSummaryToChat = (isCompleted: boolean = false): void => {
   const title = isCompleted ? 'Queue Completed!' : 'Queue Paused!'
   const summaryHTML = `
     <div style="background-color: rgb(31, 41, 55); border-radius: 12px; padding: 16px; margin: 12px 0;">
-      <h2 style="color: white; font-size: 24px; font-weight: 600; margin-bottom: 20px;">${title}</h2>
+      <h2 style="color: white; font-size: 24px; font-weight: 600; margin-bottom: 32px;">${title}</h2>
 
       <!-- Results & Next Steps Section -->
-      <div style="margin-bottom: 20px;">
+      <div style="margin-bottom: 32px;">
         <h3 style="color: white; font-size: 18px; font-weight: 600; margin-bottom: 16px;">${isCompleted ? '<i class="pi pi-check-circle" style="margin-right: 8px;"></i>Next Steps' : 'Your Calling Results'}</h3>
         <div style="background-color: rgb(55, 65, 81); border-radius: 8px; padding: 20px;">
           <div style="color: rgb(209, 213, 219); font-size: 14px; font-weight: normal; line-height: 1.5;">
@@ -1400,7 +1400,7 @@ const addSessionSummaryToChat = (isCompleted: boolean = false): void => {
       </div>
 
       <!-- Call Log Section -->
-      <div>
+      <div style="margin-top: 8px;">
         <div onclick="toggleCallLog()" style="cursor: pointer; display: flex; align-items: center; justify-content: space-between; color: white; font-size: 18px; font-weight: 600; margin-bottom: 16px;">
           <span><i class="pi pi-list" style="margin-right: 8px;"></i>Call Log</span>
           <i id="callLogChevron" class="pi pi-chevron-right" style="transition: transform 0.2s ease;"></i>
