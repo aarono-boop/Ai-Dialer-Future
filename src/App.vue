@@ -1141,8 +1141,8 @@ const handleTryAgain = (): void => {
   // Add AI response after a delay
   setTimeout(() => {
     addAIMessage('What didn\'t look right previously that I can fix?')
-    // Reset the file upload state to show the upload area again
-    hasUploadedFile.value = false
+    // Set flag to wait for user response
+    waitingForTryAgainResponse.value = true
   }, 1000)
 }
 
