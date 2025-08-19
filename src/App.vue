@@ -1803,7 +1803,7 @@ const handleActionButton = (action: string): void => {
         response = [
           'Outstanding! Closing live sales is where the magic happens. We\'ll get you connected with your hottest prospects.',
           '',
-          'Your trial is ready! I\'ve analyzed your <strong>156 contacts</strong> and prioritized those ready to buy with Connect Score.',
+          'Your trial is ready! I\'ve analyzed your <strong style="color: #fbbf24;">156 contacts</strong> and prioritized those ready to buy with Connect Score.',
           'Here\'s a preview of your highest-intent prospects. Does this look correct?',
           sampleContacts
         ]
@@ -1812,7 +1812,7 @@ const handleActionButton = (action: string): void => {
         response = [
           'Perfect! Creating opportunities is all about finding the right prospects at the right time. We\'ll build your pipeline.',
           '',
-          'Your trial is ready! I\'ve analyzed your <strong>156 contacts</strong> and identified potential opportunities with Connect Score.',
+          'Your trial is ready! I\'ve analyzed your <strong style="color: #fbbf24;">156 contacts</strong> and identified potential opportunities with Connect Score.',
           'Here\'s a preview of your warmest leads. Does this look correct?',
           sampleContacts
         ]
@@ -1821,7 +1821,7 @@ const handleActionButton = (action: string): void => {
         response = [
           'Smart choice! Follow-ups are where deals are won. We\'ll help you reconnect with precision timing.',
           '',
-          'Your trial is ready! I\'ve analyzed your <strong>156 contacts</strong> and optimized follow-up timing with Connect Score.',
+          'Your trial is ready! I\'ve analyzed your <strong style="color: #fbbf24;">156 contacts</strong> and optimized follow-up timing with Connect Score.',
           'Here\'s a preview of your follow-up targets. Does this look correct?',
           sampleContacts
         ]
@@ -1830,7 +1830,7 @@ const handleActionButton = (action: string): void => {
         response = [
           'Brilliant! Live transfers maximize your team\'s efficiency. We\'ll connect you with prospects ready to talk.',
           '',
-          'Your trial is ready! I\'ve analyzed your <strong>156 contacts</strong> and identified transfer-ready prospects with Connect Score.',
+          'Your trial is ready! I\'ve analyzed your <strong style="color: #fbbf24;">156 contacts</strong> and identified transfer-ready prospects with Connect Score.',
           'Here\'s a preview of your transfer candidates. Does this look correct?',
           sampleContacts
         ]
@@ -1839,7 +1839,7 @@ const handleActionButton = (action: string): void => {
         response = [
           'Fantastic! Live conversations are the heart of great sales. We\'ll get you talking to the right people.',
           '',
-          'Your trial is ready! I\'ve analyzed your <strong>156 contacts</strong> and found conversation-ready prospects with Connect Score.',
+          'Your trial is ready! I\'ve analyzed your <strong style="color: #fbbf24;">156 contacts</strong> and found conversation-ready prospects with Connect Score.',
           'Here\'s a preview of your best conversation targets. Does this look correct?',
           sampleContacts
         ]
