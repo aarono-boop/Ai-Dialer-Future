@@ -7,6 +7,7 @@
       ref="headerRef"
       :isSignedIn="isSignedIn"
       @login="handleLogin"
+      @logout="handleLogout"
       @switch-to-vulcan="handleSwitchToVulcan"
       @show-product="showProductPage"
       @go-home="goToMainApp"
