@@ -1375,42 +1375,6 @@ const addSessionSummaryToChat = (isCompleted: boolean = false): void => {
     <div style="background-color: rgb(31, 41, 55); border-radius: 12px; padding: 16px; margin: 12px 0;">
       <h2 style="color: white; font-size: 24px; font-weight: 600; margin-bottom: 20px;">${title}</h2>
 
-      <!-- Statistics Cards -->
-      ${(() => {
-        const contactsLeft = contacts.length - currentContactIndex.value - 1;
-        const showContactsLeft = !isCompleted && contactsLeft > 0;
-        const gridCols = showContactsLeft ? 6 : 5;
-
-        return `
-        <div style="display: grid; grid-template-columns: repeat(${gridCols}, 1fr); gap: 8px; margin-bottom: 24px;">
-          ${showContactsLeft ? `
-          <div style="background-color: rgb(55, 65, 81); border-radius: 8px; padding: 16px; text-align: center;">
-            <div style="color: white; font-size: 24px; font-weight: bold; margin-bottom: 8px;"><i class="pi pi-users"></i> ${contactsLeft}</div>
-            <div style="color: white; font-size: 11px; line-height: 1.2;">Contacts Left to Call</div>
-          </div>` : ''}
-          <div style="background-color: rgb(55, 65, 81); border-radius: 8px; padding: 16px; text-align: center;">
-            <div style="color: white; font-size: 24px; font-weight: bold; margin-bottom: 8px;"><i class="pi pi-users"></i> ${currentContactIndex.value + 1}</div>
-            <div style="color: white; font-size: 11px; line-height: 1.2;">Contacts Dialed</div>
-          </div>
-          <div style="background-color: rgb(55, 65, 81); border-radius: 8px; padding: 16px; text-align: center;">
-            <div style="color: white; font-size: 24px; font-weight: bold; margin-bottom: 8px;"><i class="pi pi-phone"></i> ${totalCalls.value}</div>
-            <div style="color: white; font-size: 11px; line-height: 1.2;">Total Calls Made</div>
-          </div>
-          <div style="background-color: rgb(55, 65, 81); border-radius: 8px; padding: 16px; text-align: center;">
-            <div style="color: white; font-size: 24px; font-weight: bold; margin-bottom: 8px;"><i class="pi pi-clock"></i> ${queueTime.value}s</div>
-            <div style="color: white; font-size: 11px; line-height: 1.2;">Queue Duration</div>
-          </div>
-          <div style="background-color: rgb(55, 65, 81); border-radius: 8px; padding: 16px; text-align: center;">
-            <div style="color: white; font-size: 24px; font-weight: bold; margin-bottom: 8px;"><i class="pi pi-comments"></i> ${connectedCalls.value}</div>
-            <div style="color: white; font-size: 11px; line-height: 1.2;">Connected Calls</div>
-          </div>
-          <div style="background-color: rgb(55, 65, 81); border-radius: 8px; padding: 16px; text-align: center;">
-            <div style="color: white; font-size: 24px; font-weight: bold; margin-bottom: 8px;"><i class="pi pi-step-forward"></i> ${skippedNumbers.value}</div>
-            <div style="color: white; font-size: 11px; line-height: 1.2;">Skipped Numbers</div>
-          </div>
-        </div>`;
-      })()}
-
       <!-- Results & Next Steps Section -->
       <div style="margin-bottom: 20px;">
         <h3 style="color: white; font-size: 18px; font-weight: 600; margin-bottom: 16px;">${isCompleted ? '<i class="pi pi-check-circle" style="margin-right: 8px;"></i>Next Steps' : 'Your Calling Results'}</h3>
@@ -1442,6 +1406,42 @@ const addSessionSummaryToChat = (isCompleted: boolean = false): void => {
           <i id="callLogChevron" class="pi pi-chevron-right" style="transition: transform 0.2s ease;"></i>
         </div>
         <div id="callLogContent" style="display: none;">
+          <!-- Statistics Cards -->
+          ${(() => {
+            const contactsLeft = contacts.length - currentContactIndex.value - 1;
+            const showContactsLeft = !isCompleted && contactsLeft > 0;
+            const gridCols = showContactsLeft ? 6 : 5;
+
+            return `
+            <div style="display: grid; grid-template-columns: repeat(${gridCols}, 1fr); gap: 8px; margin-bottom: 16px;">
+              ${showContactsLeft ? `
+              <div style="background-color: rgb(55, 65, 81); border-radius: 8px; padding: 16px; text-align: center;">
+                <div style="color: white; font-size: 24px; font-weight: bold; margin-bottom: 8px;"><i class="pi pi-users"></i> ${contactsLeft}</div>
+                <div style="color: white; font-size: 11px; line-height: 1.2;">Contacts Left to Call</div>
+              </div>` : ''}
+              <div style="background-color: rgb(55, 65, 81); border-radius: 8px; padding: 16px; text-align: center;">
+                <div style="color: white; font-size: 24px; font-weight: bold; margin-bottom: 8px;"><i class="pi pi-users"></i> ${currentContactIndex.value + 1}</div>
+                <div style="color: white; font-size: 11px; line-height: 1.2;">Contacts Dialed</div>
+              </div>
+              <div style="background-color: rgb(55, 65, 81); border-radius: 8px; padding: 16px; text-align: center;">
+                <div style="color: white; font-size: 24px; font-weight: bold; margin-bottom: 8px;"><i class="pi pi-phone"></i> ${totalCalls.value}</div>
+                <div style="color: white; font-size: 11px; line-height: 1.2;">Total Calls Made</div>
+              </div>
+              <div style="background-color: rgb(55, 65, 81); border-radius: 8px; padding: 16px; text-align: center;">
+                <div style="color: white; font-size: 24px; font-weight: bold; margin-bottom: 8px;"><i class="pi pi-clock"></i> ${queueTime.value}s</div>
+                <div style="color: white; font-size: 11px; line-height: 1.2;">Queue Duration</div>
+              </div>
+              <div style="background-color: rgb(55, 65, 81); border-radius: 8px; padding: 16px; text-align: center;">
+                <div style="color: white; font-size: 24px; font-weight: bold; margin-bottom: 8px;"><i class="pi pi-comments"></i> ${connectedCalls.value}</div>
+                <div style="color: white; font-size: 11px; line-height: 1.2;">Connected Calls</div>
+              </div>
+              <div style="background-color: rgb(55, 65, 81); border-radius: 8px; padding: 16px; text-align: center;">
+                <div style="color: white; font-size: 24px; font-weight: bold; margin-bottom: 8px;"><i class="pi pi-step-forward"></i> ${skippedNumbers.value}</div>
+                <div style="color: white; font-size: 11px; line-height: 1.2;">Skipped Numbers</div>
+              </div>
+            </div>`;
+          })()}
+
           <div style="background-color: rgb(55, 65, 81); border-radius: 8px; overflow: hidden;">
             <!-- Table Header -->
             <div style="display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; padding: 16px; border-bottom: 1px solid rgb(75, 85, 99); background-color: rgb(45, 55, 72);">
