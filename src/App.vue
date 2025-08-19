@@ -1367,7 +1367,7 @@ const handleMute = (muted: boolean): void => {
 }
 
 const handleHold = (onHold: boolean): void => {
-  addAIMessage(onHold ? '⏸️ Call placed on hold' : '▶️ Call resumed')
+  addAIMessage(onHold ? 'Call placed on hold' : 'Call resumed')
 }
 
 const handleKeypad = (): void => {
