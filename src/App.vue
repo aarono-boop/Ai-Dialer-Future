@@ -778,7 +778,7 @@ const simulateFileUpload = () => {
       </div>`
 
       addAIMessage([
-        'Perfect! I\'ve analyzed your contact file. Here\'s a preview of your data. Does this look correct?<br><br>',
+        'Perfect! I\'ve analyzed your contact file with <strong>156 contacts</strong>. Here\'s a preview of your data. Does this look correct?<br><br>',
         sampleContacts
       ])
       showContactPreviewButtons.value = true
@@ -835,7 +835,7 @@ const onFileSelect = (file: File): void => {
       </div>`
 
       addAIMessage([
-        'Perfect! I\'ve analyzed your contact file. Here\'s a preview of your data. Does this look correct?<br><br>',
+        'Perfect! I\'ve analyzed your contact file with <strong>156 contacts</strong>. Here\'s a preview of your data. Does this look correct?<br><br>',
         sampleContacts
       ])
       showContactPreviewButtons.value = true
@@ -1795,7 +1795,7 @@ const handleActionButton = (action: string): void => {
     switch (action) {
       case 'Set Appointments':
         response = [
-          'Perfect! Setting appointments is our bread and butter. We\'ll help you fill your calendar.<br><br>I\'ve analyzed your contacts and checked phone numbers with Connect Score. Here\'s a preview of your data. Does this look correct?<br><br>',
+          'Perfect! Setting appointments is our bread and butter. We\'ll help you fill your calendar.<br><br>I\'ve analyzed your contact file with <strong>156 contacts</strong> and checked phone numbers with Connect Score. Here\'s a preview of your data. Does this look correct?<br><br>',
           sampleContacts
         ]
         break
