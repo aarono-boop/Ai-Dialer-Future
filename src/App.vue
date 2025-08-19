@@ -1410,11 +1410,11 @@ const addSessionSummaryToChat = (isCompleted: boolean = false): void => {
 
       <!-- Results & Next Steps Section -->
       <div style="margin-bottom: 24px;">
-        <h3 style="color: white; font-size: 18px; font-weight: 600; margin-bottom: 16px;">${isCompleted ? 'Your Calling Results & Next Steps' : 'Your Calling Results'}</h3>
+        <h3 style="color: white; font-size: 18px; font-weight: 600; margin-bottom: 16px;">${isCompleted ? 'Next Steps' : 'Your Calling Results'}</h3>
         <div style="background-color: rgb(55, 65, 81); border-radius: 8px; padding: 20px;">
           <div style="color: rgb(209, 213, 219); font-size: 14px; font-weight: normal; line-height: 1.5;">
             ${isCompleted ?
-              `Great work! Your queue is complete. Here's what happened and what to do next:<br><br>
+              `Great work! Your queue is complete. Here's what to do next:<br><br>
                <div style="margin-left: 20px;">
                  <div style="margin-bottom: 16px;"><strong style="color: #fbbf24;">• Schedule 2 appointments</strong> - Sam Sample and Jennifer Martinez requested follow-up calls</div>
                  <div style="margin-bottom: 16px;"><strong style="color: #fbbf24;">• Schedule 1 follow-up</strong> - George Sample showed interest and needs additional outreach</div>
