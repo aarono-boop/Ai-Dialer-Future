@@ -1340,14 +1340,32 @@ const handleExportFile = (): void => {
   addAIMessage('Exporting your enriched contact file with Connect Scores and call results...')
 }
 
-// Make handleExportFile globally accessible for onclick handlers in HTML strings
+// Toggle function for Call Log collapse/expand
+const toggleCallLog = (): void => {
+  const content = document.getElementById('callLogContent')
+  const chevron = document.getElementById('callLogChevron')
+
+  if (content && chevron) {
+    if (content.style.display === 'none') {
+      content.style.display = 'block'
+      chevron.style.transform = 'rotate(90deg)'
+    } else {
+      content.style.display = 'none'
+      chevron.style.transform = 'rotate(0deg)'
+    }
+  }
+}
+
+// Make functions globally accessible for onclick handlers in HTML strings
 onMounted(() => {
   ;(window as any).handleExportFile = handleExportFile
+  ;(window as any).toggleCallLog = toggleCallLog
 })
 
-// Clean up global reference when component is unmounted
+// Clean up global references when component is unmounted
 onUnmounted(() => {
   delete (window as any).handleExportFile
+  delete (window as any).toggleCallLog
 })
 
 const addSessionSummaryToChat = (isCompleted: boolean = false): void => {
