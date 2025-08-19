@@ -211,6 +211,8 @@
             :isLastContact="isLastContact"
             :dispositionSet="dispositionSet"
             :queueCompletionReady="queueCompletionReady"
+            :currentContactIndex="currentContactIndex"
+            :totalContacts="contacts.length"
             @call-back="handleCallBack"
             @next-contact="handleNextContact"
             @hang-up="handleHangUp"
