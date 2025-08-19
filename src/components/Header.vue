@@ -101,7 +101,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, onMounted, onUnmounted } from 'vue'
 import Button from 'primevue/button'
 
 // Define props
@@ -110,10 +110,52 @@ defineProps<{
 }>()
 
 // Define emits for parent component communication
-defineEmits(['login', 'logout', 'switch-to-vulcan', 'show-product', 'go-home'])
+const emit = defineEmits(['login', 'logout', 'switch-to-vulcan', 'show-product', 'go-home'])
 
-// Template ref
+// Template refs
 const focusAnchor = ref<HTMLElement | null>(null)
+const userMenuButton = ref<HTMLElement | null>(null)
+
+// User menu state
+const showUserMenu = ref(false)
+
+// Toggle user menu
+const toggleUserMenu = () => {
+  showUserMenu.value = !showUserMenu.value
+}
+
+// Handle logout
+const handleLogout = () => {
+  showUserMenu.value = false
+  emit('logout')
+}
+
+// Close menu when clicking outside
+const handleClickOutside = (event: MouseEvent) => {
+  if (userMenuButton.value && !userMenuButton.value.contains(event.target as Node)) {
+    showUserMenu.value = false
+  }
+}
+
+// Handle escape key
+const handleEscapeKey = (event: KeyboardEvent) => {
+  if (event.key === 'Escape' && showUserMenu.value) {
+    showUserMenu.value = false
+    userMenuButton.value?.focus()
+  }
+}
+
+// Add event listeners
+onMounted(() => {
+  document.addEventListener('click', handleClickOutside)
+  document.addEventListener('keydown', handleEscapeKey)
+})
+
+// Remove event listeners
+onUnmounted(() => {
+  document.removeEventListener('click', handleClickOutside)
+  document.removeEventListener('keydown', handleEscapeKey)
+})
 
 // Method to establish focus context (mimics clicking in header)
 const establishFocusContext = () => {
