@@ -5,7 +5,6 @@
       <!-- Header -->
       <div class="text-center mb-8">
         <h1 class="text-3xl font-bold text-white mb-2">Create Account</h1>
-        <p class="text-slate-400">Create your ARKON account quickly and securely with Google.</p>
       </div>
 
       <!-- Signup Form Container -->
@@ -21,10 +20,6 @@
           Sign up with Google
         </button>
 
-        <!-- Description Text -->
-        <p class="text-center text-slate-400 text-sm mb-6 leading-relaxed">
-          We'll get you started with your AI calling assistant in seconds.
-        </p>
 
         <!-- Sign In Link -->
         <div class="text-center">
