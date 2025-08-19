@@ -1387,7 +1387,7 @@ const addSessionSummaryToChat = (isCompleted: boolean = false): void => {
 
       <!-- Call Log Section -->
       <div style="margin-bottom: 24px;">
-        <h3 style="color: white; font-size: 18px; font-weight: 600; margin-bottom: 16px;">Call Log</h3>
+        <h3 style="color: white; font-size: 18px; font-weight: 600; margin-bottom: 16px;"><i class="pi pi-list" style="margin-right: 8px;"></i>Call Log</h3>
         <div style="background-color: rgb(55, 65, 81); border-radius: 8px; overflow: hidden;">
           <!-- Table Header -->
           <div style="display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; padding: 16px; border-bottom: 1px solid rgb(75, 85, 99); background-color: rgb(45, 55, 72);">
@@ -1408,26 +1408,26 @@ const addSessionSummaryToChat = (isCompleted: boolean = false): void => {
         </div>
       </div>
 
-      <!-- Results Section -->
-      <div style="background-color: rgb(55, 65, 81); border-radius: 8px; padding: 20px;">
-        <div style="display: flex; align-items: flex-start; gap: 16px;">
-          <div style="color: white; font-size: 24px;"><i class="pi pi-chart-line"></i></div>
-          <div style="flex: 1;">
-            <h4 style="color: white; font-size: 16px; font-weight: 600; margin-bottom: 8px;">${isCompleted ? 'Your Calling Results & Next Steps' : 'Your Calling Results'}</h4>
-            <div style="display: flex; align-items: flex-start; gap: 16px;">
-              <div style="color: rgb(209, 213, 219); font-size: 14px; font-weight: normal; line-height: 1.5; margin: 0; flex: 1;">
-                ${isCompleted ?
-                  `Great work! Your queue is complete. Here's what happened and what to do next:<br><br>
-                   • Schedule 2 appointments - Sam Sample and Jennifer Martinez requested follow-up calls<br><br>
-                   • Schedule 1 follow-up - George Sample showed interest and needs additional outreach<br><br>
-                   Your contact data has been enriched with Connect Scores, call outcomes, and notes.` :
-                  'Great work! Your queue is paused. While you were calling, I enriched your contact file data with Connect Scores, call outcomes, and notes. You can export your enriched results now or keep calling to build even more value.'
-                }
-              </div>
-              <button style="background-color: rgb(59, 130, 246); color: white; border: none; border-radius: 6px; padding: 8px 16px; font-size: 14px; font-weight: 500; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; flex-shrink: 0; margin-left: 100px;" onclick="handleExportFile()">
-                <i class="pi pi-download"></i> Export Enriched File
-              </button>
-            </div>
+      <!-- Results & Next Steps Section -->
+      <div style="margin-bottom: 24px;">
+        <h3 style="color: white; font-size: 18px; font-weight: 600; margin-bottom: 16px;">${isCompleted ? 'Your Calling Results & Next Steps' : 'Your Calling Results'}</h3>
+        <div style="background-color: rgb(55, 65, 81); border-radius: 8px; padding: 20px;">
+          <div style="color: rgb(209, 213, 219); font-size: 14px; font-weight: normal; line-height: 1.5;">
+            ${isCompleted ?
+              `Great work! Your queue is complete. Here's what happened and what to do next:<br><br>
+               <div style="margin-left: 20px;">
+                 <div style="margin-bottom: 16px;"><strong>• Schedule 2 appointments</strong> - Sam Sample and Jennifer Martinez requested follow-up calls</div>
+                 <div style="margin-bottom: 16px;"><strong>• Schedule 1 follow-up</strong> - George Sample showed interest and needs additional outreach</div>
+               </div>
+               Your contact data has been enriched with Connect Scores, call outcomes, and notes.<br><br>
+               <button style="background-color: rgb(59, 130, 246); color: white; border: none; border-radius: 6px; padding: 8px 16px; font-size: 14px; font-weight: 500; cursor: pointer; display: inline-flex; align-items: center; gap: 8px;" onclick="handleExportFile()">
+                 <i class="pi pi-download"></i> Export Enriched File
+               </button>` :
+              `Great work! Your queue is paused. While you were calling, I enriched your contact file data with Connect Scores, call outcomes, and notes. You can export your enriched results now or keep calling to build even more value.<br><br>
+               <button style="background-color: rgb(59, 130, 246); color: white; border: none; border-radius: 6px; padding: 8px 16px; font-size: 14px; font-weight: 500; cursor: pointer; display: inline-flex; align-items: center; gap: 8px;" onclick="handleExportFile()">
+                 <i class="pi pi-download"></i> Export Enriched File
+               </button>`
+            }
           </div>
         </div>
       </div>
