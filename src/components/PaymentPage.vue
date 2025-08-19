@@ -24,7 +24,7 @@
               <span class="text-gray-600">1</span>
             </div>
             <div class="text-right w-20">
-              <span class="text-gray-800 font-medium">$50.00</span>
+              <span class="text-gray-800 font-medium">$100.00</span>
             </div>
           </div>
 
@@ -37,7 +37,7 @@
           <!-- Total -->
           <div class="flex justify-between items-center py-4 border-t-2 border-gray-300">
             <span class="text-lg font-bold text-gray-800">Total</span>
-            <span class="text-lg font-bold text-gray-800">$50.00</span>
+            <span class="text-lg font-bold text-gray-800">$100.00</span>
           </div>
         </div>
       </div>
