@@ -724,7 +724,7 @@ const handleGoogleSignin = (): void => {
   currentPage.value = 'main'
   isSignedIn.value = true
   isReturningUser.value = true // This is a returning user
-  addAIMessage('��� Welcome back! You\'re signed in with Google.')
+  addAIMessage('Welcome back! You\'re signed in with Google.')
   setTimeout(() => {
     addAIMessage('Ready to upload your contact file and start dialing?')
     showFileUploadForReturningUser.value = true
