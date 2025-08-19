@@ -1176,19 +1176,32 @@ const handlePhoneVerification = (): void => {
 }
 
 const getPlaceholderText = (): string => {
-  // Check if in dial session first
-  if (showDialer.value) {
-    return 'Reply to ARKON...'
-  }
-
-  // Handle verification steps
+  // Handle verification steps first
   switch (verificationStep.value) {
     case 'enter-phone':
       return 'Enter your business phone number'
     case 'enter-code':
       return 'Enter 6-digit verification code'
-    default:
-      return ''
+  }
+
+  // Only allow animation on the very initial welcome screen
+  // Animation shows when: not signed in, no buttons showing, no file uploaded, etc.
+  const isInitialWelcomeState = !isSignedIn.value &&
+                                 !showActionButtons.value &&
+                                 !showContactPreviewButtons.value &&
+                                 !showPhoneVerificationButton.value &&
+                                 !showStartDialingButton.value &&
+                                 !showDispositionButtons.value &&
+                                 !showContinueQueueButton.value &&
+                                 !showLoadNewFileButton.value &&
+                                 !showSignupButtons.value &&
+                                 !hasUploadedFile.value &&
+                                 !showDialer.value
+
+  if (isInitialWelcomeState) {
+    return '' // Allow animation
+  } else {
+    return 'Reply to ARKON...' // Static text everywhere else
   }
 }
 
