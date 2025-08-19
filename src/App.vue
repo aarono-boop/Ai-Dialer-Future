@@ -572,6 +572,76 @@ const handleLogin = () => {
   })
 }
 
+const handleLogout = () => {
+  // Reset user state
+  isSignedIn.value = false
+  isReturningUser.value = false
+
+  // Reset UI state
+  showDialer.value = false
+  showActionButtons.value = false
+  showContactPreviewButtons.value = false
+  showPhoneVerificationButton.value = false
+  showStartDialingButton.value = false
+  showDispositionButtons.value = false
+  showContinueQueueButton.value = false
+  showLoadNewFileButton.value = false
+  showFileUploadForReturningUser.value = false
+
+  // Reset calling state
+  callState.value = 'ended'
+  callDuration.value = 0
+  queueTime.value = 14
+  currentContactIndex.value = 0
+  dispositionSet.value = false
+  queuePaused.value = false
+  queueCompletionReady.value = false
+
+  // Clear call log
+  callLog.value = []
+  totalCalls.value = 0
+  connectedCalls.value = 0
+
+  // Reset to welcome message
+  messages.value = [
+    {
+      type: 'ai',
+      content: [
+        'Welcome! I\'m <strong>ARKON</strong>, your AI calling assistant.<br><br>Drop your contact file here and I\'ll show you exactly who\'s most likely to pick up right now.'
+      ]
+    }
+  ]
+
+  // Clear any timers
+  if (callTimer) {
+    clearInterval(callTimer)
+    callTimer = null
+  }
+  if (queueTimer) {
+    clearInterval(queueTimer)
+    queueTimer = null
+  }
+  if (callSimulationTimeout) {
+    clearTimeout(callSimulationTimeout)
+    callSimulationTimeout = null
+  }
+
+  // Scroll to top
+  scrollToBottom()
+
+  // Announce to screen readers
+  nextTick(() => {
+    announceToScreenReader('Logged out successfully. Returned to welcome page.')
+
+    // Establish focus context
+    setTimeout(() => {
+      if (headerRef.value && headerRef.value.establishFocusContext) {
+        headerRef.value.establishFocusContext()
+      }
+    }, 100)
+  })
+}
+
 const handleSwitchToVulcan = () => {
   toast.add({
     severity: 'info',
