@@ -42,6 +42,7 @@
       <div class="flex gap-4 items-center" role="group" aria-label="User actions">
         <!-- Product link -->
         <Button
+          v-if="!isSignedIn"
           label="Product"
           text
           class="nav-button"
