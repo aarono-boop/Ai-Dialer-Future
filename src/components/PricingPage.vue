@@ -34,7 +34,7 @@
           
           <!-- Price -->
           <div class="mb-6">
-            <span class="text-5xl font-bold text-white">$50</span>
+            <span class="text-5xl font-bold text-white">$100</span>
             <span class="text-slate-400 text-lg">/month</span>
           </div>
           
