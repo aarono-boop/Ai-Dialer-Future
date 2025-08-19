@@ -851,7 +851,7 @@ const simulateFileUpload = () => {
       </div>`
 
       addAIMessage([
-        'Perfect! I\'ve analyzed your contact file with <strong style="color: #fbbf24;">156 contacts</strong>.<br><br>Here\'s a preview of your data. Does this look correct?<br><br>',
+        'Perfect! I\'ve analyzed your <strong style="color: #fbbf24;">156 contacts</strong>.<br><br>Here\'s a preview of your data. Does this look correct?<br><br>',
         sampleContacts
       ])
       showContactPreviewButtons.value = true
@@ -908,7 +908,7 @@ const onFileSelect = (file: File): void => {
       </div>`
 
       addAIMessage([
-        'Perfect! I\'ve analyzed your contact file with <strong style="color: #fbbf24;">156 contacts</strong>.<br><br>Here\'s a preview of your data. Does this look correct?<br><br>',
+        'Perfect! I\'ve analyzed your <strong style="color: #fbbf24;">156 contacts</strong>.<br><br>Here\'s a preview of your data. Does this look correct?<br><br>',
         sampleContacts
       ])
       showContactPreviewButtons.value = true
