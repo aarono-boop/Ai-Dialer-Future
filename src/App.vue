@@ -723,7 +723,7 @@ const handleGoogleSignin = (): void => {
   currentPage.value = 'main'
   isSignedIn.value = true
   isReturningUser.value = true // This is a returning user
-  addAIMessage('🚀 Welcome back! You\'re signed in with Google.')
+  addAIMessage('��� Welcome back! You\'re signed in with Google.')
   setTimeout(() => {
     addAIMessage('Ready to upload your contact file and start dialing?')
     showFileUploadForReturningUser.value = true
@@ -938,6 +938,19 @@ const onFileSelect = (file: File): void => {
 const sendMessage = (message: string): void => {
   // Add user message
   addUserMessage(message)
+
+  // Handle try again response flow
+  if (waitingForTryAgainResponse.value) {
+    waitingForTryAgainResponse.value = false
+    setTimeout(() => {
+      addAIMessage('I understand. Let\'s try uploading your contact file again.')
+      // Reset states to show file upload
+      hasUploadedFile.value = false
+      showFileUploadForReturningUser.value = true
+      scrollToBottom()
+    }, 1000)
+    return
+  }
 
   // Handle verification flow
   if (verificationStep.value === 'enter-phone') {
