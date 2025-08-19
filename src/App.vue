@@ -1378,12 +1378,12 @@ const addSessionSummaryToChat = (isCompleted: boolean = false): void => {
       <!-- Statistics Cards -->
       ${(() => {
         const contactsLeft = contacts.length - currentContactIndex.value - 1;
-        const hasContactsLeft = contactsLeft > 0;
-        const gridCols = hasContactsLeft ? 6 : 5;
+        const showContactsLeft = !isCompleted && contactsLeft > 0;
+        const gridCols = showContactsLeft ? 6 : 5;
 
         return `
         <div style="display: grid; grid-template-columns: repeat(${gridCols}, 1fr); gap: 8px; margin-bottom: 24px;">
-          ${hasContactsLeft ? `
+          ${showContactsLeft ? `
           <div style="background-color: rgb(55, 65, 81); border-radius: 8px; padding: 16px; text-align: center;">
             <div style="color: white; font-size: 24px; font-weight: bold; margin-bottom: 8px;"><i class="pi pi-users"></i> ${contactsLeft}</div>
             <div style="color: white; font-size: 11px; line-height: 1.2;">Contacts Left to Call</div>
