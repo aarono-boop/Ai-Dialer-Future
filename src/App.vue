@@ -1811,7 +1811,14 @@ const handlePurchaseCompleted = () => {
   isSignedIn.value = true
   isReturningUser.value = false // This is a new user
   showActionButtons.value = true
-  addAIMessage('Congratulations! You\'ve successfully upgraded to the Pro plan and have unlimited access to all features.<br><br>To help us understand what your goals are, what are you trying to accomplish?')
+
+  // Add user message confirming account creation and upgrade
+  addUserMessage('Account created & upgraded')
+
+  // Add AI congratulations message
+  setTimeout(() => {
+    addAIMessage('Congratulations! You\'ve successfully upgraded to the Pro plan and have unlimited access to all features.<br><br>To help us understand what your goals are, what are you trying to accomplish?')
+  }, 500)
 
   // Ensure scroll happens after action buttons are rendered
   setTimeout(() => {
