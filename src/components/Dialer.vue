@@ -9,6 +9,19 @@
         </div>
       </div>
 
+      <!-- Contact Progress -->
+      <div class="mt-2 text-center">
+        <div class="text-gray-400 text-xs">
+          Contact {{ currentContactIndex + 1 }} of {{ totalContacts }}
+        </div>
+        <div class="mt-1 bg-gray-700 rounded-full h-2">
+          <div
+            class="bg-blue-500 h-2 rounded-full transition-all duration-300"
+            :style="{ width: `${((currentContactIndex + 1) / totalContacts) * 100}%` }"
+          ></div>
+        </div>
+      </div>
+
       <div class="flex items-center justify-between mt-3">
         <div class="text-gray-400 text-sm">
           Queue Time: <span class="text-white">{{ formatTime(queueTime) }}</span>
