@@ -285,6 +285,8 @@ const props = defineProps<{
   isLastContact: boolean
   dispositionSet: boolean
   queueCompletionReady: boolean
+  currentContactIndex: number
+  totalContacts: number
 }>()
 
 // Define emits
