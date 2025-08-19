@@ -89,7 +89,7 @@ defineProps<{
 }>()
 
 // Define emits for parent component communication
-defineEmits(['login', 'switch-to-vulcan', 'show-product', 'go-home'])
+defineEmits(['login', 'logout', 'switch-to-vulcan', 'show-product', 'go-home'])
 
 // Template ref
 const focusAnchor = ref<HTMLElement | null>(null)
