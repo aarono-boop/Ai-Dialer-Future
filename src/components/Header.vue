@@ -52,9 +52,15 @@
 
         <!-- Avatar when signed in -->
         <div v-if="isSignedIn" class="flex items-center gap-3" role="group" aria-label="User account">
-          <div class="w-8 h-8 rounded-full bg-gradient-to-r from-blue-500 to-purple-600 flex items-center justify-center" role="img" aria-label="User avatar">
+          <button
+            class="w-8 h-8 rounded-full bg-gradient-to-r from-blue-500 to-purple-600 flex items-center justify-center hover:scale-105 transition-transform cursor-pointer border-none"
+            role="button"
+            aria-label="User menu - click to logout"
+            @click="$emit('logout')"
+            tabindex="4"
+          >
             <i class="pi pi-user text-white text-sm" aria-hidden="true"></i>
-          </div>
+          </button>
         </div>
 
         <!-- Login button when not signed in -->
