@@ -1176,6 +1176,12 @@ const handlePhoneVerification = (): void => {
 }
 
 const getPlaceholderText = (): string => {
+  // Check if in dial session first
+  if (showDialer.value) {
+    return 'Reply to ARKON...'
+  }
+
+  // Handle verification steps
   switch (verificationStep.value) {
     case 'enter-phone':
       return 'Enter your business phone number'
