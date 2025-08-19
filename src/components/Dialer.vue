@@ -29,8 +29,14 @@
         <button
           v-if="!shouldCompleteQueue"
           @click="pauseQueue"
+          :disabled="callState === 'connected' || callState === 'ringing'"
           tabindex="8"
-          class="bg-gray-700 hover:bg-gray-600 text-white px-3 py-1 rounded text-sm transition-colors"
+          :class="[
+            'px-3 py-1 rounded text-sm transition-colors',
+            callState === 'connected' || callState === 'ringing'
+              ? 'bg-gray-600 text-gray-400 cursor-not-allowed opacity-50'
+              : 'bg-gray-700 hover:bg-gray-600 text-white cursor-pointer'
+          ]"
         >
           Pause Queue
         </button>
