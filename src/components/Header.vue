@@ -51,16 +51,37 @@
         />
 
         <!-- Avatar when signed in -->
-        <div v-if="isSignedIn" class="flex items-center gap-3" role="group" aria-label="User account">
+        <div v-if="isSignedIn" class="relative flex items-center gap-3" role="group" aria-label="User account">
           <button
             class="w-8 h-8 rounded-full bg-gradient-to-r from-blue-500 to-purple-600 flex items-center justify-center hover:scale-105 transition-transform cursor-pointer border-none"
             role="button"
-            aria-label="User menu - click to logout"
-            @click="$emit('logout')"
+            aria-label="User menu"
+            @click="toggleUserMenu"
             tabindex="4"
+            ref="userMenuButton"
           >
             <i class="pi pi-user text-white text-sm" aria-hidden="true"></i>
           </button>
+
+          <!-- User Dropdown Menu -->
+          <div
+            v-if="showUserMenu"
+            class="absolute right-0 top-full mt-2 w-48 bg-gray-800 border border-gray-600 rounded-lg shadow-lg z-50"
+            role="menu"
+            aria-labelledby="user-menu-button"
+          >
+            <div class="py-1">
+              <button
+                class="w-full text-left px-4 py-2 text-sm text-gray-300 hover:bg-gray-700 hover:text-white transition-colors flex items-center gap-2"
+                role="menuitem"
+                @click="handleLogout"
+                tabindex="5"
+              >
+                <i class="pi pi-sign-out text-sm"></i>
+                Log out
+              </button>
+            </div>
+          </div>
         </div>
 
         <!-- Login button when not signed in -->
