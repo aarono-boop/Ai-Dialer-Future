@@ -1795,7 +1795,7 @@ const handleActionButton = (action: string): void => {
     switch (action) {
       case 'Set Appointments':
         response = [
-          'Perfect! Setting appointments is our bread and butter. We\'ll help you fill your calendar.<br><br>I\'ve analyzed your contact file with <strong>156 contacts</strong> and checked phone numbers with Connect Score. Here\'s a preview of your data. Does this look correct?<br><br>',
+          'Perfect! Setting appointments is our bread and butter. We\'ll help you fill your calendar.<br><br>I\'ve analyzed your contact file with <strong style=\"color: #fbbf24;\">156 contacts</strong> and checked phone numbers with Connect Score.<br><br>Here\'s a preview of your data. Does this look correct?<br><br>',
           sampleContacts
         ]
         break
