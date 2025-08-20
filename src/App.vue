@@ -305,6 +305,10 @@
 <script setup lang="ts">
 import { ref, nextTick, computed, onMounted, onUnmounted, type Ref } from 'vue'
 import { useToast } from 'primevue/usetoast'
+import { showContactPreview } from './utils/contactPreview'
+import { clearFocusAndEstablishContext, focusChatInput, announceToScreenReader } from './utils/focus'
+import { createChatUtils, type Message } from './utils/chat'
+import { getResponseForKeywords } from './utils/aiResponses'
 
 // Components
 import Header from './components/Header.vue'
