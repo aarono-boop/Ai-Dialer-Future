@@ -470,74 +470,9 @@ const messages: Ref<Message[]> = ref([
   }
 ])
 
-// Helper function to scroll to bottom of chat
-const scrollToBottom = async () => {
-  await nextTick()
-  // Wait for DOM updates and then scroll multiple times to ensure it works
-  setTimeout(() => {
-    if (chatMessages.value) {
-      // First scroll immediately
-      chatMessages.value.scrollTop = chatMessages.value.scrollHeight
-
-      // Then scroll smoothly after a short delay
-      setTimeout(() => {
-        if (chatMessages.value) {
-          chatMessages.value.scrollTo({
-            top: chatMessages.value.scrollHeight,
-            behavior: 'smooth'
-          })
-        }
-      }, 100)
-    }
-  }, 50)
-}
-
-// Helper function to add AI message
-const addAIMessage = (content: string | string[]): void => {
-  const contentArray = Array.isArray(content) ? content : [content]
-  messages.value.push({
-    type: 'ai',
-    content: contentArray
-  })
-  scrollToBottom()
-
-  // Establish focus context after new message appears
-  nextTick(() => {
-    setTimeout(() => {
-      if (headerRef.value && headerRef.value.establishFocusContext) {
-        headerRef.value.establishFocusContext()
-      }
-    }, 100)
-  })
-}
-
-// Helper function to add user message
-const addUserMessage = (content: string): void => {
-  messages.value.push({
-    type: 'user',
-    content: [content]
-  })
-  scrollToBottom()
-
-  // Establish focus context after new message appears
-  nextTick(() => {
-    setTimeout(() => {
-      if (headerRef.value && headerRef.value.establishFocusContext) {
-        headerRef.value.establishFocusContext()
-      }
-    }, 100)
-  })
-}
-
-// Helper function to add separator message
-const addSeparatorMessage = (contactName: string): void => {
-  messages.value.push({
-    type: 'separator',
-    content: [],
-    contactName: contactName
-  })
-  scrollToBottom()
-}
+// Initialize chat utilities
+const chatUtils = createChatUtils(messages, chatMessages, headerRef)
+const { scrollToBottom, addAIMessage, addUserMessage, addSeparatorMessage } = chatUtils
 
 // Helper function to identify if a message is the "Ready to upload" message for returning users
 const isReadyToUploadMessage = (message: Message, index: number): boolean => {
