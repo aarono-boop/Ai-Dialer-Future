@@ -6,13 +6,17 @@
   >
     <div v-if="message.type === 'ai'" class="flex gap-[10px] items-start w-full">
       <div class="flex items-start justify-center flex-shrink-0 pt-1" role="img" aria-label="ARKON AI avatar">
-        <img
-          src="https://cdn.builder.io/api/v1/image/assets%2F5aeb07ce25f84dbc869290880d07b71e%2F2b49ccc7e5f74919a9a706fa2916dd90?format=webp&width=800"
-          alt="ARKON AI Assistant"
-          width="26"
-          height="26"
+        <div
+          class="ai-avatar-gradient"
           aria-hidden="true"
-        />
+          style="
+            width: 26px;
+            height: 26px;
+            background: linear-gradient(135deg, #60a5fa 0%, #7b68ee 100%);
+            mask: url('https://cdn.builder.io/api/v1/image/assets%2F5aeb07ce25f84dbc869290880d07b71e%2F2b49ccc7e5f74919a9a706fa2916dd90?format=webp&width=800') center/contain no-repeat;
+            -webkit-mask: url('https://cdn.builder.io/api/v1/image/assets%2F5aeb07ce25f84dbc869290880d07b71e%2F2b49ccc7e5f74919a9a706fa2916dd90?format=webp&width=800') center/contain no-repeat;
+          "
+        ></div>
       </div>
       <div
         :class="['bg-gray-800/90 border border-white/20 rounded-lg p-5 text-sm overflow-hidden', getMessageWidth()]"
