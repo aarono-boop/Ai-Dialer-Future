@@ -11,15 +11,17 @@
       <!-- Login Form Container -->
       <div class="bg-gray-900 border border-gray-700 rounded-xl p-6">
         <!-- Google Sign In - Primary Button -->
-        <button
+        <DSButton
           @click="$emit('google-signin')"
           @keydown.tab="handleTabKey"
-          class="w-full btn-primary py-4 px-6 rounded-lg flex items-center justify-center gap-3 transition-all duration-200 font-semibold text-lg mb-6"
+          variant="primary"
+          size="large"
+          class="w-full flex items-center justify-center gap-3 font-semibold text-lg mb-6"
           tabindex="4"
         >
           <i class="pi pi-google text-xl"></i>
           Sign in with Google
-        </button>
+        </DSButton>
 
         <!-- Sign Up Link -->
         <div class="text-center">
@@ -33,7 +35,7 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import InputText from 'primevue/inputtext'
+import { DSButton } from '@/design-system/components'
 
 // Define emits
 const emit = defineEmits(['google-signin', 'show-signup'])
