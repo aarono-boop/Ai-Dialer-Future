@@ -86,6 +86,13 @@ watch(() => props.visible, (newVisible) => {
   }
 })
 
+// Modal keydown handler for escape key
+const handleModalKeydown = (event: KeyboardEvent) => {
+  if (event.key === 'Escape') {
+    emit('close')
+  }
+}
+
 // Tab navigation method - only needed for cycling from last to first element
 const handleAgreeButtonTab = (event: KeyboardEvent) => {
   if (!event.shiftKey) {
