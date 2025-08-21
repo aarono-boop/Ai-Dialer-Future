@@ -39,7 +39,7 @@
           </div>
           
           <!-- Upgrade Button -->
-          <Button
+          <DSButton
             label="Upgrade to Pro"
 variant="primary"
             size="large"
