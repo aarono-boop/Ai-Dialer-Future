@@ -39,7 +39,6 @@
           variant="secondary"
           class="px-6 py-2"
           @click="$emit('cancel')"
-          @keydown.tab="handleCancelButtonTab"
           tabindex="5"
         />
         <DSButton
