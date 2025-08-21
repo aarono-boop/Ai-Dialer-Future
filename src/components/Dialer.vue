@@ -741,6 +741,32 @@ const handleHoldKeydown = (event: KeyboardEvent) => {
   transition: background-color 0.2s ease, color 0.2s ease !important;
 }
 
+/* Specific sizing for dialer action buttons to prevent any changes */
+:deep(.py-3) {
+  padding-top: 0.75rem !important;
+  padding-bottom: 0.75rem !important;
+}
+
+/* Hang Up button specific fixes */
+:deep(.w-full.flex.items-center.justify-center.gap-2.py-3) {
+  height: auto !important;
+  min-height: 3rem !important;
+  max-height: 3rem !important;
+  padding: 0.75rem 1rem !important;
+  border: 1px solid transparent !important;
+  box-sizing: border-box !important;
+}
+
+:deep(.w-full.flex.items-center.justify-center.gap-2.py-3:hover) {
+  height: auto !important;
+  min-height: 3rem !important;
+  max-height: 3rem !important;
+  padding: 0.75rem 1rem !important;
+  border: 1px solid transparent !important;
+  box-sizing: border-box !important;
+  transform: none !important;
+}
+
 /* Keypad button styles */
 .keypad-btn {
   @apply bg-gray-700 hover:bg-gray-600 active:bg-gray-500 text-white rounded-lg py-4 px-3 flex flex-col items-center justify-center gap-1 transition-colors min-h-16;
