@@ -1,7 +1,7 @@
 <template>
   <div class="mt-4" role="region" aria-label="Chat input area">
     <div class="flex items-center bg-gray-800 backdrop-blur-[10px] border border-gray-600 rounded-xl px-3 py-2 gap-2 w-[70%] mx-auto chat-input-container">
-      <InputText
+      <DSInput
         ref="inputRef"
         v-model="inputValue"
         :placeholder="props.customPlaceholder || animatedPlaceholder"
@@ -15,7 +15,7 @@
         aria-describedby="chat-input-help"
         tabindex="7"
       />
-      <Button
+      <DSButton
         icon="pi pi-send"
         class="w-10 h-10 rounded-full flex items-center justify-center text-purple-400 transition-all duration-300 hover:bg-purple-400/20 hover:text-white disabled:opacity-50 disabled:text-gray-600"
         :disabled="!inputValue.trim()"
@@ -36,8 +36,7 @@
 
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted } from 'vue'
-import Button from 'primevue/button'
-import InputText from 'primevue/inputtext'
+import { DSButton, DSInput } from '@/design-system/components'
 
 // Define props
 const props = defineProps<{
