@@ -41,7 +41,9 @@
           <!-- Upgrade Button -->
           <Button
             label="Upgrade to Pro"
-            class="btn-primary w-full py-3 rounded-lg font-medium"
+variant="primary"
+            size="large"
+            class="w-full font-medium"
             @click="handleUpgrade"
           />
         </div>
@@ -168,7 +170,7 @@
 </template>
 
 <script setup lang="ts">
-import Button from 'primevue/button'
+import { DSButton } from '@/design-system/components'
 
 // Define emits
 const emit = defineEmits(['upgrade-selected', 'close', 'show-payment'])
