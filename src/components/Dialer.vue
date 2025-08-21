@@ -674,17 +674,50 @@ const handleHoldKeydown = (event: KeyboardEvent) => {
   background: rgba(255, 255, 255, 0.5);
 }
 
-/* Prevent transform effects on action buttons to avoid layout shift */
+/* Prevent transform effects and size changes on action buttons to avoid layout shift */
 :deep(.ds-button) {
   transform: none !important;
+  border-width: 1px !important;
+  box-sizing: border-box !important;
 }
 
 :deep(.ds-button:hover) {
   transform: none !important;
+  border-width: 1px !important;
+  box-sizing: border-box !important;
+  padding: var(--original-padding) !important;
 }
 
 :deep(.ds-button:active) {
   transform: none !important;
+  border-width: 1px !important;
+  box-sizing: border-box !important;
+}
+
+:deep(.ds-button:focus) {
+  transform: none !important;
+  border-width: 1px !important;
+  box-sizing: border-box !important;
+}
+
+/* Override PrimeVue button specific hover effects */
+:deep(.p-button) {
+  border-width: 1px !important;
+  box-sizing: border-box !important;
+}
+
+:deep(.p-button:hover) {
+  border-width: 1px !important;
+  box-sizing: border-box !important;
+  transform: none !important;
+}
+
+:deep(.p-button:focus) {
+  border-width: 1px !important;
+  box-sizing: border-box !important;
+  transform: none !important;
+  outline: none !important;
+  box-shadow: none !important;
 }
 
 /* Keypad button styles */
