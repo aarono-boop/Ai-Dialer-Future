@@ -96,16 +96,7 @@ const handleModalKeydown = (event: KeyboardEvent) => {
   }
 }
 
-// Tab navigation method - only needed for cycling from last to first element
-const handleAgreeButtonTab = (event: KeyboardEvent) => {
-  if (!event.shiftKey) {
-    // Forward tab from I Agree button cycles back to close button
-    event.preventDefault()
-    if (closeButtonRef.value) {
-      closeButtonRef.value.focus()
-    }
-  }
-}
+// No custom tab handlers needed - let browser handle natural tab flow
 
 // Methods
 const handleAgree = (): void => {
