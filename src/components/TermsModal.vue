@@ -4,9 +4,13 @@
       <!-- Header -->
       <div class="flex items-center justify-between mb-6">
         <h2 class="text-white text-xl font-semibold">Terms & Conditions</h2>
-        <button 
+        <button
+          ref="closeButtonRef"
           class="w-8 h-8 flex items-center justify-center rounded-full text-slate-400 hover:text-white hover:bg-slate-700 transition-all duration-200"
           @click="$emit('close')"
+          @keydown.tab="handleCloseButtonTab"
+          tabindex="1"
+          aria-label="Close Terms & Conditions modal"
         >
           <i class="pi pi-times text-lg"></i>
         </button>
