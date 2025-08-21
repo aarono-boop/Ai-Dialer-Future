@@ -1,19 +1,24 @@
 import { createApp } from 'vue'
 import PrimeVue from 'primevue/config'
 import ToastService from 'primevue/toastservice'
-import Aura from '@primevue/themes/aura'
+import { customTheme, cssVariables } from './design-system/styles/theme'
 import 'primeicons/primeicons.css'
 import App from './App.vue'
 import './style.css'
 
 const app = createApp(App)
 
+// Apply CSS variables to document root
+Object.entries(cssVariables).forEach(([property, value]) => {
+  document.documentElement.style.setProperty(property, value)
+})
+
 app.use(PrimeVue, {
   theme: {
-    preset: Aura,
+    preset: customTheme,
     options: {
       prefix: 'p',
-      darkModeSelector: 'system',
+      darkModeSelector: 'class',
       cssLayer: false
     }
   }
