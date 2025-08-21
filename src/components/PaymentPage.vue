@@ -173,8 +173,10 @@
             </p>
 
             <!-- Purchase Button -->
-            <Button
+            <DSButton
               label="Purchase"
+              variant="primary"
+              size="large"
               class="w-full mt-6 py-4 bg-purple-600 hover:bg-purple-700 text-white rounded-lg font-medium text-lg transition-all duration-200"
               @click="handlePurchase"
             />
@@ -192,8 +194,7 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import Button from 'primevue/button'
-import InputText from 'primevue/inputtext'
+import { DSButton, DSInput } from '@/design-system/components'
 import Dropdown from 'primevue/dropdown'
 
 // Reactive data
