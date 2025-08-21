@@ -26,23 +26,23 @@
         <form class="flex flex-col gap-5 text-left" @submit.prevent="handleSubmit">
           <div class="flex flex-col gap-2">
             <label class="text-white text-sm font-medium">Email Address</label>
-            <InputText
+            <DSInput
               v-model="email"
               placeholder="Email address"
-              class="bg-white/5 border border-white/20 rounded-lg px-4 py-3.5 text-white text-sm placeholder-white/40 focus:border-purple-400/50 focus:ring-2 focus:ring-purple-400/10 focus:outline-none"
               type="email"
               required
+              class="bg-white/5 text-white"
             />
           </div>
           
           <div class="flex flex-col gap-2">
             <label class="text-white text-sm font-medium">Password</label>
-            <InputText
+            <DSInput
               v-model="password"
               placeholder="Password"
-              class="bg-white/5 border border-white/20 rounded-lg px-4 py-3.5 text-white text-sm placeholder-white/40 focus:border-purple-400/50 focus:ring-2 focus:ring-purple-400/10 focus:outline-none"
               type="password"
               required
+              class="bg-white/5 text-white"
             />
           </div>
           
@@ -56,14 +56,16 @@
             <label for="rememberMe" class="text-white/80 text-sm cursor-pointer">Remember me</label>
           </div>
           
-          <Button
+          <DSButton
             type="submit"
-            class="w-full bg-gradient-to-r from-indigo-600 to-purple-600 border-none rounded-lg py-3.5 px-6 text-white font-semibold text-sm flex items-center justify-center gap-2 mt-2 transition-all duration-300 hover:from-indigo-700 hover:to-purple-700 disabled:opacity-50 disabled:cursor-not-allowed"
+            variant="primary"
+            size="large"
+            class="w-full flex items-center justify-center gap-2 mt-2"
             :disabled="!email || !password"
           >
             <i class="pi pi-user"></i>
             Sign In
-          </Button>
+          </DSButton>
           
           <p class="text-center text-white/60 text-sm mt-4 mb-0">
             Already have an account? 
@@ -77,8 +79,7 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import Button from 'primevue/button'
-import InputText from 'primevue/inputtext'
+import { DSButton, DSInput } from '@/design-system/components'
 
 // Define props
 interface Props {
