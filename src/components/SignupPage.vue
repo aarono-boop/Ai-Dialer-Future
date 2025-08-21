@@ -34,6 +34,8 @@
 </template>
 
 <script setup lang="ts">
+import { DSButton } from '@/design-system/components'
+
 // Define emits
 const emit = defineEmits(['google-signup', 'switch-to-signin'])
 
