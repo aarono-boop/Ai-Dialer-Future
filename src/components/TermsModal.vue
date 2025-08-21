@@ -8,7 +8,6 @@
           ref="closeButtonRef"
           class="w-8 h-8 flex items-center justify-center rounded-full text-slate-400 hover:text-white hover:bg-slate-700 transition-all duration-200"
           @click="$emit('close')"
-          @keydown.tab="handleCloseButtonTab"
           tabindex="1"
           aria-label="Close Terms & Conditions modal"
         >
