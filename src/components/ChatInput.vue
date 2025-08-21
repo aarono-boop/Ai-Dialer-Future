@@ -189,22 +189,49 @@ defineExpose({
     inputValue.value = ''
   },
   focus: () => {
-    // Try multiple ways to focus the input
-    if (inputRef.value) {
-      // First try the PrimeVue way
-      if (inputRef.value.$el) {
-        inputRef.value.$el.focus()
-      } else if (inputRef.value.focus) {
-        // If it's a direct input element
-        inputRef.value.focus()
-      } else {
-        // If it's wrapped, find the actual input
-        const inputElement = inputRef.value.$el?.querySelector('input') || inputRef.value
-        if (inputElement && inputElement.focus) {
-          inputElement.focus()
+    console.log('ChatInput focus method called')
+
+    // For DSInput component, we need to find the actual input element
+    nextTick(() => {
+      if (inputRef.value) {
+        console.log('InputRef found:', inputRef.value)
+
+        // DSInput component structure: look for the actual input element
+        let actualInput = null
+
+        // Try to find the PrimeVue InputText element within DSInput
+        if (inputRef.value.$el) {
+          actualInput = inputRef.value.$el.querySelector('input')
         }
+
+        // If still not found, try different approaches
+        if (!actualInput && inputRef.value.$refs) {
+          // Look through refs for input elements
+          Object.values(inputRef.value.$refs).forEach((ref: any) => {
+            if (ref && ref.$el) {
+              const foundInput = ref.$el.querySelector('input')
+              if (foundInput) actualInput = foundInput
+            }
+          })
+        }
+
+        // Fallback: try direct element
+        if (!actualInput) {
+          actualInput = inputRef.value.$el || inputRef.value
+        }
+
+        console.log('Actual input element found:', actualInput)
+
+        if (actualInput && typeof actualInput.focus === 'function') {
+          actualInput.focus()
+          console.log('Successfully focused input element')
+        } else {
+          console.log('Could not focus input element')
+        }
+      } else {
+        console.log('InputRef not available')
       }
-    }
+    })
   }
 })
 </script>
