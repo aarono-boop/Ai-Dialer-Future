@@ -57,6 +57,7 @@
 </template>
 
 <script setup lang="ts">
+import { ref, nextTick, watch } from 'vue'
 import { DSButton } from '@/design-system/components'
 
 // Define props
@@ -64,7 +65,7 @@ interface Props {
   visible?: boolean
 }
 
-defineProps<Props>()
+const props = defineProps<Props>()
 
 // Define emits
 const emit = defineEmits<{
@@ -72,6 +73,53 @@ const emit = defineEmits<{
   cancel: []
   agree: []
 }>()
+
+// Template refs
+const closeButtonRef = ref<HTMLButtonElement | null>(null)
+
+// Watch for modal visibility to manage focus
+watch(() => props.visible, (newVisible) => {
+  if (newVisible) {
+    nextTick(() => {
+      if (closeButtonRef.value) {
+        closeButtonRef.value.focus()
+      }
+    })
+  }
+})
+
+// Tab navigation methods
+const handleCloseButtonTab = (event: KeyboardEvent) => {
+  if (!event.shiftKey) {
+    // Forward tab from close button goes to first link
+    event.preventDefault()
+    const firstLink = document.querySelector('[tabindex="2"]') as HTMLElement
+    if (firstLink) {
+      firstLink.focus()
+    }
+  }
+}
+
+const handleCancelButtonTab = (event: KeyboardEvent) => {
+  if (!event.shiftKey) {
+    // Forward tab from Cancel goes to I Agree button
+    event.preventDefault()
+    const agreeButton = document.querySelector('[tabindex="6"]') as HTMLElement
+    if (agreeButton) {
+      agreeButton.focus()
+    }
+  }
+}
+
+const handleAgreeButtonTab = (event: KeyboardEvent) => {
+  if (!event.shiftKey) {
+    // Forward tab from I Agree button cycles back to close button
+    event.preventDefault()
+    if (closeButtonRef.value) {
+      closeButtonRef.value.focus()
+    }
+  }
+}
 
 // Methods
 const handleAgree = (): void => {
