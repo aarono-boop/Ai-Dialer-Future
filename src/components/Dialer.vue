@@ -815,9 +815,7 @@ const handleHoldKeydown = (event: KeyboardEvent) => {
   flex-grow: 0 !important;
 }
 
-/* Specific targeting for all dialer buttons */
-:deep([tabindex="9"]),
-:deep([tabindex="10"]),
+/* Specific targeting for call control buttons (mute, keypad, hold, hang up) */
 :deep([tabindex="11"]),
 :deep([tabindex="12"]) {
   height: 48px !important;
@@ -828,8 +826,6 @@ const handleHoldKeydown = (event: KeyboardEvent) => {
   flex-grow: 0 !important;
 }
 
-:deep([tabindex="9"]:hover),
-:deep([tabindex="10"]:hover),
 :deep([tabindex="11"]:hover),
 :deep([tabindex="12"]:hover) {
   height: 48px !important;
@@ -839,6 +835,28 @@ const handleHoldKeydown = (event: KeyboardEvent) => {
   transform: none !important;
   flex-shrink: 0 !important;
   flex-grow: 0 !important;
+}
+
+/* Action buttons (call back, next) need different treatment */
+:deep([tabindex="9"]),
+:deep([tabindex="10"]) {
+  box-sizing: border-box !important;
+  flex-shrink: 0 !important;
+  flex-grow: 0 !important;
+  margin-bottom: 0.5rem !important; /* Add explicit spacing */
+}
+
+:deep([tabindex="9"]:hover),
+:deep([tabindex="10"]:hover) {
+  box-sizing: border-box !important;
+  transform: none !important;
+  flex-shrink: 0 !important;
+  flex-grow: 0 !important;
+}
+
+/* Ensure space-y-2 class works properly */
+:deep(.space-y-2 > *:not(:last-child)) {
+  margin-bottom: 0.5rem !important;
 }
 
 /* Keypad button styles */
