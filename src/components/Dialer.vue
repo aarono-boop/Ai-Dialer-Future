@@ -26,20 +26,15 @@
         <div class="text-gray-400 text-sm">
           Queue Time: <span class="text-white">{{ formatTime(queueTime) }}</span>
         </div>
-        <button
+        <DSButton
           v-if="!shouldCompleteQueue"
           @click="pauseQueue"
           :disabled="callState === 'connected' || callState === 'ringing'"
           tabindex="8"
-          :class="[
-            'px-3 py-1 rounded text-sm transition-colors',
-            callState === 'connected' || callState === 'ringing'
-              ? 'bg-gray-600 text-gray-400 cursor-not-allowed opacity-50'
-              : 'bg-gray-700 hover:bg-gray-600 text-white cursor-pointer'
-          ]"
-        >
-          Pause Queue
-        </button>
+          variant="secondary"
+          size="small"
+          label="Pause Queue"
+        />
       </div>
     </div>
 
@@ -132,76 +127,79 @@
       <div v-if="callState === 'connected'" class="space-y-3">
         <!-- Call Control Buttons -->
         <div class="grid grid-cols-3 gap-3">
-          <button
+          <DSButton
             ref="muteButtonRef"
             @click="toggleMute"
             @keydown="handleMuteKeydown"
             tabindex="9"
-            :class="isMuted ? 'bg-red-700 hover:bg-red-600' : 'bg-gray-700 hover:bg-gray-600'"
-            class="text-white py-3 px-4 rounded-lg flex flex-col items-center justify-center gap-1 transition-colors"
+            :variant="isMuted ? 'error' : 'secondary'"
+            class="flex flex-col items-center justify-center gap-1 py-3"
           >
             <i class="pi pi-microphone-slash" v-if="isMuted"></i>
             <i class="pi pi-microphone" v-else></i>
             <span class="text-xs">{{ isMuted ? 'Unmute' : 'Mute' }}</span>
-          </button>
+          </DSButton>
 
-          <button
+          <DSButton
             ref="keypadButtonRef"
             @click="showKeypad"
             tabindex="10"
-            class="bg-gray-700 hover:bg-gray-600 text-white py-3 px-4 rounded-lg flex flex-col items-center justify-center gap-1 transition-colors"
+            variant="secondary"
+            class="flex flex-col items-center justify-center gap-1 py-3"
           >
             <i class="pi pi-th"></i>
             <span class="text-xs">Keypad</span>
-          </button>
+          </DSButton>
 
-          <button
+          <DSButton
             ref="holdButtonRef"
             @click="toggleHold"
             @keydown="handleHoldKeydown"
             tabindex="11"
-            :class="isOnHold ? 'bg-yellow-700 hover:bg-yellow-600' : 'bg-gray-700 hover:bg-gray-600'"
-            class="text-white py-3 px-4 rounded-lg flex flex-col items-center justify-center gap-1 transition-colors"
+            :variant="isOnHold ? 'warning' : 'secondary'"
+            class="flex flex-col items-center justify-center gap-1 py-3"
           >
             <i class="pi pi-pause"></i>
             <span class="text-xs">{{ isOnHold ? 'Resume' : 'Hold' }}</span>
-          </button>
+          </DSButton>
         </div>
 
         <!-- Hang Up Button -->
-        <button
+        <DSButton
           @click="hangUp"
           @keydown.tab="handleHangUpTab"
           tabindex="12"
-          class="w-full bg-red-600 hover:bg-red-700 text-white py-3 px-4 rounded-lg flex items-center justify-center gap-2 transition-colors"
+          variant="error"
+          class="w-full flex items-center justify-center gap-2 py-3"
         >
           <i class="pi pi-phone" style="transform: rotate(135deg);"></i>
           Hang Up
-        </button>
+        </DSButton>
       </div>
 
       <!-- Regular Action Buttons (when not connected) -->
       <div v-else class="space-y-2">
-        <button
+        <DSButton
           @click="callBack"
           tabindex="9"
-          class="w-full bg-gray-700 hover:bg-gray-600 text-white py-3 px-4 rounded-lg flex items-center justify-center gap-2 transition-colors"
+          variant="secondary"
+          class="w-full flex items-center justify-center gap-2 py-3"
         >
           <i class="pi pi-phone"></i>
           Call {{ currentContact.name }} Back
-        </button>
+        </DSButton>
 
-        <button
+        <DSButton
           @click="shouldCompleteQueue ? completeQueue() : nextContact()"
           @keydown.tab="handleNextContactTab"
           tabindex="10"
           :disabled="shouldCompleteQueue && !queueCompletionReady"
-          :class="shouldCompleteQueue ? (queueCompletionReady ? 'bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700' : 'bg-gray-400 cursor-not-allowed') : dispositionSet ? 'bg-blue-600 hover:bg-blue-700' : 'bg-gray-700 hover:bg-gray-600'"
-          class="w-full text-white py-3 px-4 rounded-lg flex items-center justify-center gap-2 transition-colors"
+          :variant="shouldCompleteQueue ? (queueCompletionReady ? 'success' : 'secondary') : dispositionSet ? 'primary' : 'secondary'"
+          class="w-full flex items-center justify-center gap-2 py-3"
         >
           <i :class="shouldCompleteQueue ? 'pi pi-check' : 'pi pi-arrow-right'"></i>
           {{ shouldCompleteQueue ? 'Queue Completed' : `Next: ${nextContactName}` }}
-        </button>
+        </DSButton>
       </div>
     </div>
 
@@ -211,9 +209,9 @@
         <!-- Modal Header -->
         <div class="flex justify-between items-center mb-6">
           <h3 class="text-white text-lg font-semibold">Keypad</h3>
-          <button @click="closeKeypad" @keydown.tab="handleCloseButtonTab" tabindex="113" class="text-gray-400 hover:text-white">
+          <DSButton @click="closeKeypad" @keydown.tab="handleCloseButtonTab" tabindex="113" variant="tertiary" size="small">
             <i class="pi pi-times text-xl"></i>
-          </button>
+          </DSButton>
         </div>
 
         <!-- Keypad Grid -->
@@ -278,6 +276,7 @@
 
 <script setup lang="ts">
 import { ref, nextTick } from 'vue'
+import { DSButton } from '@/design-system/components'
 
 // Define props
 const props = defineProps<{
