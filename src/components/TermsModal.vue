@@ -297,7 +297,7 @@ const openAcceptable = () => {
 }
 
 .cancel-btn:focus {
-  outline: 2px solid #fbbf24;
+  outline: 2px solid #9333FF;
   outline-offset: 2px;
 }
 
