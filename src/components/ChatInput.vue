@@ -152,17 +152,25 @@ const handleTabKey = (event: KeyboardEvent) => {
   if (!event.shiftKey) {
     event.preventDefault()
 
-    // Check if dialer is showing by looking for dialer buttons
-    const dialerButton = document.querySelector('[tabindex="8"]') as HTMLElement
+    // Check if dialer is showing and what controls are available
+    const pauseQueueButton = document.querySelector('[tabindex="8"]') as HTMLElement
+    const muteButton = document.querySelector('[tabindex="9"]') as HTMLElement
 
-    if (dialerButton) {
-      // Dialer is active, continue to dialer (tabindex="8")
-      dialerButton.focus()
+    // If call is connected, Pause Queue might be disabled, so try Mute button first
+    if (muteButton && muteButton.offsetParent !== null && !muteButton.disabled) {
+      // Call controls are visible (call is connected), go to Mute button
+      muteButton.focus()
+      console.log('Focused Mute button (call is connected)')
+    } else if (pauseQueueButton && pauseQueueButton.offsetParent !== null && !pauseQueueButton.disabled) {
+      // Pause Queue is available and enabled, focus it
+      pauseQueueButton.focus()
+      console.log('Focused Pause Queue button')
     } else {
-      // No dialer, cycle back to ARKON logo (tabindex="1")
+      // No dialer visible, cycle back to ARKON logo (tabindex="1")
       const arkonLogo = document.querySelector('[tabindex="1"]') as HTMLElement
       if (arkonLogo) {
         arkonLogo.focus()
+        console.log('No dialer controls available, focused ARKON logo')
       }
     }
   }
