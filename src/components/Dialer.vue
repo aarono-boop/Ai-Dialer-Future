@@ -741,30 +741,61 @@ const handleHoldKeydown = (event: KeyboardEvent) => {
   transition: background-color 0.2s ease, color 0.2s ease !important;
 }
 
-/* Specific sizing for dialer action buttons to prevent any changes */
+/* Aggressive button height locking for ALL dialer buttons */
+:deep(.p-button) {
+  height: 48px !important;
+  min-height: 48px !important;
+  max-height: 48px !important;
+  box-sizing: border-box !important;
+  border: 1px solid transparent !important;
+  margin: 0 !important;
+  vertical-align: top !important;
+}
+
+:deep(.p-button:hover) {
+  height: 48px !important;
+  min-height: 48px !important;
+  max-height: 48px !important;
+  box-sizing: border-box !important;
+  border: 1px solid transparent !important;
+  margin: 0 !important;
+  transform: none !important;
+  vertical-align: top !important;
+}
+
+:deep(.p-button:focus) {
+  height: 48px !important;
+  min-height: 48px !important;
+  max-height: 48px !important;
+  box-sizing: border-box !important;
+  border: 1px solid transparent !important;
+  margin: 0 !important;
+  transform: none !important;
+  vertical-align: top !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+/* Lock down the action button containers */
+:deep(.space-y-3) {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 0.75rem !important;
+}
+
+:deep(.grid.grid-cols-3.gap-3) {
+  height: 48px !important;
+  min-height: 48px !important;
+  max-height: 48px !important;
+}
+
+/* Specific py-3 class override */
 :deep(.py-3) {
   padding-top: 0.75rem !important;
   padding-bottom: 0.75rem !important;
-}
-
-/* Hang Up button specific fixes */
-:deep(.w-full.flex.items-center.justify-center.gap-2.py-3) {
-  height: auto !important;
-  min-height: 3rem !important;
-  max-height: 3rem !important;
-  padding: 0.75rem 1rem !important;
-  border: 1px solid transparent !important;
-  box-sizing: border-box !important;
-}
-
-:deep(.w-full.flex.items-center.justify-center.gap-2.py-3:hover) {
-  height: auto !important;
-  min-height: 3rem !important;
-  max-height: 3rem !important;
-  padding: 0.75rem 1rem !important;
-  border: 1px solid transparent !important;
-  box-sizing: border-box !important;
-  transform: none !important;
+  height: 48px !important;
+  min-height: 48px !important;
+  max-height: 48px !important;
 }
 
 /* Keypad button styles */
