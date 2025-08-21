@@ -426,7 +426,15 @@ const closeKeypad = () => {
   // Return focus to the keypad button in the dialer
   nextTick(() => {
     if (keypadButtonRef.value) {
-      keypadButtonRef.value.focus()
+      // DSButton component - need to find the actual DOM element
+      const buttonElement = keypadButtonRef.value.$el || keypadButtonRef.value
+      if (buttonElement && buttonElement.focus) {
+        buttonElement.focus()
+      } else {
+        // Fallback: focus by tabindex
+        const keypadBtn = document.querySelector('[tabindex="10"]') as HTMLElement
+        if (keypadBtn) keypadBtn.focus()
+      }
     }
   })
 }
