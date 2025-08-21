@@ -126,9 +126,11 @@
 
       <!-- CTA Section -->
       <section class="text-center">
-        <Button
+        <DSButton
           label="Get Started with ARKON"
-          class="btn-primary px-8 py-4 rounded-lg font-semibold text-lg"
+          variant="primary"
+          size="large"
+          class="px-8 py-4 font-semibold text-lg"
           @click="$emit('go-to-app')"
           @keydown.tab="handleTabKey"
           tabindex="4"
@@ -139,7 +141,7 @@
 </template>
 
 <script setup lang="ts">
-import Button from 'primevue/button'
+import { DSButton } from '@/design-system/components'
 
 // Define emits
 defineEmits(['go-to-app'])
