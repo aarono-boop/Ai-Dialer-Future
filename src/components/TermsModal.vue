@@ -40,12 +40,16 @@
           variant="secondary"
           class="px-6 py-2"
           @click="$emit('cancel')"
+          @keydown.tab="handleCancelButtonTab"
+          tabindex="5"
         />
         <DSButton
           label="I Agree"
           variant="primary"
           class="px-6 py-2"
           @click="handleAgree"
+          @keydown.tab="handleAgreeButtonTab"
+          tabindex="6"
         />
       </div>
     </div>
