@@ -25,9 +25,9 @@
         <div class="bg-slate-900 border border-slate-600 rounded-lg p-4">
           <p class="text-slate-300 text-sm leading-relaxed">
             By clicking "I Agree," you agree to PhoneBurner's
-            <a href="#" class="text-blue-400 hover:text-blue-300 transition-colors duration-200" tabindex="2">terms of service</a>,
-            <a href="#" class="text-blue-400 hover:text-blue-300 transition-colors duration-200" tabindex="3">privacy policy</a>
-            and <a href="#" class="text-blue-400 hover:text-blue-300 transition-colors duration-200" tabindex="4">acceptable use policy</a>.
+            <button type="button" class="text-blue-400 hover:text-blue-300 transition-colors duration-200 underline bg-transparent border-none cursor-pointer focus:ring-2 focus:ring-yellow-400" tabindex="2" @focus="() => console.log('Terms link focused')">terms of service</button>,
+            <button type="button" class="text-blue-400 hover:text-blue-300 transition-colors duration-200 underline bg-transparent border-none cursor-pointer focus:ring-2 focus:ring-yellow-400" tabindex="3" @focus="() => console.log('Privacy link focused')">privacy policy</button>
+            and <button type="button" class="text-blue-400 hover:text-blue-300 transition-colors duration-200 underline bg-transparent border-none cursor-pointer focus:ring-2 focus:ring-yellow-400" tabindex="4" @focus="() => console.log('Acceptable use link focused')">acceptable use policy</button>.
           </p>
         </div>
       </div>
