@@ -16,13 +16,14 @@
         tabindex="7"
       />
       <button
-        class="w-10 h-10 flex items-center justify-center text-purple-400 transition-colors duration-200 hover:text-purple-300 disabled:opacity-50 disabled:text-gray-600 bg-transparent border-none cursor-pointer"
+        class="w-10 h-10 flex items-center justify-center transition-colors duration-200 hover:opacity-80 disabled:opacity-50 disabled:text-gray-600 bg-transparent border-none cursor-pointer"
         :disabled="!inputValue.trim()"
         @click="handleSend"
         aria-label="Send message"
         :aria-describedby="!inputValue.trim() ? 'send-button-help' : ''"
+        style="color: #9333FF;"
       >
-        <i class="pi pi-send"></i>
+        <i class="pi pi-send text-lg"></i>
       </button>
     </div>
     <div id="chat-input-help" class="sr-only">
