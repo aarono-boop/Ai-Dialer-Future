@@ -86,29 +86,7 @@ watch(() => props.visible, (newVisible) => {
   }
 })
 
-// Tab navigation methods
-const handleCloseButtonTab = (event: KeyboardEvent) => {
-  if (!event.shiftKey) {
-    // Forward tab from close button goes to first link
-    event.preventDefault()
-    const firstLink = document.querySelector('[tabindex="2"]') as HTMLElement
-    if (firstLink) {
-      firstLink.focus()
-    }
-  }
-}
-
-const handleCancelButtonTab = (event: KeyboardEvent) => {
-  if (!event.shiftKey) {
-    // Forward tab from Cancel goes to I Agree button
-    event.preventDefault()
-    const agreeButton = document.querySelector('[tabindex="6"]') as HTMLElement
-    if (agreeButton) {
-      agreeButton.focus()
-    }
-  }
-}
-
+// Tab navigation method - only needed for cycling from last to first element
 const handleAgreeButtonTab = (event: KeyboardEvent) => {
   if (!event.shiftKey) {
     // Forward tab from I Agree button cycles back to close button
