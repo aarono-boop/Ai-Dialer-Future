@@ -1,9 +1,12 @@
 <template>
-  <Button 
+  <Button
     v-bind="$attrs"
     :class="computedClasses"
     :disabled="disabled || loading"
     :loading="loading"
+    :icon="icon"
+    :iconPos="iconPos"
+    :text="text"
   >
     <template v-if="$slots.default">
       <slot />
