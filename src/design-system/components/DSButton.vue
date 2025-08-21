@@ -11,8 +11,8 @@
     <template v-if="$slots.default">
       <slot />
     </template>
-    <template v-else>
-      {{ label }}
+    <template v-else-if="props.label">
+      {{ props.label }}
     </template>
   </Button>
 </template>
