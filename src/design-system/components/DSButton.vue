@@ -24,6 +24,9 @@ export interface DSButtonProps {
   disabled?: boolean
   loading?: boolean
   label?: string
+  icon?: string
+  iconPos?: 'left' | 'right' | 'top' | 'bottom'
+  text?: boolean
 }
 
 const props = withDefaults(defineProps<DSButtonProps>(), {
