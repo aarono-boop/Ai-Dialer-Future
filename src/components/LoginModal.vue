@@ -4,19 +4,21 @@
       <!-- Header -->
       <div class="flex items-center justify-between mb-6">
         <h2 class="text-white text-xl font-semibold">Log in</h2>
-        <button @click="$emit('close')" class="text-gray-400 hover:text-white">
+        <DSButton @click="$emit('close')" variant="tertiary" size="small">
           <i class="pi pi-times text-lg"></i>
-        </button>
+        </DSButton>
       </div>
 
       <!-- Google Sign In -->
-      <button 
+      <DSButton
         @click="$emit('google-signin')"
-        class="w-full bg-gray-800 hover:bg-gray-700 border border-gray-600 text-white py-3 px-4 rounded-lg flex items-center justify-center gap-3 transition-colors mb-6"
+        variant="secondary"
+        size="large"
+        class="w-full flex items-center justify-center gap-3 mb-6"
       >
         <i class="pi pi-google text-lg"></i>
         Sign in with Google
-      </button>
+      </DSButton>
 
       <!-- Divider -->
       <div class="flex items-center mb-6">
@@ -27,36 +29,38 @@
 
       <!-- Email Field -->
       <div class="mb-4">
-        <label class="block text-gray-300 text-sm font-medium mb-2">Email</label>
-        <InputText
+        <DSInput
           v-model="email"
+          label="Email"
           placeholder="name@host.com"
-          class="w-full bg-gray-800 border border-gray-600 text-white placeholder-gray-400 rounded-lg px-3 py-3 focus:border-blue-500 focus:outline-none"
+          type="email"
+          class="w-full"
         />
       </div>
 
       <!-- Password Field -->
       <div class="mb-6">
         <div class="flex items-center justify-between mb-2">
-          <label class="text-gray-300 text-sm font-medium">Password</label>
+          <span class="text-gray-300 text-sm font-medium">Password</span>
           <a href="#" class="text-blue-400 text-sm hover:text-blue-300">Forgot password?</a>
         </div>
-        <InputText
+        <DSInput
           v-model="password"
           type="password"
           placeholder="Enter password"
-          class="w-full bg-gray-800 border border-gray-600 text-white placeholder-gray-400 rounded-lg px-3 py-3 focus:border-blue-500 focus:outline-none"
+          class="w-full"
         />
       </div>
 
       <!-- Login Button -->
-      <button 
+      <DSButton
         @click="handleLogin"
         :disabled="!email || !password"
-        class="w-full bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 disabled:from-gray-600 disabled:to-gray-700 disabled:cursor-not-allowed text-white py-3 px-4 rounded-lg font-semibold transition-all duration-200 mb-4"
-      >
-        Log in
-      </button>
+        variant="primary"
+        size="large"
+        class="w-full mb-4"
+        label="Log in"
+      />
 
       <!-- Sign Up Link -->
       <div class="text-center">
@@ -69,7 +73,7 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import InputText from 'primevue/inputtext'
+import { DSButton, DSInput } from '@/design-system/components'
 
 // Define emits
 const emit = defineEmits(['close', 'google-signin', 'login-success', 'show-signup'])
