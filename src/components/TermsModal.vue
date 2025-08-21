@@ -34,21 +34,21 @@
       
       <!-- Buttons -->
       <div class="flex gap-3 justify-end">
-        <DSButton
-          label="Cancel"
-          variant="secondary"
-          class="px-6 py-2"
+        <button
+          class="btn-secondary px-6 py-2 rounded-lg font-medium transition-all duration-200"
           @click="$emit('cancel')"
           tabindex="5"
-        />
-        <DSButton
-          label="I Agree"
-          variant="primary"
-          class="px-6 py-2"
+        >
+          Cancel
+        </button>
+        <button
+          class="btn-primary px-6 py-2 rounded-lg font-medium transition-all duration-200"
           @click="handleAgree"
           @keydown.tab="handleAgreeButtonTab"
           tabindex="6"
-        />
+        >
+          I Agree
+        </button>
       </div>
     </div>
   </div>
