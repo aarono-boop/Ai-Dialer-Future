@@ -1,22 +1,20 @@
 <template>
   <div class="mt-4" role="region" aria-label="Chat input area">
     <div class="flex items-center bg-gray-800 backdrop-blur-[10px] border border-gray-600 rounded-xl px-3 py-2 gap-2 w-[70%] mx-auto chat-input-container">
-      <div class="flex-1">
-        <DSInput
-          ref="inputRef"
-          v-model="inputValue"
-          :placeholder="props.customPlaceholder || animatedPlaceholder"
-          class="bg-transparent border-none text-white text-base px-4 py-3 placeholder-gray-300 focus:outline-none focus:ring-0"
-          style="background-color: transparent !important; color: white !important;"
-          @keyup.enter="handleSend"
-          @keydown.tab="handleTabKey"
-          @focus="pauseAnimation"
-          @blur="resumeAnimation"
-          aria-label="Type your message or question"
-          aria-describedby="chat-input-help"
-          tabindex="7"
-        />
-      </div>
+      <DSInput
+        ref="inputRef"
+        v-model="inputValue"
+        :placeholder="props.customPlaceholder || animatedPlaceholder"
+        class="flex-1 bg-transparent border-none text-white text-base px-4 py-3 placeholder-gray-300 focus:outline-none focus:ring-0"
+        style="background-color: transparent !important; color: white !important;"
+        @keyup.enter="handleSend"
+        @keydown.tab="handleTabKey"
+        @focus="pauseAnimation"
+        @blur="resumeAnimation"
+        aria-label="Type your message or question"
+        aria-describedby="chat-input-help"
+        tabindex="7"
+      />
       <button
         class="w-10 h-10 flex items-center justify-center text-white transition-colors duration-200 hover:opacity-80 disabled:opacity-50 bg-transparent border-none cursor-pointer"
         :disabled="!inputValue.trim()"
