@@ -365,7 +365,15 @@ const toggleMute = () => {
   nextTick(() => {
     setTimeout(() => {
       if (muteButtonRef.value) {
-        muteButtonRef.value.focus()
+        // DSButton component - need to find the actual DOM element
+        const buttonElement = muteButtonRef.value.$el || muteButtonRef.value
+        if (buttonElement && buttonElement.focus) {
+          buttonElement.focus()
+        } else {
+          // Fallback: focus by tabindex
+          const muteBtn = document.querySelector('[tabindex="9"]') as HTMLElement
+          if (muteBtn) muteBtn.focus()
+        }
       }
     }, 100)
   })
