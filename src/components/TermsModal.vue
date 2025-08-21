@@ -35,17 +35,21 @@
       <!-- Buttons -->
       <div class="flex gap-3 justify-end">
         <button
-          class="btn-secondary px-6 py-2 rounded-lg font-medium transition-all duration-200"
+          type="button"
+          class="btn-secondary px-6 py-2 rounded-lg font-medium transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500"
           @click="$emit('cancel')"
           tabindex="5"
+          aria-label="Cancel and close modal"
         >
           Cancel
         </button>
         <button
-          class="btn-primary px-6 py-2 rounded-lg font-medium transition-all duration-200"
+          type="button"
+          class="btn-primary px-6 py-2 rounded-lg font-medium transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500"
           @click="handleAgree"
           @keydown.tab="handleAgreeButtonTab"
           tabindex="6"
+          aria-label="Agree to terms and conditions"
         >
           I Agree
         </button>
