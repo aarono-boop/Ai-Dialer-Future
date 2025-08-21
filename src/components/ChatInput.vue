@@ -15,15 +15,15 @@
         aria-describedby="chat-input-help"
         tabindex="7"
       />
-      <DSButton
-        icon="pi pi-send"
-        class="w-10 h-10 flex items-center justify-center text-purple-400 transition-colors duration-200 hover:text-purple-300 disabled:opacity-50 disabled:text-gray-600"
+      <button
+        class="w-10 h-10 flex items-center justify-center text-purple-400 transition-colors duration-200 hover:text-purple-300 disabled:opacity-50 disabled:text-gray-600 bg-transparent border-none cursor-pointer"
         :disabled="!inputValue.trim()"
-        text
         @click="handleSend"
         aria-label="Send message"
         :aria-describedby="!inputValue.trim() ? 'send-button-help' : ''"
-      />
+      >
+        <i class="pi pi-send"></i>
+      </button>
     </div>
     <div id="chat-input-help" class="sr-only">
       Press Enter to send your message or use the send button
