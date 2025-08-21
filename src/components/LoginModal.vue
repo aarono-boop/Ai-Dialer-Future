@@ -105,21 +105,3 @@ const handleLogin = () => {
   }
 }
 </script>
-
-<style scoped>
-/* Custom input styling */
-:deep(.p-inputtext) {
-  background-color: rgb(31 41 55) !important;
-  border-color: rgb(75 85 99) !important;
-  color: white !important;
-}
-
-:deep(.p-inputtext:focus) {
-  border-color: rgb(59 130 246) !important;
-  box-shadow: none !important;
-}
-
-:deep(.p-inputtext::placeholder) {
-  color: rgb(156 163 175) !important;
-}
-</style>
