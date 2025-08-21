@@ -178,7 +178,7 @@ const openAcceptable = () => {
 
 .modal-container {
   background: #1e293b;
-  border: 1px solid #475569;
+  border: 1px solid #3b82f6;
   border-radius: 1rem;
   padding: 1.5rem;
   max-width: 28rem;
