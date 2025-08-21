@@ -50,7 +50,7 @@
             <h3 class="text-lg font-semibold text-gray-800 mb-4">Contact Information</h3>
             <div>
               <label class="block text-sm font-medium text-gray-700 mb-2">Email</label>
-              <InputText
+              <DSInput
                 v-model="email"
                 type="email"
                 placeholder="charles+1@phoneburner.com"
@@ -92,7 +92,7 @@
               <div>
                 <label class="block text-sm font-medium text-gray-700 mb-2">Card number</label>
                 <div class="relative">
-                  <InputText
+                  <DSInput
                     v-model="cardNumber"
                     placeholder="1234 1234 1234 1234"
                     class="w-full pr-20"
@@ -114,7 +114,7 @@
               <div class="grid grid-cols-2 gap-4">
                 <div>
                   <label class="block text-sm font-medium text-gray-700 mb-2">Expiration date</label>
-                  <InputText
+                  <DSInput
                     v-model="expirationDate"
                     placeholder="MM / YY"
                     :pt="{
@@ -125,7 +125,7 @@
                 <div>
                   <label class="block text-sm font-medium text-gray-700 mb-2">Security code</label>
                   <div class="relative">
-                    <InputText
+                    <DSInput
                       v-model="securityCode"
                       placeholder="CVC"
                       :pt="{
@@ -156,7 +156,7 @@
               <!-- ZIP Code -->
               <div>
                 <label class="block text-sm font-medium text-gray-700 mb-2">ZIP code</label>
-                <InputText
+                <DSInput
                   v-model="zipCode"
                   placeholder="12345"
                   :pt="{
