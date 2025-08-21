@@ -1,16 +1,19 @@
 <template>
   <footer class="flex justify-center items-center p-6 text-gray-500 text-xs relative z-[5] -mt-[25px]">
     <p>&copy; 2025 ARKON. All rights reserved.</p>
-    <button
+    <DSButton
       @click="$emit('skip-to-dialer')"
-      class="ml-4 text-gray-400 hover:text-gray-300 underline transition-colors"
-    >
-      Skip to Dialer
-    </button>
+      variant="tertiary"
+      size="small"
+      class="ml-4 underline"
+      label="Skip to Dialer"
+    />
   </footer>
 </template>
 
 <script setup lang="ts">
+import { DSButton } from '@/design-system/components'
+
 // Define emits
 defineEmits(['skip-to-dialer'])
 </script>
