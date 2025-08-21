@@ -41,7 +41,7 @@
       
       <div class="flex gap-4 items-center" role="group" aria-label="User actions">
         <!-- Product link -->
-        <Button
+        <DSButton
           v-if="!isSignedIn"
           label="Product"
           text
@@ -86,7 +86,7 @@
         </div>
 
         <!-- Login button when not signed in -->
-        <Button
+        <DSButton
           v-else
           label="Login"
           text
