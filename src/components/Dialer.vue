@@ -12,7 +12,7 @@
       <!-- Contact Progress -->
       <div class="mt-2 text-center">
         <div class="text-gray-400 text-xs">
-          Contact {{ currentContactIndex + 1 }} of {{ totalContacts }}
+          Contact {{ currentContactIndex + 1 }} of 3
         </div>
         <div class="mt-1 bg-gray-700 rounded-full h-2">
           <div
