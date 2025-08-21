@@ -36,7 +36,9 @@ const props = withDefaults(defineProps<DSButtonProps>(), {
   variant: 'primary',
   size: 'medium',
   disabled: false,
-  loading: false
+  loading: false,
+  iconPos: 'left',
+  text: false
 })
 
 const computedClasses = computed(() => {
