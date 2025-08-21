@@ -387,7 +387,15 @@ const toggleHold = () => {
   nextTick(() => {
     setTimeout(() => {
       if (holdButtonRef.value) {
-        holdButtonRef.value.focus()
+        // DSButton component - need to find the actual DOM element
+        const buttonElement = holdButtonRef.value.$el || holdButtonRef.value
+        if (buttonElement && buttonElement.focus) {
+          buttonElement.focus()
+        } else {
+          // Fallback: focus by tabindex
+          const holdBtn = document.querySelector('[tabindex="11"]') as HTMLElement
+          if (holdBtn) holdBtn.focus()
+        }
       }
     }, 100)
   })
