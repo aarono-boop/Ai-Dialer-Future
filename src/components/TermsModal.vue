@@ -31,14 +31,16 @@
       
       <!-- Buttons -->
       <div class="flex gap-3 justify-end">
-        <Button
+        <DSButton
           label="Cancel"
-          class="btn-secondary px-6 py-2 rounded-lg"
+          variant="secondary"
+          class="px-6 py-2"
           @click="$emit('cancel')"
         />
-        <Button
+        <DSButton
           label="I Agree"
-          class="btn-primary px-6 py-2 rounded-lg"
+          variant="primary"
+          class="px-6 py-2"
           @click="handleAgree"
         />
       </div>
@@ -47,7 +49,7 @@
 </template>
 
 <script setup lang="ts">
-import Button from 'primevue/button'
+import { DSButton } from '@/design-system/components'
 
 // Define props
 interface Props {
