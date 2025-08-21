@@ -674,6 +674,19 @@ const handleHoldKeydown = (event: KeyboardEvent) => {
   background: rgba(255, 255, 255, 0.5);
 }
 
+/* Prevent transform effects on action buttons to avoid layout shift */
+:deep(.ds-button) {
+  transform: none !important;
+}
+
+:deep(.ds-button:hover) {
+  transform: none !important;
+}
+
+:deep(.ds-button:active) {
+  transform: none !important;
+}
+
 /* Keypad button styles */
 .keypad-btn {
   @apply bg-gray-700 hover:bg-gray-600 active:bg-gray-500 text-white rounded-lg py-4 px-3 flex flex-col items-center justify-center gap-1 transition-colors min-h-16;
