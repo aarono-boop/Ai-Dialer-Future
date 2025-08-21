@@ -36,7 +36,7 @@
       <div class="flex gap-3 justify-end">
         <button
           type="button"
-          class="btn-secondary px-6 py-2 rounded-lg font-medium transition-all duration-200 focus:outline-none focus:ring-4 focus:ring-yellow-400 focus:bg-gray-600"
+          class="bg-gray-600 hover:bg-gray-500 text-white px-6 py-2 rounded-lg font-medium transition-colors duration-200 focus:ring-4 focus:ring-yellow-400 border-none cursor-pointer"
           @click="$emit('cancel')"
           tabindex="5"
           aria-label="Cancel and close modal"
@@ -46,7 +46,7 @@
         </button>
         <button
           type="button"
-          class="btn-primary px-6 py-2 rounded-lg font-medium transition-all duration-200 focus:outline-none focus:ring-4 focus:ring-yellow-400 focus:bg-purple-600"
+          class="bg-purple-600 hover:bg-purple-500 text-white px-6 py-2 rounded-lg font-medium transition-colors duration-200 focus:ring-4 focus:ring-yellow-400 border-none cursor-pointer"
           @click="handleAgree"
           tabindex="6"
           aria-label="Agree to terms and conditions"
