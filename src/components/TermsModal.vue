@@ -25,10 +25,10 @@
         <!-- Terms Agreement Box -->
         <div class="bg-slate-900 border border-slate-600 rounded-lg p-4">
           <p class="text-slate-300 text-sm leading-relaxed">
-            By clicking "I Agree," you agree to PhoneBurner's 
-            <a href="#" class="text-blue-400 hover:text-blue-300 transition-colors duration-200">terms of service</a>, 
-            <a href="#" class="text-blue-400 hover:text-blue-300 transition-colors duration-200">privacy policy</a> 
-            and <a href="#" class="text-blue-400 hover:text-blue-300 transition-colors duration-200">acceptable use policy</a>.
+            By clicking "I Agree," you agree to PhoneBurner's
+            <a href="#" class="text-blue-400 hover:text-blue-300 transition-colors duration-200" tabindex="2">terms of service</a>,
+            <a href="#" class="text-blue-400 hover:text-blue-300 transition-colors duration-200" tabindex="3">privacy policy</a>
+            and <a href="#" class="text-blue-400 hover:text-blue-300 transition-colors duration-200" tabindex="4">acceptable use policy</a>.
           </p>
         </div>
       </div>
