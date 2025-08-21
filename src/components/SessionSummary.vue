@@ -4,9 +4,9 @@
       <!-- Header -->
       <div class="flex items-center justify-between mb-6">
         <h2 class="text-white text-2xl font-bold">Queue Paused!</h2>
-        <button @click="$emit('close')" class="text-gray-400 hover:text-white">
+        <DSButton @click="$emit('close')" variant="tertiary" size="small">
           <i class="pi pi-times text-xl"></i>
-        </button>
+        </DSButton>
       </div>
 
       <!-- Statistics -->
@@ -99,45 +99,50 @@
           </div>
         </div>
         
-        <button 
+        <DSButton
           @click="$emit('export-file')"
-          class="bg-gray-700 hover:bg-gray-600 text-white px-4 py-2 rounded-lg flex items-center gap-2 transition-colors"
+          variant="secondary"
+          class="flex items-center gap-2"
         >
           <i class="pi pi-download"></i>
           Export Enriched File
-        </button>
+        </DSButton>
       </div>
 
       <!-- Action Buttons -->
       <div v-if="isQueueComplete" class="flex justify-center">
-        <button
+        <DSButton
           @click="$emit('load-new-file')"
-          class="btn-secondary py-3 px-8 rounded-lg font-semibold"
-        >
-          Load New File
-        </button>
+          variant="secondary"
+          size="large"
+          label="Load New File"
+        />
       </div>
 
       <div v-else class="flex gap-4">
-        <button
+        <DSButton
           @click="$emit('continue-queue')"
-          class="btn-primary flex-1 py-3 px-6 rounded-lg font-semibold"
-        >
-          Continue Call Queue
-        </button>
+          variant="primary"
+          size="large"
+          class="flex-1"
+          label="Continue Call Queue"
+        />
 
-        <button
+        <DSButton
           @click="$emit('load-new-file')"
-          class="btn-secondary flex-1 py-3 px-6 rounded-lg font-semibold"
-        >
-          Load New File
-        </button>
+          variant="secondary"
+          size="large"
+          class="flex-1"
+          label="Load New File"
+        />
       </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
+import { DSButton, DSCard } from '@/design-system/components'
+
 // Define props
 defineProps<{
   contactsLeft: number
