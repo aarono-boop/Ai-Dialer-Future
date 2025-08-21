@@ -17,7 +17,7 @@
         <div class="mt-1 bg-gray-700 rounded-full h-2">
           <div
             class="bg-blue-500 h-2 rounded-full transition-all duration-300"
-            :style="{ width: `${((currentContactIndex + 1) / totalContacts) * 100}%` }"
+            :style="{ width: `${((currentContactIndex + 1) / 3) * 100}%` }"
           ></div>
         </div>
       </div>
