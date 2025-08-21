@@ -798,6 +798,49 @@ const handleHoldKeydown = (event: KeyboardEvent) => {
   max-height: 48px !important;
 }
 
+/* Lock down the entire action buttons section */
+.space-y-3 {
+  min-height: 120px !important;
+  max-height: 120px !important;
+}
+
+/* Prevent any flex item growth that could cause movement */
+:deep(.flex-col) {
+  flex-shrink: 0 !important;
+}
+
+/* Ultra-aggressive button stabilization */
+:deep(button) {
+  flex-shrink: 0 !important;
+  flex-grow: 0 !important;
+}
+
+/* Specific targeting for all dialer buttons */
+:deep([tabindex="9"]),
+:deep([tabindex="10"]),
+:deep([tabindex="11"]),
+:deep([tabindex="12"]) {
+  height: 48px !important;
+  min-height: 48px !important;
+  max-height: 48px !important;
+  box-sizing: border-box !important;
+  flex-shrink: 0 !important;
+  flex-grow: 0 !important;
+}
+
+:deep([tabindex="9"]:hover),
+:deep([tabindex="10"]:hover),
+:deep([tabindex="11"]:hover),
+:deep([tabindex="12"]:hover) {
+  height: 48px !important;
+  min-height: 48px !important;
+  max-height: 48px !important;
+  box-sizing: border-box !important;
+  transform: none !important;
+  flex-shrink: 0 !important;
+  flex-grow: 0 !important;
+}
+
 /* Keypad button styles */
 .keypad-btn {
   @apply bg-gray-700 hover:bg-gray-600 active:bg-gray-500 text-white rounded-lg py-4 px-3 flex flex-col items-center justify-center gap-1 transition-colors min-h-16;
