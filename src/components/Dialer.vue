@@ -704,12 +704,22 @@ const handleHoldKeydown = (event: KeyboardEvent) => {
 :deep(.p-button) {
   border-width: 1px !important;
   box-sizing: border-box !important;
+  min-height: auto !important;
+  height: auto !important;
+  line-height: inherit !important;
+  font-size: inherit !important;
 }
 
 :deep(.p-button:hover) {
   border-width: 1px !important;
   box-sizing: border-box !important;
   transform: none !important;
+  min-height: auto !important;
+  height: auto !important;
+  line-height: inherit !important;
+  font-size: inherit !important;
+  padding: inherit !important;
+  margin: inherit !important;
 }
 
 :deep(.p-button:focus) {
@@ -718,6 +728,17 @@ const handleHoldKeydown = (event: KeyboardEvent) => {
   transform: none !important;
   outline: none !important;
   box-shadow: none !important;
+  min-height: auto !important;
+  height: auto !important;
+  line-height: inherit !important;
+  font-size: inherit !important;
+  padding: inherit !important;
+  margin: inherit !important;
+}
+
+/* Lock down button dimensions completely */
+:deep(.p-button), :deep(.ds-button) {
+  transition: background-color 0.2s ease, color 0.2s ease !important;
 }
 
 /* Keypad button styles */
