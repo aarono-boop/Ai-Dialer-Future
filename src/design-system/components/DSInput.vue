@@ -29,6 +29,11 @@
 import { computed } from 'vue'
 import InputText from 'primevue/inputtext'
 
+// Prevent attributes from being inherited by the wrapper div
+defineOptions({
+  inheritAttrs: false
+})
+
 export interface DSInputProps {
   label?: string
   placeholder?: string
