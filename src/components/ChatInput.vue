@@ -157,16 +157,24 @@ const handleTabKey = (event: KeyboardEvent) => {
     const dialerButton9 = document.querySelector('[tabindex="9"]') as HTMLElement // Could be Mute or Call Back
     const dialerButton10 = document.querySelector('[tabindex="10"]') as HTMLElement // Could be Keypad or Next
 
+    // Helper function to check if a button is disabled (handles both standard and PrimeVue disabled states)
+    const isButtonDisabled = (button: HTMLElement): boolean => {
+      return button.disabled ||
+             button.getAttribute('disabled') === 'true' ||
+             button.getAttribute('data-p-disabled') === 'true' ||
+             button.hasAttribute('disabled')
+    }
+
     // Try to focus on any available dialer control in order of preference
-    if (pauseQueueButton && pauseQueueButton.offsetParent !== null && !pauseQueueButton.disabled) {
+    if (pauseQueueButton && pauseQueueButton.offsetParent !== null && !isButtonDisabled(pauseQueueButton)) {
       // Pause Queue is available and enabled, focus it first
       pauseQueueButton.focus()
       console.log('Focused Pause Queue button')
-    } else if (dialerButton9 && dialerButton9.offsetParent !== null && !dialerButton9.disabled) {
+    } else if (dialerButton9 && dialerButton9.offsetParent !== null && !isButtonDisabled(dialerButton9)) {
       // Focus tabindex="9" button (Mute when connected, Call Back when ended)
       dialerButton9.focus()
       console.log('Focused dialer button (tabindex="9")')
-    } else if (dialerButton10 && dialerButton10.offsetParent !== null && !dialerButton10.disabled) {
+    } else if (dialerButton10 && dialerButton10.offsetParent !== null && !isButtonDisabled(dialerButton10)) {
       // Focus tabindex="10" button (Keypad when connected, Next when ended)
       dialerButton10.focus()
       console.log('Focused dialer button (tabindex="10")')
@@ -176,6 +184,8 @@ const handleTabKey = (event: KeyboardEvent) => {
       if (arkonLogo) {
         arkonLogo.focus()
         console.log('No dialer controls available, focused ARKON logo')
+      } else {
+        console.log('Could not find ARKON logo to focus')
       }
     }
   }
