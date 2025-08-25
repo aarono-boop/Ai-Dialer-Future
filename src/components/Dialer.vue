@@ -820,6 +820,41 @@ const handleHoldKeydown = (event: KeyboardEvent) => {
   flex-grow: 0 !important;
 }
 
+/* Pause Queue button stabilization */
+:deep([tabindex="8"]) {
+  height: auto !important;
+  min-height: auto !important;
+  max-height: auto !important;
+  box-sizing: border-box !important;
+  flex-shrink: 0 !important;
+  flex-grow: 0 !important;
+  transform: none !important;
+  border: 1px solid transparent !important;
+  vertical-align: top !important;
+}
+
+:deep([tabindex="8"]:hover) {
+  box-sizing: border-box !important;
+  transform: none !important;
+  flex-shrink: 0 !important;
+  flex-grow: 0 !important;
+  border: 1px solid transparent !important;
+  vertical-align: top !important;
+  padding: inherit !important;
+  margin: inherit !important;
+}
+
+:deep([tabindex="8"]:focus) {
+  box-sizing: border-box !important;
+  transform: none !important;
+  flex-shrink: 0 !important;
+  flex-grow: 0 !important;
+  border: 1px solid transparent !important;
+  vertical-align: top !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
+
 /* Specific targeting for call control buttons (mute, keypad, hold, hang up) */
 :deep([tabindex="11"]),
 :deep([tabindex="12"]) {
