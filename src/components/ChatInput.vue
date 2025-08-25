@@ -156,38 +156,59 @@ const handleTabKey = (event: KeyboardEvent) => {
     const pauseQueueButton = document.querySelector('[tabindex="8"]') as HTMLElement
     const dialerButton9 = document.querySelector('[tabindex="9"]') as HTMLElement // Could be Mute or Call Back
     const dialerButton10 = document.querySelector('[tabindex="10"]') as HTMLElement // Could be Keypad or Next
+    const dialerButton11 = document.querySelector('[tabindex="11"]') as HTMLElement // Could be Hold
+    const dialerButton12 = document.querySelector('[tabindex="12"]') as HTMLElement // Could be Hang Up
+
+    console.log('=== TAB NAVIGATION DEBUG ===')
+    console.log('Pause Queue (8):', pauseQueueButton, 'visible:', pauseQueueButton?.offsetParent !== null)
+    console.log('Button 9:', dialerButton9, 'visible:', dialerButton9?.offsetParent !== null)
+    console.log('Button 10:', dialerButton10, 'visible:', dialerButton10?.offsetParent !== null)
+    console.log('Button 11:', dialerButton11, 'visible:', dialerButton11?.offsetParent !== null)
+    console.log('Button 12:', dialerButton12, 'visible:', dialerButton12?.offsetParent !== null)
 
     // Helper function to check if a button is disabled (handles both standard and PrimeVue disabled states)
     const isButtonDisabled = (button: HTMLElement): boolean => {
-      return button.disabled ||
+      if (!button) return true
+      const disabled = button.disabled ||
              button.getAttribute('disabled') === 'true' ||
              button.getAttribute('data-p-disabled') === 'true' ||
              button.hasAttribute('disabled')
+      console.log(`Button with text "${button.textContent?.trim()}" disabled:`, disabled)
+      return disabled
     }
 
     // Try to focus on any available dialer control in order of preference
     if (pauseQueueButton && pauseQueueButton.offsetParent !== null && !isButtonDisabled(pauseQueueButton)) {
       // Pause Queue is available and enabled, focus it first
       pauseQueueButton.focus()
-      console.log('Focused Pause Queue button')
+      console.log('✅ Focused Pause Queue button')
     } else if (dialerButton9 && dialerButton9.offsetParent !== null && !isButtonDisabled(dialerButton9)) {
       // Focus tabindex="9" button (Mute when connected, Call Back when ended)
       dialerButton9.focus()
-      console.log('Focused dialer button (tabindex="9")')
+      console.log('✅ Focused dialer button (tabindex="9"):', dialerButton9.textContent?.trim())
     } else if (dialerButton10 && dialerButton10.offsetParent !== null && !isButtonDisabled(dialerButton10)) {
       // Focus tabindex="10" button (Keypad when connected, Next when ended)
       dialerButton10.focus()
-      console.log('Focused dialer button (tabindex="10")')
+      console.log('✅ Focused dialer button (tabindex="10"):', dialerButton10.textContent?.trim())
+    } else if (dialerButton11 && dialerButton11.offsetParent !== null && !isButtonDisabled(dialerButton11)) {
+      // Focus tabindex="11" button (Hold when connected)
+      dialerButton11.focus()
+      console.log('✅ Focused dialer button (tabindex="11"):', dialerButton11.textContent?.trim())
+    } else if (dialerButton12 && dialerButton12.offsetParent !== null && !isButtonDisabled(dialerButton12)) {
+      // Focus tabindex="12" button (Hang Up when connected)
+      dialerButton12.focus()
+      console.log('✅ Focused dialer button (tabindex="12"):', dialerButton12.textContent?.trim())
     } else {
       // No dialer visible, cycle back to ARKON logo (tabindex="1")
       const arkonLogo = document.querySelector('[tabindex="1"]') as HTMLElement
       if (arkonLogo) {
         arkonLogo.focus()
-        console.log('No dialer controls available, focused ARKON logo')
+        console.log('❌ No dialer controls available, focused ARKON logo')
       } else {
-        console.log('Could not find ARKON logo to focus')
+        console.log('❌ Could not find ARKON logo to focus')
       }
     }
+    console.log('=== END TAB DEBUG ===')
   }
   // For Shift+Tab (backward), let default behavior handle it
 }
