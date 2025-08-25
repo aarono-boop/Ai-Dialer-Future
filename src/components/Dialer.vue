@@ -199,7 +199,7 @@
           @keydown.tab="handleNextContactTab"
           tabindex="10"
           :disabled="(shouldCompleteQueue && !queueCompletionReady) || (callState === 'ended' && !dispositionSet)"
-          :variant="shouldCompleteQueue ? (queueCompletionReady ? 'success' : 'secondary') : dispositionSet ? 'primary' : 'secondary'"
+          :variant="shouldCompleteQueue ? (dispositionSet ? 'primary' : 'secondary') : dispositionSet ? 'primary' : 'secondary'"
           class="w-full flex items-center justify-center gap-2 py-3"
         >
           <i :class="shouldCompleteQueue ? 'pi pi-check' : 'pi pi-arrow-right'"></i>
