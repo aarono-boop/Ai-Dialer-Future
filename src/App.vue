@@ -860,8 +860,8 @@ const sendMessage = (message: string): void => {
   // Add user message
   addUserMessage(message)
 
-  // Handle notes input for disposition
-  if (waitingForNotesInput.value) {
+  // Handle notes input for disposition (but not during session summary)
+  if (waitingForNotesInput.value && showDialer.value && !showContinueQueueButton.value && !showLoadNewFileButton.value) {
     waitingForNotesInput.value = false
 
     // Update contact notes
