@@ -1007,7 +1007,7 @@ const sendMessage = (message: string): void => {
         'ARKON\'s practice mode can help you:',
         '• Rehearse your opening pitch with AI feedback',
         '• Practice handling common objections',
-        '• Test different conversation flows',
+        '��� Test different conversation flows',
         '• Record and review your delivery',
         'Would you like to practice a cold call opening or work on handling objections?'
       ])
@@ -1411,10 +1411,13 @@ const handleExportFile = (): void => {
 }
 
 // Toggle function for Call Log collapse/expand
-const toggleCallLog = (): void => {
-  console.log('toggleCallLog called')
-  const content = document.getElementById('callLogContent')
-  const chevron = document.getElementById('callLogChevron')
+const toggleCallLog = (uniqueId?: string): void => {
+  console.log('toggleCallLog called with ID:', uniqueId)
+  const contentId = uniqueId ? `callLogContent_${uniqueId}` : 'callLogContent'
+  const chevronId = uniqueId ? `callLogChevron_${uniqueId}` : 'callLogChevron'
+
+  const content = document.getElementById(contentId)
+  const chevron = document.getElementById(chevronId)
 
   console.log('content:', content, 'chevron:', chevron)
 
@@ -1429,7 +1432,7 @@ const toggleCallLog = (): void => {
       console.log('Call log collapsed')
     }
   } else {
-    console.error('Could not find callLogContent or callLogChevron elements')
+    console.error(`Could not find ${contentId} or ${chevronId} elements`)
   }
 }
 
