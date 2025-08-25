@@ -1663,8 +1663,9 @@ const handleCompleteQueue = (): void => {
     queueTimer = null
   }
 
-  // Hide dialer
+  // Hide dialer and reset notes input state
   showDialer.value = false
+  waitingForNotesInput.value = false
 
   addAIMessage('Congratulations! You have completed your entire call queue. All contacts have been processed.')
 
