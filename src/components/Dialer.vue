@@ -785,9 +785,8 @@ const handleHoldKeydown = (event: KeyboardEvent) => {
 :deep([tabindex="10"]:focus),
 :deep([tabindex="11"]:focus),
 :deep([tabindex="12"]:focus) {
-  outline: 2px solid #60a5fa !important;
-  outline-offset: 2px !important;
-  box-shadow: 0 0 0 2px rgba(96, 165, 250, 0.2) !important;
+  outline: none !important;
+  box-shadow: inset 0 0 0 2px #60a5fa !important;
 }
 
 /* Lock down the action button containers */
