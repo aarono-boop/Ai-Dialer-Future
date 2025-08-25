@@ -116,6 +116,10 @@
               <td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af;">Lead Source:</td>
               <td style="padding: 4px 0; color: white;">{{ currentContact.leadSource }}</td>
             </tr>
+            <tr v-if="currentContact.notes">
+              <td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af;">Notes:</td>
+              <td style="padding: 4px 0; color: white; white-space: pre-wrap;">{{ currentContact.notes }}</td>
+            </tr>
           </table>
         </div>
       </div>
@@ -297,6 +301,7 @@ const props = defineProps<{
     industry: string
     companySize: string
     leadSource: string
+    notes: string
   }
   nextContactName: string
   shouldCompleteQueue: boolean
