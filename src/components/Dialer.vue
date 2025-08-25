@@ -838,16 +838,19 @@ const handleHoldKeydown = (event: KeyboardEvent) => {
   position: relative !important;
 }
 
-/* Ultra-aggressive Pause Queue button stabilization */
+/* Nuclear option: Override all global button styles for Pause Queue button */
+:deep([tabindex="8"].btn-secondary),
+:deep([tabindex="8"].ds-button),
+:deep([tabindex="8"].p-button),
 :deep([tabindex="8"]) {
+  transition: none !important;
+  animation: none !important;
+  transform: none !important;
   box-sizing: border-box !important;
   flex-shrink: 0 !important;
   flex-grow: 0 !important;
-  transform: none !important;
-  border: 1px solid transparent !important;
+  border: 1px solid rgba(255, 255, 255, 0.3) !important;
   vertical-align: top !important;
-  transition: none !important;
-  animation: none !important;
   width: auto !important;
   height: auto !important;
   min-width: auto !important;
@@ -855,6 +858,16 @@ const handleHoldKeydown = (event: KeyboardEvent) => {
   max-width: none !important;
   max-height: none !important;
   position: relative !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: auto !important;
+  bottom: auto !important;
+  margin: 0 !important;
+  padding: 8px 12px !important;
+  font-size: 0.875rem !important;
+  line-height: 1.25rem !important;
+  background-color: #344054 !important;
+  color: white !important;
 }
 
 :deep([tabindex="8"]:hover) {
