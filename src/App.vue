@@ -1287,7 +1287,7 @@ const simulateCall = (): void => {
 
 // Dialer Methods
 const handleCallBack = (): void => {
-  addAIMessage(`��� Calling ${currentContact.value.name} back on their number...`)
+  addAIMessage(`Calling ${currentContact.value.name} back on their number...`)
   simulateCall()
 }
 
