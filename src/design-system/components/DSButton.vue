@@ -113,45 +113,37 @@ const computedClasses = computed(() => {
 
 /* Focus styles for accessibility */
 :deep(.p-button:focus) {
-  outline: 2px solid #60a5fa !important;
-  outline-offset: 2px !important;
-  box-shadow: 0 0 0 2px rgba(96, 165, 250, 0.2) !important;
+  outline: none !important;
+  box-shadow: inset 0 0 0 2px #60a5fa !important;
 }
 
 :deep(.p-button:focus-visible) {
-  outline: 2px solid #60a5fa !important;
-  outline-offset: 2px !important;
-  box-shadow: 0 0 0 2px rgba(96, 165, 250, 0.2) !important;
+  outline: none !important;
+  box-shadow: inset 0 0 0 2px #60a5fa !important;
 }
 
 /* Variant-specific focus styles */
 :deep(.btn-primary:focus) {
-  outline-color: #3b82f6 !important;
-  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2) !important;
+  box-shadow: inset 0 0 0 2px #3b82f6 !important;
 }
 
 :deep(.btn-secondary:focus) {
-  outline-color: #6b7280 !important;
-  box-shadow: 0 0 0 2px rgba(107, 114, 128, 0.2) !important;
+  box-shadow: inset 0 0 0 2px #6b7280 !important;
 }
 
 :deep(.btn-tertiary:focus) {
-  outline-color: #9ca3af !important;
-  box-shadow: 0 0 0 2px rgba(156, 163, 175, 0.2) !important;
+  box-shadow: inset 0 0 0 2px #9ca3af !important;
 }
 
 :deep(.ds-button--success:focus) {
-  outline-color: #10b981 !important;
-  box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.2) !important;
+  box-shadow: inset 0 0 0 2px #10b981 !important;
 }
 
 :deep(.ds-button--warning:focus) {
-  outline-color: #f59e0b !important;
-  box-shadow: 0 0 0 2px rgba(245, 158, 11, 0.2) !important;
+  box-shadow: inset 0 0 0 2px #f59e0b !important;
 }
 
 :deep(.ds-button--error:focus) {
-  outline-color: #ef4444 !important;
-  box-shadow: 0 0 0 2px rgba(239, 68, 68, 0.2) !important;
+  box-shadow: inset 0 0 0 2px #ef4444 !important;
 }
 </style>
