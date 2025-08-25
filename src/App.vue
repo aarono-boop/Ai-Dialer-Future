@@ -1412,24 +1412,36 @@ const handleExportFile = (): void => {
 
 // Toggle function for Call Log collapse/expand
 const toggleCallLog = (): void => {
+  console.log('toggleCallLog called')
   const content = document.getElementById('callLogContent')
   const chevron = document.getElementById('callLogChevron')
+
+  console.log('content:', content, 'chevron:', chevron)
 
   if (content && chevron) {
     if (content.style.display === 'none') {
       content.style.display = 'block'
       chevron.style.transform = 'rotate(90deg)'
+      console.log('Call log expanded')
     } else {
       content.style.display = 'none'
       chevron.style.transform = 'rotate(0deg)'
+      console.log('Call log collapsed')
     }
+  } else {
+    console.error('Could not find callLogContent or callLogChevron elements')
   }
 }
 
-// Make functions globally accessible for onclick handlers in HTML strings
+// Make functions globally accessible immediately
+;(window as any).handleExportFile = handleExportFile
+;(window as any).toggleCallLog = toggleCallLog
+
+// Ensure functions are available on mount
 onMounted(() => {
   ;(window as any).handleExportFile = handleExportFile
   ;(window as any).toggleCallLog = toggleCallLog
+  console.log('Global functions assigned')
 })
 
 // Clean up global references when component is unmounted
