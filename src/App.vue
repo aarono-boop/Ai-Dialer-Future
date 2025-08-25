@@ -1453,6 +1453,7 @@ onUnmounted(() => {
 const addSessionSummaryToChat = (isCompleted: boolean = false): void => {
   // Create session summary content as HTML
   const title = isCompleted ? 'Queue Completed!' : 'Queue Paused!'
+  const uniqueId = Date.now() // Create unique ID for this session summary
   const summaryHTML = `
     <div style="background-color: rgb(31, 41, 55); border-radius: 12px; padding: 16px; margin: 12px 0;">
       <h2 style="color: white; font-size: 24px; font-weight: 600; margin-bottom: 32px;">${title}</h2>
