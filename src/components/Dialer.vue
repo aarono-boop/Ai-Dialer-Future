@@ -921,8 +921,9 @@ const handleHoldKeydown = (event: KeyboardEvent) => {
   flex-grow: 0 !important;
   border: 1px solid rgba(255, 255, 255, 0.3) !important;
   vertical-align: top !important;
-  outline: none !important;
-  box-shadow: none !important;
+  outline: 2px solid #6b7280 !important;
+  outline-offset: 2px !important;
+  box-shadow: 0 0 0 2px rgba(107, 114, 128, 0.2) !important;
   width: auto !important;
   height: auto !important;
   min-width: auto !important;
