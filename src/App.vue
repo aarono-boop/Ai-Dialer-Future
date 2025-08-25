@@ -1030,7 +1030,7 @@ const sendMessage = (message: string): void => {
       ])
     } else if (lowerMessage.includes('jenn')) {
       addAIMessage([
-        'Found Jenn! �����',
+        'Found Jenn!',
         'I found <strong>Jenn Peterson</strong> in your contacts.',
         'She has an <strong>89% pickup rate</strong> and is most likely available now.',
         'Ready to call Jenn?'
