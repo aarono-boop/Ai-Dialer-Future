@@ -870,17 +870,18 @@ const handleHoldKeydown = (event: KeyboardEvent) => {
   color: white !important;
 }
 
+:deep([tabindex="8"].btn-secondary:hover),
+:deep([tabindex="8"].ds-button:hover),
+:deep([tabindex="8"].p-button:hover),
 :deep([tabindex="8"]:hover) {
-  box-sizing: border-box !important;
-  transform: none !important;
-  flex-shrink: 0 !important;
-  flex-grow: 0 !important;
-  border: 1px solid transparent !important;
-  vertical-align: top !important;
-  padding: inherit !important;
-  margin: inherit !important;
   transition: none !important;
   animation: none !important;
+  transform: none !important;
+  box-sizing: border-box !important;
+  flex-shrink: 0 !important;
+  flex-grow: 0 !important;
+  border: 1px solid rgba(255, 255, 255, 0.3) !important;
+  vertical-align: top !important;
   width: auto !important;
   height: auto !important;
   min-width: auto !important;
@@ -888,10 +889,16 @@ const handleHoldKeydown = (event: KeyboardEvent) => {
   max-width: none !important;
   max-height: none !important;
   position: relative !important;
-  top: auto !important;
-  left: auto !important;
+  top: 0 !important;
+  left: 0 !important;
   right: auto !important;
   bottom: auto !important;
+  margin: 0 !important;
+  padding: 8px 12px !important;
+  font-size: 0.875rem !important;
+  line-height: 1.25rem !important;
+  background-color: #475467 !important;
+  color: white !important;
 }
 
 :deep([tabindex="8"]:focus) {
