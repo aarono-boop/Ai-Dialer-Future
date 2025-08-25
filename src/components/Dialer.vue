@@ -842,21 +842,49 @@ const handleHoldKeydown = (event: KeyboardEvent) => {
   flex-grow: 0 !important;
 }
 
-/* Action buttons (call back, next) need different treatment */
+/* Action buttons (call back, next) need aggressive height locking */
 :deep([tabindex="9"]),
 :deep([tabindex="10"]) {
+  height: 48px !important;
+  min-height: 48px !important;
+  max-height: 48px !important;
   box-sizing: border-box !important;
   flex-shrink: 0 !important;
   flex-grow: 0 !important;
   margin-bottom: 0.5rem !important; /* Add explicit spacing */
+  transform: none !important;
+  border: 1px solid transparent !important;
+  vertical-align: top !important;
 }
 
 :deep([tabindex="9"]:hover),
 :deep([tabindex="10"]:hover) {
+  height: 48px !important;
+  min-height: 48px !important;
+  max-height: 48px !important;
   box-sizing: border-box !important;
   transform: none !important;
   flex-shrink: 0 !important;
   flex-grow: 0 !important;
+  border: 1px solid transparent !important;
+  vertical-align: top !important;
+  padding: inherit !important;
+  margin: 0 0 0.5rem 0 !important;
+}
+
+:deep([tabindex="9"]:focus),
+:deep([tabindex="10"]:focus) {
+  height: 48px !important;
+  min-height: 48px !important;
+  max-height: 48px !important;
+  box-sizing: border-box !important;
+  transform: none !important;
+  flex-shrink: 0 !important;
+  flex-grow: 0 !important;
+  border: 1px solid transparent !important;
+  vertical-align: top !important;
+  outline: none !important;
+  box-shadow: none !important;
 }
 
 /* Ensure space-y-2 class works properly */
