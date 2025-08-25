@@ -1173,7 +1173,7 @@ const getPlaceholderText = (): string => {
 
   if (isInitialWelcomeState) {
     return '' // Allow animation
-  } else if (waitingForNotesInput.value) {
+  } else if (waitingForNotesInput.value && showDialer.value && !showContinueQueueButton.value && !showLoadNewFileButton.value) {
     return 'Enter notes...'
   } else {
     return 'Reply to ARKON...' // Static text everywhere else
