@@ -1390,8 +1390,9 @@ const handlePauseQueue = (): void => {
     callSimulationTimeout = null
   }
 
-  // Hide dialer
+  // Hide dialer and reset notes input state
   showDialer.value = false
+  waitingForNotesInput.value = false
 
   addAIMessage('Queue paused. You can review your session summary.')
 
