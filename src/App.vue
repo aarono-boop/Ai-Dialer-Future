@@ -1689,6 +1689,9 @@ const handleDisposition = (disposition: string): void => {
   // Add user message showing what disposition was selected
   addUserMessage(disposition)
 
+  // Set disposition flag to enable next button immediately (notes are optional)
+  dispositionSet.value = true
+
   // Set flag to wait for notes input
   waitingForNotesInput.value = true
 
