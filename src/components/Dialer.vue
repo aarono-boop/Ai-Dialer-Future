@@ -198,7 +198,7 @@
           @click="shouldCompleteQueue ? completeQueue() : nextContact()"
           @keydown.tab="handleNextContactTab"
           tabindex="10"
-          :disabled="(shouldCompleteQueue && !queueCompletionReady) || (callState === 'ended' && !dispositionSet)"
+          :disabled="callState === 'ended' && !dispositionSet"
           :variant="shouldCompleteQueue ? (dispositionSet ? 'primary' : 'secondary') : dispositionSet ? 'primary' : 'secondary'"
           class="w-full flex items-center justify-center gap-2 py-3"
         >
