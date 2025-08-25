@@ -144,7 +144,7 @@
           </div>
 
           <!-- Disposition Buttons - always visible when active -->
-          <div v-if="showDispositionButtons" class="mt-2 pt-5 flex justify-center">
+          <div v-if="showDispositionButtons && showDialer && !showContinueQueueButton && !showLoadNewFileButton" class="mt-2 pt-5 flex justify-center">
             <div class="w-[70%] grid grid-cols-4 gap-3">
               <button
                 @click="handleDisposition('Follow up')"
