@@ -369,6 +369,8 @@ const showSessionSummary = ref<boolean>(false)
 const showContinueQueueButton = ref<boolean>(false)
 const showLoadNewFileButton = ref<boolean>(false)
 const waitingForTryAgainResponse = ref<boolean>(false)
+const waitingForNotesInput = ref<boolean>(false)
+const currentDisposition = ref<string>('')
 const dispositionSet = ref<boolean>(false)
 const queuePaused = ref<boolean>(false)
 const queueCompletionReady = ref<boolean>(false)
@@ -395,7 +397,8 @@ const contacts = [
     linkedin: 'https://www.linkedin.com/in/samsample-fake',
     industry: 'Technology / SaaS',
     companySize: '250-500 employees',
-    leadSource: 'Webinar Registration'
+    leadSource: 'Webinar Registration',
+    notes: ''
   },
   {
     name: 'George Sample',
@@ -410,7 +413,8 @@ const contacts = [
     linkedin: 'https://www.linkedin.com/in/georgesample-fake',
     industry: 'Marketing & Advertising',
     companySize: '11-50 employees',
-    leadSource: 'Conference Booth'
+    leadSource: 'Conference Booth',
+    notes: ''
   },
   {
     name: 'Jennifer Martinez',
@@ -425,7 +429,8 @@ const contacts = [
     linkedin: 'https://www.linkedin.com/in/jennifermartinez',
     industry: 'Software Development',
     companySize: '100-250 employees',
-    leadSource: 'LinkedIn Outreach'
+    leadSource: 'LinkedIn Outreach',
+    notes: ''
   },
   {
     name: 'David Wilson',
@@ -440,7 +445,8 @@ const contacts = [
     linkedin: 'https://www.linkedin.com/in/davidwilson',
     industry: 'Enterprise Solutions',
     companySize: '500+ employees',
-    leadSource: 'Trade Show'
+    leadSource: 'Trade Show',
+    notes: ''
   }
 ]
 
@@ -527,6 +533,8 @@ const handleLogout = () => {
   showContinueQueueButton.value = false
   showLoadNewFileButton.value = false
   showFileUploadForReturningUser.value = false
+  waitingForNotesInput.value = false
+  currentDisposition.value = ''
 
   // Reset calling state
   callState.value = 'ended'
@@ -537,6 +545,8 @@ const handleLogout = () => {
   queuePaused.value = false
   queueCompletionReady.value = false
   waitingForTryAgainResponse.value = false
+  waitingForNotesInput.value = false
+  currentDisposition.value = ''
 
   // Clear call log
   callLog.value = []
@@ -850,6 +860,35 @@ const sendMessage = (message: string): void => {
   // Add user message
   addUserMessage(message)
 
+  // Handle notes input for disposition
+  if (waitingForNotesInput.value) {
+    waitingForNotesInput.value = false
+
+    // Update contact notes
+    if (currentContact.value) {
+      currentContact.value.notes = message.trim()
+    }
+
+    // Update call log entry with notes
+    if (callLog.value.length > 0) {
+      const lastCall = callLog.value[callLog.value.length - 1]
+      lastCall.notes = message.trim()
+    }
+
+    // Complete the disposition process
+    setTimeout(() => {
+      // Check if this is the 3rd contact (index 2) - if so, enable queue completion
+      if (currentContactIndex.value >= 2) {
+        queueCompletionReady.value = true
+        addAIMessage(`${currentDisposition.value} disposition and notes saved for ${currentContact.value.name}. Click "Queue Completed" to finish your dialing session.`)
+      } else {
+        addAIMessage(`${currentDisposition.value} disposition and notes saved for ${currentContact.value.name}. Click "Next" to continue to the next contact.`)
+      }
+      scrollToBottom()
+    }, 1000)
+    return
+  }
+
   // Handle try again response flow
   if (waitingForTryAgainResponse.value) {
     waitingForTryAgainResponse.value = false
@@ -1109,6 +1148,11 @@ const getPlaceholderText = (): string => {
       return 'Enter 6-digit verification code'
   }
 
+  // Handle notes input state
+  if (waitingForNotesInput.value) {
+    return 'Enter notes...'
+  }
+
   // Only allow animation on the very initial welcome screen
   // Animation shows when: not signed in, no buttons showing, no file uploaded, etc.
   const isInitialWelcomeState = !isSignedIn.value &&
@@ -1121,10 +1165,13 @@ const getPlaceholderText = (): string => {
                                  !showLoadNewFileButton.value &&
                                  !showSignupButtons.value &&
                                  !hasUploadedFile.value &&
-                                 !showDialer.value
+                                 !showDialer.value &&
+                                 !waitingForNotesInput.value
 
   if (isInitialWelcomeState) {
     return '' // Allow animation
+  } else if (waitingForNotesInput.value) {
+    return 'Enter notes...'
   } else {
     return 'Reply to ARKON...' // Static text everywhere else
   }
@@ -1250,6 +1297,8 @@ const handleNextContact = (): void => {
 
   // Reset disposition flag for new contact
   dispositionSet.value = false
+  waitingForNotesInput.value = false
+  currentDisposition.value = ''
 
   // Move to next contact
   if (currentContactIndex.value < contacts.length - 1) {
@@ -1303,7 +1352,7 @@ const handleHangUp = (): void => {
   })
 
   addAIMessage(`Call with ${currentContact.value.name} ended. Duration: ${duration}`)
-  addAIMessage('Please select a disposition for this call:')
+  addAIMessage('Please select a disposition for this call and enter any notes:')
 }
 
 const handleMute = (muted: boolean): void => {
@@ -1625,8 +1674,8 @@ const handleDisposition = (disposition: string): void => {
   // Hide disposition buttons
   showDispositionButtons.value = false
 
-  // Set disposition flag to enable next button
-  dispositionSet.value = true
+  // Store the disposition for later use
+  currentDisposition.value = disposition
 
   // Update the last call log entry with the disposition
   if (callLog.value.length > 0) {
@@ -1637,15 +1686,23 @@ const handleDisposition = (disposition: string): void => {
   // Add user message showing what disposition was selected
   addUserMessage(disposition)
 
-  // Add AI response about the disposition
+  // Set flag to wait for notes input
+  waitingForNotesInput.value = true
+
+  // Add AI response prompting for notes
   setTimeout(() => {
-    // Check if this is the 3rd contact (index 2) - if so, enable queue completion
-    if (currentContactIndex.value >= 2) {
-      queueCompletionReady.value = true
-      addAIMessage(`${disposition} disposition saved for ${currentContact.value.name}. Click "Queue Completed" to finish your dialing session.`)
-    } else {
-      addAIMessage(`${disposition} disposition saved for ${currentContact.value.name}. Click "Next" to continue to the next contact.`)
-    }
+    addAIMessage('Great! Now please enter any notes about this call:')
+
+    // Focus the chat input for notes
+    setTimeout(() => {
+      if (chatInputRef.value && chatInputRef.value.focus) {
+        chatInputRef.value.focus()
+        console.log('Auto-focused chat input for notes entry')
+      } else {
+        console.log('Chat input ref not available for notes auto-focus')
+      }
+    }, 500)
+
     scrollToBottom()
   }, 1000)
 }
