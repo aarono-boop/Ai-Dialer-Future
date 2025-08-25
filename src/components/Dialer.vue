@@ -22,8 +22,8 @@
         </div>
       </div>
 
-      <div class="flex items-center justify-between mt-3">
-        <div class="text-gray-400 text-sm">
+      <div class="flex items-center justify-between mt-3" style="min-height: 32px; box-sizing: border-box;">
+        <div class="text-gray-400 text-sm" style="flex-shrink: 0;">
           Queue Time: <span class="text-white">{{ formatTime(queueTime) }}</span>
         </div>
         <DSButton
@@ -34,6 +34,7 @@
           variant="secondary"
           size="small"
           label="Pause Queue"
+          style="flex-shrink: 0; position: relative;"
         />
       </div>
     </div>
