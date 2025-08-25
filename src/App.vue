@@ -875,6 +875,9 @@ const sendMessage = (message: string): void => {
       lastCall.notes = message.trim()
     }
 
+    // Set disposition flag to enable next button
+    dispositionSet.value = true
+
     // Complete the disposition process
     setTimeout(() => {
       // Check if this is the 3rd contact (index 2) - if so, enable queue completion
