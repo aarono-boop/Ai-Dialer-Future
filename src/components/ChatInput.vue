@@ -154,17 +154,22 @@ const handleTabKey = (event: KeyboardEvent) => {
 
     // Check if dialer is showing and what controls are available
     const pauseQueueButton = document.querySelector('[tabindex="8"]') as HTMLElement
-    const muteButton = document.querySelector('[tabindex="9"]') as HTMLElement
+    const dialerButton9 = document.querySelector('[tabindex="9"]') as HTMLElement // Could be Mute or Call Back
+    const dialerButton10 = document.querySelector('[tabindex="10"]') as HTMLElement // Could be Keypad or Next
 
-    // If call is connected, Pause Queue might be disabled, so try Mute button first
-    if (muteButton && muteButton.offsetParent !== null && !muteButton.disabled) {
-      // Call controls are visible (call is connected), go to Mute button
-      muteButton.focus()
-      console.log('Focused Mute button (call is connected)')
-    } else if (pauseQueueButton && pauseQueueButton.offsetParent !== null && !pauseQueueButton.disabled) {
-      // Pause Queue is available and enabled, focus it
+    // Try to focus on any available dialer control in order of preference
+    if (pauseQueueButton && pauseQueueButton.offsetParent !== null && !pauseQueueButton.disabled) {
+      // Pause Queue is available and enabled, focus it first
       pauseQueueButton.focus()
       console.log('Focused Pause Queue button')
+    } else if (dialerButton9 && dialerButton9.offsetParent !== null && !dialerButton9.disabled) {
+      // Focus tabindex="9" button (Mute when connected, Call Back when ended)
+      dialerButton9.focus()
+      console.log('Focused dialer button (tabindex="9")')
+    } else if (dialerButton10 && dialerButton10.offsetParent !== null && !dialerButton10.disabled) {
+      // Focus tabindex="10" button (Keypad when connected, Next when ended)
+      dialerButton10.focus()
+      console.log('Focused dialer button (tabindex="10")')
     } else {
       // No dialer visible, cycle back to ARKON logo (tabindex="1")
       const arkonLogo = document.querySelector('[tabindex="1"]') as HTMLElement
