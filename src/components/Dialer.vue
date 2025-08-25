@@ -1032,9 +1032,8 @@ const handleHoldKeydown = (event: KeyboardEvent) => {
   flex-grow: 0 !important;
   border: 1px solid transparent !important;
   vertical-align: top !important;
-  outline: 2px solid #60a5fa !important;
-  outline-offset: 2px !important;
-  box-shadow: 0 0 0 2px rgba(96, 165, 250, 0.2) !important;
+  outline: none !important;
+  box-shadow: inset 0 0 0 2px #60a5fa !important;
 }
 
 /* Ensure space-y-2 class works properly */
