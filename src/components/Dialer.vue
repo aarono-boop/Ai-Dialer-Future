@@ -821,6 +821,23 @@ const handleHoldKeydown = (event: KeyboardEvent) => {
   flex-grow: 0 !important;
 }
 
+/* Parent container stabilization for Pause Queue button */
+:deep(.flex.items-center.justify-between.mt-3) {
+  min-height: 32px !important;
+  max-height: 32px !important;
+  box-sizing: border-box !important;
+  overflow: hidden !important;
+  position: relative !important;
+}
+
+:deep(.flex.items-center.justify-between.mt-3:hover) {
+  min-height: 32px !important;
+  max-height: 32px !important;
+  box-sizing: border-box !important;
+  overflow: hidden !important;
+  position: relative !important;
+}
+
 /* Ultra-aggressive Pause Queue button stabilization */
 :deep([tabindex="8"]) {
   box-sizing: border-box !important;
