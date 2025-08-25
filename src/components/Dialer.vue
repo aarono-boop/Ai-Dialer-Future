@@ -820,17 +820,23 @@ const handleHoldKeydown = (event: KeyboardEvent) => {
   flex-grow: 0 !important;
 }
 
-/* Pause Queue button stabilization */
+/* Ultra-aggressive Pause Queue button stabilization */
 :deep([tabindex="8"]) {
-  height: auto !important;
-  min-height: auto !important;
-  max-height: auto !important;
   box-sizing: border-box !important;
   flex-shrink: 0 !important;
   flex-grow: 0 !important;
   transform: none !important;
   border: 1px solid transparent !important;
   vertical-align: top !important;
+  transition: none !important;
+  animation: none !important;
+  width: auto !important;
+  height: auto !important;
+  min-width: auto !important;
+  min-height: auto !important;
+  max-width: none !important;
+  max-height: none !important;
+  position: relative !important;
 }
 
 :deep([tabindex="8"]:hover) {
@@ -842,6 +848,19 @@ const handleHoldKeydown = (event: KeyboardEvent) => {
   vertical-align: top !important;
   padding: inherit !important;
   margin: inherit !important;
+  transition: none !important;
+  animation: none !important;
+  width: auto !important;
+  height: auto !important;
+  min-width: auto !important;
+  min-height: auto !important;
+  max-width: none !important;
+  max-height: none !important;
+  position: relative !important;
+  top: auto !important;
+  left: auto !important;
+  right: auto !important;
+  bottom: auto !important;
 }
 
 :deep([tabindex="8"]:focus) {
@@ -853,6 +872,33 @@ const handleHoldKeydown = (event: KeyboardEvent) => {
   vertical-align: top !important;
   outline: none !important;
   box-shadow: none !important;
+  transition: none !important;
+  animation: none !important;
+  width: auto !important;
+  height: auto !important;
+  min-width: auto !important;
+  min-height: auto !important;
+  max-width: none !important;
+  max-height: none !important;
+  position: relative !important;
+  top: auto !important;
+  left: auto !important;
+  right: auto !important;
+  bottom: auto !important;
+}
+
+:deep([tabindex="8"]:active) {
+  box-sizing: border-box !important;
+  transform: none !important;
+  flex-shrink: 0 !important;
+  flex-grow: 0 !important;
+  border: 1px solid transparent !important;
+  vertical-align: top !important;
+  transition: none !important;
+  animation: none !important;
+  width: auto !important;
+  height: auto !important;
+  position: relative !important;
 }
 
 /* Specific targeting for call control buttons (mute, keypad, hold, hang up) */
