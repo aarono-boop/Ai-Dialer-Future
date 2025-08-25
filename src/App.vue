@@ -1007,7 +1007,7 @@ const sendMessage = (message: string): void => {
         'ARKON\'s practice mode can help you:',
         '• Rehearse your opening pitch with AI feedback',
         '• Practice handling common objections',
-        '��� Test different conversation flows',
+        '• Test different conversation flows',
         '• Record and review your delivery',
         'Would you like to practice a cold call opening or work on handling objections?'
       ])
@@ -1487,11 +1487,11 @@ const addSessionSummaryToChat = (isCompleted: boolean = false): void => {
 
       <!-- Call Log Section -->
       <div style="margin-top: 8px;">
-        <div onclick="toggleCallLog()" style="cursor: pointer; display: flex; align-items: center; justify-content: space-between; color: white; font-size: 18px; font-weight: 600; margin-bottom: 16px;">
+        <div onclick="toggleCallLog('${uniqueId}')" style="cursor: pointer; display: flex; align-items: center; justify-content: space-between; color: white; font-size: 18px; font-weight: 600; margin-bottom: 16px;">
           <span><i class="pi pi-list" style="margin-right: 8px;"></i>Call Log</span>
-          <i id="callLogChevron" class="pi pi-chevron-right" style="transition: transform 0.2s ease;"></i>
+          <i id="callLogChevron_${uniqueId}" class="pi pi-chevron-right" style="transition: transform 0.2s ease;"></i>
         </div>
-        <div id="callLogContent" style="display: none;">
+        <div id="callLogContent_${uniqueId}" style="display: none;">
           <!-- Statistics Cards -->
           ${(() => {
             const contactsLeft = contacts.length - currentContactIndex.value - 1;
