@@ -1005,7 +1005,7 @@ const sendMessage = (message: string): void => {
       addAIMessage([
         '🎭 Great idea! Call practice makes perfect.',
         'ARKON\'s practice mode can help you:',
-        '��� Rehearse your opening pitch with AI feedback',
+        '• Rehearse your opening pitch with AI feedback',
         '• Practice handling common objections',
         '• Test different conversation flows',
         '• Record and review your delivery',
