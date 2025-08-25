@@ -1775,7 +1775,7 @@ const handleTermsCancel = () => {
   showActionButtons.value = false
   // Clear messages and show welcome message
   messages.value = []
-  addAIMessage('��� Welcome to ARKON! I\'m your AI calling assistant. I\'ll help you connect with more prospects and close more deals. What would you like to accomplish today?')
+  addAIMessage('👋 Welcome to ARKON! I\'m your AI calling assistant. I\'ll help you connect with more prospects and close more deals. What would you like to accomplish today?')
 
   // Set focus context for header
   nextTick(() => {
