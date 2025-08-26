@@ -1481,7 +1481,7 @@ const addSessionSummaryToChat = (isCompleted: boolean = false): void => {
                  <div style="margin-bottom: 16px;"><strong style="color: #fbbf24;">• Schedule 2 appointments</strong> - Sam Sample and Jennifer Martinez requested follow-up calls</div>
                  <div style="margin-bottom: 16px;"><strong style="color: #fbbf24;">• Schedule 1 follow-up</strong> - George Sample showed interest and needs additional outreach</div>
                </div>
-               Your contact data has been enriched with Connect Scores, call outcomes, and notes.<br><br>
+               Your contact data has been enriched with Connect Scores, call outcomes, and notes.<br>Keep calling to build even more value.<br><br>
                <button style="background-color: rgb(59, 130, 246); color: white; border: none; border-radius: 6px; padding: 8px 16px; font-size: 14px; font-weight: 500; cursor: pointer; display: inline-flex; align-items: center; gap: 8px;" onclick="handleExportFile()">
                  <i class="pi pi-download"></i> Export Enriched File
                </button>`
