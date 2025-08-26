@@ -36,7 +36,7 @@
       </button>
       
       <div class="text-gray-400 font-light italic" aria-label="ARKON tagline">
-        Calling made smarter
+        Your AI assisted dialer
       </div>
       
       <div class="flex gap-4 items-center" role="group" aria-label="User actions">
