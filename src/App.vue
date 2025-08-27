@@ -712,6 +712,7 @@ const handleGoogleSignin = (): void => {
   currentPage.value = 'main'
   isSignedIn.value = true
   isReturningUser.value = true // This is a returning user
+  phoneVerified.value = true // Returning users don't need to verify phone again
   addAIMessage('Welcome back! You\'re signed in with Google.')
   setTimeout(() => {
     addAIMessage('Ready to upload your contact file and start dialing?')
@@ -739,6 +740,7 @@ const handleLoginSuccess = (userData: any): void => {
   currentPage.value = 'main'
   isSignedIn.value = true
   isReturningUser.value = true // This is a returning user
+  phoneVerified.value = true // Returning users don't need to verify phone again
 
   // Since they're a returning user who has already set goals,
   // skip directly to file upload stage
