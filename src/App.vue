@@ -2248,8 +2248,7 @@ const handleActionButton = (action: string): void => {
       default:
         response = [`I\'ll help you with ${action.toLowerCase()}. Let me prepare your optimal calling strategy.`]
     }
-    addAIMessage(response)
-    scrollToBottom()
+    addAIMessageWithoutScroll(response)
   }, 1500)
 }
 
