@@ -341,8 +341,8 @@
 .connect-score-tooltip:hover::after {
   content: attr(data-tooltip);
   position: fixed;
-  top: 50%;
-  left: 50%;
+  top: calc(50% - 60px);
+  left: calc(50% + 150px);
   transform: translate(-50%, -50%);
   background: #1f2937;
   color: white;
@@ -362,8 +362,8 @@
 .connect-score-tooltip:hover::before {
   content: '';
   position: fixed;
-  top: calc(50% + 150px);
-  left: 50%;
+  top: calc(50% + 90px);
+  left: calc(50% + 150px);
   transform: translateX(-50%);
   border: 6px solid transparent;
   border-top-color: #374151;
