@@ -7,7 +7,7 @@
     <div class="flex items-center gap-2 bg-gray-800/80 border border-green-700 rounded-lg px-4 py-2 mx-4" style="border-width: 1px;">
       <i class="pi pi-phone text-green-400 text-sm"></i>
       <span class="text-gray-300 text-sm font-medium tracking-wide uppercase">
-        Next Call: {{ contactName }}
+        Calling {{ contactName }}
       </span>
     </div>
 
