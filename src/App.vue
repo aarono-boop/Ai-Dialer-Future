@@ -136,7 +136,7 @@
           </div>
 
           <!-- Disposition Buttons - always visible when active -->
-          <div v-if="showDispositionButtons && showDialer && !showContinueQueueButton && !showLoadNewFileButton" class="mt-2 pt-5 flex justify-center">
+          <div v-if="showDispositionButtons && showDialer && !showContinueQueueButton" class="mt-2 pt-5 flex justify-center">
             <!-- Voicemail Disposition Buttons for George Sample -->
             <div v-if="isVoicemailScenario" class="w-[70%] grid grid-cols-3 gap-3">
               <button
@@ -628,7 +628,6 @@ const handleLogout = () => {
   showStartDialingButton.value = false
   showDispositionButtons.value = false
   showContinueQueueButton.value = false
-  showLoadNewFileButton.value = false
   showFileUploadForReturningUser.value = false
   waitingForNotesInput.value = false
   currentDisposition.value = ''
@@ -965,7 +964,7 @@ const sendMessage = (message: string): void => {
   addUserMessage(message)
 
   // Handle notes input for disposition (but not during session summary)
-  if (waitingForNotesInput.value && showDialer.value && !showContinueQueueButton.value && !showLoadNewFileButton.value) {
+  if (waitingForNotesInput.value && showDialer.value && !showContinueQueueButton.value) {
     waitingForNotesInput.value = false
 
     // Update contact notes
@@ -1315,7 +1314,6 @@ const getPlaceholderText = (): string => {
                                  !showStartDialingButton.value &&
                                  !showDispositionButtons.value &&
                                  !showContinueQueueButton.value &&
-                                 !showLoadNewFileButton.value &&
                                  !showSignupButtons.value &&
                                  !hasUploadedFile.value &&
                                  !showDialer.value &&
@@ -1323,7 +1321,7 @@ const getPlaceholderText = (): string => {
 
   if (isInitialWelcomeState) {
     return '' // Allow animation
-  } else if (waitingForNotesInput.value && showDialer.value && !showContinueQueueButton.value && !showLoadNewFileButton.value) {
+  } else if (waitingForNotesInput.value && showDialer.value && !showContinueQueueButton.value) {
     return 'Enter notes...'
   } else {
     return 'Reply to ARKON...' // Static text everywhere else
@@ -1716,7 +1714,7 @@ const addSessionSummaryToChat = (isCompleted: boolean = false): void => {
               `Great work! Your queue is currently paused. Here's what to do next:<br><br>
                <div style="margin-left: 20px;">
                  <div style="margin-bottom: 16px;"><strong style="color: #fbbf24;">• Schedule 2 appointments</strong> - Sam Sample and Jennifer Martinez requested follow-up calls</div>
-                 <div style="margin-bottom: 16px;"><strong style="color: #fbbf24;">• Schedule 1 follow-up</strong> - George Sample showed interest and needs additional outreach</div>
+                 <div style="margin-bottom: 16px;"><strong style="color: #fbbf24;">�� Schedule 1 follow-up</strong> - George Sample showed interest and needs additional outreach</div>
                </div>
                ${wrapConnectScoreWithTooltip('Your contact data has been enriched with Connect Scores, call outcomes, and notes.')}<br>Keep calling to build even more value.<br><br>
                <button style="background-color: rgb(59, 130, 246); color: white; border: none; border-radius: 6px; padding: 8px 16px; font-size: 14px; font-weight: 500; cursor: pointer; display: inline-flex; align-items: center; gap: 8px;" onclick="handleExportFile()">
