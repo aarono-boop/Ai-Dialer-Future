@@ -48,10 +48,15 @@ export const createChatUtils = (
           const lastUserMessage = userMessages[userMessages.length - 1] as HTMLElement
           console.log('🔥 Last user message element:', lastUserMessage)
 
-          // Simple approach: scroll to top of container first
-          console.log('🔥 Scrolling to top of container')
+          // Calculate the position of the user message within the scrollable container
+          const messageOffsetTop = lastUserMessage.offsetTop
+          console.log('🔥 User message offset top:', messageOffsetTop)
+          console.log('🔥 Current scroll position:', chatMessages.value.scrollTop)
+
+          // Scroll to position the user message at the top
+          console.log('🔥 Scrolling to position:', messageOffsetTop)
           chatMessages.value.scrollTo({
-            top: 0,
+            top: messageOffsetTop,
             behavior: 'smooth'
           })
         } else {
