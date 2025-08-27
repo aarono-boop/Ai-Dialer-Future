@@ -1539,7 +1539,7 @@ const closeSessionSummary = (): void => {
 }
 
 const handleExportFile = (): void => {
-  addAIMessage('Exporting your enriched contact file with Connect Scores and call results...')
+  addAIMessage(wrapConnectScoreWithTooltip('Exporting your enriched contact file with Connect Scores and call results...'))
 }
 
 // Toggle function for Call Log collapse/expand
