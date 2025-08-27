@@ -844,9 +844,9 @@ const simulateFileUpload = () => {
         <br>
         <table style="width: 100%; border-collapse: collapse;">
           <tr><td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af;">Home Phone:</td><td style="padding: 4px 0;">(555) 123-4567</td></tr>
-          <tr><td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af;">Connect Score:</td><td style="padding: 4px 0;">High</td></tr>
+          <tr><td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af;">${wrapConnectScoreWithTooltip('Connect Score')}:</td><td style="padding: 4px 0;">High</td></tr>
           <tr><td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af;">Mobile Phone:</td><td style="padding: 4px 0;">(555) 123-4568</td></tr>
-          <tr><td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af;">Connect Score:</td><td style="padding: 4px 0;">Medium</td></tr>
+          <tr><td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af;">${wrapConnectScoreWithTooltip('Connect Score')}:</td><td style="padding: 4px 0;">Medium</td></tr>
           <tr><td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af;">Email:</td><td style="padding: 4px 0;">sarah.johnson@techcorp.com</td></tr>
           <tr><td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af;">Address:</td><td style="padding: 4px 0;">1234 Main St, Dallas, TX</td></tr>
           <tr><td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af;">Local Time:</td><td style="padding: 4px 0;">2:45 PM CST</td></tr>
