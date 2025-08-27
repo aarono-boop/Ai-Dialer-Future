@@ -44,7 +44,7 @@
       type="button"
       tabindex="2"
     >
-      <i class="pi pi-info-circle text-xl"></i>
+      <i class="pi pi-phone text-xl"></i>
     </button>
 
     <!-- Spacer to push user actions to bottom -->
