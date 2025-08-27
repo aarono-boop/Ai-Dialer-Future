@@ -389,6 +389,7 @@ const showPhoneVerificationButton = ref<boolean>(false)
 const verificationStep = ref<string>('default') // 'default', 'enter-phone', 'enter-code'
 const enteredPhoneNumber = ref<string>('')
 const showVerificationButtons = ref<boolean>(false)
+const phoneVerified = ref<boolean>(false) // Track if phone has been verified in this session
 const showStartDialingButton = ref<boolean>(false)
 const showDialer = ref<boolean>(false)
 const showDispositionButtons = ref<boolean>(false)
@@ -554,6 +555,7 @@ const handleLogout = () => {
   // Reset user state
   isSignedIn.value = false
   isReturningUser.value = false
+  phoneVerified.value = false // Reset phone verification status
 
   // Reset UI state
   showDialer.value = false
@@ -579,6 +581,11 @@ const handleLogout = () => {
   waitingForTryAgainResponse.value = false
   waitingForNotesInput.value = false
   currentDisposition.value = ''
+
+  // Reset verification state
+  verificationStep.value = 'default'
+  enteredPhoneNumber.value = ''
+  showVerificationButtons.value = false
 
   // Clear call log
   callLog.value = []
@@ -963,6 +970,7 @@ const sendMessage = (message: string): void => {
   if (verificationStep.value === 'enter-code') {
     showVerificationButtons.value = false
     verificationStep.value = 'default'
+    phoneVerified.value = true // Mark phone as verified
     showStartDialingButton.value = true
 
     setTimeout(() => {
@@ -1097,8 +1105,8 @@ const handleLooksGood = (): void => {
   // Add user message showing what button was clicked
   addUserMessage('Looks Good')
 
-  if (isReturningUser.value) {
-    // Skip phone verification for returning users (logged in users)
+  if (isReturningUser.value || phoneVerified.value) {
+    // Skip phone verification for returning users or if phone was already verified
     setTimeout(() => {
       addAIMessage([
         'I\'ve analyzed your contact\'s phone numbers using real connection data from 900M+ calls, recent phone engagement, calling patterns, and carrier signals—so you only dial numbers likely to connect.<br><br>I\'ve prioritized the phone numbers most likely to connect so you spend time talking, not hitting dead lines.<br><br>Here\'s what I found:<br><div style="margin-left: 1em; text-indent: -1em;">• 40 numbers have \'High\' Connect Scores and show consistent calling activity in the last 12 months. These are highly likely to be connected and assigned to active subscribers.</div><br><div style="margin-left: 1em; text-indent: -1em;">• 67 numbers have \'Medium\' Connect Scores and are worth calling after you exhaust your \'High\' Connect Score numbers.</div><br><div style="margin-left: 1em; text-indent: -1em;">• 54 numbers have \'Low\' Connect Scores and are likely disconnected or inactive lines that won\'t answer when dialed.</div>'
@@ -1106,8 +1114,9 @@ const handleLooksGood = (): void => {
 
       // Skip directly to verified phone and start dialing
       setTimeout(() => {
+        const phoneNumber = enteredPhoneNumber.value || '(971) 235-1723'
         addAIMessage([
-          'Great! Your number (971) 235-1723 is verified and set as your Caller ID.<br><br>As the dialer calls each person, their contact information will be displayed. The first contact that will be called is Sam Sample.'
+          `Great! Your number ${phoneNumber} is verified and set as your Caller ID.<br><br>As the dialer calls each person, their contact information will be displayed. The first contact that will be called is Sam Sample.`
         ])
         showStartDialingButton.value = true
         scrollToBottom()
