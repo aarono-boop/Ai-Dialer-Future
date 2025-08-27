@@ -81,8 +81,16 @@
             <button
               class="w-full text-left px-4 py-2 text-sm text-gray-300 hover:bg-gray-700 hover:text-white transition-colors flex items-center gap-2"
               role="menuitem"
-              @click="handleLogout"
               tabindex="4"
+            >
+              <i class="pi pi-sun text-sm"></i>
+              Use Light Mode
+            </button>
+            <button
+              class="w-full text-left px-4 py-2 text-sm text-gray-300 hover:bg-gray-700 hover:text-white transition-colors flex items-center gap-2"
+              role="menuitem"
+              @click="handleLogout"
+              tabindex="5"
             >
               <i class="pi pi-sign-out text-sm"></i>
               Log out
