@@ -472,6 +472,7 @@ const skippedNumbers = ref<number>(3) // Default for demo
 const callState = ref<string>('ended') // 'ended', 'ringing', 'connected'
 const callDuration = ref<number>(0)
 const queueTime = ref<number>(14)
+const isExportingFile = ref<boolean>(false)
 
 // Contact data
 const contacts = [
@@ -1587,7 +1588,15 @@ const closeSessionSummary = (): void => {
 }
 
 const handleExportFile = (): void => {
+  if (isExportingFile.value) return
+
+  isExportingFile.value = true
   addAIMessage(wrapConnectScoreWithTooltip('Exporting your enriched contact file with Connect Scores and call results...'))
+
+  // Reset after 2 seconds
+  setTimeout(() => {
+    isExportingFile.value = false
+  }, 2000)
 }
 
 // Toggle function for Call Log collapse/expand
