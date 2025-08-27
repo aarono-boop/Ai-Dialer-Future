@@ -369,6 +369,20 @@ interface Message {
 // Toast functionality (only for login/vulcan actions)
 const toast = useToast()
 
+// Connect Score tooltip content
+const connectScoreTooltip = `Connect Score is a premium add-on feature that uses real-world signals to help users prioritize high-value contacts and skip low-quality leads. It scores each phone number as High, Medium, or Low based on:
+
+• Carrier data
+• Engagement history
+• Phone metadata
+
+This lets teams focus their efforts on numbers with the greatest chance of a live answer—improving connect rates, morale, and performance.`
+
+// Helper function to wrap Connect Score text with tooltip
+const wrapConnectScoreWithTooltip = (text: string): string => {
+  return text.replace(/Connect Score/g, `<span v-tooltip.top="'${connectScoreTooltip.replace(/'/g, '&apos;')}'">Connect Score</span>`)
+}
+
 // Reactive data
 const currentPage = ref<string>('main') // 'main', 'product', 'login', 'signup'
 const chatInputRef = ref<any>(null)
@@ -1098,7 +1112,7 @@ const sendMessage = (message: string): void => {
         '📅 Here\'s your schedule for today:',
         '<strong>Upcoming appointments:</strong>',
         '• 2:00 PM - Demo call with Sarah Johnson (confirmed)',
-        '• 3:30 PM - Follow-up with ABC Corp (needs confirmation)',
+        '��� 3:30 PM - Follow-up with ABC Corp (needs confirmation)',
         '• 4:15 PM - Discovery call with new lead Mike Chen',
         'You have 45 minutes before your next call. Perfect time for some prospecting!'
       ])
