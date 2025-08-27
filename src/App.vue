@@ -1279,7 +1279,7 @@ const handleStartDialing = (): void => {
 
     // Add separator for the first call
     setTimeout(() => {
-      addSeparatorMessage(contacts[1].name) // George Sample (since we start at index 1)
+      addSeparatorMessage(currentContact.value.name) // Sam Sample (current contact at index 0)
 
       // Start the call simulation after showing separator
       setTimeout(() => {
