@@ -283,6 +283,15 @@
 import { ref, nextTick } from 'vue'
 import { DSButton } from '@/design-system/components'
 
+// Connect Score tooltip content
+const connectScoreTooltip = `Connect Score is a premium add-on feature that uses real-world signals to help users prioritize high-value contacts and skip low-quality leads. It scores each phone number as High, Medium, or Low based on:
+
+• Carrier data
+• Engagement history
+• Phone metadata
+
+This lets teams focus their efforts on numbers with the greatest chance of a live answer—improving connect rates, morale, and performance.`
+
 // Define props
 const props = defineProps<{
   callState: string
