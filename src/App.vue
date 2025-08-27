@@ -282,7 +282,7 @@
     </div>
 
     <!-- Footer -->
-    <Footer v-if="currentPage === 'main'" :style="showDialer ? 'margin-right: 33.333333%' : ''" @skip-to-dialer="skipToDialer" />
+    <Footer v-if="currentPage === 'main'" :style="showDialer ? 'margin-right: 33.333333%' : ''" :showDialer="showDialer" @skip-to-dialer="skipToDialer" />
 
     <!-- Screen Reader Live Region for Announcements -->
     <div
