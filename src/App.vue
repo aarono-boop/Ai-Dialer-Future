@@ -1598,7 +1598,7 @@ const closeSessionSummary = (): void => {
 
 // Handler for triggering file upload flow
 const triggerFileUpload = (): void => {
-  loadNewFile()
+  loadNewFile(queuePaused.value)
 }
 
 // Handler for export with animation
