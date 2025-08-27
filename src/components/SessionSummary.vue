@@ -99,25 +99,31 @@
           </div>
         </div>
         
-        <DSButton
-          @click="handleExportClick"
-          :disabled="isExporting"
-          variant="secondary"
-          class="flex items-center gap-2"
-        >
-          <i v-if="!isExporting" class="pi pi-download"></i>
-          <i v-else class="pi pi-spin pi-spinner animate-spin"></i>
-          {{ isExporting ? 'Downloading...' : 'Export Enriched File' }}
-        </DSButton>
       </div>
 
       <!-- Action Buttons -->
-      <div v-if="!isQueueComplete" class="flex justify-center">
+      <div v-if="isQueueComplete" class="flex justify-center">
+        <DSButton
+          @click="$emit('trigger-file-upload')"
+          variant="secondary"
+          size="large"
+          label="Load New File"
+        />
+      </div>
+      <div v-else class="flex gap-4">
         <DSButton
           @click="$emit('continue-queue')"
           variant="primary"
           size="large"
+          class="flex-1"
           label="Continue Call Queue"
+        />
+        <DSButton
+          @click="$emit('trigger-file-upload')"
+          variant="secondary"
+          size="large"
+          class="flex-1"
+          label="Export Enriched File"
         />
       </div>
     </div>
@@ -146,23 +152,7 @@ defineProps<{
 }>()
 
 // Define emits
-const emit = defineEmits(['close', 'continue-queue', 'export-file'])
-
-// Reactive state
-const isExporting = ref(false)
-
-// Handle export click with animation
-const handleExportClick = () => {
-  if (isExporting.value) return
-
-  isExporting.value = true
-  emit('export-file')
-
-  // Reset after 2 seconds
-  setTimeout(() => {
-    isExporting.value = false
-  }, 2000)
-}
+const emit = defineEmits(['close', 'continue-queue', 'trigger-file-upload'])
 
 // Helper function
 const formatTime = (seconds: number): string => {
