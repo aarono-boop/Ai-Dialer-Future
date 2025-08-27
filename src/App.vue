@@ -470,7 +470,6 @@ const skippedNumbers = ref<number>(3) // Default for demo
 const callState = ref<string>('ended') // 'ended', 'ringing', 'connected'
 const callDuration = ref<number>(0)
 const queueTime = ref<number>(14)
-const isExportingFile = ref<boolean>(false)
 
 // Contact data
 const contacts = [
@@ -1583,65 +1582,9 @@ const closeSessionSummary = (): void => {
   showSessionSummary.value = false
 }
 
-const handleExportFile = (): void => {
-  if (isExportingFile.value) return
-
-  isExportingFile.value = true
-
-  // Find all export buttons and update them
-  const exportButtons = document.querySelectorAll('button[onclick="handleExportFile()"]')
-  exportButtons.forEach((button: Element) => {
-    const btn = button as HTMLButtonElement
-    btn.disabled = true
-    btn.style.opacity = '0.7'
-    btn.style.cursor = 'not-allowed'
-
-    // Update icon and text
-    const icon = btn.querySelector('i')
-    if (icon) {
-      icon.className = 'pi pi-spin pi-spinner'
-      icon.style.animation = 'spin 1s linear infinite'
-    }
-
-    // Update text content
-    const textNodes = Array.from(btn.childNodes).filter(node => node.nodeType === Node.TEXT_NODE)
-    textNodes.forEach(node => {
-      if (node.textContent?.includes('Export')) {
-        node.textContent = ' Downloading...'
-      }
-    })
-  })
-
-  // After 2 seconds, show file upload interface instead of export message
-  setTimeout(() => {
-    isExportingFile.value = false
-
-    // Reset all export buttons
-    exportButtons.forEach((button: Element) => {
-      const btn = button as HTMLButtonElement
-      btn.disabled = false
-      btn.style.opacity = '1'
-      btn.style.cursor = 'pointer'
-
-      // Reset icon
-      const icon = btn.querySelector('i')
-      if (icon) {
-        icon.className = 'pi pi-download'
-        icon.style.animation = ''
-      }
-
-      // Reset text content
-      const textNodes = Array.from(btn.childNodes).filter(node => node.nodeType === Node.TEXT_NODE)
-      textNodes.forEach(node => {
-        if (node.textContent?.includes('Downloading')) {
-          node.textContent = ' Export Enriched File'
-        }
-      })
-    })
-
-    // Automatically trigger loadNewFile functionality
-    loadNewFile()
-  }, 2000)
+// Handler for triggering file upload flow
+const triggerFileUpload = (): void => {
+  loadNewFile()
 }
 
 // Toggle function for Call Log collapse/expand
@@ -1671,19 +1614,19 @@ const toggleCallLog = (uniqueId?: string): void => {
 }
 
 // Make functions globally accessible immediately
-;(window as any).handleExportFile = handleExportFile
+;(window as any).triggerFileUpload = triggerFileUpload
 ;(window as any).toggleCallLog = toggleCallLog
 
 // Ensure functions are available on mount
 onMounted(() => {
-  ;(window as any).handleExportFile = handleExportFile
+  ;(window as any).triggerFileUpload = triggerFileUpload
   ;(window as any).toggleCallLog = toggleCallLog
   console.log('Global functions assigned')
 })
 
 // Clean up global references when component is unmounted
 onUnmounted(() => {
-  delete (window as any).handleExportFile
+  delete (window as any).triggerFileUpload
   delete (window as any).toggleCallLog
 })
 
@@ -1707,7 +1650,7 @@ const addSessionSummaryToChat = (isCompleted: boolean = false): void => {
                  <div style="margin-bottom: 16px;"><strong style="color: #fbbf24;">• Schedule 1 follow-up</strong> - George Sample showed interest and needs additional outreach</div>
                </div>
                ${wrapConnectScoreWithTooltip('Your contact data has been enriched with Connect Scores, call outcomes, and notes.')}<br><br>
-               <button style="background-color: rgb(59, 130, 246); color: white; border: none; border-radius: 6px; padding: 8px 16px; font-size: 14px; font-weight: 500; cursor: pointer; display: inline-flex; align-items: center; gap: 8px;" onclick="handleExportFile()">
+               <button style="background-color: rgb(59, 130, 246); color: white; border: none; border-radius: 6px; padding: 8px 16px; font-size: 14px; font-weight: 500; cursor: pointer; display: inline-flex; align-items: center; gap: 8px;" onclick="triggerFileUpload()">
                  <i class="pi pi-download"></i> Export Enriched File
                </button>` :
               `Great work! Your queue is currently paused. Here's what to do next:<br><br>
@@ -1716,7 +1659,7 @@ const addSessionSummaryToChat = (isCompleted: boolean = false): void => {
                  <div style="margin-bottom: 16px;"><strong style="color: #fbbf24;">• Schedule 1 follow-up</strong> - George Sample showed interest and needs additional outreach</div>
                </div>
                ${wrapConnectScoreWithTooltip('Your contact data has been enriched with Connect Scores, call outcomes, and notes.')}<br>Keep calling to build even more value.<br><br>
-               <button style="background-color: rgb(59, 130, 246); color: white; border: none; border-radius: 6px; padding: 8px 16px; font-size: 14px; font-weight: 500; cursor: pointer; display: inline-flex; align-items: center; gap: 8px;" onclick="handleExportFile()">
+               <button style="background-color: rgb(59, 130, 246); color: white; border: none; border-radius: 6px; padding: 8px 16px; font-size: 14px; font-weight: 500; cursor: pointer; display: inline-flex; align-items: center; gap: 8px;" onclick="triggerFileUpload()">
                  <i class="pi pi-download"></i> Export Enriched File
                </button>`
             }
