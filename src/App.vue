@@ -340,10 +340,10 @@
 
 .connect-score-tooltip:hover::after {
   content: attr(data-tooltip);
-  position: absolute;
-  bottom: 100%;
+  position: fixed;
+  top: 50%;
   left: 50%;
-  transform: translateX(-50%);
+  transform: translate(-50%, -50%);
   background: #1f2937;
   color: white;
   padding: 12px;
@@ -351,24 +351,23 @@
   font-size: 14px;
   line-height: 1.4;
   width: 300px;
+  max-width: 90vw;
   white-space: pre-line;
-  z-index: 9999;
+  z-index: 99999;
   border: 1px solid #374151;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-  margin-bottom: 8px;
   pointer-events: none;
 }
 
 .connect-score-tooltip:hover::before {
   content: '';
-  position: absolute;
-  bottom: 100%;
+  position: fixed;
+  top: calc(50% + 150px);
   left: 50%;
   transform: translateX(-50%);
   border: 6px solid transparent;
   border-top-color: #374151;
-  z-index: 10000;
-  margin-bottom: 2px;
+  z-index: 100000;
   pointer-events: none;
 }
 
