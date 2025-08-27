@@ -1486,7 +1486,6 @@ const handleNextContact = (): void => {
   if (currentContactIndex.value < contacts.length - 1) {
     currentContactIndex.value++
 
-    addAIMessage(`The call outcome and notes have been saved for ${currentContact.value.name}. Click "Next" to continue to the next contact.`)
     callState.value = 'ended'
     callDuration.value = 0
 
