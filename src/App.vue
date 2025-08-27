@@ -1245,7 +1245,7 @@ const handleLooksGood = (): void => {
     // Regular flow for new users
     setTimeout(() => {
       addAIMessage([
-        'I\'ve analyzed your contact\'s phone numbers using real connection data from 900M+ calls, recent phone engagement, calling patterns, and carrier signals���so you only dial numbers likely to connect.<br><br>I\'ve prioritized the phone numbers most likely to connect so you spend time talking, not hitting dead lines.<br><br>Here\'s what I found:<br><div style="margin-left: 1em; text-indent: -1em;">• 40 numbers have \'High\' <span class="connect-score-tooltip" data-tooltip="' + connectScoreTooltip.replace(/'/g, '&#39;').replace(/"/g, '&quot;') + '">Connect Scores</span> and show consistent calling activity in the last 12 months. These are highly likely to be connected and assigned to active subscribers.</div><br><div style="margin-left: 1em; text-indent: -1em;">• 67 numbers have \'Medium\' Connect Scores and are worth calling after you exhaust your \'High\' Connect Score numbers.</div><br><div style="margin-left: 1em; text-indent: -1em;">• 54 numbers have \'Low\' Connect Scores and are likely disconnected or inactive lines that won\'t answer when dialed.</div>'
+        'I\'ve analyzed your contact\'s phone numbers using real connection data from 900M+ calls, recent phone engagement, calling patterns, and carrier signals—so you only dial numbers likely to connect.<br><br>I\'ve prioritized the phone numbers most likely to connect so you spend time talking, not hitting dead lines.<br><br>Here\'s what I found:<br><div style="margin-left: 1em; text-indent: -1em;">• 40 numbers have \'High\' <span class="connect-score-tooltip" data-tooltip="' + connectScoreTooltip.replace(/'/g, '&#39;').replace(/"/g, '&quot;') + '">Connect Scores</span> and show consistent calling activity in the last 12 months. These are highly likely to be connected and assigned to active subscribers.</div><br><div style="margin-left: 1em; text-indent: -1em;">• 67 numbers have \'Medium\' Connect Scores and are worth calling after you exhaust your \'High\' Connect Score numbers.</div><br><div style="margin-left: 1em; text-indent: -1em;">• 54 numbers have \'Low\' Connect Scores and are likely disconnected or inactive lines that won\'t answer when dialed.</div>'
       ])
 
       // Show phone verification button after the message
@@ -2250,8 +2250,9 @@ const handleActionButton = (action: string): void => {
       default:
         response = [`I\'ll help you with ${action.toLowerCase()}. Let me prepare your optimal calling strategy.`]
     }
-    addAIMessageWithoutScroll(response)
-  }, 1500)
+      addAIMessageWithoutScroll(response)
+    }, 500) // Additional delay for scroll completion
+  }, 1000) // Initial delay
 }
 
 // Lifecycle hook to establish focus context when app loads
