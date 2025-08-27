@@ -2,16 +2,14 @@
   <!-- Test change for PR functionality -->
   <div class="min-h-screen text-white flex flex-col relative overflow-x-hidden" :class="showDialer ? 'dialer-active' : ''">
     
-    <!-- Header -->
-    <Header
+    <!-- Sidebar Navigation -->
+    <Sidebar
       ref="headerRef"
       :isSignedIn="isSignedIn"
       @login="handleLogin"
       @logout="handleLogout"
-      @switch-to-vulcan="handleSwitchToVulcan"
       @show-product="showProductPage"
       @go-home="goToMainApp"
-      :style="showDialer ? 'margin-right: 33.333333%' : ''"
     />
 
     <!-- Main App Content -->
