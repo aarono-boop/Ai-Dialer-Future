@@ -45,19 +45,14 @@ export const createChatUtils = (
           const lastUserMessage = userMessages[userMessages.length - 1] as HTMLElement
           console.log('Last user message element:', lastUserMessage)
 
-          // Get the position of the user message relative to the scrollable container
-          const messageOffsetTop = lastUserMessage.offsetTop
-          console.log('Message offset top:', messageOffsetTop)
-
-          // Position the user message at the absolute top edge with minimal padding
-          const targetScrollTop = Math.max(0, messageOffsetTop)
-          console.log('Target scroll top:', targetScrollTop)
-
-          // Scroll to position the user message at the highest visible point
-          chatMessages.value.scrollTo({
-            top: targetScrollTop,
-            behavior: 'smooth'
+          // Use scrollIntoView to position the user message at the very top
+          lastUserMessage.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start',
+            inline: 'nearest'
           })
+
+          console.log('ScrollIntoView called with block: start')
         } else {
           console.log('No user messages found, falling back to bottom scroll')
           // Fallback to bottom scroll if no user message found
