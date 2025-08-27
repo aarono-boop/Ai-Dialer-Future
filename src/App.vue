@@ -440,7 +440,9 @@ This lets teams focus their efforts on numbers with the greatest chance of a liv
 // Helper function to wrap Connect Score text with tooltip
 const wrapConnectScoreWithTooltip = (text: string): string => {
   const tooltipContent = connectScoreTooltip.replace(/'/g, '&#39;').replace(/"/g, '&quot;')
-  return text.replace(/Connect Score/g, `<span class="connect-score-tooltip" data-tooltip="${tooltipContent}">Connect Score</span>`)
+  return text
+    .replace(/Connect Scores/g, `<span class="connect-score-tooltip" data-tooltip="${tooltipContent}">Connect Scores</span>`)
+    .replace(/Connect Score/g, `<span class="connect-score-tooltip" data-tooltip="${tooltipContent}">Connect Score</span>`)
 }
 
 // Reactive data
