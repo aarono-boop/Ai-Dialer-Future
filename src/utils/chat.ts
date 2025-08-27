@@ -86,7 +86,9 @@ export const createChatUtils = (
       type: 'user',
       content: [content]
     })
-    scrollToBottom()
+
+    // Use scrollToUserMessage for better positioning after user messages
+    scrollToUserMessage()
 
     // Establish focus context after new message appears
     nextTick(() => {
@@ -120,6 +122,7 @@ export const createChatUtils = (
 
   return {
     scrollToBottom,
+    scrollToUserMessage,
     addAIMessage,
     addUserMessage,
     addSeparatorMessage,
