@@ -986,6 +986,45 @@ const sendMessage = (message: string): void => {
     return
   }
 
+  // Handle custom disposition input when disposition buttons are showing
+  if (showDispositionButtons.value && showDialer.value) {
+    // Treat the input as a custom disposition - same logic as handleDisposition
+    showDispositionButtons.value = false
+
+    // Store the disposition for later use
+    currentDisposition.value = message.trim()
+
+    // Update the last call log entry with the disposition
+    if (callLog.value.length > 0) {
+      const lastCall = callLog.value[callLog.value.length - 1]
+      lastCall.disposition = message.trim()
+    }
+
+    // Set disposition flag to enable next button immediately (notes are optional)
+    dispositionSet.value = true
+
+    // Set flag to wait for notes input
+    waitingForNotesInput.value = true
+
+    // Add AI response prompting for notes
+    setTimeout(() => {
+      addAIMessage('Great! Now please enter any notes about this call:')
+
+      // Focus the chat input for notes
+      setTimeout(() => {
+        if (chatInputRef.value && chatInputRef.value.focus) {
+          chatInputRef.value.focus()
+          console.log('Auto-focused chat input for notes entry')
+        } else {
+          console.log('Chat input ref not available for notes auto-focus')
+        }
+      }, 500)
+
+      scrollToBottom()
+    }, 1000)
+    return
+  }
+
   // Simulate AI processing for regular messages
   setTimeout(() => {
     const lowerMessage = message.toLowerCase()
