@@ -105,8 +105,9 @@
 import { ref, onMounted, onUnmounted } from 'vue'
 
 // Define props
-defineProps<{
+const props = defineProps<{
   isSignedIn?: boolean
+  currentPage?: string
 }>()
 
 // Define emits for parent component communication
