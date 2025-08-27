@@ -144,7 +144,32 @@
 
           <!-- Disposition Buttons - always visible when active -->
           <div v-if="showDispositionButtons && showDialer && !showContinueQueueButton && !showLoadNewFileButton" class="mt-2 pt-5 flex justify-center">
-            <div class="w-[70%] grid grid-cols-4 gap-3">
+            <!-- Voicemail Disposition Buttons for George Sample -->
+            <div v-if="isVoicemailScenario" class="w-[70%] grid grid-cols-3 gap-3">
+              <button
+                @click="handleDisposition('Voicemail Left')"
+                class="btn-primary py-3 px-4 rounded-lg font-medium cursor-pointer"
+                tabindex="3"
+              >
+                Voicemail Left
+              </button>
+              <button
+                @click="handleDisposition('No Voicemail Left')"
+                class="btn-secondary py-3 px-4 rounded-lg font-medium cursor-pointer"
+                tabindex="4"
+              >
+                No Voicemail Left
+              </button>
+              <button
+                @click="handleDisposition('No Answer')"
+                class="btn-secondary py-3 px-4 rounded-lg font-medium cursor-pointer"
+                tabindex="5"
+              >
+                No Answer
+              </button>
+            </div>
+            <!-- Regular Disposition Buttons for other contacts -->
+            <div v-else class="w-[70%] grid grid-cols-4 gap-3">
               <button
                 @click="handleDisposition('Follow up')"
                 class="btn-secondary py-3 px-4 rounded-lg font-medium cursor-pointer"
@@ -466,6 +491,11 @@ const shouldCompleteQueue = computed(() => {
 
 const isLastContact = computed(() => {
   return currentContactIndex.value >= contacts.length - 1
+})
+
+// Check if current contact is George Sample (voicemail scenario)
+const isVoicemailScenario = computed(() => {
+  return currentContact.value && currentContact.value.name === 'George Sample'
 })
 
 // Chat messages array
@@ -1264,27 +1294,56 @@ const simulateCall = (): void => {
     queueTime.value++
   }, 1000)
 
-  // Simulate ringing for 3-5 seconds
-  callSimulationTimeout = setTimeout(() => {
-    // Check if queue is still active (not paused)
-    if (queuePaused.value) {
-      return // Don't proceed if queue is paused
-    }
+  // Check if this is George Sample (voicemail scenario)
+  if (currentContact.value && currentContact.value.name === 'George Sample') {
+    // Simulate ringing for 4-6 seconds then go to voicemail
+    callSimulationTimeout = setTimeout(() => {
+      // Check if queue is still active (not paused)
+      if (queuePaused.value) {
+        return // Don't proceed if queue is paused
+      }
 
-    // Contact answers
-    callState.value = 'connected'
-    callDuration.value = 0
-    connectedCalls.value++
+      // Call goes to voicemail - don't set as connected
+      callState.value = 'ended'
+      showDispositionButtons.value = true
+      totalCalls.value++
 
-    // Start call duration timer
-    callTimer = setInterval(() => {
-      callDuration.value++
-    }, 1000)
+      // Add to call log with voicemail entry
+      callLog.value.push({
+        contact: currentContact.value.name,
+        duration: '00:00', // No connection time for voicemail
+        disposition: 'No Disposition Set',
+        notes: ''
+      })
 
-    // Show AI message that call connected
-    addAIMessage(`Connected! You're now speaking with ${currentContact.value.name}.`)
-    scrollToBottom()
-  }, 3000)
+      // Show voicemail detected message
+      addAIMessage('Voicemail detected...')
+      addAIMessage('Please select a disposition for this call and enter any notes:')
+      scrollToBottom()
+    }, 4000)
+  } else {
+    // Regular call simulation for other contacts
+    callSimulationTimeout = setTimeout(() => {
+      // Check if queue is still active (not paused)
+      if (queuePaused.value) {
+        return // Don't proceed if queue is paused
+      }
+
+      // Contact answers
+      callState.value = 'connected'
+      callDuration.value = 0
+      connectedCalls.value++
+
+      // Start call duration timer
+      callTimer = setInterval(() => {
+        callDuration.value++
+      }, 1000)
+
+      // Show AI message that call connected
+      addAIMessage(`Connected! You're now speaking with ${currentContact.value.name}.`)
+      scrollToBottom()
+    }, 3000)
+  }
 }
 
 // Dialer Methods
