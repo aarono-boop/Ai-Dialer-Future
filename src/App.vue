@@ -204,6 +204,19 @@
             </div>
           </div>
 
+          <!-- Load New File Button - shown when queue is completed -->
+          <div v-if="showLoadNewFileButton" class="mt-2 pt-5 flex justify-center">
+            <div class="w-[70%]">
+              <button
+                @click="triggerFileUpload"
+                class="w-full btn-secondary px-6 py-3 rounded-lg font-semibold cursor-pointer flex items-center justify-center gap-2"
+              >
+                <i class="pi pi-upload"></i>
+                Load New File
+              </button>
+            </div>
+          </div>
+
           <!-- Chat Input - positioned at bottom -->
           <div class="mt-2 pt-2.5">
             <ChatInput
@@ -470,6 +483,7 @@ const skippedNumbers = ref<number>(3) // Default for demo
 const callState = ref<string>('ended') // 'ended', 'ringing', 'connected'
 const callDuration = ref<number>(0)
 const queueTime = ref<number>(14)
+const showLoadNewFileButton = ref<boolean>(false)
 
 // Contact data
 const contacts = [
@@ -1709,14 +1723,9 @@ const addSessionSummaryToChat = (isCompleted: boolean = false): void => {
                  <div style="margin-bottom: 16px;"><strong style="color: #fbbf24;">• Schedule 1 follow-up</strong> - George Sample showed interest and needs additional outreach</div>
                </div>
                ${wrapConnectScoreWithTooltip('Your contact data has been enriched with Connect Scores, call outcomes, and notes.')}<br><br>
-               <div style="display: flex; gap: 12px;">
-                 <button style="background-color: rgb(59, 130, 246); color: white; border: none; border-radius: 6px; padding: 8px 16px; font-size: 14px; font-weight: 500; cursor: pointer; display: inline-flex; align-items: center; gap: 8px;" onclick="handleExportFile()">
-                   <i class="pi pi-download"></i> Export Enriched File
-                 </button>
-                 <button style="background-color: rgb(107, 114, 128); color: white; border: none; border-radius: 6px; padding: 8px 16px; font-size: 14px; font-weight: 500; cursor: pointer; display: inline-flex; align-items: center; gap: 8px;" onclick="triggerFileUpload()">
-                   <i class="pi pi-upload"></i> Load New File
-                 </button>
-               </div>` :
+               <button style="background-color: rgb(59, 130, 246); color: white; border: none; border-radius: 6px; padding: 8px 16px; font-size: 14px; font-weight: 500; cursor: pointer; display: inline-flex; align-items: center; gap: 8px;" onclick="handleExportFile()">
+                 <i class="pi pi-download"></i> Export Enriched File
+               </button>` :
               `Great work! Your queue is currently paused. Here's what to do next:<br><br>
                <div style="margin-left: 20px;">
                  <div style="margin-bottom: 16px;"><strong style="color: #fbbf24;">• Schedule 2 appointments</strong> - Sam Sample and Jennifer Martinez requested follow-up calls</div>
