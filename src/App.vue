@@ -1915,8 +1915,8 @@ const loadNewFile = (preserveQueueState: boolean = false): void => {
   hasUploadedFile.value = false
   showLoadNewFileButton.value = false // Hide the Load New File button
 
-  // Show file upload component for new file only if not already visible
-  if (!showFileUploadForReturningUser.value) {
+  // Show file upload component for new file only if not preserving queue state and not already visible
+  if (!preserveQueueState && !showFileUploadForReturningUser.value) {
     addAIMessage('Ready to load a new file. Please upload your contact list to start a new dialing session.')
     showFileUploadForReturningUser.value = true
   }
