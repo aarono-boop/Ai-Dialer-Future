@@ -1802,7 +1802,7 @@ const loadNewFile = (): void => {
 }
 
 const exportFile = (): void => {
-  addAIMessage('Exporting your enriched contact file with Connect Scores and call results...')
+  addAIMessage(wrapConnectScoreWithTooltip('Exporting your enriched contact file with Connect Scores and call results...'))
 }
 
 const handleCompleteQueue = (): void => {
