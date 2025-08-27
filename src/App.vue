@@ -1622,9 +1622,7 @@ const handleExportFile = (): void => {
     })
   })
 
-  addAIMessage(wrapConnectScoreWithTooltip('Exporting your enriched contact file with Connect Scores and call results...'))
-
-  // Reset after 2 seconds
+  // After 2 seconds, show file upload interface instead of export message
   setTimeout(() => {
     isExportingFile.value = false
 
@@ -1650,6 +1648,11 @@ const handleExportFile = (): void => {
         }
       })
     })
+
+    // Show file upload interface
+    addAIMessage('Ready to load a new file. Please upload your contact list to start a new dialing session.')
+    showFileUploadForReturningUser.value = true
+    scrollToBottom()
   }, 2000)
 }
 
