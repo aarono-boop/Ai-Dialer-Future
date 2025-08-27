@@ -380,7 +380,8 @@ This lets teams focus their efforts on numbers with the greatest chance of a liv
 
 // Helper function to wrap Connect Score text with tooltip
 const wrapConnectScoreWithTooltip = (text: string): string => {
-  return text.replace(/Connect Score/g, `<span v-tooltip.top="'${connectScoreTooltip.replace(/'/g, '&apos;')}'">Connect Score</span>`)
+  const tooltipContent = connectScoreTooltip.replace(/'/g, '&#39;').replace(/"/g, '&quot;')
+  return text.replace(/Connect Score/g, `<span class="connect-score-tooltip" data-tooltip="${tooltipContent}">Connect Score</span>`)
 }
 
 // Reactive data
@@ -1112,7 +1113,7 @@ const sendMessage = (message: string): void => {
         '📅 Here\'s your schedule for today:',
         '<strong>Upcoming appointments:</strong>',
         '• 2:00 PM - Demo call with Sarah Johnson (confirmed)',
-        '��� 3:30 PM - Follow-up with ABC Corp (needs confirmation)',
+        '• 3:30 PM - Follow-up with ABC Corp (needs confirmation)',
         '• 4:15 PM - Discovery call with new lead Mike Chen',
         'You have 45 minutes before your next call. Perfect time for some prospecting!'
       ])
