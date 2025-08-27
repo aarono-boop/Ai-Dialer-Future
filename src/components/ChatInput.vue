@@ -1,5 +1,5 @@
 <template>
-  <div class="mt-9" role="region" aria-label="Chat input area">
+  <div class="mt-4" role="region" aria-label="Chat input area">
     <div class="flex items-center bg-gray-800 backdrop-blur-[10px] border border-gray-600 rounded-xl px-3 py-2 gap-2 w-[70%] mx-auto chat-input-container">
       <DSInput
         ref="inputRef"
