@@ -1,5 +1,5 @@
 <template>
-  <footer class="flex justify-center items-center p-6 text-gray-500 text-xs relative z-[5] -mt-[50px]">
+  <footer class="flex justify-center items-center p-6 text-gray-500 text-xs relative z-[5] -mt-[10px]">
     <p>&copy; 2025 ARKON. All rights reserved.</p>
     <DSButton
       @click="$emit('skip-to-dialer')"
