@@ -57,21 +57,14 @@
           </div>
 
           <!-- Queue Action Buttons - shown when queue is paused -->
-          <div v-if="showContinueQueueButton || showLoadNewFileButton" class="mt-2 pt-5 flex justify-center">
-            <div class="w-[70%] flex gap-3">
+          <div v-if="showContinueQueueButton" class="mt-2 pt-5 flex justify-center">
+            <div class="w-[70%]">
               <button
                 v-if="showContinueQueueButton"
                 @click="continueQueue"
-                class="flex-1 btn-primary px-6 py-3 rounded-lg font-semibold cursor-pointer"
+                class="w-full btn-primary px-6 py-3 rounded-lg font-semibold cursor-pointer"
               >
                 Continue Call Queue
-              </button>
-              <button
-                v-if="showLoadNewFileButton"
-                @click="loadNewFile"
-                class="flex-1 btn-secondary px-6 py-3 rounded-lg font-semibold cursor-pointer"
-              >
-                Load New File
               </button>
             </div>
           </div>
@@ -1649,10 +1642,8 @@ const handleExportFile = (): void => {
       })
     })
 
-    // Show file upload interface
-    addAIMessage('Ready to load a new file. Please upload your contact list to start a new dialing session.')
-    showFileUploadForReturningUser.value = true
-    scrollToBottom()
+    // Automatically trigger loadNewFile functionality
+    loadNewFile()
   }, 2000)
 }
 
@@ -1805,11 +1796,8 @@ const addSessionSummaryToChat = (isCompleted: boolean = false): void => {
   addAIMessage([summaryHTML])
 
   // Show action buttons for continuing or loading new file
-  if (shouldCompleteQueue.value) {
-    showLoadNewFileButton.value = true
-  } else {
+  if (!shouldCompleteQueue.value) {
     showContinueQueueButton.value = true
-    showLoadNewFileButton.value = true
   }
 }
 
