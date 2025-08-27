@@ -54,8 +54,8 @@ export const createChatUtils = (
           console.log('🔥 Current scroll position:', chatMessages.value.scrollTop)
 
           // Scroll to position the user message at the top with small buffer
-          const scrollPosition = Math.max(0, messageOffsetTop - 10)
-          console.log('🔥 Scrolling to position (with 10px buffer):', scrollPosition)
+          const scrollPosition = Math.max(0, messageOffsetTop - 5)
+          console.log('🔥 Scrolling to position (with 5px buffer):', scrollPosition)
           chatMessages.value.scrollTo({
             top: scrollPosition,
             behavior: 'smooth'
