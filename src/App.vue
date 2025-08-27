@@ -1205,7 +1205,7 @@ const sendMessage = (message: string): void => {
 }
 
 const handleVoiceInput = () => {
-  addAIMessage('���� Listening... (voice recognition simulated)')
+  addAIMessage('🎤 Listening... (voice recognition simulated)')
 
   // Simulate voice input
   setTimeout(() => {
@@ -2254,8 +2254,8 @@ const handleActionButton = (action: string): void => {
       }
 
       addAIMessageWithoutScroll(response)
-    }, 500) // Additional delay for scroll completion
-  }, 1000) // Initial delay
+    }, 1000) // Additional delay for scroll completion
+  }, 1500) // Initial delay
 }
 
 // Lifecycle hook to establish focus context when app loads
