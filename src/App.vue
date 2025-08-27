@@ -1127,7 +1127,7 @@ const sendMessage = (message: string): void => {
         'Let me set up a personalized demo where you can see:',
         '• Live contact scoring and prioritization',
         '• Real-time dialing with connect predictions',
-        '�� Smart call disposition and follow-up automation',
+        '��� Smart call disposition and follow-up automation',
         'What\'s your preferred time? I can schedule something for today or tomorrow.'
       ])
     } else if (lowerMessage.includes('who i should call now') || lowerMessage.includes('who should i call')) {
@@ -2160,8 +2160,7 @@ const handleGoogleSignupFromAccount = () => {
 const handleActionButton = (action: string): void => {
   // Hide action buttons after selection
   showActionButtons.value = false
-  // Show contact preview buttons
-  showContactPreviewButtons.value = true
+  // Don't show contact preview buttons yet - wait for AI message to appear
   
   // Add user message showing their selection
   addUserMessage(`I want to ${action.toLowerCase()}`)
