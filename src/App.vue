@@ -1671,11 +1671,13 @@ const toggleCallLog = (uniqueId?: string): void => {
 
 // Make functions globally accessible immediately
 ;(window as any).triggerFileUpload = triggerFileUpload
+;(window as any).handleExportFile = handleExportFile
 ;(window as any).toggleCallLog = toggleCallLog
 
 // Ensure functions are available on mount
 onMounted(() => {
   ;(window as any).triggerFileUpload = triggerFileUpload
+  ;(window as any).handleExportFile = handleExportFile
   ;(window as any).toggleCallLog = toggleCallLog
   console.log('Global functions assigned')
 })
@@ -1683,6 +1685,7 @@ onMounted(() => {
 // Clean up global references when component is unmounted
 onUnmounted(() => {
   delete (window as any).triggerFileUpload
+  delete (window as any).handleExportFile
   delete (window as any).toggleCallLog
 })
 
@@ -2029,7 +2032,7 @@ const handleTermsCancel = () => {
   showActionButtons.value = false
   // Clear messages and show welcome message
   messages.value = []
-  addAIMessage('👋 Welcome to ARKON! I\'m your AI calling assistant. I\'ll help you connect with more prospects and close more deals. What would you like to accomplish today?')
+  addAIMessage('��� Welcome to ARKON! I\'m your AI calling assistant. I\'ll help you connect with more prospects and close more deals. What would you like to accomplish today?')
 
   // Set focus context for header
   nextTick(() => {
