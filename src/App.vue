@@ -309,7 +309,7 @@ import { createChatUtils, type Message } from './utils/chat'
 import { getResponseForKeywords } from './utils/aiResponses'
 
 // Components
-import Header from './components/Header.vue'
+import Sidebar from './components/Sidebar.vue'
 import ChatMessage from './components/ChatMessage.vue'
 import FileUpload from './components/FileUpload.vue'
 import ActionButtons from './components/ActionButtons.vue'
