@@ -1,6 +1,6 @@
 <template>
   <!-- Test change for PR functionality -->
-  <div class="min-h-screen text-white flex flex-col relative overflow-x-hidden" :class="showDialer ? 'dialer-active' : ''">
+  <div class="min-h-screen text-white relative overflow-x-hidden" :class="showDialer ? 'dialer-active' : ''">
     
     <!-- Sidebar Navigation -->
     <Sidebar
@@ -985,7 +985,7 @@ const sendMessage = (message: string): void => {
       ])
     } else if (lowerMessage.includes('fire up a dial session') || lowerMessage.includes('dial session')) {
       addAIMessage([
-        '🔥 Let\'s fire up a power dialing session!',
+        '���� Let\'s fire up a power dialing session!',
         'I can configure your session with:',
         '• <strong>Target audience:</strong> High-priority prospects, warm leads, or follow-ups',
         '• <strong>Call duration:</strong> 30 min, 1 hour, or 2-hour session',
