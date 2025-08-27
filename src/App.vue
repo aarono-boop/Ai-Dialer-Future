@@ -1436,7 +1436,7 @@ const simulateCall = (): void => {
 
       // Show voicemail detected message
       addAIMessage('Voicemail detected...')
-      addAIMessage('Please select a disposition for this call and enter any notes:')
+      addAIMessage('Please select a call outcome:')
       scrollToBottom()
     }, 4000)
   } else {
@@ -1534,7 +1534,7 @@ const handleHangUp = (): void => {
   })
 
   addAIMessage(`Call with ${currentContact.value.name} ended. Duration: ${duration}`)
-  addAIMessage('Please select a disposition for this call and enter any notes:')
+  addAIMessage('Please select a call outcome:')
 }
 
 const handleMute = (muted: boolean): void => {
