@@ -57,9 +57,9 @@ export const createChatUtils = (
           console.log('Current scroll top:', chatMessages.value.scrollTop)
           console.log('Calculated scroll offset:', scrollOffset)
 
-          // Scroll to position the message at the very top with a small buffer
+          // Scroll to position the message at the absolute top (no buffer)
           chatMessages.value.scrollTo({
-            top: Math.max(0, scrollOffset - 5),
+            top: Math.max(0, scrollOffset),
             behavior: 'smooth'
           })
         } else {
