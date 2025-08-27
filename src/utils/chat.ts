@@ -33,6 +33,36 @@ export const createChatUtils = (
     }, 50)
   }
 
+  const scrollToUserMessage = async (): Promise<void> => {
+    await nextTick()
+    setTimeout(() => {
+      if (chatMessages.value) {
+        // Find the last user message element
+        const userMessages = chatMessages.value.querySelectorAll('[data-message-type="user"]')
+        if (userMessages.length > 0) {
+          const lastUserMessage = userMessages[userMessages.length - 1]
+
+          // Get the position of the user message relative to the container
+          const containerRect = chatMessages.value.getBoundingClientRect()
+          const messageRect = lastUserMessage.getBoundingClientRect()
+          const currentScrollTop = chatMessages.value.scrollTop
+
+          // Calculate the scroll position to put the user message at the top of the viewport
+          const targetScrollTop = currentScrollTop + (messageRect.top - containerRect.top)
+
+          // Scroll to position the user message at the top
+          chatMessages.value.scrollTo({
+            top: targetScrollTop,
+            behavior: 'smooth'
+          })
+        } else {
+          // Fallback to bottom scroll if no user message found
+          scrollToBottom()
+        }
+      }
+    }, 50)
+  }
+
   const addAIMessage = (content: string | string[]): void => {
     const contentArray = Array.isArray(content) ? content : [content]
     messages.value.push({
