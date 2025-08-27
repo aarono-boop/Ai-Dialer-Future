@@ -341,7 +341,7 @@
 .connect-score-tooltip:hover::after {
   content: attr(data-tooltip);
   position: fixed;
-  top: calc(50% - 60px);
+  top: calc(50% - 160px);
   left: calc(50% + 250px);
   transform: translate(-50%, -50%);
   background: #1f2937;
@@ -362,7 +362,7 @@
 .connect-score-tooltip:hover::before {
   content: '';
   position: fixed;
-  top: calc(50% + 90px);
+  top: calc(50% - 10px);
   left: calc(50% + 250px);
   transform: translateX(-50%);
   border: 6px solid transparent;
