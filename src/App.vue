@@ -6,6 +6,7 @@
     <Sidebar
       ref="headerRef"
       :isSignedIn="isSignedIn"
+      :currentPage="currentPage"
       @login="handleLogin"
       @logout="handleLogout"
       @show-product="showProductPage"
