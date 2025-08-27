@@ -42,15 +42,15 @@ export const createChatUtils = (
         if (userMessages.length > 0) {
           const lastUserMessage = userMessages[userMessages.length - 1]
 
-          // Get the position of the user message relative to the container
-          const containerRect = chatMessages.value.getBoundingClientRect()
-          const messageRect = lastUserMessage.getBoundingClientRect()
+          // Get the position of the user message relative to the scrollable container
           const currentScrollTop = chatMessages.value.scrollTop
+          const messageOffsetTop = lastUserMessage.offsetTop
 
-          // Calculate the scroll position to put the user message at the top of the viewport
-          const targetScrollTop = currentScrollTop + (messageRect.top - containerRect.top)
+          // Position the user message at the very top of the viewable area
+          // Add a small buffer (8px) to ensure it's fully visible and not cut off
+          const targetScrollTop = Math.max(0, messageOffsetTop - 8)
 
-          // Scroll to position the user message at the top
+          // Scroll to position the user message at the highest visible point
           chatMessages.value.scrollTo({
             top: targetScrollTop,
             behavior: 'smooth'
