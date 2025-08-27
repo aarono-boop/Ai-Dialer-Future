@@ -6,6 +6,7 @@
     <div class="flex justify-center items-center">
       <p>&copy; 2025 ARKON. All rights reserved.</p>
       <DSButton
+        v-if="!showDialer"
         @click="$emit('skip-to-dialer')"
         variant="tertiary"
         size="small"
