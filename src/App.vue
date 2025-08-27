@@ -1163,7 +1163,7 @@ const sendMessage = (message: string): void => {
       ])
     } else if (lowerMessage.includes('tell a joke') || lowerMessage.includes('joke')) {
       addAIMessage([
-        '�� Why did the salesperson bring a ladder to work?',
+        '😄 Why did the salesperson bring a ladder to work?',
         'Because they heard the job was about making <strong>high-level</strong> connections!',
         '',
         'Speaking of connections, did you know ARKON users make 3x more meaningful connections than traditional dialers?',
@@ -1707,7 +1707,7 @@ const addSessionSummaryToChat = (isCompleted: boolean = false): void => {
                </div>
                ${wrapConnectScoreWithTooltip('Your contact data has been enriched with Connect Scores, call outcomes, and notes.')}<br><br>
                <div style="display: flex; gap: 12px;">
-                 <button style="background-color: rgb(59, 130, 246); color: white; border: none; border-radius: 6px; padding: 8px 16px; font-size: 14px; font-weight: 500; cursor: pointer; display: inline-flex; align-items: center; gap: 8px;" onclick="triggerFileUpload()">
+                 <button style="background-color: rgb(59, 130, 246); color: white; border: none; border-radius: 6px; padding: 8px 16px; font-size: 14px; font-weight: 500; cursor: pointer; display: inline-flex; align-items: center; gap: 8px;" onclick="handleExportFile()">
                    <i class="pi pi-download"></i> Export Enriched File
                  </button>
                  <button style="background-color: rgb(107, 114, 128); color: white; border: none; border-radius: 6px; padding: 8px 16px; font-size: 14px; font-weight: 500; cursor: pointer; display: inline-flex; align-items: center; gap: 8px;" onclick="triggerFileUpload()">
