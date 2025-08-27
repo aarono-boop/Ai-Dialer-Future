@@ -39,15 +39,19 @@ export const createChatUtils = (
       if (chatMessages.value) {
         // Find the last user message element
         const userMessages = chatMessages.value.querySelectorAll('[data-message-type="user"]')
+        console.log('Found user messages:', userMessages.length)
+
         if (userMessages.length > 0) {
-          const lastUserMessage = userMessages[userMessages.length - 1]
+          const lastUserMessage = userMessages[userMessages.length - 1] as HTMLElement
+          console.log('Last user message element:', lastUserMessage)
 
           // Get the position of the user message relative to the scrollable container
           const messageOffsetTop = lastUserMessage.offsetTop
+          console.log('Message offset top:', messageOffsetTop)
 
           // Position the user message at the absolute top edge with minimal padding
-          // Use only 2px buffer to ensure it's not cut off but is as high as possible
-          const targetScrollTop = Math.max(0, messageOffsetTop - 2)
+          const targetScrollTop = Math.max(0, messageOffsetTop)
+          console.log('Target scroll top:', targetScrollTop)
 
           // Scroll to position the user message at the highest visible point
           chatMessages.value.scrollTo({
@@ -55,11 +59,12 @@ export const createChatUtils = (
             behavior: 'smooth'
           })
         } else {
+          console.log('No user messages found, falling back to bottom scroll')
           // Fallback to bottom scroll if no user message found
           scrollToBottom()
         }
       }
-    }, 50)
+    }, 100) // Increased delay to ensure DOM is ready
   }
 
   const addAIMessage = (content: string | string[]): void => {
