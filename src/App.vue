@@ -357,6 +357,7 @@ import CallSeparator from './components/CallSeparator.vue'
 
 // PrimeVue Components
 import Toast from 'primevue/toast'
+import Tooltip from 'primevue/tooltip'
 
 // Types
 interface Message {
