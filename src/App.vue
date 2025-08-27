@@ -226,28 +226,31 @@
     </main>
 
     <!-- Product Page -->
-    <ProductPage
-      v-if="currentPage === 'product'"
-      @go-to-app="goToMainApp"
-    />
+    <div v-if="currentPage === 'product'" class="ml-16">
+      <ProductPage
+        @go-to-app="goToMainApp"
+      />
+    </div>
 
     <!-- Login Page -->
-    <LoginPage
-      v-if="currentPage === 'login'"
-      @google-signin="handleGoogleSignin"
-      @login-success="handleLoginSuccess"
-      @show-signup="showSignupFromLogin"
-    />
+    <div v-if="currentPage === 'login'" class="ml-16">
+      <LoginPage
+        @google-signin="handleGoogleSignin"
+        @login-success="handleLoginSuccess"
+        @show-signup="showSignupFromLogin"
+      />
+    </div>
 
     <!-- Signup Page -->
-    <SignupPage
-      v-if="currentPage === 'signup'"
-      @google-signup="handleGoogleSignupFromSignup"
-      @switch-to-signin="switchToSigninFromSignup"
-    />
+    <div v-if="currentPage === 'signup'" class="ml-16">
+      <SignupPage
+        @google-signup="handleGoogleSignupFromSignup"
+        @switch-to-signin="switchToSigninFromSignup"
+      />
+    </div>
 
     <!-- Footer -->
-    <Footer v-if="currentPage === 'main'" :style="showDialer ? 'margin-right: 33.333333%' : ''" @skip-to-dialer="skipToDialer" />
+    <Footer v-if="currentPage === 'main'" class="ml-16" :style="showDialer ? 'margin-right: 33.333333%' : ''" @skip-to-dialer="skipToDialer" />
 
     <!-- Screen Reader Live Region for Announcements -->
     <div
