@@ -1063,44 +1063,4 @@ const handleHoldKeydown = (event: KeyboardEvent) => {
 .keypad-btn:active {
   transform: translateY(0);
 }
-
-/* Connect Score tooltip styles */
-.connect-score-tooltip {
-  position: relative;
-  cursor: help;
-  border-bottom: 1px dotted #60a5fa;
-  color: #60a5fa;
-}
-
-.connect-score-tooltip:hover::after {
-  content: attr(data-tooltip);
-  position: absolute;
-  bottom: 100%;
-  left: 50%;
-  transform: translateX(-50%);
-  background: #1f2937;
-  color: white;
-  padding: 12px;
-  border-radius: 8px;
-  font-size: 14px;
-  line-height: 1.4;
-  width: 300px;
-  white-space: pre-line;
-  z-index: 1000;
-  border: 1px solid #374151;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-  margin-bottom: 8px;
-}
-
-.connect-score-tooltip:hover::before {
-  content: '';
-  position: absolute;
-  bottom: 100%;
-  left: 50%;
-  transform: translateX(-50%);
-  border: 6px solid transparent;
-  border-top-color: #374151;
-  z-index: 1001;
-  margin-bottom: 2px;
-}
 </style>
