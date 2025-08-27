@@ -212,7 +212,7 @@
           </div>
 
           <!-- Chat Input - positioned at bottom -->
-          <div class="pt-12">
+          <div class="mt-2">
             <ChatInput
               ref="chatInputRef"
               :customPlaceholder="getPlaceholderText()"
@@ -1042,7 +1042,7 @@ const sendMessage = (message: string): void => {
         '• <strong>Smart Timing:</strong> Calls prospects when they\'re most likely to answer',
         '• <strong>Local Presence:</strong> Uses local numbers to increase pickup rates',
         '• <strong>Voicemail Drop:</strong> Leaves personalized messages when they don\'t answer',
-        '�� <strong>Follow-up Sequences:</strong> Automatically schedules optimal callback times',
+        '• <strong>Follow-up Sequences:</strong> Automatically schedules optimal callback times',
         'On average, users see a 40% increase in connect rates within their first week!'
       ])
     } else if (lowerMessage.includes('setup a demo') || lowerMessage.includes('demo')) {
