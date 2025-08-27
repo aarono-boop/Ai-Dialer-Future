@@ -1163,7 +1163,7 @@ const sendMessage = (message: string): void => {
       ])
     } else if (lowerMessage.includes('tell a joke') || lowerMessage.includes('joke')) {
       addAIMessage([
-        '😄 Why did the salesperson bring a ladder to work?',
+        '�� Why did the salesperson bring a ladder to work?',
         'Because they heard the job was about making <strong>high-level</strong> connections!',
         '',
         'Speaking of connections, did you know ARKON users make 3x more meaningful connections than traditional dialers?',
@@ -1587,6 +1587,62 @@ const triggerFileUpload = (): void => {
   loadNewFile()
 }
 
+// Handler for export with animation
+const handleExportFile = (): void => {
+  // Find all export buttons and update them
+  const exportButtons = document.querySelectorAll('button[onclick="handleExportFile()"]')
+  exportButtons.forEach((button: Element) => {
+    const btn = button as HTMLButtonElement
+    btn.disabled = true
+    btn.style.opacity = '0.7'
+    btn.style.cursor = 'not-allowed'
+
+    // Update icon and text
+    const icon = btn.querySelector('i')
+    if (icon) {
+      icon.className = 'pi pi-spin pi-spinner'
+      icon.style.animation = 'spin 1s linear infinite'
+    }
+
+    // Update text content
+    const textNodes = Array.from(btn.childNodes).filter(node => node.nodeType === Node.TEXT_NODE)
+    textNodes.forEach(node => {
+      if (node.textContent?.includes('Export')) {
+        node.textContent = ' Downloading...'
+      }
+    })
+  })
+
+  // After 2 seconds, show file upload interface
+  setTimeout(() => {
+    // Reset all export buttons
+    exportButtons.forEach((button: Element) => {
+      const btn = button as HTMLButtonElement
+      btn.disabled = false
+      btn.style.opacity = '1'
+      btn.style.cursor = 'pointer'
+
+      // Reset icon
+      const icon = btn.querySelector('i')
+      if (icon) {
+        icon.className = 'pi pi-download'
+        icon.style.animation = ''
+      }
+
+      // Reset text content
+      const textNodes = Array.from(btn.childNodes).filter(node => node.nodeType === Node.TEXT_NODE)
+      textNodes.forEach(node => {
+        if (node.textContent?.includes('Downloading')) {
+          node.textContent = ' Export Enriched File'
+        }
+      })
+    })
+
+    // Trigger file upload flow
+    loadNewFile()
+  }, 2000)
+}
+
 // Toggle function for Call Log collapse/expand
 const toggleCallLog = (uniqueId?: string): void => {
   console.log('toggleCallLog called with ID:', uniqueId)
@@ -1973,7 +2029,7 @@ const handleTermsCancel = () => {
   showActionButtons.value = false
   // Clear messages and show welcome message
   messages.value = []
-  addAIMessage('���� Welcome to ARKON! I\'m your AI calling assistant. I\'ll help you connect with more prospects and close more deals. What would you like to accomplish today?')
+  addAIMessage('👋 Welcome to ARKON! I\'m your AI calling assistant. I\'ll help you connect with more prospects and close more deals. What would you like to accomplish today?')
 
   // Set focus context for header
   nextTick(() => {
