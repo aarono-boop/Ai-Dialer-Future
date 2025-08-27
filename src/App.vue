@@ -2253,6 +2253,11 @@ const handleActionButton = (action: string): void => {
       }
 
       addAIMessageWithoutScroll(response)
+
+      // Show contact preview buttons after AI message appears
+      setTimeout(() => {
+        showContactPreviewButtons.value = true
+      }, 200)
     }, 1000) // Additional delay for scroll completion
   }, 1500) // Initial delay
 }
