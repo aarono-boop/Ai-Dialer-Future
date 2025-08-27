@@ -28,15 +28,15 @@
       </div>
     </div>
     
-    <div v-else class="flex gap-4 items-start flex-row-reverse">
-      <div 
+    <div v-else class="flex gap-4 items-start flex-row-reverse" data-message-type="user">
+      <div
         class="w-[23px] h-[23px] rounded-full bg-gradient-to-br from-blue-400 to-purple-500 flex items-center justify-center flex-shrink-0"
-        role="img" 
+        role="img"
         aria-label="User avatar"
       >
         <i class="pi pi-user text-white text-sm" aria-hidden="true"></i>
       </div>
-      <div 
+      <div
         class="max-w-[95%] bg-gradient-to-br from-blue-400 to-purple-500 rounded-lg rounded-br-sm p-5 text-white text-sm"
         role="region"
         aria-label="User message content"
