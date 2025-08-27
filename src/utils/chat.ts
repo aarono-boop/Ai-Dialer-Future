@@ -109,6 +109,24 @@ export const createChatUtils = (
     scrollToBottom()
   }
 
+  const addAIMessageWithoutScroll = (content: string | string[]): void => {
+    const contentArray = Array.isArray(content) ? content : [content]
+    messages.value.push({
+      type: 'ai',
+      content: contentArray
+    })
+    // Don't scroll - preserve current position
+
+    // Establish focus context after new message appears
+    nextTick(() => {
+      setTimeout(() => {
+        if (headerRef.value?.establishFocusContext) {
+          headerRef.value.establishFocusContext()
+        }
+      }, 100)
+    })
+  }
+
   const addAIMessageWithDelay = (
     content: string | string[],
     delay: number = 1000,
