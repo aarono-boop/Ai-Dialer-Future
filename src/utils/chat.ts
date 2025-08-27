@@ -34,41 +34,34 @@ export const createChatUtils = (
   }
 
   const scrollToUserMessage = async (): Promise<void> => {
+    console.log('🔥 SCROLL TO USER MESSAGE FUNCTION CALLED!')
     await nextTick()
     setTimeout(() => {
+      console.log('🔥 Inside setTimeout for scrollToUserMessage')
       if (chatMessages.value) {
+        console.log('🔥 Chat messages container found')
         // Find the last user message element
         const userMessages = chatMessages.value.querySelectorAll('[data-message-type="user"]')
-        console.log('Found user messages:', userMessages.length)
+        console.log('🔥 Found user messages:', userMessages.length)
 
         if (userMessages.length > 0) {
           const lastUserMessage = userMessages[userMessages.length - 1] as HTMLElement
-          console.log('Last user message element:', lastUserMessage)
+          console.log('🔥 Last user message element:', lastUserMessage)
 
-          // Get the message position relative to its offset parent
-          const messageRect = lastUserMessage.getBoundingClientRect()
-          const containerRect = chatMessages.value.getBoundingClientRect()
-
-          // Calculate how much to scroll to put the message at the top
-          const scrollOffset = messageRect.top - containerRect.top + chatMessages.value.scrollTop
-
-          console.log('Message rect top:', messageRect.top)
-          console.log('Container rect top:', containerRect.top)
-          console.log('Current scroll top:', chatMessages.value.scrollTop)
-          console.log('Calculated scroll offset:', scrollOffset)
-
-          // Try negative offset to account for container padding and push message higher
+          // Simple approach: scroll to top of container first
+          console.log('🔥 Scrolling to top of container')
           chatMessages.value.scrollTo({
-            top: Math.max(0, scrollOffset - 20),
+            top: 0,
             behavior: 'smooth'
           })
         } else {
-          console.log('No user messages found, falling back to bottom scroll')
-          // Fallback to bottom scroll if no user message found
+          console.log('🔥 No user messages found, falling back to bottom scroll')
           scrollToBottom()
         }
+      } else {
+        console.log('🔥 No chat messages container found!')
       }
-    }, 100) // Increased delay to ensure DOM is ready
+    }, 100)
   }
 
   const addAIMessage = (content: string | string[]): void => {
