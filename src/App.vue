@@ -342,7 +342,7 @@
   content: attr(data-tooltip);
   position: fixed;
   top: calc(50% - 60px);
-  left: calc(50% + 150px);
+  left: calc(50% + 250px);
   transform: translate(-50%, -50%);
   background: #1f2937;
   color: white;
@@ -363,7 +363,7 @@
   content: '';
   position: fixed;
   top: calc(50% + 90px);
-  left: calc(50% + 150px);
+  left: calc(50% + 250px);
   transform: translateX(-50%);
   border: 6px solid transparent;
   border-top-color: #374151;
