@@ -100,12 +100,14 @@
         </div>
         
         <DSButton
-          @click="$emit('export-file')"
+          @click="handleExportClick"
+          :disabled="isExporting"
           variant="secondary"
           class="flex items-center gap-2"
         >
-          <i class="pi pi-download"></i>
-          Export Enriched File
+          <i v-if="!isExporting" class="pi pi-download"></i>
+          <i v-else class="pi pi-spin pi-spinner animate-spin"></i>
+          {{ isExporting ? 'Downloading...' : 'Export Enriched File' }}
         </DSButton>
       </div>
 
@@ -141,6 +143,7 @@
 </template>
 
 <script setup lang="ts">
+import { ref } from 'vue'
 import { DSButton, DSCard } from '@/design-system/components'
 
 // Define props
@@ -161,7 +164,23 @@ defineProps<{
 }>()
 
 // Define emits
-defineEmits(['close', 'continue-queue', 'load-new-file', 'export-file'])
+const emit = defineEmits(['close', 'continue-queue', 'load-new-file', 'export-file'])
+
+// Reactive state
+const isExporting = ref(false)
+
+// Handle export click with animation
+const handleExportClick = () => {
+  if (isExporting.value) return
+
+  isExporting.value = true
+  emit('export-file')
+
+  // Reset after 2 seconds
+  setTimeout(() => {
+    isExporting.value = false
+  }, 2000)
+}
 
 // Helper function
 const formatTime = (seconds: number): string => {
