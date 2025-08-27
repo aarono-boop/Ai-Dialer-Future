@@ -31,7 +31,7 @@
     <div id="send-button-help" class="sr-only" v-if="!inputValue.trim()">
       Enter a message to enable the send button
     </div>
-    <div class="text-center mt-3 text-gray-400 text-sm">
+    <div class="text-center mt-3 text-gray-500 text-xs">
       ARKON can make mistakes. Please double-check responses.
     </div>
   </div>
