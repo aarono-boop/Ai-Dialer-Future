@@ -1652,8 +1652,8 @@ const handleExportFile = (): void => {
       })
     })
 
-    // Trigger file upload flow
-    loadNewFile()
+    // Trigger file upload flow - preserve queue state if paused
+    loadNewFile(queuePaused.value)
   }, 2000)
 }
 
