@@ -1199,6 +1199,11 @@ const getPlaceholderText = (): string => {
     return 'Enter notes...'
   }
 
+  // Handle disposition selection state
+  if (showDispositionButtons.value && showDialer.value) {
+    return 'Input a custom disposition...'
+  }
+
   // Only allow animation on the very initial welcome screen
   // Animation shows when: not signed in, no buttons showing, no file uploaded, etc.
   const isInitialWelcomeState = !isSignedIn.value &&
