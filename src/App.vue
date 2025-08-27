@@ -1811,6 +1811,9 @@ const addSessionSummaryToChat = (isCompleted: boolean = false): void => {
   // Show action buttons for continuing or loading new file
   if (!shouldCompleteQueue.value) {
     showContinueQueueButton.value = true
+  } else {
+    // Show Load New File button when queue is completed
+    showLoadNewFileButton.value = true
   }
 }
 
@@ -1899,6 +1902,7 @@ const loadNewFile = (): void => {
   showDialer.value = false
   hasUploadedFile.value = false
   showContinueQueueButton.value = false
+  showLoadNewFileButton.value = false // Hide the Load New File button
 
   // Reset all state
   currentContactIndex.value = 0
@@ -1938,6 +1942,8 @@ const handleCompleteQueue = (): void => {
   // Add session summary content to chat
   setTimeout(() => {
     addSessionSummaryToChat(true)
+    // Show Load New File button
+    showLoadNewFileButton.value = true
   }, 1000)
 }
 
