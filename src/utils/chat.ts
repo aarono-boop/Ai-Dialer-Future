@@ -142,6 +142,7 @@ export const createChatUtils = (
     scrollToBottom,
     scrollToUserMessage,
     addAIMessage,
+    addAIMessageWithoutScroll,
     addUserMessage,
     addSeparatorMessage,
     addAIMessageWithDelay
