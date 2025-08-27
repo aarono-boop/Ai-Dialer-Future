@@ -38,7 +38,12 @@
     <!-- Product link -->
     <button
       v-if="!isSignedIn"
-      class="flex items-center justify-center p-2 mt-4 hover:bg-gray-800 rounded-lg transition-colors cursor-pointer bg-transparent border-none text-gray-400 hover:text-white"
+      :class="[
+        'flex items-center justify-center p-2 mt-4 rounded-lg transition-colors cursor-pointer border-none',
+        props.currentPage === 'product'
+          ? 'bg-blue-600 text-white'
+          : 'bg-transparent text-gray-400 hover:bg-gray-800 hover:text-white'
+      ]"
       @click="$emit('show-product')"
       aria-label="View product information"
       type="button"
