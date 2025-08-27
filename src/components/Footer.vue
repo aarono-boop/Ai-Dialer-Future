@@ -20,6 +20,11 @@
 <script setup lang="ts">
 import { DSButton } from '@/design-system/components'
 
+// Define props
+defineProps<{
+  showDialer?: boolean
+}>()
+
 // Define emits
 defineEmits(['skip-to-dialer'])
 </script>
