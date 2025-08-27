@@ -18,7 +18,7 @@
       <div class="flex gap-6 w-full max-w-[1400px] h-[80vh] mt-2.5">
         <!-- Chat Container -->
         <div class="w-full max-w-6xl mx-auto rounded-xl px-5">
-          <div class="w-full h-full flex flex-col">
+          <div class="w-full h-full flex flex-col pb-20">
           <!-- Top content area - scrollable -->
           <div class="flex-1 overflow-y-auto flex flex-col gap-8 pr-2 pb-4" ref="chatMessages">
             <!-- Chat Messages Area -->
