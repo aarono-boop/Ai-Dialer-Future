@@ -2249,9 +2249,9 @@ const handleActionButton = (action: string): void => {
         break
       default:
         response = [`I\'ll help you with ${action.toLowerCase()}. Let me prepare your optimal calling strategy.`]
-    }
+      }
 
-    addAIMessageWithoutScroll(response)
+      addAIMessageWithoutScroll(response)
     }, 500) // Additional delay for scroll completion
   }, 1000) // Initial delay
 }
