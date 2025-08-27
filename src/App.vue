@@ -1893,25 +1893,27 @@ const skipToDialer = (): void => {
   }, 1500) // Brief delay to show the startup message
 }
 
-const loadNewFile = (): void => {
-  // Reset paused state
-  queuePaused.value = false
-  queueCompletionReady.value = false
+const loadNewFile = (preserveQueueState: boolean = false): void => {
+  // Only reset queue state if not preserving it
+  if (!preserveQueueState) {
+    queuePaused.value = false
+    queueCompletionReady.value = false
+    showContinueQueueButton.value = false
+
+    // Reset all state
+    currentContactIndex.value = 0
+    callState.value = 'ended'
+    callDuration.value = 0
+    queueTime.value = 0
+    totalCalls.value = 0
+    connectedCalls.value = 0
+    callLog.value = []
+  }
 
   showSessionSummary.value = false
   showDialer.value = false
   hasUploadedFile.value = false
-  showContinueQueueButton.value = false
   showLoadNewFileButton.value = false // Hide the Load New File button
-
-  // Reset all state
-  currentContactIndex.value = 0
-  callState.value = 'ended'
-  callDuration.value = 0
-  queueTime.value = 0
-  totalCalls.value = 0
-  connectedCalls.value = 0
-  callLog.value = []
 
   // Show file upload component for new file only if not already visible
   if (!showFileUploadForReturningUser.value) {
