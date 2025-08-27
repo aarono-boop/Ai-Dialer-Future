@@ -375,6 +375,12 @@
 .connect-score-tooltip:hover {
   overflow: visible;
 }
+
+/* Spinner animation for export buttons */
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
 </style>
 
 <script setup lang="ts">
@@ -1591,11 +1597,59 @@ const handleExportFile = (): void => {
   if (isExportingFile.value) return
 
   isExportingFile.value = true
+
+  // Find all export buttons and update them
+  const exportButtons = document.querySelectorAll('button[onclick="handleExportFile()"]')
+  exportButtons.forEach((button: Element) => {
+    const btn = button as HTMLButtonElement
+    btn.disabled = true
+    btn.style.opacity = '0.7'
+    btn.style.cursor = 'not-allowed'
+
+    // Update icon and text
+    const icon = btn.querySelector('i')
+    if (icon) {
+      icon.className = 'pi pi-spin pi-spinner'
+      icon.style.animation = 'spin 1s linear infinite'
+    }
+
+    // Update text content
+    const textNodes = Array.from(btn.childNodes).filter(node => node.nodeType === Node.TEXT_NODE)
+    textNodes.forEach(node => {
+      if (node.textContent?.includes('Export')) {
+        node.textContent = ' Downloading...'
+      }
+    })
+  })
+
   addAIMessage(wrapConnectScoreWithTooltip('Exporting your enriched contact file with Connect Scores and call results...'))
 
   // Reset after 2 seconds
   setTimeout(() => {
     isExportingFile.value = false
+
+    // Reset all export buttons
+    exportButtons.forEach((button: Element) => {
+      const btn = button as HTMLButtonElement
+      btn.disabled = false
+      btn.style.opacity = '1'
+      btn.style.cursor = 'pointer'
+
+      // Reset icon
+      const icon = btn.querySelector('i')
+      if (icon) {
+        icon.className = 'pi pi-download'
+        icon.style.animation = ''
+      }
+
+      // Reset text content
+      const textNodes = Array.from(btn.childNodes).filter(node => node.nodeType === Node.TEXT_NODE)
+      textNodes.forEach(node => {
+        if (node.textContent?.includes('Downloading')) {
+          node.textContent = ' Export Enriched File'
+        }
+      })
+    })
   }, 2000)
 }
 
@@ -1662,8 +1716,8 @@ const addSessionSummaryToChat = (isCompleted: boolean = false): void => {
                  <div style="margin-bottom: 16px;"><strong style="color: #fbbf24;">• Schedule 1 follow-up</strong> - George Sample showed interest and needs additional outreach</div>
                </div>
                ${wrapConnectScoreWithTooltip('Your contact data has been enriched with Connect Scores, call outcomes, and notes.')}<br><br>
-               <button style="background-color: rgb(59, 130, 246); color: white; border: none; border-radius: 6px; padding: 8px 16px; font-size: 14px; font-weight: 500; cursor: pointer; display: inline-flex; align-items: center; gap: 8px;" onclick="handleExportFile()" ${isExportingFile.value ? 'disabled' : ''}>
-                 <i class="${isExportingFile.value ? 'pi pi-spin pi-spinner animate-spin' : 'pi pi-download'}"></i> ${isExportingFile.value ? 'Downloading...' : 'Export Enriched File'}
+               <button style="background-color: rgb(59, 130, 246); color: white; border: none; border-radius: 6px; padding: 8px 16px; font-size: 14px; font-weight: 500; cursor: pointer; display: inline-flex; align-items: center; gap: 8px;" onclick="handleExportFile()">
+                 <i class="pi pi-download"></i> Export Enriched File
                </button>` :
               `Great work! Your queue is currently paused. Here's what to do next:<br><br>
                <div style="margin-left: 20px;">
@@ -1671,8 +1725,8 @@ const addSessionSummaryToChat = (isCompleted: boolean = false): void => {
                  <div style="margin-bottom: 16px;"><strong style="color: #fbbf24;">• Schedule 1 follow-up</strong> - George Sample showed interest and needs additional outreach</div>
                </div>
                ${wrapConnectScoreWithTooltip('Your contact data has been enriched with Connect Scores, call outcomes, and notes.')}<br>Keep calling to build even more value.<br><br>
-               <button style="background-color: rgb(59, 130, 246); color: white; border: none; border-radius: 6px; padding: 8px 16px; font-size: 14px; font-weight: 500; cursor: pointer; display: inline-flex; align-items: center; gap: 8px;" onclick="handleExportFile()" ${isExportingFile.value ? 'disabled' : ''}>
-                 <i class="${isExportingFile.value ? 'pi pi-spin pi-spinner animate-spin' : 'pi pi-download'}"></i> ${isExportingFile.value ? 'Downloading...' : 'Export Enriched File'}
+               <button style="background-color: rgb(59, 130, 246); color: white; border: none; border-radius: 6px; padding: 8px 16px; font-size: 14px; font-weight: 500; cursor: pointer; display: inline-flex; align-items: center; gap: 8px;" onclick="handleExportFile()">
+                 <i class="pi pi-download"></i> Export Enriched File
                </button>`
             }
           </div>
