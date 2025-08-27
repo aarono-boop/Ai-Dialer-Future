@@ -123,13 +123,16 @@ export const createChatUtils = (
     })
     // Don't scroll - preserve current position
 
-    // Establish focus context after new message appears
+    // After AI message is added, re-position the user message at the top
     nextTick(() => {
       setTimeout(() => {
+        console.log('🔥 AI message added, now re-positioning user message')
+        scrollToUserMessage()
+
         if (headerRef.value?.establishFocusContext) {
           headerRef.value.establishFocusContext()
         }
-      }, 100)
+      }, 200) // Small delay to ensure DOM is updated
     })
   }
 
