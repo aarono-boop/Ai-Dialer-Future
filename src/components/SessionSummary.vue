@@ -112,30 +112,12 @@
       </div>
 
       <!-- Action Buttons -->
-      <div v-if="isQueueComplete" class="flex justify-center">
-        <DSButton
-          @click="$emit('load-new-file')"
-          variant="secondary"
-          size="large"
-          label="Load New File"
-        />
-      </div>
-
-      <div v-else class="flex gap-4">
+      <div v-if="!isQueueComplete" class="flex justify-center">
         <DSButton
           @click="$emit('continue-queue')"
           variant="primary"
           size="large"
-          class="flex-1"
           label="Continue Call Queue"
-        />
-
-        <DSButton
-          @click="$emit('load-new-file')"
-          variant="secondary"
-          size="large"
-          class="flex-1"
-          label="Load New File"
         />
       </div>
     </div>
@@ -164,7 +146,7 @@ defineProps<{
 }>()
 
 // Define emits
-const emit = defineEmits(['close', 'continue-queue', 'load-new-file', 'export-file'])
+const emit = defineEmits(['close', 'continue-queue', 'export-file'])
 
 // Reactive state
 const isExporting = ref(false)
