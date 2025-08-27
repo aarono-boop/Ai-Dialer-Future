@@ -2166,7 +2166,7 @@ const handleActionButton = (action: string): void => {
   // Add user message showing their selection
   addUserMessage(`I want to ${action.toLowerCase()}`)
   
-  // Add AI response based on the action
+  // Add AI response based on the action - increased delay to allow user message scroll to complete
   setTimeout(() => {
     let response = []
     const sampleContacts = `
