@@ -63,6 +63,12 @@
         <div class="text-green-400 font-medium">Live Call: <span class="font-mono">{{ formatTime(callDuration) }}</span></div>
         <div class="text-gray-300 text-sm">{{ currentContact.phone }}</div>
       </div>
+
+      <!-- Idle State (initial state before any calls) -->
+      <div v-else-if="callState === 'idle'" class="bg-gray-900/50 border border-gray-600 rounded-lg p-3 text-center">
+        <div class="text-gray-400 font-medium">Ready to Dial</div>
+        <div class="text-gray-300 text-sm">{{ currentContact.phone }}</div>
+      </div>
     </div>
 
     <!-- Contact Info -->
