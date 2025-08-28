@@ -1,7 +1,7 @@
 import { createApp } from 'vue'
 import PrimeVue from 'primevue/config'
 import ToastService from 'primevue/toastservice'
-import { customTheme, cssVariables } from './design-system/styles/theme'
+import { customTheme } from './design-system/tokens/primevue'
 import 'primeicons/primeicons.css'
 import App from './App.vue'
 import './style.css'
