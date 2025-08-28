@@ -1958,6 +1958,9 @@ const handleDisposition = (disposition: string): void => {
   // Hide disposition buttons
   showDispositionButtons.value = false
 
+  // Mark that a disposition button was clicked
+  dispositionButtonClicked.value = true
+
   // Store the disposition for later use
   currentDisposition.value = disposition
 
