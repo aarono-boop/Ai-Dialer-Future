@@ -1067,9 +1067,6 @@ const sendMessage = (message: string): void => {
 
     const userInput = message.trim()
 
-    // Check if user provided both disposition and notes (input longer than typical disposition)
-    const seemsToIncludeNotes = userInput.length > 20 || userInput.includes(' - ') || userInput.includes(': ') || userInput.includes('. ')
-
     // Store the disposition for later use
     currentDisposition.value = userInput
 
@@ -1077,56 +1074,30 @@ const sendMessage = (message: string): void => {
     if (callLog.value.length > 0) {
       const lastCall = callLog.value[callLog.value.length - 1]
       lastCall.disposition = userInput
+      lastCall.notes = userInput // Always use custom input as notes
 
-      // If it seems like notes were included, also set them as notes
-      if (seemsToIncludeNotes) {
-        lastCall.notes = userInput
-
-        // Update contact notes too
-        if (currentContact.value) {
-          currentContact.value.notes = userInput
-        }
+      // Update contact notes too
+      if (currentContact.value) {
+        currentContact.value.notes = userInput
       }
     }
 
     // Set disposition flag to enable next button immediately
     dispositionSet.value = true
 
-    if (seemsToIncludeNotes) {
-      // User already provided notes, complete the disposition process
-      waitingForNotesInput.value = false
+    // User provided custom input, consider it complete (no additional notes prompt)
+    waitingForNotesInput.value = false
 
-      setTimeout(() => {
-        // Check if this is the 3rd contact (index 2) - if so, enable queue completion
-        if (currentContactIndex.value >= 2) {
-          queueCompletionReady.value = true
-          addAIMessage(`The call outcome and notes have been saved for ${currentContact.value.name}. Click "Queue Completed" to finish your dialing session.`)
-        } else {
-          addAIMessage(`The call outcome and notes have been saved for ${currentContact.value.name}. Click "Next" to continue to the next contact.`)
-        }
-        scrollToBottom()
-      }, 1000)
-    } else {
-      // Set flag to wait for notes input
-      waitingForNotesInput.value = true
-
-      // Add AI response prompting for notes
-      setTimeout(() => {
-        addAIMessage('Great! Now please enter any notes about this call:')
-
-        // Focus the chat input for notes
-        setTimeout(() => {
-          if (chatInputRef.value && chatInputRef.value.focus) {
-            chatInputRef.value.focus()
-            console.log('Auto-focused chat input for notes entry')
-          } else {
-            console.log('Chat input ref not available for notes auto-focus')
-          }
-        }, 500)
-
-        scrollToBottom()
-      }, 1000)
-    }
+    setTimeout(() => {
+      // Check if this is the 3rd contact (index 2) - if so, enable queue completion
+      if (currentContactIndex.value >= 2) {
+        queueCompletionReady.value = true
+        addAIMessage(`The call outcome and notes have been saved for ${currentContact.value.name}. Click "Queue Completed" to finish your dialing session.`)
+      } else {
+        addAIMessage(`The call outcome and notes have been saved for ${currentContact.value.name}. Click "Next" to continue to the next contact.`)
+      }
+      scrollToBottom()
+    }, 1000)
     return
   }
 
