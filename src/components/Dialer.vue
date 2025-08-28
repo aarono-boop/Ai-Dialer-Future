@@ -134,8 +134,8 @@
 
     <!-- Action Buttons -->
     <div class="p-4 border-t border-gray-700">
-      <!-- Call Controls (always visible) -->
-      <div class="space-y-3">
+      <!-- Call Controls (visible when not ended) -->
+      <div v-if="callState !== 'ended'" class="space-y-3">
         <!-- Call Control Buttons -->
         <div class="grid grid-cols-3 gap-3">
           <DSButton
@@ -192,8 +192,8 @@
         </DSButton>
       </div>
 
-      <!-- Additional Action Buttons (when call ended) -->
-      <div v-if="callState === 'ended'" class="space-y-2 mt-3">
+      <!-- Call Ended Action Buttons (only when call ended) -->
+      <div v-if="callState === 'ended'" class="space-y-2">
         <DSButton
           @click="callBack"
           tabindex="13"
