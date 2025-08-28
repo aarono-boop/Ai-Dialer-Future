@@ -1496,7 +1496,7 @@ const handleNextContact = (): void => {
   if (currentContactIndex.value < contacts.length - 1) {
     currentContactIndex.value++
 
-    callState.value = 'ended'
+    callState.value = 'idle'
     callDuration.value = 0
 
     addAIMessage(`Moving to next contact: ${currentContact.value.name}. Preparing to dial...`)
