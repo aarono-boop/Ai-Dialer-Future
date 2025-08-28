@@ -713,6 +713,26 @@ const handleHoldKeydown = (event: KeyboardEvent) => {
   padding: var(--original-padding) !important;
 }
 
+/* Remove hover effects for disabled buttons */
+:deep(.ds-button:disabled),
+:deep(.ds-button[disabled]) {
+  pointer-events: none !important;
+  opacity: 0.6 !important;
+  cursor: not-allowed !important;
+}
+
+:deep(.ds-button:disabled:hover),
+:deep(.ds-button[disabled]:hover),
+:deep(.p-button:disabled:hover),
+:deep(.p-button[disabled]:hover) {
+  transform: none !important;
+  background-color: inherit !important;
+  color: inherit !important;
+  border-color: inherit !important;
+  box-shadow: none !important;
+  opacity: 0.6 !important;
+}
+
 :deep(.ds-button:active) {
   transform: none !important;
   border-width: 1px !important;
