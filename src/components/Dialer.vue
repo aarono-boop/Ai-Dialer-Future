@@ -134,8 +134,8 @@
 
     <!-- Action Buttons -->
     <div class="p-4 border-t border-gray-700">
-      <!-- Call Controls (when ringing or connected) -->
-      <div v-if="callState === 'connected' || callState === 'ringing'" class="space-y-3">
+      <!-- Call Controls (always visible) -->
+      <div class="space-y-3">
         <!-- Call Control Buttons -->
         <div class="grid grid-cols-3 gap-3">
           <DSButton
@@ -143,6 +143,7 @@
             @click="toggleMute"
             @keydown="handleMuteKeydown"
             tabindex="9"
+            :disabled="callState === 'idle'"
             :variant="isMuted ? 'error' : 'secondary'"
             class="flex flex-col items-center justify-center gap-1 py-3"
           >
@@ -155,6 +156,7 @@
             ref="keypadButtonRef"
             @click="showKeypad"
             tabindex="10"
+            :disabled="callState === 'idle'"
             variant="secondary"
             class="flex flex-col items-center justify-center gap-1 py-3"
           >
@@ -167,6 +169,7 @@
             @click="toggleHold"
             @keydown="handleHoldKeydown"
             tabindex="11"
+            :disabled="callState === 'idle'"
             :variant="isOnHold ? 'warning' : 'secondary'"
             class="flex flex-col items-center justify-center gap-1 py-3"
           >
@@ -180,6 +183,7 @@
           @click="hangUp"
           @keydown.tab="handleHangUpTab"
           tabindex="12"
+          :disabled="callState === 'idle'"
           variant="error"
           class="w-full flex items-center justify-center gap-2 py-3"
         >
@@ -188,8 +192,8 @@
         </DSButton>
       </div>
 
-      <!-- Regular Action Buttons (when not connected) -->
-      <div v-else class="space-y-2">
+      <!-- Additional Action Buttons (when call ended) -->
+      <div v-if="callState === 'ended'" class="space-y-2 mt-3">
         <DSButton
           v-if="callState === 'ended'"
           @click="callBack"
