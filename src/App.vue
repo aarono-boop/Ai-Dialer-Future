@@ -1986,7 +1986,7 @@ const handleDisposition = (disposition: string): void => {
 
   // Add AI response prompting for notes
   setTimeout(() => {
-    addAIMessage('Great! Now please enter any notes about this call:')
+    addAIMessage('Great! Now please enter any notes about this call or continue to the next call.')
 
     // Focus the chat input for notes
     setTimeout(() => {
