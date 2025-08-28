@@ -202,6 +202,7 @@
         </DSButton>
 
         <DSButton
+          v-if="callState === 'ended'"
           @click="shouldCompleteQueue ? completeQueue() : nextContact()"
           @keydown.tab="handleNextContactTab"
           tabindex="10"
