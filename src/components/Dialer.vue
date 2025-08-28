@@ -134,8 +134,8 @@
 
     <!-- Action Buttons -->
     <div class="p-4 border-t border-gray-700">
-      <!-- Call Controls (when connected) -->
-      <div v-if="callState === 'connected'" class="space-y-3">
+      <!-- Call Controls (when ringing or connected) -->
+      <div v-if="callState === 'connected' || callState === 'ringing'" class="space-y-3">
         <!-- Call Control Buttons -->
         <div class="grid grid-cols-3 gap-3">
           <DSButton
