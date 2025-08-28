@@ -185,6 +185,7 @@
       <!-- Regular Action Buttons (when not connected) -->
       <div v-else class="space-y-2">
         <DSButton
+          v-if="callState === 'ended'"
           @click="callBack"
           tabindex="9"
           variant="secondary"
