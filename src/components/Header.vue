@@ -53,16 +53,15 @@
 
         <!-- Avatar when signed in -->
         <div v-if="isSignedIn" class="relative flex items-center gap-3" role="group" aria-label="User account">
-          <button
-            class="w-8 h-8 rounded-full bg-gradient-to-r from-blue-500 to-purple-600 flex items-center justify-center hover:scale-105 transition-transform cursor-pointer border-none"
-            role="button"
-            aria-label="User menu"
+          <DSButton
             @click="toggleUserMenu"
+            variant="text"
+            icon="pi pi-user"
+            class="w-8 h-8 rounded-full bg-gradient-to-r from-blue-500 to-purple-600 flex items-center justify-center hover:scale-105 transition-transform text-white text-sm"
+            aria-label="User menu"
             tabindex="4"
             ref="userMenuButton"
-          >
-            <i class="pi pi-user text-white text-sm" aria-hidden="true"></i>
-          </button>
+          />
 
           <!-- User Dropdown Menu -->
           <div
