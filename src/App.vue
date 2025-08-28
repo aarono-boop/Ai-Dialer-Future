@@ -658,6 +658,7 @@ const handleLogout = () => {
   waitingForTryAgainResponse.value = false
   waitingForNotesInput.value = false
   currentDisposition.value = ''
+  dispositionButtonClicked.value = false
 
   // Reset verification state
   verificationStep.value = 'default'
