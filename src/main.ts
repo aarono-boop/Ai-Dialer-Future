@@ -8,10 +8,7 @@ import './style.css'
 
 const app = createApp(App)
 
-// Apply CSS variables to document root
-Object.entries(cssVariables).forEach(([property, value]) => {
-  document.documentElement.style.setProperty(property, value)
-})
+// PrimeVue design tokens are now handled by the theme system
 
 app.use(PrimeVue, {
   theme: {
