@@ -1053,9 +1053,7 @@ const sendMessage = (message: string): void => {
 
     setTimeout(() => {
       addAIMessage([
-        `Great! Your number ${enteredPhoneNumber.value} is verified and set as your Caller ID.`,
-        '',
-        'As the dialer calls each person, their contact information will be displayed. The first contact that will be called is Sam Sample.'
+        `Great! Your number ${enteredPhoneNumber.value} is verified and set as your Caller ID.<br><br>As the dialer calls each person, their contact information will be displayed. The first contact that will be called is Sam Sample.`
       ])
       scrollToBottom()
     }, 1000)
