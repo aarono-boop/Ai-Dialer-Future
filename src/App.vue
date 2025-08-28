@@ -1314,7 +1314,7 @@ const getPlaceholderText = (): string => {
 
   // Handle disposition selection state
   if (showDispositionButtons.value && showDialer.value) {
-    return 'Input a custom disposition...'
+    return 'Enter notes...'
   }
 
   // Only allow animation on the very initial welcome screen
