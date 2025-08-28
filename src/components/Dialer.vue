@@ -195,9 +195,8 @@
       <!-- Additional Action Buttons (when call ended) -->
       <div v-if="callState === 'ended'" class="space-y-2 mt-3">
         <DSButton
-          v-if="callState === 'ended'"
           @click="callBack"
-          tabindex="9"
+          tabindex="13"
           variant="secondary"
           class="w-full flex items-center justify-center gap-2 py-3"
         >
@@ -206,10 +205,9 @@
         </DSButton>
 
         <DSButton
-          v-if="callState === 'ended'"
           @click="shouldCompleteQueue ? completeQueue() : nextContact()"
           @keydown.tab="handleNextContactTab"
-          tabindex="10"
+          tabindex="14"
           :disabled="shouldCompleteQueue ? !dispositionSet : (callState === 'ended' && !dispositionSet)"
           :variant="shouldCompleteQueue ? (dispositionSet ? 'primary' : 'secondary') : dispositionSet ? 'primary' : 'secondary'"
           class="w-full flex items-center justify-center gap-2 py-3"
