@@ -1453,7 +1453,7 @@ const simulateCall = (): void => {
 
       // Show voicemail detected message
       addAIMessage('Voicemail detected...')
-      addAIMessage('Please select a call outcome:')
+      addAIMessage('Please select a call outcome or enter notes:')
       scrollToBottom()
     }, 4000)
   } else {
