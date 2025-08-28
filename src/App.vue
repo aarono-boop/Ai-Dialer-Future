@@ -59,79 +59,79 @@
           <!-- Queue Action Buttons - shown when queue is paused -->
           <div v-if="showContinueQueueButton" class="mt-2 pt-5 flex justify-center">
             <div class="w-[70%]">
-              <button
+              <DSButton
                 v-if="showContinueQueueButton"
                 @click="continueQueue"
-                class="w-full btn-primary px-6 py-3 rounded-lg font-semibold cursor-pointer"
-              >
-                Continue Call Queue
-              </button>
+                variant="primary"
+                label="Continue Call Queue"
+                class="w-full px-6 py-3 font-semibold"
+              />
             </div>
           </div>
 
           <!-- Contact Preview Buttons - always visible when active -->
           <div v-if="showContactPreviewButtons" class="mt-2 pt-5 flex justify-center">
             <div class="w-[70%] flex gap-3">
-              <button
+              <DSButton
                 @click="handleLooksGood"
-                class="flex-1 btn-primary px-6 py-3 rounded-lg font-semibold cursor-pointer"
+                variant="primary"
+                label="Looks Good"
+                class="flex-1 px-6 py-3 font-semibold"
                 tabindex="3"
-              >
-                Looks Good
-              </button>
-              <button
+              />
+              <DSButton
                 @click="handleTryAgain"
-                class="btn-secondary flex-1 px-6 py-3 rounded-lg font-semibold cursor-pointer"
+                variant="secondary"
+                label="Try Again"
+                class="flex-1 px-6 py-3 font-semibold"
                 tabindex="4"
-              >
-                Try Again
-              </button>
+              />
             </div>
           </div>
 
           <!-- Phone Verification Button - always visible when active -->
           <div v-if="showPhoneVerificationButton" class="mt-2 pt-5 flex justify-center">
             <div class="w-[70%]">
-              <button
+              <DSButton
                 @click="handlePhoneVerification"
-                class="w-1/2 btn-primary px-8 py-3 rounded-lg font-semibold cursor-pointer mx-auto block"
+                variant="primary"
+                label="Now lets verify my phone number"
+                class="w-1/2 px-8 py-3 font-semibold mx-auto block"
                 tabindex="3"
-              >
-                Now lets verify my phone number
-              </button>
+              />
             </div>
           </div>
 
           <!-- Verification Code Buttons - always visible when active -->
           <div v-if="showVerificationButtons" class="mt-2 pt-5 flex justify-center">
             <div class="w-[70%] flex gap-3">
-              <button
+              <DSButton
                 @click="handleResendCode"
-                class="btn-secondary flex-1 px-6 py-3 rounded-lg font-semibold cursor-pointer"
+                variant="secondary"
+                label="Resend Code"
+                class="flex-1 px-6 py-3 font-semibold"
                 tabindex="3"
-              >
-                Resend Code
-              </button>
-              <button
+              />
+              <DSButton
                 @click="handleTryAnotherNumber"
-                class="btn-secondary flex-1 px-6 py-3 rounded-lg font-semibold cursor-pointer"
+                variant="secondary"
+                label="Try Another Number"
+                class="flex-1 px-6 py-3 font-semibold"
                 tabindex="4"
-              >
-                Try Another Number
-              </button>
+              />
             </div>
           </div>
 
           <!-- Start Dialing Button - always visible when active -->
           <div v-if="showStartDialingButton" class="mt-2 pt-5 flex justify-center">
             <div class="w-[70%]">
-              <button
+              <DSButton
                 @click="handleStartDialing"
-                class="w-1/2 btn-primary py-3 rounded-lg font-semibold cursor-pointer mx-auto block"
+                variant="primary"
+                label="Start Dialing"
+                class="w-1/2 py-3 font-semibold mx-auto block"
                 tabindex="3"
-              >
-                Start Dialing
-              </button>
+              />
             </div>
           </div>
 
