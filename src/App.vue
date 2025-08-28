@@ -1846,7 +1846,7 @@ const skipToDialer = (): void => {
   showDialer.value = true
 
   // Initialize dialer state
-  callState.value = 'ended'
+  callState.value = 'idle'
   currentContactIndex.value = 0
 
   // Clear messages and add dialer startup message
