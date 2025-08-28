@@ -1,4 +1,4 @@
-import { definePreset } from '@primeuix/styled'
+import { definePreset } from '@primevue/themes'
 import base from './base'
 import button from './button'
 
