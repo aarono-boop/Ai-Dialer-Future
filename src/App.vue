@@ -1065,37 +1065,68 @@ const sendMessage = (message: string): void => {
     // Treat the input as a custom disposition - same logic as handleDisposition
     showDispositionButtons.value = false
 
-    // Store the disposition for later use
-    currentDisposition.value = message.trim()
+    const userInput = message.trim()
 
-    // Update the last call log entry with the disposition
+    // Check if user provided both disposition and notes (input longer than typical disposition)
+    const seemsToIncludeNotes = userInput.length > 20 || userInput.includes(' - ') || userInput.includes(': ') || userInput.includes('. ')
+
+    // Store the disposition for later use
+    currentDisposition.value = userInput
+
+    // Update the last call log entry with the disposition and notes
     if (callLog.value.length > 0) {
       const lastCall = callLog.value[callLog.value.length - 1]
-      lastCall.disposition = message.trim()
+      lastCall.disposition = userInput
+
+      // If it seems like notes were included, also set them as notes
+      if (seemsToIncludeNotes) {
+        lastCall.notes = userInput
+
+        // Update contact notes too
+        if (currentContact.value) {
+          currentContact.value.notes = userInput
+        }
+      }
     }
 
-    // Set disposition flag to enable next button immediately (notes are optional)
+    // Set disposition flag to enable next button immediately
     dispositionSet.value = true
 
-    // Set flag to wait for notes input
-    waitingForNotesInput.value = true
+    if (seemsToIncludeNotes) {
+      // User already provided notes, complete the disposition process
+      waitingForNotesInput.value = false
 
-    // Add AI response prompting for notes
-    setTimeout(() => {
-      addAIMessage('Great! Now please enter any notes about this call:')
-
-      // Focus the chat input for notes
       setTimeout(() => {
-        if (chatInputRef.value && chatInputRef.value.focus) {
-          chatInputRef.value.focus()
-          console.log('Auto-focused chat input for notes entry')
+        // Check if this is the 3rd contact (index 2) - if so, enable queue completion
+        if (currentContactIndex.value >= 2) {
+          queueCompletionReady.value = true
+          addAIMessage(`The call outcome and notes have been saved for ${currentContact.value.name}. Click "Queue Completed" to finish your dialing session.`)
         } else {
-          console.log('Chat input ref not available for notes auto-focus')
+          addAIMessage(`The call outcome and notes have been saved for ${currentContact.value.name}. Click "Next" to continue to the next contact.`)
         }
-      }, 500)
+        scrollToBottom()
+      }, 1000)
+    } else {
+      // Set flag to wait for notes input
+      waitingForNotesInput.value = true
 
-      scrollToBottom()
-    }, 1000)
+      // Add AI response prompting for notes
+      setTimeout(() => {
+        addAIMessage('Great! Now please enter any notes about this call:')
+
+        // Focus the chat input for notes
+        setTimeout(() => {
+          if (chatInputRef.value && chatInputRef.value.focus) {
+            chatInputRef.value.focus()
+            console.log('Auto-focused chat input for notes entry')
+          } else {
+            console.log('Chat input ref not available for notes auto-focus')
+          }
+        }, 500)
+
+        scrollToBottom()
+      }, 1000)
+    }
     return
   }
 
@@ -1224,7 +1255,7 @@ const handleLooksGood = (): void => {
     // Skip phone verification for returning users or if phone was already verified
     setTimeout(() => {
       addAIMessage([
-        'I\'ve analyzed your contact\'s phone numbers using real connection data from 900M+ calls, recent phone engagement, calling patterns, and carrier signals—so you only dial numbers likely to connect.<br><br>I\'ve prioritized the phone numbers most likely to connect so you spend time talking, not hitting dead lines.<br><br>Here\'s what I found:<br><div style="margin-left: 1em; text-indent: -1em;">• 40 numbers have \'High\' <span class="connect-score-tooltip" data-tooltip="' + connectScoreTooltip.replace(/'/g, '&#39;').replace(/"/g, '&quot;') + '">Connect Scores</span> and show consistent calling activity in the last 12 months. These are highly likely to be connected and assigned to active subscribers.</div><br><div style="margin-left: 1em; text-indent: -1em;">• 67 numbers have \'Medium\' Connect Scores and are worth calling after you exhaust your \'High\' Connect Score numbers.</div><br><div style="margin-left: 1em; text-indent: -1em;">• 54 numbers have \'Low\' Connect Scores and are likely disconnected or inactive lines that won\'t answer when dialed.</div>'
+        'I\'ve analyzed your contact\'s phone numbers using real connection data from 900M+ calls, recent phone engagement, calling patterns, and carrier signals—so you only dial numbers likely to connect.<br><br>I\'ve prioritized the phone numbers most likely to connect so you spend time talking, not hitting dead lines.<br><br>Here\'s what I found:<br><div style="margin-left: 1em; text-indent: -1em;">�� 40 numbers have \'High\' <span class="connect-score-tooltip" data-tooltip="' + connectScoreTooltip.replace(/'/g, '&#39;').replace(/"/g, '&quot;') + '">Connect Scores</span> and show consistent calling activity in the last 12 months. These are highly likely to be connected and assigned to active subscribers.</div><br><div style="margin-left: 1em; text-indent: -1em;">• 67 numbers have \'Medium\' Connect Scores and are worth calling after you exhaust your \'High\' Connect Score numbers.</div><br><div style="margin-left: 1em; text-indent: -1em;">• 54 numbers have \'Low\' Connect Scores and are likely disconnected or inactive lines that won\'t answer when dialed.</div>'
       ])
 
       // Skip directly to verified phone and start dialing
