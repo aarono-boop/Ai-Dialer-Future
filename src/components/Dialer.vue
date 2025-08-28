@@ -1101,4 +1101,18 @@ const handleHoldKeydown = (event: KeyboardEvent) => {
 .keypad-btn:active {
   transform: translateY(0);
 }
+
+/* Disabled keypad button styles */
+.keypad-btn:disabled,
+.keypad-btn[disabled] {
+  pointer-events: none !important;
+  opacity: 0.6 !important;
+  cursor: not-allowed !important;
+}
+
+.keypad-btn:disabled:hover,
+.keypad-btn[disabled]:hover {
+  transform: none !important;
+  background-color: #374151 !important; /* gray-700 */
+}
 </style>
