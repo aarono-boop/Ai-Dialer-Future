@@ -1066,6 +1066,9 @@ const sendMessage = (message: string): void => {
     // Treat the input as a custom disposition - same logic as handleDisposition
     showDispositionButtons.value = false
 
+    // Mark that this was custom input, not a button click
+    dispositionButtonClicked.value = false
+
     const userInput = message.trim()
 
     // Store the disposition for later use
