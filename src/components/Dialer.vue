@@ -1115,4 +1115,9 @@ const handleHoldKeydown = (event: KeyboardEvent) => {
   transform: none !important;
   background-color: #374151 !important; /* gray-700 */
 }
+
+/* Hang Up button custom hover color */
+:deep([tabindex="12"]:hover) {
+  background-color: #b91c1c !important; /* red-700 - darker red for hover */
+}
 </style>
