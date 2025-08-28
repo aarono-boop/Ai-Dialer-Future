@@ -1902,7 +1902,7 @@ const loadNewFile = (preserveQueueState: boolean = false): void => {
 
     // Reset all state
     currentContactIndex.value = 0
-    callState.value = 'ended'
+    callState.value = 'idle'
     callDuration.value = 0
     queueTime.value = 0
     totalCalls.value = 0
