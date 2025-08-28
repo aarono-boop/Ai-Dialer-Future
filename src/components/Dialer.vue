@@ -767,6 +767,14 @@ const handleHoldKeydown = (event: KeyboardEvent) => {
   margin: inherit !important;
 }
 
+/* Disabled PrimeVue button states */
+:deep(.p-button:disabled),
+:deep(.p-button[disabled]) {
+  pointer-events: none !important;
+  opacity: 0.6 !important;
+  cursor: not-allowed !important;
+}
+
 :deep(.p-button:focus) {
   border-width: 1px !important;
   box-sizing: border-box !important;
