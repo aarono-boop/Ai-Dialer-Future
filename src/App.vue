@@ -1497,6 +1497,7 @@ const handleNextContact = (): void => {
   dispositionSet.value = false
   waitingForNotesInput.value = false
   currentDisposition.value = ''
+  dispositionButtonClicked.value = false
 
   // Move to next contact
   if (currentContactIndex.value < contacts.length - 1) {
