@@ -139,58 +139,58 @@
           <div v-if="showDispositionButtons && showDialer && !showContinueQueueButton" class="mt-2 pt-5 flex justify-center">
             <!-- Voicemail Disposition Buttons for George Sample -->
             <div v-if="isVoicemailScenario" class="w-[70%] grid grid-cols-3 gap-3">
-              <button
+              <DSButton
                 @click="handleDisposition('Voicemail Left')"
-                class="btn-primary py-3 px-4 rounded-lg font-medium cursor-pointer"
+                variant="primary"
+                label="Voicemail Left"
+                class="py-3 px-4 font-medium"
                 tabindex="3"
-              >
-                Voicemail Left
-              </button>
-              <button
+              />
+              <DSButton
                 @click="handleDisposition('No Voicemail Left')"
-                class="btn-secondary py-3 px-4 rounded-lg font-medium cursor-pointer"
+                variant="secondary"
+                label="No Voicemail Left"
+                class="py-3 px-4 font-medium"
                 tabindex="4"
-              >
-                No Voicemail Left
-              </button>
-              <button
+              />
+              <DSButton
                 @click="handleDisposition('No Answer')"
-                class="btn-secondary py-3 px-4 rounded-lg font-medium cursor-pointer"
+                variant="secondary"
+                label="No Answer"
+                class="py-3 px-4 font-medium"
                 tabindex="5"
-              >
-                No Answer
-              </button>
+              />
             </div>
             <!-- Regular Disposition Buttons for other contacts -->
             <div v-else class="w-[70%] grid grid-cols-4 gap-3">
-              <button
+              <DSButton
                 @click="handleDisposition('Follow up')"
-                class="btn-secondary py-3 px-4 rounded-lg font-medium cursor-pointer"
+                variant="secondary"
+                label="Follow up"
+                class="py-3 px-4 font-medium"
                 tabindex="3"
-              >
-                Follow up
-              </button>
-              <button
+              />
+              <DSButton
                 @click="handleDisposition('Not interested')"
-                class="btn-secondary py-3 px-4 rounded-lg font-medium cursor-pointer"
+                variant="secondary"
+                label="Not interested"
+                class="py-3 px-4 font-medium"
                 tabindex="4"
-              >
-                Not interested
-              </button>
-              <button
+              />
+              <DSButton
                 @click="handleDisposition('Do Not Call')"
-                class="btn-secondary py-3 px-4 rounded-lg font-medium cursor-pointer"
+                variant="secondary"
+                label="Do Not Call"
+                class="py-3 px-4 font-medium"
                 tabindex="5"
-              >
-                Do Not Call
-              </button>
-              <button
+              />
+              <DSButton
                 @click="handleDisposition('Set Appointment')"
-                class="btn-primary py-3 px-4 rounded-lg font-medium cursor-pointer"
+                variant="primary"
+                label="Set Appointment"
+                class="py-3 px-4 font-medium"
                 tabindex="6"
-              >
-                Set Appointment
-              </button>
+              />
             </div>
           </div>
 
@@ -207,13 +207,13 @@
           <!-- Load New File Button - shown when queue is completed -->
           <div v-if="showLoadNewFileButton" class="mt-2 pt-5 flex justify-center">
             <div class="w-[70%]">
-              <button
+              <DSButton
                 @click="triggerFileUpload"
-                class="w-full btn-secondary px-6 py-3 rounded-lg font-semibold cursor-pointer flex items-center justify-center gap-2"
-              >
-                <i class="pi pi-upload"></i>
-                Load New File
-              </button>
+                variant="secondary"
+                label="Load New File"
+                icon="pi pi-upload"
+                class="w-full px-6 py-3 font-semibold flex items-center justify-center gap-2"
+              />
             </div>
           </div>
 
