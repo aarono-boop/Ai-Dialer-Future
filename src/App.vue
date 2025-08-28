@@ -1132,7 +1132,7 @@ const sendMessage = (message: string): void => {
         'Let me set up a personalized demo where you can see:',
         '• Live contact scoring and prioritization',
         '• Real-time dialing with connect predictions',
-        '��� Smart call disposition and follow-up automation',
+        '����� Smart call disposition and follow-up automation',
         'What\'s your preferred time? I can schedule something for today or tomorrow.'
       ])
     } else if (lowerMessage.includes('who i should call now') || lowerMessage.includes('who should i call')) {
@@ -1453,7 +1453,7 @@ const simulateCall = (): void => {
 
       // Show voicemail detected message
       addAIMessage('Voicemail detected...')
-      addAIMessage('Please select a call outcome or enter notes:')
+      addAIMessage('Please select a call outcome or enter notes about this call.')
       scrollToBottom()
     }, 4000)
   } else {
