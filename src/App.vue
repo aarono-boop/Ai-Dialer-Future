@@ -206,13 +206,13 @@
 
           <!-- Load New File Button - shown when queue is completed -->
           <div v-if="showLoadNewFileButton" class="mt-2 pt-5 flex justify-center">
-            <div class="w-[70%]">
+            <div class="w-[70%] flex justify-center">
               <Button
                 @click="triggerFileUpload"
                 severity="secondary"
                 label="Load New File"
                 icon="pi pi-upload"
-                class="w-full px-6 py-3 font-semibold flex items-center justify-center gap-2"
+                class="w-1/2 px-6 py-3 font-semibold flex items-center justify-center gap-2"
               />
             </div>
           </div>
