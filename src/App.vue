@@ -72,16 +72,16 @@
           <!-- Contact Preview Buttons - always visible when active -->
           <div v-if="showContactPreviewButtons" class="mt-2 pt-5 flex justify-center">
             <div class="w-[70%] flex gap-3">
-              <DSButton
+              <Button
                 @click="handleLooksGood"
-                variant="primary"
+                severity="primary"
                 label="Looks Good"
                 class="flex-1 px-6 py-3 font-semibold"
                 tabindex="3"
               />
-              <DSButton
+              <Button
                 @click="handleTryAgain"
-                variant="secondary"
+                severity="secondary"
                 label="Try Again"
                 class="flex-1 px-6 py-3 font-semibold"
                 tabindex="4"
@@ -1523,7 +1523,7 @@ const handleNextContact = (): void => {
       }, 1000)
     }, 1500)
   } else {
-    addAIMessage('���� All contacts have been processed. Dialing session complete!')
+    addAIMessage('📋 All contacts have been processed. Dialing session complete!')
     showDialer.value = false
     scrollToBottom()
 
