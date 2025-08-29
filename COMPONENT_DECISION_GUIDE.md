@@ -106,10 +106,12 @@ Need a UI component?
 | Loading states | `ProgressSpinner`, `ProgressBar` |
 
 ### Custom Component Red Flags 🚩:
-- "I need a button with different colors" → Use Button + `:pt`
-- "I need a custom input" → Use InputText + styling
+- "I need a button with different colors" → Use Button + `:pt` + theme variables
+- "I need a custom input" → Use InputText + `:pt` styling
 - "I need a card layout" → Use Card component
 - "I need a modal" → Use Dialog component
+
+> 💡 **Styling Tip**: For styling needs, see [STYLING_DECISION_GUIDE.md](./STYLING_DECISION_GUIDE.md) - always try design tokens before custom CSS!
 
 ### Likely Approval Cases ✅:
 - Complex business workflows
