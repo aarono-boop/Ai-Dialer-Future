@@ -50,7 +50,7 @@
             <h3 class="text-lg font-semibold text-gray-800 mb-4">Contact Information</h3>
             <div>
               <label class="block text-sm font-medium text-gray-700 mb-2">Email</label>
-              <DSInput
+              <InputText
                 v-model="email"
                 type="email"
                 placeholder="charles+1@phoneburner.com"
@@ -92,7 +92,7 @@
               <div>
                 <label class="block text-sm font-medium text-gray-700 mb-2">Card number</label>
                 <div class="relative">
-                  <DSInput
+                  <InputText
                     v-model="cardNumber"
                     placeholder="1234 1234 1234 1234"
                     class="w-full pr-20"
@@ -194,7 +194,8 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import { DSButton, DSInput } from '@/design-system/components'
+import Button from 'primevue/button'
+import InputText from 'primevue/inputtext'
 import Dropdown from 'primevue/dropdown'
 
 // Reactive data
