@@ -145,16 +145,22 @@ Use PrimeVue's passthrough system for component customization:
 ## Best Practices
 
 ### ✅ Do
-- Use PrimeVue components directly with consistent prop patterns
-- Leverage PrimeVue's built-in theming system
-- Use the configured theme variables (CSS custom properties)
-- Follow PrimeVue's API conventions and documentation
+- **Components**: Use PrimeVue components directly with consistent prop patterns
+- **Styling**: Always try design tokens (theme variables) before custom CSS
+- **Theming**: Leverage PrimeVue's built-in theming system
+- **Consistency**: Follow PrimeVue's API conventions and documentation
+- **Approval**: Ask for permission before creating custom components or CSS
 
 ### ❌ Don't
 - Create unnecessary wrapper components around PrimeVue
+- Use custom CSS when design tokens are available
 - Override theme styles with `!important`
 - Use hardcoded colors instead of theme CSS variables
 - Bypass PrimeVue's theming system
+
+### 🛑 Stop & Ask Rules:
+1. **Custom Components**: If PrimeVue doesn't have what you need → Ask for approval
+2. **Custom CSS**: If design tokens can't handle your styling → Ask for approval
 
 ## Theme Management
 
