@@ -105,16 +105,16 @@
           <!-- Verification Code Buttons - always visible when active -->
           <div v-if="showVerificationButtons" class="mt-2 pt-5 flex justify-center">
             <div class="w-[70%] flex gap-3">
-              <DSButton
+              <Button
                 @click="handleResendCode"
-                variant="secondary"
+                severity="secondary"
                 label="Resend Code"
                 class="flex-1 px-6 py-3 font-semibold"
                 tabindex="3"
               />
-              <DSButton
+              <Button
                 @click="handleTryAnotherNumber"
-                variant="secondary"
+                severity="secondary"
                 label="Try Another Number"
                 class="flex-1 px-6 py-3 font-semibold"
                 tabindex="4"
