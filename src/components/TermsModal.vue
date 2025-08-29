@@ -4,61 +4,68 @@
       <!-- Header -->
       <div class="modal-header">
         <h2>Terms & Conditions</h2>
-        <button 
+        <DSButton
           ref="closeBtn"
-          class="close-btn"
+          variant="text"
+          icon="pi pi-times"
           @click="$emit('close')"
           data-focus-index="1"
-        >
-          <i class="pi pi-times"></i>
-        </button>
+          aria-label="Close modal"
+          class="close-btn"
+        />
       </div>
-      
+
       <!-- Content -->
       <div class="modal-content">
         <p class="modal-text">
           To create your ARKON account, please review our terms and conditions.
         </p>
-        
+
         <div class="terms-box">
           <p class="terms-text">
             By clicking "I Agree," you agree to PhoneBurner's
-            <button 
-              class="link-btn"
+            <DSButton
+              variant="text"
+              label="terms of service"
               @click="openTerms"
               data-focus-index="2"
-            >terms of service</button>,
-            <button 
               class="link-btn"
+            />,
+            <DSButton
+              variant="text"
+              label="privacy policy"
               @click="openPrivacy"
               data-focus-index="3"
-            >privacy policy</button>
-            and 
-            <button 
               class="link-btn"
+            />
+            and
+            <DSButton
+              variant="text"
+              label="acceptable use policy"
               @click="openAcceptable"
               data-focus-index="4"
-            >acceptable use policy</button>.
+              class="link-btn"
+            />.
           </p>
         </div>
       </div>
-      
+
       <!-- Buttons -->
       <div class="modal-buttons">
-        <button
-          class="cancel-btn"
+        <DSButton
+          variant="outlined"
+          label="Cancel"
           @click="$emit('cancel')"
           data-focus-index="5"
-        >
-          Cancel
-        </button>
-        <button
-          class="agree-btn"
+          class="cancel-btn"
+        />
+        <DSButton
+          variant="primary"
+          label="I Agree"
           @click="handleAgree"
           data-focus-index="6"
-        >
-          I Agree
-        </button>
+          class="agree-btn"
+        />
       </div>
     </div>
   </div>
@@ -66,6 +73,11 @@
 
 <script setup lang="ts">
 import { ref, nextTick, watch, onMounted, onUnmounted } from 'vue'
+import { DSButton } from '../design-system'
+import { useDesignTokens } from '../design-system/composables/useDesignTokens'
+
+// Access design tokens
+const { cssVariables } = useDesignTokens()
 
 // Define props
 interface Props {
@@ -172,15 +184,15 @@ const openAcceptable = () => {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 1rem;
+  padding: var(--ds-spacing-4);
   z-index: 50;
 }
 
 .modal-container {
-  background: #1e293b;
-  border: 1px solid #9333FF;
-  border-radius: 1rem;
-  padding: 1.5rem;
+  background: var(--ds-color-neutral-800);
+  border: 1px solid var(--ds-color-primary-500);
+  border-radius: var(--ds-border-radius-2xl);
+  padding: var(--ds-spacing-6);
   max-width: 28rem;
   width: 100%;
   box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
@@ -190,11 +202,11 @@ const openAcceptable = () => {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 1.5rem;
+  margin-bottom: var(--ds-spacing-6);
 }
 
 .modal-header h2 {
-  color: white;
+  color: var(--ds-color-text-primary);
   font-size: 1.25rem;
   font-weight: 600;
   margin: 0;
@@ -203,115 +215,66 @@ const openAcceptable = () => {
 .close-btn {
   width: 2rem;
   height: 2rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   border-radius: 50%;
-  background: transparent;
-  border: none;
-  color: #94a3b8;
-  cursor: pointer;
-  transition: all 0.2s;
-}
-
-.close-btn:hover {
-  background: #374151;
-  color: white;
-}
-
-.close-btn:focus {
-  outline: 2px solid #9333FF;
-  outline-offset: 2px;
 }
 
 .modal-content {
-  margin-bottom: 1.5rem;
+  margin-bottom: var(--ds-spacing-6);
 }
 
 .modal-text {
-  color: white;
+  color: var(--ds-color-text-primary);
   font-size: 1rem;
   line-height: 1.625;
-  margin-bottom: 1.5rem;
+  margin-bottom: var(--ds-spacing-6);
 }
 
 .terms-box {
-  background: #0f172a;
-  border: 1px solid #475569;
-  border-radius: 0.5rem;
-  padding: 1rem;
+  background: var(--ds-color-neutral-950);
+  border: 1px solid var(--ds-color-neutral-600);
+  border-radius: var(--ds-border-radius-lg);
+  padding: var(--ds-spacing-4);
 }
 
 .terms-text {
-  color: #cbd5e1;
+  color: var(--ds-color-text-secondary);
   font-size: 0.875rem;
   line-height: 1.625;
   margin: 0;
 }
 
 .link-btn {
-  background: transparent;
-  border: none;
-  color: #60a5fa;
+  color: var(--ds-color-primary-400);
   text-decoration: underline;
-  cursor: pointer;
   font-size: inherit;
   padding: 0;
   margin: 0;
-  transition: color 0.2s;
-}
-
-.link-btn:hover {
-  color: #93c5fd;
-}
-
-.link-btn:focus {
-  outline: 2px solid #9333FF;
-  outline-offset: 2px;
-  border-radius: 2px;
 }
 
 .modal-buttons {
   display: flex;
-  gap: 0.75rem;
+  gap: var(--ds-spacing-3);
   justify-content: flex-end;
 }
 
-.cancel-btn, .agree-btn {
-  padding: 0.5rem 1.5rem;
-  border-radius: 0.5rem;
-  font-weight: 500;
-  border: none;
-  cursor: pointer;
-  transition: all 0.2s;
-  font-size: 0.875rem;
-}
-
-.cancel-btn {
-  background: #4b5563;
-  color: white;
-}
-
-.cancel-btn:hover {
-  background: #6b7280;
-}
-
-.cancel-btn:focus {
-  outline: 2px solid #9333FF;
-  outline-offset: 2px;
-}
-
-.agree-btn {
-  background: #7c3aed;
-  color: white;
-}
-
-.agree-btn:hover {
-  background: #8b5cf6;
-}
-
-.agree-btn:focus {
-  outline: 2px solid #9333FF;
-  outline-offset: 2px;
+/* Apply design tokens as CSS variables */
+.modal-overlay {
+  --ds-spacing-0: 0;
+  --ds-spacing-1: 0.25rem;
+  --ds-spacing-2: 0.5rem;
+  --ds-spacing-3: 0.75rem;
+  --ds-spacing-4: 1rem;
+  --ds-spacing-5: 1.25rem;
+  --ds-spacing-6: 1.5rem;
+  --ds-spacing-8: 2rem;
+  --ds-border-radius-lg: 0.5rem;
+  --ds-border-radius-2xl: 1rem;
+  --ds-color-neutral-600: #4b5563;
+  --ds-color-neutral-800: #1f2937;
+  --ds-color-neutral-950: #030712;
+  --ds-color-primary-400: #a78bfa;
+  --ds-color-primary-500: #9333FF;
+  --ds-color-text-primary: #ffffff;
+  --ds-color-text-secondary: #9ca3af;
 }
 </style>
