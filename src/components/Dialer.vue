@@ -166,18 +166,18 @@
             <span class="text-xs">Keypad</span>
           </Button>
 
-          <DSButton
+          <Button
             ref="holdButtonRef"
             @click="toggleHold"
             @keydown="handleHoldKeydown"
             tabindex="11"
             :disabled="callState === 'idle'"
-            :variant="isOnHold ? 'warning' : 'secondary'"
+            :severity="isOnHold ? 'warn' : 'secondary'"
             class="flex flex-col items-center justify-center gap-1 py-3"
           >
             <i class="pi pi-pause"></i>
             <span class="text-xs">{{ isOnHold ? 'Resume' : 'Hold' }}</span>
-          </DSButton>
+          </Button>
         </div>
 
         <!-- Hang Up Button -->
