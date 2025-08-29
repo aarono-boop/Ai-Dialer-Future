@@ -28,56 +28,65 @@ const handleThemeToggle = () => toggleTheme()
 ```vue
 <template>
   <!-- Buttons -->
-  <DSButton variant="primary">Primary Action</DSButton>
-  <DSButton variant="secondary">Secondary Action</DSButton>
-  <DSButton variant="tertiary">Tertiary Action</DSButton>
-  
+  <!-- Buttons -->
+  <Button severity="primary">Primary Action</Button>
+  <Button severity="secondary">Secondary Action</Button>
+  <Button severity="secondary" outlined>Tertiary Action</Button>
+
   <!-- Cards -->
-  <DSCard title="Card Title" subtitle="Card subtitle">
-    <p>Card content goes here</p>
-  </DSCard>
-  
-  <!-- Inputs -->
-  <DSInput
-    v-model="inputValue"
-    label="Email Address"
-    placeholder="Enter your email"
-    required
-  />
+  <Card>
+    <template #title>Card Title</template>
+    <template #subtitle>Card subtitle</template>
+    <template #content>
+      <p>Card content goes here</p>
+    </template>
+  </Card>
+
+  <!-- Inputs with Labels -->
+  <div class="field">
+    <label for="email" class="block text-sm font-medium mb-2">
+      Email Address <span class="text-red-400">*</span>
+    </label>
+    <InputText
+      id="email"
+      v-model="inputValue"
+      placeholder="Enter your email"
+      required
+      class="w-full"
+    />
+  </div>
 </template>
 ```
 
 ## Component API Reference
 
-### DSButton
+### Button (PrimeVue)
 ```vue
-<DSButton
-  variant="primary|secondary|tertiary|success|warning|error"
-  size="small|medium|large"
+<Button
+  severity="primary|secondary|success|warn|danger|help|info"
+  :outlined="false"
+  :text="false"
+  size="small|large"
   :disabled="false"
   :loading="false"
   label="Button Text"
+  icon="pi pi-icon"
 >
   Custom content
-</DSButton>
+</Button>
 ```
 
-### DSCard
+### Card (PrimeVue)
 ```vue
-<DSCard
-  variant="default|elevated|outlined|filled"
-  padding="none|small|medium|large"
-  title="Card Title"
-  subtitle="Card Subtitle"
->
+<Card>
   <template #header>Custom header</template>
-  <template #title>Custom title</template>
-  <template #subtitle>Custom subtitle</template>
-  
-  Card content
-  
+  <template #title>Card Title</template>
+  <template #subtitle>Card Subtitle</template>
+  <template #content>
+    Card content
+  </template>
   <template #footer>Custom footer</template>
-</DSCard>
+</Card>
 ```
 
 ### DSInput
