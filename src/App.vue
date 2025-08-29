@@ -59,10 +59,10 @@
           <!-- Queue Action Buttons - shown when queue is paused -->
           <div v-if="showContinueQueueButton" class="mt-2 pt-5 flex justify-center">
             <div class="w-[70%]">
-              <DSButton
+              <Button
                 v-if="showContinueQueueButton"
                 @click="continueQueue"
-                variant="primary"
+                severity="primary"
                 label="Continue Call Queue"
                 class="w-full px-6 py-3 font-semibold"
               />
@@ -1523,7 +1523,7 @@ const handleNextContact = (): void => {
       }, 1000)
     }, 1500)
   } else {
-    addAIMessage('📋 All contacts have been processed. Dialing session complete!')
+    addAIMessage('���� All contacts have been processed. Dialing session complete!')
     showDialer.value = false
     scrollToBottom()
 
