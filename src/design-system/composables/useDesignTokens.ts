@@ -1,5 +1,5 @@
 import { computed } from 'vue'
-import { tokens, colors, spacing, typography } from '../tokens'
+import { tokens, colors, spacing, typography, componentTokens } from '../tokens'
 import type { ColorToken, SpacingToken, TypographyToken } from '../tokens'
 
 /**
