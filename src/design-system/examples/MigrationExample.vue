@@ -63,31 +63,10 @@
       </Card>
     </div>
     
-    <!-- Show design tokens usage -->
-    <div class="token-examples">
-      <h3>Design Tokens Usage</h3>
-      
-      <div class="color-examples">
-        <div 
-          v-for="(color, name) in colorExamples" 
-          :key="name"
-          class="color-swatch"
-          :style="{ backgroundColor: color }"
-        >
-          {{ name }}
-        </div>
-      </div>
-      
-      <div class="spacing-examples">
-        <div 
-          v-for="(space, name) in spacingExamples"
-          :key="name" 
-          class="spacing-demo"
-          :style="{ padding: space }"
-        >
-          {{ name }}: {{ space }}
-        </div>
-      </div>
+    <!-- Migration completed: Now using PrimeVue components directly -->
+    <div class="migration-complete">
+      <h3>✅ Migration Complete</h3>
+      <p>All components now use PrimeVue directly with theme-based styling.</p>
     </div>
   </div>
 </template>
@@ -102,22 +81,7 @@ import Card from 'primevue/card'
 const userName = ref('')
 const userEmail = ref('')
 
-// Design tokens usage
-const { colors, spacing } = useDesignTokens()
-
-const colorExamples = computed(() => ({
-  'Primary 500': colors.primary[500],
-  'Primary 600': colors.primary[600], 
-  'Background Primary': colors.background.primary,
-  'Text Primary': colors.text.primary
-}))
-
-const spacingExamples = computed(() => ({
-  'Small (sm)': spacing[2],
-  'Medium (md)': spacing[4],
-  'Large (lg)': spacing[6],
-  'Extra Large (xl)': spacing[8]
-}))
+// Migration complete - using PrimeVue components directly
 </script>
 
 <style scoped>
