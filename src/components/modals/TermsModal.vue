@@ -177,7 +177,7 @@ const openAcceptable = () => {
 }
 </script>
 
-<style scoped>
+<style>
 /* Apply design tokens as CSS variables globally */
 :global(:root) {
   --ds-spacing-0: 0;
@@ -200,11 +200,19 @@ const openAcceptable = () => {
 }
 
 /* Style the PrimeVue Dialog component using design tokens */
-.terms-dialog :deep(.p-dialog) {
-  background: var(--ds-color-neutral-800);
-  border: 2px solid var(--ds-color-primary-500);
-  border-radius: var(--ds-border-radius-2xl);
-  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+.terms-dialog .p-dialog {
+  background: var(--ds-color-neutral-800) !important;
+  border: 3px solid #9333FF !important;
+  border-radius: var(--ds-border-radius-2xl) !important;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25) !important;
+}
+
+/* Fallback with global selector */
+.p-dialog.terms-dialog {
+  background: var(--ds-color-neutral-800) !important;
+  border: 3px solid #9333FF !important;
+  border-radius: 1rem !important;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25) !important;
 }
 
 .terms-dialog :deep(.p-dialog-header) {
@@ -236,8 +244,17 @@ const openAcceptable = () => {
   color: var(--ds-color-text-primary);
 }
 
-.terms-dialog :deep(.p-dialog-mask) {
-  background: rgba(0, 0, 0, 0.95) !important;
+/* Modal mask - multiple selectors for maximum coverage */
+.terms-dialog .p-dialog-mask {
+  background: rgba(0, 0, 0, 0.98) !important;
+}
+
+.p-dialog-mask {
+  background: rgba(0, 0, 0, 0.98) !important;
+}
+
+.p-overlay-mask {
+  background: rgba(0, 0, 0, 0.98) !important;
 }
 
 /* Dialog Header */
