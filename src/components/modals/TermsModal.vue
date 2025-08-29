@@ -59,10 +59,6 @@
 import { ref, computed, nextTick, watch, onMounted, onUnmounted } from 'vue'
 import Dialog from 'primevue/dialog'
 import Button from 'primevue/button'
-import { useDesignTokens } from '../../design-system/composables/useDesignTokens'
-
-// Access design tokens
-const { cssVariables } = useDesignTokens()
 
 // Define props
 interface Props {
