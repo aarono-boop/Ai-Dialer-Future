@@ -2,26 +2,25 @@
 
 ## Quick Start
 
-### 1. Import Components
+### 1. Import PrimeVue Components
 ```vue
 <script setup>
-// Import design system components
-import { DSButton, DSCard, DSInput } from '@/design-system/components'
-
-// Or import all at once
-import { DSButton, DSCard, DSInput } from '@/design-system'
+// Import PrimeVue components directly
+import Button from 'primevue/button'
+import InputText from 'primevue/inputtext'
+import Card from 'primevue/card'
 </script>
 ```
 
-### 2. Use Design Tokens
+### 2. Use Theme Management (Optional)
 ```vue
 <script setup>
-import { useDesignTokens } from '@/design-system/composables'
+import { useTheme } from '@/design-system/composables'
 
-const { getColor, getSpacing } = useDesignTokens()
+const { themeMode, toggleTheme, setThemeMode } = useTheme()
 
-const primaryColor = getColor('primary.500')
-const mediumSpacing = getSpacing('4')
+// Toggle between light/dark themes
+const handleThemeToggle = () => toggleTheme()
 </script>
 ```
 
