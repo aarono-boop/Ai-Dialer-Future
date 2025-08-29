@@ -392,7 +392,7 @@ const toggleMute = () => {
   nextTick(() => {
     setTimeout(() => {
       if (muteButtonRef.value) {
-        // DSButton component - need to find the actual DOM element
+        // PrimeVue Button component - access DOM element
         const buttonElement = muteButtonRef.value.$el || muteButtonRef.value
         if (buttonElement && buttonElement.focus) {
           buttonElement.focus()
