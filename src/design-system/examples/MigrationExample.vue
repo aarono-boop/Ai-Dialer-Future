@@ -22,9 +22,9 @@
       <h3>✅ After (Design System)</h3>
       
       <div class="button-group">
-        <DSButton variant="primary">Save Changes</DSButton>
-        <DSButton variant="secondary">Cancel</DSButton>
-        <DSButton variant="tertiary">Reset</DSButton>
+        <Button severity="primary">Save Changes</Button>
+        <Button severity="secondary">Cancel</Button>
+        <Button severity="secondary" outlined>Reset</Button>
       </div>
       
       <Card class="profile-card">
@@ -56,8 +56,8 @@
         </template>
         <template #footer>
           <div class="card-actions">
-            <DSButton variant="primary" size="small">Update Profile</DSButton>
-            <DSButton variant="tertiary" size="small">Reset Form</DSButton>
+            <Button severity="primary" size="small">Update Profile</Button>
+            <Button severity="secondary" outlined size="small">Reset Form</Button>
           </div>
         </template>
       </Card>
@@ -94,10 +94,9 @@
 
 <script setup lang="ts">
 import { ref, computed } from 'vue'
-import { DSButton } from '@/design-system/components'
+import Button from 'primevue/button'
 import InputText from 'primevue/inputtext'
 import Card from 'primevue/card'
-import { useDesignTokens } from '@/design-system/composables'
 
 // Component state
 const userName = ref('')
