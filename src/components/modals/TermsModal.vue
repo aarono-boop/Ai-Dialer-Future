@@ -3,77 +3,54 @@
     v-model:visible="isVisible"
     modal
     header="Terms & Conditions"
-    :style="{
-      width: '28rem',
-      border: '3px solid #9333FF',
-      background: '#1f2937',
-      borderRadius: '1rem'
-    }"
+    :style="{ width: '28rem' }"
     :dismissableMask="true"
     @hide="$emit('close')"
-    class="terms-dialog"
-    :maskStyle="{
-      background: 'rgba(0, 0, 0, 0.98)'
-    }"
   >
-    <!-- Custom header with close button -->
-    <template #header>
-      <div class="dialog-header">
-        <h2 class="dialog-title">Terms & Conditions</h2>
-      </div>
-    </template>
-
     <!-- Dialog Content -->
-    <div class="dialog-content">
-      <p class="dialog-text">
-        To create your ARKON account, please review our terms and conditions.
-      </p>
+    <p>
+      To create your ARKON account, please review our terms and conditions.
+    </p>
 
-      <div class="terms-box">
-        <p class="terms-text">
-          By clicking "I Agree," you agree to PhoneBurner's
-          <DSButton
-            variant="text"
-            label="terms of service"
-            @click="openTerms"
-            data-focus-index="2"
-            class="link-btn"
-          />,
-          <DSButton
-            variant="text"
-            label="privacy policy"
-            @click="openPrivacy"
-            data-focus-index="3"
-            class="link-btn"
-          />
-          and
-          <DSButton
-            variant="text"
-            label="acceptable use policy"
-            @click="openAcceptable"
-            data-focus-index="4"
-            class="link-btn"
-          />.
-        </p>
-      </div>
+    <div style="background: var(--ds-color-neutral-950); border: 1px solid var(--ds-color-neutral-600); border-radius: var(--ds-border-radius-lg); padding: var(--ds-spacing-4); margin: var(--ds-spacing-6) 0;">
+      <p style="color: var(--ds-color-text-secondary); font-size: 0.875rem; line-height: 1.625; margin: 0;">
+        By clicking "I Agree," you agree to PhoneBurner's
+        <DSButton
+          variant="text"
+          label="terms of service"
+          @click="openTerms"
+          data-focus-index="2"
+        />,
+        <DSButton
+          variant="text"
+          label="privacy policy"
+          @click="openPrivacy"
+          data-focus-index="3"
+        />
+        and
+        <DSButton
+          variant="text"
+          label="acceptable use policy"
+          @click="openAcceptable"
+          data-focus-index="4"
+        />.
+      </p>
     </div>
 
     <!-- Dialog Footer with action buttons -->
     <template #footer>
-      <div class="dialog-footer">
+      <div style="display: flex; gap: var(--ds-spacing-3); justify-content: flex-end;">
         <DSButton
           variant="outlined"
           label="Cancel"
           @click="$emit('cancel')"
           data-focus-index="5"
-          class="cancel-btn"
         />
         <DSButton
           variant="primary"
           label="I Agree"
           @click="handleAgree"
           data-focus-index="6"
-          class="agree-btn"
         />
       </div>
     </template>
@@ -186,137 +163,5 @@ const openAcceptable = () => {
 </script>
 
 <style>
-/* Apply design tokens as CSS variables globally */
-:global(:root) {
-  --ds-spacing-0: 0;
-  --ds-spacing-1: 0.25rem;
-  --ds-spacing-2: 0.5rem;
-  --ds-spacing-3: 0.75rem;
-  --ds-spacing-4: 1rem;
-  --ds-spacing-5: 1.25rem;
-  --ds-spacing-6: 1.5rem;
-  --ds-spacing-8: 2rem;
-  --ds-border-radius-lg: 0.5rem;
-  --ds-border-radius-2xl: 1rem;
-  --ds-color-neutral-600: #4b5563;
-  --ds-color-neutral-800: #1f2937;
-  --ds-color-neutral-950: #030712;
-  --ds-color-primary-400: #a78bfa;
-  --ds-color-primary-500: #9333FF;
-  --ds-color-text-primary: #ffffff;
-  --ds-color-text-secondary: #9ca3af;
-}
-
-/* Style the PrimeVue Dialog component using design tokens */
-.terms-dialog .p-dialog {
-  background: var(--ds-color-neutral-800) !important;
-  border: 3px solid #9333FF !important;
-  border-radius: var(--ds-border-radius-2xl) !important;
-  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25) !important;
-}
-
-/* Fallback with global selector */
-.p-dialog.terms-dialog {
-  background: var(--ds-color-neutral-800) !important;
-  border: 3px solid #9333FF !important;
-  border-radius: 1rem !important;
-  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25) !important;
-}
-
-.terms-dialog :deep(.p-dialog-header) {
-  background: transparent;
-  border-bottom: none;
-  padding: var(--ds-spacing-6) var(--ds-spacing-6) 0;
-}
-
-.terms-dialog :deep(.p-dialog-content) {
-  background: transparent;
-  padding: var(--ds-spacing-4) var(--ds-spacing-6);
-}
-
-.terms-dialog :deep(.p-dialog-footer) {
-  background: transparent;
-  border-top: none;
-  padding: 0 var(--ds-spacing-6) var(--ds-spacing-6);
-}
-
-.terms-dialog :deep(.p-dialog-header-close) {
-  color: var(--ds-color-text-secondary);
-  width: 2rem;
-  height: 2rem;
-  border-radius: 50%;
-}
-
-.terms-dialog :deep(.p-dialog-header-close:hover) {
-  background: var(--ds-color-neutral-700);
-  color: var(--ds-color-text-primary);
-}
-
-/* Modal mask - multiple selectors for maximum coverage */
-.terms-dialog .p-dialog-mask {
-  background: rgba(0, 0, 0, 0.98) !important;
-}
-
-.p-dialog-mask {
-  background: rgba(0, 0, 0, 0.98) !important;
-}
-
-.p-overlay-mask {
-  background: rgba(0, 0, 0, 0.98) !important;
-}
-
-/* Dialog Header */
-.dialog-header {
-  display: flex;
-  align-items: center;
-  width: 100%;
-}
-
-.dialog-title {
-  color: var(--ds-color-text-primary);
-  font-size: 1.25rem;
-  font-weight: 600;
-  margin: 0;
-}
-
-/* Dialog Content */
-.dialog-content {
-  margin-bottom: var(--ds-spacing-4);
-}
-
-.dialog-text {
-  color: var(--ds-color-text-primary);
-  font-size: 1rem;
-  line-height: 1.625;
-  margin-bottom: var(--ds-spacing-6);
-}
-
-.terms-box {
-  background: var(--ds-color-neutral-950);
-  border: 1px solid var(--ds-color-neutral-600);
-  border-radius: var(--ds-border-radius-lg);
-  padding: var(--ds-spacing-4);
-}
-
-.terms-text {
-  color: var(--ds-color-text-secondary);
-  font-size: 0.875rem;
-  line-height: 1.625;
-  margin: 0;
-}
-
-.link-btn {
-  color: var(--ds-color-primary-400);
-  text-decoration: underline;
-  font-size: inherit;
-  padding: 0;
-  margin: 0;
-}
-
-/* Dialog Footer */
-.dialog-footer {
-  display: flex;
-  gap: var(--ds-spacing-3);
-  justify-content: flex-end;
-}
+/* Design tokens are applied through the PrimeVue theme system via dialog.ts */
 </style>
