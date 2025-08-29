@@ -1,57 +1,58 @@
 <template>
-  <div v-if="visible" class="modal-overlay">
-    <div class="modal-container">
-      <!-- Header -->
-      <div class="modal-header">
-        <h2>Terms & Conditions</h2>
-        <DSButton
-          ref="closeBtn"
-          variant="text"
-          icon="pi pi-times"
-          @click="$emit('close')"
-          data-focus-index="1"
-          aria-label="Close modal"
-          class="close-btn"
-        />
+  <Dialog
+    v-model:visible="isVisible"
+    modal
+    header="Terms & Conditions"
+    :style="{ width: '28rem' }"
+    :dismissableMask="true"
+    @hide="$emit('close')"
+    class="terms-dialog"
+  >
+    <!-- Custom header with close button -->
+    <template #header>
+      <div class="dialog-header">
+        <h2 class="dialog-title">Terms & Conditions</h2>
       </div>
+    </template>
 
-      <!-- Content -->
-      <div class="modal-content">
-        <p class="modal-text">
-          To create your ARKON account, please review our terms and conditions.
+    <!-- Dialog Content -->
+    <div class="dialog-content">
+      <p class="dialog-text">
+        To create your ARKON account, please review our terms and conditions.
+      </p>
+
+      <div class="terms-box">
+        <p class="terms-text">
+          By clicking "I Agree," you agree to PhoneBurner's
+          <DSButton
+            variant="text"
+            label="terms of service"
+            @click="openTerms"
+            data-focus-index="2"
+            class="link-btn"
+          />,
+          <DSButton
+            variant="text"
+            label="privacy policy"
+            @click="openPrivacy"
+            data-focus-index="3"
+            class="link-btn"
+          />
+          and
+          <DSButton
+            variant="text"
+            label="acceptable use policy"
+            @click="openAcceptable"
+            data-focus-index="4"
+            class="link-btn"
+          />.
         </p>
-
-        <div class="terms-box">
-          <p class="terms-text">
-            By clicking "I Agree," you agree to PhoneBurner's
-            <DSButton
-              variant="text"
-              label="terms of service"
-              @click="openTerms"
-              data-focus-index="2"
-              class="link-btn"
-            />,
-            <DSButton
-              variant="text"
-              label="privacy policy"
-              @click="openPrivacy"
-              data-focus-index="3"
-              class="link-btn"
-            />
-            and
-            <DSButton
-              variant="text"
-              label="acceptable use policy"
-              @click="openAcceptable"
-              data-focus-index="4"
-              class="link-btn"
-            />.
-          </p>
-        </div>
       </div>
+    </div>
 
-      <!-- Buttons -->
-      <div class="modal-buttons">
+    <!-- Dialog Footer with action buttons -->
+    <template #footer>
+      <div class="dialog-footer">
         <DSButton
           variant="outlined"
           label="Cancel"
@@ -67,12 +68,13 @@
           class="agree-btn"
         />
       </div>
-    </div>
-  </div>
+    </template>
+  </Dialog>
 </template>
 
 <script setup lang="ts">
-import { ref, nextTick, watch, onMounted, onUnmounted } from 'vue'
+import { ref, computed, nextTick, watch, onMounted, onUnmounted } from 'vue'
+import Dialog from 'primevue/dialog'
 import { DSButton } from '../design-system'
 import { useDesignTokens } from '../design-system/composables/useDesignTokens'
 
@@ -86,6 +88,16 @@ interface Props {
 
 const props = defineProps<Props>()
 
+// Create a computed property for v-model compatibility
+const isVisible = computed({
+  get: () => props.visible || false,
+  set: (value: boolean) => {
+    if (!value) {
+      emit('close')
+    }
+  }
+})
+
 // Define emits
 const emit = defineEmits<{
   close: []
@@ -93,10 +105,7 @@ const emit = defineEmits<{
   agree: []
 }>()
 
-// Template refs
-const closeBtn = ref<HTMLButtonElement | null>(null)
-
-// Focus management
+// Focus management for custom buttons (PrimeVue Dialog handles most focus management)
 const focusableElements = ref<HTMLElement[]>([])
 
 const setupFocusManagement = () => {
@@ -111,18 +120,14 @@ const setupFocusManagement = () => {
 
 const handleKeydown = (event: KeyboardEvent) => {
   if (!props.visible) return
-  
-  if (event.key === 'Escape') {
-    emit('close')
-    return
-  }
-  
-  if (event.key === 'Tab') {
+
+  // Handle Tab navigation for our custom focus index system
+  if (event.key === 'Tab' && focusableElements.value.length > 0) {
     event.preventDefault()
-    
+
     const currentElement = document.activeElement as HTMLElement
     const currentIndex = focusableElements.value.findIndex(el => el === currentElement)
-    
+
     let nextIndex: number
     if (event.shiftKey) {
       // Shift+Tab (backward)
@@ -131,19 +136,16 @@ const handleKeydown = (event: KeyboardEvent) => {
       // Tab (forward)
       nextIndex = currentIndex >= focusableElements.value.length - 1 ? 0 : currentIndex + 1
     }
-    
+
     focusableElements.value[nextIndex]?.focus()
   }
 }
 
-// Watch for modal visibility
+// Watch for dialog visibility
 watch(() => props.visible, (newVisible) => {
   if (newVisible) {
     nextTick(() => {
       setupFocusManagement()
-      if (closeBtn.value) {
-        closeBtn.value.focus()
-      }
     })
   }
 })
@@ -176,53 +178,88 @@ const openAcceptable = () => {
 </script>
 
 <style scoped>
-.modal-overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.8);
-  backdrop-filter: blur(4px);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: var(--ds-spacing-4);
-  z-index: 50;
+/* Apply design tokens as CSS variables globally */
+:global(:root) {
+  --ds-spacing-0: 0;
+  --ds-spacing-1: 0.25rem;
+  --ds-spacing-2: 0.5rem;
+  --ds-spacing-3: 0.75rem;
+  --ds-spacing-4: 1rem;
+  --ds-spacing-5: 1.25rem;
+  --ds-spacing-6: 1.5rem;
+  --ds-spacing-8: 2rem;
+  --ds-border-radius-lg: 0.5rem;
+  --ds-border-radius-2xl: 1rem;
+  --ds-color-neutral-600: #4b5563;
+  --ds-color-neutral-800: #1f2937;
+  --ds-color-neutral-950: #030712;
+  --ds-color-primary-400: #a78bfa;
+  --ds-color-primary-500: #9333FF;
+  --ds-color-text-primary: #ffffff;
+  --ds-color-text-secondary: #9ca3af;
 }
 
-.modal-container {
+/* Style the PrimeVue Dialog component using design tokens */
+.terms-dialog :deep(.p-dialog) {
   background: var(--ds-color-neutral-800);
   border: 1px solid var(--ds-color-primary-500);
   border-radius: var(--ds-border-radius-2xl);
-  padding: var(--ds-spacing-6);
-  max-width: 28rem;
-  width: 100%;
   box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
 }
 
-.modal-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: var(--ds-spacing-6);
+.terms-dialog :deep(.p-dialog-header) {
+  background: transparent;
+  border-bottom: none;
+  padding: var(--ds-spacing-6) var(--ds-spacing-6) 0;
 }
 
-.modal-header h2 {
+.terms-dialog :deep(.p-dialog-content) {
+  background: transparent;
+  padding: var(--ds-spacing-4) var(--ds-spacing-6);
+}
+
+.terms-dialog :deep(.p-dialog-footer) {
+  background: transparent;
+  border-top: none;
+  padding: 0 var(--ds-spacing-6) var(--ds-spacing-6);
+}
+
+.terms-dialog :deep(.p-dialog-header-close) {
+  color: var(--ds-color-text-secondary);
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+}
+
+.terms-dialog :deep(.p-dialog-header-close:hover) {
+  background: var(--ds-color-neutral-700);
+  color: var(--ds-color-text-primary);
+}
+
+.terms-dialog :deep(.p-dialog-mask) {
+  backdrop-filter: blur(4px);
+}
+
+/* Dialog Header */
+.dialog-header {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.dialog-title {
   color: var(--ds-color-text-primary);
   font-size: 1.25rem;
   font-weight: 600;
   margin: 0;
 }
 
-.close-btn {
-  width: 2rem;
-  height: 2rem;
-  border-radius: 50%;
+/* Dialog Content */
+.dialog-content {
+  margin-bottom: var(--ds-spacing-4);
 }
 
-.modal-content {
-  margin-bottom: var(--ds-spacing-6);
-}
-
-.modal-text {
+.dialog-text {
   color: var(--ds-color-text-primary);
   font-size: 1rem;
   line-height: 1.625;
@@ -251,30 +288,10 @@ const openAcceptable = () => {
   margin: 0;
 }
 
-.modal-buttons {
+/* Dialog Footer */
+.dialog-footer {
   display: flex;
   gap: var(--ds-spacing-3);
   justify-content: flex-end;
-}
-
-/* Apply design tokens as CSS variables */
-.modal-overlay {
-  --ds-spacing-0: 0;
-  --ds-spacing-1: 0.25rem;
-  --ds-spacing-2: 0.5rem;
-  --ds-spacing-3: 0.75rem;
-  --ds-spacing-4: 1rem;
-  --ds-spacing-5: 1.25rem;
-  --ds-spacing-6: 1.5rem;
-  --ds-spacing-8: 2rem;
-  --ds-border-radius-lg: 0.5rem;
-  --ds-border-radius-2xl: 1rem;
-  --ds-color-neutral-600: #4b5563;
-  --ds-color-neutral-800: #1f2937;
-  --ds-color-neutral-950: #030712;
-  --ds-color-primary-400: #a78bfa;
-  --ds-color-primary-500: #9333FF;
-  --ds-color-text-primary: #ffffff;
-  --ds-color-text-secondary: #9ca3af;
 }
 </style>
