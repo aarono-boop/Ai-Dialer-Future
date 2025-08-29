@@ -15,25 +15,22 @@
     <div style="background: var(--p-surface-800); border: 1px solid var(--p-surface-600); border-radius: 0.5rem; padding: 1rem; margin: 1.5rem 0; color: var(--p-text-muted-color); font-size: 0.875rem; line-height: 1.625;">
       <p style="margin: 0;">
         By clicking "I Agree," you agree to PhoneBurner's
-        <DSButton
-          variant="text"
-          label="terms of service"
+        <button
           @click="openTerms"
           data-focus-index="2"
-        />,
-        <DSButton
-          variant="text"
-          label="privacy policy"
+          class="link-button"
+        >terms of service</button>,
+        <button
           @click="openPrivacy"
           data-focus-index="3"
-        />
+          class="link-button"
+        >privacy policy</button>
         and
-        <DSButton
-          variant="text"
-          label="acceptable use policy"
+        <button
           @click="openAcceptable"
           data-focus-index="4"
-        />.
+          class="link-button"
+        >acceptable use policy</button>.
       </p>
     </div>
 
