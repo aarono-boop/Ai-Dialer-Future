@@ -154,17 +154,17 @@
             <span class="text-xs">{{ isMuted ? 'Unmute' : 'Mute' }}</span>
           </Button>
 
-          <DSButton
+          <Button
             ref="keypadButtonRef"
             @click="showKeypad"
             tabindex="10"
             :disabled="callState === 'idle'"
-            variant="secondary"
+            severity="secondary"
             class="flex flex-col items-center justify-center gap-1 py-3"
           >
             <i class="pi pi-th"></i>
             <span class="text-xs">Keypad</span>
-          </DSButton>
+          </Button>
 
           <DSButton
             ref="holdButtonRef"
