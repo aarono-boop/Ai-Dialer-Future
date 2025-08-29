@@ -206,17 +206,17 @@
           Call {{ currentContact.name }} Back
         </Button>
 
-        <DSButton
+        <Button
           @click="shouldCompleteQueue ? completeQueue() : nextContact()"
           @keydown.tab="handleNextContactTab"
           tabindex="14"
           :disabled="shouldCompleteQueue ? !dispositionSet : (callState === 'ended' && !dispositionSet)"
-          :variant="shouldCompleteQueue ? (dispositionSet ? 'primary' : 'secondary') : dispositionSet ? 'primary' : 'secondary'"
+          :severity="shouldCompleteQueue ? (dispositionSet ? 'primary' : 'secondary') : dispositionSet ? 'primary' : 'secondary'"
           class="w-full flex items-center justify-center gap-2 py-3"
         >
           <i :class="shouldCompleteQueue ? 'pi pi-check' : 'pi pi-arrow-right'"></i>
           {{ shouldCompleteQueue ? 'Queue Completed' : `Next: ${nextContactName}` }}
-        </DSButton>
+        </Button>
       </div>
     </div>
 
