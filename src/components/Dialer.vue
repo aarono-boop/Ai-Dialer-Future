@@ -453,7 +453,7 @@ const closeKeypad = () => {
   // Return focus to the keypad button in the dialer
   nextTick(() => {
     if (keypadButtonRef.value) {
-      // DSButton component - need to find the actual DOM element
+      // PrimeVue Button component - access DOM element
       const buttonElement = keypadButtonRef.value.$el || keypadButtonRef.value
       if (buttonElement && buttonElement.focus) {
         buttonElement.focus()
