@@ -39,14 +39,14 @@
 
     <!-- Dialog Footer with action buttons -->
     <template #footer>
-      <DSButton
-        variant="outlined"
+      <Button
+        outlined
         label="Cancel"
         @click="$emit('cancel')"
         data-focus-index="5"
       />
-      <DSButton
-        variant="primary"
+      <Button
+        severity="primary"
         label="I Agree"
         @click="handleAgree"
         data-focus-index="6"
@@ -58,7 +58,7 @@
 <script setup lang="ts">
 import { ref, computed, nextTick, watch, onMounted, onUnmounted } from 'vue'
 import Dialog from 'primevue/dialog'
-import { DSButton } from '../../design-system'
+import Button from 'primevue/button'
 import { useDesignTokens } from '../../design-system/composables/useDesignTokens'
 
 // Access design tokens
