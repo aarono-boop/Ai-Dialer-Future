@@ -1,7 +1,7 @@
 <template>
   <div class="mt-4" role="region" aria-label="Chat input area">
     <div class="flex items-center backdrop-blur-[10px] rounded-xl px-3 py-2 gap-2 w-[70%] mx-auto chat-input-container">
-      <DSInput
+      <InputText
         ref="inputRef"
         v-model="inputValue"
         :placeholder="props.customPlaceholder || animatedPlaceholder"
@@ -37,7 +37,7 @@
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted, nextTick } from 'vue'
 import Button from 'primevue/button'
-import { DSInput } from '@/design-system/components'
+import InputText from 'primevue/inputtext'
 
 // Define props
 const props = defineProps<{
