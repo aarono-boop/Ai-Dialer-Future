@@ -1,13 +1,12 @@
 import { ref, computed, watch } from 'vue'
-import { useDesignTokens } from './useDesignTokens'
 
 type ThemeMode = 'light' | 'dark' | 'system'
 
 /**
  * Composable for managing theme state and preferences
+ * Uses PrimeVue's built-in theming system
  */
 export function useTheme() {
-  const { applyTheme } = useDesignTokens()
   
   // Theme state
   const themeMode = ref<ThemeMode>('dark') // Default to dark for your app
