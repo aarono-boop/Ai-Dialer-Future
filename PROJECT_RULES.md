@@ -30,10 +30,10 @@
 3. **Evaluate customization** - Can PrimeVue's `:pt` system handle styling needs?
 4. **Ask for approval** - If custom component is truly needed, request permission
 
-### Approval Process:
-- **Explain the gap** - What PrimeVue cannot provide
-- **Show research** - Which PrimeVue components were considered
-- **Justify necessity** - Why custom component is required
+### Approval Process (Components & Styling):
+- **Explain the gap** - What PrimeVue/design tokens cannot provide
+- **Show research** - Which PrimeVue components/tokens were considered
+- **Justify necessity** - Why custom component/CSS is required
 - **Wait for approval** - Get explicit "yes" before proceeding
 
 ### Examples:
