@@ -4,21 +4,21 @@
       <!-- Header -->
       <div class="flex items-center justify-between mb-6">
         <h2 class="text-white text-xl font-semibold">Log in</h2>
-        <DSButton @click="$emit('close')" variant="tertiary" size="small">
+        <Button @click="$emit('close')" severity="secondary" outlined size="small">
           <i class="pi pi-times text-lg"></i>
-        </DSButton>
+        </Button>
       </div>
 
       <!-- Google Sign In -->
-      <DSButton
+      <Button
         @click="$emit('google-signin')"
-        variant="secondary"
+        severity="secondary"
         size="large"
         class="w-full flex items-center justify-center gap-3 mb-6"
       >
         <i class="pi pi-google text-lg"></i>
         Sign in with Google
-      </DSButton>
+      </Button>
 
       <!-- Divider -->
       <div class="flex items-center mb-6">
@@ -53,10 +53,10 @@
       </div>
 
       <!-- Login Button -->
-      <DSButton
+      <Button
         @click="handleLogin"
         :disabled="!email || !password"
-        variant="primary"
+        severity="primary"
         size="large"
         class="w-full mb-4"
         label="Log in"
@@ -73,7 +73,8 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import { DSButton, DSInput } from '@/design-system/components'
+import Button from 'primevue/button'
+import { DSInput } from '@/design-system/components'
 
 // Define emits
 const emit = defineEmits(['close', 'google-signin', 'login-success', 'show-signup'])
