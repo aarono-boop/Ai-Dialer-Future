@@ -14,13 +14,19 @@ export default {
     },
     title: {
         fontSize: "1.25rem",
-        fontWeight: "600"
+        fontWeight: "600",
+        color: "{overlay.modal.color}"
     },
     content: {
-        padding: "0 {overlay.modal.padding} {overlay.modal.padding} {overlay.modal.padding}"
+        padding: "0 {overlay.modal.padding} {overlay.modal.padding} {overlay.modal.padding}",
+        color: "{overlay.modal.color}",
+        fontSize: "1rem",
+        lineHeight: "1.625"
     },
     footer: {
         padding: "0 {overlay.modal.padding} {overlay.modal.padding} {overlay.modal.padding}",
-        gap: "0.5rem"
+        gap: "0.75rem",
+        display: "flex",
+        justifyContent: "flex-end"
     }
 } satisfies DialogDesignTokens;
