@@ -15,10 +15,10 @@
         aria-describedby="chat-input-help"
         tabindex="7"
       />
-      <DSButton
+      <Button
         :disabled="!inputValue.trim()"
         @click="handleSend"
-        variant="text"
+        text
         icon="pi pi-send"
         class="w-10 h-10 flex items-center justify-center text-white transition-colors duration-200 hover:opacity-80 disabled:opacity-50"
         aria-label="Send message"
@@ -36,7 +36,8 @@
 
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted, nextTick } from 'vue'
-import { DSButton, DSInput } from '@/design-system/components'
+import Button from 'primevue/button'
+import { DSInput } from '@/design-system/components'
 
 // Define props
 const props = defineProps<{
