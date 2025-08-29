@@ -8,12 +8,12 @@
     @hide="$emit('close')"
   >
     <!-- Dialog Content -->
-    <p>
+    <p class="dialog-text">
       To create your ARKON account, please review our terms and conditions.
     </p>
 
-    <div style="background: var(--ds-color-neutral-950); border: 1px solid var(--ds-color-neutral-600); border-radius: var(--ds-border-radius-lg); padding: var(--ds-spacing-4); margin: var(--ds-spacing-6) 0;">
-      <p style="color: var(--ds-color-text-secondary); font-size: 0.875rem; line-height: 1.625; margin: 0;">
+    <div class="terms-box">
+      <p class="terms-text">
         By clicking "I Agree," you agree to PhoneBurner's
         <DSButton
           variant="text"
@@ -39,7 +39,7 @@
 
     <!-- Dialog Footer with action buttons -->
     <template #footer>
-      <div style="display: flex; gap: var(--ds-spacing-3); justify-content: flex-end;">
+      <div class="dialog-footer">
         <DSButton
           variant="outlined"
           label="Cancel"
