@@ -5,10 +5,11 @@
     </div>
     <div class="flex justify-center items-center">
       <p>&copy; 2025 ARKON. All rights reserved.</p>
-      <DSButton
+      <Button
         v-if="!showDialer && !queuePaused"
         @click="$emit('skip-to-dialer')"
-        variant="tertiary"
+        severity="secondary"
+        outlined
         size="small"
         class="ml-4 underline"
         label="Skip to Dialer"
