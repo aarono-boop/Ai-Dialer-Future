@@ -173,13 +173,14 @@
             </p>
 
             <!-- Purchase Button -->
-            <DSButton
-              label="Purchase"
-              variant="primary"
+            <Button
+              severity="primary"
               size="large"
               class="w-full mt-6 py-4 bg-purple-600 hover:bg-purple-700 text-white rounded-lg font-medium text-lg transition-all duration-200"
               @click="handlePurchase"
-            />
+            >
+              Purchase
+            </Button>
 
             <!-- Stripe Footer -->
             <p class="text-center text-xs text-gray-400 mt-4">
