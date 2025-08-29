@@ -154,7 +154,7 @@ defineExpose({
 }
 
 .upload-text {
-  color: var(--p-surface-300);
+  color: var(--p-surface-0);
   font-size: 0.875rem;
   margin: 0;
 }
