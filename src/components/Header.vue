@@ -8,9 +8,9 @@
       aria-hidden="true"
     >Focus anchor</button>
     <nav class="flex justify-between items-center max-w-6xl mx-auto" role="navigation" aria-label="Main navigation">
-      <DSButton
+      <Button
         @click="$emit('go-home')"
-        variant="text"
+        text
         class="flex items-center gap-3 p-0"
         aria-label="Return to ARKON home page"
         tabindex="1"
@@ -33,7 +33,7 @@
           <path fill="url(#arkonGradient)" d="M240-400q0 52 21 98.5t60 81.5q-1-5-1-9v-9q0-32 12-60t35-51l113-111 113 111q23 23 35 51t12 60v9q0 4-1 9 39-35 60-81.5t21-98.5q0-50-18.5-94.5T648-574q-20 13-42 19.5t-45 6.5q-62 0-107.5-41T401-690q-39 33-69 68.5t-50.5 72Q261-513 250.5-475T240-400Zm240 52-57 56q-11 11-17 25t-6 29q0 32 23.5 55t56.5 23q33 0 56.5-23t23.5-55q0-16-6-29.5T537-292l-57-56Zm0-492v132q0 34 23.5 57t57.5 23q18 0 33.5-7.5T622-658l18-22q74 42 117 117t43 163q0 134-93 227T480-80q-134 0-227-93t-93-227q0-129 86.5-245T480-840Z"/>
         </svg>
         <span class="text-2xl font-bold tracking-wider bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent" aria-hidden="true">ARKON</span>
-      </DSButton>
+      </Button>
       
       <div class="text-gray-400 font-light italic" aria-label="ARKON tagline">
         Your AI assisted dialer
@@ -41,7 +41,7 @@
       
       <div class="flex gap-4 items-center" role="group" aria-label="User actions">
         <!-- Product link -->
-        <DSButton
+        <Button
           v-if="!isSignedIn"
           label="Product"
           text
@@ -53,9 +53,9 @@
 
         <!-- Avatar when signed in -->
         <div v-if="isSignedIn" class="relative flex items-center gap-3" role="group" aria-label="User account">
-          <DSButton
+          <Button
             @click="toggleUserMenu"
-            variant="text"
+            text
             icon="pi pi-user"
             class="w-8 h-8 rounded-full bg-gradient-to-r from-blue-500 to-purple-600 flex items-center justify-center hover:scale-105 transition-transform text-white text-sm"
             aria-label="User menu"
@@ -71,9 +71,9 @@
             aria-labelledby="user-menu-button"
           >
             <div class="py-1">
-              <DSButton
+              <Button
                 @click="handleLogout"
-                variant="text"
+                text
                 icon="pi pi-sign-out"
                 label="Log out"
                 class="w-full text-left px-4 py-2 text-sm text-gray-300 hover:bg-gray-700 hover:text-white transition-colors flex items-center gap-2"
@@ -85,7 +85,7 @@
         </div>
 
         <!-- Login button when not signed in -->
-        <DSButton
+        <Button
           v-else
           label="Login"
           text
@@ -102,7 +102,7 @@
 
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted } from 'vue'
-import { DSButton } from '@/design-system/components'
+import Button from 'primevue/button'
 
 // Define props
 defineProps<{
