@@ -26,12 +26,34 @@ app.use(ToastService)
 
 app.mount('#app')
 
-// Ensure no light class is added to html element
+// Aggressively remove light class from html element
 const removeLight = () => {
-  document.documentElement.classList.remove('light')
+  const html = document.documentElement
+  if (html.classList.contains('light')) {
+    html.classList.remove('light')
+    console.log('Removed light class from html')
+  }
 }
 
-// Remove on mount and watch for changes
+// Remove immediately and repeatedly
 removeLight()
-const observer = new MutationObserver(removeLight)
-observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] })
+setTimeout(removeLight, 0)
+setTimeout(removeLight, 100)
+setTimeout(removeLight, 500)
+
+// Watch for any changes and remove immediately
+const observer = new MutationObserver((mutations) => {
+  mutations.forEach((mutation) => {
+    if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
+      removeLight()
+    }
+  })
+})
+observer.observe(document.documentElement, {
+  attributes: true,
+  attributeFilter: ['class'],
+  subtree: false
+})
+
+// Also check periodically
+setInterval(removeLight, 1000)
