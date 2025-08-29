@@ -157,6 +157,31 @@ const openAcceptable = () => {
 }
 </script>
 
-<style>
-/* All styling handled by PrimeVue design tokens in dialog.ts */
+<style scoped>
+/* All dialog styling handled by PrimeVue design tokens in dialog.ts */
+
+/* Inline link buttons should look like text links */
+.link-button {
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+  color: var(--p-primary-color);
+  text-decoration: underline;
+  cursor: pointer;
+  font-size: inherit;
+  font-family: inherit;
+  line-height: inherit;
+  display: inline;
+}
+
+.link-button:hover {
+  color: var(--p-primary-300);
+}
+
+.link-button:focus {
+  outline: 2px solid var(--p-primary-color);
+  outline-offset: 1px;
+  border-radius: 2px;
+}
 </style>
