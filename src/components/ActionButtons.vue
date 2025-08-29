@@ -1,11 +1,11 @@
 <template>
   <div>
     <div class="grid grid-cols-3 gap-3 md:gap-3 sm:grid-cols-2 xs:grid-cols-1">
-      <DSButton
+      <Button
         v-for="(action, index) in actions"
         :key="action"
         :label="action"
-        variant="secondary"
+        severity="secondary"
         class="px-4 py-3.5 font-medium text-sm text-center min-h-[48px] flex items-center justify-center"
         @click="$emit('action-selected', action)"
         :tabindex="3 + index"
@@ -15,7 +15,7 @@
 </template>
 
 <script setup lang="ts">
-import { DSButton } from '@/design-system/components'
+import Button from 'primevue/button'
 
 // Define props
 interface Props {
