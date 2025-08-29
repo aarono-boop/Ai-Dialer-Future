@@ -208,7 +208,7 @@ const handleUpgrade = () => {
 }
 
 /* Ensure proper styling for buttons */
-:deep(.p-button) {
+:deep(.p-button:not(.p-button-outlined)) {
   border: none !important;
   font-weight: 500 !important;
 }
