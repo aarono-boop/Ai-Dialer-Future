@@ -29,7 +29,7 @@
         <Button
           v-if="!shouldCompleteQueue"
           @click="pauseQueue"
-          :disabled="callState === 'connected' || callState === 'ringing'"
+          :disabled="callState === 'connected'"
           tabindex="8"
           severity="secondary"
           size="small"
