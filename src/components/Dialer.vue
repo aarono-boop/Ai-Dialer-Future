@@ -226,9 +226,9 @@
         <!-- Modal Header -->
         <div class="flex justify-between items-center mb-6">
           <h3 class="text-white text-lg font-semibold">Keypad</h3>
-          <DSButton @click="closeKeypad" @keydown.tab="handleCloseButtonTab" tabindex="113" variant="tertiary" size="small">
+          <Button @click="closeKeypad" @keydown.tab="handleCloseButtonTab" tabindex="113" severity="secondary" outlined size="small">
             <i class="pi pi-times text-xl"></i>
-          </DSButton>
+          </Button>
         </div>
 
         <!-- Keypad Grid -->
