@@ -28,6 +28,13 @@ body {
   transition: all 0.5s ease-in-out;
 }
 
+/* Remove any light class that might be auto-added */
+html.light {
+  /* Override or reset any light theme styles */
+}
+
+/* Force remove light class via JavaScript if needed */
+
 /* Custom dark scrollbar styling */
 * {
   scrollbar-width: thick !important;
