@@ -49,7 +49,9 @@ export function useTheme() {
   const applyDocumentTheme = () => {
     document.documentElement.setAttribute('data-theme', actualTheme.value)
     document.documentElement.className = actualTheme.value
-    applyTheme()
+
+    // PrimeVue theming is handled through CSS classes and theme configuration
+    // The dark/light classes are automatically picked up by PrimeVue
   }
   
   // Initialize theme
