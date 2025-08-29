@@ -1,30 +1,39 @@
 # Design System
 
-This folder contains the design system components, tokens, and utilities for the application.
+This folder contains the design system configuration for PrimeVue theming and brand consistency.
 
 ## Structure
 
-- `tokens/` - Design tokens (colors, spacing, typography, etc.)
-- `components/` - Design system components (wrappers around PrimeVue)
-- `composables/` - Shared design system logic and utilities
-- `styles/` - Global theme overrides and CSS variables
-- `types/` - TypeScript type definitions for the design system
+- `tokens/` - Design tokens (colors, spacing, typography) used to configure PrimeVue themes
+- `composables/` - Theme management utilities
+- `styles/` - PrimeVue theme configuration and customization
+- `tokens/primevue/` - PrimeVue-specific theme token configurations
 
 ## Usage
 
-Import design system components instead of PrimeVue components directly:
+Use PrimeVue components directly with our custom theme:
 
 ```vue
-// ❌ Don't do this
+// ✅ Use PrimeVue components directly
 import Button from 'primevue/button'
+import InputText from 'primevue/inputtext'
+import Card from 'primevue/card'
 
-// ✅ Do this instead  
-import { DSButton } from '@/design-system/components'
+// Theme is automatically applied via PrimeVue configuration
+<Button severity="primary" label="Save" />
+<InputText v-model="value" placeholder="Enter text" />
 ```
+
+## Theme Configuration
+
+The design system defines:
+- **Brand colors** - Primary, secondary, semantic colors
+- **Component tokens** - PrimeVue component styling via design tokens
+- **Dark/light themes** - Consistent theming across modes
 
 ## Guidelines
 
-1. Always use design tokens for colors, spacing, and typography
-2. Extend PrimeVue components through composition, not inheritance
-3. Keep component APIs consistent with PrimeVue where possible
-4. Document component variants and usage examples
+1. Use PrimeVue components directly - no custom wrappers needed
+2. Styling is handled through PrimeVue's theme system
+3. Brand colors are defined in `tokens/colors.ts` and applied to PrimeVue theme
+4. Component customization via PrimeVue's passthrough (`:pt`) system when needed
