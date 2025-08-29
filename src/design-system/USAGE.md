@@ -89,45 +89,58 @@ const handleThemeToggle = () => toggleTheme()
 </Card>
 ```
 
-### DSInput
+### InputText (PrimeVue)
 ```vue
-<DSInput
-  v-model="value"
-  label="Field Label"
-  placeholder="Placeholder text"
-  help-text="Helper text"
-  error-message="Error message"
-  size="small|medium|large"
-  variant="default|filled|outlined"
-  :required="false"
-  :disabled="false"
-  :invalid="false"
-/>
+<!-- Simple input -->
+<InputText v-model="value" placeholder="Enter text" />
+
+<!-- Input with label and validation -->
+<div class="field">
+  <label for="email" class="block text-sm font-medium mb-2">
+    Email Address <span class="text-red-400">*</span>
+  </label>
+  <InputText
+    id="email"
+    v-model="email"
+    placeholder="Enter your email"
+    :invalid="!!errors.email"
+    type="email"
+    required
+  />
+  <small v-if="errors.email" class="text-red-400">{{ errors.email }}</small>
+  <small v-else class="text-gray-500">We'll never share your email</small>
+</div>
 ```
 
-## Design Tokens
+## Theme Configuration
 
 ### Colors
-```javascript
-// Access colors from tokens
-import { colors } from '@/design-system/tokens'
+Colors are configured in PrimeVue theme and accessible via CSS variables:
+```css
+/* Primary colors (configured via design tokens) */
+var(--p-primary-color)
+var(--p-primary-500)
+var(--p-primary-600)
 
-colors.primary[500]     // #9333FF
-colors.background.primary  // #242733
-colors.text.primary     // #ffffff
+/* Text colors */
+var(--p-text-color)
+var(--p-text-muted-color)
+
+/* Surface colors */
+var(--p-surface-0)
+var(--p-surface-800)
 ```
 
-### Spacing
-```javascript
-import { spacing } from '@/design-system/tokens'
-
-spacing[4]   // 1rem (16px)
-spacing[8]   // 2rem (32px)
+### Customization
+Use PrimeVue's passthrough system for component customization:
+```vue
+<Button
+  label="Custom Button"
+  :pt="{
+    root: { class: 'custom-button-styles' }
+  }"
+/>
 ```
-
-### Typography
-```javascript
-import { typography } from '@/design-system/tokens'
 
 typography.h1.fontSize      // 2.25rem
 typography.button.fontWeight // 500
