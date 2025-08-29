@@ -207,9 +207,9 @@
           <!-- Load New File Button - shown when queue is completed -->
           <div v-if="showLoadNewFileButton" class="mt-2 pt-5 flex justify-center">
             <div class="w-[70%]">
-              <DSButton
+              <Button
                 @click="triggerFileUpload"
-                variant="secondary"
+                severity="secondary"
                 label="Load New File"
                 icon="pi pi-upload"
                 class="w-full px-6 py-3 font-semibold flex items-center justify-center gap-2"
@@ -1180,7 +1180,7 @@ const sendMessage = (message: string): void => {
       addAIMessage([
         '📅 Here\'s your schedule for today:',
         '<strong>Upcoming appointments:</strong>',
-        '• 2:00 PM - Demo call with Sarah Johnson (confirmed)',
+        '��� 2:00 PM - Demo call with Sarah Johnson (confirmed)',
         '• 3:30 PM - Follow-up with ABC Corp (needs confirmation)',
         '• 4:15 PM - Discovery call with new lead Mike Chen',
         'You have 45 minutes before your next call. Perfect time for some prospecting!'
