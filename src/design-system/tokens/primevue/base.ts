@@ -561,7 +561,7 @@ export default {
         formField: {
           background: "{surface.950}",
           disabledBackground: "{surface.700}",
-          filledBackground: "{surface.800}",
+          filledBackground: "{surface.600}",
           filledHoverBackground: "{surface.800}",
           filledFocusBackground: "{surface.800}",
           borderColor: "{surface.600}",
