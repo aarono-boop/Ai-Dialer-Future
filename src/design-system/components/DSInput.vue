@@ -72,37 +72,3 @@ const requiredStyles = computed(() => getComponentStyles('input', 'required'))
 const helpStyles = computed(() => getComponentStyles('input', 'help'))
 const errorStyles = computed(() => getComponentStyles('input', 'error'))
 </script>
-
-<style scoped>
-/* Minimal wrapper styling - all input styling handled by design tokens */
-.ds-input-wrapper {
-  width: 100%;
-}
-
-.ds-input__label {
-  display: block;
-  font-size: 0.875rem;
-  font-weight: 500;
-  margin-bottom: 0.5rem;
-  color: var(--p-text-muted-color);
-}
-
-.ds-input__required {
-  margin-left: 0.25rem;
-  color: var(--p-red-400);
-}
-
-.ds-input__help {
-  display: block;
-  font-size: 0.75rem;
-  margin-top: 0.25rem;
-  color: var(--p-text-muted-color);
-}
-
-.ds-input__error {
-  display: block;
-  font-size: 0.75rem;
-  margin-top: 0.25rem;
-  color: var(--p-red-400);
-}
-</style>
