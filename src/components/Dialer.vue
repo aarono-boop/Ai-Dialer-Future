@@ -196,15 +196,15 @@
 
       <!-- Call Ended Action Buttons (only when call ended) -->
       <div v-if="callState === 'ended'" class="space-y-2">
-        <DSButton
+        <Button
           @click="callBack"
           tabindex="13"
-          variant="secondary"
+          severity="secondary"
           class="w-full flex items-center justify-center gap-2 py-3"
         >
           <i class="pi pi-phone"></i>
           Call {{ currentContact.name }} Back
-        </DSButton>
+        </Button>
 
         <DSButton
           @click="shouldCompleteQueue ? completeQueue() : nextContact()"
