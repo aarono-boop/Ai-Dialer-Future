@@ -585,7 +585,7 @@ const messages: Ref<Message[]> = ref([
   {
     type: 'ai',
     content: [
-      'Welcome! I\'m <strong>ARKON</strong>, your AI calling assistant.<br><br>Drop your contact file here and I\'ll show you exactly who\'s most likely to pick up right now.'
+      'Welcome! I\'m <strong>ARKON (MVP)</strong>, your AI calling assistant.<br><br>Drop your contact file here and I\'ll show you exactly who\'s most likely to pick up right now.'
     ]
   }
 ])
@@ -678,7 +678,7 @@ const handleLogout = () => {
     {
       type: 'ai',
       content: [
-        'Welcome! I\'m <strong>ARKON</strong>, your AI calling assistant.<br><br>Drop your contact file here and I\'ll show you exactly who\'s most likely to pick up right now.'
+        'Welcome! I\'m <strong>ARKON (MVP)</strong>, your AI calling assistant.<br><br>Drop your contact file here and I\'ll show you exactly who\'s most likely to pick up right now.'
       ]
     }
   ]
@@ -1140,7 +1140,7 @@ const sendMessage = (message: string): void => {
       ])
     } else if (lowerMessage.includes('who i should call now') || lowerMessage.includes('who should i call')) {
       addAIMessage([
-        '��� Based on your contact data and current time analysis:',
+        '����� Based on your contact data and current time analysis:',
         '<strong>Top 3 prospects to call right now:</strong>',
         '1. Sarah Johnson - 92% connect probability (last spoke 3 days ago)',
         '2. Mike Chen - 89% connect probability (opened your email yesterday)',
