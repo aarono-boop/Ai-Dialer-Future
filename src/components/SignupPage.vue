@@ -10,17 +10,17 @@
       <!-- Signup Form Container -->
       <div class="bg-gray-900 border border-gray-700 rounded-xl p-6">
         <!-- Google Sign Up - Primary Button -->
-        <DSButton
+        <Button
           @click="$emit('google-signup')"
           @keydown.tab="handleTabKey"
-          variant="primary"
+          severity="primary"
           size="large"
           class="w-full flex items-center justify-center gap-3 font-semibold text-lg mb-6"
           tabindex="4"
         >
           <i class="pi pi-google text-xl"></i>
           Sign up with Google
-        </DSButton>
+        </Button>
 
 
         <!-- Sign In Link -->
@@ -34,7 +34,7 @@
 </template>
 
 <script setup lang="ts">
-import { DSButton } from '@/design-system/components'
+import Button from 'primevue/button'
 
 // Define emits
 const emit = defineEmits(['google-signup', 'switch-to-signin'])
