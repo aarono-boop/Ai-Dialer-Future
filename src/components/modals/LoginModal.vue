@@ -29,9 +29,9 @@
 
       <!-- Email Field -->
       <div class="mb-4">
-        <DSInput
+        <label class="text-gray-300 text-sm font-medium block mb-2">Email</label>
+        <InputText
           v-model="email"
-          label="Email"
           placeholder="name@host.com"
           type="email"
           class="w-full"
@@ -44,7 +44,7 @@
           <span class="text-gray-300 text-sm font-medium">Password</span>
           <a href="#" class="text-blue-400 text-sm hover:text-blue-300">Forgot password?</a>
         </div>
-        <DSInput
+        <InputText
           v-model="password"
           type="password"
           placeholder="Enter password"
@@ -74,7 +74,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import Button from 'primevue/button'
-import { DSInput } from '@/design-system/components'
+import InputText from 'primevue/inputtext'
 
 // Define emits
 const emit = defineEmits(['close', 'google-signin', 'login-success', 'show-signup'])
