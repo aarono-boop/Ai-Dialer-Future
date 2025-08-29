@@ -26,7 +26,7 @@
         <form class="flex flex-col gap-5 text-left" @submit.prevent="handleSubmit">
           <div class="flex flex-col gap-2">
             <label class="text-white text-sm font-medium">Email Address</label>
-            <DSInput
+            <InputText
               v-model="email"
               placeholder="Email address"
               type="email"
@@ -37,7 +37,7 @@
           
           <div class="flex flex-col gap-2">
             <label class="text-white text-sm font-medium">Password</label>
-            <DSInput
+            <InputText
               v-model="password"
               placeholder="Password"
               type="password"
@@ -80,7 +80,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import Button from 'primevue/button'
-import { DSInput } from '@/design-system/components'
+import InputText from 'primevue/inputtext'
 
 // Define props
 interface Props {
