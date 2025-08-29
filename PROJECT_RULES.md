@@ -61,11 +61,17 @@
 - Basic hover/focus states - Use `:pt` system instead
 
 ## Benefits:
-- Maintains UI consistency
-- Reduces maintenance overhead  
-- Ensures PrimeVue theme integration
-- Prevents duplicate functionality
-- Forces consideration of PrimeVue solutions first
+- **UI Consistency**: Maintains uniform components and styling
+- **Reduced Maintenance**: Less custom code to maintain
+- **Theme Integration**: Ensures PrimeVue theme system works properly
+- **Dark Mode Support**: Design tokens automatically handle theme switching
+- **Performance**: Leverages PrimeVue's optimized styling
+- **Future-Proof**: Easy to update when PrimeVue evolves
+- **Design System**: Forces consideration of systematic approaches first
+
+## Related Guides:
+- [COMPONENT_DECISION_GUIDE.md](./COMPONENT_DECISION_GUIDE.md) - When to use PrimeVue vs custom components
+- [STYLING_DECISION_GUIDE.md](./STYLING_DECISION_GUIDE.md) - When to use design tokens vs custom CSS
 
 ## Debugging Protocol
 When debugging is required, follow structured approach:
