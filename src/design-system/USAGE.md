@@ -112,23 +112,66 @@ const handleThemeToggle = () => toggleTheme()
 </div>
 ```
 
-## Theme Configuration
+## Design Tokens (Theme Variables)
 
-### Colors
-Colors are configured in PrimeVue theme and accessible via CSS variables:
+### Available Design Tokens
+All styling should use PrimeVue theme variables (design tokens) when possible:
+
+#### Colors:
 ```css
-/* Primary colors (configured via design tokens) */
-var(--p-primary-color)
-var(--p-primary-500)
-var(--p-primary-600)
+/* Primary brand colors */
+var(--p-primary-color)      /* Main brand color */
+var(--p-primary-50)         /* Lightest primary */
+var(--p-primary-500)        /* Medium primary */
+var(--p-primary-950)        /* Darkest primary */
+
+/* Surface colors (backgrounds) */
+var(--p-surface-0)          /* Pure white/black (theme dependent) */
+var(--p-surface-50)         /* Very light gray */
+var(--p-surface-100)        /* Light gray */
+var(--p-surface-800)        /* Dark gray */
+var(--p-surface-900)        /* Very dark gray */
 
 /* Text colors */
-var(--p-text-color)
-var(--p-text-muted-color)
+var(--p-text-color)         /* Main text color */
+var(--p-text-muted-color)   /* Secondary text color */
 
-/* Surface colors */
-var(--p-surface-0)
-var(--p-surface-800)
+/* Semantic colors */
+var(--p-green-500)          /* Success */
+var(--p-red-500)            /* Error/danger */
+var(--p-yellow-500)         /* Warning */
+var(--p-blue-500)           /* Info */
+```
+
+#### Layout & Effects:
+```css
+/* Border radius */
+var(--p-border-radius)      /* Standard radius */
+var(--p-border-radius-sm)   /* Small radius */
+var(--p-border-radius-lg)   /* Large radius */
+
+/* Focus ring */
+var(--p-focus-ring-width)   /* Focus outline width */
+var(--p-focus-ring-color)   /* Focus outline color */
+var(--p-focus-ring-shadow)  /* Focus shadow effect */
+```
+
+### Usage Examples:
+```vue
+<!-- ✅ Using design tokens -->
+<div :style="{
+  backgroundColor: 'var(--p-surface-100)',
+  color: 'var(--p-text-color)',
+  borderRadius: 'var(--p-border-radius)',
+  padding: '1rem'
+}">
+  Content with theme variables
+</div>
+
+<!-- ❌ Don't hardcode values -->
+<div style="background: #f3f4f6; color: #111827; border-radius: 8px;">
+  Content with hardcoded values
+</div>
 ```
 
 ### Customization
