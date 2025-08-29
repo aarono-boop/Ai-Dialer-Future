@@ -58,13 +58,13 @@
 
           <!-- Queue Action Buttons - shown when queue is paused -->
           <div v-if="showContinueQueueButton" class="mt-2 pt-5 flex justify-center">
-            <div class="w-[70%]">
+            <div class="w-[70%] flex justify-center">
               <Button
                 v-if="showContinueQueueButton"
                 @click="continueQueue"
                 severity="primary"
                 label="Continue Call Queue"
-                class="w-full px-6 py-3 font-semibold"
+                class="w-1/2 px-6 py-3 font-semibold"
               />
             </div>
           </div>
@@ -1140,7 +1140,7 @@ const sendMessage = (message: string): void => {
       ])
     } else if (lowerMessage.includes('who i should call now') || lowerMessage.includes('who should i call')) {
       addAIMessage([
-        '🎯 Based on your contact data and current time analysis:',
+        '��� Based on your contact data and current time analysis:',
         '<strong>Top 3 prospects to call right now:</strong>',
         '1. Sarah Johnson - 92% connect probability (last spoke 3 days ago)',
         '2. Mike Chen - 89% connect probability (opened your email yesterday)',
