@@ -91,12 +91,12 @@
 
           <!-- Phone Verification Button - always visible when active -->
           <div v-if="showPhoneVerificationButton" class="mt-2 pt-5 flex justify-center">
-            <div class="w-[70%]">
+            <div class="w-[70%] flex justify-center">
               <Button
                 @click="handlePhoneVerification"
                 severity="primary"
                 label="Now lets verify my phone number"
-                class="w-1/2 px-8 py-3 font-semibold mx-auto block"
+                class="px-8 py-3 font-semibold"
                 tabindex="3"
               />
             </div>
