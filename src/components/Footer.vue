@@ -18,7 +18,7 @@
 </template>
 
 <script setup lang="ts">
-import { DSButton } from '@/design-system/components'
+import Button from 'primevue/button'
 
 // Define props
 defineProps<{
