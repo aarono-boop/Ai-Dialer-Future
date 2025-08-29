@@ -28,17 +28,29 @@ body {
   transition: all 0.5s ease-in-out !important;
 }
 
-/* Ensure dark theme tokens are applied correctly */
+/* Force dark theme for all PrimeVue buttons */
 .dark .p-button-secondary {
-  background-color: var(--p-button-secondary-background) !important;
-  border-color: var(--p-button-secondary-border-color) !important;
-  color: var(--p-button-secondary-color) !important;
+  background-color: #27272a !important; /* zinc-800 */
+  border-color: #27272a !important;
+  color: #d4d4d8 !important; /* zinc-300 */
 }
 
 .dark .p-button-secondary:hover {
-  background-color: var(--p-button-secondary-hover-background) !important;
-  border-color: var(--p-button-secondary-hover-border-color) !important;
-  color: var(--p-button-secondary-hover-color) !important;
+  background-color: #3f3f46 !important; /* zinc-700 */
+  border-color: #3f3f46 !important;
+  color: #e4e4e7 !important; /* zinc-200 */
+}
+
+.dark .p-button-primary {
+  background-color: #a855f7 !important; /* purple-500 */
+  border-color: #a855f7 !important;
+  color: #ffffff !important;
+}
+
+.dark .p-button-primary:hover {
+  background-color: #9333ea !important; /* purple-600 */
+  border-color: #9333ea !important;
+  color: #ffffff !important;
 }
 
 /* Custom dark scrollbar styling */
