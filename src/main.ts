@@ -26,26 +26,34 @@ app.use(ToastService)
 
 app.mount('#app')
 
-// Aggressively remove light class from html element
-const removeLight = () => {
+// Ensure dark theme is applied to HTML element for modals
+const ensureDarkTheme = () => {
   const html = document.documentElement
+
+  // Remove light class if present
   if (html.classList.contains('light')) {
     html.classList.remove('light')
     console.log('Removed light class from html')
   }
+
+  // Add dark class if not present
+  if (!html.classList.contains('dark')) {
+    html.classList.add('dark')
+    console.log('Added dark class to html')
+  }
 }
 
-// Remove immediately and repeatedly
-removeLight()
-setTimeout(removeLight, 0)
-setTimeout(removeLight, 100)
-setTimeout(removeLight, 500)
+// Apply immediately and repeatedly
+ensureDarkTheme()
+setTimeout(ensureDarkTheme, 0)
+setTimeout(ensureDarkTheme, 100)
+setTimeout(ensureDarkTheme, 500)
 
-// Watch for any changes and remove immediately
+// Watch for any changes and fix immediately
 const observer = new MutationObserver((mutations) => {
   mutations.forEach((mutation) => {
     if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
-      removeLight()
+      ensureDarkTheme()
     }
   })
 })
@@ -56,4 +64,4 @@ observer.observe(document.documentElement, {
 })
 
 // Also check periodically
-setInterval(removeLight, 1000)
+setInterval(ensureDarkTheme, 1000)
