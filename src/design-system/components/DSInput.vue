@@ -1,8 +1,8 @@
 <template>
-  <div class="ds-input-wrapper">
-    <label v-if="label" :for="inputId" class="ds-input__label">
+  <div :style="wrapperStyles">
+    <label v-if="label" :for="inputId" :style="labelStyles">
       {{ label }}
-      <span v-if="required" class="ds-input__required">*</span>
+      <span v-if="required" :style="requiredStyles">*</span>
     </label>
 
     <InputText
@@ -15,11 +15,11 @@
       @update:modelValue="$emit('update:modelValue', $event)"
     />
 
-    <small v-if="helpText && !errorMessage" class="ds-input__help">
+    <small v-if="helpText && !errorMessage" :style="helpStyles">
       {{ helpText }}
     </small>
 
-    <small v-if="errorMessage" class="ds-input__error">
+    <small v-if="errorMessage" :style="errorStyles">
       {{ errorMessage }}
     </small>
   </div>
