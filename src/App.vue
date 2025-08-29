@@ -139,23 +139,23 @@
           <div v-if="showDispositionButtons && showDialer && !showContinueQueueButton" class="mt-2 pt-5 flex justify-center">
             <!-- Voicemail Disposition Buttons for George Sample -->
             <div v-if="isVoicemailScenario" class="w-[70%] grid grid-cols-3 gap-3">
-              <DSButton
+              <Button
                 @click="handleDisposition('Voicemail Left')"
-                variant="primary"
+                severity="primary"
                 label="Voicemail Left"
                 class="py-3 px-4 font-medium"
                 tabindex="3"
               />
-              <DSButton
+              <Button
                 @click="handleDisposition('No Voicemail Left')"
-                variant="secondary"
+                severity="secondary"
                 label="No Voicemail Left"
                 class="py-3 px-4 font-medium"
                 tabindex="4"
               />
-              <DSButton
+              <Button
                 @click="handleDisposition('No Answer')"
-                variant="secondary"
+                severity="secondary"
                 label="No Answer"
                 class="py-3 px-4 font-medium"
                 tabindex="5"
