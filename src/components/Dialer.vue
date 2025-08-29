@@ -827,6 +827,19 @@ const handleHoldKeydown = (event: KeyboardEvent) => {
   vertical-align: top !important;
 }
 
+/* Explicit borders for call control buttons (mute, keypad, hold) */
+:deep([tabindex="9"]),
+:deep([tabindex="10"]),
+:deep([tabindex="11"]) {
+  border: 1px solid var(--p-button-secondary-border-color) !important;
+}
+
+:deep([tabindex="9"]:hover),
+:deep([tabindex="10"]:hover),
+:deep([tabindex="11"]:hover) {
+  border: 1px solid var(--p-button-secondary-hover-border-color) !important;
+}
+
 /* Allow focus styles for call control buttons (tabindex 9-12) */
 :deep([tabindex="9"]:focus),
 :deep([tabindex="10"]:focus),
