@@ -142,77 +142,84 @@ Use PrimeVue's passthrough system for component customization:
 />
 ```
 
-typography.h1.fontSize      // 2.25rem
-typography.button.fontWeight // 500
-```
-
 ## Best Practices
 
 ### ✅ Do
-- Always use design system components instead of PrimeVue components directly
-- Use design tokens for consistent spacing, colors, and typography
-- Follow the established component API patterns
-- Document any custom variants or extensions
+- Use PrimeVue components directly with consistent prop patterns
+- Leverage PrimeVue's built-in theming system
+- Use the configured theme variables (CSS custom properties)
+- Follow PrimeVue's API conventions and documentation
 
 ### ❌ Don't
-- Import PrimeVue components directly in application code
-- Use hardcoded colors, spacing, or typography values
-- Override design system styles with `!important`
-- Create custom components that duplicate design system functionality
+- Create unnecessary wrapper components around PrimeVue
+- Override theme styles with `!important`
+- Use hardcoded colors instead of theme CSS variables
+- Bypass PrimeVue's theming system
 
-## Migration Strategy
+## Theme Management
 
-### Step 1: Identify Components to Replace
-```bash
-# Find all PrimeVue component imports
-grep -r "from 'primevue/" src/components/
-```
-
-### Step 2: Replace Gradually
-```vue
-<!-- Before -->
-<Button class="btn-primary">Click me</Button>
-
-<!-- After -->
-<DSButton variant="primary">Click me</DSButton>
-```
-
-### Step 3: Remove Custom CSS
-After migrating to design system components, remove custom CSS classes that duplicate design system functionality.
-
-## Extending the Design System
-
-### Adding New Components
-1. Create component in `src/design-system/components/`
-2. Follow existing patterns for props and variants
-3. Export from `src/design-system/components/index.ts`
-4. Document usage examples
-
-### Adding New Tokens
-1. Add tokens to appropriate file in `src/design-system/tokens/`
-2. Update theme configuration if needed
-3. Export from `src/design-system/tokens/index.ts`
-4. Update TypeScript types
-
-### Creating Custom Variants
+### Dark/Light Mode
 ```vue
 <script setup>
-// Extend existing components with custom logic
-import { DSButton } from '@/design-system/components'
-import { computed } from 'vue'
+import { useTheme } from '@/design-system/composables'
 
-const props = defineProps<{
-  danger?: boolean
-}>()
-
-const buttonVariant = computed(() => {
-  return props.danger ? 'error' : 'primary'
-})
+const { actualTheme, toggleTheme } = useTheme()
 </script>
 
 <template>
-  <DSButton :variant="buttonVariant">
-    <slot />
-  </DSButton>
+  <Button @click="toggleTheme" icon="pi pi-moon" />
+  <p>Current theme: {{ actualTheme }}</p>
+</template>
+```
+
+## Customizing PrimeVue Components
+
+### Using Passthrough
+```vue
+<Button
+  label="Custom Button"
+  :pt="{
+    root: {
+      class: 'custom-focus-ring hover:scale-105 transition-transform'
+    }
+  }"
+/>
+```
+
+### Global Theme Customization
+Edit `src/design-system/tokens/primevue/` files to customize component appearance globally.
+
+### Creating Composite Components
+```vue
+<script setup>
+// Create reusable patterns with PrimeVue components
+import Button from 'primevue/button'
+import InputText from 'primevue/inputtext'
+
+const props = defineProps<{
+  value: string
+  placeholder?: string
+  buttonLabel?: string
+}>()
+
+const emit = defineEmits<{
+  update:value: [value: string]
+  submit: []
+}>()
+</script>
+
+<template>
+  <div class="flex gap-2">
+    <InputText
+      :value="value"
+      :placeholder="placeholder"
+      @update:value="emit('update:value', $event)"
+      class="flex-1"
+    />
+    <Button
+      :label="buttonLabel || 'Submit'"
+      @click="emit('submit')"
+    />
+  </div>
 </template>
 ```
