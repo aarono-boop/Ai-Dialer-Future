@@ -4,21 +4,21 @@
       {{ label }}
       <span v-if="required" class="ds-input__required">*</span>
     </label>
-    
+
     <InputText
       :id="inputId"
       v-bind="$attrs"
-      :class="computedClasses"
+      :size="props.size === 'small' ? 'small' : props.size === 'large' ? 'large' : null"
       :placeholder="placeholder"
       :disabled="disabled"
       :invalid="invalid || !!errorMessage"
       @update:modelValue="$emit('update:modelValue', $event)"
     />
-    
+
     <small v-if="helpText && !errorMessage" class="ds-input__help">
       {{ helpText }}
     </small>
-    
+
     <small v-if="errorMessage" class="ds-input__error">
       {{ errorMessage }}
     </small>
@@ -61,119 +61,39 @@ defineEmits<{
 // Generate unique ID for accessibility
 const inputId = `ds-input-${Math.random().toString(36).substr(2, 9)}`
 
-const computedClasses = computed(() => {
-  const classes = ['ds-input']
-  
-  // Size classes
-  switch (props.size) {
-    case 'small':
-      classes.push('ds-input--small')
-      break
-    case 'large':
-      classes.push('ds-input--large')
-      break
-    default:
-      classes.push('ds-input--medium')
-  }
-  
-  // Variant classes
-  switch (props.variant) {
-    case 'filled':
-      classes.push('ds-input--filled')
-      break
-    case 'outlined':
-      classes.push('ds-input--outlined')
-      break
-    default:
-      classes.push('ds-input--default')
-  }
-  
-  // State classes
-  if (props.invalid || props.errorMessage) {
-    classes.push('ds-input--error')
-  }
-  
-  return classes.join(' ')
-})
+// All styling handled by PrimeVue design tokens in inputtext.ts
 </script>
 
 <style scoped>
+/* Minimal wrapper styling - all input styling handled by design tokens */
 .ds-input-wrapper {
-  @apply w-full;
+  width: 100%;
 }
 
 .ds-input__label {
-  @apply block text-sm font-medium mb-2;
-  color: var(--p-surface-300);
+  display: block;
+  font-size: 0.875rem;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+  color: var(--p-text-muted-color);
 }
 
 .ds-input__required {
-  @apply ml-1;
+  margin-left: 0.25rem;
   color: var(--p-red-400);
-}
-
-.ds-input {
-  @apply w-full transition-colors duration-200;
-}
-
-.ds-input--small {
-  @apply text-sm px-3 py-1;
-}
-
-.ds-input--medium {
-  @apply text-base px-3 py-2;
-}
-
-.ds-input--large {
-  @apply text-lg px-4 py-3;
-}
-
-.ds-input--default {
-  background-color: var(--p-surface-700);
-  border: 1px solid var(--p-surface-600);
-  color: var(--p-surface-0);
-}
-
-.ds-input--filled {
-  background-color: var(--p-surface-600);
-  border: none;
-  color: var(--p-surface-0);
-}
-
-.ds-input--outlined {
-  background-color: transparent;
-  border: 2px solid var(--p-surface-500);
-  color: var(--p-surface-0);
-}
-
-.ds-input--error {
-  border-color: var(--p-red-500);
-}
-
-.ds-input--error:focus {
-  outline: none;
-  box-shadow: inset 0 0 0 2px var(--p-red-500);
 }
 
 .ds-input__help {
-  @apply block text-xs mt-1;
-  color: var(--p-surface-400);
+  display: block;
+  font-size: 0.75rem;
+  margin-top: 0.25rem;
+  color: var(--p-text-muted-color);
 }
 
 .ds-input__error {
-  @apply block text-xs mt-1;
+  display: block;
+  font-size: 0.75rem;
+  margin-top: 0.25rem;
   color: var(--p-red-400);
-}
-
-/* Placeholder styling using design tokens */
-:deep(.p-inputtext::placeholder) {
-  color: var(--p-surface-400);
-}
-
-/* Focus states using design tokens */
-:deep(.p-inputtext:focus) {
-  outline: none;
-  box-shadow: inset 0 0 0 2px var(--p-primary-color);
-  border-color: var(--p-primary-color);
 }
 </style>
