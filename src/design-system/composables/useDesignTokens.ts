@@ -30,6 +30,15 @@ export function useDesignTokens() {
   const getTypography = (typeKey: keyof typeof typography) => {
     return typography[typeKey]
   }
+
+  // Component styles utilities
+  const getComponentStyles = (component: string, element: string) => {
+    const componentStyles = componentTokens[component as keyof typeof componentTokens]
+    if (!componentStyles) return {}
+
+    const elementStyles = componentStyles[element as keyof typeof componentStyles]
+    return elementStyles || {}
+  }
   
   // CSS variable generation
   const generateCSSVariables = () => {
