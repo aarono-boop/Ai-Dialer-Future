@@ -13,8 +13,8 @@
       <h2 class="text-white text-2xl font-semibold mb-8 text-center">Create your account</h2>
 
       <!-- Google Sign Up Button -->
-      <DSButton
-        variant="primary"
+      <Button
+        severity="primary"
         size="large"
         class="w-full mb-8 py-3"
         @click="handleGoogleSignup"
@@ -23,7 +23,7 @@
           <i class="pi pi-google text-lg"></i>
           <span>Sign up with Google</span>
         </div>
-      </DSButton>
+      </Button>
 
       <!-- Description Text -->
       <p class="text-center text-slate-400 text-sm mb-6 leading-relaxed">
@@ -46,7 +46,7 @@
 </template>
 
 <script setup lang="ts">
-import { DSButton } from '@/design-system/components'
+import Button from 'primevue/button'
 
 // Define emits
 const emit = defineEmits(['close', 'switch-to-signin', 'show-terms'])
