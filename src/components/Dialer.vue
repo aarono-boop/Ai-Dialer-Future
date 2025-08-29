@@ -26,12 +26,12 @@
         <div class="text-gray-400 text-sm" style="flex-shrink: 0;">
           Queue Time: <span class="text-white">{{ formatTime(queueTime) }}</span>
         </div>
-        <DSButton
+        <Button
           v-if="!shouldCompleteQueue"
           @click="pauseQueue"
           :disabled="callState === 'connected' || callState === 'ringing'"
           tabindex="8"
-          variant="secondary"
+          severity="secondary"
           size="small"
           label="Pause Queue"
           style="flex-shrink: 0; position: relative;"
