@@ -415,8 +415,8 @@ import Footer from './components/Footer.vue'
 import Dialer from './components/Dialer.vue'
 import CallSeparator from './components/CallSeparator.vue'
 
-// Design System Components
-import { DSButton } from './design-system/components'
+// PrimeVue Components (adding Button)
+import Button from 'primevue/button'
 
 // PrimeVue Components
 import Toast from 'primevue/toast'
