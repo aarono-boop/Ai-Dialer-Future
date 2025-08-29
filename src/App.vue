@@ -163,30 +163,30 @@
             </div>
             <!-- Regular Disposition Buttons for other contacts -->
             <div v-else class="w-[70%] grid grid-cols-4 gap-3">
-              <DSButton
+              <Button
                 @click="handleDisposition('Follow up')"
-                variant="secondary"
+                severity="secondary"
                 label="Follow up"
                 class="py-3 px-4 font-medium"
                 tabindex="3"
               />
-              <DSButton
+              <Button
                 @click="handleDisposition('Not interested')"
-                variant="secondary"
+                severity="secondary"
                 label="Not interested"
                 class="py-3 px-4 font-medium"
                 tabindex="4"
               />
-              <DSButton
+              <Button
                 @click="handleDisposition('Do Not Call')"
-                variant="secondary"
+                severity="secondary"
                 label="Do Not Call"
                 class="py-3 px-4 font-medium"
                 tabindex="5"
               />
-              <DSButton
+              <Button
                 @click="handleDisposition('Set Appointment')"
-                variant="primary"
+                severity="primary"
                 label="Set Appointment"
                 class="py-3 px-4 font-medium"
                 tabindex="6"
