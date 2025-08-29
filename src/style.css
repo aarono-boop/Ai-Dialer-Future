@@ -28,6 +28,26 @@ body {
   transition: all 0.5s ease-in-out;
 }
 
+/* Design System - Text Links */
+.text-link {
+  color: var(--p-primary-color);
+  text-decoration: underline;
+  font-size: inherit;
+  font-family: inherit;
+  line-height: inherit;
+}
+
+.text-link:hover {
+  color: var(--p-primary-300);
+  text-decoration: underline;
+}
+
+.text-link:focus {
+  outline: 2px solid var(--p-primary-color);
+  outline-offset: 1px;
+  border-radius: 2px;
+}
+
 /* Remove any light class that might be auto-added */
 html.light {
   /* Override or reset any light theme styles */
