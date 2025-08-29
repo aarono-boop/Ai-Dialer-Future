@@ -286,7 +286,7 @@ export default {
           background: "{surface.800}",
           hoverBackground: "{surface.700}",
           activeBackground: "{surface.600}",
-          borderColor: "{surface.200}",
+          borderColor: "{surface.300}",
           hoverBorderColor: "{surface.700}",
           activeBorderColor: "{surface.600}",
           color: "{surface.0}",
