@@ -38,15 +38,27 @@
 
 ### Examples:
 
-#### ✅ Approved Scenarios:
+#### ✅ Approved Custom Component Scenarios:
 - Complex business logic components (workflows, dashboards)
 - Third-party integrations not covered by PrimeVue
 - Performance-critical components with specific requirements
 
-#### ❌ Likely Rejected:
+#### ❌ Likely Rejected Custom Components:
 - Basic UI elements (buttons, inputs, cards) - PrimeVue has these
 - Simple styling variations - Use `:pt` customization instead
 - Convenience wrappers - Use PrimeVue components directly
+
+#### ✅ Approved Custom CSS Scenarios:
+- Complex animations not supported by PrimeVue
+- Brand-specific visual effects beyond theme capabilities
+- Performance-critical styling (rare cases)
+- Integration with third-party CSS frameworks
+
+#### ❌ Likely Rejected Custom CSS:
+- Colors - Use `var(--p-primary-500)`, `var(--p-surface-800)`, etc.
+- Spacing - Use `var(--p-spacing-*)` or PrimeVue spacing classes
+- Typography - Use PrimeVue text utilities and theme variables
+- Basic hover/focus states - Use `:pt` system instead
 
 ## Benefits:
 - Maintains UI consistency
