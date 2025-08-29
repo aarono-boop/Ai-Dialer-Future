@@ -162,6 +162,33 @@ const openAcceptable = () => {
 }
 </script>
 
-<style>
-/* Design tokens are applied through the PrimeVue theme system via dialog.ts */
+<style scoped>
+/* Minimal styling using design tokens - dialog styling handled by theme system */
+.dialog-text {
+  color: var(--ds-color-text-primary);
+  font-size: 1rem;
+  line-height: 1.625;
+  margin-bottom: var(--ds-spacing-6);
+}
+
+.terms-box {
+  background: var(--ds-color-neutral-950);
+  border: 1px solid var(--ds-color-neutral-600);
+  border-radius: var(--ds-border-radius-lg);
+  padding: var(--ds-spacing-4);
+  margin: var(--ds-spacing-6) 0;
+}
+
+.terms-text {
+  color: var(--ds-color-text-secondary);
+  font-size: 0.875rem;
+  line-height: 1.625;
+  margin: 0;
+}
+
+.dialog-footer {
+  display: flex;
+  gap: var(--ds-spacing-3);
+  justify-content: flex-end;
+}
 </style>
