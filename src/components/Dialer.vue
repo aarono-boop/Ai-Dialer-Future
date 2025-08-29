@@ -1061,7 +1061,6 @@ const handleHoldKeydown = (event: KeyboardEvent) => {
   flex-grow: 0 !important;
   margin-bottom: 0.5rem !important; /* Add explicit spacing */
   transform: none !important;
-  border: 1px solid transparent !important;
   vertical-align: top !important;
 }
 
@@ -1074,7 +1073,6 @@ const handleHoldKeydown = (event: KeyboardEvent) => {
   transform: none !important;
   flex-shrink: 0 !important;
   flex-grow: 0 !important;
-  border: 1px solid transparent !important;
   vertical-align: top !important;
   padding: inherit !important;
   margin: 0 0 0.5rem 0 !important;
@@ -1089,7 +1087,6 @@ const handleHoldKeydown = (event: KeyboardEvent) => {
   transform: none !important;
   flex-shrink: 0 !important;
   flex-grow: 0 !important;
-  border: 1px solid transparent !important;
   vertical-align: top !important;
   padding: inherit !important;
   margin: 0 0 0.5rem 0 !important;
