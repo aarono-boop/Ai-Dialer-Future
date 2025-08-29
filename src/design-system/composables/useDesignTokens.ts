@@ -82,12 +82,14 @@ export function useDesignTokens() {
     colors,
     spacing,
     typography,
-    
+    componentTokens,
+
     // Utilities
     getColor,
     getSpacing,
     getTypography,
-    
+    getComponentStyles,
+
     // CSS Variables
     cssVariables,
     generateCSSVariables,
