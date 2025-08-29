@@ -133,7 +133,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import Button from 'primevue/button'
-import { DSCard } from '@/design-system/components'
 
 // Define props
 defineProps<{
