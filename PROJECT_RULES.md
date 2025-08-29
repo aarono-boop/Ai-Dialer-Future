@@ -18,6 +18,12 @@
 
 ## Implementation Guidelines
 
+### Before Using Custom CSS:
+1. **Check PrimeVue theme variables** - Use CSS custom properties (--p-*)
+2. **Consider PrimeVue utilities** - Built-in spacing, colors, typography
+3. **Evaluate passthrough styling** - Can `:pt` system handle the need?
+4. **Ask for approval** - If custom CSS is truly needed, request permission
+
 ### Before Creating Custom Components:
 1. **Research PrimeVue catalog** - Check if suitable component exists
 2. **Consider composition** - Can multiple PrimeVue components solve the need?
