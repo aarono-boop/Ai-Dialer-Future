@@ -1,4 +1,4 @@
-# PrimeVue Styling Decision Guide - test
+# PrimeVue Styling Decision Guide
 
 ## 🎨 Decision Flowchart
 
