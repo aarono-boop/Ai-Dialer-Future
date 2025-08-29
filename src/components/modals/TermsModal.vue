@@ -166,6 +166,8 @@ const openAcceptable = () => {
   border: none;
   padding: 0;
   margin: 0;
+  height: auto;
+  min-height: auto;
   color: var(--p-primary-color);
   text-decoration: underline;
   cursor: pointer;
@@ -173,6 +175,8 @@ const openAcceptable = () => {
   font-family: inherit;
   line-height: inherit;
   display: inline;
+  vertical-align: baseline;
+  box-sizing: content-box;
 }
 
 .link-button:hover {
