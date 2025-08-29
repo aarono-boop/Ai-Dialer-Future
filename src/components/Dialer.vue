@@ -800,7 +800,7 @@ const handleHoldKeydown = (event: KeyboardEvent) => {
   min-height: 48px !important;
   max-height: 48px !important;
   box-sizing: border-box !important;
-  border: 1px solid transparent !important;
+  border-width: 1px !important;
   margin: 0 !important;
   vertical-align: top !important;
 }
@@ -810,7 +810,7 @@ const handleHoldKeydown = (event: KeyboardEvent) => {
   min-height: 48px !important;
   max-height: 48px !important;
   box-sizing: border-box !important;
-  border: 1px solid transparent !important;
+  border-width: 1px !important;
   margin: 0 !important;
   transform: none !important;
   vertical-align: top !important;
@@ -821,7 +821,7 @@ const handleHoldKeydown = (event: KeyboardEvent) => {
   min-height: 48px !important;
   max-height: 48px !important;
   box-sizing: border-box !important;
-  border: 1px solid transparent !important;
+  border-width: 1px !important;
   margin: 0 !important;
   transform: none !important;
   vertical-align: top !important;
