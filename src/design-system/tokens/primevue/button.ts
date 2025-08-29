@@ -363,12 +363,12 @@ export default {
           activeBackground: "{red.600}",
           borderColor: "{red.500}",
           hoverBorderColor: "{red.600}",
-          activeBorderColor: "red.600}",
+          activeBorderColor: "{red.600}",
           color: "{red.0}",
           hoverColor: "{red.0}",
           activeColor: "{red.0}",
           focusRing: {
-            color: "{red.600}",
+            color: "{red.400}",
             shadow: "none"
           }
         },
