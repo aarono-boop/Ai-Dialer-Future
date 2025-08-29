@@ -114,7 +114,7 @@
               <div class="grid grid-cols-2 gap-4">
                 <div>
                   <label class="block text-sm font-medium text-gray-700 mb-2">Expiration date</label>
-                  <DSInput
+                  <InputText
                     v-model="expirationDate"
                     placeholder="MM / YY"
                     :pt="{
@@ -125,7 +125,7 @@
                 <div>
                   <label class="block text-sm font-medium text-gray-700 mb-2">Security code</label>
                   <div class="relative">
-                    <DSInput
+                    <InputText
                       v-model="securityCode"
                       placeholder="CVC"
                       :pt="{
@@ -156,7 +156,7 @@
               <!-- ZIP Code -->
               <div>
                 <label class="block text-sm font-medium text-gray-700 mb-2">ZIP code</label>
-                <DSInput
+                <InputText
                   v-model="zipCode"
                   placeholder="12345"
                   :pt="{
