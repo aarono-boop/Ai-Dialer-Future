@@ -1,10 +1,5 @@
 // Design System Composables - Main Export
 
-export { useDesignTokens } from './useDesignTokens'
 export { useTheme } from './useTheme'
 
-export type { 
-  ColorProp, 
-  SpacingProp, 
-  TypographyProp 
-} from './useDesignTokens'
+// Note: useDesignTokens removed - now using PrimeVue's built-in theming system
