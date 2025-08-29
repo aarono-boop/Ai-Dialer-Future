@@ -3,10 +3,18 @@
     v-model:visible="isVisible"
     modal
     header="Terms & Conditions"
-    :style="{ width: '28rem' }"
+    :style="{
+      width: '28rem',
+      border: '3px solid #9333FF',
+      background: '#1f2937',
+      borderRadius: '1rem'
+    }"
     :dismissableMask="true"
     @hide="$emit('close')"
     class="terms-dialog"
+    :maskStyle="{
+      background: 'rgba(0, 0, 0, 0.98)'
+    }"
   >
     <!-- Custom header with close button -->
     <template #header>
