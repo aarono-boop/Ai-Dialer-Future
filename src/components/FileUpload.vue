@@ -1,73 +1,96 @@
 <template>
   <div class="w-full mt-4 flex flex-col justify-start items-start gap-4">
-    <!-- PrimeVue FileUpload Component -->
-    <FileUpload
-      mode="basic"
-      name="contacts"
-      :auto="false"
-      accept=".csv,.xls,.xlsx"
-      :maxFileSize="10000000"
-      @select="onFileSelect"
-      @clear="onClear"
-      :customUpload="true"
-      class="w-full"
+    <div
+      @dragover.prevent="handleDragOver"
+      @dragleave="handleDragLeave"
+      @drop.prevent="handleDrop"
+      @click="triggerFileInput"
+      @keydown.enter="triggerFileInput"
+      @keydown.space.prevent="triggerFileInput"
+      class="upload-area"
+      tabindex="3"
+      role="button"
+      aria-label="Click or drag and drop to upload contact file"
     >
-      <template #empty>
-        <div class="upload-content">
-          <!-- Plus icon in top left -->
-          <div class="upload-plus-icon">
-            <i class="pi pi-plus"></i>
-          </div>
+      <!-- Plus icon in top left -->
+      <div class="upload-plus-icon">
+        <i class="pi pi-plus"></i>
+      </div>
 
-          <!-- Center content -->
-          <div class="upload-center">
-            <!-- Upload icon in circle -->
-            <div class="upload-icon-circle">
-              <i class="pi pi-cloud-upload"></i>
-            </div>
-
-            <!-- Upload text -->
-            <p class="upload-text">
-              Drag and drop your contact file to here to upload.
-            </p>
-          </div>
+      <!-- Center content -->
+      <div class="upload-center">
+        <!-- Upload icon in circle -->
+        <div class="upload-icon-circle">
+          <i class="pi pi-cloud-upload"></i>
         </div>
-      </template>
-    </FileUpload>
+
+        <!-- Upload text -->
+        <p class="upload-text">
+          Drag and drop your contact file to here to upload.
+        </p>
+      </div>
+
+      <!-- Hidden file input -->
+      <input
+        ref="fileInput"
+        type="file"
+        accept=".csv,.xls,.xlsx"
+        @change="onFileInputChange"
+        class="hidden"
+      />
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import FileUpload from 'primevue/fileupload'
 
 // Define emits
 const emit = defineEmits(['trigger-upload', 'file-selected', 'file-dropped'])
 
 // Template refs
-const fileUpload = ref<any>(null)
+const fileInput = ref<HTMLInputElement | null>(null)
 
 // Methods
 const triggerFileInput = (): void => {
-  // Trigger the PrimeVue FileUpload component
-  if (fileUpload.value) {
-    const input = fileUpload.value.$el.querySelector('input[type="file"]')
-    if (input) {
-      input.click()
-    }
-  }
+  fileInput.value?.click()
 }
 
-const onFileSelect = (event: any): void => {
-  const file = event.files[0]
+const onFileInputChange = (event: Event): void => {
+  const target = event.target as HTMLInputElement
+  const file = target.files?.[0]
   if (file) {
     emit('file-selected', file)
-    emit('file-dropped', file)
+    // Don't emit file-dropped here to avoid duplicate handling
   }
 }
 
-const onClear = (): void => {
-  // Handle file clear if needed
+const handleDragOver = (event: DragEvent): void => {
+  event.preventDefault()
+  event.stopPropagation()
+}
+
+const handleDragLeave = (event: DragEvent): void => {
+  event.preventDefault()
+  event.stopPropagation()
+}
+
+const handleDrop = (event: DragEvent): void => {
+  event.preventDefault()
+  event.stopPropagation()
+
+  const files = event.dataTransfer?.files
+  if (files && files.length > 0) {
+    const file = files[0]
+    // Check file type
+    const allowedTypes = ['.csv', '.xls', '.xlsx']
+    const fileExtension = '.' + file.name.split('.').pop()?.toLowerCase()
+
+    if (allowedTypes.includes(fileExtension)) {
+      emit('file-selected', file)
+      emit('file-dropped', file)
+    }
+  }
 }
 
 // Expose triggerFileInput method to parent for backward compatibility
@@ -77,39 +100,29 @@ defineExpose({
 </script>
 
 <style scoped>
-/* PrimeVue FileUpload customization using design tokens */
-:deep(.p-fileupload) {
-  background: transparent;
-  border: none;
-}
-
-:deep(.p-fileupload-content) {
+/* Custom file upload styles using PrimeVue design tokens */
+.upload-area {
+  width: 100%;
+  height: 8rem;
   background: var(--p-surface-800);
   border: 1px solid var(--p-surface-600);
   border-radius: 0.5rem;
+  position: relative;
+  cursor: pointer;
   transition: all 0.3s ease;
-  padding: 2rem;
-  min-height: 8rem;
   display: flex;
   align-items: center;
   justify-content: center;
-  position: relative;
-  cursor: pointer;
 }
 
-:deep(.p-fileupload-content:hover) {
+.upload-area:hover {
   background: var(--p-surface-700);
   border-color: var(--p-surface-500);
 }
 
-/* Custom upload content layout */
-.upload-content {
-  width: 100%;
-  height: 100%;
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.upload-area:focus {
+  outline: none;
+  box-shadow: inset 0 0 0 2px var(--p-primary-color);
 }
 
 .upload-plus-icon {
@@ -146,12 +159,10 @@ defineExpose({
   margin: 0;
 }
 
-/* Hide default PrimeVue elements we don't need */
-:deep(.p-fileupload-buttonbar) {
-  display: none;
-}
-
-:deep(.p-fileupload-files) {
-  display: none;
+/* Ensure the hidden input doesn't interfere */
+.hidden {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
 }
 </style>
