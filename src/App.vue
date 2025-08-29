@@ -124,12 +124,12 @@
 
           <!-- Start Dialing Button - always visible when active -->
           <div v-if="showStartDialingButton" class="mt-2 pt-5 flex justify-center">
-            <div class="w-[70%]">
+            <div class="w-[70%] flex justify-center">
               <Button
                 @click="handleStartDialing"
                 severity="primary"
                 label="Start Dialing"
-                class="w-1/2 py-3 font-semibold mx-auto block"
+                class="w-1/2 py-3 font-semibold"
                 tabindex="3"
               />
             </div>
