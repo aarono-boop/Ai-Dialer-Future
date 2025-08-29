@@ -414,7 +414,7 @@ const toggleHold = () => {
   nextTick(() => {
     setTimeout(() => {
       if (holdButtonRef.value) {
-        // DSButton component - need to find the actual DOM element
+        // PrimeVue Button component - access DOM element
         const buttonElement = holdButtonRef.value.$el || holdButtonRef.value
         if (buttonElement && buttonElement.focus) {
           buttonElement.focus()
