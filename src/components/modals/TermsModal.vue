@@ -159,27 +159,3 @@ const openAcceptable = () => {
   console.log('Opening acceptable use policy')
 }
 </script>
-
-<style scoped>
-/* All dialog styling handled by PrimeVue design tokens in dialog.ts */
-
-/* Inline text links */
-.text-link {
-  color: var(--p-primary-color);
-  text-decoration: underline;
-  font-size: inherit;
-  font-family: inherit;
-  line-height: inherit;
-}
-
-.text-link:hover {
-  color: var(--p-primary-300);
-  text-decoration: underline;
-}
-
-.text-link:focus {
-  outline: 2px solid var(--p-primary-color);
-  outline-offset: 1px;
-  border-radius: 2px;
-}
-</style>
