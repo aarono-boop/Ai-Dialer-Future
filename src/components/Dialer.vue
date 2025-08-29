@@ -140,19 +140,19 @@
       <div v-if="callState !== 'ended'" class="space-y-3">
         <!-- Call Control Buttons -->
         <div class="grid grid-cols-3 gap-3">
-          <DSButton
+          <Button
             ref="muteButtonRef"
             @click="toggleMute"
             @keydown="handleMuteKeydown"
             tabindex="9"
             :disabled="callState === 'idle'"
-            :variant="isMuted ? 'error' : 'secondary'"
+            :severity="isMuted ? 'danger' : 'secondary'"
             class="flex flex-col items-center justify-center gap-1 py-3"
           >
             <i class="pi pi-microphone-slash" v-if="isMuted"></i>
             <i class="pi pi-microphone" v-else></i>
             <span class="text-xs">{{ isMuted ? 'Unmute' : 'Mute' }}</span>
-          </DSButton>
+          </Button>
 
           <DSButton
             ref="keypadButtonRef"
