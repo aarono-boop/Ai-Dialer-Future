@@ -271,7 +271,7 @@ export default {
           background: "{primary.color}",
           hoverBackground: "{primary.hover.color}",
           activeBackground: "{primary.active.color}",
-          borderColor: "{surface.100}",
+          borderColor: "{surface.200}",
           hoverBorderColor: "{primary.hover.color}",
           activeBorderColor: "{primary.active.color}",
           color: "{primary.contrast.color}",
