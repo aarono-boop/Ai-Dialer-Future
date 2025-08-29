@@ -56,16 +56,16 @@
             <label for="rememberMe" class="text-white/80 text-sm cursor-pointer">Remember me</label>
           </div>
           
-          <DSButton
+          <Button
             type="submit"
-            variant="primary"
+            severity="primary"
             size="large"
             class="w-full flex items-center justify-center gap-2 mt-2"
             :disabled="!email || !password"
           >
             <i class="pi pi-user"></i>
             Sign In
-          </DSButton>
+          </Button>
           
           <p class="text-center text-white/60 text-sm mt-4 mb-0">
             Already have an account? 
@@ -79,7 +79,8 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import { DSButton, DSInput } from '@/design-system/components'
+import Button from 'primevue/button'
+import { DSInput } from '@/design-system/components'
 
 // Define props
 interface Props {
