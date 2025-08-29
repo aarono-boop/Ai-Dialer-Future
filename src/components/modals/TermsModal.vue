@@ -75,8 +75,8 @@
 <script setup lang="ts">
 import { ref, computed, nextTick, watch, onMounted, onUnmounted } from 'vue'
 import Dialog from 'primevue/dialog'
-import { DSButton } from '../design-system'
-import { useDesignTokens } from '../design-system/composables/useDesignTokens'
+import { DSButton } from '../../design-system'
+import { useDesignTokens } from '../../design-system/composables/useDesignTokens'
 
 // Access design tokens
 const { cssVariables } = useDesignTokens()
