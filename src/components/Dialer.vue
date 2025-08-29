@@ -342,10 +342,10 @@ const isMuted = ref(false)
 const isOnHold = ref(false)
 const showKeypadModal = ref(false)
 
-// Template refs for buttons
-const muteButtonRef = ref<HTMLButtonElement | null>(null)
-const holdButtonRef = ref<HTMLButtonElement | null>(null)
-const keypadButtonRef = ref<HTMLButtonElement | null>(null)
+// Template refs for PrimeVue buttons
+const muteButtonRef = ref<any>(null)
+const holdButtonRef = ref<any>(null)
+const keypadButtonRef = ref<any>(null)
 
 // Methods
 const formatTime = (seconds: number): string => {
