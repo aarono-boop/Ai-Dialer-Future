@@ -293,7 +293,7 @@
 
 <script setup lang="ts">
 import { ref, nextTick } from 'vue'
-import { DSButton } from '@/design-system/components'
+import Button from 'primevue/button'
 
 // Connect Score tooltip content
 const connectScoreTooltip = `Connect Score is a premium add-on feature that uses real-world signals to help users prioritize high-value contacts and skip low-quality leads. It scores each phone number as High, Medium, or Low based on:
