@@ -8,6 +8,14 @@
 ### Enhanced Rule: Custom Component Approval Required
 **If a PrimeVue component cannot be used and a custom component needs to be created, STOP and ask for explicit approval before proceeding.**
 
+## Styling Standards
+
+### Primary Rule: Design Tokens Over Custom CSS
+**Always try to use design tokens over custom CSS**
+
+### Enhanced Rule: Custom CSS Approval Required
+**If it is not possible to use a design token and custom CSS is needed, STOP and ask for approval before proceeding.**
+
 ## Implementation Guidelines
 
 ### Before Creating Custom Components:
