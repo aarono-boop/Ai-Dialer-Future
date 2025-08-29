@@ -207,13 +207,4 @@ const handleUpgrade = () => {
   background-size: 100% 100%, 16px 16px;
 }
 
-/* Ensure proper styling for buttons */
-:deep(.p-button:not(.p-button-outlined)) {
-  border: none !important;
-  font-weight: 500 !important;
-}
-
-:deep(.p-button:focus) {
-  box-shadow: none !important;
-}
 </style>
