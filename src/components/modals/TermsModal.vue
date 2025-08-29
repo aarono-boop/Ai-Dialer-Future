@@ -188,7 +188,7 @@ const openAcceptable = () => {
 
 .dialog-footer {
   display: flex;
-  gap: var(--ds-spacing-3);
+  gap: 0.75rem;
   justify-content: flex-end;
 }
 </style>
