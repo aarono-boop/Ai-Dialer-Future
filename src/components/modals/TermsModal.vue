@@ -8,12 +8,12 @@
     @hide="$emit('close')"
   >
     <!-- Dialog Content -->
-    <p class="dialog-text">
+    <p>
       To create your ARKON account, please review our terms and conditions.
     </p>
 
-    <div class="terms-box">
-      <p class="terms-text">
+    <div style="background: var(--p-surface-800); border: 1px solid var(--p-surface-600); border-radius: 0.5rem; padding: 1rem; margin: 1.5rem 0; color: var(--p-text-muted-color); font-size: 0.875rem; line-height: 1.625;">
+      <p style="margin: 0;">
         By clicking "I Agree," you agree to PhoneBurner's
         <DSButton
           variant="text"
@@ -39,20 +39,18 @@
 
     <!-- Dialog Footer with action buttons -->
     <template #footer>
-      <div class="dialog-footer">
-        <DSButton
-          variant="outlined"
-          label="Cancel"
-          @click="$emit('cancel')"
-          data-focus-index="5"
-        />
-        <DSButton
-          variant="primary"
-          label="I Agree"
-          @click="handleAgree"
-          data-focus-index="6"
-        />
-      </div>
+      <DSButton
+        variant="outlined"
+        label="Cancel"
+        @click="$emit('cancel')"
+        data-focus-index="5"
+      />
+      <DSButton
+        variant="primary"
+        label="I Agree"
+        @click="handleAgree"
+        data-focus-index="6"
+      />
     </template>
   </Dialog>
 </template>
@@ -162,33 +160,6 @@ const openAcceptable = () => {
 }
 </script>
 
-<style scoped>
-/* Minimal styling using design tokens - dialog styling handled by theme system */
-.dialog-text {
-  color: var(--ds-color-text-primary);
-  font-size: 1rem;
-  line-height: 1.625;
-  margin-bottom: var(--ds-spacing-6);
-}
-
-.terms-box {
-  background: var(--ds-color-neutral-950);
-  border: 1px solid var(--ds-color-neutral-600);
-  border-radius: var(--ds-border-radius-lg);
-  padding: var(--ds-spacing-4);
-  margin: var(--ds-spacing-6) 0;
-}
-
-.terms-text {
-  color: var(--ds-color-text-secondary);
-  font-size: 0.875rem;
-  line-height: 1.625;
-  margin: 0;
-}
-
-.dialog-footer {
-  display: flex;
-  gap: 0.75rem;
-  justify-content: flex-end;
-}
+<style>
+/* All styling handled by PrimeVue design tokens in dialog.ts */
 </style>
