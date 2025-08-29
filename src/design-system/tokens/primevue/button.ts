@@ -269,8 +269,8 @@ export default {
       root: {
         primary: {
           background: "{primary.700}",
-          hoverBackground: "{primary.hover.color}",
-          activeBackground: "{primary.active.color}",
+          hoverBackground: "{primary.800}",
+          activeBackground: "{primary.800}",
           borderColor: "{surface.400}",
           hoverBorderColor: "{surface.400}",
           activeBorderColor: "{surface.400}",
@@ -284,8 +284,8 @@ export default {
         },
         secondary: {
           background: "{surface.800}",
-          hoverBackground: "{surface.700}",
-          activeBackground: "{surface.600}",
+          hoverBackground: "{surface.900}",
+          activeBackground: "{surface.900}",
           borderColor: "{surface.400}",
           hoverBorderColor: "{surface.400}",
           activeBorderColor: "{surface.400}",
