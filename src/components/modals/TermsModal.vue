@@ -202,7 +202,7 @@ const openAcceptable = () => {
 /* Style the PrimeVue Dialog component using design tokens */
 .terms-dialog :deep(.p-dialog) {
   background: var(--ds-color-neutral-800);
-  border: 1px solid var(--ds-color-primary-500);
+  border: 2px solid var(--ds-color-primary-500);
   border-radius: var(--ds-border-radius-2xl);
   box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
 }
