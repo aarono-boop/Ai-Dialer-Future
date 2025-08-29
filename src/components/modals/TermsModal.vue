@@ -237,8 +237,7 @@ const openAcceptable = () => {
 }
 
 .terms-dialog :deep(.p-dialog-mask) {
-  background: rgba(0, 0, 0, 0.85) !important;
-  backdrop-filter: blur(4px);
+  background: rgba(0, 0, 0, 0.95) !important;
 }
 
 /* Dialog Header */
