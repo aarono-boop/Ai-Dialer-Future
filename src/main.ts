@@ -25,3 +25,13 @@ app.use(PrimeVue, {
 app.use(ToastService)
 
 app.mount('#app')
+
+// Ensure no light class is added to html element
+const removeLight = () => {
+  document.documentElement.classList.remove('light')
+}
+
+// Remove on mount and watch for changes
+removeLight()
+const observer = new MutationObserver(removeLight)
+observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] })
