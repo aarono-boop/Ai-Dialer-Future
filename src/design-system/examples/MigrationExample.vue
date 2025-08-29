@@ -34,20 +34,26 @@
         class="profile-card"
       >
         <div class="form-group">
-          <DSInput
-            v-model="userName"
-            label="Full Name"
-            placeholder="Enter your name"
-            help-text="This will be displayed on your profile"
-          />
+          <div class="field">
+            <label class="block text-sm font-medium mb-2">Full Name</label>
+            <InputText
+              v-model="userName"
+              placeholder="Enter your name"
+              class="w-full"
+            />
+            <small class="text-gray-500 block mt-1">This will be displayed on your profile</small>
+          </div>
           
-          <DSInput
-            v-model="userEmail"
-            label="Email Address"
-            placeholder="Enter your email"
-            type="email"
-            required
-          />
+          <div class="field">
+            <label class="block text-sm font-medium mb-2">Email Address <span class="text-red-400">*</span></label>
+            <InputText
+              v-model="userEmail"
+              placeholder="Enter your email"
+              type="email"
+              required
+              class="w-full"
+            />
+          </div>
         </div>
         
         <template #footer>
@@ -90,7 +96,8 @@
 
 <script setup lang="ts">
 import { ref, computed } from 'vue'
-import { DSButton, DSCard, DSInput } from '@/design-system/components'
+import { DSButton, DSCard } from '@/design-system/components'
+import InputText from 'primevue/inputtext'
 import { useDesignTokens } from '@/design-system/composables'
 
 // Component state
