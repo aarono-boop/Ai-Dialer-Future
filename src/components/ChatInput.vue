@@ -1,6 +1,6 @@
 <template>
   <div class="mt-4" role="region" aria-label="Chat input area">
-    <div class="flex items-center bg-gray-800 backdrop-blur-[10px] border border-gray-600 rounded-xl px-3 py-2 gap-2 w-[70%] mx-auto chat-input-container">
+    <div class="flex items-center backdrop-blur-[10px] rounded-xl px-3 py-2 gap-2 w-[70%] mx-auto chat-input-container">
       <DSInput
         ref="inputRef"
         v-model="inputValue"
@@ -281,10 +281,27 @@ defineExpose({
 </script>
 
 <style scoped>
-/* Ensure PrimeVue input styling doesn't override our dark theme */
+/* Chat input container using design tokens */
+.chat-input-container {
+  background-color: var(--p-surface-800);
+  border: 1px solid var(--p-surface-600);
+  transition: all 0.2s ease;
+}
+
+.chat-input-container:hover {
+  border-color: var(--p-surface-500);
+}
+
+.chat-input-container:focus-within {
+  outline: none;
+  border-color: var(--p-primary-color);
+  box-shadow: inset 0 0 0 1px var(--p-primary-color);
+}
+
+/* Ensure PrimeVue input styling integrates with design tokens */
 :deep(.p-inputtext) {
   background-color: transparent !important;
-  color: white !important;
+  color: var(--p-surface-0) !important;
   border: none !important;
 }
 
@@ -295,18 +312,19 @@ defineExpose({
 }
 
 :deep(.p-inputtext::placeholder) {
-  color: rgb(209 213 219) !important; /* gray-300 */
+  color: var(--p-surface-300) !important;
 }
 
-/* Chat input container focus styling to match file upload */
-.chat-input-container:focus-within {
-  outline: 2px solid #60a5fa !important;
-  outline-offset: 2px !important;
-  border-color: #60a5fa !important;
-  transition: all 0.2s ease;
+/* Send button color using design tokens */
+:deep(.p-button-text) {
+  color: var(--p-surface-0) !important;
 }
 
-.chat-input-container {
-  transition: all 0.2s ease;
+:deep(.p-button-text:hover:not(:disabled)) {
+  background-color: var(--p-surface-700) !important;
+}
+
+:deep(.p-button-text:disabled) {
+  color: var(--p-surface-500) !important;
 }
 </style>

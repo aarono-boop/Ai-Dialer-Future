@@ -103,11 +103,13 @@ const computedClasses = computed(() => {
 }
 
 .ds-input__label {
-  @apply block text-sm font-medium text-gray-300 mb-2;
+  @apply block text-sm font-medium mb-2;
+  color: var(--p-surface-300);
 }
 
 .ds-input__required {
-  @apply text-red-400 ml-1;
+  @apply ml-1;
+  color: var(--p-red-400);
 }
 
 .ds-input {
@@ -127,26 +129,51 @@ const computedClasses = computed(() => {
 }
 
 .ds-input--default {
-  @apply bg-gray-700 border border-gray-600 text-white;
+  background-color: var(--p-surface-700);
+  border: 1px solid var(--p-surface-600);
+  color: var(--p-surface-0);
 }
 
 .ds-input--filled {
-  @apply bg-gray-600 border-0 text-white;
+  background-color: var(--p-surface-600);
+  border: none;
+  color: var(--p-surface-0);
 }
 
 .ds-input--outlined {
-  @apply bg-transparent border-2 border-gray-500 text-white;
+  background-color: transparent;
+  border: 2px solid var(--p-surface-500);
+  color: var(--p-surface-0);
 }
 
 .ds-input--error {
-  @apply border-red-500 focus:ring-red-500;
+  border-color: var(--p-red-500);
+}
+
+.ds-input--error:focus {
+  outline: none;
+  box-shadow: inset 0 0 0 2px var(--p-red-500);
 }
 
 .ds-input__help {
-  @apply block text-xs text-gray-400 mt-1;
+  @apply block text-xs mt-1;
+  color: var(--p-surface-400);
 }
 
 .ds-input__error {
-  @apply block text-xs text-red-400 mt-1;
+  @apply block text-xs mt-1;
+  color: var(--p-red-400);
+}
+
+/* Placeholder styling using design tokens */
+:deep(.p-inputtext::placeholder) {
+  color: var(--p-surface-400);
+}
+
+/* Focus states using design tokens */
+:deep(.p-inputtext:focus) {
+  outline: none;
+  box-shadow: inset 0 0 0 2px var(--p-primary-color);
+  border-color: var(--p-primary-color);
 }
 </style>
