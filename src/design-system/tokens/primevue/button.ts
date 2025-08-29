@@ -274,9 +274,9 @@ export default {
           borderColor: "{surface.200}",
           hoverBorderColor: "{surface.200}",
           activeBorderColor: "{surface.200}",
-          color: "{primary.contrast.color}",
-          hoverColor: "{primary.contrast.color}",
-          activeColor: "{primary.contrast.color}",
+          color: "{surface.0}",
+          hoverColor: "{surface.0}",
+          activeColor: "{surface.0}",
           focusRing: {
             color: "{primary.color}",
             shadow: "none"
@@ -290,8 +290,8 @@ export default {
           hoverBorderColor: "{surface.400}",
           activeBorderColor: "{surface.400}",
           color: "{surface.0}",
-          hoverColor: "{surface.200}",
-          activeColor: "{surface.100}",
+          hoverColor: "{surface.0}",
+          activeColor: "{surface.0}",
           focusRing: {
             color: "{surface.300}",
             shadow: "none"
