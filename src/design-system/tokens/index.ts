@@ -2,13 +2,11 @@
 export * from './colors'
 export * from './spacing'
 export * from './typography'
-export * from './components'
 
 // Re-export for convenience
 import { colors } from './colors'
 import { spacing, borderRadius, componentSpacing } from './spacing'
 import { typography, fontFamily, fontSize, fontWeight } from './typography'
-import { componentTokens } from './components'
 
 export const tokens = {
   colors,
@@ -18,8 +16,7 @@ export const tokens = {
   typography,
   fontFamily,
   fontSize,
-  fontWeight,
-  components: componentTokens
+  fontWeight
 } as const
 
 // Type definitions for better TypeScript support
