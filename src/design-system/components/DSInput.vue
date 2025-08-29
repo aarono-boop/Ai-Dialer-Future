@@ -28,6 +28,7 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import InputText from 'primevue/inputtext'
+import { useDesignTokens } from '../composables/useDesignTokens'
 
 // Prevent attributes from being inherited by the wrapper div
 defineOptions({
@@ -61,7 +62,15 @@ defineEmits<{
 // Generate unique ID for accessibility
 const inputId = `ds-input-${Math.random().toString(36).substr(2, 9)}`
 
-// All styling handled by PrimeVue design tokens in inputtext.ts
+// Design tokens
+const { getComponentStyles } = useDesignTokens()
+
+// Computed styles from design tokens
+const wrapperStyles = computed(() => getComponentStyles('input', 'wrapper'))
+const labelStyles = computed(() => getComponentStyles('input', 'label'))
+const requiredStyles = computed(() => getComponentStyles('input', 'required'))
+const helpStyles = computed(() => getComponentStyles('input', 'help'))
+const errorStyles = computed(() => getComponentStyles('input', 'error'))
 </script>
 
 <style scoped>
