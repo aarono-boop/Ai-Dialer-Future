@@ -530,17 +530,17 @@ export default {
       dark: {
         surface: {
           0: "#ffffff",
-          50: "{zinc.50}",
-          100: "{zinc.100}",
-          200: "{zinc.200}",
-          300: "{zinc.300}",
-          400: "{zinc.400}",
-          500: "{zinc.500}",
-          600: "{zinc.600}",
-          700: "{zinc.700}",
-          800: "{zinc.800}",
-          900: "{zinc.900}",
-          950: "{zinc.950}"
+          50: "#fbfbfb",
+          100: "#ebebeb",
+          200: "#dbdbdb",
+          300: "#cbcbcb",
+          400: "#bbbbbb",
+          500: "#ababab",
+          600: "#919191",
+          700: "#787878",
+          800: "#5e5e5e",
+          900: "#444444",
+          950: "#2b2b2b"
         },
         primary: {
           color: "{primary.400}",
@@ -561,7 +561,7 @@ export default {
         formField: {
           background: "{surface.950}",
           disabledBackground: "{surface.700}",
-          filledBackground: "{surface.600}",
+          filledBackground: "{surface.800}",
           filledHoverBackground: "{surface.800}",
           filledFocusBackground: "{surface.800}",
           borderColor: "{surface.600}",
