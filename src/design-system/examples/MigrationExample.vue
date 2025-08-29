@@ -27,42 +27,40 @@
         <DSButton variant="tertiary">Reset</DSButton>
       </div>
       
-      <DSCard 
-        title="User Profile" 
-        subtitle="Manage your account information"
-        variant="elevated"
-        class="profile-card"
-      >
-        <div class="form-group">
-          <div class="field">
-            <label class="block text-sm font-medium mb-2">Full Name</label>
-            <InputText
-              v-model="userName"
-              placeholder="Enter your name"
-              class="w-full"
-            />
-            <small class="text-gray-500 block mt-1">This will be displayed on your profile</small>
+      <Card class="profile-card">
+        <template #title>User Profile</template>
+        <template #subtitle>Manage your account information</template>
+        <template #content>
+          <div class="form-group">
+            <div class="field">
+              <label class="block text-sm font-medium mb-2">Full Name</label>
+              <InputText
+                v-model="userName"
+                placeholder="Enter your name"
+                class="w-full"
+              />
+              <small class="text-gray-500 block mt-1">This will be displayed on your profile</small>
+            </div>
+
+            <div class="field">
+              <label class="block text-sm font-medium mb-2">Email Address <span class="text-red-400">*</span></label>
+              <InputText
+                v-model="userEmail"
+                placeholder="Enter your email"
+                type="email"
+                required
+                class="w-full"
+              />
+            </div>
           </div>
-          
-          <div class="field">
-            <label class="block text-sm font-medium mb-2">Email Address <span class="text-red-400">*</span></label>
-            <InputText
-              v-model="userEmail"
-              placeholder="Enter your email"
-              type="email"
-              required
-              class="w-full"
-            />
-          </div>
-        </div>
-        
+        </template>
         <template #footer>
           <div class="card-actions">
             <DSButton variant="primary" size="small">Update Profile</DSButton>
             <DSButton variant="tertiary" size="small">Reset Form</DSButton>
           </div>
         </template>
-      </DSCard>
+      </Card>
     </div>
     
     <!-- Show design tokens usage -->
@@ -96,8 +94,9 @@
 
 <script setup lang="ts">
 import { ref, computed } from 'vue'
-import { DSButton, DSCard } from '@/design-system/components'
+import { DSButton } from '@/design-system/components'
 import InputText from 'primevue/inputtext'
+import Card from 'primevue/card'
 import { useDesignTokens } from '@/design-system/composables'
 
 // Component state
