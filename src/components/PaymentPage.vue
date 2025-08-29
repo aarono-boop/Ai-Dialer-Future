@@ -222,36 +222,3 @@ const handlePurchase = () => {
   emit('purchase-completed')
 }
 </script>
-
-<style scoped>
-/* Custom input styling */
-:deep(.p-inputtext) {
-  background-color: white !important;
-  border-color: rgb(209 213 219) !important;
-  color: rgb(17 24 39) !important;
-}
-
-:deep(.p-inputtext:focus) {
-  border-color: rgb(147 51 234) !important;
-  box-shadow: none !important;
-}
-
-:deep(.p-dropdown) {
-  background-color: white !important;
-  border-color: rgb(209 213 219) !important;
-}
-
-:deep(.p-dropdown:focus) {
-  border-color: rgb(147 51 234) !important;
-  box-shadow: none !important;
-}
-
-:deep(.p-button) {
-  border: none !important;
-  font-weight: 500 !important;
-}
-
-:deep(.p-button:focus) {
-  box-shadow: none !important;
-}
-</style>
