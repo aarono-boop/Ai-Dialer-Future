@@ -358,17 +358,17 @@ export default {
           }
         },
         danger: {
-          background: "{red.400}",
-          hoverBackground: "{red.300}",
-          activeBackground: "{red.200}",
-          borderColor: "{red.400}",
-          hoverBorderColor: "{red.300}",
-          activeBorderColor: "{red.200}",
-          color: "{red.950}",
-          hoverColor: "{red.950}",
-          activeColor: "{red.950}",
+          background: "{red.500}",
+          hoverBackground: "{red.600}",
+          activeBackground: "{red.600}",
+          borderColor: "{red.500}",
+          hoverBorderColor: "{red.600}",
+          activeBorderColor: "{red.600}",
+          color: "{red.0}",
+          hoverColor: "{red.0}",
+          activeColor: "{red.0}",
           focusRing: {
-            color: "{red.400}",
+            color: "{red.600}",
             shadow: "none"
           }
         },
