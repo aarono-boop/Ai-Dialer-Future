@@ -268,7 +268,7 @@ export default {
     dark: {
       root: {
         primary: {
-          background: "{primary.100}",
+          background: "{primary.500}",
           hoverBackground: "{primary.hover.color}",
           activeBackground: "{primary.active.color}",
           borderColor: "{surface.200}",
