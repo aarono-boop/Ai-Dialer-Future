@@ -289,7 +289,7 @@ export default {
           borderColor: "{surface.800}",
           hoverBorderColor: "{surface.700}",
           activeBorderColor: "{surface.600}",
-          color: "{surface.300}",
+          color: "{surface.0}",
           hoverColor: "{surface.200}",
           activeColor: "{surface.100}",
           focusRing: {
