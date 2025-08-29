@@ -1,6 +1,6 @@
 <template>
   <!-- Test change for PR functionality -->
-  <div class="min-h-screen text-white relative overflow-x-hidden dark" :class="showDialer ? 'dialer-active' : ''">
+  <div class="min-h-screen text-white relative overflow-x-hidden" :class="showDialer ? 'dialer-active' : ''">
     
     <!-- Sidebar Navigation -->
     <Sidebar
