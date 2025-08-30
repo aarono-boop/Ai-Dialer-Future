@@ -585,7 +585,7 @@ const messages: Ref<Message[]> = ref([
   {
     type: 'ai',
     content: [
-      'Welcome! I\'m <strong>ARKON</strong>, your AI calling assistant.<br><br>Drop your contact file here and I\'ll show you exactly who\'s most likely to pick up right now.'
+      'Welcome! I\'m <strong>ARKON (MVP)</strong>, your AI calling assistant.<br><br>Drop your contact file here and I\'ll show you exactly who\'s most likely to pick up right now.'
     ]
   }
 ])
