@@ -527,6 +527,7 @@ const connectedCalls = ref<number>(0)
 const skippedNumbers = ref<number>(3) // Default for demo
 const callState = ref<string>('idle') // 'idle', 'ringing', 'connected', 'ended'
 const callDuration = ref<number>(0)
+const isManualHangUp = ref<boolean>(false) // Track if hang up was manual vs automatic
 const queueTime = ref<number>(14)
 const showLoadNewFileButton = ref<boolean>(false)
 
