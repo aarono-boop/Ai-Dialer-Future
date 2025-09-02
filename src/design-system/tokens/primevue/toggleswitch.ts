@@ -20,18 +20,18 @@ export default {
     invalidBorderColor: '{form.field.invalid.border.color}',
     backgroundColor: '{form.field.background}',
     hoverBackgroundColor: '{form.field.hover.background}',
-    checkedBackgroundColor: '{primary.color}',
-    checkedHoverBackgroundColor: '{primary.hover.color}',
+    checkedBackgroundColor: '#8b5cf6',
+    checkedHoverBackgroundColor: '#7c3aed',
     invalidBackgroundColor: '{form.field.invalid.background}',
     transitionDuration: '{transition.duration}'
   },
   handle: {
     borderRadius: '50%',
     size: '1.5rem',
-    backgroundColor: '{form.field.border.color}',
-    hoverBackgroundColor: '{form.field.border.color}',
-    checkedBackgroundColor: '{primary.contrast.color}',
-    checkedHoverBackgroundColor: '{primary.contrast.color}',
+    backgroundColor: '#ffffff',
+    hoverBackgroundColor: '#ffffff',
+    checkedBackgroundColor: '#ffffff',
+    checkedHoverBackgroundColor: '#ffffff',
     invalidBackgroundColor: '{form.field.invalid.border.color}',
     transitionDuration: '{transition.duration}'
   }
