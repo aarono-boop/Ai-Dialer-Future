@@ -1185,3 +1185,28 @@ const handleHoldKeydown = (event: KeyboardEvent) => {
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3) !important; /* Add shadow for better visibility */
 }
 </style>
+
+<style>
+/* Unscoped global styles for AI Coach Toggle - Maximum specificity */
+body .ai-coach-toggle.p-toggleswitch .p-toggleswitch-slider {
+  background-color: #374151 !important;
+  background: #374151 !important;
+  border-color: #6b7280 !important;
+}
+
+body .ai-coach-toggle.p-toggleswitch[data-p-checked="true"] .p-toggleswitch-slider,
+body .ai-coach-toggle.p-toggleswitch-checked .p-toggleswitch-slider {
+  background-color: #8b5cf6 !important;
+  background: #8b5cf6 !important;
+  border-color: #8b5cf6 !important;
+}
+
+body .ai-coach-toggle.p-toggleswitch .p-toggleswitch-handle,
+body .ai-coach-toggle.p-toggleswitch[data-p-checked="true"] .p-toggleswitch-handle,
+body .ai-coach-toggle.p-toggleswitch-checked .p-toggleswitch-handle {
+  background-color: #ffffff !important;
+  background: #ffffff !important;
+  border-color: #ffffff !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3) !important;
+}
+</style>
