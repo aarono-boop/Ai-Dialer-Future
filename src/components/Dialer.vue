@@ -23,8 +23,18 @@
       </div>
 
       <div class="flex items-center justify-between mt-3" style="min-height: 32px; box-sizing: border-box;">
-        <div class="text-gray-400 text-sm" style="flex-shrink: 0;">
-          Queue Time: <span class="text-white">{{ formatTime(queueTime) }}</span>
+        <div class="flex items-center gap-4" style="flex-shrink: 0;">
+          <div class="flex items-center gap-2">
+            <span class="text-gray-300 text-sm">AI Coach</span>
+            <ToggleSwitch
+              v-model="aiCoachEnabled"
+              @change="toggleAICoach"
+              class="ai-coach-toggle"
+            />
+          </div>
+          <div class="text-gray-400 text-sm">
+            Queue Time: <span class="text-white">{{ formatTime(queueTime) }}</span>
+          </div>
         </div>
         <Button
           v-if="!shouldCompleteQueue"
