@@ -107,11 +107,11 @@ export const AI_RESPONSES = {
 
   // Objection handling response
   OBJECTION_RESPONSE: [
-    '⚠️ <strong>Objection detected: Existing Agent</strong> ⚠️',
-    '',
+    '<i class="pi pi-exclamation-triangle"></i> <strong>Objection detected: Existing Agent</strong> <i class="pi pi-exclamation-triangle"></i>',
+    '<br>',
     '"I\'m already working with another agent."',
-    '',
-    '<strong>Response:</strong>',
+    '<br>',
+    'Response:',
     '<span style="color: #fbbf24; font-style: italic;">[Based on your training nuances, the AI suggests responses that align with your proven objection-handling techniques, communication style, and coaching philosophy. Responses adapt to your nuanced approach and this prospect\'s context.]</span>'
   ]
 }
