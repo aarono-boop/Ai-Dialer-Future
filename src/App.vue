@@ -1576,6 +1576,9 @@ const handleNextContact = (): void => {
 }
 
 const handleHangUp = (): void => {
+  // Set flag to indicate this was a manual hang up
+  isManualHangUp.value = true
+
   // Stop timers
   if (callTimer) {
     clearInterval(callTimer)
@@ -1595,13 +1598,19 @@ const handleHangUp = (): void => {
     notes: ''
   })
 
-  addAIMessage([
-    '<strong>Jordan\'s Coaching Recap</strong>',
-    '<br><br>',
-    'You kept them on the line, that\'s good. But you let them control the conversation. Next call, you\'re the prize—lead them to the close.',
-    '<br><br>',
-    '<strong>Delivery:</strong> 9/10<br><strong>Pace:</strong> 9/10<br><strong>Confidence:</strong> 9/10'
-  ])
+  // Only show coaching recap for manual hang ups
+  if (isManualHangUp.value) {
+    addAIMessage([
+      '<strong>Jordan\'s Coaching Recap</strong>',
+      '<br><br>',
+      'You kept them on the line, that\'s good. But you let them control the conversation. Next call, you\'re the prize—lead them to the close.',
+      '<br><br>',
+      '<strong>Delivery:</strong> 9/10<br><strong>Pace:</strong> 9/10<br><strong>Confidence:</strong> 9/10'
+    ])
+  }
+
+  // Reset the flag
+  isManualHangUp.value = false
 }
 
 const handleMute = (muted: boolean): void => {
