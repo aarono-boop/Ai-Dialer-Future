@@ -49,15 +49,15 @@
 
       <!-- Ringing State -->
       <div v-else-if="callState === 'ringing'" class="bg-yellow-900/50 border border-yellow-700 rounded-lg p-3 text-center">
-        <div class="text-yellow-400 font-medium">Calling...</div>
         <div class="flex items-center justify-center gap-2">
-          <div class="text-gray-300 text-sm">{{ currentContact.phone }}</div>
+          <div class="text-yellow-400 font-medium">Calling</div>
           <div class="flex items-center">
             <div class="animate-pulse w-2 h-2 bg-yellow-400 rounded-full mx-1"></div>
             <div class="animate-pulse w-2 h-2 bg-yellow-400 rounded-full mx-1" style="animation-delay: 0.2s"></div>
             <div class="animate-pulse w-2 h-2 bg-yellow-400 rounded-full mx-1" style="animation-delay: 0.4s"></div>
           </div>
         </div>
+        <div class="text-gray-300 text-sm">{{ currentContact.phone }}</div>
       </div>
 
       <!-- Connected State -->
