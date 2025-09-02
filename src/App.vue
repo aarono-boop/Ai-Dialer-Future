@@ -448,6 +448,24 @@ const wrapConnectScoreWithTooltip = (text: string): string => {
     .replace(/Connect Score/g, `<span class="connect-score-tooltip" data-tooltip="${tooltipContent}">Connect Score</span>`)
 }
 
+// Generate dynamic coaching feedback
+const getDynamicCoachingFeedback = (): string => {
+  const coachingMessages = [
+    'Great connection! I heard you building rapport early—that\'s your sweet spot. Next call, try mirroring their pace a bit more to deepen that connection.',
+    'Nice work staying patient through their objections. I noticed you got stronger as the call progressed. Carry that momentum into the next one.',
+    'You handled that beautifully! Your confidence really came through. Next time, try asking one more discovery question before presenting—it\'ll make your close even stronger.',
+    'I loved how you listened for their pain points. Your empathy is one of your strongest assets. Now let\'s work on creating more urgency in your next call.',
+    'Solid call! You kept them engaged throughout. I\'d love to see you slow down just a touch during the value proposition—let it sink in.',
+    'That was textbook rapport building! Your energy is infectious. Next call, try to qualify their budget earlier in the conversation.',
+    'Really strong finish! You didn\'t give up when they hesitated. For your next call, lead with a stronger hook to grab their attention faster.',
+    'I can tell you\'re finding your rhythm! Your questioning technique is improving with each call. Next one, focus on getting them to commit to a specific time.',
+    'Excellent persistence! You turned a \'no\' into a \'maybe\'—that\'s skill. Keep that same energy but try to get more specific about their timeline.',
+    'That call showed real growth! Your objection handling is getting smoother. Next call, trust your instincts and go for the close sooner.'
+  ]
+
+  return coachingMessages[Math.floor(Math.random() * coachingMessages.length)]
+}
+
 // Generate personalized call script
 const generateCallScript = (contact: any): string[] => {
   const scriptTemplate = AI_RESPONSES.CALL_SCRIPT
