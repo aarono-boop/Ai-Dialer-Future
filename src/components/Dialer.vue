@@ -146,11 +146,10 @@
             @keydown="handleMuteKeydown"
             tabindex="9"
             :disabled="callState === 'idle'"
-            :severity="isMuted ? 'danger' : 'secondary'"
+            :severity="isMuted ? 'warn' : 'secondary'"
             class="flex flex-col items-center justify-center gap-1 py-3"
           >
-            <i class="pi pi-microphone-slash" v-if="isMuted"></i>
-            <i class="pi pi-microphone" v-else></i>
+            <i class="pi pi-microphone"></i>
             <span class="text-xs">{{ isMuted ? 'Unmute' : 'Mute' }}</span>
           </Button>
 
@@ -162,7 +161,7 @@
             severity="secondary"
             class="flex flex-col items-center justify-center gap-1 py-3"
           >
-            <i class="pi pi-th"></i>
+            <i class="pi pi-calculator"></i>
             <span class="text-xs">Keypad</span>
           </Button>
 
@@ -222,9 +221,9 @@
 
     <!-- Keypad Modal -->
     <div v-if="showKeypadModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50" @click="closeKeypad" @keydown="handleKeypadKeydown" tabindex="-1">
-      <div class="bg-gray-800 rounded-lg p-6 w-80 max-w-sm mx-4" @click.stop>
+      <div class="bg-gray-800 rounded-lg w-80 mx-4 my-8 overflow-hidden" @click.stop style="padding: 24px; min-height: 400px;">
         <!-- Modal Header -->
-        <div class="flex justify-between items-center mb-6">
+        <div class="flex justify-between items-center" style="margin-bottom: 24px;">
           <h3 class="text-white text-lg font-semibold">Keypad</h3>
           <Button @click="closeKeypad" @keydown.tab="handleCloseButtonTab" tabindex="113" severity="secondary" outlined size="small">
             <i class="pi pi-times text-xl"></i>
@@ -232,7 +231,7 @@
         </div>
 
         <!-- Keypad Grid -->
-        <div class="grid grid-cols-3 gap-3">
+        <div class="grid grid-cols-3 gap-3" style="padding-bottom: 24px;">
           <!-- Row 1: 1, 2, 3 -->
           <button @click="pressKeyWithFeedback('1', $event)" @keydown="handleKeypadButtonKeydown('1', $event)" data-keypad-key="1" tabindex="101" class="keypad-btn">
             <span class="text-2xl font-bold">1</span>
@@ -1103,7 +1102,11 @@ const handleHoldKeydown = (event: KeyboardEvent) => {
 
 /* Keypad button styles */
 .keypad-btn {
-  @apply bg-gray-700 hover:bg-gray-600 active:bg-gray-500 text-white rounded-lg py-4 px-3 flex flex-col items-center justify-center gap-1 transition-colors min-h-16;
+  @apply bg-gray-700 hover:bg-gray-600 active:bg-gray-500 text-white rounded-lg px-3 flex flex-col items-center justify-center gap-1 transition-colors min-h-20;
+  margin: 1px;
+  box-sizing: border-box;
+  padding-top: 30px;
+  padding-bottom: 30px;
 }
 
 .keypad-btn:hover {
