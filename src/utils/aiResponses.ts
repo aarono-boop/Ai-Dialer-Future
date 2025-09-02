@@ -92,7 +92,27 @@ export const AI_RESPONSES = {
   ],
 
   // Voice simulation
-  VOICE_CAPTURED: 'Voice captured! I heard: "Call my highest priority contacts"'
+  VOICE_CAPTURED: 'Voice captured! I heard: "Call my highest priority contacts"',
+
+  // Call script for connected calls
+  CALL_SCRIPT: [
+    '🎯 <strong>Great! You\'re connected!</strong>',
+    '',
+    '📞 <strong>Here\'s your personalized script for this conversation:</strong>',
+    '',
+    '• <strong>Opening:</strong> "Hi {{ contact_name }}, this is {{ your_name }} from {{ your_company }}. I hope I\'m catching you at a good time..."',
+    '',
+    '• <strong>Value Proposition:</strong> "I\'m reaching out because we help {{ industry }} companies like {{ contact_company }} {{ value_statement }}"',
+    '',
+    '• <strong>Discovery Questions:</strong>',
+    '  - "What\'s your biggest challenge with {{ pain_point }}?"',
+    '  - "How are you currently handling {{ process }}?"',
+    '  - "What would be most valuable to improve in your {{ department }}?"',
+    '',
+    '• <strong>Next Steps:</strong> "Based on what you\'ve shared, I\'d love to show you exactly how we could help. Would you be open to a quick 15-minute demo this week?"',
+    '',
+    '💡 <strong>Remember:</strong> Listen actively, take notes, and focus on their needs rather than your pitch!'
+  ]
 }
 
 export const getResponseForKeywords = (message: string): string | string[] => {
