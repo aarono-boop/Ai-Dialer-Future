@@ -1608,7 +1608,7 @@ const handleHangUp = (): void => {
     addAIMessage([
       '<strong>AI Coaching Recap</strong>',
       '<br>',
-      'You kept them on the line, that\'s good. But you let them control the conversation. Next call, you\'re the prize—lead them to the close.',
+      getDynamicCoachingFeedback(),
       '<br>',
       'Delivery: 9/10<br>Pace: 9/10<br>Confidence: 9/10'
     ])
