@@ -1221,14 +1221,15 @@ body .ai-coach-toggle.p-toggleswitch-checked .p-toggleswitch-handle {
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3) !important;
   height: 16px !important;
   width: 16px !important;
-  top: 2px !important;
+  position: absolute !important;
+  top: 50% !important;
   left: 2px !important;
-  transform: none !important;
+  transform: translateY(-50%) !important;
 }
 
 body .ai-coach-toggle.p-toggleswitch[data-p-checked="true"] .p-toggleswitch-handle,
 body .ai-coach-toggle.p-toggleswitch-checked .p-toggleswitch-handle {
   left: 22px !important;
-  transform: none !important;
+  transform: translateY(-50%) !important;
 }
 </style>
