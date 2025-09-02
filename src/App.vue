@@ -488,6 +488,13 @@ const generateCallScript = (contact: any): string[] => {
 
 // Show call connected message followed by script and objection handling
 const showCallConnectedMessages = (contact: any): void => {
+  if (!aiCoachEnabled.value) {
+    // Just show basic connection message if AI Coach is disabled
+    addAIMessage('Great! You\'re connected!')
+    scrollToBottom()
+    return
+  }
+
   // Combine connection message and script into single bubble with proper spacing
   const combinedMessage = [
     'Great! You\'re connected!',
@@ -1623,8 +1630,8 @@ const handleHangUp = (): void => {
     notes: ''
   })
 
-  // Only show coaching recap for manual hang ups
-  if (isManualHangUp.value) {
+  // Only show coaching recap for manual hang ups and if AI Coach is enabled
+  if (isManualHangUp.value && aiCoachEnabled.value) {
     addAIMessage([
       '<strong>AI Coaching Recap</strong>',
       '<br>',
@@ -2208,7 +2215,7 @@ const handleUpgradeSelected = () => {
   closePricingPage()
   isSignedIn.value = true
   showActionButtons.value = true
-  addAIMessage('🎉 Welcome to ARKON! Your account has been created successfully. Let\'s start your first smart calling session! What are you trying to accomplish?')
+  addAIMessage('�� Welcome to ARKON! Your account has been created successfully. Let\'s start your first smart calling session! What are you trying to accomplish?')
 
   // Ensure scroll happens after action buttons are rendered
   setTimeout(() => {
