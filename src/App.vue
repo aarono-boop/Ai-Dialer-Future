@@ -467,7 +467,7 @@ const generateCallScript = (contact: any): string[] => {
   )
 }
 
-// Show call connected message followed by script immediately
+// Show call connected message followed by script and objection handling
 const showCallConnectedMessages = (contact: any): void => {
   // Show connection message
   addAIMessage(AI_RESPONSES.CALL_CONNECTED)
@@ -477,6 +477,12 @@ const showCallConnectedMessages = (contact: any): void => {
   const callScript = generateCallScript(contact)
   addAIMessage(callScript)
   scrollToBottom()
+
+  // Wait 2 seconds then show objection handling
+  setTimeout(() => {
+    addAIMessage(AI_RESPONSES.OBJECTION_RESPONSE)
+    scrollToBottom()
+  }, 2000)
 }
 
 // Reactive data
