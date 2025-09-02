@@ -48,7 +48,7 @@
     </div>
 
     <!-- AI Coach Controls -->
-    <div class="px-4 py-1">
+    <div class="mx-2 mb-3 bg-gray-800 border border-gray-600 rounded-lg p-3">
       <div class="flex items-center justify-between" style="min-height: 32px; box-sizing: border-box;">
         <div class="flex items-center gap-2" style="flex-shrink: 0;">
           <span
