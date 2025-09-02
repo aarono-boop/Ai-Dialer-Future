@@ -1497,7 +1497,9 @@ const simulateCall = (): void => {
       }, 1000)
 
       // Show AI message that call connected
-      addAIMessage(`Connected! You're now speaking with ${currentContact.value.name}.`)
+      // Generate and display personalized call script
+      const callScript = generateCallScript(currentContact.value)
+      addAIMessage(callScript)
       scrollToBottom()
     }, 3000)
   }
@@ -1917,7 +1919,9 @@ const skipToDialer = (): void => {
       }, 1000)
 
       // Show AI message that call connected
-      addAIMessage(`Connected! You're now speaking with ${currentContact.value.name}.`)
+      // Generate and display personalized call script
+      const callScript = generateCallScript(currentContact.value)
+      addAIMessage(callScript)
       scrollToBottom()
     }, 3000)
   }, 1500) // Brief delay to show the startup message
