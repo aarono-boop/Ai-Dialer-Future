@@ -7,6 +7,14 @@
           <div class="w-2 h-2 bg-green-500 rounded-full"></div>
           <span class="text-white font-medium">Dial Queue</span>
         </div>
+        <div class="flex items-center gap-2">
+          <span class="text-gray-300 text-sm">AI Coach</span>
+          <ToggleSwitch
+            v-model="aiCoachEnabled"
+            @change="toggleAICoach"
+            class="scale-75"
+          />
+        </div>
       </div>
 
       <!-- Contact Progress -->
@@ -295,6 +303,7 @@
 <script setup lang="ts">
 import { ref, nextTick } from 'vue'
 import Button from 'primevue/button'
+import ToggleSwitch from 'primevue/toggleswitch'
 
 // Connect Score tooltip content
 const connectScoreTooltip = `Connect Score is a premium add-on feature that uses real-world signals to help users prioritize high-value contacts and skip low-quality leads. It scores each phone number as High, Medium, or Low based on:
@@ -336,12 +345,13 @@ const props = defineProps<{
 }>()
 
 // Define emits
-const emit = defineEmits(['call-back', 'next-contact', 'hang-up', 'mute', 'hold', 'keypad', 'keypad-press', 'pause-queue', 'complete-queue'])
+const emit = defineEmits(['call-back', 'next-contact', 'hang-up', 'mute', 'hold', 'keypad', 'keypad-press', 'pause-queue', 'complete-queue', 'ai-coach-toggle'])
 
 // Reactive data
 const isMuted = ref(false)
 const isOnHold = ref(false)
 const showKeypadModal = ref(false)
+const aiCoachEnabled = ref(true)
 
 // Template refs for PrimeVue buttons
 const muteButtonRef = ref<any>(null)
@@ -638,6 +648,10 @@ const pauseQueue = () => {
 
 const completeQueue = () => {
   emit('complete-queue')
+}
+
+const toggleAICoach = () => {
+  emit('ai-coach-toggle', aiCoachEnabled.value)
 }
 
 const handleHangUpTab = (event: KeyboardEvent) => {
