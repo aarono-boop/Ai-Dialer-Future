@@ -252,6 +252,7 @@
             @keypad="handleKeypad"
             @pause-queue="handlePauseQueue"
             @complete-queue="handleCompleteQueue"
+            @ai-coach-toggle="handleAICoachToggle"
           />
         </div>
       </div>
@@ -530,6 +531,7 @@ const phoneVerified = ref<boolean>(false) // Track if phone has been verified in
 const showStartDialingButton = ref<boolean>(false)
 const showDialer = ref<boolean>(false)
 const showDispositionButtons = ref<boolean>(false)
+const aiCoachEnabled = ref<boolean>(true)
 const showSessionSummary = ref<boolean>(false)
 const showContinueQueueButton = ref<boolean>(false)
 const waitingForTryAgainResponse = ref<boolean>(false)
