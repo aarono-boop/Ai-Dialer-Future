@@ -1103,9 +1103,11 @@ const handleHoldKeydown = (event: KeyboardEvent) => {
 
 /* Keypad button styles */
 .keypad-btn {
-  @apply bg-gray-700 hover:bg-gray-600 active:bg-gray-500 text-white rounded-lg py-4 px-3 flex flex-col items-center justify-center gap-1 transition-colors min-h-16;
+  @apply bg-gray-700 hover:bg-gray-600 active:bg-gray-500 text-white rounded-lg px-3 flex flex-col items-center justify-center gap-1 transition-colors min-h-20;
   margin: 1px;
   box-sizing: border-box;
+  padding-top: 20px;
+  padding-bottom: 20px;
 }
 
 .keypad-btn:hover {
