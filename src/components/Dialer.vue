@@ -1190,6 +1190,7 @@ const handleHoldKeydown = (event: KeyboardEvent) => {
 /* Unscoped global styles for AI Coach Toggle - Maximum specificity */
 body .ai-coach-toggle.p-toggleswitch {
   height: 20px !important;
+  width: 40px !important;
 }
 
 body .ai-coach-toggle.p-toggleswitch .p-toggleswitch-slider {
@@ -1197,6 +1198,8 @@ body .ai-coach-toggle.p-toggleswitch .p-toggleswitch-slider {
   background: #374151 !important;
   border-color: #6b7280 !important;
   height: 20px !important;
+  width: 40px !important;
+  border-radius: 10px !important;
 }
 
 body .ai-coach-toggle.p-toggleswitch[data-p-checked="true"] .p-toggleswitch-slider,
@@ -1205,6 +1208,8 @@ body .ai-coach-toggle.p-toggleswitch-checked .p-toggleswitch-slider {
   background: #8b5cf6 !important;
   border-color: #8b5cf6 !important;
   height: 20px !important;
+  width: 40px !important;
+  border-radius: 10px !important;
 }
 
 body .ai-coach-toggle.p-toggleswitch .p-toggleswitch-handle,
@@ -1216,5 +1221,14 @@ body .ai-coach-toggle.p-toggleswitch-checked .p-toggleswitch-handle {
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3) !important;
   height: 16px !important;
   width: 16px !important;
+  top: 2px !important;
+  left: 2px !important;
+  transform: none !important;
+}
+
+body .ai-coach-toggle.p-toggleswitch[data-p-checked="true"] .p-toggleswitch-handle,
+body .ai-coach-toggle.p-toggleswitch-checked .p-toggleswitch-handle {
+  left: 22px !important;
+  transform: none !important;
 }
 </style>
