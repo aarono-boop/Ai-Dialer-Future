@@ -1592,8 +1592,7 @@ const handleHangUp = (): void => {
     notes: ''
   })
 
-  addAIMessage(`Call with ${currentContact.value.name} ended. Duration: ${duration}`)
-  addAIMessage('Please select a call outcome or enter notes about this call.')
+  addAIMessage(`Call with ${currentContact.value.name} ended. Duration: ${duration}<br>Please select a call outcome or enter notes about this call.`)
 }
 
 const handleMute = (muted: boolean): void => {
