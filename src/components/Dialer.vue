@@ -146,7 +146,7 @@
             @keydown="handleMuteKeydown"
             tabindex="9"
             :disabled="callState === 'idle'"
-            :severity="isMuted ? 'danger' : 'secondary'"
+            :severity="isMuted ? 'warn' : 'secondary'"
             class="flex flex-col items-center justify-center gap-1 py-3"
           >
             <i class="pi pi-microphone-slash" v-if="isMuted"></i>
