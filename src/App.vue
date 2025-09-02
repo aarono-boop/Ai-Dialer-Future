@@ -448,6 +448,25 @@ const wrapConnectScoreWithTooltip = (text: string): string => {
     .replace(/Connect Score/g, `<span class="connect-score-tooltip" data-tooltip="${tooltipContent}">Connect Score</span>`)
 }
 
+// Generate personalized call script
+const generateCallScript = (contact: any): string[] => {
+  const scriptTemplate = AI_RESPONSES.CALL_SCRIPT
+
+  // Replace template variables with actual contact information
+  return scriptTemplate.map(line =>
+    line
+      .replace(/\{\{ contact_name \}\}/g, contact.name || 'there')
+      .replace(/\{\{ your_name \}\}/g, '[Your Name]')
+      .replace(/\{\{ your_company \}\}/g, '[Your Company]')
+      .replace(/\{\{ industry \}\}/g, contact.industry || 'your industry')
+      .replace(/\{\{ contact_company \}\}/g, contact.company || 'your company')
+      .replace(/\{\{ value_statement \}\}/g, 'increase efficiency and reduce costs')
+      .replace(/\{\{ pain_point \}\}/g, contact.industry ? `${contact.industry.toLowerCase()} operations` : 'current processes')
+      .replace(/\{\{ process \}\}/g, contact.industry ? `${contact.industry.toLowerCase()} workflow` : 'your current workflow')
+      .replace(/\{\{ department \}\}/g, contact.title ? contact.title.toLowerCase().includes('sales') ? 'sales process' : 'your operations' : 'your operations')
+  )
+}
+
 // Reactive data
 const currentPage = ref<string>('main') // 'main', 'product', 'login', 'signup'
 const chatInputRef = ref<any>(null)
