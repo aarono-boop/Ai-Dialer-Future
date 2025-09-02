@@ -1101,12 +1101,6 @@ const handleHoldKeydown = (event: KeyboardEvent) => {
   margin-bottom: 0.5rem !important;
 }
 
-/* Keypad modal specific styles */
-.keypad-modal-container {
-  min-height: fit-content;
-  height: auto;
-}
-
 /* Keypad button styles */
 .keypad-btn {
   @apply bg-gray-700 hover:bg-gray-600 active:bg-gray-500 text-white rounded-lg py-4 px-3 flex flex-col items-center justify-center gap-1 transition-colors min-h-16;
