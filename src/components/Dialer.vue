@@ -13,9 +13,9 @@
         <div class="flex items-center justify-center gap-2">
           <div class="text-green-400 font-medium">Calling</div>
           <div class="flex items-center">
-            <div class="animate-pulse w-2 h-2 bg-gray-400 rounded-full mx-1"></div>
-            <div class="animate-pulse w-2 h-2 bg-gray-400 rounded-full mx-1" style="animation-delay: 0.2s"></div>
-            <div class="animate-pulse w-2 h-2 bg-gray-400 rounded-full mx-1" style="animation-delay: 0.4s"></div>
+            <div class="animate-pulse w-2 h-2 bg-green-400 rounded-full mx-1"></div>
+            <div class="animate-pulse w-2 h-2 bg-green-400 rounded-full mx-1" style="animation-delay: 0.2s"></div>
+            <div class="animate-pulse w-2 h-2 bg-green-400 rounded-full mx-1" style="animation-delay: 0.4s"></div>
           </div>
         </div>
         <div class="text-gray-300 text-sm">{{ currentContact.phone }}</div>
