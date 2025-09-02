@@ -1,5 +1,5 @@
 <template>
-  <div class="w-full h-full bg-gray-900 rounded-lg border border-gray-700 flex flex-col p-2.5">
+  <div class="w-full h-full bg-gray-900 rounded-lg border border-gray-700 flex flex-col pt-5 px-2.5 pb-2.5">
     <!-- Header -->
     <div class="px-4 py-2">
       <div class="bg-gray-700 rounded-full h-5 w-full relative flex items-center">
@@ -306,7 +306,7 @@ const connectScoreTooltip = `Connect Score is a premium add-on feature that uses
 • Engagement history
 • Phone metadata
 
-This lets teams focus their efforts on numbers with the greatest chance of a live answer—improving connect rates, morale, and performance.`
+This lets teams focus their efforts on numbers with the greatest chance of a live answer���improving connect rates, morale, and performance.`
 
 // Define props
 const props = defineProps<{
