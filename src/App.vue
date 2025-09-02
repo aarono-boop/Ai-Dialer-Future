@@ -1783,25 +1783,27 @@ const addSessionSummaryToChat = (isCompleted: boolean = false): void => {
 
       <!-- Results & Next Steps Section -->
       <div style="margin-bottom: 32px;">
-        <h3 style="color: white; font-size: 18px; font-weight: 600; margin-bottom: 16px;"><i class="pi pi-check-circle" style="margin-right: 8px;"></i>Next Steps</h3>
+        <h3 style="color: white; font-size: 18px; font-weight: 600; margin-bottom: 16px;"><i class="pi pi-check-circle" style="margin-right: 8px;"></i>AI Coaching</h3>
         <div style="background-color: rgb(55, 65, 81); border-radius: 8px; padding: 20px;">
           <div style="color: rgb(209, 213, 219); font-size: 14px; font-weight: normal; line-height: 1.5;">
             ${isCompleted ?
-              `Great work! Your queue is complete. Here's what to do next:<br><br>
+              `Outstanding work completing your queue! I observed some key strengths in your calling approach:<br><br>
                <div style="margin-left: 20px;">
-                 <div style="margin-bottom: 16px;"><strong style="color: #fbbf24;">• Schedule 2 appointments</strong> - Sam Sample and Jennifer Martinez requested follow-up calls</div>
-                 <div style="margin-bottom: 16px;"><strong style="color: #fbbf24;">• Schedule 1 follow-up</strong> - George Sample showed interest and needs additional outreach</div>
+                 <div style="margin-bottom: 16px;"><strong style="color: #fbbf24;">✓ Strong opening rapport</strong> - You connected well with prospects and built trust quickly</div>
+                 <div style="margin-bottom: 16px;"><strong style="color: #fbbf24;">✓ Active listening</strong> - You picked up on buying signals and pain points effectively</div>
+                 <div style="margin-bottom: 16px;"><strong style="color: #fbbf24;">✓ Confident close attempts</strong> - You weren't afraid to ask for the appointment when the timing was right</div>
                </div>
-               Your contact data has been enriched with <span class="connect-score-tooltip" data-tooltip="${connectScoreTooltip.replace(/'/g, '&#39;').replace(/"/g, '&quot;')}">Connect Scores</span>, call outcomes, and notes.<br><br>
+               For your next session, focus on slowing down your pace slightly during objection handling—give prospects more time to process your responses. This will increase your conversion rate even further.<br><br>
                <button style="background-color: rgb(59, 130, 246); color: white; border: none; border-radius: 6px; padding: 8px 16px; font-size: 14px; font-weight: 500; cursor: pointer; display: inline-flex; align-items: center; gap: 8px;" onclick="handleExportFile()">
                  <i class="pi pi-download"></i> Export Enriched File
                </button>` :
-              `Great work! Your queue is currently paused. Here's what to do next:<br><br>
+              `Great progress so far! I've been listening to your calls and here's my coaching feedback:<br><br>
                <div style="margin-left: 20px;">
-                 <div style="margin-bottom: 16px;"><strong style="color: #fbbf24;">• Schedule 2 appointments</strong> - Sam Sample and Jennifer Martinez requested follow-up calls</div>
-                 <div style="margin-bottom: 16px;"><strong style="color: #fbbf24;">• Schedule 1 follow-up</strong> - George Sample showed interest and needs additional outreach</div>
+                 <div style="margin-bottom: 16px;"><strong style="color: #fbbf24;">✓ Energy and enthusiasm</strong> - Your positive tone is engaging prospects right from the start</div>
+                 <div style="margin-bottom: 16px;"><strong style="color: #fbbf24;">⚡ Opportunity area</strong> - Try asking more discovery questions before jumping into your pitch</div>
+                 <div style="margin-bottom: 16px;"><strong style="color: #fbbf24;">⚡ Key insight</strong> - When you slow down and really listen, your closing rate increases significantly</div>
                </div>
-               Your contact data has been enriched with <span class="connect-score-tooltip" data-tooltip="${connectScoreTooltip.replace(/'/g, '&#39;').replace(/"/g, '&quot;')}">Connect Scores</span>, call outcomes, and notes.<br>Keep calling to build even more value.<br><br>
+               Take a quick break if needed, then get back in there! Your next few calls are primed for success—I can feel the momentum building.<br><br>
                <button style="background-color: rgb(59, 130, 246); color: white; border: none; border-radius: 6px; padding: 8px 16px; font-size: 14px; font-weight: 500; cursor: pointer; display: inline-flex; align-items: center; gap: 8px;" onclick="handleExportFile()">
                  <i class="pi pi-download"></i> Export Enriched File
                </button>`
