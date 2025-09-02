@@ -60,6 +60,29 @@ body {
   background-color: #7c3aed !important; /* Darker purple on hover */
 }
 
+/* Ultra-specific selectors to override any conflicting styles */
+div[data-pc-name="toggleswitch"] .p-toggleswitch-slider {
+  background-color: #374151 !important;
+  border-color: #6b7280 !important;
+}
+
+div[data-pc-name="toggleswitch"][data-p-checked="true"] .p-toggleswitch-slider {
+  background-color: #8b5cf6 !important;
+  border-color: #8b5cf6 !important;
+}
+
+div[data-pc-name="toggleswitch"] .p-toggleswitch-handle {
+  background-color: #ffffff !important;
+  border-color: #ffffff !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3) !important;
+}
+
+div[data-pc-name="toggleswitch"][data-p-checked="true"] .p-toggleswitch-handle {
+  background-color: #ffffff !important;
+  border-color: #ffffff !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3) !important;
+}
+
 /* Design System - Text Links */
 .text-link {
   color: var(--p-primary-color);
