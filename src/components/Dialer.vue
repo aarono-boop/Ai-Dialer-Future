@@ -222,7 +222,7 @@
 
     <!-- Keypad Modal -->
     <div v-if="showKeypadModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50" @click="closeKeypad" @keydown="handleKeypadKeydown" tabindex="-1">
-      <div class="bg-gray-800 rounded-lg w-80 mx-4 my-8 overflow-hidden" @click.stop style="padding: 24px; min-height: 500px;">
+      <div class="bg-gray-800 rounded-lg w-80 mx-4 my-8 overflow-hidden" @click.stop style="padding: 24px; min-height: 400px;">
         <!-- Modal Header -->
         <div class="flex justify-between items-center" style="margin-bottom: 24px;">
           <h3 class="text-white text-lg font-semibold">Keypad</h3>
