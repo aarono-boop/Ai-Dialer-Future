@@ -1,5 +1,5 @@
 <template>
-  <div class="w-full h-full bg-gray-900 rounded-lg border border-gray-700 flex flex-col pt-4 pb-[10px] px-3">
+  <div class="w-full h-full bg-gray-900 rounded-r-lg border border-gray-700 flex flex-col pt-4 pb-[10px] px-3">
     <!-- Call Status & Controls Card -->
     <div class="mx-[5px] mb-4 bg-gray-800 border border-gray-600 rounded-lg p-[14px]">
       <!-- Call Status -->
