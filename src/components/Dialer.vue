@@ -36,7 +36,7 @@
 
       <!-- Header -->
       <div class="mt-3">
-        <div class="bg-gray-700 rounded-full h-5 w-full relative flex items-center">
+        <div class="bg-gray-700 rounded-full h-5 w-full relative flex items-center pt-[5px]">
           <div
             class="h-5 rounded-full transition-all duration-300"
             :style="{ width: `${((currentContactIndex + 1) / 3) * 100}%`, background: 'linear-gradient(to right, #60a5fa, #7b68ee)' }"
