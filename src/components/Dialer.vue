@@ -221,10 +221,10 @@
     </div>
 
     <!-- Keypad Modal -->
-    <div v-if="showKeypadModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-8" @click="closeKeypad" @keydown="handleKeypadKeydown" tabindex="-1">
-      <div class="bg-gray-800 rounded-lg p-6 w-80 max-w-sm mx-auto my-auto flex flex-col min-h-fit" @click.stop>
+    <div v-if="showKeypadModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50" @click="closeKeypad" @keydown="handleKeypadKeydown" tabindex="-1">
+      <div class="bg-gray-800 rounded-lg w-80 mx-4 my-8 overflow-hidden" @click.stop style="padding: 24px; min-height: 500px;">
         <!-- Modal Header -->
-        <div class="flex justify-between items-center mb-6">
+        <div class="flex justify-between items-center" style="margin-bottom: 24px;">
           <h3 class="text-white text-lg font-semibold">Keypad</h3>
           <Button @click="closeKeypad" @keydown.tab="handleCloseButtonTab" tabindex="113" severity="secondary" outlined size="small">
             <i class="pi pi-times text-xl"></i>
@@ -232,7 +232,7 @@
         </div>
 
         <!-- Keypad Grid -->
-        <div class="grid grid-cols-3 gap-3 pb-8 pt-2">
+        <div class="grid grid-cols-3 gap-3" style="padding-bottom: 24px;">
           <!-- Row 1: 1, 2, 3 -->
           <button @click="pressKeyWithFeedback('1', $event)" @keydown="handleKeypadButtonKeydown('1', $event)" data-keypad-key="1" tabindex="101" class="keypad-btn">
             <span class="text-2xl font-bold">1</span>
