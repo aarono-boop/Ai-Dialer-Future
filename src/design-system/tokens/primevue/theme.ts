@@ -3,12 +3,14 @@ import base from './base'
 import button from './button'
 import dialog from './dialog'
 import inputtext from './inputtext'
+import toggleswitch from './toggleswitch'
 
 export const customTheme = definePreset(base, {
     components: {
         button,
         dialog,
-        inputtext
+        inputtext,
+        toggleswitch
     }
 })
 
