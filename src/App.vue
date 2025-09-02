@@ -1217,7 +1217,7 @@ const sendMessage = (message: string): void => {
       addAIMessage([
         '📅 Here\'s your schedule for today:',
         '<strong>Upcoming appointments:</strong>',
-        '����� 2:00 PM - Demo call with Sarah Johnson (confirmed)',
+        '��� 2:00 PM - Demo call with Sarah Johnson (confirmed)',
         '• 3:30 PM - Follow-up with ABC Corp (needs confirmation)',
         '• 4:15 PM - Discovery call with new lead Mike Chen',
         'You have 45 minutes before your next call. Perfect time for some prospecting!'
@@ -1592,7 +1592,7 @@ const handleHangUp = (): void => {
     notes: ''
   })
 
-  addAIMessage(`Call with ${currentContact.value.name} ended. Duration: ${duration}<br>Please select a call outcome or enter notes about this call.`)
+  addAIMessage(`Call with ${currentContact.value.name} ended. Duration: ${duration}<br><br>Please select a call outcome or enter notes about this call.`)
 }
 
 const handleMute = (muted: boolean): void => {
