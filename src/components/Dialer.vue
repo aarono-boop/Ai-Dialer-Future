@@ -159,7 +159,7 @@
             tabindex="10"
             :disabled="callState === 'idle'"
             severity="secondary"
-            class="flex flex-col items-center justify-center gap-1 py-3"
+            class="flex flex-row items-center justify-center gap-1 py-3"
           >
             <i class="pi pi-calculator"></i>
             <span class="text-xs">Keypad</span>
