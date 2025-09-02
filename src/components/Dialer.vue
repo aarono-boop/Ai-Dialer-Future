@@ -2,16 +2,16 @@
   <div class="w-full h-full bg-gray-900 rounded-lg border border-gray-700 flex flex-col">
     <!-- Header -->
     <div class="p-4 border-b border-gray-700">
-      <div class="flex items-center justify-between">
+      <div class="flex items-center">
         <div class="flex items-center gap-2">
           <div class="w-2 h-2 bg-green-500 rounded-full"></div>
           <span class="text-white font-medium">Dial Queue</span>
         </div>
-        <div class="flex flex-col items-end gap-1">
-          <div class="text-gray-400 text-xs">
+        <div class="flex flex-col gap-1 flex-1" style="margin-left: 40px;">
+          <div class="text-gray-400 text-xs text-right">
             Contact {{ currentContactIndex + 1 }} of 3
           </div>
-          <div class="bg-gray-700 rounded-full h-2 w-20">
+          <div class="bg-gray-700 rounded-full h-2 w-full">
             <div
               class="h-2 rounded-full transition-all duration-300"
               :style="{ width: `${((currentContactIndex + 1) / 3) * 100}%`, background: 'linear-gradient(to right, #60a5fa, #7b68ee)' }"
