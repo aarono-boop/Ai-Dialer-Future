@@ -1099,4 +1099,16 @@ html body .ai-coach-toggle.p-toggleswitch-checked .p-toggleswitch-handle {
   transform: none !important;
   transition: left 0.2s ease !important;
 }
+
+/* Compact styling for Pause Queue button */
+.pause-queue-compact {
+  padding: 4px 8px !important;
+  font-size: 0.75rem !important;
+  min-height: auto !important;
+  height: auto !important;
+}
+
+.pause-queue-compact .text-xs {
+  font-size: 0.75rem !important;
+}
 </style>
