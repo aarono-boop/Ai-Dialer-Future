@@ -11,31 +11,6 @@
           Dial Queue {{ currentContactIndex + 1 }} of 3
         </div>
       </div>
-
-      <div class="flex items-center justify-between mt-3" style="min-height: 32px; box-sizing: border-box;">
-        <div class="flex items-center gap-2" style="flex-shrink: 0;">
-          <span class="text-gray-300 text-sm">AI Coach</span>
-          <ToggleSwitch
-            v-model="aiCoachEnabled"
-            @change="toggleAICoach"
-            class="ai-coach-toggle"
-          />
-        </div>
-        <div class="text-gray-400 text-sm text-center">
-          Queue Time: <span class="text-white">{{ formatTime(queueTime) }}</span>
-        </div>
-        <Button
-          v-if="!shouldCompleteQueue"
-          @click="pauseQueue"
-          :disabled="callState === 'connected'"
-          tabindex="8"
-          severity="secondary"
-          size="small"
-          class="pause-queue-compact"
-        >
-          <span class="text-xs">Pause Queue</span>
-        </Button>
-      </div>
     </div>
 
     <!-- Call Status -->
