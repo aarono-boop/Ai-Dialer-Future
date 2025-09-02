@@ -1101,14 +1101,22 @@ html body .ai-coach-toggle.p-toggleswitch-checked .p-toggleswitch-handle {
 }
 
 /* Compact styling for Pause Queue button */
-.pause-queue-compact {
+html body .pause-queue-compact.p-button {
   padding: 4px 8px !important;
   font-size: 0.75rem !important;
-  min-height: auto !important;
-  height: auto !important;
+  min-height: 24px !important;
+  height: 24px !important;
+  line-height: 1 !important;
 }
 
-.pause-queue-compact .text-xs {
+html body .pause-queue-compact.p-button .text-xs {
   font-size: 0.75rem !important;
+  line-height: 1 !important;
+}
+
+html body .pause-queue-compact.p-button:hover {
+  padding: 4px 8px !important;
+  min-height: 24px !important;
+  height: 24px !important;
 }
 </style>
