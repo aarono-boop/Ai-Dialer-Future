@@ -1464,6 +1464,9 @@ let callSimulationTimeout: number | null = null
 const simulateCall = (): void => {
   // Contact index should already be set by handleNextContact or other functions
 
+  // Reset manual hang up flag for new call
+  isManualHangUp.value = false
+
   // Start ringing
   callState.value = 'ringing'
 
