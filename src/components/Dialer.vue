@@ -1,7 +1,7 @@
 <template>
-  <div class="w-full h-full bg-gray-900 rounded-lg border border-gray-700 flex flex-col pt-[17px] pb-3 px-2.5">
+  <div class="w-full h-full bg-gray-900 rounded-lg border border-gray-700 flex flex-col pt-4 pb-[10px] px-3">
     <!-- Call Status & Controls Card -->
-    <div class="mx-[5px] mb-3 bg-gray-800 border border-gray-600 rounded-lg p-3">
+    <div class="mx-[5px] mb-4 bg-gray-800 border border-gray-600 rounded-lg p-[14px]">
       <!-- Call Status -->
       <!-- Call Ended State -->
       <div v-if="callState === 'ended'" class="bg-gray-900/50 border border-gray-600 rounded-lg p-3 text-center">
@@ -80,7 +80,7 @@
     </div>
 
     <!-- Contact Info -->
-    <div class="flex-1 mx-[5px] mb-3 bg-gray-800 border border-gray-600 rounded-lg p-3 overflow-y-auto">
+    <div class="flex-1 mx-[5px] mb-4 bg-gray-800 border border-gray-600 rounded-lg p-[14px] overflow-y-auto">
       <div class="space-y-4">
         <!-- Contact Header -->
         <div>
@@ -143,7 +143,7 @@
     </div>
 
     <!-- Action Buttons -->
-    <div class="mx-[5px] mb-2 bg-gray-800 border border-gray-600 rounded-lg p-3">
+    <div class="mx-[5px] mb-2 bg-gray-800 border border-gray-600 rounded-lg pt-[14px] px-[14px] pb-[2px]">
       <!-- Call Controls (visible when not ended) -->
       <div v-if="callState !== 'ended'" class="space-y-3">
         <!-- Call Control Buttons -->
