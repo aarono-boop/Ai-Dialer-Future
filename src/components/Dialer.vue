@@ -26,9 +26,9 @@
         <div class="flex items-center justify-center gap-2">
           <div class="text-gray-400 font-medium">Calling</div>
           <div class="flex items-center">
-            <div class="animate-pulse w-2 h-2 bg-yellow-400 rounded-full mx-1"></div>
-            <div class="animate-pulse w-2 h-2 bg-yellow-400 rounded-full mx-1" style="animation-delay: 0.2s"></div>
-            <div class="animate-pulse w-2 h-2 bg-yellow-400 rounded-full mx-1" style="animation-delay: 0.4s"></div>
+            <div class="animate-pulse w-2 h-2 bg-gray-400 rounded-full mx-1"></div>
+            <div class="animate-pulse w-2 h-2 bg-gray-400 rounded-full mx-1" style="animation-delay: 0.2s"></div>
+            <div class="animate-pulse w-2 h-2 bg-gray-400 rounded-full mx-1" style="animation-delay: 0.4s"></div>
           </div>
         </div>
         <div class="text-gray-300 text-sm">{{ currentContact.phone }}</div>
@@ -302,7 +302,7 @@ import ToggleSwitch from 'primevue/toggleswitch'
 // Connect Score tooltip content
 const connectScoreTooltip = `Connect Score is a premium add-on feature that uses real-world signals to help users prioritize high-value contacts and skip low-quality leads. It scores each phone number as High, Medium, or Low based on:
 
-• Carrier data
+��� Carrier data
 • Engagement history
 • Phone metadata
 
