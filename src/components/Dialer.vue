@@ -147,7 +147,7 @@
             tabindex="9"
             :disabled="callState === 'idle'"
             :severity="isMuted ? 'warn' : 'secondary'"
-            class="flex flex-col items-center justify-center gap-1 py-3"
+            class="flex flex-row items-center justify-center gap-1 py-3"
           >
             <i class="pi pi-microphone"></i>
             <span class="text-xs">{{ isMuted ? 'Unmute' : 'Mute' }}</span>
