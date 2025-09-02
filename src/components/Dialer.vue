@@ -222,7 +222,7 @@
 
     <!-- Keypad Modal -->
     <div v-if="showKeypadModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50" @click="closeKeypad" @keydown="handleKeypadKeydown" tabindex="-1">
-      <div class="bg-gray-800 rounded-lg p-6 w-80 max-w-sm mx-4 min-h-fit" @click.stop>
+      <div class="bg-gray-800 rounded-lg p-6 w-80 max-w-sm mx-4 flex flex-col" @click.stop>
         <!-- Modal Header -->
         <div class="flex justify-between items-center mb-6">
           <h3 class="text-white text-lg font-semibold">Keypad</h3>
@@ -232,7 +232,7 @@
         </div>
 
         <!-- Keypad Grid -->
-        <div class="grid grid-cols-3 gap-3">
+        <div class="grid grid-cols-3 gap-3 pb-2">
           <!-- Row 1: 1, 2, 3 -->
           <button @click="pressKeyWithFeedback('1', $event)" @keydown="handleKeypadButtonKeydown('1', $event)" data-keypad-key="1" tabindex="101" class="keypad-btn">
             <span class="text-2xl font-bold">1</span>
