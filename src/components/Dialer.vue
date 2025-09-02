@@ -1,7 +1,7 @@
 <template>
   <div class="w-full h-full bg-gray-900 rounded-lg border border-gray-700 flex flex-col pt-2.5">
     <!-- Header -->
-    <div class="p-4">
+    <div class="px-4 py-2">
       <div class="bg-gray-700 rounded-full h-5 w-full relative flex items-center">
         <div
           class="h-5 rounded-full transition-all duration-300"
