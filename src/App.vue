@@ -1482,6 +1482,7 @@ const simulateCall = (): void => {
       }
 
       // Call goes to voicemail - don't set as connected
+      isManualHangUp.value = false // This is automatic, not manual
       callState.value = 'ended'
       showDispositionButtons.value = true
       totalCalls.value++
