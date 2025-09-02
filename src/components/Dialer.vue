@@ -1193,28 +1193,32 @@ body .ai-coach-toggle.p-toggleswitch {
   width: 40px !important;
 }
 
-body .ai-coach-toggle.p-toggleswitch .p-toggleswitch-slider {
+html body .ai-coach-toggle.p-toggleswitch .p-toggleswitch-slider {
   background-color: #374151 !important;
   background: #374151 !important;
   border-color: #6b7280 !important;
   height: 20px !important;
   width: 40px !important;
   border-radius: 10px !important;
+  position: relative !important;
+  display: flex !important;
+  align-items: center !important;
 }
 
-body .ai-coach-toggle.p-toggleswitch[data-p-checked="true"] .p-toggleswitch-slider,
-body .ai-coach-toggle.p-toggleswitch-checked .p-toggleswitch-slider {
+html body .ai-coach-toggle.p-toggleswitch[data-p-checked="true"] .p-toggleswitch-slider,
+html body .ai-coach-toggle.p-toggleswitch-checked .p-toggleswitch-slider {
   background-color: #8b5cf6 !important;
   background: #8b5cf6 !important;
   border-color: #8b5cf6 !important;
   height: 20px !important;
   width: 40px !important;
   border-radius: 10px !important;
+  position: relative !important;
+  display: flex !important;
+  align-items: center !important;
 }
 
-body .ai-coach-toggle.p-toggleswitch .p-toggleswitch-handle,
-body .ai-coach-toggle.p-toggleswitch[data-p-checked="true"] .p-toggleswitch-handle,
-body .ai-coach-toggle.p-toggleswitch-checked .p-toggleswitch-handle {
+html body .ai-coach-toggle.p-toggleswitch .p-toggleswitch-handle {
   background-color: #ffffff !important;
   background: #ffffff !important;
   border-color: #ffffff !important;
@@ -1222,14 +1226,24 @@ body .ai-coach-toggle.p-toggleswitch-checked .p-toggleswitch-handle {
   height: 16px !important;
   width: 16px !important;
   position: absolute !important;
-  top: 50% !important;
+  top: 2px !important;
   left: 2px !important;
-  transform: translateY(-50%) !important;
+  transform: none !important;
+  transition: left 0.2s ease !important;
 }
 
-body .ai-coach-toggle.p-toggleswitch[data-p-checked="true"] .p-toggleswitch-handle,
-body .ai-coach-toggle.p-toggleswitch-checked .p-toggleswitch-handle {
+html body .ai-coach-toggle.p-toggleswitch[data-p-checked="true"] .p-toggleswitch-handle,
+html body .ai-coach-toggle.p-toggleswitch-checked .p-toggleswitch-handle {
+  background-color: #ffffff !important;
+  background: #ffffff !important;
+  border-color: #ffffff !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3) !important;
+  height: 16px !important;
+  width: 16px !important;
+  position: absolute !important;
+  top: 2px !important;
   left: 22px !important;
-  transform: translateY(-50%) !important;
+  transform: none !important;
+  transition: left 0.2s ease !important;
 }
 </style>
