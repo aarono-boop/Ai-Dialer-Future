@@ -31,8 +31,9 @@
           tabindex="8"
           severity="secondary"
           size="small"
-          label="Pause Queue"
-        />
+        >
+          <span class="text-xs">Pause Queue</span>
+        </Button>
       </div>
     </div>
 
