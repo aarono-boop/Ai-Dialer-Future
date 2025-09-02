@@ -12,6 +12,17 @@
           <ToggleSwitch
             v-model="aiCoachEnabled"
             @change="toggleAICoach"
+            :pt="{
+              root: { style: 'background-color: #374151 !important;' },
+              slider: {
+                style: 'background-color: #374151 !important; border-color: #6b7280 !important;',
+                'data-p-checked': 'background-color: #8b5cf6 !important; border-color: #8b5cf6 !important;'
+              },
+              handle: {
+                style: 'background-color: #ffffff !important; border-color: #ffffff !important; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3) !important;'
+              }
+            }"
+            class="custom-toggle"
           />
         </div>
       </div>
