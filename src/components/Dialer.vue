@@ -33,49 +33,49 @@
         <div class="text-gray-400 font-medium">Ready to Dial</div>
         <div class="text-gray-300 text-sm">{{ currentContact.phone }}</div>
       </div>
-    </div>
 
       <!-- Header -->
       <div class="mt-3">
-      <div class="bg-gray-700 rounded-full h-5 w-full relative flex items-center">
-        <div
-          class="h-5 rounded-full transition-all duration-300"
-          :style="{ width: `${((currentContactIndex + 1) / 3) * 100}%`, background: 'linear-gradient(to right, #60a5fa, #7b68ee)' }"
-        ></div>
-        <div class="absolute inset-0 flex items-center justify-center text-white text-xs font-medium">
-          Dial Queue {{ currentContactIndex + 1 }} of 3
+        <div class="bg-gray-700 rounded-full h-5 w-full relative flex items-center">
+          <div
+            class="h-5 rounded-full transition-all duration-300"
+            :style="{ width: `${((currentContactIndex + 1) / 3) * 100}%`, background: 'linear-gradient(to right, #60a5fa, #7b68ee)' }"
+          ></div>
+          <div class="absolute inset-0 flex items-center justify-center text-white text-xs font-medium">
+            Dial Queue {{ currentContactIndex + 1 }} of 3
+          </div>
         </div>
       </div>
-    </div>
 
       <!-- AI Coach Controls -->
       <div class="mt-3">
-      <div class="flex items-center justify-between" style="min-height: 32px; box-sizing: border-box;">
-        <div class="flex items-center gap-2" style="flex-shrink: 0;">
-          <span
-            class="text-gray-300 text-sm cursor-pointer select-none"
-            @click="aiCoachEnabled = !aiCoachEnabled"
-          >AI Coach</span>
-          <ToggleSwitch
-            v-model="aiCoachEnabled"
-            @change="toggleAICoach"
-            class="ai-coach-toggle"
-          />
+        <div class="flex items-center justify-between" style="min-height: 32px; box-sizing: border-box;">
+          <div class="flex items-center gap-2" style="flex-shrink: 0;">
+            <span
+              class="text-gray-300 text-sm cursor-pointer select-none"
+              @click="aiCoachEnabled = !aiCoachEnabled"
+            >AI Coach</span>
+            <ToggleSwitch
+              v-model="aiCoachEnabled"
+              @change="toggleAICoach"
+              class="ai-coach-toggle"
+            />
+          </div>
+          <div class="text-gray-400 text-sm text-center">
+            Queue Time: <span class="text-white">{{ formatTime(queueTime) }}</span>
+          </div>
+          <Button
+            v-if="!shouldCompleteQueue"
+            @click="pauseQueue"
+            :disabled="callState === 'connected'"
+            tabindex="8"
+            severity="secondary"
+            size="small"
+            class="pause-queue-compact"
+          >
+            <span class="text-xs">Pause Queue</span>
+          </Button>
         </div>
-        <div class="text-gray-400 text-sm text-center">
-          Queue Time: <span class="text-white">{{ formatTime(queueTime) }}</span>
-        </div>
-        <Button
-          v-if="!shouldCompleteQueue"
-          @click="pauseQueue"
-          :disabled="callState === 'connected'"
-          tabindex="8"
-          severity="secondary"
-          size="small"
-          class="pause-queue-compact"
-        >
-          <span class="text-xs">Pause Queue</span>
-        </Button>
       </div>
     </div>
 
