@@ -22,7 +22,7 @@
       </div>
 
       <!-- Ringing State -->
-      <div v-else-if="callState === 'ringing'" style="background: linear-gradient(to right, #60a5fa, #7b68ee); border: 1px solid #6b7280; border-radius: 0.5rem; padding: 0.75rem; text-align: center;">
+      <div v-else-if="callState === 'ringing'" class="bg-gray-900/50 border border-gray-600 rounded-lg p-3 text-center">
         <div class="flex items-center justify-center gap-2">
           <div class="text-yellow-400 font-medium">Calling</div>
           <div class="flex items-center">
