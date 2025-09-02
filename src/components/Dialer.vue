@@ -7,15 +7,15 @@
           <div class="w-2 h-2 bg-green-500 rounded-full"></div>
           <span class="text-white font-medium">Dial Queue</span>
         </div>
-        <div class="flex flex-col gap-1 flex-1" style="margin-left: 40px;">
-          <div class="text-gray-400 text-xs text-right">
-            Contact {{ currentContactIndex + 1 }} of 3
-          </div>
-          <div class="bg-gray-700 rounded-full h-2 w-full">
+        <div class="flex-1" style="margin-left: 40px;">
+          <div class="bg-gray-700 rounded-full h-8 w-full relative flex items-center">
             <div
-              class="h-2 rounded-full transition-all duration-300"
+              class="h-8 rounded-full transition-all duration-300"
               :style="{ width: `${((currentContactIndex + 1) / 3) * 100}%`, background: 'linear-gradient(to right, #60a5fa, #7b68ee)' }"
             ></div>
+            <div class="absolute inset-0 flex items-center justify-center text-white text-xs font-medium">
+              Contact {{ currentContactIndex + 1 }} of 3
+            </div>
           </div>
         </div>
       </div>
