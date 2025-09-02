@@ -1226,7 +1226,7 @@ html body .ai-coach-toggle.p-toggleswitch .p-toggleswitch-handle {
   height: 16px !important;
   width: 16px !important;
   position: absolute !important;
-  top: 2px !important;
+  top: 13px !important;
   left: 2px !important;
   transform: none !important;
   transition: left 0.2s ease !important;
@@ -1241,7 +1241,7 @@ html body .ai-coach-toggle.p-toggleswitch-checked .p-toggleswitch-handle {
   height: 16px !important;
   width: 16px !important;
   position: absolute !important;
-  top: 2px !important;
+  top: 13px !important;
   left: 22px !important;
   transform: none !important;
   transition: left 0.2s ease !important;
