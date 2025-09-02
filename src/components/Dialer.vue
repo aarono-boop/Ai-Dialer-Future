@@ -14,7 +14,7 @@
     </div>
 
     <!-- Call Status -->
-    <div class="p-4">
+    <div class="px-4 py-2">
       <!-- Call Ended State -->
       <div v-if="callState === 'ended'" class="bg-red-900/50 border border-red-700 rounded-lg p-3 text-center">
         <div class="text-red-400 font-medium">Call Ended</div>
