@@ -47,11 +47,10 @@
           </div>
           
           <div class="flex items-center gap-2 my-2">
-            <input 
-              type="checkbox" 
-              id="rememberMe" 
-              v-model="rememberMe" 
-              class="w-4 h-4 bg-white/5 border border-white/20 rounded accent-purple-500" 
+            <Checkbox
+              id="rememberMe"
+              v-model="rememberMe"
+              binary
             />
             <label for="rememberMe" class="text-white/80 text-sm cursor-pointer">Remember me</label>
           </div>
@@ -81,6 +80,7 @@
 import { ref } from 'vue'
 import Button from 'primevue/button'
 import InputText from 'primevue/inputtext'
+import Checkbox from 'primevue/checkbox'
 
 // Define props
 interface Props {
