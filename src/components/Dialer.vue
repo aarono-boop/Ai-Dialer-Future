@@ -136,7 +136,7 @@
     </div>
 
     <!-- Action Buttons -->
-    <div class="p-4 border-t border-gray-700">
+    <div class="p-4">
       <!-- Call Controls (visible when not ended) -->
       <div v-if="callState !== 'ended'" class="space-y-3">
         <!-- Call Control Buttons -->
