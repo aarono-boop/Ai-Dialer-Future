@@ -12,7 +12,6 @@
           <ToggleSwitch
             v-model="aiCoachEnabled"
             @change="toggleAICoach"
-            class="scale-75"
           />
         </div>
       </div>
