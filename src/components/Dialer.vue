@@ -1162,35 +1162,36 @@ const handleHoldKeydown = (event: KeyboardEvent) => {
   background-color: #b91c1c !important; /* red-700 - darker red for hover */
 }
 
-/* Custom ToggleSwitch styling */
-::deep(.p-toggleswitch .p-toggleswitch-slider) {
+/* Custom ToggleSwitch styling - try multiple approaches */
+.custom-toggle .p-toggleswitch-slider {
   background-color: #374151 !important; /* Default background - gray-700 */
   border-color: #6b7280 !important; /* gray-500 */
 }
 
-::deep(.p-toggleswitch-checked .p-toggleswitch-slider) {
+.custom-toggle.p-toggleswitch-checked .p-toggleswitch-slider {
   background-color: #8b5cf6 !important; /* Purple when checked */
   border-color: #8b5cf6 !important;
 }
 
-::deep(.p-toggleswitch .p-toggleswitch-handle) {
+.custom-toggle .p-toggleswitch-handle {
   background-color: #ffffff !important; /* White handle always */
   border-color: #ffffff !important;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3) !important; /* Add shadow for better visibility */
 }
 
-::deep(.p-toggleswitch-checked .p-toggleswitch-handle) {
-  background-color: #ffffff !important; /* White handle when checked */
+::deep(.custom-toggle .p-toggleswitch-slider) {
+  background-color: #374151 !important; /* Default background - gray-700 */
+  border-color: #6b7280 !important; /* gray-500 */
+}
+
+::deep(.custom-toggle.p-toggleswitch-checked .p-toggleswitch-slider) {
+  background-color: #8b5cf6 !important; /* Purple when checked */
+  border-color: #8b5cf6 !important;
+}
+
+::deep(.custom-toggle .p-toggleswitch-handle) {
+  background-color: #ffffff !important; /* White handle always */
   border-color: #ffffff !important;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3) !important;
-}
-
-/* Hover effects for better UX */
-::deep(.p-toggleswitch:hover .p-toggleswitch-slider) {
-  background-color: #4b5563 !important; /* Lighter gray on hover */
-}
-
-::deep(.p-toggleswitch-checked:hover .p-toggleswitch-slider) {
-  background-color: #7c3aed !important; /* Darker purple on hover */
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3) !important; /* Add shadow for better visibility */
 }
 </style>
