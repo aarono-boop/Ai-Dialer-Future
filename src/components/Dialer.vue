@@ -7,18 +7,16 @@
           <div class="w-2 h-2 bg-green-500 rounded-full"></div>
           <span class="text-white font-medium">Dial Queue</span>
         </div>
-      </div>
-
-      <!-- Contact Progress -->
-      <div class="mt-2 text-center">
-        <div class="text-gray-400 text-xs">
-          Contact {{ currentContactIndex + 1 }} of 3
-        </div>
-        <div class="mt-1 bg-gray-700 rounded-full h-2">
-          <div
-            class="h-2 rounded-full transition-all duration-300"
-            :style="{ width: `${((currentContactIndex + 1) / 3) * 100}%`, background: 'linear-gradient(to right, #60a5fa, #7b68ee)' }"
-          ></div>
+        <div class="flex flex-col items-end gap-1">
+          <div class="text-gray-400 text-xs">
+            Contact {{ currentContactIndex + 1 }} of 3
+          </div>
+          <div class="bg-gray-700 rounded-full h-2 w-20">
+            <div
+              class="h-2 rounded-full transition-all duration-300"
+              :style="{ width: `${((currentContactIndex + 1) / 3) * 100}%`, background: 'linear-gradient(to right, #60a5fa, #7b68ee)' }"
+            ></div>
+          </div>
         </div>
       </div>
 
