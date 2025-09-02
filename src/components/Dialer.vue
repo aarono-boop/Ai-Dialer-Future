@@ -79,7 +79,7 @@
     </div>
 
     <!-- Contact Info -->
-    <div class="flex-1 p-4 overflow-y-auto">
+    <div class="flex-1 mx-2 mb-3 bg-gray-800 border border-gray-600 rounded-lg p-3 overflow-y-auto">
       <div class="space-y-4">
         <!-- Contact Header -->
         <div>
