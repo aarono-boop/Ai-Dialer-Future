@@ -1,1 +1,5 @@
-Always use PrimeVue UI components
+Always use PrimeVue UI components, when you cannot and need to create a custom component stop and ask if that is ok and explain your plan.
+
+Always use Design Token for styling, when you cannot and need to create custom css stop and ask if that is ok and explain your plan.
+
+Always use Primeicons, when you cannot and need to create a custom icon stop and ask if that is ok and explain your plan.
