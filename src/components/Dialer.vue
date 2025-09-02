@@ -149,7 +149,7 @@
             :severity="isMuted ? 'warn' : 'secondary'"
             class="flex flex-col items-center justify-center gap-1 py-3"
           >
-            <i class="pi pi-volume-off" v-if="isMuted"></i>
+            <i class="pi pi-microphone-slash" v-if="isMuted"></i>
             <i class="pi pi-microphone" v-else></i>
             <span class="text-xs">{{ isMuted ? 'Unmute' : 'Mute' }}</span>
           </Button>
