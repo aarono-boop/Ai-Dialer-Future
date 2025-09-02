@@ -480,11 +480,11 @@ const showCallConnectedMessages = (contact: any): void => {
   addAIMessage(combinedMessage)
   scrollToBottom()
 
-  // Wait 2 seconds then show objection handling
+  // Wait 3 seconds then show objection handling
   setTimeout(() => {
     addAIMessage(AI_RESPONSES.OBJECTION_RESPONSE)
     scrollToBottom()
-  }, 2000)
+  }, 3000)
 }
 
 // Reactive data
