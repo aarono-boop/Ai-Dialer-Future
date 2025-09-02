@@ -7,14 +7,6 @@
           <div class="w-2 h-2 bg-green-500 rounded-full"></div>
           <span class="text-white font-medium">Dial Queue</span>
         </div>
-        <div class="flex items-center gap-2">
-          <span class="text-gray-300 text-sm">AI Coach</span>
-          <ToggleSwitch
-            v-model="aiCoachEnabled"
-            @change="toggleAICoach"
-            class="ai-coach-toggle"
-          />
-        </div>
       </div>
 
       <!-- Contact Progress -->
