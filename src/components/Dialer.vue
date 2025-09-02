@@ -35,8 +35,8 @@
       </div>
     </div>
 
-    <!-- Header -->
-    <div class="mx-2 mb-3 bg-gray-800 border border-gray-600 rounded-lg p-3">
+      <!-- Header -->
+      <div class="mt-3">
       <div class="bg-gray-700 rounded-full h-5 w-full relative flex items-center">
         <div
           class="h-5 rounded-full transition-all duration-300"
