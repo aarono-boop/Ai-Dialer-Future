@@ -24,8 +24,8 @@
         </div>
         <div class="mt-1 bg-gray-700 rounded-full h-2">
           <div
-            class="bg-blue-500 h-2 rounded-full transition-all duration-300"
-            :style="{ width: `${((currentContactIndex + 1) / 3) * 100}%` }"
+            class="h-2 rounded-full transition-all duration-300"
+            :style="{ width: `${((currentContactIndex + 1) / 3) * 100}%`, background: 'linear-gradient(to right, #60a5fa, #7b68ee)' }"
           ></div>
         </div>
       </div>
