@@ -469,13 +469,15 @@ const generateCallScript = (contact: any): string[] => {
 
 // Show call connected message followed by script and objection handling
 const showCallConnectedMessages = (contact: any): void => {
-  // Show connection message
-  addAIMessage(AI_RESPONSES.CALL_CONNECTED)
-  scrollToBottom()
+  // Combine connection message and script into single bubble with extra spacing
+  const combinedMessage = [
+    'Great! You\'re connected!',
+    '<br><br>',
+    'Script:',
+    '<span style="color: #fbbf24; font-style: italic;">[The AI learns the nuances of your coaching approach to generate contextual scripts that reflect your unique sales philosophy, language patterns, and proven conversation starters tailored to this specific prospect.]</span>'
+  ]
 
-  // Show script immediately
-  const callScript = generateCallScript(contact)
-  addAIMessage(callScript)
+  addAIMessage(combinedMessage)
   scrollToBottom()
 
   // Wait 2 seconds then show objection handling
@@ -1177,7 +1179,7 @@ const sendMessage = (message: string): void => {
       ])
     } else if (lowerMessage.includes('who i should call now') || lowerMessage.includes('who should i call')) {
       addAIMessage([
-        '��� Based on your contact data and current time analysis:',
+        '����� Based on your contact data and current time analysis:',
         '<strong>Top 3 prospects to call right now:</strong>',
         '1. Sarah Johnson - 92% connect probability (last spoke 3 days ago)',
         '2. Mike Chen - 89% connect probability (opened your email yesterday)',
