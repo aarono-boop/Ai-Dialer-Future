@@ -1511,10 +1511,8 @@ const simulateCall = (): void => {
       }, 1000)
 
       // Show AI message that call connected
-      // Generate and display personalized call script
-      const callScript = generateCallScript(currentContact.value)
-      addAIMessage(callScript)
-      scrollToBottom()
+      // Show connection message first, then script with delay
+      showCallConnectedMessages(currentContact.value)
     }, 3000)
   }
 }
@@ -1933,10 +1931,8 @@ const skipToDialer = (): void => {
       }, 1000)
 
       // Show AI message that call connected
-      // Generate and display personalized call script
-      const callScript = generateCallScript(currentContact.value)
-      addAIMessage(callScript)
-      scrollToBottom()
+      // Show connection message first, then script with delay
+      showCallConnectedMessages(currentContact.value)
     }, 3000)
   }, 1500) // Brief delay to show the startup message
 }
