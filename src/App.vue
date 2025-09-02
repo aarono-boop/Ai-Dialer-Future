@@ -218,7 +218,7 @@
           </div>
 
           <!-- Chat Input - positioned at bottom -->
-          <div class="mt-2 pt-2.5">
+          <div class="mt-2 pt-2.5 mb-4">
             <ChatInput
               ref="chatInputRef"
               :customPlaceholder="getPlaceholderText()"
@@ -1217,7 +1217,7 @@ const sendMessage = (message: string): void => {
       addAIMessage([
         '📅 Here\'s your schedule for today:',
         '<strong>Upcoming appointments:</strong>',
-        '��� 2:00 PM - Demo call with Sarah Johnson (confirmed)',
+        '����� 2:00 PM - Demo call with Sarah Johnson (confirmed)',
         '• 3:30 PM - Follow-up with ABC Corp (needs confirmation)',
         '• 4:15 PM - Discovery call with new lead Mike Chen',
         'You have 45 minutes before your next call. Perfect time for some prospecting!'
