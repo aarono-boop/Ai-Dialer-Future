@@ -1610,7 +1610,7 @@ const handleHangUp = (): void => {
       '<br><br>',
       'You kept them on the line, that\'s good. But you let them control the conversation. Next call, you\'re the prize—lead them to the close.',
       '<br><br>',
-      '<strong>Delivery:</strong> 9/10<br><strong>Pace:</strong> 9/10<br><strong>Confidence:</strong> 9/10'
+      'Delivery: 9/10<br>Pace: 9/10<br>Confidence: 9/10'
     ])
   }
 
