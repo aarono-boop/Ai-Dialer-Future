@@ -32,7 +32,6 @@
           severity="secondary"
           size="small"
           label="Pause Queue"
-          style="flex-shrink: 0; position: relative;"
         />
       </div>
     </div>
