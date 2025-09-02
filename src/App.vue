@@ -1606,7 +1606,7 @@ const handleHangUp = (): void => {
   // Only show coaching recap for manual hang ups
   if (isManualHangUp.value) {
     addAIMessage([
-      '<strong>Jordan\'s Coaching Recap</strong>',
+      '<strong>AI Coaching Recap</strong>',
       '<br>',
       'You kept them on the line, that\'s good. But you let them control the conversation. Next call, you\'re the prize—lead them to the close.',
       '<br>',
