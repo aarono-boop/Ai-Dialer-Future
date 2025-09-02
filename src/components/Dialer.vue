@@ -232,7 +232,7 @@
         </div>
 
         <!-- Keypad Grid -->
-        <div class="grid grid-cols-3 gap-3 pb-4">
+        <div class="grid grid-cols-3 gap-3 pb-6">
           <!-- Row 1: 1, 2, 3 -->
           <button @click="pressKeyWithFeedback('1', $event)" @keydown="handleKeypadButtonKeydown('1', $event)" data-keypad-key="1" tabindex="101" class="keypad-btn">
             <span class="text-2xl font-bold">1</span>
@@ -1101,10 +1101,16 @@ const handleHoldKeydown = (event: KeyboardEvent) => {
   margin-bottom: 0.5rem !important;
 }
 
+/* Keypad modal specific styles */
+.keypad-modal-container {
+  min-height: fit-content;
+  height: auto;
+}
+
 /* Keypad button styles */
 .keypad-btn {
   @apply bg-gray-700 hover:bg-gray-600 active:bg-gray-500 text-white rounded-lg py-4 px-3 flex flex-col items-center justify-center gap-1 transition-colors min-h-16;
-  margin: 1px; /* Provide space for hover effect */
+  margin: 2px; /* Provide space for hover effect */
 }
 
 .keypad-btn:hover {
