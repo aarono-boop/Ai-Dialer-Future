@@ -395,7 +395,7 @@ import { useToast } from 'primevue/usetoast'
 import { showContactPreview } from './utils/contactPreview'
 import { clearFocusAndEstablishContext, focusChatInput, announceToScreenReader } from './utils/focus'
 import { createChatUtils, type Message } from './utils/chat'
-import { getResponseForKeywords } from './utils/aiResponses'
+import { getResponseForKeywords, AI_RESPONSES } from './utils/aiResponses'
 
 // Components
 import Sidebar from './components/Sidebar.vue'
