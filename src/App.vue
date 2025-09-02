@@ -1597,7 +1597,7 @@ const handleHangUp = (): void => {
 }
 
 const handleMute = (muted: boolean): void => {
-  addAIMessage(muted ? '<i class="pi pi-microphone-slash"></i> Microphone muted' : '<i class="pi pi-microphone"></i> Microphone unmuted')
+  addAIMessage(muted ? 'Microphone muted' : 'Microphone unmuted')
 }
 
 const handleHold = (onHold: boolean): void => {
