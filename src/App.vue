@@ -2043,6 +2043,10 @@ const handleCompleteQueue = (): void => {
   }, 1000)
 }
 
+const handleAICoachToggle = (enabled: boolean): void => {
+  aiCoachEnabled.value = enabled
+}
+
 const handleDisposition = (disposition: string): void => {
   // Hide disposition buttons
   showDispositionButtons.value = false
