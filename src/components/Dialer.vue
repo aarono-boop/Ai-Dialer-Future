@@ -16,7 +16,7 @@
     <!-- Call Status -->
     <div class="px-4 py-2">
       <!-- Call Ended State -->
-      <div v-if="callState === 'ended'" class="bg-red-900/50 border border-red-700 rounded-lg p-3 text-center">
+      <div v-if="callState === 'ended'" class="bg-gray-900/50 border border-gray-600 rounded-lg p-3 text-center">
         <div class="text-red-400 font-medium">Call Ended</div>
         <div class="text-gray-300 text-sm">(312) 586-9748</div>
       </div>
@@ -302,7 +302,7 @@ import ToggleSwitch from 'primevue/toggleswitch'
 // Connect Score tooltip content
 const connectScoreTooltip = `Connect Score is a premium add-on feature that uses real-world signals to help users prioritize high-value contacts and skip low-quality leads. It scores each phone number as High, Medium, or Low based on:
 
-��� Carrier data
+• Carrier data
 • Engagement history
 • Phone metadata
 
