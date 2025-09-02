@@ -1607,7 +1607,7 @@ const handleHangUp = (): void => {
   if (isManualHangUp.value) {
     addAIMessage([
       '<strong>Jordan\'s Coaching Recap</strong>',
-      '<br><br>',
+      '<br>',
       'You kept them on the line, that\'s good. But you let them control the conversation. Next call, you\'re the prize—lead them to the close.',
       '<br>',
       'Delivery: 9/10<br>Pace: 9/10<br>Confidence: 9/10'
