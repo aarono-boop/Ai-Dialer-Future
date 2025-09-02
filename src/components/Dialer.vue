@@ -1,18 +1,5 @@
 <template>
   <div class="w-full h-full bg-gray-900 rounded-lg border border-gray-700 flex flex-col pt-5 px-2.5 pb-2.5">
-    <!-- Header -->
-    <div class="px-4 py-2">
-      <div class="bg-gray-700 rounded-full h-5 w-full relative flex items-center">
-        <div
-          class="h-5 rounded-full transition-all duration-300"
-          :style="{ width: `${((currentContactIndex + 1) / 3) * 100}%`, background: 'linear-gradient(to right, #60a5fa, #7b68ee)' }"
-        ></div>
-        <div class="absolute inset-0 flex items-center justify-center text-white text-xs font-medium">
-          Dial Queue {{ currentContactIndex + 1 }} of 3
-        </div>
-      </div>
-    </div>
-
     <!-- Call Status -->
     <div class="px-4 py-2">
       <!-- Call Ended State -->
@@ -44,6 +31,19 @@
       <div v-else-if="callState === 'idle'" class="bg-gray-900/50 border border-gray-600 rounded-lg p-3 text-center">
         <div class="text-gray-400 font-medium">Ready to Dial</div>
         <div class="text-gray-300 text-sm">{{ currentContact.phone }}</div>
+      </div>
+    </div>
+
+    <!-- Header -->
+    <div class="px-4 py-2">
+      <div class="bg-gray-700 rounded-full h-5 w-full relative flex items-center">
+        <div
+          class="h-5 rounded-full transition-all duration-300"
+          :style="{ width: `${((currentContactIndex + 1) / 3) * 100}%`, background: 'linear-gradient(to right, #60a5fa, #7b68ee)' }"
+        ></div>
+        <div class="absolute inset-0 flex items-center justify-center text-white text-xs font-medium">
+          Dial Queue {{ currentContactIndex + 1 }} of 3
+        </div>
       </div>
     </div>
 
