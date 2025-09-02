@@ -31,6 +31,7 @@
           tabindex="8"
           severity="secondary"
           size="small"
+          class="pause-queue-compact"
         >
           <span class="text-xs">Pause Queue</span>
         </Button>
