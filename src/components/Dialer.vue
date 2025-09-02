@@ -232,7 +232,7 @@
         </div>
 
         <!-- Keypad Grid -->
-        <div class="grid grid-cols-3 gap-3 pb-6">
+        <div class="grid grid-cols-3 gap-3 pb-8 pt-2">
           <!-- Row 1: 1, 2, 3 -->
           <button @click="pressKeyWithFeedback('1', $event)" @keydown="handleKeypadButtonKeydown('1', $event)" data-keypad-key="1" tabindex="101" class="keypad-btn">
             <span class="text-2xl font-bold">1</span>
