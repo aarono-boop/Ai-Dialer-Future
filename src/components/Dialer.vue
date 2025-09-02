@@ -162,7 +162,7 @@
             severity="secondary"
             class="flex flex-col items-center justify-center gap-1 py-3"
           >
-            <i class="pi pi-th"></i>
+            <i class="pi pi-calculator"></i>
             <span class="text-xs">Keypad</span>
           </Button>
 
