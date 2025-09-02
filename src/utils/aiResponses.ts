@@ -96,11 +96,12 @@ export const AI_RESPONSES = {
 
   // Call connected message
   CALL_CONNECTED: [
-    '<strong>Great! You\'re connected!</strong>'
+    'Great! You\'re connected!'
   ],
 
   // Call script for connected calls
   CALL_SCRIPT: [
+    'Script:',
     '<span style="color: #fbbf24; font-style: italic;">[The AI learns the nuances of your coaching approach to generate contextual scripts that reflect your unique sales philosophy, language patterns, and proven conversation starters tailored to this specific prospect.]</span>'
   ]
 }
