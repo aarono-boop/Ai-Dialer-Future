@@ -467,6 +467,20 @@ const generateCallScript = (contact: any): string[] => {
   )
 }
 
+// Show call connected message followed by script with delay
+const showCallConnectedMessages = (contact: any): void => {
+  // First show connection message
+  addAIMessage(AI_RESPONSES.CALL_CONNECTED)
+  scrollToBottom()
+
+  // Wait 1 second then show script
+  setTimeout(() => {
+    const callScript = generateCallScript(contact)
+    addAIMessage(callScript)
+    scrollToBottom()
+  }, 1000)
+}
+
 // Reactive data
 const currentPage = ref<string>('main') // 'main', 'product', 'login', 'signup'
 const chatInputRef = ref<any>(null)
