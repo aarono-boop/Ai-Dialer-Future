@@ -309,6 +309,7 @@ export const createChatUtils = (
     addUserMessage,
     addUserGoalMessage,
     addUserQueuePausedMessage,
+    addUserQueueCompletedMessage,
     addSeparatorMessage,
     addAIMessageWithDelay,
     addAIMessageWithTyping,
