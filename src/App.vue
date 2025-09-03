@@ -1526,7 +1526,7 @@ const simulateCall = (): void => {
       })
 
       // Show voicemail detected message
-      addAIMessage('Voicemail detected...')
+      addAIMessageWithTyping('Voicemail detected...')
       const duration = '00:00'
       addAIMessage(`Call with ${currentContact.value.name} ended. Duration: ${duration}<br><br>Please select a call outcome or enter notes about this call.`)
       scrollToBottom()
