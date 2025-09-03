@@ -1582,7 +1582,7 @@ const handleNextContact = (): void => {
     callState.value = 'idle'
     callDuration.value = 0
 
-    addAIMessage(`Moving to next contact: ${currentContact.value.name}. Preparing to dial...`)
+    addAIMessageWithTyping(`Moving to next contact: ${currentContact.value.name}. Preparing to dial...`)
 
     // Add separator message for the new contact
     setTimeout(() => {
