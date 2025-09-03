@@ -91,20 +91,30 @@ export const createChatUtils = (
   }
 
   const scrollToTopWithPadding = async (padding: number = 50): Promise<void> => {
+    console.log('scrollToTopWithPadding called with padding:', padding)
     await nextTick()
 
     // Use multiple attempts with longer delays to ensure it works
     const forceScrollToTop = (attempt: number = 0) => {
-      if (!chatMessages.value || attempt > 5) return
+      if (!chatMessages.value || attempt > 5) {
+        console.log('scrollToTopWithPadding: chatMessages not found or max attempts reached')
+        return
+      }
 
       const userMessages = chatMessages.value.querySelectorAll('[data-message-type="user"]')
+      console.log('Found user messages:', userMessages.length)
 
       if (userMessages.length > 0) {
         const lastUserMessage = userMessages[userMessages.length - 1] as HTMLElement
         const messageOffsetTop = lastUserMessage.offsetTop
-
-        // Force scroll to show user message at top with specified padding
         const targetPosition = Math.max(0, messageOffsetTop - padding)
+
+        console.log('Scroll details:', {
+          messageOffsetTop,
+          padding,
+          targetPosition,
+          currentScrollTop: chatMessages.value.scrollTop
+        })
 
         // Force immediate scroll
         chatMessages.value.scrollTop = targetPosition
