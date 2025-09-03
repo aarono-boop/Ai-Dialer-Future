@@ -686,6 +686,15 @@ const handleTypingComplete = (index: number): void => {
   if (index === 0 && !isSignedIn.value) {
     welcomeTypingComplete.value = true
   }
+
+  // Check if this is the congratulations message
+  if (messages.value[index] && messages.value[index].content[0]?.includes('Congratulations! You\'ve successfully upgraded to the Pro plan')) {
+    congratulationsTypingComplete.value = true
+    // Show action buttons after congratulations typing completes
+    setTimeout(() => {
+      showActionButtons.value = true
+    }, 200) // Small delay for better UX
+  }
 }
 
 // Update welcome message typing status based on user status
