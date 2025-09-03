@@ -432,6 +432,23 @@ const generateCallScript = (contact: any): string[] => {
 
 // Show call connected message followed by script and objection handling
 const showCallConnectedMessages = (contact: any): void => {
+  // Add coach-specific intro message when coach parameter is set
+  if (coachParameter.value === 'jordan-stupar') {
+    addAIMessageWithTyping('I\'m on the call with you...')
+
+    // Delay before showing connection message
+    setTimeout(() => {
+      showRegularConnectedMessages(contact)
+    }, 1500)
+    return
+  }
+
+  // Show regular messages for no coach or other coaches
+  showRegularConnectedMessages(contact)
+}
+
+// Helper function for regular connected messages
+const showRegularConnectedMessages = (contact: any): void => {
   if (!aiCoachEnabled.value) {
     // Just show basic connection message if AI Coach is disabled
     addAIMessageWithTyping('Great! You\'re connected!')
