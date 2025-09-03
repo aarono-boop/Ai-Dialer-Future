@@ -799,6 +799,7 @@ const handleLogout = () => {
   contactPreviewButtonsUsed.value = false // Reset contact preview buttons used state
   connectionAnalysisTypingComplete.value = false // Reset connection analysis typing state
   phoneVerificationButtonUsed.value = false // Reset phone verification button used state
+  verificationCodeTypingComplete.value = false // Reset verification code typing state
 
   // Reset UI state
   showDialer.value = false
