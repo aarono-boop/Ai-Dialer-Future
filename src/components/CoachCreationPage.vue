@@ -146,26 +146,25 @@
                 </div>
               </div>
 
-              <!-- Welcome Message Preview -->
+              <!-- Welcome Message Preview with Video -->
               <div class="bg-gray-700 rounded-lg p-4">
                 <h5 class="text-sm font-semibold text-gray-300 mb-2">Welcome Message:</h5>
                 <div class="bg-gray-800/90 border border-white/20 rounded-lg p-3 text-sm">
                   <div v-html="previewMessage"></div>
-                </div>
-              </div>
 
-              <!-- Video Preview -->
-              <div v-if="extractedVideoId" class="bg-gray-700 rounded-lg p-4">
-                <h5 class="text-sm font-semibold text-gray-300 mb-2">Video Preview:</h5>
-                <div class="aspect-video bg-gray-800 rounded-lg overflow-hidden">
-                  <iframe
-                    :src="`https://www.youtube.com/embed/${extractedVideoId}`"
-                    frameborder="0"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowfullscreen
-                    class="w-full h-full"
-                    :title="`Preview of ${formData.displayName}'s video`"
-                  ></iframe>
+                  <!-- Video Preview embedded in welcome message -->
+                  <div v-if="extractedVideoId" class="mt-4">
+                    <div class="aspect-video bg-gray-700 rounded-lg overflow-hidden">
+                      <iframe
+                        :src="`https://www.youtube.com/embed/${extractedVideoId}`"
+                        frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen
+                        class="w-full h-full"
+                        :title="`Preview of ${formData.displayName}'s video`"
+                      ></iframe>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
