@@ -2422,6 +2422,9 @@ const handleActionButton = (action: string): void => {
         response = [`I\'ll help you with ${action.toLowerCase()}. Let me prepare your optimal calling strategy.`]
       }
 
+      // Force scroll position one more time before AI response
+      scrollToTopForGoals()
+
       addAIMessageWithTypingNoScroll(response)
 
       // Stop maintaining scroll position after AI response starts
