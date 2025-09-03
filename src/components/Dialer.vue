@@ -97,7 +97,7 @@
                 <td style="padding: 4px 0; color: white;">{{ currentContact.phone }}</td>
               </tr>
               <tr>
-                <td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af;"><span class="connect-score-tooltip" :data-tooltip="connectScoreTooltip">Connect Score</span>:</td>
+                <td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af;">Connect Score:</td>
                 <td style="padding: 4px 0; color: white;">{{ currentContact.connectScore }}</td>
               </tr>
               <tr>
