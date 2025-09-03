@@ -88,6 +88,7 @@ const startTypingAnimation = (): void => {
   const typeNextCharacter = () => {
     if (lineIndex >= props.message.content.length) {
       isTyping.value = false
+      emit('typingComplete')
       return
     }
 
