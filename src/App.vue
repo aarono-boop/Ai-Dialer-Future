@@ -1704,8 +1704,16 @@ const handleHangUp = (): void => {
 
   // Only show coaching recap for manual hang ups and if AI Coach is enabled
   if (isManualHangUp.value && aiCoachEnabled.value) {
+    // Get coach-specific recap title
+    const getCoachRecapTitle = (): string => {
+      if (coachParameter.value === 'jordan-stupar') {
+        return '<strong>Jordan\'s Recap</strong>'
+      }
+      return '<strong>AI Coaching Recap</strong>'
+    }
+
     addAIMessageWithTyping([
-      '<strong>AI Coaching Recap</strong>',
+      getCoachRecapTitle(),
       '<br>',
       getDynamicCoachingFeedback(),
       '<br>',
