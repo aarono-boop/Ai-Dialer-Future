@@ -90,11 +90,11 @@ export const createChatUtils = (
     setTimeout(() => performUserScroll(), 100)
   }
 
-  const scrollToTopForGoals = async (): Promise<void> => {
+  const scrollToTopWithPadding = async (padding: number = 50): Promise<void> => {
     await nextTick()
 
     // Use multiple attempts with longer delays to ensure it works
-    const forceScrollToGoal = (attempt: number = 0) => {
+    const forceScrollToTop = (attempt: number = 0) => {
       if (!chatMessages.value || attempt > 5) return
 
       const userMessages = chatMessages.value.querySelectorAll('[data-message-type="user"]')
@@ -103,45 +103,22 @@ export const createChatUtils = (
         const lastUserMessage = userMessages[userMessages.length - 1] as HTMLElement
         const messageOffsetTop = lastUserMessage.offsetTop
 
-        // Force scroll to show user message at top with adequate padding for full visibility
-        const targetPosition = Math.max(0, messageOffsetTop - 50)
+        // Force scroll to show user message at top with specified padding
+        const targetPosition = Math.max(0, messageOffsetTop - padding)
 
         // Force immediate scroll
         chatMessages.value.scrollTop = targetPosition
 
         // Continue trying to maintain position
-        setTimeout(() => forceScrollToGoal(attempt + 1), 200)
+        setTimeout(() => forceScrollToTop(attempt + 1), 200)
       }
     }
 
-    setTimeout(() => forceScrollToGoal(), 50)
+    setTimeout(() => forceScrollToTop(), 50)
   }
 
-  const scrollToTopForQueuePaused = async (): Promise<void> => {
-    await nextTick()
-
-    // Use multiple attempts with longer delays to ensure it works
-    const forceScrollToQueuePaused = (attempt: number = 0) => {
-      if (!chatMessages.value || attempt > 5) return
-
-      const userMessages = chatMessages.value.querySelectorAll('[data-message-type="user"]')
-
-      if (userMessages.length > 0) {
-        const lastUserMessage = userMessages[userMessages.length - 1] as HTMLElement
-        const messageOffsetTop = lastUserMessage.offsetTop
-
-        // Force scroll to show user message with more padding for Queue Paused
-        const targetPosition = Math.max(0, messageOffsetTop - 200)
-
-        // Force immediate scroll
-        chatMessages.value.scrollTop = targetPosition
-
-        // Continue trying to maintain position
-        setTimeout(() => forceScrollToQueuePaused(attempt + 1), 200)
-      }
-    }
-
-    setTimeout(() => forceScrollToQueuePaused(), 50)
+  const scrollToTopForGoals = async (): Promise<void> => {
+    return scrollToTopWithPadding(50)
   }
 
   const addAIMessage = (content: string | string[]): void => {
