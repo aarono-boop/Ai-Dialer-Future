@@ -105,7 +105,7 @@ const startTypingAnimation = (): void => {
     }
   }
 
-  typingInterval = setInterval(typeNextCharacter, 15) // Typing speed
+  typingInterval = setInterval(typeNextCharacter, 5) // Typing speed
 }
 
 // Stop typing animation
