@@ -737,6 +737,7 @@ const handleLogout = () => {
   isReturningUser.value = false
   phoneVerified.value = false // Reset phone verification status
   welcomeTypingComplete.value = false // Reset typing completion state
+  congratulationsTypingComplete.value = false // Reset congratulations typing state
 
   // Reset UI state
   showDialer.value = false
