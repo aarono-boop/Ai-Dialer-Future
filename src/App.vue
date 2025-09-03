@@ -678,6 +678,14 @@ const shouldBeWideMessage = (message: Message, index: number): boolean => {
          (isSignedIn.value && showFileUploadForReturningUser.value && isReadyToUploadMessage(message, index)) // Upload message for returning users
 }
 
+// Handle typing completion for welcome message
+const handleTypingComplete = (index: number): void => {
+  // If this is the welcome message (index 0) and user is not signed in
+  if (index === 0 && !isSignedIn.value) {
+    welcomeTypingComplete.value = true
+  }
+}
+
 // Header Methods
 const handleLogin = () => {
   currentPage.value = 'login'
