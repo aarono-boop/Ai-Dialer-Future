@@ -750,6 +750,7 @@ const cancelEdit = () => {
 :deep(.p-card) {
   background-color: #1f2937;
   border: 1px solid #374151;
+  border-radius: 0.5rem;
 }
 
 :deep(.p-card .p-card-content) {
