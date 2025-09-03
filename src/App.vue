@@ -2389,7 +2389,7 @@ const handleActionButton = (action: string): void => {
         response = [
           'Smart choice! Follow-ups are where deals are won. We\'ll help you reconnect with precision timing.',
           '',
-          wrapConnectScoreWithTooltip('Your trial is ready! I\'ve analyzed your <strong style="color: #fbbf24;">156 contacts</strong> and optimized follow-up timing with Connect Score.'),
+          'Your trial is ready! I\'ve analyzed your <strong style="color: #fbbf24;">156 contacts</strong> and optimized follow-up timing with Connect Score.',
           'Here\'s a preview of your follow-up targets. Does this look correct?',
           sampleContacts
         ]
