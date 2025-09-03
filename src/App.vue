@@ -2572,12 +2572,8 @@ const handleCoachCreated = (coachData: any) => {
 }
 
 const handleCoachModalClose = () => {
-  // Return to normal app without management mode
-  const url = new URL(window.location.href)
-  url.searchParams.delete('create-coach')
-  url.searchParams.delete('manage-coaches')
-  url.searchParams.delete('coach-admin')
-  window.location.href = url.toString()
+  // Simply set management mode to null for testing
+  setManagementMode(null)
 }
 
 // Lifecycle hook to establish focus context when app loads
