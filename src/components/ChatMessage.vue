@@ -5,15 +5,24 @@
     :aria-label="`${message.type === 'user' ? 'User' : 'ARKON AI'} message`"
   >
     <div v-if="message.type === 'ai'" class="flex gap-[10px] items-start w-full">
-      <div class="flex items-start justify-center flex-shrink-0 pt-1" role="img" :aria-label="shouldUseCoachAvatar() ? 'Jordan Stupar avatar' : 'ARKON AI avatar'">
-        <!-- Jordan's Avatar when coach parameter is set and not an ARKON AI system message -->
-        <img
-          v-if="shouldUseCoachAvatar()"
-          src="https://cdn.builder.io/api/v1/image/assets%2F5aeb07ce25f84dbc869290880d07b71e%2F3bddb1110d0949139407eb0dc708c7ff?format=webp&width=800"
-          alt="Jordan Stupar"
-          class="w-[26px] h-[26px] rounded-full object-cover"
-          aria-hidden="true"
-        />
+      <div class="flex items-start justify-center flex-shrink-0 pt-1" role="img" :aria-label="getAvatarLabel()">
+        <!-- Dynamic Coach Avatar when coach is set and not an ARKON AI system message -->
+        <template v-if="shouldUseCoachAvatar() && currentCoach">
+          <img
+            v-if="currentCoach.avatarUrl"
+            :src="currentCoach.avatarUrl"
+            :alt="currentCoach.displayName"
+            class="w-[26px] h-[26px] rounded-full object-cover"
+            aria-hidden="true"
+          />
+          <div
+            v-else
+            class="w-[26px] h-[26px] rounded-full bg-gradient-to-br from-blue-400 to-purple-500 flex items-center justify-center text-white text-xs font-semibold"
+            aria-hidden="true"
+          >
+            {{ getCoachInitials(currentCoach.displayName) }}
+          </div>
+        </template>
         <!-- Default ARKON AI Avatar -->
         <div
           v-else
@@ -68,6 +77,7 @@
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted, computed } from 'vue'
 import YouTubeVideo from './YouTubeVideo.vue'
+import { useCoaches } from '../composables/useCoaches'
 
 // Types
 interface Message {
@@ -90,10 +100,30 @@ const emit = defineEmits<{
   typingComplete: []
 }>()
 
+// Coach system integration
+const { currentCoach } = useCoaches()
+
 // Typing animation state
 const typedContent = ref<string[]>(props.message.typing ? props.message.content.map(() => '') : [])
 const isTyping = ref(false)
 let typingInterval: NodeJS.Timeout | null = null
+
+// Helper methods
+const getCoachInitials = (name: string): string => {
+  return name
+    .split(' ')
+    .map(word => word.charAt(0))
+    .join('')
+    .toUpperCase()
+    .slice(0, 2)
+}
+
+const getAvatarLabel = (): string => {
+  if (shouldUseCoachAvatar() && currentCoach.value) {
+    return `${currentCoach.value.displayName} avatar`
+  }
+  return 'ARKON AI avatar'
+}
 
 // Process message content to extract video information
 const processedContent = computed(() => {
@@ -225,8 +255,8 @@ const shouldUseCoachAvatar = (): boolean => {
     return false
   }
 
-  // Only use coach avatar if coach parameter is set
-  if (props.coachParameter !== 'jordan-stupar') {
+  // Only use coach avatar if a coach is currently selected
+  if (!currentCoach.value) {
     return false
   }
 
