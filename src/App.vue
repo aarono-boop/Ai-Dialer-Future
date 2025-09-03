@@ -1845,6 +1845,14 @@ const toggleCallLog = (uniqueId?: string): void => {
 
 // Ensure functions are available on mount
 onMounted(() => {
+  // Parse URL parameters for coach functionality
+  const urlParams = new URLSearchParams(window.location.search)
+  const coach = urlParams.get('coach')
+  if (coach) {
+    coachParameter.value = coach
+    console.log('Coach parameter detected:', coach)
+  }
+
   ;(window as any).triggerFileUpload = triggerFileUpload
   ;(window as any).handleExportFile = handleExportFile
   ;(window as any).toggleCallLog = toggleCallLog
