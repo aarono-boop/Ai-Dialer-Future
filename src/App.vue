@@ -337,51 +337,6 @@
 </template>
 
 <style>
-/* Global Connect Score tooltip styles */
-.connect-score-tooltip {
-  position: relative;
-  cursor: help;
-  border-bottom: 1px dotted #60a5fa;
-  color: #60a5fa !important;
-}
-
-.connect-score-tooltip:hover::after {
-  content: attr(data-tooltip);
-  position: fixed;
-  top: calc(50% - 160px);
-  left: calc(50% + 250px);
-  transform: translate(-50%, -50%);
-  background: #1f2937;
-  color: white;
-  padding: 12px;
-  border-radius: 8px;
-  font-size: 14px;
-  line-height: 1.4;
-  width: 300px;
-  max-width: 90vw;
-  white-space: pre-line;
-  z-index: 99999;
-  border: 1px solid #374151;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-  pointer-events: none;
-}
-
-.connect-score-tooltip:hover::before {
-  content: '';
-  position: fixed;
-  top: calc(50% - 10px);
-  left: calc(50% + 250px);
-  transform: translateX(-50%);
-  border: 6px solid transparent;
-  border-top-color: #374151;
-  z-index: 100000;
-  pointer-events: none;
-}
-
-/* Ensure parent containers don't clip the tooltip */
-.connect-score-tooltip:hover {
-  overflow: visible;
-}
 
 /* Spinner animation for export buttons */
 @keyframes spin {
