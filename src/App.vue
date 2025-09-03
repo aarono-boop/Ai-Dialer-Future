@@ -456,7 +456,7 @@ const getDynamicCoachingFeedback = (): string => {
     'Nice work staying patient through their objections. I noticed you got stronger as the call progressed. Carry that momentum into the next one.',
     'You handled that beautifully! Your confidence really came through. Next time, try asking one more discovery question before presenting—it\'ll make your close even stronger.',
     'I loved how you listened for their pain points. Your empathy is one of your strongest assets. Now let\'s work on creating more urgency in your next call.',
-    'Solid call! You kept them engaged throughout. I\'d love to see you slow down just a touch during the value proposition��let it sink in.',
+    'Solid call! You kept them engaged throughout. I\'d love to see you slow down just a touch during the value proposition—let it sink in.',
     'That was textbook rapport building! Your energy is infectious. Next call, try to qualify their budget earlier in the conversation.',
     'Really strong finish! You didn\'t give up when they hesitated. For your next call, lead with a stronger hook to grab their attention faster.',
     'I can tell you\'re finding your rhythm! Your questioning technique is improving with each call. Next one, focus on getting them to commit to a specific time.',
@@ -690,17 +690,12 @@ const handleTypingComplete = (index: number): void => {
 
   // Check if this is the congratulations message
   if (messages.value[index] && messages.value[index].content[0]?.includes('Congratulations! You\'ve successfully upgraded to the Pro plan')) {
-    console.log('🎊 Congratulations message typing completed!')
     congratulationsTypingComplete.value = true
     // Only show action buttons if they haven't been used yet
-    console.log('🎊 actionButtonsUsed:', actionButtonsUsed.value)
     if (!actionButtonsUsed.value) {
-      console.log('🎊 Showing action buttons after congratulations typing')
       setTimeout(() => {
         showActionButtons.value = true
       }, 200) // Small delay for better UX
-    } else {
-      console.log('🎊 Not showing action buttons - already used')
     }
   }
 }
