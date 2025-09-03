@@ -1866,6 +1866,11 @@ onMounted(() => {
     console.log('Coach parameter detected:', coach)
   }
 
+  // Set the initial welcome message based on coach parameter
+  if (messages.value.length > 0 && messages.value[0].type === 'ai') {
+    messages.value[0].content = [getCoachWelcomeMessage.value]
+  }
+
   ;(window as any).triggerFileUpload = triggerFileUpload
   ;(window as any).handleExportFile = handleExportFile
   ;(window as any).toggleCallLog = toggleCallLog
