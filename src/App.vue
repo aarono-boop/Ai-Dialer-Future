@@ -1323,7 +1323,7 @@ const sendMessage = (message: string): void => {
         'ARKON can remind you to:',
         '• Follow up with specific prospects at optimal times',
         '• Call back prospects who didn\'t answer',
-        '�� Review and update your call notes',
+        '• Review and update your call notes',
         '• Start your daily calling sessions',
         'What would you like to be reminded about and when?'
       ])
@@ -2160,14 +2160,20 @@ const handleCompleteQueue = (): void => {
   showDialer.value = false
   waitingForNotesInput.value = false
 
-  addAIMessage('Congratulations! You have completed your entire call queue. All contacts have been processed.')
+  // Add user message for queue completion with custom positioning
+  addUserQueueCompletedMessage('Queue completed')
 
-  // Add session summary content to chat
+  // Add AI congratulations message after a delay
   setTimeout(() => {
-    addSessionSummaryToChat(true)
-    // Show Load New File button
-    showLoadNewFileButton.value = true
-  }, 1000)
+    addAIMessage('Congratulations! You have completed your entire call queue. All contacts have been processed.')
+
+    // Add session summary content to chat
+    setTimeout(() => {
+      addSessionSummaryToChat(true)
+      // Show Load New File button
+      showLoadNewFileButton.value = true
+    }, 1000)
+  }, 500)
 }
 
 const handleAICoachToggle = (enabled: boolean): void => {
