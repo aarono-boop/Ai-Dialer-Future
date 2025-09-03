@@ -279,6 +279,7 @@ const shouldUseCoachAvatar = (): boolean => {
     messageText.includes('Please select a call outcome') ||
     messageText.includes('Congratulations! You have completed your entire call queue') ||
     messageText.includes('Queue Completed!') ||
+    messageText.includes('Queue Paused!') ||
     messageText.includes('successfully upgraded to the Pro plan') ||
     messageText.includes('analyzed your') && messageText.includes('contacts') ||
     messageText.includes('Connect Score') ||
