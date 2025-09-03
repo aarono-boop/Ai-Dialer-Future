@@ -99,10 +99,20 @@ const startTypingAnimation = (): void => {
       // Add character to current line
       typedContent.value[lineIndex] = currentLine.substring(0, charIndex + 1)
       charIndex++
+
+      // Scroll to bottom every few characters to keep new content visible
+      if (charIndex % 10 === 0 && props.onTypingProgress) {
+        props.onTypingProgress()
+      }
     } else {
       // Move to next line
       lineIndex++
       charIndex = 0
+
+      // Always scroll when starting a new line
+      if (props.onTypingProgress) {
+        props.onTypingProgress()
+      }
     }
   }
 
