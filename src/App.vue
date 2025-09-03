@@ -439,7 +439,7 @@ const connectScoreTooltip = `Connect Score is a premium add-on feature that uses
 • Engagement history
 • Phone metadata
 
-This lets teams focus their efforts on numbers with the greatest chance of a live answer���improving connect rates, morale, and performance.`
+This lets teams focus their efforts on numbers with the greatest chance of a live answer—improving connect rates, morale, and performance.`
 
 // Helper function to wrap Connect Score text with tooltip
 const wrapConnectScoreWithTooltip = (text: string): string => {
@@ -503,7 +503,7 @@ const showCallConnectedMessages = (contact: any): void => {
     '<span style="color: #fbbf24; font-style: italic;">[The AI learns the nuances of your coaching approach to generate contextual scripts that reflect your unique sales philosophy, language patterns, and proven conversation starters tailored to this specific prospect.]</span>'
   ]
 
-  addAIMessage(combinedMessage)
+  addAIMessageWithTyping(combinedMessage)
   scrollToBottom()
 
   // Wait 3 seconds then show objection handling
