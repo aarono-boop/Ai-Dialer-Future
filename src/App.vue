@@ -2333,8 +2333,6 @@ const handleActionButton = (action: string): void => {
 
   // Wait for user message scroll to complete, then add AI response
   setTimeout(() => {
-    // Wait an additional moment for scroll animation to complete
-    setTimeout(() => {
       let response = []
       const sampleContacts = `
         <div style="color: #ffffff;">
