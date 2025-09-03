@@ -200,6 +200,25 @@ export const createChatUtils = (
     })
   }
 
+  const addUserQueuePausedMessage = (content: string): void => {
+    messages.value.push({
+      type: 'user',
+      content: [content]
+    })
+
+    // Use the special queue paused scroll function with more padding
+    scrollToTopForQueuePaused()
+
+    // Establish focus context after new message appears
+    nextTick(() => {
+      setTimeout(() => {
+        if (headerRef.value?.establishFocusContext) {
+          headerRef.value.establishFocusContext()
+        }
+      }, 100)
+    })
+  }
+
   const addSeparatorMessage = (contactName: string): void => {
     messages.value.push({
       type: 'separator',
