@@ -794,7 +794,7 @@ const handleLogout = () => {
     {
       type: 'ai',
       content: [
-        'Welcome! I\'m <strong>ARKON (Post MVP)</strong>, your AI calling assistant.<br><br>Drop your contact file here and I\'ll show you exactly who\'s most likely to pick up right now.'
+        'Welcome to <strong>ARKON</strong>, your AI calling assistant.<br><br>Drop your contact file here and I\'ll show you exactly who\'s most likely to pick up right now.'
       ],
       // Only show typing animation for completely new users (not signed in and not returning)
       typing: !isSignedIn.value && !isReturningUser.value
@@ -1290,7 +1290,7 @@ const sendMessage = (message: string): void => {
         'ARKON\'s practice mode can help you:',
         '• Rehearse your opening pitch with AI feedback',
         '• Practice handling common objections',
-        '• Test different conversation flows',
+        '��� Test different conversation flows',
         '�� Record and review your delivery',
         'Would you like to practice a cold call opening or work on handling objections?'
       ])
