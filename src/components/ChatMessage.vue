@@ -90,19 +90,12 @@ const startTypingAnimation = (): void => {
 
     if (charIndex < currentLine.length) {
       // Add character to current line
-      if (!typedContent.value[lineIndex]) {
-        typedContent.value[lineIndex] = ''
-      }
       typedContent.value[lineIndex] = currentLine.substring(0, charIndex + 1)
       charIndex++
     } else {
       // Move to next line
       lineIndex++
       charIndex = 0
-      // Add empty line for next iteration
-      if (lineIndex < props.message.content.length) {
-        typedContent.value[lineIndex] = ''
-      }
     }
   }
 
