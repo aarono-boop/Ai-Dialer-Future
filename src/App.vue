@@ -2380,7 +2380,7 @@ const handleActionButton = (action: string): void => {
         response = [
           'Perfect! Creating opportunities is all about finding the right prospects at the right time. We\'ll build your pipeline.',
           '',
-          wrapConnectScoreWithTooltip('Your trial is ready! I\'ve analyzed your <strong style="color: #fbbf24;">156 contacts</strong> and identified potential opportunities with Connect Score.'),
+          'Your trial is ready! I\'ve analyzed your <strong style="color: #fbbf24;">156 contacts</strong> and identified potential opportunities with Connect Score.',
           'Here\'s a preview of your warmest leads. Does this look correct?',
           sampleContacts
         ]
