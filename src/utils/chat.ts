@@ -183,8 +183,8 @@ export const createChatUtils = (
       content: [content]
     })
 
-    // Use the special queue paused scroll function with more padding
-    scrollToTopForQueuePaused()
+    // Use the reusable scroll function with more padding for Queue Paused
+    scrollToTopWithPadding(200)
 
     // Establish focus context after new message appears
     nextTick(() => {
