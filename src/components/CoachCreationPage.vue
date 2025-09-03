@@ -246,10 +246,6 @@ const previewMessage = computed(() => {
   let message = formData.value.customMessage ||
     `Welcome to <strong>ARKON</strong>! I'm your AI calling assistant, enhanced with <strong>${formData.value.displayName}'s</strong> proven methodologies.`
 
-  if (extractedVideoId.value) {
-    message += `<br><br><div style="padding: 8px; background: #374151; border-radius: 4px; color: #9ca3af; font-size: 12px;">📹 ${formData.value.displayName}'s introduction video will appear below:</div>`
-  }
-
   message += `<br><br>Drop your contact file here and I'll show you exactly who's most likely to pick up right now using ${formData.value.displayName}'s approach.`
 
   return message
