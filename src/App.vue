@@ -699,6 +699,22 @@ const handleTypingComplete = (index: number): void => {
       }, 200) // Small delay for better UX
     }
   }
+
+  // Check if this is a contact preview message (starts with goal responses)
+  if (messages.value[index] && messages.value[index].content[0] && (
+    messages.value[index].content[0].includes('Perfect! Setting appointments is our bread and butter') ||
+    messages.value[index].content[0].includes('Outstanding! Closing live sales is where the magic happens') ||
+    messages.value[index].content[0].includes('Perfect! Creating opportunities is all about finding the right prospects') ||
+    messages.value[index].content[0].includes('Smart choice! Follow-ups are where deals are won') ||
+    messages.value[index].content[0].includes('Brilliant! Live transfers maximize your team\'s efficiency') ||
+    messages.value[index].content[0].includes('Fantastic! Live conversations are the heart of great sales')
+  )) {
+    contactPreviewTypingComplete.value = true
+    // Show contact preview buttons after typing completes
+    setTimeout(() => {
+      showContactPreviewButtons.value = true
+    }, 200) // Small delay for better UX
+  }
 }
 
 // Update welcome message typing status based on user status
