@@ -2424,6 +2424,11 @@ const handleActionButton = (action: string): void => {
 
       addAIMessageWithTypingNoScroll(response)
 
+      // Stop maintaining scroll position after AI response starts
+      setTimeout(() => {
+        clearInterval(scrollMaintainer)
+      }, 2000)
+
       // Contact preview buttons will be shown automatically when typing completes
   }, 1500) // Increased delay to ensure user message scroll completes
 }
