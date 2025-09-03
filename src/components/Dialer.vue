@@ -67,7 +67,7 @@
             <span
               v-else
               class="text-gray-300 text-sm cursor-pointer select-none"
-              @click="aiCoachEnabled = !aiCoachEnabled"
+              @click="toggleAICoach(!props.aiCoachEnabled)"
             >AI Coach</span>
             <ToggleSwitch
               :model-value="props.aiCoachEnabled"
