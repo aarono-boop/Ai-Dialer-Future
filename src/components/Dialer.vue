@@ -202,7 +202,7 @@
       </div>
 
       <!-- Call Ended Action Buttons (only when call ended) -->
-      <div v-if="callState === 'ended'" class="space-y-2">
+      <div v-if="callState === 'ended'" class="space-y-3">
         <Button
           @click="callBack"
           tabindex="13"
