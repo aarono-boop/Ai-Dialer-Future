@@ -1434,8 +1434,9 @@ const handleTryAgain = (): void => {
 }
 
 const handlePhoneVerification = (): void => {
-  // Hide phone verification button
+  // Hide phone verification button and mark as used
   showPhoneVerificationButton.value = false
+  phoneVerificationButtonUsed.value = true
 
   // Add user message showing what button was clicked
   addUserMessage('Now lets verify my phone number')
