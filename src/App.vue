@@ -1270,7 +1270,7 @@ const sendMessage = (message: string): void => {
         '• Rehearse your opening pitch with AI feedback',
         '• Practice handling common objections',
         '• Test different conversation flows',
-        '• Record and review your delivery',
+        '�� Record and review your delivery',
         'Would you like to practice a cold call opening or work on handling objections?'
       ])
     } else if (lowerMessage.includes('appointments') && lowerMessage.includes('today')) {
@@ -2284,6 +2284,7 @@ const handleGoogleSignupFromAccount = () => {
   setTimeout(() => {
     isSignedIn.value = true
     showActionButtons.value = true
+    updateWelcomeMessageTyping() // Update typing status for welcome message
     addAIMessage('🎉 Welcome to ARKON! Your account has been created successfully. Let\'s start your first smart calling session! What are you trying to accomplish?')
 
     // Ensure scroll happens after action buttons are rendered
