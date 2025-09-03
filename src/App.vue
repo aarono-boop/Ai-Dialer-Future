@@ -136,7 +136,7 @@
           </div>
 
           <!-- Disposition Buttons - always visible when active -->
-          <div v-if="showDispositionButtons && showDialer && !showContinueQueueButton" class="mt-2 pt-5 flex justify-center">
+          <div v-if="showDispositionButtons && showDialer && !showContinueQueueButton" class="mt-1 pt-2 flex justify-center">
             <!-- Voicemail Disposition Buttons for George Sample -->
             <div v-if="isVoicemailScenario" class="w-[70%] grid grid-cols-3 gap-3">
               <Button
@@ -1281,7 +1281,7 @@ const sendMessage = (message: string): void => {
         '• Follow up with specific prospects at optimal times',
         '• Call back prospects who didn\'t answer',
         '• Review and update your call notes',
-        '�� Start your daily calling sessions',
+        '• Start your daily calling sessions',
         'What would you like to be reminded about and when?'
       ])
     } else if (lowerMessage.includes('practice a call') || lowerMessage.includes('practice')) {
