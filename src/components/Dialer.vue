@@ -340,6 +340,7 @@ const props = defineProps<{
   queueCompletionReady: boolean
   currentContactIndex: number
   totalContacts: number
+  coachParameter: string
 }>()
 
 // Define emits
