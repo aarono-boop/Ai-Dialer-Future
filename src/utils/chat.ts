@@ -196,6 +196,25 @@ export const createChatUtils = (
     })
   }
 
+  const addUserQueueCompletedMessage = (content: string): void => {
+    messages.value.push({
+      type: 'user',
+      content: [content]
+    })
+
+    // Use the reusable scroll function with less padding for Queue Completed
+    scrollToTopWithPadding(250)
+
+    // Establish focus context after new message appears
+    nextTick(() => {
+      setTimeout(() => {
+        if (headerRef.value?.establishFocusContext) {
+          headerRef.value.establishFocusContext()
+        }
+      }, 100)
+    })
+  }
+
   const addSeparatorMessage = (contactName: string): void => {
     messages.value.push({
       type: 'separator',
