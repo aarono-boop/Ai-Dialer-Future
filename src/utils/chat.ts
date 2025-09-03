@@ -147,7 +147,6 @@ export const createChatUtils = (
     // After AI message is added, re-position the user message at the top
     nextTick(() => {
       setTimeout(() => {
-        console.log('🔥 AI message added, now re-positioning user message')
         scrollToUserMessage()
 
         if (headerRef.value?.establishFocusContext) {
