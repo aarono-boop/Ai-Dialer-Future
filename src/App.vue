@@ -714,6 +714,7 @@ const handleLogout = () => {
   isSignedIn.value = false
   isReturningUser.value = false
   phoneVerified.value = false // Reset phone verification status
+  welcomeTypingComplete.value = false // Reset typing completion state
 
   // Reset UI state
   showDialer.value = false
