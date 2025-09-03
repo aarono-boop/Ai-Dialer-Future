@@ -177,6 +177,7 @@ export const createChatUtils = (
 
   return {
     scrollToBottom,
+    scrollToBottomDuringTyping,
     scrollToUserMessage,
     addAIMessage,
     addAIMessageWithoutScroll,
