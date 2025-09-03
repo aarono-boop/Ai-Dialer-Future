@@ -2417,8 +2417,7 @@ const handleActionButton = (action: string): void => {
       addAIMessageWithTyping(response)
 
       // Contact preview buttons will be shown automatically when typing completes
-    }, 1000) // Additional delay for scroll completion
-  }, 1500) // Initial delay
+  }, 800) // Reduced delay for faster response while allowing scroll to complete
 }
 
 // Lifecycle hook to establish focus context when app loads
