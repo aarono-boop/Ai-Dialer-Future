@@ -387,21 +387,9 @@ interface Message {
 // Toast functionality (only for login/vulcan actions)
 const toast = useToast()
 
-// Connect Score tooltip content
-const connectScoreTooltip = `Connect Score is a premium add-on feature that uses real-world signals to help users prioritize high-value contacts and skip low-quality leads. It scores each phone number as High, Medium, or Low based on:
-
-• Carrier data
-• Engagement history
-• Phone metadata
-
-This lets teams focus their efforts on numbers with the greatest chance of a live answer—improving connect rates, morale, and performance.`
-
-// Helper function to wrap Connect Score text with tooltip
+// Helper function to handle Connect Score text (no tooltip)
 const wrapConnectScoreWithTooltip = (text: string): string => {
-  const tooltipContent = connectScoreTooltip.replace(/'/g, '&#39;').replace(/"/g, '&quot;')
-  return text
-    .replace(/Connect Scores/g, `<span class="connect-score-tooltip" data-tooltip="${tooltipContent}">Connect Scores</span>`)
-    .replace(/Connect Score/g, `<span class="connect-score-tooltip" data-tooltip="${tooltipContent}">Connect Score</span>`)
+  return text // Just return the original text without any wrapping
 }
 
 // Generate dynamic coaching feedback
