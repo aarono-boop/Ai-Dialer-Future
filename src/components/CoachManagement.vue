@@ -19,7 +19,7 @@
       <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
         <Card class="bg-gray-800 border-gray-700">
           <template #content>
-            <div class="flex items-center gap-4">
+            <div class="flex items-center gap-4 p-2.5">
               <div class="w-12 h-12 bg-blue-600 rounded-lg flex items-center justify-center">
                 <i class="pi pi-users text-xl text-white"></i>
               </div>
@@ -33,7 +33,7 @@
         
         <Card class="bg-gray-800 border-gray-700">
           <template #content>
-            <div class="flex items-center gap-4">
+            <div class="flex items-center gap-4 p-2.5">
               <div class="w-12 h-12 bg-green-600 rounded-lg flex items-center justify-center">
                 <i class="pi pi-check text-xl text-white"></i>
               </div>
@@ -47,7 +47,7 @@
         
         <Card class="bg-gray-800 border-gray-700">
           <template #content>
-            <div class="flex items-center gap-4">
+            <div class="flex items-center gap-4 p-2.5">
               <div class="w-12 h-12 bg-purple-600 rounded-lg flex items-center justify-center">
                 <i class="pi pi-video text-xl text-white"></i>
               </div>
