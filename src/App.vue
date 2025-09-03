@@ -537,6 +537,7 @@ const contactPreviewButtonsUsed = ref<boolean>(false)
 const connectionAnalysisTypingComplete = ref<boolean>(false)
 const showContactPreviewButtons = ref<boolean>(false)
 const showPhoneVerificationButton = ref<boolean>(false)
+const phoneVerificationButtonUsed = ref<boolean>(false)
 const verificationStep = ref<string>('default') // 'default', 'enter-phone', 'enter-code'
 const enteredPhoneNumber = ref<string>('')
 const showVerificationButtons = ref<boolean>(false)
