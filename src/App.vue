@@ -759,6 +759,7 @@ const handleLogout = () => {
   welcomeTypingComplete.value = false // Reset typing completion state
   congratulationsTypingComplete.value = false // Reset congratulations typing state
   actionButtonsUsed.value = false // Reset action buttons used state
+  contactPreviewTypingComplete.value = false // Reset contact preview typing state
 
   // Reset UI state
   showDialer.value = false
