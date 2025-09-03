@@ -36,27 +36,13 @@
       <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
         <Card class="bg-gray-800 border-gray-700">
           <template #content>
-            <div class="flex items-center gap-4 p-2.5">
-              <div class="w-12 h-12 bg-blue-600 rounded-lg flex items-center justify-center">
-                <i class="pi pi-users text-xl text-white"></i>
+            <div class="flex items-center gap-3 p-2">
+              <div class="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
+                <i class="pi pi-users text-sm text-white"></i>
               </div>
-              <div>
-                <h3 class="font-semibold">Total Coaches</h3>
-                <p class="text-2xl font-bold">{{ coachList.length }}</p>
-              </div>
-            </div>
-          </template>
-        </Card>
-        
-        <Card class="bg-gray-800 border-gray-700">
-          <template #content>
-            <div class="flex items-center gap-4 p-2.5">
-              <div class="w-12 h-12 bg-green-600 rounded-lg flex items-center justify-center">
-                <i class="pi pi-check text-xl text-white"></i>
-              </div>
-              <div>
-                <h3 class="font-semibold">Active Coaches</h3>
-                <p class="text-2xl font-bold">{{ activeCoaches.length }}</p>
+              <div class="flex items-center gap-2">
+                <h3 class="font-medium text-sm">Total Coaches</h3>
+                <p class="text-lg font-bold">{{ coachList.length }}</p>
               </div>
             </div>
           </template>
@@ -64,13 +50,27 @@
         
         <Card class="bg-gray-800 border-gray-700">
           <template #content>
-            <div class="flex items-center gap-4 p-2.5">
-              <div class="w-12 h-12 bg-purple-600 rounded-lg flex items-center justify-center">
-                <i class="pi pi-video text-xl text-white"></i>
+            <div class="flex items-center gap-3 p-2">
+              <div class="w-8 h-8 bg-green-600 rounded-lg flex items-center justify-center">
+                <i class="pi pi-check text-sm text-white"></i>
               </div>
-              <div>
-                <h3 class="font-semibold">With Videos</h3>
-                <p class="text-2xl font-bold">{{ coachesWithVideos.length }}</p>
+              <div class="flex items-center gap-2">
+                <h3 class="font-medium text-sm">Active Coaches</h3>
+                <p class="text-lg font-bold">{{ activeCoaches.length }}</p>
+              </div>
+            </div>
+          </template>
+        </Card>
+        
+        <Card class="bg-gray-800 border-gray-700">
+          <template #content>
+            <div class="flex items-center gap-3 p-2">
+              <div class="w-8 h-8 bg-purple-600 rounded-lg flex items-center justify-center">
+                <i class="pi pi-video text-sm text-white"></i>
+              </div>
+              <div class="flex items-center gap-2">
+                <h3 class="font-medium text-sm">With Videos</h3>
+                <p class="text-lg font-bold">{{ coachesWithVideos.length }}</p>
               </div>
             </div>
           </template>
