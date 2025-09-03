@@ -2163,16 +2163,11 @@ const handleCompleteQueue = (): void => {
   // Add user message for queue completion with custom positioning
   addUserQueueCompletedMessage('Queue completed')
 
-  // Add AI congratulations message after a delay
+  // Add session summary content to chat after a delay
   setTimeout(() => {
-    addAIMessage('Congratulations! You have completed your entire call queue. All contacts have been processed.')
-
-    // Add session summary content to chat
-    setTimeout(() => {
-      addSessionSummaryToChat(true)
-      // Show Load New File button
-      showLoadNewFileButton.value = true
-    }, 1000)
+    addSessionSummaryToChat(true)
+    // Show Load New File button
+    showLoadNewFileButton.value = true
   }, 500)
 }
 
