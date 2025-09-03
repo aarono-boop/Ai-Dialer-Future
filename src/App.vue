@@ -2311,9 +2311,14 @@ const handleGoogleSignupFromAccount = () => {
 
 // Action Button Methods
 const handleActionButton = (action: string): void => {
+  console.log('🎯 handleActionButton called with action:', action)
+  console.log('🎯 Before: showActionButtons =', showActionButtons.value, 'actionButtonsUsed =', actionButtonsUsed.value)
+
   // Hide action buttons after selection and mark as used
   showActionButtons.value = false
   actionButtonsUsed.value = true
+
+  console.log('🎯 After: showActionButtons =', showActionButtons.value, 'actionButtonsUsed =', actionButtonsUsed.value)
   // Don't show contact preview buttons yet - wait for AI message to appear
   
   // Add user message showing their selection
