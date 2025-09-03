@@ -173,6 +173,11 @@ onUnmounted(() => {
 
 // Method to determine if coach avatar should be used
 const shouldUseCoachAvatar = (): boolean => {
+  // Always use ARKON avatar if AI coaching is disabled
+  if (props.aiCoachEnabled === false) {
+    return false
+  }
+
   // Only use coach avatar if coach parameter is set
   if (props.coachParameter !== 'jordan-stupar') {
     return false
