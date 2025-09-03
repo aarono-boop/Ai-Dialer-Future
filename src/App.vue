@@ -2335,7 +2335,8 @@ const handleActionButton = (action: string): void => {
   actionButtonsUsed.value = true
   // Reset contact preview typing state for new message
   contactPreviewTypingComplete.value = false
-  // Don't show contact preview buttons yet - wait for AI message to appear
+  // Hide contact preview buttons initially - they'll show after typing completes
+  showContactPreviewButtons.value = false
   
   // Add user message showing their selection
   addUserMessage(`I want to ${action.toLowerCase()}`)
