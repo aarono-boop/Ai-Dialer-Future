@@ -288,21 +288,12 @@
     <CoachManagement v-if="(managementMode === 'manage' || managementMode === 'admin') && currentPage === 'main'" />
 
     <!-- Coach Creation Modal for create-coach URL -->
-    <div
+    <CoachCreationModal
       v-if="managementMode === 'create'"
-      class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
-    >
-      <div class="bg-gray-800 rounded-lg p-8 max-w-md mx-4">
-        <h2 class="text-white text-xl font-bold mb-4">Create New Coach</h2>
-        <p class="text-gray-300 mb-4">This is a test to see if the create-coach mode works.</p>
-        <button
-          @click="handleCoachModalClose"
-          class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
-        >
-          Close
-        </button>
-      </div>
-    </div>
+      :visible="managementMode === 'create'"
+      @coach-created="handleCoachCreated"
+      @close="handleCoachModalClose"
+    />
 
     <!-- Footer -->
     <Footer v-if="currentPage === 'main' && !managementMode" :style="showDialer ? 'margin-right: 33.333333%' : ''" :showDialer="showDialer" :queuePaused="queuePaused" @skip-to-dialer="skipToDialer" />
