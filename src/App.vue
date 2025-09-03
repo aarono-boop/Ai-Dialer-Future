@@ -649,18 +649,16 @@ const isVoicemailScenario = computed(() => {
 })
 
 // Chat messages array
-const messages: Ref<Message[]> = ref([
-  {
-    type: 'ai',
-    content: [
-      'Welcome! I\'m <strong>ARKON (Post MVP)</strong>, your AI calling assistant.<br><br>Drop your contact file here and I\'ll show you exactly who\'s most likely to pick up right now.'
-    ],
-    get typing() {
-      // Only show typing animation for completely new users (not signed in and not returning)
-      return !isSignedIn.value && !isReturningUser.value
-    }
-  }
-])
+const initialWelcomeMessage = computed(() => ({
+  type: 'ai' as const,
+  content: [
+    'Welcome! I\'m <strong>ARKON (Post MVP)</strong>, your AI calling assistant.<br><br>Drop your contact file here and I\'ll show you exactly who\'s most likely to pick up right now.'
+  ],
+  // Only show typing animation for completely new users (not signed in and not returning)
+  typing: !isSignedIn.value && !isReturningUser.value
+}))
+
+const messages: Ref<Message[]> = ref([initialWelcomeMessage.value])
 
 // Initialize chat utilities
 const chatUtils = createChatUtils(messages, chatMessages, headerRef)
@@ -1255,7 +1253,7 @@ const sendMessage = (message: string): void => {
       addAIMessage([
         '<i class="pi pi-users"></i> Great idea! Call practice makes perfect.',
         'ARKON\'s practice mode can help you:',
-        '��� Rehearse your opening pitch with AI feedback',
+        '• Rehearse your opening pitch with AI feedback',
         '• Practice handling common objections',
         '• Test different conversation flows',
         '• Record and review your delivery',
