@@ -218,6 +218,7 @@ export const createChatUtils = (
     addUserMessage,
     addSeparatorMessage,
     addAIMessageWithDelay,
-    addAIMessageWithTyping
+    addAIMessageWithTyping,
+    addAIMessageWithTypingNoScroll
   }
 }
