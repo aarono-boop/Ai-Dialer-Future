@@ -48,7 +48,7 @@
           </div>
 
           <!-- Action Buttons - positioned above chat input -->
-          <div v-if="showActionButtons" class="mt-2 pt-5 flex justify-center">
+          <div v-if="showActionButtons && !actionButtonsUsed" class="mt-2 pt-5 flex justify-center">
             <div class="w-[70%]">
               <ActionButtons
                 @action-selected="handleActionButton"
