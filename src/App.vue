@@ -624,7 +624,7 @@ const messages: Ref<Message[]> = ref([
 
 // Initialize chat utilities
 const chatUtils = createChatUtils(messages, chatMessages, headerRef)
-const { scrollToBottom, scrollToUserMessage, addAIMessage, addAIMessageWithoutScroll, addUserMessage, addSeparatorMessage, addAIMessageWithTyping } = chatUtils
+const { scrollToBottom, scrollToBottomDuringTyping, scrollToUserMessage, addAIMessage, addAIMessageWithoutScroll, addUserMessage, addSeparatorMessage, addAIMessageWithTyping } = chatUtils
 
 // Helper function to identify if a message is the "Ready to upload" message for returning users
 const isReadyToUploadMessage = (message: Message, index: number): boolean => {
