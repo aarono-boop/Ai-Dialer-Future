@@ -324,7 +324,6 @@ const handleCreate = async () => {
 }
 
 const onClose = () => {
-  emit('update:visible', false)
   emit('close')
   // Reset form after a delay to allow dialog to close smoothly
   setTimeout(resetForm, 300)
