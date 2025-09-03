@@ -1218,6 +1218,7 @@ const sendMessage = (message: string): void => {
   if (verificationStep.value === 'enter-code') {
     showVerificationButtons.value = false
     showPhoneVerificationButton.value = false // Hide phone verification button
+    verificationCodeTypingComplete.value = false // Reset typing state
     verificationStep.value = 'default'
     phoneVerified.value = true // Mark phone as verified
     showStartDialingButton.value = true
