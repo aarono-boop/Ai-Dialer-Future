@@ -15,23 +15,30 @@ export const createChatUtils = (
 ) => {
   const scrollToBottom = async (): Promise<void> => {
     await nextTick()
-    // Wait for DOM updates and then scroll multiple times to ensure it works
-    setTimeout(() => {
-      if (chatMessages.value) {
-        // First scroll immediately
-        chatMessages.value.scrollTop = chatMessages.value.scrollHeight
 
-        // Then scroll smoothly after a short delay
-        setTimeout(() => {
-          if (chatMessages.value) {
-            chatMessages.value.scrollTo({
-              top: chatMessages.value.scrollHeight,
-              behavior: 'smooth'
-            })
-          }
-        }, 100)
+    // Enhanced scroll function with multiple attempts to handle dynamic content
+    const performScroll = (attempt: number = 0) => {
+      if (!chatMessages.value || attempt > 3) return
+
+      const maxScrollTop = chatMessages.value.scrollHeight - chatMessages.value.clientHeight
+
+      // Immediate scroll to bottom
+      chatMessages.value.scrollTop = maxScrollTop
+
+      // Check if we need to try again (content might still be loading)
+      if (attempt < 2) {
+        setTimeout(() => performScroll(attempt + 1), 100)
+      } else {
+        // Final smooth scroll for better UX
+        chatMessages.value.scrollTo({
+          top: maxScrollTop,
+          behavior: 'smooth'
+        })
       }
-    }, 50)
+    }
+
+    // Start with small delay to ensure DOM is updated
+    setTimeout(() => performScroll(), 50)
   }
 
   const scrollToBottomDuringTyping = (): void => {
