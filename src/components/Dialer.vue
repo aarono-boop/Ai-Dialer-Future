@@ -663,8 +663,8 @@ const completeQueue = () => {
   emit('complete-queue')
 }
 
-const toggleAICoach = () => {
-  emit('ai-coach-toggle', aiCoachEnabled.value)
+const toggleAICoach = (newValue: boolean) => {
+  emit('ai-coach-toggle', newValue)
 }
 
 const handleHangUpTab = (event: KeyboardEvent) => {
