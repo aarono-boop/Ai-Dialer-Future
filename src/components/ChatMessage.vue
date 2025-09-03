@@ -64,6 +64,11 @@ const props = defineProps<{
   isWide?: boolean
 }>()
 
+// Define emits
+const emit = defineEmits<{
+  typingComplete: []
+}>()
+
 // Typing animation state
 const typedContent = ref<string[]>(props.message.typing ? props.message.content.map(() => '') : [])
 const isTyping = ref(false)
