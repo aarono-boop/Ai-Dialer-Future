@@ -2549,9 +2549,9 @@ const handleActionButton = (action: string): void => {
 }
 
 // Coach Management Methods
-const handleCoachCreated = (coachData: any) => {
+const handleCoachCreated = async (coachData: any) => {
   try {
-    const newCoach = addCoach(coachData)
+    const newCoach = await addCoach(coachData)
     // Redirect to the new coach's page
     const newUrl = generateCoachUrl(newCoach.name)
     window.location.href = newUrl
