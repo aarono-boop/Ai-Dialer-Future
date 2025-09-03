@@ -51,17 +51,24 @@
       <div class="mt-3">
         <div class="flex items-center justify-between" style="min-height: 32px; box-sizing: border-box;">
           <div class="flex items-center gap-2" style="flex-shrink: 0;">
-            <!-- Jordan's Avatar when coach parameter is set -->
-            <div v-if="props.coachParameter === 'jordan-stupar'" class="flex items-center gap-2">
+            <!-- Dynamic Coach Avatar and Name -->
+            <div v-if="currentCoach" class="flex items-center gap-2">
               <img
-                src="https://cdn.builder.io/api/v1/image/assets%2F5aeb07ce25f84dbc869290880d07b71e%2F3bddb1110d0949139407eb0dc708c7ff?format=webp&width=800"
-                alt="Jordan Stupar"
+                v-if="currentCoach.avatarUrl"
+                :src="currentCoach.avatarUrl"
+                :alt="currentCoach.displayName"
                 class="w-6 h-6 rounded-full object-cover"
               />
+              <div
+                v-else
+                class="w-6 h-6 rounded-full bg-gradient-to-br from-blue-400 to-purple-500 flex items-center justify-center text-white text-xs font-semibold"
+              >
+                {{ getCoachInitials(currentCoach.displayName) }}
+              </div>
               <span
                 class="text-gray-300 text-sm cursor-pointer select-none"
                 @click="toggleAICoach(!props.aiCoachEnabled)"
-              >Jordan's AI Coach</span>
+              >{{ currentCoach.displayName }}'s AI Coach</span>
             </div>
             <!-- Default AI Coach when no coach parameter -->
             <span
@@ -313,9 +320,10 @@
 </template>
 
 <script setup lang="ts">
-import { ref, nextTick } from 'vue'
+import { ref, nextTick, computed } from 'vue'
 import Button from 'primevue/button'
 import ToggleSwitch from 'primevue/toggleswitch'
+import { useCoaches } from '../composables/useCoaches'
 
 // Connect Score tooltip content
 const connectScoreTooltip = `Connect Score is a premium add-on feature that uses real-world signals to help users prioritize high-value contacts and skip low-quality leads. It scores each phone number as High, Medium, or Low based on:
@@ -370,6 +378,19 @@ const showKeypadModal = ref(false)
 const muteButtonRef = ref<any>(null)
 const holdButtonRef = ref<any>(null)
 const keypadButtonRef = ref<any>(null)
+
+// Coach system integration
+const { currentCoach } = useCoaches()
+
+// Helper method for coach initials
+const getCoachInitials = (name: string): string => {
+  return name
+    .split(' ')
+    .map(word => word.charAt(0))
+    .join('')
+    .toUpperCase()
+    .slice(0, 2)
+}
 
 // Methods
 const formatTime = (seconds: number): string => {
