@@ -732,6 +732,25 @@ const handleTypingComplete = (index: number): void => {
       }, 200) // Small delay for better UX
     }
   }
+
+  // Check if this is the verification code message
+  if (messages.value[index] && messages.value[index].content[0]?.includes('Perfect. We\'ve sent a text with 6-digit verification code')) {
+    verificationCodeTypingComplete.value = true
+    // Show verification buttons after typing completes
+    setTimeout(() => {
+      showVerificationButtons.value = true
+
+      // Focus the chat input after the buttons appear
+      setTimeout(() => {
+        if (chatInputRef.value && chatInputRef.value.focus) {
+          chatInputRef.value.focus()
+          console.log('Auto-focused chat input for verification code after typing')
+        } else {
+          console.log('Chat input ref not available for verification code auto-focus after typing')
+        }
+      }, 100)
+    }, 200) // Small delay for better UX
+  }
 }
 
 // Update welcome message typing status based on user status
