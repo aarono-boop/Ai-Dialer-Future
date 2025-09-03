@@ -285,7 +285,7 @@
     </div>
 
     <!-- Coach Management Interface -->
-    <CoachManagement v-if="managementMode && currentPage === 'main'" />
+    <CoachManagement v-if="(managementMode === 'manage' || managementMode === 'admin') && currentPage === 'main'" />
 
     <!-- Coach Creation Modal for create-coach URL -->
     <!-- Temporarily disabled for debugging -->
