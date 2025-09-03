@@ -434,7 +434,7 @@ const generateCallScript = (contact: any): string[] => {
 const showCallConnectedMessages = (contact: any): void => {
   // Add coach-specific intro message when coach parameter is set
   if (coachParameter.value === 'jordan-stupar') {
-    addAIMessageWithTyping('I\'m on the call with you...')
+    addAIMessageWithTyping('I\'m on the call with you - let\'s crush this together!')
 
     // Delay before showing connection message
     setTimeout(() => {
@@ -1940,7 +1940,7 @@ const addSessionSummaryToChat = (isCompleted: boolean = false): void => {
                  <div style="margin-bottom: 16px;"><strong style="color: #fbbf24;"><i class="pi pi-info-circle" style="margin-right: 8px;"></i>Opportunity area</strong> - Try asking more discovery questions before jumping into your pitch</div>
                  <div style="margin-bottom: 16px;"><strong style="color: #fbbf24;"><i class="pi pi-lightbulb" style="margin-right: 8px;"></i>Key insight</strong> - When you slow down and really listen, your closing rate increases significantly</div>
                </div>
-               Take a quick break if needed, then get back in there! Your next few calls are primed for success—I can feel the momentum building.<br><br>
+               Take a quick break if needed, then get back in there! Your next few calls are primed for success��I can feel the momentum building.<br><br>
                <button style="background-color: rgb(59, 130, 246); color: white; border: none; border-radius: 6px; padding: 8px 16px; font-size: 14px; font-weight: 500; cursor: pointer; display: inline-flex; align-items: center; gap: 8px;" onclick="handleExportFile()">
                  <i class="pi pi-download"></i> Export Enriched File
                </button>`
@@ -2325,7 +2325,7 @@ const handleUpgradeSelected = () => {
   closePricingPage()
   isSignedIn.value = true
   showActionButtons.value = true
-  addAIMessage('�� Welcome to ARKON! Your account has been created successfully. Let\'s start your first smart calling session! What are you trying to accomplish?')
+  addAIMessage('���� Welcome to ARKON! Your account has been created successfully. Let\'s start your first smart calling session! What are you trying to accomplish?')
 
   // Ensure scroll happens after action buttons are rendered
   setTimeout(() => {
