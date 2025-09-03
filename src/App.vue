@@ -1102,7 +1102,7 @@ const simulateFileUpload = () => {
 
       addAIMessage([
         'Perfect! I\'ve analyzed your <strong style="color: #fbbf24;">156 contacts</strong>.<br><br>Here\'s a preview of your data. Does this look correct?<br><br>',
-        sampleContacts
+        sampleContacts.replace(/\$\{wrapConnectScoreWithTooltip\('Connect Score'\)\}/g, 'Connect Score')
       ])
       showContactPreviewButtons.value = true
       scrollToBottom()
