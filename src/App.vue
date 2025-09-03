@@ -288,9 +288,10 @@
     <CoachManagement v-if="(managementMode === 'manage' || managementMode === 'admin') && currentPage === 'main'" />
 
     <!-- Coach Creation Modal for create-coach URL -->
-    <TestModal
+    <CoachCreationModal
       v-if="managementMode === 'create'"
       :visible="managementMode === 'create'"
+      @coach-created="handleCoachCreated"
       @close="handleCoachModalClose"
     />
 
