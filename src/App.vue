@@ -1928,7 +1928,8 @@ const addSessionSummaryToChat = (isCompleted: boolean = false): void => {
       <h2 style="color: white; font-size: 24px; font-weight: 600; margin-bottom: 16px;">${title}</h2>
       ${isCompleted ? '<p style="color: rgb(209, 213, 219); font-size: 16px; margin-bottom: 32px;">Congratulations! You have completed your entire call queue. All contacts have been processed.</p>' : ''}
 
-      <!-- Results & Next Steps Section -->
+      <!-- Results & Next Steps Section - only show coaching if AI Coach is enabled -->
+      ${aiCoachEnabled.value ? `
       <div style="margin-bottom: 32px;">
         <h3 style="color: white; font-size: 18px; font-weight: 600; margin-bottom: 16px; display: flex; align-items: center;">${coachParameter.value === 'jordan-stupar' ? '<img src="https://cdn.builder.io/api/v1/image/assets%2F5aeb07ce25f84dbc869290880d07b71e%2F3bddb1110d0949139407eb0dc708c7ff?format=webp&width=800" alt="Jordan Stupar" style="width: 18px; height: 18px; border-radius: 50%; object-fit: cover; margin-right: 8px;">' : '<i class="pi pi-check-circle" style="margin-right: 8px;"></i>'}${coachParameter.value === 'jordan-stupar' ? 'Jordan\'s Session Recap' : 'AI Coaching'}</h3>
         <div style="background-color: rgb(55, 65, 81); border-radius: 8px; padding: 20px;">
@@ -1958,6 +1959,14 @@ const addSessionSummaryToChat = (isCompleted: boolean = false): void => {
           </div>
         </div>
       </div>
+      ` : `
+      <!-- Export button for when AI Coach is disabled -->
+      <div style="margin-bottom: 32px;">
+        <button style="background-color: rgb(59, 130, 246); color: white; border: none; border-radius: 6px; padding: 8px 16px; font-size: 14px; font-weight: 500; cursor: pointer; display: inline-flex; align-items: center; gap: 8px;" onclick="handleExportFile()">
+          <i class="pi pi-download"></i> Export Enriched File
+        </button>
+      </div>
+      `}
 
       <!-- Call Log Section -->
       <div style="margin-top: 8px;">
