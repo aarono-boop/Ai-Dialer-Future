@@ -354,6 +354,8 @@ import { showContactPreview } from './utils/contactPreview'
 import { clearFocusAndEstablishContext, focusChatInput, announceToScreenReader } from './utils/focus'
 import { createChatUtils, type Message } from './utils/chat'
 import { getResponseForKeywords, AI_RESPONSES } from './utils/aiResponses'
+import { useCoaches } from './composables/useCoaches'
+import type { CoachManagementMode } from './types/coach'
 
 // Components
 import Sidebar from './components/Sidebar.vue'
@@ -540,8 +542,21 @@ const isManualHangUp = ref<boolean>(false) // Track if hang up was manual vs aut
 const queueTime = ref<number>(14)
 const showLoadNewFileButton = ref<boolean>(false)
 
-// Coach parameter for AI Coach functionality
-const coachParameter = ref<string>('')
+// Initialize coach management system
+const {
+  currentCoachId,
+  currentCoach,
+  welcomeMessage,
+  managementMode,
+  setCurrentCoach,
+  setManagementMode,
+  addCoach,
+  coachList,
+  generateCoachUrl
+} = useCoaches()
+
+// Computed to maintain compatibility with existing code
+const coachParameter = computed(() => currentCoachId.value || '')
 
 // Contact data
 const contacts = [
@@ -632,20 +647,8 @@ const isVoicemailScenario = computed(() => {
   return currentContact.value && currentContact.value.name === 'George Sample'
 })
 
-// Coach-specific welcome messages
-const getCoachWelcomeMessage = computed(() => {
-  if (!coachParameter.value) {
-    return 'Welcome to <strong>ARKON</strong>, your AI calling assistant.<br><br>Drop your contact file here and I\'ll show you exactly who\'s most likely to pick up right now.'
-  }
-
-  // Coach-specific welcome messages
-  const coachMessages: Record<string, string> = {
-    'jordan-stupar': 'Welcome to <strong>ARKON</strong>! I\'m your AI calling assistant, trained with <strong>Jordan Stupar\'s</strong> proven sales methodologies.<br><br><div class="coach-video-container" data-video-id="sthXVPIC8K0" data-autoplay="true"></div><br>Drop your contact file here and I\'ll show you exactly who\'s most likely to pick up right now using Jordan\'s approach.',
-    // Add more coaches as needed
-  }
-
-  return coachMessages[coachParameter.value] || `Welcome to <strong>ARKON</strong>! I'm your AI calling assistant, enhanced with your coach's proven methodologies.<br><br>Drop your contact file here and I\'ll show you exactly who\'s most likely to pick up right now.`
-})
+// Use the welcome message from the coach system
+const getCoachWelcomeMessage = welcomeMessage
 
 // Chat messages array
 const messages: Ref<Message[]> = ref([
@@ -1898,12 +1901,29 @@ const toggleCallLog = (uniqueId?: string): void => {
 
 // Ensure functions are available on mount
 onMounted(() => {
-  // Parse URL parameters for coach functionality
+  // Parse URL parameters for coach functionality and management modes
   const urlParams = new URLSearchParams(window.location.search)
   const coach = urlParams.get('coach')
+  const createCoach = urlParams.get('create-coach')
+  const manageCoaches = urlParams.get('manage-coaches')
+  const coachAdmin = urlParams.get('coach-admin')
+
+  // Set coach if specified
   if (coach) {
-    coachParameter.value = coach
+    setCurrentCoach(coach)
     console.log('Coach parameter detected:', coach)
+  }
+
+  // Set management mode based on URL parameters
+  if (createCoach === 'true') {
+    setManagementMode('create')
+    console.log('Coach creation mode enabled')
+  } else if (manageCoaches === 'true') {
+    setManagementMode('manage')
+    console.log('Coach management mode enabled')
+  } else if (coachAdmin) {
+    setManagementMode('admin')
+    console.log('Coach admin mode enabled')
   }
 
   // Set the initial welcome message based on coach parameter
