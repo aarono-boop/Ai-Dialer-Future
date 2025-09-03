@@ -243,12 +243,8 @@ const canCreate = computed(() => {
 const previewMessage = computed(() => {
   if (!formData.value.displayName) return ''
 
-  let message = formData.value.customMessage ||
+  return formData.value.customMessage ||
     `Welcome to <strong>ARKON</strong>! I'm your AI calling assistant, enhanced with <strong>${formData.value.displayName}'s</strong> proven methodologies.`
-
-  message += `<br><br>Drop your contact file here and I'll show you exactly who's most likely to pick up right now using ${formData.value.displayName}'s approach.`
-
-  return message
 })
 
 // Utility functions
