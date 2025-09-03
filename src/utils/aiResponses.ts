@@ -102,7 +102,7 @@ export const AI_RESPONSES = {
   // Call script for connected calls
   CALL_SCRIPT: [
     'Script:',
-    '<span style="color: #fbbf24; font-style: italic;">[The AI learns the nuances of your coaching approach to generate contextual scripts that reflect your unique sales philosophy, language patterns, and proven conversation starters tailored to this specific prospect.]</span>'
+    '<span style="color: #fbbf24; font-style: italic;">[The AI learns the nuances of this coaches approach to generate contextual scripts that reflect their unique sales philosophy, language patterns, and proven conversation starters tailored to this specific prospect.]</span>'
   ],
 
   // Objection handling response
