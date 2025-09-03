@@ -1,61 +1,25 @@
 <template>
-  <div class="w-full h-full bg-gray-900 rounded-lg border border-gray-700 flex flex-col">
-    <!-- Header -->
-    <div class="p-4 border-b border-gray-700">
-      <div class="flex items-center justify-between">
-        <div class="flex items-center gap-2">
-          <div class="w-2 h-2 bg-green-500 rounded-full"></div>
-          <span class="text-white font-medium">Dial Queue</span>
-        </div>
-      </div>
-
-      <!-- Contact Progress -->
-      <div class="mt-2 text-center">
-        <div class="text-gray-400 text-xs">
-          Contact {{ currentContactIndex + 1 }} of 3
-        </div>
-        <div class="mt-1 bg-gray-700 rounded-full h-2">
-          <div
-            class="bg-blue-500 h-2 rounded-full transition-all duration-300"
-            :style="{ width: `${((currentContactIndex + 1) / 3) * 100}%` }"
-          ></div>
-        </div>
-      </div>
-
-      <div class="flex items-center justify-between mt-3" style="min-height: 32px; box-sizing: border-box;">
-        <div class="text-gray-400 text-sm" style="flex-shrink: 0;">
-          Queue Time: <span class="text-white">{{ formatTime(queueTime) }}</span>
-        </div>
-        <Button
-          v-if="!shouldCompleteQueue"
-          @click="pauseQueue"
-          :disabled="callState === 'connected'"
-          tabindex="8"
-          severity="secondary"
-          size="small"
-          label="Pause Queue"
-          style="flex-shrink: 0; position: relative;"
-        />
-      </div>
-    </div>
-
-    <!-- Call Status -->
-    <div class="p-4 border-b border-gray-700">
+  <div class="w-full h-full bg-gray-900 rounded-r-lg border border-gray-700 flex flex-col pt-4 pb-[10px] px-3">
+    <!-- Call Status & Controls Card -->
+    <div class="mx-[5px] mb-4 bg-gray-800 border border-gray-600 rounded-lg p-[14px]">
+      <!-- Call Status -->
       <!-- Call Ended State -->
-      <div v-if="callState === 'ended'" class="bg-red-900/50 border border-red-700 rounded-lg p-3 text-center">
+      <div v-if="callState === 'ended'" class="bg-gray-900/50 border border-gray-600 rounded-lg p-3 text-center">
         <div class="text-red-400 font-medium">Call Ended</div>
         <div class="text-gray-300 text-sm">(312) 586-9748</div>
       </div>
 
       <!-- Ringing State -->
-      <div v-else-if="callState === 'ringing'" class="bg-yellow-900/50 border border-yellow-700 rounded-lg p-3 text-center">
-        <div class="text-yellow-400 font-medium">Calling...</div>
-        <div class="text-gray-300 text-sm">{{ currentContact.phone }}</div>
-        <div class="flex justify-center mt-2">
-          <div class="animate-pulse w-2 h-2 bg-yellow-400 rounded-full mx-1"></div>
-          <div class="animate-pulse w-2 h-2 bg-yellow-400 rounded-full mx-1" style="animation-delay: 0.2s"></div>
-          <div class="animate-pulse w-2 h-2 bg-yellow-400 rounded-full mx-1" style="animation-delay: 0.4s"></div>
+      <div v-else-if="callState === 'ringing'" class="bg-gray-900/50 border border-gray-600 rounded-lg p-3 text-center">
+        <div class="flex items-center justify-center gap-2">
+          <div class="text-green-400 font-medium">Calling</div>
+          <div class="flex items-center">
+            <div class="animate-pulse w-2 h-2 bg-green-400 rounded-full mx-1"></div>
+            <div class="animate-pulse w-2 h-2 bg-green-400 rounded-full mx-1" style="animation-delay: 0.2s"></div>
+            <div class="animate-pulse w-2 h-2 bg-green-400 rounded-full mx-1" style="animation-delay: 0.4s"></div>
+          </div>
         </div>
+        <div class="text-gray-300 text-sm">{{ currentContact.phone }}</div>
       </div>
 
       <!-- Connected State -->
@@ -69,10 +33,54 @@
         <div class="text-gray-400 font-medium">Ready to Dial</div>
         <div class="text-gray-300 text-sm">{{ currentContact.phone }}</div>
       </div>
+
+      <!-- Header -->
+      <div class="mt-[17px]">
+        <div class="bg-gray-700 rounded-full h-5 w-full relative flex items-center">
+          <div
+            class="h-5 rounded-full transition-all duration-300"
+            :style="{ width: `${((currentContactIndex + 1) / 3) * 100}%`, background: 'linear-gradient(to right, #60a5fa, #7b68ee)' }"
+          ></div>
+          <div class="absolute inset-0 flex items-center justify-center text-white text-xs font-medium">
+            Dial Queue {{ currentContactIndex + 1 }} of 3
+          </div>
+        </div>
+      </div>
+
+      <!-- AI Coach Controls -->
+      <div class="mt-3">
+        <div class="flex items-center justify-between" style="min-height: 32px; box-sizing: border-box;">
+          <div class="flex items-center gap-2" style="flex-shrink: 0;">
+            <span
+              class="text-gray-300 text-sm cursor-pointer select-none"
+              @click="aiCoachEnabled = !aiCoachEnabled"
+            >AI Coach</span>
+            <ToggleSwitch
+              v-model="aiCoachEnabled"
+              @change="toggleAICoach"
+              class="ai-coach-toggle"
+            />
+          </div>
+          <div class="text-gray-400 text-sm text-center">
+            Queue Time: <span class="text-white">{{ formatTime(queueTime) }}</span>
+          </div>
+          <Button
+            v-if="!shouldCompleteQueue"
+            @click="pauseQueue"
+            :disabled="callState === 'connected'"
+            tabindex="8"
+            severity="secondary"
+            size="small"
+            class="pause-queue-compact"
+          >
+            <span class="text-xs">Pause Queue</span>
+          </Button>
+        </div>
+      </div>
     </div>
 
     <!-- Contact Info -->
-    <div class="flex-1 p-4 overflow-y-auto">
+    <div class="flex-1 mx-[5px] mb-4 bg-gray-800 border border-gray-600 rounded-lg p-[14px] overflow-y-auto">
       <div class="space-y-4">
         <!-- Contact Header -->
         <div>
@@ -135,7 +143,7 @@
     </div>
 
     <!-- Action Buttons -->
-    <div class="p-4 border-t border-gray-700">
+    <div class="mx-[5px] mb-2 bg-gray-800 border border-gray-600 rounded-lg pt-[14px] px-[14px] pb-[2px]">
       <!-- Call Controls (visible when not ended) -->
       <div v-if="callState !== 'ended'" class="space-y-3">
         <!-- Call Control Buttons -->
@@ -147,7 +155,7 @@
             tabindex="9"
             :disabled="callState === 'idle'"
             :severity="isMuted ? 'warn' : 'secondary'"
-            class="flex flex-col items-center justify-center gap-1 py-3"
+            class="flex flex-row items-center justify-center gap-1 py-3"
           >
             <i class="pi pi-microphone"></i>
             <span class="text-xs">{{ isMuted ? 'Unmute' : 'Mute' }}</span>
@@ -159,7 +167,7 @@
             tabindex="10"
             :disabled="callState === 'idle'"
             severity="secondary"
-            class="flex flex-col items-center justify-center gap-1 py-3"
+            class="flex flex-row items-center justify-center gap-1 py-3"
           >
             <i class="pi pi-calculator"></i>
             <span class="text-xs">Keypad</span>
@@ -172,7 +180,7 @@
             tabindex="11"
             :disabled="callState === 'idle'"
             :severity="isOnHold ? 'warn' : 'secondary'"
-            class="flex flex-col items-center justify-center gap-1 py-3"
+            class="flex flex-row items-center justify-center gap-1 py-3"
           >
             <i class="pi pi-pause"></i>
             <span class="text-xs">{{ isOnHold ? 'Resume' : 'Hold' }}</span>
@@ -293,6 +301,7 @@
 <script setup lang="ts">
 import { ref, nextTick } from 'vue'
 import Button from 'primevue/button'
+import ToggleSwitch from 'primevue/toggleswitch'
 
 // Connect Score tooltip content
 const connectScoreTooltip = `Connect Score is a premium add-on feature that uses real-world signals to help users prioritize high-value contacts and skip low-quality leads. It scores each phone number as High, Medium, or Low based on:
@@ -301,7 +310,7 @@ const connectScoreTooltip = `Connect Score is a premium add-on feature that uses
 • Engagement history
 • Phone metadata
 
-This lets teams focus their efforts on numbers with the greatest chance of a live answer—improving connect rates, morale, and performance.`
+This lets teams focus their efforts on numbers with the greatest chance of a live answer���improving connect rates, morale, and performance.`
 
 // Define props
 const props = defineProps<{
@@ -334,12 +343,13 @@ const props = defineProps<{
 }>()
 
 // Define emits
-const emit = defineEmits(['call-back', 'next-contact', 'hang-up', 'mute', 'hold', 'keypad', 'keypad-press', 'pause-queue', 'complete-queue'])
+const emit = defineEmits(['call-back', 'next-contact', 'hang-up', 'mute', 'hold', 'keypad', 'keypad-press', 'pause-queue', 'complete-queue', 'ai-coach-toggle'])
 
 // Reactive data
 const isMuted = ref(false)
 const isOnHold = ref(false)
 const showKeypadModal = ref(false)
+const aiCoachEnabled = ref(true)
 
 // Template refs for PrimeVue buttons
 const muteButtonRef = ref<any>(null)
@@ -638,6 +648,10 @@ const completeQueue = () => {
   emit('complete-queue')
 }
 
+const toggleAICoach = () => {
+  emit('ai-coach-toggle', aiCoachEnabled.value)
+}
+
 const handleHangUpTab = (event: KeyboardEvent) => {
   // If not holding Shift (forward tab), go back to ARKON logo
   if (!event.shiftKey) {
@@ -889,145 +903,7 @@ const handleHoldKeydown = (event: KeyboardEvent) => {
   flex-grow: 0 !important;
 }
 
-/* Parent container stabilization for Pause Queue button */
-:deep(.flex.items-center.justify-between.mt-3) {
-  min-height: 32px !important;
-  max-height: 32px !important;
-  box-sizing: border-box !important;
-  overflow: hidden !important;
-  position: relative !important;
-}
 
-:deep(.flex.items-center.justify-between.mt-3:hover) {
-  min-height: 32px !important;
-  max-height: 32px !important;
-  box-sizing: border-box !important;
-  overflow: hidden !important;
-  position: relative !important;
-}
-
-/* Nuclear option: Override all global button styles for Pause Queue button */
-:deep([tabindex="8"].btn-secondary),
-:deep([tabindex="8"].ds-button),
-:deep([tabindex="8"].p-button),
-:deep([tabindex="8"]) {
-  transition: none !important;
-  animation: none !important;
-  transform: none !important;
-  box-sizing: border-box !important;
-  flex-shrink: 0 !important;
-  flex-grow: 0 !important;
-  border: 1px solid rgba(255, 255, 255, 0.3) !important;
-  vertical-align: top !important;
-  width: auto !important;
-  height: auto !important;
-  min-width: auto !important;
-  min-height: auto !important;
-  max-width: none !important;
-  max-height: none !important;
-  position: relative !important;
-  top: 0 !important;
-  left: 0 !important;
-  right: auto !important;
-  bottom: auto !important;
-  margin: 0 !important;
-  padding: 8px 12px !important;
-  font-size: 0.875rem !important;
-  line-height: 1.25rem !important;
-  background-color: #344054 !important;
-  color: white !important;
-}
-
-:deep([tabindex="8"].btn-secondary:hover),
-:deep([tabindex="8"].ds-button:hover),
-:deep([tabindex="8"].p-button:hover),
-:deep([tabindex="8"]:hover) {
-  transition: none !important;
-  animation: none !important;
-  transform: none !important;
-  box-sizing: border-box !important;
-  flex-shrink: 0 !important;
-  flex-grow: 0 !important;
-  border: 1px solid rgba(255, 255, 255, 0.3) !important;
-  vertical-align: top !important;
-  width: auto !important;
-  height: auto !important;
-  min-width: auto !important;
-  min-height: auto !important;
-  max-width: none !important;
-  max-height: none !important;
-  position: relative !important;
-  top: 0 !important;
-  left: 0 !important;
-  right: auto !important;
-  bottom: auto !important;
-  margin: 0 !important;
-  padding: 8px 12px !important;
-  font-size: 0.875rem !important;
-  line-height: 1.25rem !important;
-  background-color: #475467 !important;
-  color: white !important;
-}
-
-:deep([tabindex="8"].btn-secondary:focus),
-:deep([tabindex="8"].ds-button:focus),
-:deep([tabindex="8"].p-button:focus),
-:deep([tabindex="8"]:focus) {
-  transition: none !important;
-  animation: none !important;
-  transform: none !important;
-  box-sizing: border-box !important;
-  flex-shrink: 0 !important;
-  flex-grow: 0 !important;
-  border: 1px solid rgba(255, 255, 255, 0.3) !important;
-  vertical-align: top !important;
-  outline: none !important;
-  box-shadow: inset 0 0 0 2px #6b7280 !important;
-  width: auto !important;
-  height: auto !important;
-  min-width: auto !important;
-  min-height: auto !important;
-  max-width: none !important;
-  max-height: none !important;
-  position: relative !important;
-  top: 0 !important;
-  left: 0 !important;
-  right: auto !important;
-  bottom: auto !important;
-  margin: 0 !important;
-  padding: 8px 12px !important;
-  font-size: 0.875rem !important;
-  line-height: 1.25rem !important;
-  background-color: #475467 !important;
-  color: white !important;
-}
-
-:deep([tabindex="8"].btn-secondary:active),
-:deep([tabindex="8"].ds-button:active),
-:deep([tabindex="8"].p-button:active),
-:deep([tabindex="8"]:active) {
-  transition: none !important;
-  animation: none !important;
-  transform: none !important;
-  box-sizing: border-box !important;
-  flex-shrink: 0 !important;
-  flex-grow: 0 !important;
-  border: 1px solid rgba(255, 255, 255, 0.3) !important;
-  vertical-align: top !important;
-  width: auto !important;
-  height: auto !important;
-  position: relative !important;
-  top: 0 !important;
-  left: 0 !important;
-  right: auto !important;
-  bottom: auto !important;
-  margin: 0 !important;
-  padding: 8px 12px !important;
-  font-size: 0.875rem !important;
-  line-height: 1.25rem !important;
-  background-color: #475467 !important;
-  color: white !important;
-}
 
 /* Specific targeting for call control buttons (mute, keypad, hold, hang up) */
 :deep([tabindex="11"]),
@@ -1134,5 +1010,120 @@ const handleHoldKeydown = (event: KeyboardEvent) => {
 /* Hang Up button custom hover color */
 :deep([tabindex="12"]:hover) {
   background-color: #b91c1c !important; /* red-700 - darker red for hover */
+}
+
+/* Custom ToggleSwitch styling - try multiple approaches */
+.custom-toggle .p-toggleswitch-slider {
+  background-color: #374151 !important; /* Default background - gray-700 */
+  border-color: #6b7280 !important; /* gray-500 */
+}
+
+.custom-toggle.p-toggleswitch-checked .p-toggleswitch-slider {
+  background-color: #8b5cf6 !important; /* Purple when checked */
+  border-color: #8b5cf6 !important;
+}
+
+.custom-toggle .p-toggleswitch-handle {
+  background-color: #ffffff !important; /* White handle always */
+  border-color: #ffffff !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3) !important; /* Add shadow for better visibility */
+}
+
+::deep(.custom-toggle .p-toggleswitch-slider) {
+  background-color: #374151 !important; /* Default background - gray-700 */
+  border-color: #6b7280 !important; /* gray-500 */
+}
+
+::deep(.custom-toggle.p-toggleswitch-checked .p-toggleswitch-slider) {
+  background-color: #8b5cf6 !important; /* Purple when checked */
+  border-color: #8b5cf6 !important;
+}
+
+::deep(.custom-toggle .p-toggleswitch-handle) {
+  background-color: #ffffff !important; /* White handle always */
+  border-color: #ffffff !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3) !important; /* Add shadow for better visibility */
+}
+</style>
+
+<style>
+/* Unscoped global styles for AI Coach Toggle - Maximum specificity */
+body .ai-coach-toggle.p-toggleswitch {
+  height: 20px !important;
+  width: 40px !important;
+}
+
+html body .ai-coach-toggle.p-toggleswitch .p-toggleswitch-slider {
+  background-color: #374151 !important;
+  background: #374151 !important;
+  border-color: #6b7280 !important;
+  height: 20px !important;
+  width: 40px !important;
+  border-radius: 10px !important;
+  position: relative !important;
+  display: flex !important;
+  align-items: center !important;
+}
+
+html body .ai-coach-toggle.p-toggleswitch[data-p-checked="true"] .p-toggleswitch-slider,
+html body .ai-coach-toggle.p-toggleswitch-checked .p-toggleswitch-slider {
+  background-color: #8b5cf6 !important;
+  background: #8b5cf6 !important;
+  border-color: #8b5cf6 !important;
+  height: 20px !important;
+  width: 40px !important;
+  border-radius: 10px !important;
+  position: relative !important;
+  display: flex !important;
+  align-items: center !important;
+}
+
+html body .ai-coach-toggle.p-toggleswitch .p-toggleswitch-handle {
+  background-color: #ffffff !important;
+  background: #ffffff !important;
+  border-color: #ffffff !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3) !important;
+  height: 16px !important;
+  width: 16px !important;
+  position: absolute !important;
+  top: 13px !important;
+  left: 2px !important;
+  transform: none !important;
+  transition: left 0.2s ease !important;
+}
+
+html body .ai-coach-toggle.p-toggleswitch[data-p-checked="true"] .p-toggleswitch-handle,
+html body .ai-coach-toggle.p-toggleswitch-checked .p-toggleswitch-handle {
+  background-color: #ffffff !important;
+  background: #ffffff !important;
+  border-color: #ffffff !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3) !important;
+  height: 16px !important;
+  width: 16px !important;
+  position: absolute !important;
+  top: 13px !important;
+  left: 22px !important;
+  transform: none !important;
+  transition: left 0.2s ease !important;
+}
+
+/* Compact styling for Pause Queue button */
+html body .pause-queue-compact.p-button {
+  padding: 4px 8px !important;
+  font-size: 0.75rem !important;
+  min-height: 24px !important;
+  height: 24px !important;
+  line-height: 1 !important;
+}
+
+html body .pause-queue-compact.p-button .text-xs {
+  font-size: 0.75rem !important;
+  line-height: 1 !important;
+}
+
+html body .pause-queue-compact.p-button:hover {
+  padding: 4px 8px !important;
+  min-height: 24px !important;
+  height: 24px !important;
 }
 </style>

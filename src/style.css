@@ -28,6 +28,86 @@ body {
   transition: all 0.5s ease-in-out;
 }
 
+/* Global ToggleSwitch styling for AI Coach toggle - Override PrimeVue theme */
+.p-toggleswitch {
+  --p-toggleswitch-background: #374151 !important;
+  --p-toggleswitch-checked-background: #8b5cf6 !important;
+  --p-toggleswitch-handle-background: #ffffff !important;
+  --p-toggleswitch-border-color: #6b7280 !important;
+  --p-toggleswitch-checked-border-color: #8b5cf6 !important;
+}
+
+/* Direct element targeting with highest specificity */
+.p-toggleswitch .p-toggleswitch-slider,
+div[data-pc-name="toggleswitch"] .p-toggleswitch-slider {
+  background: #374151 !important;
+  border: 1px solid #6b7280 !important;
+}
+
+.p-toggleswitch[data-p-checked="true"] .p-toggleswitch-slider,
+.p-toggleswitch-checked .p-toggleswitch-slider,
+div[data-pc-name="toggleswitch"][data-p-checked="true"] .p-toggleswitch-slider {
+  background: #8b5cf6 !important;
+  border: 1px solid #8b5cf6 !important;
+}
+
+.p-toggleswitch .p-toggleswitch-handle,
+div[data-pc-name="toggleswitch"] .p-toggleswitch-handle {
+  background: #ffffff !important;
+  border: 1px solid #ffffff !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3) !important;
+}
+
+/* Force white handle in all states */
+.p-toggleswitch[data-p-checked="true"] .p-toggleswitch-handle,
+.p-toggleswitch-checked .p-toggleswitch-handle,
+div[data-pc-name="toggleswitch"][data-p-checked="true"] .p-toggleswitch-handle,
+div[data-pc-name="toggleswitch"] .p-toggleswitch-handle {
+  background: #ffffff !important;
+  border: 1px solid #ffffff !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3) !important;
+}
+
+/* Additional fallback with inline styles simulation */
+[data-pc-name="toggleswitch"] {
+  --p-primary-color: #8b5cf6 !important;
+  --p-surface-0: #374151 !important;
+}
+
+/* AI Coach Toggle Specific Styling */
+.ai-coach-toggle.p-toggleswitch .p-toggleswitch-slider {
+  background: #374151 !important;
+  border: 1px solid #6b7280 !important;
+}
+
+.ai-coach-toggle.p-toggleswitch[data-p-checked="true"] .p-toggleswitch-slider,
+.ai-coach-toggle.p-toggleswitch-checked .p-toggleswitch-slider {
+  background: #8b5cf6 !important;
+  border: 1px solid #8b5cf6 !important;
+}
+
+.ai-coach-toggle.p-toggleswitch .p-toggleswitch-handle {
+  background: #ffffff !important;
+  border: 1px solid #ffffff !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3) !important;
+}
+
+/* Nuclear option - highest possible specificity */
+body .ai-coach-toggle.p-toggleswitch .p-toggleswitch-slider {
+  background-color: #374151 !important;
+  background: #374151 !important;
+}
+
+body .ai-coach-toggle.p-toggleswitch[data-p-checked="true"] .p-toggleswitch-slider {
+  background-color: #8b5cf6 !important;
+  background: #8b5cf6 !important;
+}
+
+body .ai-coach-toggle.p-toggleswitch .p-toggleswitch-handle {
+  background-color: #ffffff !important;
+  background: #ffffff !important;
+}
+
 /* Design System - Text Links */
 .text-link {
   color: var(--p-primary-color);

@@ -218,7 +218,7 @@
           </div>
 
           <!-- Chat Input - positioned at bottom -->
-          <div class="mt-2 pt-2.5">
+          <div class="mt-2 pt-2.5 mb-4">
             <ChatInput
               ref="chatInputRef"
               :customPlaceholder="getPlaceholderText()"
@@ -252,6 +252,7 @@
             @keypad="handleKeypad"
             @pause-queue="handlePauseQueue"
             @complete-queue="handleCompleteQueue"
+            @ai-coach-toggle="handleAICoachToggle"
           />
         </div>
       </div>
@@ -395,7 +396,7 @@ import { useToast } from 'primevue/usetoast'
 import { showContactPreview } from './utils/contactPreview'
 import { clearFocusAndEstablishContext, focusChatInput, announceToScreenReader } from './utils/focus'
 import { createChatUtils, type Message } from './utils/chat'
-import { getResponseForKeywords } from './utils/aiResponses'
+import { getResponseForKeywords, AI_RESPONSES } from './utils/aiResponses'
 
 // Components
 import Sidebar from './components/Sidebar.vue'
@@ -448,6 +449,70 @@ const wrapConnectScoreWithTooltip = (text: string): string => {
     .replace(/Connect Score/g, `<span class="connect-score-tooltip" data-tooltip="${tooltipContent}">Connect Score</span>`)
 }
 
+// Generate dynamic coaching feedback
+const getDynamicCoachingFeedback = (): string => {
+  const coachingMessages = [
+    'Great connection! I heard you building rapport early—that\'s your sweet spot. Next call, try mirroring their pace a bit more to deepen that connection.',
+    'Nice work staying patient through their objections. I noticed you got stronger as the call progressed. Carry that momentum into the next one.',
+    'You handled that beautifully! Your confidence really came through. Next time, try asking one more discovery question before presenting—it\'ll make your close even stronger.',
+    'I loved how you listened for their pain points. Your empathy is one of your strongest assets. Now let\'s work on creating more urgency in your next call.',
+    'Solid call! You kept them engaged throughout. I\'d love to see you slow down just a touch during the value proposition—let it sink in.',
+    'That was textbook rapport building! Your energy is infectious. Next call, try to qualify their budget earlier in the conversation.',
+    'Really strong finish! You didn\'t give up when they hesitated. For your next call, lead with a stronger hook to grab their attention faster.',
+    'I can tell you\'re finding your rhythm! Your questioning technique is improving with each call. Next one, focus on getting them to commit to a specific time.',
+    'Excellent persistence! You turned a \'no\' into a \'maybe\'—that\'s skill. Keep that same energy but try to get more specific about their timeline.',
+    'That call showed real growth! Your objection handling is getting smoother. Next call, trust your instincts and go for the close sooner.'
+  ]
+
+  return coachingMessages[Math.floor(Math.random() * coachingMessages.length)]
+}
+
+// Generate personalized call script
+const generateCallScript = (contact: any): string[] => {
+  const scriptTemplate = AI_RESPONSES.CALL_SCRIPT
+
+  // Replace template variables with actual contact information
+  return scriptTemplate.map(line =>
+    line
+      .replace(/\{\{ contact_name \}\}/g, contact.name || 'there')
+      .replace(/\{\{ your_name \}\}/g, '[Your Name]')
+      .replace(/\{\{ your_company \}\}/g, '[Your Company]')
+      .replace(/\{\{ industry \}\}/g, contact.industry || 'your industry')
+      .replace(/\{\{ contact_company \}\}/g, contact.company || 'your company')
+      .replace(/\{\{ value_statement \}\}/g, 'increase efficiency and reduce costs')
+      .replace(/\{\{ pain_point \}\}/g, contact.industry ? `${contact.industry.toLowerCase()} operations` : 'current processes')
+      .replace(/\{\{ process \}\}/g, contact.industry ? `${contact.industry.toLowerCase()} workflow` : 'your current workflow')
+      .replace(/\{\{ department \}\}/g, contact.title ? contact.title.toLowerCase().includes('sales') ? 'sales process' : 'your operations' : 'your operations')
+  )
+}
+
+// Show call connected message followed by script and objection handling
+const showCallConnectedMessages = (contact: any): void => {
+  if (!aiCoachEnabled.value) {
+    // Just show basic connection message if AI Coach is disabled
+    addAIMessage('Great! You\'re connected!')
+    scrollToBottom()
+    return
+  }
+
+  // Combine connection message and script into single bubble with proper spacing
+  const combinedMessage = [
+    'Great! You\'re connected!',
+    '<br>',
+    'Script:',
+    '<span style="color: #fbbf24; font-style: italic;">[The AI learns the nuances of your coaching approach to generate contextual scripts that reflect your unique sales philosophy, language patterns, and proven conversation starters tailored to this specific prospect.]</span>'
+  ]
+
+  addAIMessage(combinedMessage)
+  scrollToBottom()
+
+  // Wait 3 seconds then show objection handling
+  setTimeout(() => {
+    addAIMessage(AI_RESPONSES.OBJECTION_RESPONSE)
+    scrollToBottom()
+  }, 3000)
+}
+
 // Reactive data
 const currentPage = ref<string>('main') // 'main', 'product', 'login', 'signup'
 const chatInputRef = ref<any>(null)
@@ -473,6 +538,7 @@ const phoneVerified = ref<boolean>(false) // Track if phone has been verified in
 const showStartDialingButton = ref<boolean>(false)
 const showDialer = ref<boolean>(false)
 const showDispositionButtons = ref<boolean>(false)
+const aiCoachEnabled = ref<boolean>(true)
 const showSessionSummary = ref<boolean>(false)
 const showContinueQueueButton = ref<boolean>(false)
 const waitingForTryAgainResponse = ref<boolean>(false)
@@ -488,6 +554,7 @@ const connectedCalls = ref<number>(0)
 const skippedNumbers = ref<number>(3) // Default for demo
 const callState = ref<string>('idle') // 'idle', 'ringing', 'connected', 'ended'
 const callDuration = ref<number>(0)
+const isManualHangUp = ref<boolean>(false) // Track if hang up was manual vs automatic
 const queueTime = ref<number>(14)
 const showLoadNewFileButton = ref<boolean>(false)
 
@@ -585,7 +652,7 @@ const messages: Ref<Message[]> = ref([
   {
     type: 'ai',
     content: [
-      'Welcome! I\'m <strong>ARKON (MVP)</strong>, your AI calling assistant.<br><br>Drop your contact file here and I\'ll show you exactly who\'s most likely to pick up right now.'
+      'Welcome! I\'m <strong>ARKON (Post MVP)</strong>, your AI calling assistant.<br><br>Drop your contact file here and I\'ll show you exactly who\'s most likely to pick up right now.'
     ]
   }
 ])
@@ -678,7 +745,7 @@ const handleLogout = () => {
     {
       type: 'ai',
       content: [
-        'Welcome! I\'m <strong>ARKON (MVP)</strong>, your AI calling assistant.<br><br>Drop your contact file here and I\'ll show you exactly who\'s most likely to pick up right now.'
+        'Welcome! I\'m <strong>ARKON (Post MVP)</strong>, your AI calling assistant.<br><br>Drop your contact file here and I\'ll show you exactly who\'s most likely to pick up right now.'
       ]
     }
   ]
@@ -1115,14 +1182,14 @@ const sendMessage = (message: string): void => {
 
     if (lowerMessage.includes('anything about arkon')) {
       addAIMessage([
-        '🚀 ARKON is PhoneBurner\'s revolutionary AI-powered dialer!',
+        '<i class="pi pi-rocket"></i> ARKON is PhoneBurner\'s revolutionary AI-powered dialer!',
         'It uses advanced algorithms to predict the best times to call prospects, automatically prioritizes your contact list, and helps you connect with more people in less time.',
         'Key features include smart scheduling, real-time connect predictions, and personalized calling strategies.',
         'What specific aspect of ARKON would you like to know more about?'
       ])
     } else if (lowerMessage.includes('connected to more calls') || lowerMessage.includes('get connected')) {
       addAIMessage([
-        '📈 Great question! Here are ARKON\'s proven strategies to boost your connect rates:',
+        '<i class="pi pi-chart-line"></i> Great question! Here are ARKON\'s proven strategies to boost your connect rates:',
         '• <strong>Smart Timing:</strong> Calls prospects when they\'re most likely to answer',
         '• <strong>Local Presence:</strong> Uses local numbers to increase pickup rates',
         '• <strong>Voicemail Drop:</strong> Leaves personalized messages when they don\'t answer',
@@ -1131,7 +1198,7 @@ const sendMessage = (message: string): void => {
       ])
     } else if (lowerMessage.includes('setup a demo') || lowerMessage.includes('demo')) {
       addAIMessage([
-        '✨ I\'d love to show you ARKON in action!',
+        '<i class="pi pi-star"></i> I\'d love to show you ARKON in action!',
         'Let me set up a personalized demo where you can see:',
         '• Live contact scoring and prioritization',
         '• Real-time dialing with connect predictions',
@@ -1140,7 +1207,7 @@ const sendMessage = (message: string): void => {
       ])
     } else if (lowerMessage.includes('who i should call now') || lowerMessage.includes('who should i call')) {
       addAIMessage([
-        '��� Based on your contact data and current time analysis:',
+        '<i class="pi pi-bullseye"></i> Based on your contact data and current time analysis:',
         '<strong>Top 3 prospects to call right now:</strong>',
         '1. Sarah Johnson - 92% connect probability (last spoke 3 days ago)',
         '2. Mike Chen - 89% connect probability (opened your email yesterday)',
@@ -1149,7 +1216,7 @@ const sendMessage = (message: string): void => {
       ])
     } else if (lowerMessage.includes('fire up a dial session') || lowerMessage.includes('dial session')) {
       addAIMessage([
-        '���� Let\'s fire up a power dialing session!',
+        '<i class="pi pi-bolt"></i> Let\'s fire up a power dialing session!',
         'I can configure your session with:',
         '• <strong>Target audience:</strong> High-priority prospects, warm leads, or follow-ups',
         '• <strong>Call duration:</strong> 30 min, 1 hour, or 2-hour session',
@@ -1158,7 +1225,7 @@ const sendMessage = (message: string): void => {
       ])
     } else if (lowerMessage.includes('set a reminder') || lowerMessage.includes('reminder')) {
       addAIMessage([
-        '⏰ I\'ll help you set up smart reminders!',
+        '<i class="pi pi-clock"></i> I\'ll help you set up smart reminders!',
         'ARKON can remind you to:',
         '• Follow up with specific prospects at optimal times',
         '• Call back prospects who didn\'t answer',
@@ -1168,7 +1235,7 @@ const sendMessage = (message: string): void => {
       ])
     } else if (lowerMessage.includes('practice a call') || lowerMessage.includes('practice')) {
       addAIMessage([
-        '🎭 Great idea! Call practice makes perfect.',
+        '<i class="pi pi-users"></i> Great idea! Call practice makes perfect.',
         'ARKON\'s practice mode can help you:',
         '• Rehearse your opening pitch with AI feedback',
         '• Practice handling common objections',
@@ -1178,16 +1245,16 @@ const sendMessage = (message: string): void => {
       ])
     } else if (lowerMessage.includes('appointments') && lowerMessage.includes('today')) {
       addAIMessage([
-        '📅 Here\'s your schedule for today:',
+        '<i class="pi pi-calendar"></i> Here\'s your schedule for today:',
         '<strong>Upcoming appointments:</strong>',
-        '��� 2:00 PM - Demo call with Sarah Johnson (confirmed)',
+        '<i class="pi pi-check"></i> 2:00 PM - Demo call with Sarah Johnson (confirmed)',
         '• 3:30 PM - Follow-up with ABC Corp (needs confirmation)',
         '• 4:15 PM - Discovery call with new lead Mike Chen',
         'You have 45 minutes before your next call. Perfect time for some prospecting!'
       ])
     } else if (lowerMessage.includes('tell a joke') || lowerMessage.includes('joke')) {
       addAIMessage([
-        '😄 Why did the salesperson bring a ladder to work?',
+        '<i class="pi pi-heart"></i> Why did the salesperson bring a ladder to work?',
         'Because they heard the job was about making <strong>high-level</strong> connections!',
         '',
         'Speaking of connections, did you know ARKON users make 3x more meaningful connections than traditional dialers?',
@@ -1202,7 +1269,7 @@ const sendMessage = (message: string): void => {
       ])
     } else if (lowerMessage.includes('call') || lowerMessage.includes('start')) {
       addAIMessage([
-        'Perfect! Let\'s start calling. 📞',
+        'Perfect! Let\'s start calling. <i class="pi pi-phone"></i>',
         'I\'ll prioritize contacts with the highest pickup probability.',
         'Shall I begin with the top 23 most likely to answer?'
       ])
@@ -1213,7 +1280,7 @@ const sendMessage = (message: string): void => {
 }
 
 const handleVoiceInput = () => {
-  addAIMessage('🎤 Listening... (voice recognition simulated)')
+  addAIMessage('<i class="pi pi-microphone"></i> Listening... (voice recognition simulated)')
 
   // Simulate voice input
   setTimeout(() => {
@@ -1424,6 +1491,9 @@ let callSimulationTimeout: number | null = null
 const simulateCall = (): void => {
   // Contact index should already be set by handleNextContact or other functions
 
+  // Reset manual hang up flag for new call
+  isManualHangUp.value = false
+
   // Start ringing
   callState.value = 'ringing'
 
@@ -1442,6 +1512,7 @@ const simulateCall = (): void => {
       }
 
       // Call goes to voicemail - don't set as connected
+      isManualHangUp.value = false // This is automatic, not manual
       callState.value = 'ended'
       showDispositionButtons.value = true
       totalCalls.value++
@@ -1456,7 +1527,8 @@ const simulateCall = (): void => {
 
       // Show voicemail detected message
       addAIMessage('Voicemail detected...')
-      addAIMessage('Please select a call outcome or enter notes about this call.')
+      const duration = '00:00'
+      addAIMessage(`Call with ${currentContact.value.name} ended. Duration: ${duration}<br><br>Please select a call outcome or enter notes about this call.`)
       scrollToBottom()
     }, 4000)
   } else {
@@ -1478,8 +1550,8 @@ const simulateCall = (): void => {
       }, 1000)
 
       // Show AI message that call connected
-      addAIMessage(`Connected! You're now speaking with ${currentContact.value.name}.`)
-      scrollToBottom()
+      // Show connection message first, then script with delay
+      showCallConnectedMessages(currentContact.value)
     }, 3000)
   }
 }
@@ -1536,6 +1608,9 @@ const handleNextContact = (): void => {
 }
 
 const handleHangUp = (): void => {
+  // Set flag to indicate this was a manual hang up
+  isManualHangUp.value = true
+
   // Stop timers
   if (callTimer) {
     clearInterval(callTimer)
@@ -1555,12 +1630,23 @@ const handleHangUp = (): void => {
     notes: ''
   })
 
-  addAIMessage(`Call with ${currentContact.value.name} ended. Duration: ${duration}`)
-  addAIMessage('Please select a call outcome or enter notes about this call.')
+  // Only show coaching recap for manual hang ups and if AI Coach is enabled
+  if (isManualHangUp.value && aiCoachEnabled.value) {
+    addAIMessage([
+      '<strong>AI Coaching Recap</strong>',
+      '<br>',
+      getDynamicCoachingFeedback(),
+      '<br>',
+      'Delivery: 9/10<br>Pace: 9/10<br>Confidence: 9/10'
+    ])
+  }
+
+  // Reset the flag
+  isManualHangUp.value = false
 }
 
 const handleMute = (muted: boolean): void => {
-  addAIMessage(muted ? '🔇 Microphone muted' : '🎤 Microphone unmuted')
+  addAIMessage(muted ? 'Microphone muted' : 'Microphone unmuted')
 }
 
 const handleHold = (onHold: boolean): void => {
@@ -1724,25 +1810,27 @@ const addSessionSummaryToChat = (isCompleted: boolean = false): void => {
 
       <!-- Results & Next Steps Section -->
       <div style="margin-bottom: 32px;">
-        <h3 style="color: white; font-size: 18px; font-weight: 600; margin-bottom: 16px;"><i class="pi pi-check-circle" style="margin-right: 8px;"></i>Next Steps</h3>
+        <h3 style="color: white; font-size: 18px; font-weight: 600; margin-bottom: 16px;"><i class="pi pi-check-circle" style="margin-right: 8px;"></i>AI Coaching</h3>
         <div style="background-color: rgb(55, 65, 81); border-radius: 8px; padding: 20px;">
           <div style="color: rgb(209, 213, 219); font-size: 14px; font-weight: normal; line-height: 1.5;">
             ${isCompleted ?
-              `Great work! Your queue is complete. Here's what to do next:<br><br>
+              `Outstanding work completing your queue! I observed some key strengths in your calling approach:<br><br>
                <div style="margin-left: 20px;">
-                 <div style="margin-bottom: 16px;"><strong style="color: #fbbf24;">• Schedule 2 appointments</strong> - Sam Sample and Jennifer Martinez requested follow-up calls</div>
-                 <div style="margin-bottom: 16px;"><strong style="color: #fbbf24;">• Schedule 1 follow-up</strong> - George Sample showed interest and needs additional outreach</div>
+                 <div style="margin-bottom: 16px;"><strong style="color: #fbbf24;"><i class="pi pi-check" style="margin-right: 8px;"></i>Strong opening rapport</strong> - You connected well with prospects and built trust quickly</div>
+                 <div style="margin-bottom: 16px;"><strong style="color: #fbbf24;"><i class="pi pi-check" style="margin-right: 8px;"></i>Active listening</strong> - You picked up on buying signals and pain points effectively</div>
+                 <div style="margin-bottom: 16px;"><strong style="color: #fbbf24;"><i class="pi pi-check" style="margin-right: 8px;"></i>Confident close attempts</strong> - You weren't afraid to ask for the appointment when the timing was right</div>
                </div>
-               Your contact data has been enriched with <span class="connect-score-tooltip" data-tooltip="${connectScoreTooltip.replace(/'/g, '&#39;').replace(/"/g, '&quot;')}">Connect Scores</span>, call outcomes, and notes.<br><br>
+               For your next session, focus on slowing down your pace slightly during objection handling—give prospects more time to process your responses. This will increase your conversion rate even further.<br><br>
                <button style="background-color: rgb(59, 130, 246); color: white; border: none; border-radius: 6px; padding: 8px 16px; font-size: 14px; font-weight: 500; cursor: pointer; display: inline-flex; align-items: center; gap: 8px;" onclick="handleExportFile()">
                  <i class="pi pi-download"></i> Export Enriched File
                </button>` :
-              `Great work! Your queue is currently paused. Here's what to do next:<br><br>
+              `Great progress so far! I've been listening to your calls and here's my coaching feedback:<br><br>
                <div style="margin-left: 20px;">
-                 <div style="margin-bottom: 16px;"><strong style="color: #fbbf24;">• Schedule 2 appointments</strong> - Sam Sample and Jennifer Martinez requested follow-up calls</div>
-                 <div style="margin-bottom: 16px;"><strong style="color: #fbbf24;">• Schedule 1 follow-up</strong> - George Sample showed interest and needs additional outreach</div>
+                 <div style="margin-bottom: 16px;"><strong style="color: #fbbf24;"><i class="pi pi-check" style="margin-right: 8px;"></i>Energy and enthusiasm</strong> - Your positive tone is engaging prospects right from the start</div>
+                 <div style="margin-bottom: 16px;"><strong style="color: #fbbf24;"><i class="pi pi-info-circle" style="margin-right: 8px;"></i>Opportunity area</strong> - Try asking more discovery questions before jumping into your pitch</div>
+                 <div style="margin-bottom: 16px;"><strong style="color: #fbbf24;"><i class="pi pi-lightbulb" style="margin-right: 8px;"></i>Key insight</strong> - When you slow down and really listen, your closing rate increases significantly</div>
                </div>
-               Your contact data has been enriched with <span class="connect-score-tooltip" data-tooltip="${connectScoreTooltip.replace(/'/g, '&#39;').replace(/"/g, '&quot;')}">Connect Scores</span>, call outcomes, and notes.<br>Keep calling to build even more value.<br><br>
+               Take a quick break if needed, then get back in there! Your next few calls are primed for success—I can feel the momentum building.<br><br>
                <button style="background-color: rgb(59, 130, 246); color: white; border: none; border-radius: 6px; padding: 8px 16px; font-size: 14px; font-weight: 500; cursor: pointer; display: inline-flex; align-items: center; gap: 8px;" onclick="handleExportFile()">
                  <i class="pi pi-download"></i> Export Enriched File
                </button>`
@@ -1898,8 +1986,8 @@ const skipToDialer = (): void => {
       }, 1000)
 
       // Show AI message that call connected
-      addAIMessage(`Connected! You're now speaking with ${currentContact.value.name}.`)
-      scrollToBottom()
+      // Show connection message first, then script with delay
+      showCallConnectedMessages(currentContact.value)
     }, 3000)
   }, 1500) // Brief delay to show the startup message
 }
@@ -1960,6 +2048,10 @@ const handleCompleteQueue = (): void => {
     // Show Load New File button
     showLoadNewFileButton.value = true
   }, 1000)
+}
+
+const handleAICoachToggle = (enabled: boolean): void => {
+  aiCoachEnabled.value = enabled
 }
 
 const handleDisposition = (disposition: string): void => {
@@ -2123,7 +2215,7 @@ const handleUpgradeSelected = () => {
   closePricingPage()
   isSignedIn.value = true
   showActionButtons.value = true
-  addAIMessage('🎉 Welcome to ARKON! Your account has been created successfully. Let\'s start your first smart calling session! What are you trying to accomplish?')
+  addAIMessage('�� Welcome to ARKON! Your account has been created successfully. Let\'s start your first smart calling session! What are you trying to accomplish?')
 
   // Ensure scroll happens after action buttons are rendered
   setTimeout(() => {
@@ -2155,7 +2247,7 @@ const showTermsFromAccount = () => {
 
 const handleGoogleSignupFromAccount = () => {
   closeAccountCreation()
-  addAIMessage('🚀 Great choice! Setting up your Google account integration...')
+  addAIMessage('<i class="pi pi-rocket"></i> Great choice! Setting up your Google account integration...')
   setTimeout(() => {
     isSignedIn.value = true
     showActionButtons.value = true
