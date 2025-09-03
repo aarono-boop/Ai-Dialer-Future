@@ -702,7 +702,7 @@ const handleTypingComplete = (index: number): void => {
 const updateWelcomeMessageTyping = (): void => {
   if (messages.value.length > 0 && messages.value[0].type === 'ai') {
     const welcomeMessage = messages.value[0]
-    if (welcomeMessage.content[0].includes('Welcome! I\'m <strong>ARKON (Post MVP)</strong>')) {
+    if (welcomeMessage.content[0].includes('Welcome to <strong>ARKON</strong>')) {
       // Update typing property based on current user status
       welcomeMessage.typing = !isSignedIn.value && !isReturningUser.value
     }
