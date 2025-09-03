@@ -711,10 +711,12 @@ const handleTypingComplete = (index: number): void => {
     messages.value[index].content[0].includes('Fantastic! Live conversations are the heart of great sales')
   )) {
     contactPreviewTypingComplete.value = true
-    // Show contact preview buttons after typing completes
-    setTimeout(() => {
-      showContactPreviewButtons.value = true
-    }, 200) // Small delay for better UX
+    // Only show contact preview buttons if they haven't been used yet
+    if (!contactPreviewButtonsUsed.value) {
+      setTimeout(() => {
+        showContactPreviewButtons.value = true
+      }, 200) // Small delay for better UX
+    }
   }
 }
 
