@@ -2227,6 +2227,7 @@ const handlePurchaseCompleted = () => {
   isSignedIn.value = true
   isReturningUser.value = false // This is a new user
   showActionButtons.value = true
+  updateWelcomeMessageTyping() // Update typing status for welcome message
 
   // Add user message confirming account creation and upgrade
   addUserMessage('Account created & upgraded')
