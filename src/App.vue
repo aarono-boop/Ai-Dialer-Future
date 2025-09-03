@@ -819,6 +819,7 @@ const handleLogout = () => {
   actionButtonsUsed.value = false
   contactPreviewTypingComplete.value = false
   contactPreviewButtonsUsed.value = false
+  connectionAnalysisTypingComplete.value = false
 
   // Reset to welcome message
   messages.value = [
