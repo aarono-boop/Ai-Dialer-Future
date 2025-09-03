@@ -1186,21 +1186,11 @@ const sendMessage = (message: string): void => {
   if (verificationStep.value === 'enter-phone') {
     enteredPhoneNumber.value = message
     verificationStep.value = 'enter-code'
-    showVerificationButtons.value = true
+    verificationCodeTypingComplete.value = false // Reset typing state
 
     setTimeout(() => {
-      addAIMessage(`Perfect. We've sent a text with 6-digit verification code to ${message}. Please enter it below to continue.`)
+      addAIMessageWithTyping(`Perfect. We've sent a text with 6-digit verification code to ${message}. Please enter it below to continue.`)
       scrollToBottom()
-
-      // Focus the chat input after the AI message appears
-      setTimeout(() => {
-        if (chatInputRef.value && chatInputRef.value.focus) {
-          chatInputRef.value.focus()
-          console.log('Auto-focused chat input for verification code')
-        } else {
-          console.log('Chat input ref not available for verification code auto-focus')
-        }
-      }, 500)
     }, 1000)
     return
   }
