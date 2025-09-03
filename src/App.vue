@@ -724,8 +724,8 @@ const handleTypingComplete = (index: number): void => {
   // Check if this is the connection analysis message
   if (messages.value[index] && messages.value[index].content[0]?.includes('I\'ve analyzed your contact\'s phone numbers using real connection data')) {
     connectionAnalysisTypingComplete.value = true
-    // Show phone verification button after typing completes (for new users only)
-    if (!isReturningUser.value && !phoneVerified.value) {
+    // Show phone verification button after typing completes (for new users only) and if not already used
+    if (!isReturningUser.value && !phoneVerified.value && !phoneVerificationButtonUsed.value) {
       setTimeout(() => {
         showPhoneVerificationButton.value = true
       }, 200) // Small delay for better UX
