@@ -805,6 +805,7 @@ const handleLogout = () => {
   congratulationsTypingComplete.value = false
   actionButtonsUsed.value = false
   contactPreviewTypingComplete.value = false
+  contactPreviewButtonsUsed.value = false
 
   // Reset to welcome message
   messages.value = [
@@ -1290,7 +1291,7 @@ const sendMessage = (message: string): void => {
         'I can configure your session with:',
         '• <strong>Target audience:</strong> High-priority prospects, warm leads, or follow-ups',
         '• <strong>Call duration:</strong> 30 min, 1 hour, or 2-hour session',
-        '��� <strong>Connect goals:</strong> Number of conversations you want to have',
+        '• <strong>Connect goals:</strong> Number of conversations you want to have',
         'What type of prospects do you want to focus on for this session?'
       ])
     } else if (lowerMessage.includes('set a reminder') || lowerMessage.includes('reminder')) {
