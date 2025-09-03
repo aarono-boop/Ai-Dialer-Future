@@ -1710,6 +1710,9 @@ const handleHangUp = (): void => {
   // Set flag to indicate this was a manual hang up
   isManualHangUp.value = true
 
+  // Add user message to show they hung up
+  addUserMessage('Call ended')
+
   // Stop timers
   if (callTimer) {
     clearInterval(callTimer)
