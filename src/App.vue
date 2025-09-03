@@ -1072,9 +1072,9 @@ const sendMessage = (message: string): void => {
       // Check if this is the 3rd contact (index 2) - if so, enable queue completion
       if (currentContactIndex.value >= 2) {
         queueCompletionReady.value = true
-        addAIMessage(`The call outcome and notes have been saved for ${currentContact.value.name}. Click "Queue Completed" to finish your dialing session.`)
+        addAIMessageWithTyping(`The call outcome and notes have been saved for ${currentContact.value.name}. Click "Queue Completed" to finish your dialing session.`)
       } else {
-        addAIMessage(`The call outcome and notes have been saved for ${currentContact.value.name}. Click "Next" to continue to the next contact.`)
+        addAIMessageWithTyping(`The call outcome and notes have been saved for ${currentContact.value.name}. Click "Next" to continue to the next contact.`)
       }
       scrollToBottom()
     }, 1000)
