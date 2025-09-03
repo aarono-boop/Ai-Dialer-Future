@@ -1,6 +1,6 @@
 <template>
   <Dialog
-    v-model:visible="visible"
+    :visible="visible"
     modal
     header="Create New Coach"
     :style="{ width: '50rem' }"
