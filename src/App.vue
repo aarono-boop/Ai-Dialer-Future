@@ -20,16 +20,16 @@
         <div class="w-full max-w-6xl mx-auto rounded-xl px-5">
           <div class="w-full h-full flex flex-col">
           <!-- Top content area - scrollable -->
-          <div class="flex-1 overflow-y-auto flex flex-col gap-8 pr-2 pb-4" ref="chatMessages">
+          <div class="flex-1 overflow-y-auto flex flex-col gap-8 pr-2" :class="showDialer ? 'pb-10' : 'pb-32'" ref="chatMessages">
             <!-- Chat Messages Area -->
             <div class="flex flex-col">
               <template v-for="(message, index) in messages" :key="index">
                 <!-- Regular Chat Message -->
-                <ChatMessage v-if="message.type !== 'separator'" :message="message" :isWide="shouldBeWideMessage(message, index)">
+                <ChatMessage v-if="message.type !== 'separator'" :message="message" :isWide="shouldBeWideMessage(message, index)" :onTypingProgress="message.preserveUserPosition ? undefined : scrollToBottomDuringTyping" @typing-complete="handleTypingComplete(index)">
                   <template #additional-content>
                     <!-- File Upload Area - shown inside welcome message for new users or ready to upload message for returning users -->
                     <FileUpload
-                      v-if="(index === 0 && !isSignedIn) || (isSignedIn && showFileUploadForReturningUser && isReadyToUploadMessage(message, index))"
+                      v-if="(index === 0 && !isSignedIn && welcomeTypingComplete) || (isSignedIn && showFileUploadForReturningUser && isReadyToUploadMessage(message, index))"
                       @trigger-upload="simulateFileUpload"
                       @file-selected="onFileSelect"
                       @file-dropped="simulateFileUpload"
@@ -48,7 +48,7 @@
           </div>
 
           <!-- Action Buttons - positioned above chat input -->
-          <div v-if="showActionButtons" class="mt-2 pt-5 flex justify-center">
+          <div v-if="showActionButtons && !actionButtonsUsed" class="mt-2 pt-5 flex justify-center">
             <div class="w-[70%]">
               <ActionButtons
                 @action-selected="handleActionButton"
@@ -70,7 +70,7 @@
           </div>
 
           <!-- Contact Preview Buttons - always visible when active -->
-          <div v-if="showContactPreviewButtons" class="mt-2 pt-5 flex justify-center">
+          <div v-if="showContactPreviewButtons && !contactPreviewButtonsUsed" class="mt-2 pt-5 flex justify-center">
             <div class="w-[70%] flex gap-3">
               <Button
                 @click="handleLooksGood"
@@ -90,7 +90,7 @@
           </div>
 
           <!-- Phone Verification Button - always visible when active -->
-          <div v-if="showPhoneVerificationButton" class="mt-2 pt-5 flex justify-center">
+          <div v-if="showPhoneVerificationButton && verificationStep === 'default'" class="mt-2 pt-5 flex justify-center">
             <div class="w-[70%] flex justify-center">
               <Button
                 @click="handlePhoneVerification"
@@ -103,7 +103,7 @@
           </div>
 
           <!-- Verification Code Buttons - always visible when active -->
-          <div v-if="showVerificationButtons" class="mt-2 pt-5 flex justify-center">
+          <div v-if="showVerificationButtons && verificationCodeTypingComplete && !phoneVerified && verificationStep === 'enter-code'" class="mt-2 pt-5 flex justify-center">
             <div class="w-[70%] flex gap-3">
               <Button
                 @click="handleResendCode"
@@ -136,7 +136,7 @@
           </div>
 
           <!-- Disposition Buttons - always visible when active -->
-          <div v-if="showDispositionButtons && showDialer && !showContinueQueueButton" class="mt-2 pt-5 flex justify-center">
+          <div v-if="showDispositionButtons && showDialer && !showContinueQueueButton" class="mt-1 pt-2 flex justify-center">
             <!-- Voicemail Disposition Buttons for George Sample -->
             <div v-if="isVoicemailScenario" class="w-[70%] grid grid-cols-3 gap-3">
               <Button
@@ -337,51 +337,6 @@
 </template>
 
 <style>
-/* Global Connect Score tooltip styles */
-.connect-score-tooltip {
-  position: relative;
-  cursor: help;
-  border-bottom: 1px dotted #60a5fa;
-  color: #60a5fa !important;
-}
-
-.connect-score-tooltip:hover::after {
-  content: attr(data-tooltip);
-  position: fixed;
-  top: calc(50% - 160px);
-  left: calc(50% + 250px);
-  transform: translate(-50%, -50%);
-  background: #1f2937;
-  color: white;
-  padding: 12px;
-  border-radius: 8px;
-  font-size: 14px;
-  line-height: 1.4;
-  width: 300px;
-  max-width: 90vw;
-  white-space: pre-line;
-  z-index: 99999;
-  border: 1px solid #374151;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-  pointer-events: none;
-}
-
-.connect-score-tooltip:hover::before {
-  content: '';
-  position: fixed;
-  top: calc(50% - 10px);
-  left: calc(50% + 250px);
-  transform: translateX(-50%);
-  border: 6px solid transparent;
-  border-top-color: #374151;
-  z-index: 100000;
-  pointer-events: none;
-}
-
-/* Ensure parent containers don't clip the tooltip */
-.connect-score-tooltip:hover {
-  overflow: visible;
-}
 
 /* Spinner animation for export buttons */
 @keyframes spin {
@@ -432,21 +387,9 @@ interface Message {
 // Toast functionality (only for login/vulcan actions)
 const toast = useToast()
 
-// Connect Score tooltip content
-const connectScoreTooltip = `Connect Score is a premium add-on feature that uses real-world signals to help users prioritize high-value contacts and skip low-quality leads. It scores each phone number as High, Medium, or Low based on:
-
-• Carrier data
-• Engagement history
-• Phone metadata
-
-This lets teams focus their efforts on numbers with the greatest chance of a live answer—improving connect rates, morale, and performance.`
-
-// Helper function to wrap Connect Score text with tooltip
+// Helper function to handle Connect Score text (no tooltip)
 const wrapConnectScoreWithTooltip = (text: string): string => {
-  const tooltipContent = connectScoreTooltip.replace(/'/g, '&#39;').replace(/"/g, '&quot;')
-  return text
-    .replace(/Connect Scores/g, `<span class="connect-score-tooltip" data-tooltip="${tooltipContent}">Connect Scores</span>`)
-    .replace(/Connect Score/g, `<span class="connect-score-tooltip" data-tooltip="${tooltipContent}">Connect Score</span>`)
+  return text // Just return the original text without any wrapping
 }
 
 // Generate dynamic coaching feedback
@@ -490,7 +433,7 @@ const generateCallScript = (contact: any): string[] => {
 const showCallConnectedMessages = (contact: any): void => {
   if (!aiCoachEnabled.value) {
     // Just show basic connection message if AI Coach is disabled
-    addAIMessage('Great! You\'re connected!')
+    addAIMessageWithTyping('Great! You\'re connected!')
     scrollToBottom()
     return
   }
@@ -503,12 +446,12 @@ const showCallConnectedMessages = (contact: any): void => {
     '<span style="color: #fbbf24; font-style: italic;">[The AI learns the nuances of your coaching approach to generate contextual scripts that reflect your unique sales philosophy, language patterns, and proven conversation starters tailored to this specific prospect.]</span>'
   ]
 
-  addAIMessage(combinedMessage)
+  addAIMessageWithTyping(combinedMessage)
   scrollToBottom()
 
   // Wait 3 seconds then show objection handling
   setTimeout(() => {
-    addAIMessage(AI_RESPONSES.OBJECTION_RESPONSE)
+    addAIMessageWithTyping(AI_RESPONSES.OBJECTION_RESPONSE)
     scrollToBottom()
   }, 3000)
 }
@@ -529,8 +472,16 @@ const isSignedIn = ref<boolean>(false)
 const isReturningUser = ref<boolean>(false) // Track if user logged in vs created new account
 const showActionButtons = ref<boolean>(false)
 const showFileUploadForReturningUser = ref<boolean>(false)
+const welcomeTypingComplete = ref<boolean>(false)
+const congratulationsTypingComplete = ref<boolean>(false)
+const actionButtonsUsed = ref<boolean>(false)
+const contactPreviewTypingComplete = ref<boolean>(false)
+const contactPreviewButtonsUsed = ref<boolean>(false)
+const connectionAnalysisTypingComplete = ref<boolean>(false)
 const showContactPreviewButtons = ref<boolean>(false)
 const showPhoneVerificationButton = ref<boolean>(false)
+const phoneVerificationButtonUsed = ref<boolean>(false)
+const verificationCodeTypingComplete = ref<boolean>(false)
 const verificationStep = ref<string>('default') // 'default', 'enter-phone', 'enter-code'
 const enteredPhoneNumber = ref<string>('')
 const showVerificationButtons = ref<boolean>(false)
@@ -653,13 +604,15 @@ const messages: Ref<Message[]> = ref([
     type: 'ai',
     content: [
       'Welcome! I\'m <strong>ARKON (Post MVP)</strong>, your AI calling assistant.<br><br>Drop your contact file here and I\'ll show you exactly who\'s most likely to pick up right now.'
-    ]
+    ],
+    // Only show typing animation for completely new users (not signed in and not returning)
+    typing: !isSignedIn.value && !isReturningUser.value
   }
 ])
 
 // Initialize chat utilities
 const chatUtils = createChatUtils(messages, chatMessages, headerRef)
-const { scrollToBottom, scrollToUserMessage, addAIMessage, addAIMessageWithoutScroll, addUserMessage, addSeparatorMessage } = chatUtils
+const { scrollToBottom, scrollToBottomDuringTyping, scrollToUserMessage, scrollToTopForGoals, addAIMessage, addAIMessageWithoutScroll, addUserMessage, addUserGoalMessage, addSeparatorMessage, addAIMessageWithTyping, addAIMessageWithTypingNoScroll } = chatUtils
 
 // Helper function to identify if a message is the "Ready to upload" message for returning users
 const isReadyToUploadMessage = (message: Message, index: number): boolean => {
@@ -674,6 +627,86 @@ const shouldBeWideMessage = (message: Message, index: number): boolean => {
   // Make message wide if it contains file upload content
   return (index === 0 && !isSignedIn.value) || // Welcome message for new users
          (isSignedIn.value && showFileUploadForReturningUser.value && isReadyToUploadMessage(message, index)) // Upload message for returning users
+}
+
+// Handle typing completion for welcome message
+const handleTypingComplete = (index: number): void => {
+  // If this is the welcome message (index 0) and user is not signed in
+  if (index === 0 && !isSignedIn.value) {
+    welcomeTypingComplete.value = true
+  }
+
+  // Check if this is the congratulations message
+  if (messages.value[index] && messages.value[index].content[0]?.includes('Congratulations! You\'ve successfully upgraded to the Pro plan')) {
+    congratulationsTypingComplete.value = true
+    // Only show action buttons if they haven't been used yet
+    if (!actionButtonsUsed.value) {
+      setTimeout(() => {
+        showActionButtons.value = true
+      }, 200) // Small delay for better UX
+    }
+  }
+
+  // Check if this is a contact preview message (starts with goal responses)
+  if (messages.value[index] && messages.value[index].content[0] && (
+    messages.value[index].content[0].includes('Perfect! Setting appointments is our bread and butter') ||
+    messages.value[index].content[0].includes('Outstanding! Closing live sales is where the magic happens') ||
+    messages.value[index].content[0].includes('Perfect! Creating opportunities is all about finding the right prospects') ||
+    messages.value[index].content[0].includes('Smart choice! Follow-ups are where deals are won') ||
+    messages.value[index].content[0].includes('Brilliant! Live transfers maximize your team\'s efficiency') ||
+    messages.value[index].content[0].includes('Fantastic! Live conversations are the heart of great sales')
+  )) {
+    contactPreviewTypingComplete.value = true
+    // Only show contact preview buttons if they haven't been used yet
+    if (!contactPreviewButtonsUsed.value) {
+      setTimeout(() => {
+        showContactPreviewButtons.value = true
+      }, 200) // Small delay for better UX
+    }
+  }
+
+  // Check if this is the connection analysis message
+  if (messages.value[index] && messages.value[index].content[0]?.includes('I\'ve analyzed your contact\'s phone numbers using real connection data')) {
+    connectionAnalysisTypingComplete.value = true
+    // Show phone verification button after typing completes (for new users only) and if not already used
+    if (!isReturningUser.value && !phoneVerified.value && !phoneVerificationButtonUsed.value) {
+      setTimeout(() => {
+        showPhoneVerificationButton.value = true
+      }, 200) // Small delay for better UX
+    }
+  }
+
+  // Check if this is the verification code message
+  if (messages.value[index] && messages.value[index].content[0]?.includes('Perfect. We\'ve sent a text with 6-digit verification code')) {
+    verificationCodeTypingComplete.value = true
+    // Show verification buttons after typing completes only if phone is not yet verified and we're still in verification step
+    if (!phoneVerified.value && verificationStep.value === 'enter-code') {
+      setTimeout(() => {
+        showVerificationButtons.value = true
+
+        // Focus the chat input after the buttons appear
+        setTimeout(() => {
+          if (chatInputRef.value && chatInputRef.value.focus) {
+            chatInputRef.value.focus()
+            console.log('Auto-focused chat input for verification code after typing')
+          } else {
+            console.log('Chat input ref not available for verification code auto-focus after typing')
+          }
+        }, 100)
+      }, 200) // Small delay for better UX
+    }
+  }
+}
+
+// Update welcome message typing status based on user status
+const updateWelcomeMessageTyping = (): void => {
+  if (messages.value.length > 0 && messages.value[0].type === 'ai') {
+    const welcomeMessage = messages.value[0]
+    if (welcomeMessage.content[0].includes('Welcome! I\'m <strong>ARKON (Post MVP)</strong>')) {
+      // Update typing property based on current user status
+      welcomeMessage.typing = !isSignedIn.value && !isReturningUser.value
+    }
+  }
 }
 
 // Header Methods
@@ -704,6 +737,14 @@ const handleLogout = () => {
   isSignedIn.value = false
   isReturningUser.value = false
   phoneVerified.value = false // Reset phone verification status
+  welcomeTypingComplete.value = false // Reset typing completion state
+  congratulationsTypingComplete.value = false // Reset congratulations typing state
+  actionButtonsUsed.value = false // Reset action buttons used state
+  contactPreviewTypingComplete.value = false // Reset contact preview typing state
+  contactPreviewButtonsUsed.value = false // Reset contact preview buttons used state
+  connectionAnalysisTypingComplete.value = false // Reset connection analysis typing state
+  phoneVerificationButtonUsed.value = false // Reset phone verification button used state
+  verificationCodeTypingComplete.value = false // Reset verification code typing state
 
   // Reset UI state
   showDialer.value = false
@@ -740,13 +781,23 @@ const handleLogout = () => {
   totalCalls.value = 0
   connectedCalls.value = 0
 
+  // Reset typing state
+  welcomeTypingComplete.value = false
+  congratulationsTypingComplete.value = false
+  actionButtonsUsed.value = false
+  contactPreviewTypingComplete.value = false
+  contactPreviewButtonsUsed.value = false
+  connectionAnalysisTypingComplete.value = false
+
   // Reset to welcome message
   messages.value = [
     {
       type: 'ai',
       content: [
         'Welcome! I\'m <strong>ARKON (Post MVP)</strong>, your AI calling assistant.<br><br>Drop your contact file here and I\'ll show you exactly who\'s most likely to pick up right now.'
-      ]
+      ],
+      // Only show typing animation for completely new users (not signed in and not returning)
+      typing: !isSignedIn.value && !isReturningUser.value
     }
   ]
 
@@ -861,6 +912,7 @@ const handleGoogleSignin = (): void => {
   isSignedIn.value = true
   isReturningUser.value = true // This is a returning user
   phoneVerified.value = true // Returning users don't need to verify phone again
+  updateWelcomeMessageTyping() // Update typing status for welcome message
   addAIMessage('Welcome back! You\'re signed in with Google.')
   setTimeout(() => {
     addAIMessage('Ready to upload your contact file and start dialing?')
@@ -889,6 +941,7 @@ const handleLoginSuccess = (userData: any): void => {
   isSignedIn.value = true
   isReturningUser.value = true // This is a returning user
   phoneVerified.value = true // Returning users don't need to verify phone again
+  updateWelcomeMessageTyping() // Update typing status for welcome message
 
   // Since they're a returning user who has already set goals,
   // skip directly to file upload stage
@@ -976,9 +1029,9 @@ const simulateFileUpload = () => {
         <br>
         <table style="width: 100%; border-collapse: collapse;">
           <tr><td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af;">Home Phone:</td><td style="padding: 4px 0;">(555) 123-4567</td></tr>
-          <tr><td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af;">${wrapConnectScoreWithTooltip('Connect Score')}:</td><td style="padding: 4px 0;">High</td></tr>
+          <tr><td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af;">Connect Score:</td><td style="padding: 4px 0;">High</td></tr>
           <tr><td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af;">Mobile Phone:</td><td style="padding: 4px 0;">(555) 123-4568</td></tr>
-          <tr><td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af;">${wrapConnectScoreWithTooltip('Connect Score')}:</td><td style="padding: 4px 0;">Medium</td></tr>
+          <tr><td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af;">Connect Score:</td><td style="padding: 4px 0;">Medium</td></tr>
           <tr><td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af;">Email:</td><td style="padding: 4px 0;">sarah.johnson@techcorp.com</td></tr>
           <tr><td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af;">Address:</td><td style="padding: 4px 0;">1234 Main St, Dallas, TX</td></tr>
           <tr><td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af;">Local Time:</td><td style="padding: 4px 0;">2:45 PM CST</td></tr>
@@ -1072,9 +1125,9 @@ const sendMessage = (message: string): void => {
       // Check if this is the 3rd contact (index 2) - if so, enable queue completion
       if (currentContactIndex.value >= 2) {
         queueCompletionReady.value = true
-        addAIMessage(`The call outcome and notes have been saved for ${currentContact.value.name}. Click "Queue Completed" to finish your dialing session.`)
+        addAIMessageWithTyping(`The call outcome and notes have been saved for ${currentContact.value.name}. Click "Queue Completed" to finish your dialing session.`)
       } else {
-        addAIMessage(`The call outcome and notes have been saved for ${currentContact.value.name}. Click "Next" to continue to the next contact.`)
+        addAIMessageWithTyping(`The call outcome and notes have been saved for ${currentContact.value.name}. Click "Next" to continue to the next contact.`)
       }
       scrollToBottom()
     }, 1000)
@@ -1098,29 +1151,27 @@ const sendMessage = (message: string): void => {
   if (verificationStep.value === 'enter-phone') {
     enteredPhoneNumber.value = message
     verificationStep.value = 'enter-code'
-    showVerificationButtons.value = true
+    verificationCodeTypingComplete.value = false // Reset typing state
 
     setTimeout(() => {
-      addAIMessage(`Perfect. We've sent a text with 6-digit verification code to ${message}. Please enter it below to continue.`)
+      addAIMessageWithTyping(`Perfect. We've sent a text with 6-digit verification code to ${message}. Please enter it below to continue.`)
       scrollToBottom()
-
-      // Focus the chat input after the AI message appears
-      setTimeout(() => {
-        if (chatInputRef.value && chatInputRef.value.focus) {
-          chatInputRef.value.focus()
-          console.log('Auto-focused chat input for verification code')
-        } else {
-          console.log('Chat input ref not available for verification code auto-focus')
-        }
-      }, 500)
     }, 1000)
     return
   }
 
   if (verificationStep.value === 'enter-code') {
+    // Immediately hide all verification UI elements
     showVerificationButtons.value = false
+    showPhoneVerificationButton.value = false
+    verificationCodeTypingComplete.value = false
+    phoneVerificationButtonUsed.value = true
+
+    // Mark verification as complete and reset step
+    phoneVerified.value = true
     verificationStep.value = 'default'
-    phoneVerified.value = true // Mark phone as verified
+
+    // Show the next step
     showStartDialingButton.value = true
 
     setTimeout(() => {
@@ -1167,9 +1218,9 @@ const sendMessage = (message: string): void => {
       // Check if this is the 3rd contact (index 2) - if so, enable queue completion
       if (currentContactIndex.value >= 2) {
         queueCompletionReady.value = true
-        addAIMessage(`The notes have been saved for ${currentContact.value.name}. Click "Queue Completed" to finish your dialing session.`)
+        addAIMessageWithTyping(`The notes have been saved for ${currentContact.value.name}. Click "Queue Completed" to finish your dialing session.`)
       } else {
-        addAIMessage(`The notes have been saved for ${currentContact.value.name}. Click "Next" to continue to the next contact.`)
+        addAIMessageWithTyping(`The notes have been saved for ${currentContact.value.name}. Click "Next" to continue to the next contact.`)
       }
       scrollToBottom()
     }, 1000)
@@ -1240,7 +1291,7 @@ const sendMessage = (message: string): void => {
         '• Rehearse your opening pitch with AI feedback',
         '• Practice handling common objections',
         '• Test different conversation flows',
-        '• Record and review your delivery',
+        '�� Record and review your delivery',
         'Would you like to practice a cold call opening or work on handling objections?'
       ])
     } else if (lowerMessage.includes('appointments') && lowerMessage.includes('today')) {
@@ -1291,8 +1342,11 @@ const handleVoiceInput = () => {
 
 // Contact Preview Button Methods
 const handleLooksGood = (): void => {
-  // Hide contact preview buttons
+  // Hide contact preview buttons and mark as used
   showContactPreviewButtons.value = false
+  contactPreviewButtonsUsed.value = true
+  // Reset connection analysis typing state for new message
+  connectionAnalysisTypingComplete.value = false
 
   // Add user message showing what button was clicked
   addUserMessage('Looks Good')
@@ -1300,8 +1354,8 @@ const handleLooksGood = (): void => {
   if (isReturningUser.value || phoneVerified.value) {
     // Skip phone verification for returning users or if phone was already verified
     setTimeout(() => {
-      addAIMessage([
-        'I\'ve analyzed your contact\'s phone numbers using real connection data from 900M+ calls, recent phone engagement, calling patterns, and carrier signals—so you only dial numbers likely to connect.<br><br>I\'ve prioritized the phone numbers most likely to connect so you spend time talking, not hitting dead lines.<br><br>Here\'s what I found:<br><div style="margin-left: 1em; text-indent: -1em;">�� 40 numbers have \'High\' <span class="connect-score-tooltip" data-tooltip="' + connectScoreTooltip.replace(/'/g, '&#39;').replace(/"/g, '&quot;') + '">Connect Scores</span> and show consistent calling activity in the last 12 months. These are highly likely to be connected and assigned to active subscribers.</div><br><div style="margin-left: 1em; text-indent: -1em;">• 67 numbers have \'Medium\' Connect Scores and are worth calling after you exhaust your \'High\' Connect Score numbers.</div><br><div style="margin-left: 1em; text-indent: -1em;">• 54 numbers have \'Low\' Connect Scores and are likely disconnected or inactive lines that won\'t answer when dialed.</div>'
+      addAIMessageWithTyping([
+        'I\'ve analyzed your contact\'s phone numbers using real connection data from 900M+ calls, recent phone engagement, calling patterns, and carrier signals—so you only dial numbers likely to connect.<br><br>I\'ve prioritized the phone numbers most likely to connect so you spend time talking, not hitting dead lines.<br><br>Here\'s what I found:<br><div style="margin-left: 1em; text-indent: -1em;">�� 40 numbers have \'High\' Connect Scores and show consistent calling activity in the last 12 months. These are highly likely to be connected and assigned to active subscribers.</div><br><div style="margin-left: 1em; text-indent: -1em;">• 67 numbers have \'Medium\' Connect Scores and are worth calling after you exhaust your \'High\' Connect Score numbers.</div><br><div style="margin-left: 1em; text-indent: -1em;">• 54 numbers have \'Low\' Connect Scores and are likely disconnected or inactive lines that won\'t answer when dialed.</div>'
       ])
 
       // Skip directly to verified phone and start dialing
@@ -1319,20 +1373,19 @@ const handleLooksGood = (): void => {
   } else {
     // Regular flow for new users
     setTimeout(() => {
-      addAIMessage([
-        'I\'ve analyzed your contact\'s phone numbers using real connection data from 900M+ calls, recent phone engagement, calling patterns, and carrier signals—so you only dial numbers likely to connect.<br><br>I\'ve prioritized the phone numbers most likely to connect so you spend time talking, not hitting dead lines.<br><br>Here\'s what I found:<br><div style="margin-left: 1em; text-indent: -1em;">• 40 numbers have \'High\' <span class="connect-score-tooltip" data-tooltip="' + connectScoreTooltip.replace(/'/g, '&#39;').replace(/"/g, '&quot;') + '">Connect Scores</span> and show consistent calling activity in the last 12 months. These are highly likely to be connected and assigned to active subscribers.</div><br><div style="margin-left: 1em; text-indent: -1em;">• 67 numbers have \'Medium\' Connect Scores and are worth calling after you exhaust your \'High\' Connect Score numbers.</div><br><div style="margin-left: 1em; text-indent: -1em;">• 54 numbers have \'Low\' Connect Scores and are likely disconnected or inactive lines that won\'t answer when dialed.</div>'
+      addAIMessageWithTyping([
+        'I\'ve analyzed your contact\'s phone numbers using real connection data from 900M+ calls, recent phone engagement, calling patterns, and carrier signals—so you only dial numbers likely to connect.<br><br>I\'ve prioritized the phone numbers most likely to connect so you spend time talking, not hitting dead lines.<br><br>Here\'s what I found:<br><div style="margin-left: 1em; text-indent: -1em;">• 40 numbers have \'High\' Connect Scores and show consistent calling activity in the last 12 months. These are highly likely to be connected and assigned to active subscribers.</div><br><div style="margin-left: 1em; text-indent: -1em;">• 67 numbers have \'Medium\' Connect Scores and are worth calling after you exhaust your \'High\' Connect Score numbers.</div><br><div style="margin-left: 1em; text-indent: -1em;">• 54 numbers have \'Low\' Connect Scores and are likely disconnected or inactive lines that won\'t answer when dialed.</div>'
       ])
 
-      // Show phone verification button after the message
-      showPhoneVerificationButton.value = true
-      scrollToBottom()
+      // Phone verification button will be shown automatically when typing completes
     }, 1000)
   }
 }
 
 const handleTryAgain = (): void => {
-  // Hide contact preview buttons
+  // Hide contact preview buttons and mark as used
   showContactPreviewButtons.value = false
+  contactPreviewButtonsUsed.value = true
 
   // Add user message showing what button was clicked
   addUserMessage('Try Again')
@@ -1346,8 +1399,9 @@ const handleTryAgain = (): void => {
 }
 
 const handlePhoneVerification = (): void => {
-  // Hide phone verification button
+  // Hide phone verification button and mark as used
   showPhoneVerificationButton.value = false
+  phoneVerificationButtonUsed.value = true
 
   // Add user message showing what button was clicked
   addUserMessage('Now lets verify my phone number')
@@ -1437,6 +1491,7 @@ const handleTryAnotherNumber = (): void => {
   // Reset to phone entry step
   verificationStep.value = 'enter-phone'
   enteredPhoneNumber.value = ''
+  verificationCodeTypingComplete.value = false // Reset typing state
 
   // Add AI response
   setTimeout(() => {
@@ -1526,9 +1581,9 @@ const simulateCall = (): void => {
       })
 
       // Show voicemail detected message
-      addAIMessage('Voicemail detected...')
+      addAIMessageWithTyping('Voicemail detected...')
       const duration = '00:00'
-      addAIMessage(`Call with ${currentContact.value.name} ended. Duration: ${duration}<br><br>Please select a call outcome or enter notes about this call.`)
+      addAIMessageWithTyping(`Call with ${currentContact.value.name} ended. Duration: ${duration}<br><br>Please select a call outcome or enter notes about this call.`)
       scrollToBottom()
     }, 4000)
   } else {
@@ -1582,7 +1637,7 @@ const handleNextContact = (): void => {
     callState.value = 'idle'
     callDuration.value = 0
 
-    addAIMessage(`Moving to next contact: ${currentContact.value.name}. Preparing to dial...`)
+    addAIMessageWithTyping(`Moving to next contact: ${currentContact.value.name}. Preparing to dial...`)
 
     // Add separator message for the new contact
     setTimeout(() => {
@@ -1632,7 +1687,7 @@ const handleHangUp = (): void => {
 
   // Only show coaching recap for manual hang ups and if AI Coach is enabled
   if (isManualHangUp.value && aiCoachEnabled.value) {
-    addAIMessage([
+    addAIMessageWithTyping([
       '<strong>AI Coaching Recap</strong>',
       '<br>',
       getDynamicCoachingFeedback(),
@@ -1938,6 +1993,7 @@ const skipToDialer = (): void => {
   isSignedIn.value = true
   isReturningUser.value = true
   hasUploadedFile.value = true
+  updateWelcomeMessageTyping() // Update typing status for welcome message
   showActionButtons.value = false
   showContactPreviewButtons.value = false
   showPhoneVerificationButton.value = false
@@ -2022,7 +2078,7 @@ const loadNewFile = (preserveQueueState: boolean = false): void => {
 }
 
 const exportFile = (): void => {
-  addAIMessage(wrapConnectScoreWithTooltip('Exporting your enriched contact file with Connect Scores and call results...'))
+  addAIMessage('Exporting your enriched contact file with Connect Scores and call results...')
 }
 
 const handleCompleteQueue = (): void => {
@@ -2081,7 +2137,7 @@ const handleDisposition = (disposition: string): void => {
 
   // Add AI response prompting for notes
   setTimeout(() => {
-    addAIMessage('Great! Now please enter any notes about this call or continue to the next call.')
+    addAIMessageWithTyping('Great! Now please enter any notes about this call or continue to the next call.')
 
     // Focus the chat input for notes
     setTimeout(() => {
@@ -2157,7 +2213,7 @@ const handleTermsCancel = () => {
   showActionButtons.value = false
   // Clear messages and show welcome message
   messages.value = []
-  addAIMessage('��� Welcome to ARKON! I\'m your AI calling assistant. I\'ll help you connect with more prospects and close more deals. What would you like to accomplish today?')
+  addAIMessage('���� Welcome to ARKON! I\'m your AI calling assistant. I\'ll help you connect with more prospects and close more deals. What would you like to accomplish today?')
 
   // Set focus context for header
   nextTick(() => {
@@ -2195,19 +2251,18 @@ const handlePurchaseCompleted = () => {
   currentPage.value = 'main'
   isSignedIn.value = true
   isReturningUser.value = false // This is a new user
-  showActionButtons.value = true
+  updateWelcomeMessageTyping() // Update typing status for welcome message
+
+  // Reset congratulations typing completion and action buttons used state
+  congratulationsTypingComplete.value = false
+  actionButtonsUsed.value = false
 
   // Add user message confirming account creation and upgrade
   addUserMessage('Account created & upgraded')
 
-  // Add AI congratulations message
+  // Add AI congratulations message with typing animation (action buttons will show after typing completes)
   setTimeout(() => {
-    addAIMessage('Congratulations! You\'ve successfully upgraded to the Pro plan and have unlimited access to all features.<br><br>To help us understand what your goals are, what are you trying to accomplish?')
-  }, 500)
-
-  // Ensure scroll happens after action buttons are rendered
-  setTimeout(() => {
-    scrollToBottom()
+    addAIMessageWithTyping('Congratulations! You\'ve successfully upgraded to the Pro plan and have unlimited access to all features.<br><br>To help us understand what your goals are, what are you trying to accomplish?')
   }, 500)
 }
 
@@ -2232,6 +2287,7 @@ const handleAccountCreated = (accountData: any) => {
   closeAccountCreation()
   isSignedIn.value = true
   showActionButtons.value = true
+  updateWelcomeMessageTyping() // Update typing status for welcome message
   addAIMessage('🎉 Welcome to ARKON! Your account has been created successfully. Let\'s start your first smart calling session! What are you trying to accomplish?')
 
   // Ensure scroll happens after action buttons are rendered
@@ -2251,6 +2307,7 @@ const handleGoogleSignupFromAccount = () => {
   setTimeout(() => {
     isSignedIn.value = true
     showActionButtons.value = true
+    updateWelcomeMessageTyping() // Update typing status for welcome message
     addAIMessage('🎉 Welcome to ARKON! Your account has been created successfully. Let\'s start your first smart calling session! What are you trying to accomplish?')
 
     // Ensure scroll happens after action buttons are rendered
@@ -2262,19 +2319,28 @@ const handleGoogleSignupFromAccount = () => {
 
 // Action Button Methods
 const handleActionButton = (action: string): void => {
-  // Hide action buttons after selection
+  // Hide action buttons after selection and mark as used
   showActionButtons.value = false
-  // Don't show contact preview buttons yet - wait for AI message to appear
+  actionButtonsUsed.value = true
+  // Reset contact preview typing state for new message
+  contactPreviewTypingComplete.value = false
+  contactPreviewButtonsUsed.value = false
+  // Hide contact preview buttons initially - they'll show after typing completes
+  showContactPreviewButtons.value = false
   
   // Add user message showing their selection
-  addUserMessage(`I want to ${action.toLowerCase()}`)
+  addUserGoalMessage(`I want to ${action.toLowerCase()}`)
+
+  // Maintain scroll position for goal message even during AI response
+  const maintainGoalPosition = () => {
+    scrollToTopForGoals()
+  }
+
+  // Set up periodic maintenance of scroll position
+  const scrollMaintainer = setInterval(maintainGoalPosition, 300)
 
   // Wait for user message scroll to complete, then add AI response
   setTimeout(() => {
-    console.log('First timeout completed, waiting for scroll animation')
-    // Wait an additional moment for scroll animation to complete
-    setTimeout(() => {
-      console.log('About to add AI message without scroll')
       let response = []
       const sampleContacts = `
         <div style="color: #ffffff;">
@@ -2286,9 +2352,9 @@ const handleActionButton = (action: string): void => {
           <br>
           <table style="width: 100%; border-collapse: collapse;">
             <tr><td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af;">Home Phone:</td><td style="padding: 4px 0;">(555) 123-4567</td></tr>
-            <tr><td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af;">${wrapConnectScoreWithTooltip('Connect Score')}:</td><td style="padding: 4px 0;">High</td></tr>
+            <tr><td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af;">Connect Score:</td><td style="padding: 4px 0;">High</td></tr>
             <tr><td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af;">Mobile Phone:</td><td style="padding: 4px 0;">(555) 123-4568</td></tr>
-            <tr><td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af;">${wrapConnectScoreWithTooltip('Connect Score')}:</td><td style="padding: 4px 0;">Medium</td></tr>
+            <tr><td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af;">Connect Score:</td><td style="padding: 4px 0;">Medium</td></tr>
             <tr><td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af;">Email:</td><td style="padding: 4px 0;">sarah.johnson@techcorp.com</td></tr>
             <tr><td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af;">Address:</td><td style="padding: 4px 0;">1234 Main St, Dallas, TX</td></tr>
             <tr><td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af;">Local Time:</td><td style="padding: 4px 0;">2:45 PM CST</td></tr>
@@ -2303,7 +2369,7 @@ const handleActionButton = (action: string): void => {
       switch (action) {
       case 'Set Appointments':
         response = [
-          wrapConnectScoreWithTooltip('Perfect! Setting appointments is our bread and butter. We\'ll help you fill your calendar.<br><br>I\'ve analyzed your <strong style=\"color: #fbbf24;\">156 contacts</strong> and checked phone numbers with Connect Score.<br><br>Here\'s a preview of your data. Does this look correct?<br><br>'),
+          'Perfect! Setting appointments is our bread and butter. We\'ll help you fill your calendar.<br><br>I\'ve analyzed your <strong style=\"color: #fbbf24;\">156 contacts</strong> and checked phone numbers with Connect Score.<br><br>Here\'s a preview of your data. Does this look correct?<br><br>',
           sampleContacts
         ]
         break
@@ -2311,7 +2377,7 @@ const handleActionButton = (action: string): void => {
         response = [
           'Outstanding! Closing live sales is where the magic happens. We\'ll get you connected with your hottest prospects.',
           '',
-          wrapConnectScoreWithTooltip('Your trial is ready! I\'ve analyzed your <strong style="color: #fbbf24;">156 contacts</strong> and prioritized those ready to buy with Connect Score.'),
+          'Your trial is ready! I\'ve analyzed your <strong style="color: #fbbf24;">156 contacts</strong> and prioritized those ready to buy with Connect Score.',
           'Here\'s a preview of your highest-intent prospects. Does this look correct?',
           sampleContacts
         ]
@@ -2320,7 +2386,7 @@ const handleActionButton = (action: string): void => {
         response = [
           'Perfect! Creating opportunities is all about finding the right prospects at the right time. We\'ll build your pipeline.',
           '',
-          wrapConnectScoreWithTooltip('Your trial is ready! I\'ve analyzed your <strong style="color: #fbbf24;">156 contacts</strong> and identified potential opportunities with Connect Score.'),
+          'Your trial is ready! I\'ve analyzed your <strong style="color: #fbbf24;">156 contacts</strong> and identified potential opportunities with Connect Score.',
           'Here\'s a preview of your warmest leads. Does this look correct?',
           sampleContacts
         ]
@@ -2329,7 +2395,7 @@ const handleActionButton = (action: string): void => {
         response = [
           'Smart choice! Follow-ups are where deals are won. We\'ll help you reconnect with precision timing.',
           '',
-          wrapConnectScoreWithTooltip('Your trial is ready! I\'ve analyzed your <strong style="color: #fbbf24;">156 contacts</strong> and optimized follow-up timing with Connect Score.'),
+          'Your trial is ready! I\'ve analyzed your <strong style="color: #fbbf24;">156 contacts</strong> and optimized follow-up timing with Connect Score.',
           'Here\'s a preview of your follow-up targets. Does this look correct?',
           sampleContacts
         ]
@@ -2338,7 +2404,7 @@ const handleActionButton = (action: string): void => {
         response = [
           'Brilliant! Live transfers maximize your team\'s efficiency. We\'ll connect you with prospects ready to talk.',
           '',
-          wrapConnectScoreWithTooltip('Your trial is ready! I\'ve analyzed your <strong style="color: #fbbf24;">156 contacts</strong> and identified transfer-ready prospects with Connect Score.'),
+          'Your trial is ready! I\'ve analyzed your <strong style="color: #fbbf24;">156 contacts</strong> and identified transfer-ready prospects with Connect Score.',
           'Here\'s a preview of your transfer candidates. Does this look correct?',
           sampleContacts
         ]
@@ -2347,7 +2413,7 @@ const handleActionButton = (action: string): void => {
         response = [
           'Fantastic! Live conversations are the heart of great sales. We\'ll get you talking to the right people.',
           '',
-          wrapConnectScoreWithTooltip('Your trial is ready! I\'ve analyzed your <strong style="color: #fbbf24;">156 contacts</strong> and found conversation-ready prospects with Connect Score.'),
+          'Your trial is ready! I\'ve analyzed your <strong style="color: #fbbf24;">156 contacts</strong> and found conversation-ready prospects with Connect Score.',
           'Here\'s a preview of your best conversation targets. Does this look correct?',
           sampleContacts
         ]
@@ -2356,14 +2422,18 @@ const handleActionButton = (action: string): void => {
         response = [`I\'ll help you with ${action.toLowerCase()}. Let me prepare your optimal calling strategy.`]
       }
 
-      addAIMessageWithoutScroll(response)
+      // Force scroll position one more time before AI response
+      scrollToTopForGoals()
 
-      // Show contact preview buttons after AI message appears
+      addAIMessageWithTypingNoScroll(response)
+
+      // Stop maintaining scroll position after AI response starts
       setTimeout(() => {
-        showContactPreviewButtons.value = true
-      }, 200)
-    }, 1000) // Additional delay for scroll completion
-  }, 1500) // Initial delay
+        clearInterval(scrollMaintainer)
+      }, 2000)
+
+      // Contact preview buttons will be shown automatically when typing completes
+  }, 1500) // Increased delay to ensure user message scroll completes
 }
 
 // Lifecycle hook to establish focus context when app loads

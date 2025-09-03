@@ -97,7 +97,7 @@
                 <td style="padding: 4px 0; color: white;">{{ currentContact.phone }}</td>
               </tr>
               <tr>
-                <td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af;"><span class="connect-score-tooltip" :data-tooltip="connectScoreTooltip">Connect Score</span>:</td>
+                <td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af;">Connect Score:</td>
                 <td style="padding: 4px 0; color: white;">{{ currentContact.connectScore }}</td>
               </tr>
               <tr>
@@ -143,7 +143,7 @@
     </div>
 
     <!-- Action Buttons -->
-    <div class="mx-[5px] mb-2 bg-gray-800 border border-gray-600 rounded-lg pt-[14px] px-[14px] pb-[2px]">
+    <div class="mx-[5px] mb-2 bg-gray-800 border border-gray-600 rounded-lg pt-[14px] px-[14px] pb-[4px]">
       <!-- Call Controls (visible when not ended) -->
       <div v-if="callState !== 'ended'" class="space-y-3">
         <!-- Call Control Buttons -->
@@ -202,7 +202,7 @@
       </div>
 
       <!-- Call Ended Action Buttons (only when call ended) -->
-      <div v-if="callState === 'ended'" class="space-y-2">
+      <div v-if="callState === 'ended'" class="space-y-3">
         <Button
           @click="callBack"
           tabindex="13"

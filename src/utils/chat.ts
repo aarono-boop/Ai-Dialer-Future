@@ -5,6 +5,8 @@ export interface Message {
   type: 'ai' | 'user' | 'separator'
   content: string[]
   contactName?: string
+  typing?: boolean
+  preserveUserPosition?: boolean
 }
 
 export const createChatUtils = (
@@ -14,60 +16,105 @@ export const createChatUtils = (
 ) => {
   const scrollToBottom = async (): Promise<void> => {
     await nextTick()
-    // Wait for DOM updates and then scroll multiple times to ensure it works
-    setTimeout(() => {
-      if (chatMessages.value) {
-        // First scroll immediately
-        chatMessages.value.scrollTop = chatMessages.value.scrollHeight
 
-        // Then scroll smoothly after a short delay
-        setTimeout(() => {
-          if (chatMessages.value) {
-            chatMessages.value.scrollTo({
-              top: chatMessages.value.scrollHeight,
-              behavior: 'smooth'
-            })
-          }
-        }, 100)
+    // Enhanced scroll function with multiple attempts to handle dynamic content
+    const performScroll = (attempt: number = 0) => {
+      if (!chatMessages.value || attempt > 3) return
+
+      const maxScrollTop = chatMessages.value.scrollHeight - chatMessages.value.clientHeight
+
+      // Immediate scroll to bottom
+      chatMessages.value.scrollTop = maxScrollTop
+
+      // Check if we need to try again (content might still be loading)
+      if (attempt < 2) {
+        setTimeout(() => performScroll(attempt + 1), 100)
+      } else {
+        // Final smooth scroll for better UX
+        chatMessages.value.scrollTo({
+          top: maxScrollTop,
+          behavior: 'smooth'
+        })
       }
-    }, 50)
+    }
+
+    // Start with small delay to ensure DOM is updated
+    setTimeout(() => performScroll(), 50)
+  }
+
+  const scrollToBottomDuringTyping = (): void => {
+    // Optimized version for frequent calls during typing animation
+    if (chatMessages.value) {
+      chatMessages.value.scrollTop = chatMessages.value.scrollHeight
+    }
   }
 
   const scrollToUserMessage = async (): Promise<void> => {
-    console.log('🔥 SCROLL TO USER MESSAGE FUNCTION CALLED!')
     await nextTick()
-    setTimeout(() => {
-      console.log('🔥 Inside setTimeout for scrollToUserMessage')
-      if (chatMessages.value) {
-        console.log('🔥 Chat messages container found')
-        // Find the last user message element
-        const userMessages = chatMessages.value.querySelectorAll('[data-message-type="user"]')
-        console.log('🔥 Found user messages:', userMessages.length)
 
-        if (userMessages.length > 0) {
-          const lastUserMessage = userMessages[userMessages.length - 1] as HTMLElement
-          console.log('🔥 Last user message element:', lastUserMessage)
+    const performUserScroll = (attempt: number = 0) => {
+      if (!chatMessages.value || attempt > 3) return
 
-          // Calculate the position of the user message within the scrollable container
-          const messageOffsetTop = lastUserMessage.offsetTop
-          console.log('🔥 User message offset top:', messageOffsetTop)
-          console.log('🔥 Current scroll position:', chatMessages.value.scrollTop)
+      // Find the last user message element
+      const userMessages = chatMessages.value.querySelectorAll('[data-message-type="user"]')
 
-          // Scroll to position the user message with space above it
-          const scrollPosition = Math.max(0, messageOffsetTop - 50)
-          console.log('🔥 Scrolling to position (with -50px offset):', scrollPosition)
+      if (userMessages.length > 0) {
+        const lastUserMessage = userMessages[userMessages.length - 1] as HTMLElement
+
+        // Calculate the position to place the user message at the top of the viewport
+        const messageOffsetTop = lastUserMessage.offsetTop
+
+        // Position user message near the top with adequate padding for full visibility
+        const targetPosition = Math.max(0, messageOffsetTop - 50)
+
+        // Use immediate scroll for instant positioning
+        chatMessages.value.scrollTop = targetPosition
+
+        // Retry if needed to handle dynamic content
+        if (attempt < 2) {
+          setTimeout(() => performUserScroll(attempt + 1), 150)
+        } else {
+          // Final smooth adjustment for better UX
           chatMessages.value.scrollTo({
-            top: scrollPosition,
+            top: targetPosition,
             behavior: 'smooth'
           })
-        } else {
-          console.log('🔥 No user messages found, falling back to bottom scroll')
-          scrollToBottom()
         }
       } else {
-        console.log('🔥 No chat messages container found!')
+        // Fallback to bottom scroll if no user messages found
+        scrollToBottom()
       }
-    }, 100)
+    }
+
+    // Start with small delay to ensure DOM is updated
+    setTimeout(() => performUserScroll(), 100)
+  }
+
+  const scrollToTopForGoals = async (): Promise<void> => {
+    await nextTick()
+
+    // Use multiple attempts with longer delays to ensure it works
+    const forceScrollToGoal = (attempt: number = 0) => {
+      if (!chatMessages.value || attempt > 5) return
+
+      const userMessages = chatMessages.value.querySelectorAll('[data-message-type="user"]')
+
+      if (userMessages.length > 0) {
+        const lastUserMessage = userMessages[userMessages.length - 1] as HTMLElement
+        const messageOffsetTop = lastUserMessage.offsetTop
+
+        // Force scroll to show user message at top with adequate padding for full visibility
+        const targetPosition = Math.max(0, messageOffsetTop - 50)
+
+        // Force immediate scroll
+        chatMessages.value.scrollTop = targetPosition
+
+        // Continue trying to maintain position
+        setTimeout(() => forceScrollToGoal(attempt + 1), 200)
+      }
+    }
+
+    setTimeout(() => forceScrollToGoal(), 50)
   }
 
   const addAIMessage = (content: string | string[]): void => {
@@ -107,6 +154,25 @@ export const createChatUtils = (
     })
   }
 
+  const addUserGoalMessage = (content: string): void => {
+    messages.value.push({
+      type: 'user',
+      content: [content]
+    })
+
+    // Use the special goal scroll function for goal selections
+    scrollToTopForGoals()
+
+    // Establish focus context after new message appears
+    nextTick(() => {
+      setTimeout(() => {
+        if (headerRef.value?.establishFocusContext) {
+          headerRef.value.establishFocusContext()
+        }
+      }, 100)
+    })
+  }
+
   const addSeparatorMessage = (contactName: string): void => {
     messages.value.push({
       type: 'separator',
@@ -127,7 +193,6 @@ export const createChatUtils = (
     // After AI message is added, re-position the user message at the top
     nextTick(() => {
       setTimeout(() => {
-        console.log('🔥 AI message added, now re-positioning user message')
         scrollToUserMessage()
 
         if (headerRef.value?.establishFocusContext) {
@@ -148,13 +213,61 @@ export const createChatUtils = (
     }, delay)
   }
 
+  const addAIMessageWithTyping = (content: string | string[]): void => {
+    const contentArray = Array.isArray(content) ? content : [content]
+    messages.value.push({
+      type: 'ai',
+      content: contentArray,
+      typing: true
+    })
+
+    // Initial scroll to position the new message
+    nextTick(() => {
+      scrollToBottom()
+    })
+
+    // Establish focus context after new message appears
+    nextTick(() => {
+      setTimeout(() => {
+        if (headerRef.value?.establishFocusContext) {
+          headerRef.value.establishFocusContext()
+        }
+      }, 100)
+    })
+  }
+
+  const addAIMessageWithTypingNoScroll = (content: string | string[]): void => {
+    const contentArray = Array.isArray(content) ? content : [content]
+    messages.value.push({
+      type: 'ai',
+      content: contentArray,
+      typing: true,
+      preserveUserPosition: true // Flag to indicate this should preserve user message position
+    })
+
+    // Don't scroll - preserve current user message position
+    // Establish focus context after new message appears
+    nextTick(() => {
+      setTimeout(() => {
+        if (headerRef.value?.establishFocusContext) {
+          headerRef.value.establishFocusContext()
+        }
+      }, 100)
+    })
+  }
+
   return {
     scrollToBottom,
+    scrollToBottomDuringTyping,
     scrollToUserMessage,
+    scrollToTopForGoals,
     addAIMessage,
     addAIMessageWithoutScroll,
     addUserMessage,
+    addUserGoalMessage,
     addSeparatorMessage,
-    addAIMessageWithDelay
+    addAIMessageWithDelay,
+    addAIMessageWithTyping,
+    addAIMessageWithTypingNoScroll
   }
 }
