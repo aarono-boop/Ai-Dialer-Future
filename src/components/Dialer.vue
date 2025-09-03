@@ -355,6 +355,7 @@ const props = defineProps<{
   currentContactIndex: number
   totalContacts: number
   coachParameter: string
+  aiCoachEnabled: boolean
 }>()
 
 // Define emits
@@ -364,7 +365,6 @@ const emit = defineEmits(['call-back', 'next-contact', 'hang-up', 'mute', 'hold'
 const isMuted = ref(false)
 const isOnHold = ref(false)
 const showKeypadModal = ref(false)
-const aiCoachEnabled = ref(true)
 
 // Template refs for PrimeVue buttons
 const muteButtonRef = ref<any>(null)
