@@ -65,7 +65,7 @@ const props = defineProps<{
 }>()
 
 // Typing animation state
-const typedContent = ref<string[]>([])
+const typedContent = ref<string[]>(props.message.typing ? props.message.content.map(() => '') : [])
 const isTyping = ref(false)
 let typingInterval: NodeJS.Timeout | null = null
 
