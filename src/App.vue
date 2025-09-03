@@ -284,6 +284,17 @@
       />
     </div>
 
+    <!-- Coach Management Interface -->
+    <CoachManagement v-if="managementMode && currentPage === 'main'" />
+
+    <!-- Coach Creation Modal for create-coach URL -->
+    <CoachCreationModal
+      v-if="managementMode === 'create' && currentPage === 'main'"
+      :visible="true"
+      @coach-created="handleCoachCreated"
+      @close="handleCoachModalClose"
+    />
+
     <!-- Footer -->
     <Footer v-if="currentPage === 'main'" :style="showDialer ? 'margin-right: 33.333333%' : ''" :showDialer="showDialer" :queuePaused="queuePaused" @skip-to-dialer="skipToDialer" />
 
