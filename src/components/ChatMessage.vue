@@ -120,9 +120,7 @@ const stopTypingAnimation = (): void => {
 // Lifecycle
 onMounted(() => {
   if (props.message.typing) {
-    setTimeout(() => {
-      startTypingAnimation()
-    }, 100) // Small delay before starting
+    startTypingAnimation()
   }
 })
 
