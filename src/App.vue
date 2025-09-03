@@ -1277,7 +1277,7 @@ const sendMessage = (message: string): void => {
         '• Follow up with specific prospects at optimal times',
         '• Call back prospects who didn\'t answer',
         '• Review and update your call notes',
-        '�� Start your daily calling sessions',
+        '• Start your daily calling sessions',
         'What would you like to be reminded about and when?'
       ])
     } else if (lowerMessage.includes('practice a call') || lowerMessage.includes('practice')) {
@@ -2245,8 +2245,9 @@ const handlePurchaseCompleted = () => {
   isReturningUser.value = false // This is a new user
   updateWelcomeMessageTyping() // Update typing status for welcome message
 
-  // Reset congratulations typing completion
+  // Reset congratulations typing completion and action buttons used state
   congratulationsTypingComplete.value = false
+  actionButtonsUsed.value = false
 
   // Add user message confirming account creation and upgrade
   addUserMessage('Account created & upgraded')
