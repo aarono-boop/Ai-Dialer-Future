@@ -4,39 +4,15 @@
     <div class="border-b border-gray-700 bg-gray-800/50 backdrop-blur-sm">
       <div class="max-w-4xl mx-auto px-6 py-4">
         <div class="flex items-center justify-between">
-          <div class="flex items-center gap-3">
-            <Button
-              icon="pi pi-arrow-left"
-              text
-              size="small"
-              @click="handleCancel"
-              aria-label="Go back"
-              class="text-gray-400 hover:text-white"
-            />
-            <h1 class="text-2xl font-bold">Create New Coach</h1>
-          </div>
-          <div class="flex items-center gap-3">
-            <Button
-              label="Coach Management"
-              icon="pi pi-users"
-              severity="secondary"
-              size="small"
-              @click="navigateToManagement"
-              class="text-gray-400 hover:text-white"
-            />
-            <Button
-              label="Cancel"
-              severity="secondary"
-              size="small"
-              @click="handleCancel"
-            />
-            <Button
-              label="Create Coach"
-              :loading="isCreating"
-              @click="handleCreate"
-              :disabled="!canCreate"
-            />
-          </div>
+          <h1 class="text-2xl font-bold">Create New Coach</h1>
+          <Button
+            label="Coach Management"
+            icon="pi pi-users"
+            severity="secondary"
+            size="small"
+            @click="navigateToManagement"
+            class="text-gray-400 hover:text-white"
+          />
         </div>
       </div>
     </div>
