@@ -432,8 +432,8 @@ const generateCallScript = (contact: any): string[] => {
 
 // Show call connected message followed by script and objection handling
 const showCallConnectedMessages = (contact: any): void => {
-  // Add coach-specific intro message when coach parameter is set
-  if (coachParameter.value) {
+  // Add coach-specific intro message when coach parameter is set AND AI Coach is enabled
+  if (coachParameter.value && aiCoachEnabled.value) {
     const getCoachCallMessage = (): string => {
       switch (coachParameter.value) {
         case 'jordan-stupar':
