@@ -736,8 +736,8 @@ const handleTypingComplete = (index: number): void => {
   // Check if this is the verification code message
   if (messages.value[index] && messages.value[index].content[0]?.includes('Perfect. We\'ve sent a text with 6-digit verification code')) {
     verificationCodeTypingComplete.value = true
-    // Show verification buttons after typing completes only if phone is not yet verified
-    if (!phoneVerified.value) {
+    // Show verification buttons after typing completes only if phone is not yet verified and we're still in verification step
+    if (!phoneVerified.value && verificationStep.value === 'enter-code') {
       setTimeout(() => {
         showVerificationButtons.value = true
 
