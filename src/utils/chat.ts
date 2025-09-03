@@ -18,20 +18,10 @@ export const createChatUtils = (
     // Wait for DOM updates and then scroll multiple times to ensure it works
     setTimeout(() => {
       if (chatMessages.value) {
-        // First scroll immediately
+        // For typing animations, use immediate scrolling to reduce resource usage
         chatMessages.value.scrollTop = chatMessages.value.scrollHeight
-
-        // Then scroll smoothly after a short delay
-        setTimeout(() => {
-          if (chatMessages.value) {
-            chatMessages.value.scrollTo({
-              top: chatMessages.value.scrollHeight,
-              behavior: 'smooth'
-            })
-          }
-        }, 100)
       }
-    }, 50)
+    }, 10) // Reduced delay for more responsive scrolling during typing
   }
 
   const scrollToUserMessage = async (): Promise<void> => {
