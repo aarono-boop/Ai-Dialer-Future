@@ -20,7 +20,7 @@
         <div class="w-full max-w-6xl mx-auto rounded-xl px-5">
           <div class="w-full h-full flex flex-col">
           <!-- Top content area - scrollable -->
-          <div class="flex-1 overflow-y-auto flex flex-col gap-8 pr-2 pb-10" ref="chatMessages">
+          <div class="flex-1 overflow-y-auto flex flex-col gap-8 pr-2" :class="showDialer ? 'pb-10' : 'pb-32'" ref="chatMessages">
             <!-- Chat Messages Area -->
             <div class="flex flex-col">
               <template v-for="(message, index) in messages" :key="index">
