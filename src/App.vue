@@ -287,12 +287,11 @@
     <!-- Coach Management Interface -->
     <CoachManagement v-if="(managementMode === 'manage' || managementMode === 'admin') && currentPage === 'main'" />
 
-    <!-- Coach Creation Modal for create-coach URL -->
-    <CoachCreationModal
+    <!-- Coach Creation Page for create-coach URL -->
+    <CoachCreationPage
       v-if="managementMode === 'create'"
-      :visible="managementMode === 'create'"
       @coach-created="handleCoachCreated"
-      @close="handleCoachModalClose"
+      @cancel="handleCoachModalClose"
     />
 
     <!-- Footer -->
@@ -387,7 +386,7 @@ import Dialer from './components/Dialer.vue'
 import CallSeparator from './components/CallSeparator.vue'
 import YouTubeVideo from './components/YouTubeVideo.vue'
 import CoachManagement from './components/CoachManagement.vue'
-import CoachCreationModal from './components/CoachCreationModal.vue'
+import CoachCreationPage from './components/CoachCreationPage.vue'
 
 // PrimeVue Components (adding Button)
 import Button from 'primevue/button'
