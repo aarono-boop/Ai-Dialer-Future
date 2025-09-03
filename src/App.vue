@@ -1379,6 +1379,8 @@ const handleLooksGood = (): void => {
   // Hide contact preview buttons and mark as used
   showContactPreviewButtons.value = false
   contactPreviewButtonsUsed.value = true
+  // Reset connection analysis typing state for new message
+  connectionAnalysisTypingComplete.value = false
 
   // Add user message showing what button was clicked
   addUserMessage('Looks Good')
