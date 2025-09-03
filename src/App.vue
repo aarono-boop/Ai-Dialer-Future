@@ -103,7 +103,7 @@
           </div>
 
           <!-- Verification Code Buttons - always visible when active -->
-          <div v-if="showVerificationButtons" class="mt-2 pt-5 flex justify-center">
+          <div v-if="showVerificationButtons && verificationCodeTypingComplete" class="mt-2 pt-5 flex justify-center">
             <div class="w-[70%] flex gap-3">
               <Button
                 @click="handleResendCode"
