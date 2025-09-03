@@ -1222,6 +1222,7 @@ const sendMessage = (message: string): void => {
     showVerificationButtons.value = false
     showPhoneVerificationButton.value = false
     verificationCodeTypingComplete.value = false
+    phoneVerificationButtonUsed.value = true
 
     // Mark verification as complete and reset step
     phoneVerified.value = true
