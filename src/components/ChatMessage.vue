@@ -202,7 +202,9 @@ const shouldUseCoachAvatar = (): boolean => {
     messageText.includes('add a verified phone number') ||
     messageText.includes('sent a text with') && messageText.includes('verification code') ||
     messageText.includes('number') && messageText.includes('is verified') ||
-    messageText.includes('Setting appointments is our bread and butter')
+    messageText.includes('Setting appointments is our bread and butter') ||
+    messageText.includes('Starting your dialing session') ||
+    messageText.includes('Connecting you to your first contact')
 
   // Use ARKON avatar for system messages, coach avatar for coaching content
   return !isArkonSystemMessage
