@@ -508,7 +508,7 @@ const showCallConnectedMessages = (contact: any): void => {
 
   // Wait 3 seconds then show objection handling
   setTimeout(() => {
-    addAIMessage(AI_RESPONSES.OBJECTION_RESPONSE)
+    addAIMessageWithTyping(AI_RESPONSES.OBJECTION_RESPONSE)
     scrollToBottom()
   }, 3000)
 }
