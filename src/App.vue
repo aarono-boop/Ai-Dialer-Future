@@ -1294,7 +1294,7 @@ const sendMessage = (message: string): void => {
       addAIMessage([
         '<i class="pi pi-star"></i> I\'d love to show you ARKON in action!',
         'Let me set up a personalized demo where you can see:',
-        '�� Live contact scoring and prioritization',
+        '• Live contact scoring and prioritization',
         '• Real-time dialing with connect predictions',
         '��� Smart call disposition and follow-up automation',
         'What\'s your preferred time? I can schedule something for today or tomorrow.'
@@ -1787,7 +1787,7 @@ const handlePauseQueue = (): void => {
   showDialer.value = false
   waitingForNotesInput.value = false
 
-  addAIMessage('Queue paused. You can review your session summary.')
+  addUserMessage('Queue paused. You can review your session summary.')
 
   // Add session summary content to chat
   setTimeout(() => {
