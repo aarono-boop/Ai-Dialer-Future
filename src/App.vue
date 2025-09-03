@@ -601,6 +601,21 @@ const isVoicemailScenario = computed(() => {
   return currentContact.value && currentContact.value.name === 'George Sample'
 })
 
+// Coach-specific welcome messages
+const getCoachWelcomeMessage = computed(() => {
+  if (!coachParameter.value) {
+    return 'Welcome to <strong>ARKON</strong>, your AI calling assistant.<br><br>Drop your contact file here and I\'ll show you exactly who\'s most likely to pick up right now.'
+  }
+
+  // Coach-specific welcome messages
+  const coachMessages: Record<string, string> = {
+    'jordan-stupar': 'Welcome to <strong>ARKON</strong>! I\'m your AI calling assistant, trained with <strong>Jordan Stupar\'s</strong> proven sales methodologies.<br><br>Drop your contact file here and I\'ll show you exactly who\'s most likely to pick up right now using Jordan\'s approach.',
+    // Add more coaches as needed
+  }
+
+  return coachMessages[coachParameter.value] || `Welcome to <strong>ARKON</strong>! I'm your AI calling assistant, enhanced with your coach's proven methodologies.<br><br>Drop your contact file here and I\'ll show you exactly who\'s most likely to pick up right now.`
+})
+
 // Chat messages array
 const messages: Ref<Message[]> = ref([
   {
