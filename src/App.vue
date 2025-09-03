@@ -2371,7 +2371,7 @@ const handleActionButton = (action: string): void => {
         response = [
           'Outstanding! Closing live sales is where the magic happens. We\'ll get you connected with your hottest prospects.',
           '',
-          wrapConnectScoreWithTooltip('Your trial is ready! I\'ve analyzed your <strong style="color: #fbbf24;">156 contacts</strong> and prioritized those ready to buy with Connect Score.'),
+          'Your trial is ready! I\'ve analyzed your <strong style="color: #fbbf24;">156 contacts</strong> and prioritized those ready to buy with Connect Score.',
           'Here\'s a preview of your highest-intent prospects. Does this look correct?',
           sampleContacts
         ]
