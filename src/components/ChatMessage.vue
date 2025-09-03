@@ -170,6 +170,25 @@ onUnmounted(() => {
   stopTypingAnimation()
 })
 
+// Method to determine if coach avatar should be used
+const shouldUseCoachAvatar = (): boolean => {
+  // Only use coach avatar if coach parameter is set
+  if (props.coachParameter !== 'jordan-stupar') {
+    return false
+  }
+
+  // Check if this is an ARKON AI system message that should always use ARKON avatar
+  const messageText = props.message.content.join(' ')
+  const isArkonSystemMessage =
+    messageText.includes('Welcome to ARKON') ||
+    messageText.includes('ARKON AI') ||
+    messageText.includes('Drop your contact file here') ||
+    messageText.includes('Drag and drop your contact file')
+
+  // Use ARKON avatar for system messages, coach avatar for coaching content
+  return !isArkonSystemMessage
+}
+
 // Method to determine message width
 const getMessageWidth = (): string => {
   // Check if this is a session summary message
