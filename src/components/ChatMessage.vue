@@ -211,7 +211,8 @@ const shouldUseCoachAvatar = (): boolean => {
     messageText.includes('Setting appointments is our bread and butter') ||
     messageText.includes('Starting your dialing session') ||
     messageText.includes('Connecting you to your first contact') ||
-    messageText.includes('Resuming call queue')
+    messageText.includes('Resuming call queue') ||
+    messageText.includes('Great! You\'re connected!')
 
   // Use ARKON avatar for system messages, coach avatar for coaching content
   return !isArkonSystemMessage
