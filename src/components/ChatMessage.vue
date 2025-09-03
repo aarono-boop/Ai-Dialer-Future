@@ -74,6 +74,7 @@ const props = defineProps<{
   isWide?: boolean
   onTypingProgress?: () => void
   coachParameter?: string
+  aiCoachEnabled?: boolean
 }>()
 
 // Define emits
