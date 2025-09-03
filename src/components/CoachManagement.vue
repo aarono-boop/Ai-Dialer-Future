@@ -163,6 +163,14 @@
                       class="flex-1"
                     />
                     <Button
+                      v-if="coach.createdBy !== 'system'"
+                      icon="pi pi-pencil"
+                      size="small"
+                      severity="secondary"
+                      @click.stop="editCoach(coach)"
+                      aria-label="Edit coach"
+                    />
+                    <Button
                       v-if="managementMode === 'admin' && coach.createdBy !== 'system'"
                       icon="pi pi-trash"
                       size="small"
@@ -276,6 +284,100 @@
       </div>
     </Dialog>
 
+    <!-- Edit Coach Modal -->
+    <Dialog
+      v-model:visible="showEditModal"
+      modal
+      :header="`Edit ${editingCoach?.displayName || 'Coach'}`"
+      :style="{ width: '40rem' }"
+      :breakpoints="{ '1199px': '75vw', '575px': '90vw' }"
+    >
+      <div v-if="editingCoach" class="space-y-4">
+        <!-- Current Avatar -->
+        <div class="flex flex-col gap-2">
+          <label class="font-semibold text-white">Current Avatar</label>
+          <div class="flex items-center gap-4 p-3 bg-gray-700 rounded-lg">
+            <img
+              v-if="editingCoach.avatarUrl && !editingCoach.avatarUrl.startsWith('blob:')"
+              :src="editingCoach.avatarUrl"
+              :alt="editingCoach.displayName"
+              class="w-12 h-12 rounded-full object-cover"
+            />
+            <div
+              v-else
+              class="w-12 h-12 rounded-full bg-gradient-to-br from-blue-400 to-purple-500 flex items-center justify-center"
+            >
+              <span class="text-white font-semibold text-lg">{{ editingCoach.displayName.charAt(0) }}</span>
+            </div>
+            <div>
+              <p class="text-white font-medium">{{ editingCoach.displayName }}</p>
+              <p v-if="editingCoach.avatarUrl && editingCoach.avatarUrl.startsWith('blob:')" class="text-red-400 text-sm">
+                ⚠️ Avatar broken (invalid URL)
+              </p>
+              <p v-else-if="editingCoach.avatarUrl" class="text-green-400 text-sm">
+                ✓ Avatar working
+              </p>
+              <p v-else class="text-gray-400 text-sm">
+                No custom avatar
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Upload New Avatar -->
+        <div class="flex flex-col gap-2">
+          <label class="font-semibold text-white">Upload New Avatar</label>
+          <div
+            class="border-2 border-dashed border-gray-600 rounded-lg p-6 text-center cursor-pointer hover:border-gray-500 transition-colors"
+            @click="triggerEditFileUpload"
+            @dragover.prevent
+            @drop="handleEditImageDrop"
+          >
+            <div v-if="!editImagePreview" class="flex flex-col items-center gap-2">
+              <i class="pi pi-cloud-upload text-3xl text-gray-400"></i>
+              <p class="text-gray-400">Click or drag to upload new avatar</p>
+              <small class="text-gray-500">PNG, JPG up to 2MB</small>
+            </div>
+            <div v-else class="flex flex-col items-center gap-2">
+              <img :src="editImagePreview" alt="New avatar preview" class="w-16 h-16 rounded-full object-cover" />
+              <p class="text-gray-400">New avatar ready</p>
+              <Button
+                text
+                severity="danger"
+                size="small"
+                @click.stop="removeEditImage"
+                label="Remove"
+                icon="pi pi-times"
+              />
+            </div>
+          </div>
+          <input
+            ref="editFileInput"
+            type="file"
+            accept="image/*"
+            class="hidden"
+            @change="handleEditImageSelect"
+          />
+        </div>
+      </div>
+
+      <template #footer>
+        <div class="flex justify-end gap-3">
+          <Button
+            label="Cancel"
+            severity="secondary"
+            @click="cancelEdit"
+          />
+          <Button
+            label="Save Changes"
+            :loading="isUpdating"
+            @click="saveCoachEdit"
+            :disabled="!editImagePreview"
+          />
+        </div>
+      </template>
+    </Dialog>
+
     <!-- Delete Confirmation -->
     <ConfirmDialog />
 
@@ -319,7 +421,12 @@ const toast = useToast()
 
 // State
 const showDetailsModal = ref(false)
+const showEditModal = ref(false)
 const selectedCoach = ref<Coach | null>(null)
+const editingCoach = ref<Coach | null>(null)
+const editImagePreview = ref<string | null>(null)
+const editFileInput = ref<HTMLInputElement | null>(null)
+const isUpdating = ref(false)
 const exportLoading = ref(false)
 const importFileInput = ref<HTMLInputElement | null>(null)
 
@@ -488,6 +595,114 @@ const handleImport = (event: Event) => {
 const formatDate = (dateString?: string) => {
   if (!dateString) return 'Unknown'
   return new Date(dateString).toLocaleDateString()
+}
+
+// Edit coach functionality
+const editCoach = (coach: Coach) => {
+  editingCoach.value = coach
+  editImagePreview.value = null
+  showEditModal.value = true
+}
+
+const triggerEditFileUpload = () => {
+  editFileInput.value?.click()
+}
+
+const handleEditImageSelect = (event: Event) => {
+  const file = (event.target as HTMLInputElement).files?.[0]
+  if (file) {
+    validateAndSetEditImage(file)
+  }
+}
+
+const handleEditImageDrop = (event: DragEvent) => {
+  event.preventDefault()
+  const file = event.dataTransfer?.files[0]
+  if (file) {
+    validateAndSetEditImage(file)
+  }
+}
+
+const validateAndSetEditImage = (file: File) => {
+  // Validate file type
+  if (!file.type.startsWith('image/')) {
+    toast.add({
+      severity: 'error',
+      summary: 'Invalid File',
+      detail: 'Please select an image file',
+      life: 3000
+    })
+    return
+  }
+
+  // Validate file size (2MB)
+  if (file.size > 2 * 1024 * 1024) {
+    toast.add({
+      severity: 'error',
+      summary: 'File Too Large',
+      detail: 'Image must be less than 2MB',
+      life: 3000
+    })
+    return
+  }
+
+  // Create preview
+  const reader = new FileReader()
+  reader.onload = (e) => {
+    editImagePreview.value = e.target?.result as string
+  }
+  reader.readAsDataURL(file)
+}
+
+const removeEditImage = () => {
+  editImagePreview.value = null
+  if (editFileInput.value) {
+    editFileInput.value.value = ''
+  }
+}
+
+const saveCoachEdit = async () => {
+  if (!editingCoach.value || !editImagePreview.value) return
+
+  isUpdating.value = true
+
+  try {
+    // Update the coach's avatar
+    const success = updateCoach(editingCoach.value.id, {
+      avatarUrl: editImagePreview.value
+    })
+
+    if (success) {
+      toast.add({
+        severity: 'success',
+        summary: 'Coach Updated',
+        detail: `${editingCoach.value.displayName}'s avatar has been updated`,
+        life: 3000
+      })
+      cancelEdit()
+    } else {
+      throw new Error('Failed to update coach')
+    }
+  } catch (error) {
+    console.error('Error updating coach:', error)
+    toast.add({
+      severity: 'error',
+      summary: 'Update Failed',
+      detail: 'Failed to update coach avatar. Please try again.',
+      life: 3000
+    })
+  } finally {
+    isUpdating.value = false
+  }
+}
+
+const cancelEdit = () => {
+  showEditModal.value = false
+  editingCoach.value = null
+  editImagePreview.value = null
+  if (editFileInput.value) {
+    editFileInput.value.value = ''
+  }
 }
 </script>
 
