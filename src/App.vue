@@ -1681,7 +1681,7 @@ const handleNextContact = (): void => {
     callState.value = 'idle'
     callDuration.value = 0
 
-    addAIMessageWithTyping(`Moving to next contact: ${currentContact.value.name}. Preparing to dial...`)
+    addUserMessage('Next contact')
 
     // Add separator message for the new contact
     setTimeout(() => {
