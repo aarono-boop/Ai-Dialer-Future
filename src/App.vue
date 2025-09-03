@@ -1538,6 +1538,7 @@ const handleTryAnotherNumber = (): void => {
   // Reset to phone entry step
   verificationStep.value = 'enter-phone'
   enteredPhoneNumber.value = ''
+  verificationCodeTypingComplete.value = false // Reset typing state
 
   // Add AI response
   setTimeout(() => {
