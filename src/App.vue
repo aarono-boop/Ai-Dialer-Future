@@ -509,6 +509,9 @@ const isManualHangUp = ref<boolean>(false) // Track if hang up was manual vs aut
 const queueTime = ref<number>(14)
 const showLoadNewFileButton = ref<boolean>(false)
 
+// Coach parameter for AI Coach functionality
+const coachParameter = ref<string>('')
+
 // Contact data
 const contacts = [
   {
