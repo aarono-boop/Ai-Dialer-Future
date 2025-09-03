@@ -70,8 +70,8 @@
               @click="aiCoachEnabled = !aiCoachEnabled"
             >AI Coach</span>
             <ToggleSwitch
-              v-model="aiCoachEnabled"
-              @change="toggleAICoach"
+              :model-value="props.aiCoachEnabled"
+              @update:model-value="toggleAICoach"
               class="ai-coach-toggle"
             />
           </div>
