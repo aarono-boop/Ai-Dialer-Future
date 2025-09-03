@@ -2398,7 +2398,7 @@ const handleActionButton = (action: string): void => {
         response = [
           'Brilliant! Live transfers maximize your team\'s efficiency. We\'ll connect you with prospects ready to talk.',
           '',
-          wrapConnectScoreWithTooltip('Your trial is ready! I\'ve analyzed your <strong style="color: #fbbf24;">156 contacts</strong> and identified transfer-ready prospects with Connect Score.'),
+          'Your trial is ready! I\'ve analyzed your <strong style="color: #fbbf24;">156 contacts</strong> and identified transfer-ready prospects with Connect Score.',
           'Here\'s a preview of your transfer candidates. Does this look correct?',
           sampleContacts
         ]
