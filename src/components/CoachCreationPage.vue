@@ -157,12 +157,15 @@
               <!-- Video Preview -->
               <div v-if="extractedVideoId" class="bg-gray-700 rounded-lg p-4">
                 <h5 class="text-sm font-semibold text-gray-300 mb-2">Video Preview:</h5>
-                <div class="aspect-video bg-gray-800 rounded-lg flex items-center justify-center">
-                  <div class="text-center">
-                    <i class="pi pi-youtube text-red-500 text-3xl mb-2"></i>
-                    <p class="text-gray-400 text-sm">YouTube Video</p>
-                    <p class="text-xs text-gray-500">{{ extractedVideoId }}</p>
-                  </div>
+                <div class="aspect-video bg-gray-800 rounded-lg overflow-hidden">
+                  <iframe
+                    :src="`https://www.youtube.com/embed/${extractedVideoId}`"
+                    frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen
+                    class="w-full h-full"
+                    :title="`Preview of ${formData.displayName}'s video`"
+                  ></iframe>
                 </div>
               </div>
             </div>
