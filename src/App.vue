@@ -1632,7 +1632,7 @@ const handleHangUp = (): void => {
 
   // Only show coaching recap for manual hang ups and if AI Coach is enabled
   if (isManualHangUp.value && aiCoachEnabled.value) {
-    addAIMessage([
+    addAIMessageWithTyping([
       '<strong>AI Coaching Recap</strong>',
       '<br>',
       getDynamicCoachingFeedback(),
