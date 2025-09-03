@@ -185,43 +185,6 @@
         </div>
       </div>
 
-      <!-- Instructions for Colleagues -->
-      <Card class="bg-gray-800 border-gray-700">
-        <template #header>
-          <h3 class="font-semibold p-4 pb-0">Share with Colleagues</h3>
-        </template>
-        <template #content>
-          <p class="text-gray-400 mb-4">
-            Share these URLs with your colleagues to let them create and manage coaches:
-          </p>
-          <div class="space-y-3">
-            <div class="flex items-center gap-3 p-3 bg-gray-700 rounded-lg">
-              <div class="flex-1">
-                <p class="font-medium">Coach Creation</p>
-                <code class="text-sm text-blue-400">{{ baseUrl }}?create-coach=true</code>
-              </div>
-              <Button
-                icon="pi pi-copy"
-                size="small"
-                severity="secondary"
-                @click="copyToClipboard(`${baseUrl}?create-coach=true`)"
-              />
-            </div>
-            <div class="flex items-center gap-3 p-3 bg-gray-700 rounded-lg">
-              <div class="flex-1">
-                <p class="font-medium">Coach Management</p>
-                <code class="text-sm text-blue-400">{{ baseUrl }}?manage-coaches=true</code>
-              </div>
-              <Button
-                icon="pi pi-copy"
-                size="small"
-                severity="secondary"
-                @click="copyToClipboard(`${baseUrl}?manage-coaches=true`)"
-              />
-            </div>
-          </div>
-        </template>
-      </Card>
     </div>
 
 
