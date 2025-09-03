@@ -185,7 +185,10 @@ const shouldUseCoachAvatar = (): boolean => {
     messageText.includes('Drop your contact file here') ||
     messageText.includes('Drag and drop your contact file') ||
     messageText.includes('Dialer activated') ||
-    messageText.includes('Starting first call')
+    messageText.includes('Starting first call') ||
+    messageText.includes('Now please enter any notes about this call') ||
+    messageText.includes('The call outcome and notes have been saved') ||
+    messageText.includes('continue to the next')
 
   // Use ARKON avatar for system messages, coach avatar for coaching content
   return !isArkonSystemMessage
