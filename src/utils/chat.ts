@@ -284,7 +284,7 @@ export const createChatUtils = (
     scrollToBottomDuringTyping,
     scrollToUserMessage,
     scrollToTopForGoals,
-    scrollToTopForQueuePaused,
+    scrollToTopWithPadding,
     addAIMessage,
     addAIMessageWithoutScroll,
     addUserMessage,
