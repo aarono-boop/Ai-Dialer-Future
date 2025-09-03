@@ -359,6 +359,25 @@
             @change="handleEditImageSelect"
           />
         </div>
+
+        <!-- Custom Welcome Message -->
+        <div class="flex flex-col gap-2">
+          <label for="editCustomMessage" class="font-semibold text-white">Custom Welcome Message</label>
+          <Textarea
+            id="editCustomMessage"
+            v-model="editCustomMessage"
+            rows="4"
+            class="w-full"
+            placeholder="Leave empty to use default message format"
+          />
+          <small class="text-gray-400">
+            Default: "Welcome to ARKON! I'm your AI calling assistant, enhanced with [Coach Name]'s proven methodologies."
+          </small>
+          <div v-if="editCustomMessage" class="mt-2 border border-gray-600 rounded-lg p-3">
+            <label class="text-sm font-semibold text-gray-300">Preview:</label>
+            <div class="mt-2 bg-gray-800/90 border border-white/20 rounded-lg p-3 text-sm" v-html="getEditMessagePreview()"></div>
+          </div>
+        </div>
       </div>
 
       <template #footer>
@@ -372,7 +391,7 @@
             label="Save Changes"
             :loading="isUpdating"
             @click="saveCoachEdit"
-            :disabled="!editImagePreview && !isBrokenAvatar"
+            :disabled="!hasChanges"
           />
         </div>
       </template>
@@ -398,6 +417,7 @@ import Card from 'primevue/card'
 import Button from 'primevue/button'
 import Badge from 'primevue/badge'
 import Dialog from 'primevue/dialog'
+import Textarea from 'primevue/textarea'
 import ConfirmDialog from 'primevue/confirmdialog'
 import { useConfirm } from 'primevue/useconfirm'
 import { useToast } from 'primevue/usetoast'
@@ -426,6 +446,7 @@ const showEditModal = ref(false)
 const selectedCoach = ref<Coach | null>(null)
 const editingCoach = ref<Coach | null>(null)
 const editImagePreview = ref<string | null>(null)
+const editCustomMessage = ref<string>('')
 const editFileInput = ref<HTMLInputElement | null>(null)
 const isUpdating = ref(false)
 const exportLoading = ref(false)
@@ -437,6 +458,13 @@ const coachesWithVideos = computed(() => coachList.value.filter(coach => coach.v
 const baseUrl = computed(() => `${window.location.origin}${window.location.pathname}`)
 const isBrokenAvatar = computed(() => {
   return editingCoach.value?.avatarUrl?.startsWith('blob:') || false
+})
+
+const hasChanges = computed(() => {
+  if (!editingCoach.value) return false
+  const hasImageChange = editImagePreview.value || isBrokenAvatar.value
+  const hasMessageChange = editCustomMessage.value !== (editingCoach.value.welcomeMessage || '')
+  return hasImageChange || hasMessageChange
 })
 
 // Methods
@@ -605,7 +633,13 @@ const formatDate = (dateString?: string) => {
 const editCoach = (coach: Coach) => {
   editingCoach.value = coach
   editImagePreview.value = null
+  editCustomMessage.value = coach.welcomeMessage || ''
   showEditModal.value = true
+}
+
+const getEditMessagePreview = () => {
+  if (!editingCoach.value || !editCustomMessage.value) return ''
+  return editCustomMessage.value.replace(/\[Coach Name\]/g, editingCoach.value.displayName)
 }
 
 const triggerEditFileUpload = () => {
@@ -668,12 +702,15 @@ const removeEditImage = () => {
 const saveCoachEdit = async () => {
   if (!editingCoach.value) return
 
-  // Check if we have a new image or need to fix a broken avatar
-  if (!editImagePreview.value && !isBrokenAvatar.value) {
+  // Check if we have changes to save
+  const hasImageChange = editImagePreview.value || isBrokenAvatar.value
+  const hasMessageChange = editCustomMessage.value !== (editingCoach.value.welcomeMessage || '')
+
+  if (!hasImageChange && !hasMessageChange) {
     toast.add({
       severity: 'warn',
       summary: 'No Changes',
-      detail: 'Please upload a new avatar to save changes',
+      detail: 'Please make changes to save',
       life: 3000
     })
     return
@@ -692,13 +729,25 @@ const saveCoachEdit = async () => {
       updates.avatarUrl = undefined
     }
 
+    if (hasMessageChange) {
+      // Update welcome message
+      updates.welcomeMessage = editCustomMessage.value
+    }
+
     // Update the coach
     const success = updateCoach(editingCoach.value.id, updates)
 
     if (success) {
-      const message = editImagePreview.value
-        ? `${editingCoach.value.displayName}'s avatar has been updated`
-        : `${editingCoach.value.displayName}'s broken avatar has been removed`
+      let message = `${editingCoach.value.displayName} has been updated`
+      if (editImagePreview.value && hasMessageChange) {
+        message = `${editingCoach.value.displayName}'s avatar and welcome message have been updated`
+      } else if (editImagePreview.value) {
+        message = `${editingCoach.value.displayName}'s avatar has been updated`
+      } else if (hasMessageChange) {
+        message = `${editingCoach.value.displayName}'s welcome message has been updated`
+      } else if (isBrokenAvatar.value) {
+        message = `${editingCoach.value.displayName}'s broken avatar has been removed`
+      }
 
       toast.add({
         severity: 'success',
@@ -727,6 +776,7 @@ const cancelEdit = () => {
   showEditModal.value = false
   editingCoach.value = null
   editImagePreview.value = null
+  editCustomMessage.value = ''
   if (editFileInput.value) {
     editFileInput.value.value = ''
   }
