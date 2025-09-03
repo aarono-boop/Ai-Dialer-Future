@@ -400,7 +400,7 @@ const getDynamicCoachingFeedback = (): string => {
   const coachingMessages = [
     'Great connection! I heard you building rapport early—that\'s your sweet spot. Next call, try mirroring their pace a bit more to deepen that connection.',
     'Nice work staying patient through their objections. I noticed you got stronger as the call progressed. Carry that momentum into the next one.',
-    'You handled that beautifully! Your confidence really came through. Next time, try asking one more discovery question before presenting��it\'ll make your close even stronger.',
+    'You handled that beautifully! Your confidence really came through. Next time, try asking one more discovery question before presenting—it\'ll make your close even stronger.',
     'I loved how you listened for their pain points. Your empathy is one of your strongest assets. Now let\'s work on creating more urgency in your next call.',
     'Solid call! You kept them engaged throughout. I\'d love to see you slow down just a touch during the value proposition—let it sink in.',
     'That was textbook rapport building! Your energy is infectious. Next call, try to qualify their budget earlier in the conversation.',
@@ -640,7 +640,7 @@ const getCoachWelcomeMessage = computed(() => {
 
   // Coach-specific welcome messages
   const coachMessages: Record<string, string> = {
-    'jordan-stupar': 'Welcome to <strong>ARKON</strong>! I\'m your AI calling assistant, trained with <strong>Jordan Stupar\'s</strong> proven sales methodologies.<br><br>Drop your contact file here and I\'ll show you exactly who\'s most likely to pick up right now using Jordan\'s approach.',
+    'jordan-stupar': 'Welcome to <strong>ARKON</strong>! I\'m your AI calling assistant, trained with <strong>Jordan Stupar\'s</strong> proven sales methodologies.<br><br><div class="coach-video-container" data-video-id="sthXVPIC8K0" data-autoplay="true"></div><br>Drop your contact file here and I\'ll show you exactly who\'s most likely to pick up right now using Jordan\'s approach.',
     // Add more coaches as needed
   }
 
