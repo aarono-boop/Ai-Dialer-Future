@@ -649,16 +649,16 @@ const isVoicemailScenario = computed(() => {
 })
 
 // Chat messages array
-const initialWelcomeMessage = computed(() => ({
-  type: 'ai' as const,
-  content: [
-    'Welcome! I\'m <strong>ARKON (Post MVP)</strong>, your AI calling assistant.<br><br>Drop your contact file here and I\'ll show you exactly who\'s most likely to pick up right now.'
-  ],
-  // Only show typing animation for completely new users (not signed in and not returning)
-  typing: !isSignedIn.value && !isReturningUser.value
-}))
-
-const messages: Ref<Message[]> = ref([initialWelcomeMessage.value])
+const messages: Ref<Message[]> = ref([
+  {
+    type: 'ai',
+    content: [
+      'Welcome! I\'m <strong>ARKON (Post MVP)</strong>, your AI calling assistant.<br><br>Drop your contact file here and I\'ll show you exactly who\'s most likely to pick up right now.'
+    ],
+    // Only show typing animation for completely new users (not signed in and not returning)
+    typing: !isSignedIn.value && !isReturningUser.value
+  }
+])
 
 // Initialize chat utilities
 const chatUtils = createChatUtils(messages, chatMessages, headerRef)
