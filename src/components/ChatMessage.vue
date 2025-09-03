@@ -88,6 +88,45 @@ const typedContent = ref<string[]>(props.message.typing ? props.message.content.
 const isTyping = ref(false)
 let typingInterval: NodeJS.Timeout | null = null
 
+// Process message content to extract video information
+const processedContent = computed(() => {
+  const content = props.message.typing ? typedContent.value : props.message.content
+  const processedLines: Array<{type: 'text' | 'video', content: string, videoId?: string, autoplay?: boolean}> = []
+
+  content.forEach(line => {
+    const videoMatch = line.match(/<div class="coach-video-container" data-video-id="([^"]+)" data-autoplay="([^"]+)"><\/div>/)
+
+    if (videoMatch) {
+      // Split the line into parts before and after the video
+      const beforeVideo = line.substring(0, line.indexOf(videoMatch[0]))
+      const afterVideo = line.substring(line.indexOf(videoMatch[0]) + videoMatch[0].length)
+
+      // Add text before video if it exists
+      if (beforeVideo.trim()) {
+        processedLines.push({type: 'text', content: beforeVideo})
+      }
+
+      // Add video
+      processedLines.push({
+        type: 'video',
+        content: '',
+        videoId: videoMatch[1],
+        autoplay: videoMatch[2] === 'true'
+      })
+
+      // Add text after video if it exists
+      if (afterVideo.trim()) {
+        processedLines.push({type: 'text', content: afterVideo})
+      }
+    } else {
+      // Regular text line
+      processedLines.push({type: 'text', content: line})
+    }
+  })
+
+  return processedLines
+})
+
 // Start typing animation
 const startTypingAnimation = (): void => {
   if (!props.message.typing || props.message.type !== 'ai') return
