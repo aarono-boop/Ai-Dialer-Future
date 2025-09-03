@@ -90,7 +90,7 @@
           </div>
 
           <!-- Phone Verification Button - always visible when active -->
-          <div v-if="showPhoneVerificationButton" class="mt-2 pt-5 flex justify-center">
+          <div v-if="showPhoneVerificationButton && verificationStep === 'default'" class="mt-2 pt-5 flex justify-center">
             <div class="w-[70%] flex justify-center">
               <Button
                 @click="handlePhoneVerification"
