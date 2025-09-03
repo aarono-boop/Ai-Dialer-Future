@@ -17,6 +17,14 @@
           </div>
           <div class="flex items-center gap-3">
             <Button
+              label="Coach Management"
+              icon="pi pi-users"
+              severity="secondary"
+              size="small"
+              @click="navigateToManagement"
+              class="text-gray-400 hover:text-white"
+            />
+            <Button
               label="Cancel"
               severity="secondary"
               size="small"
@@ -399,6 +407,14 @@ const handleCreate = async () => {
 
 const handleCancel = () => {
   emit('cancel')
+}
+
+const navigateToManagement = () => {
+  // Navigate to coach management page
+  const url = new URL(window.location.href)
+  url.searchParams.delete('create-coach')
+  url.searchParams.set('manage-coaches', 'true')
+  window.location.href = url.toString()
 }
 
 // Focus the first input on mount
