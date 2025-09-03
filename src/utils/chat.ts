@@ -211,7 +211,8 @@ export const createChatUtils = (
     messages.value.push({
       type: 'ai',
       content: contentArray,
-      typing: true
+      typing: true,
+      preserveUserPosition: true // Flag to indicate this should preserve user message position
     })
 
     console.log('🔥 ADD AI MESSAGE WITH TYPING NO SCROLL - Message added, preserving scroll position')
