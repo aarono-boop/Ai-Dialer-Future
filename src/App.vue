@@ -1752,11 +1752,11 @@ const handleHangUp = (): void => {
 }
 
 const handleMute = (muted: boolean): void => {
-  addAIMessage(muted ? 'Microphone muted' : 'Microphone unmuted')
+  addUserMessage(muted ? 'Microphone muted' : 'Microphone unmuted')
 }
 
 const handleHold = (onHold: boolean): void => {
-  addAIMessage(onHold ? 'Call placed on hold' : 'Call resumed')
+  addUserMessage(onHold ? 'Call placed on hold' : 'Call resumed')
 }
 
 const handleKeypad = (): void => {
