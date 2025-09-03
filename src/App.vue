@@ -1256,7 +1256,7 @@ const sendMessage = (message: string): void => {
     } else if (lowerMessage.includes('connected to more calls') || lowerMessage.includes('get connected')) {
       addAIMessage([
         '<i class="pi pi-chart-line"></i> Great question! Here are ARKON\'s proven strategies to boost your connect rates:',
-        '�� <strong>Smart Timing:</strong> Calls prospects when they\'re most likely to answer',
+        '• <strong>Smart Timing:</strong> Calls prospects when they\'re most likely to answer',
         '• <strong>Local Presence:</strong> Uses local numbers to increase pickup rates',
         '• <strong>Voicemail Drop:</strong> Leaves personalized messages when they don\'t answer',
         '• <strong>Follow-up Sequences:</strong> Automatically schedules optimal callback times',
@@ -2333,6 +2333,8 @@ const handleActionButton = (action: string): void => {
   // Hide action buttons after selection and mark as used
   showActionButtons.value = false
   actionButtonsUsed.value = true
+  // Reset contact preview typing state for new message
+  contactPreviewTypingComplete.value = false
   // Don't show contact preview buttons yet - wait for AI message to appear
   
   // Add user message showing their selection
