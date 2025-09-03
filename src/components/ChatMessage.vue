@@ -5,10 +5,10 @@
     :aria-label="`${message.type === 'user' ? 'User' : 'ARKON AI'} message`"
   >
     <div v-if="message.type === 'ai'" class="flex gap-[10px] items-start w-full">
-      <div class="flex items-start justify-center flex-shrink-0 pt-1" role="img" :aria-label="props.coachParameter === 'jordan-stupar' ? 'Jordan Stupar avatar' : 'ARKON AI avatar'">
-        <!-- Jordan's Avatar when coach parameter is set -->
+      <div class="flex items-start justify-center flex-shrink-0 pt-1" role="img" :aria-label="shouldUseCoachAvatar() ? 'Jordan Stupar avatar' : 'ARKON AI avatar'">
+        <!-- Jordan's Avatar when coach parameter is set and not an ARKON AI system message -->
         <img
-          v-if="props.coachParameter === 'jordan-stupar'"
+          v-if="shouldUseCoachAvatar()"
           src="https://cdn.builder.io/api/v1/image/assets%2F5aeb07ce25f84dbc869290880d07b71e%2F3bddb1110d0949139407eb0dc708c7ff?format=webp&width=800"
           alt="Jordan Stupar"
           class="w-[26px] h-[26px] rounded-full object-cover"
