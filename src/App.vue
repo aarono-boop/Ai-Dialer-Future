@@ -776,6 +776,7 @@ const handleLogout = () => {
   actionButtonsUsed.value = false // Reset action buttons used state
   contactPreviewTypingComplete.value = false // Reset contact preview typing state
   contactPreviewButtonsUsed.value = false // Reset contact preview buttons used state
+  connectionAnalysisTypingComplete.value = false // Reset connection analysis typing state
 
   // Reset UI state
   showDialer.value = false
