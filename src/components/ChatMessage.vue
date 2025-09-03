@@ -195,7 +195,14 @@ const shouldUseCoachAvatar = (): boolean => {
     messageText.includes('Call with') && messageText.includes('ended') ||
     messageText.includes('Please select a call outcome') ||
     messageText.includes('Congratulations! You have completed your entire call queue') ||
-    messageText.includes('Queue Completed!')
+    messageText.includes('Queue Completed!') ||
+    messageText.includes('successfully upgraded to the Pro plan') ||
+    messageText.includes('analyzed your') && messageText.includes('contacts') ||
+    messageText.includes('Connect Score') ||
+    messageText.includes('add a verified phone number') ||
+    messageText.includes('sent a text with') && messageText.includes('verification code') ||
+    messageText.includes('number') && messageText.includes('is verified') ||
+    messageText.includes('Setting appointments is our bread and butter')
 
   // Use ARKON avatar for system messages, coach avatar for coaching content
   return !isArkonSystemMessage
