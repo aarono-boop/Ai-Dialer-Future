@@ -810,7 +810,7 @@ const handleLogout = () => {
     {
       type: 'ai',
       content: [
-        'Welcome to <strong>ARKON</strong>, your AI calling assistant.<br><br>Drop your contact file here and I\'ll show you exactly who\'s most likely to pick up right now.'
+        getCoachWelcomeMessage.value
       ],
       // Only show typing animation for completely new users (not signed in and not returning)
       typing: !isSignedIn.value && !isReturningUser.value
@@ -1390,7 +1390,7 @@ const handleLooksGood = (): void => {
     // Regular flow for new users
     setTimeout(() => {
       addAIMessageWithTyping([
-        'I\'ve analyzed your contact\'s phone numbers using real connection data from 900M+ calls, recent phone engagement, calling patterns, and carrier signals—so you only dial numbers likely to connect.<br><br>I\'ve prioritized the phone numbers most likely to connect so you spend time talking, not hitting dead lines.<br><br>Here\'s what I found:<br><div style="margin-left: 1em; text-indent: -1em;">• 40 numbers have \'High\' Connect Scores and show consistent calling activity in the last 12 months. These are highly likely to be connected and assigned to active subscribers.</div><br><div style="margin-left: 1em; text-indent: -1em;">• 67 numbers have \'Medium\' Connect Scores and are worth calling after you exhaust your \'High\' Connect Score numbers.</div><br><div style="margin-left: 1em; text-indent: -1em;">• 54 numbers have \'Low\' Connect Scores and are likely disconnected or inactive lines that won\'t answer when dialed.</div>'
+        'I\'ve analyzed your contact\'s phone numbers using real connection data from 900M+ calls, recent phone engagement, calling patterns, and carrier signals—so you only dial numbers likely to connect.<br><br>I\'ve prioritized the phone numbers most likely to connect so you spend time talking, not hitting dead lines.<br><br>Here\'s what I found:<br><div style="margin-left: 1em; text-indent: -1em;">• 40 numbers have \'High\' Connect Scores and show consistent calling activity in the last 12 months. These are highly likely to be connected and assigned to active subscribers.</div><br><div style="margin-left: 1em; text-indent: -1em;">• 67 numbers have \'Medium\' Connect Scores and are worth calling after you exhaust your \'High\' Connect Score numbers.</div><br><div style="margin-left: 1em; text-indent: -1em;">��� 54 numbers have \'Low\' Connect Scores and are likely disconnected or inactive lines that won\'t answer when dialed.</div>'
       ])
 
       // Phone verification button will be shown automatically when typing completes
