@@ -23,7 +23,7 @@
         role="region"
         aria-label="AI message content"
       >
-        <div v-if="message.typing && isTyping" v-for="(line, lineIndex) in typedContent" :key="`typed-${lineIndex}`" v-html="line"></div>
+        <div v-if="message.typing" v-for="(line, lineIndex) in typedContent" :key="`typed-${lineIndex}`" v-html="line"></div>
         <div v-else v-for="(line, lineIndex) in message.content" :key="lineIndex" v-html="line"></div>
         <slot name="additional-content"></slot>
       </div>
