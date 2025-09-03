@@ -1956,6 +1956,26 @@ onUnmounted(() => {
   delete (window as any).toggleCallLog
 })
 
+// Helper functions for session summary
+const getCoachAvatarHtml = (): string => {
+  if (currentCoach.value?.avatarUrl) {
+    return `<img src="${currentCoach.value.avatarUrl}" alt="${currentCoach.value.displayName}" style="width: 18px; height: 18px; border-radius: 50%; object-fit: cover; margin-right: 8px;">`
+  } else if (currentCoach.value) {
+    const initials = currentCoach.value.displayName
+      .split(' ')
+      .map(word => word.charAt(0))
+      .join('')
+      .toUpperCase()
+      .slice(0, 2)
+    return `<div style="width: 18px; height: 18px; border-radius: 50%; background: linear-gradient(135deg, #60a5fa 0%, #7b68ee 100%); display: inline-flex; align-items: center; justify-content: center; margin-right: 8px; font-size: 10px; font-weight: bold; color: white;">${initials}</div>`
+  }
+  return '<i class="pi pi-check-circle" style="margin-right: 8px;"></i>'
+}
+
+const getCoachTitle = (): string => {
+  return currentCoach.value ? `${currentCoach.value.displayName}'s Session Recap` : 'AI Coaching'
+}
+
 const addSessionSummaryToChat = (isCompleted: boolean = false): void => {
   // Create session summary content as HTML
   const title = isCompleted ? 'Queue Completed!' : 'Queue Paused!'
@@ -1968,7 +1988,7 @@ const addSessionSummaryToChat = (isCompleted: boolean = false): void => {
       <!-- Results & Next Steps Section - only show coaching if AI Coach is enabled -->
       ${aiCoachEnabled.value ? `
       <div style="margin-bottom: 32px;">
-        <h3 style="color: white; font-size: 18px; font-weight: 600; margin-bottom: 16px; display: flex; align-items: center;">${coachParameter.value === 'jordan-stupar' ? '<img src="https://cdn.builder.io/api/v1/image/assets%2F5aeb07ce25f84dbc869290880d07b71e%2F3bddb1110d0949139407eb0dc708c7ff?format=webp&width=800" alt="Jordan Stupar" style="width: 18px; height: 18px; border-radius: 50%; object-fit: cover; margin-right: 8px;">' : '<i class="pi pi-check-circle" style="margin-right: 8px;"></i>'}${coachParameter.value === 'jordan-stupar' ? 'Jordan\'s Session Recap' : 'AI Coaching'}</h3>
+        <h3 style="color: white; font-size: 18px; font-weight: 600; margin-bottom: 16px; display: flex; align-items: center;">${getCoachAvatarHtml()}${getCoachTitle()}</h3>
         <div style="background-color: rgb(55, 65, 81); border-radius: 8px; padding: 20px;">
           <div style="color: rgb(209, 213, 219); font-size: 14px; font-weight: normal; line-height: 1.5;">
             ${isCompleted ?
