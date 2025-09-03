@@ -60,12 +60,12 @@ export const createChatUtils = (
       if (userMessages.length > 0) {
         const lastUserMessage = userMessages[userMessages.length - 1] as HTMLElement
 
-        // Calculate the position to place the user message near the top of the viewport
+        // Calculate the position to place the user message at the top of the viewport
         const messageOffsetTop = lastUserMessage.offsetTop
         const containerHeight = chatMessages.value.clientHeight
 
-        // Position user message in the top 20% of the viewport for better visibility
-        const targetPosition = Math.max(0, messageOffsetTop - (containerHeight * 0.15))
+        // Position user message at the very top with minimal offset for better visibility
+        const targetPosition = Math.max(0, messageOffsetTop - 20)
 
         // Use immediate scroll for instant positioning
         chatMessages.value.scrollTop = targetPosition
