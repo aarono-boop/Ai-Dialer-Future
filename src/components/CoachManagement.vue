@@ -7,12 +7,29 @@
           <h1 class="text-3xl font-bold mb-2">Coach Management</h1>
           <p class="text-gray-400">Create and manage AI coaches for your team</p>
         </div>
-        <Button
-          label="Create New Coach"
-          icon="pi pi-plus"
-          @click="navigateToCreateCoach"
-          class="bg-blue-600 hover:bg-blue-700"
-        />
+        <div class="flex gap-3 items-center">
+          <Button
+            :label="exportLoading ? 'Exporting...' : 'Export Config'"
+            icon="pi pi-download"
+            severity="secondary"
+            size="small"
+            @click="handleExport"
+            :loading="exportLoading"
+          />
+          <Button
+            label="Import Config"
+            icon="pi pi-upload"
+            severity="secondary"
+            size="small"
+            @click="handleImportClick"
+          />
+          <Button
+            label="Create New Coach"
+            icon="pi pi-plus"
+            @click="navigateToCreateCoach"
+            class="bg-blue-600 hover:bg-blue-700"
+          />
+        </div>
       </div>
 
       <!-- Quick Actions -->
@@ -64,23 +81,6 @@
       <div class="mb-8">
         <div class="flex justify-between items-center mb-4">
           <h2 class="text-xl font-semibold">Your Coaches</h2>
-          <div class="flex gap-2">
-            <Button
-              :label="exportLoading ? 'Exporting...' : 'Export Config'"
-              icon="pi pi-download"
-              severity="secondary"
-              size="small"
-              @click="handleExport"
-              :loading="exportLoading"
-            />
-            <Button
-              label="Import Config"
-              icon="pi pi-upload"
-              severity="secondary"
-              size="small"
-              @click="handleImportClick"
-            />
-          </div>
         </div>
 
         <div v-if="coachList.length === 0" class="text-center py-12 bg-gray-800 rounded-lg border border-gray-700">
