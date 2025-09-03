@@ -1787,7 +1787,7 @@ const handlePauseQueue = (): void => {
   showDialer.value = false
   waitingForNotesInput.value = false
 
-  addUserMessage('Queue paused')
+  addUserGoalMessage('Queue paused')
 
   // Add session summary content to chat
   setTimeout(() => {
