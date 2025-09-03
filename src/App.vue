@@ -918,6 +918,7 @@ const handleLoginSuccess = (userData: any): void => {
   isSignedIn.value = true
   isReturningUser.value = true // This is a returning user
   phoneVerified.value = true // Returning users don't need to verify phone again
+  updateWelcomeMessageTyping() // Update typing status for welcome message
 
   // Since they're a returning user who has already set goals,
   // skip directly to file upload stage
