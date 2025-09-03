@@ -366,7 +366,7 @@ import { clearFocusAndEstablishContext, focusChatInput, announceToScreenReader }
 import { createChatUtils, type Message } from './utils/chat'
 import { getResponseForKeywords, AI_RESPONSES } from './utils/aiResponses'
 import { useCoaches } from './composables/useCoaches'
-import type { CoachManagementMode } from './types/coach'
+import type { CoachManagementMode, CoachCreateData } from './types/coach'
 
 // Components
 import Sidebar from './components/Sidebar.vue'
