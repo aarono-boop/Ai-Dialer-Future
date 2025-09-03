@@ -20,7 +20,7 @@
         <div class="w-full max-w-6xl mx-auto rounded-xl px-5">
           <div class="w-full h-full flex flex-col">
           <!-- Top content area - scrollable -->
-          <div class="flex-1 overflow-y-auto flex flex-col gap-8 pr-2 pb-32" ref="chatMessages">
+          <div class="flex-1 overflow-y-auto flex flex-col gap-8 pr-2 pb-10" ref="chatMessages">
             <!-- Chat Messages Area -->
             <div class="flex flex-col">
               <template v-for="(message, index) in messages" :key="index">
@@ -1281,7 +1281,7 @@ const sendMessage = (message: string): void => {
         '• Follow up with specific prospects at optimal times',
         '• Call back prospects who didn\'t answer',
         '• Review and update your call notes',
-        '• Start your daily calling sessions',
+        '�� Start your daily calling sessions',
         'What would you like to be reminded about and when?'
       ])
     } else if (lowerMessage.includes('practice a call') || lowerMessage.includes('practice')) {
