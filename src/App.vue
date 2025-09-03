@@ -2342,6 +2342,7 @@ const handleActionButton = (action: string): void => {
   actionButtonsUsed.value = true
   // Reset contact preview typing state for new message
   contactPreviewTypingComplete.value = false
+  contactPreviewButtonsUsed.value = false
   // Hide contact preview buttons initially - they'll show after typing completes
   showContactPreviewButtons.value = false
   
