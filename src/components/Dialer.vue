@@ -60,7 +60,7 @@
               />
               <span
                 class="text-gray-300 text-sm cursor-pointer select-none"
-                @click="aiCoachEnabled = !aiCoachEnabled"
+                @click="toggleAICoach(!props.aiCoachEnabled)"
               >Jordan's AI Coach</span>
             </div>
             <!-- Default AI Coach when no coach parameter -->
