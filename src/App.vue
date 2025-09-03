@@ -687,6 +687,17 @@ const handleTypingComplete = (index: number): void => {
   }
 }
 
+// Update welcome message typing status based on user status
+const updateWelcomeMessageTyping = (): void => {
+  if (messages.value.length > 0 && messages.value[0].type === 'ai') {
+    const welcomeMessage = messages.value[0]
+    if (welcomeMessage.content[0].includes('Welcome! I\'m <strong>ARKON (Post MVP)</strong>')) {
+      // Update typing property based on current user status
+      welcomeMessage.typing = !isSignedIn.value && !isReturningUser.value
+    }
+  }
+}
+
 // Header Methods
 const handleLogin = () => {
   currentPage.value = 'login'
