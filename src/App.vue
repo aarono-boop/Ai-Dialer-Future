@@ -529,6 +529,7 @@ const isSignedIn = ref<boolean>(false)
 const isReturningUser = ref<boolean>(false) // Track if user logged in vs created new account
 const showActionButtons = ref<boolean>(false)
 const showFileUploadForReturningUser = ref<boolean>(false)
+const welcomeTypingComplete = ref<boolean>(false)
 const showContactPreviewButtons = ref<boolean>(false)
 const showPhoneVerificationButton = ref<boolean>(false)
 const verificationStep = ref<string>('default') // 'default', 'enter-phone', 'enter-code'
@@ -1656,7 +1657,7 @@ const handleHold = (onHold: boolean): void => {
 }
 
 const handleKeypad = (): void => {
-  addAIMessage('📱 Keypad opened')
+  addAIMessage('�� Keypad opened')
 }
 
 const handlePauseQueue = (): void => {
