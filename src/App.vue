@@ -70,7 +70,7 @@
           </div>
 
           <!-- Contact Preview Buttons - always visible when active -->
-          <div v-if="showContactPreviewButtons" class="mt-2 pt-5 flex justify-center">
+          <div v-if="showContactPreviewButtons && !contactPreviewButtonsUsed" class="mt-2 pt-5 flex justify-center">
             <div class="w-[70%] flex gap-3">
               <Button
                 @click="handleLooksGood"
