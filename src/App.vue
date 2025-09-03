@@ -2343,10 +2343,8 @@ const handleActionButton = (action: string): void => {
 
   // Wait for user message scroll to complete, then add AI response
   setTimeout(() => {
-    console.log('First timeout completed, waiting for scroll animation')
     // Wait an additional moment for scroll animation to complete
     setTimeout(() => {
-      console.log('About to add AI message without scroll')
       let response = []
       const sampleContacts = `
         <div style="color: #ffffff;">
