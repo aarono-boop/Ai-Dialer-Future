@@ -74,8 +74,6 @@ const startTypingAnimation = (): void => {
   if (!props.message.typing || props.message.type !== 'ai') return
 
   isTyping.value = true
-  // Initialize with empty strings for each line
-  typedContent.value = props.message.content.map(() => '')
 
   let lineIndex = 0
   let charIndex = 0
