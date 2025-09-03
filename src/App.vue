@@ -1218,11 +1218,16 @@ const sendMessage = (message: string): void => {
   }
 
   if (verificationStep.value === 'enter-code') {
+    // Immediately hide all verification UI elements
     showVerificationButtons.value = false
-    showPhoneVerificationButton.value = false // Hide phone verification button
-    verificationCodeTypingComplete.value = false // Reset typing state
+    showPhoneVerificationButton.value = false
+    verificationCodeTypingComplete.value = false
+
+    // Mark verification as complete and reset step
+    phoneVerified.value = true
     verificationStep.value = 'default'
-    phoneVerified.value = true // Mark phone as verified
+
+    // Show the next step
     showStartDialingButton.value = true
 
     setTimeout(() => {
