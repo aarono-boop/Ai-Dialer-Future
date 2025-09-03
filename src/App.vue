@@ -375,6 +375,8 @@ import Footer from './components/Footer.vue'
 import Dialer from './components/Dialer.vue'
 import CallSeparator from './components/CallSeparator.vue'
 import YouTubeVideo from './components/YouTubeVideo.vue'
+import CoachManagement from './components/CoachManagement.vue'
+import CoachCreationModal from './components/CoachCreationModal.vue'
 
 // PrimeVue Components (adding Button)
 import Button from 'primevue/button'
