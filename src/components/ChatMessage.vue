@@ -193,7 +193,9 @@ const shouldUseCoachAvatar = (): boolean => {
     messageText.includes('Preparing to dial') ||
     messageText.includes('Voicemail detected') ||
     messageText.includes('Call with') && messageText.includes('ended') ||
-    messageText.includes('Please select a call outcome')
+    messageText.includes('Please select a call outcome') ||
+    messageText.includes('Congratulations! You have completed your entire call queue') ||
+    messageText.includes('Queue Completed!')
 
   // Use ARKON avatar for system messages, coach avatar for coaching content
   return !isArkonSystemMessage
