@@ -6,6 +6,7 @@ export interface Message {
   content: string[]
   contactName?: string
   typing?: boolean
+  preserveUserPosition?: boolean
 }
 
 export const createChatUtils = (
