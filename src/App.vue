@@ -2078,7 +2078,7 @@ const loadNewFile = (preserveQueueState: boolean = false): void => {
 }
 
 const exportFile = (): void => {
-  addAIMessage(wrapConnectScoreWithTooltip('Exporting your enriched contact file with Connect Scores and call results...'))
+  addAIMessage('Exporting your enriched contact file with Connect Scores and call results...')
 }
 
 const handleCompleteQueue = (): void => {
