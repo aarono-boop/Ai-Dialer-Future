@@ -36,14 +36,25 @@ export const useCoaches = () => {
     managementMode.value = mode
   }
 
-  const addCoach = (coachData: CoachCreateData): Coach => {
+  const addCoach = async (coachData: CoachCreateData): Promise<Coach> => {
     const coachId = generateCoachId(coachData.displayName)
-    
+
     // Extract video ID if URL provided
     let videoId: string | undefined
     if (coachData.videoUrl) {
       const extractedId = extractYouTubeVideoId(coachData.videoUrl)
       videoId = extractedId || undefined
+    }
+
+    // Convert avatar file to base64 if provided
+    let avatarUrl: string | undefined
+    if (coachData.avatarFile) {
+      try {
+        avatarUrl = await fileToBase64(coachData.avatarFile)
+      } catch (error) {
+        console.warn('Failed to convert avatar to base64:', error)
+        avatarUrl = undefined
+      }
     }
 
     // Create new coach
@@ -52,7 +63,7 @@ export const useCoaches = () => {
       name: coachId,
       displayName: coachData.displayName,
       videoId,
-      avatarUrl: coachData.avatarFile ? URL.createObjectURL(coachData.avatarFile) : undefined,
+      avatarUrl,
       welcomeMessage: coachData.customMessage || `Welcome to <strong>ARKON</strong>! I'm your AI calling assistant, enhanced with <strong>${coachData.displayName}'s</strong> proven methodologies.`,
       isActive: true,
       createdBy: 'user',
@@ -61,11 +72,21 @@ export const useCoaches = () => {
 
     // Add to config
     coachConfig.value.coaches[coachId] = newCoach
-    
+
     // Save to localStorage for persistence
     saveCoachConfig()
 
     return newCoach
+  }
+
+  // Helper function to convert File to base64
+  const fileToBase64 = (file: File): Promise<string> => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader()
+      reader.onload = () => resolve(reader.result as string)
+      reader.onerror = reject
+      reader.readAsDataURL(file)
+    })
   }
 
   const removeCoach = (coachId: string): boolean => {

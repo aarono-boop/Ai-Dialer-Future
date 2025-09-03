@@ -336,9 +336,9 @@ const navigateToCreateCoach = () => {
   window.location.href = url.toString()
 }
 
-const handleCoachCreated = (coachData: CoachCreateData) => {
+const handleCoachCreated = async (coachData: CoachCreateData) => {
   try {
-    const newCoach = addCoach(coachData)
+    const newCoach = await addCoach(coachData)
     toast.add({
       severity: 'success',
       summary: 'Coach Created',
