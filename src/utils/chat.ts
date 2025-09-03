@@ -191,7 +191,6 @@ export const createChatUtils = (
   }
 
   const addAIMessageWithTypingNoScroll = (content: string | string[]): void => {
-    console.log('🔥 ADD AI MESSAGE WITH TYPING NO SCROLL - Called')
     const contentArray = Array.isArray(content) ? content : [content]
     messages.value.push({
       type: 'ai',
@@ -200,7 +199,6 @@ export const createChatUtils = (
       preserveUserPosition: true // Flag to indicate this should preserve user message position
     })
 
-    console.log('🔥 ADD AI MESSAGE WITH TYPING NO SCROLL - Message added, preserving scroll position')
     // Don't scroll - preserve current user message position
     // Establish focus context after new message appears
     nextTick(() => {
