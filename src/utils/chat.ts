@@ -154,6 +154,25 @@ export const createChatUtils = (
     })
   }
 
+  const addUserGoalMessage = (content: string): void => {
+    messages.value.push({
+      type: 'user',
+      content: [content]
+    })
+
+    // Use the special goal scroll function for goal selections
+    scrollToTopForGoals()
+
+    // Establish focus context after new message appears
+    nextTick(() => {
+      setTimeout(() => {
+        if (headerRef.value?.establishFocusContext) {
+          headerRef.value.establishFocusContext()
+        }
+      }, 100)
+    })
+  }
+
   const addSeparatorMessage = (contactName: string): void => {
     messages.value.push({
       type: 'separator',
