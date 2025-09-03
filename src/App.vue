@@ -75,7 +75,7 @@
               <Button
                 @click="handleLooksGood"
                 severity="primary"
-                label="Looks Good"
+                label="Contact Looks Good"
                 class="flex-1 px-6 py-3 font-semibold"
                 tabindex="3"
               />
@@ -1392,7 +1392,7 @@ const handleLooksGood = (): void => {
   connectionAnalysisTypingComplete.value = false
 
   // Add user message showing what button was clicked
-  addUserMessage('Looks Good')
+  addUserMessage('Contact Looks Good')
 
   if (isReturningUser.value || phoneVerified.value) {
     // Skip phone verification for returning users or if phone was already verified
