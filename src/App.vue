@@ -1968,6 +1968,7 @@ const skipToDialer = (): void => {
   isSignedIn.value = true
   isReturningUser.value = true
   hasUploadedFile.value = true
+  updateWelcomeMessageTyping() // Update typing status for welcome message
   showActionButtons.value = false
   showContactPreviewButtons.value = false
   showPhoneVerificationButton.value = false
