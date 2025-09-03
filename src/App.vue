@@ -620,9 +620,7 @@ const getCoachWelcomeMessage = computed(() => {
 const messages: Ref<Message[]> = ref([
   {
     type: 'ai',
-    content: [
-      'Welcome to <strong>ARKON</strong>, your AI calling assistant.<br><br>Drop your contact file here and I\'ll show you exactly who\'s most likely to pick up right now.'
-    ],
+    content: [''], // Will be updated with coach-specific message after URL parsing
     // Only show typing animation for completely new users (not signed in and not returning)
     typing: !isSignedIn.value && !isReturningUser.value
   }
