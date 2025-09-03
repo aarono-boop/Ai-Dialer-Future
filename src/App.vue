@@ -2329,7 +2329,7 @@ const handleActionButton = (action: string): void => {
   showContactPreviewButtons.value = false
   
   // Add user message showing their selection
-  addUserMessage(`I want to ${action.toLowerCase()}`)
+  addUserGoalMessage(`I want to ${action.toLowerCase()}`)
 
   // Wait for user message scroll to complete, then add AI response
   setTimeout(() => {
