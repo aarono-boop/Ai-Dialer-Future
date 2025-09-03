@@ -1925,7 +1925,8 @@ const addSessionSummaryToChat = (isCompleted: boolean = false): void => {
   const uniqueId = Date.now() // Create unique ID for this session summary
   const summaryHTML = `
     <div style="background-color: rgb(31, 41, 55); border-radius: 12px; padding: 16px; margin: 12px 0;">
-      <h2 style="color: white; font-size: 24px; font-weight: 600; margin-bottom: 32px;">${title}</h2>
+      <h2 style="color: white; font-size: 24px; font-weight: 600; margin-bottom: 16px;">${title}</h2>
+      ${isCompleted ? '<p style="color: rgb(209, 213, 219); font-size: 16px; margin-bottom: 32px;">Congratulations! You have completed your entire call queue. All contacts have been processed.</p>' : ''}
 
       <!-- Results & Next Steps Section -->
       <div style="margin-bottom: 32px;">
