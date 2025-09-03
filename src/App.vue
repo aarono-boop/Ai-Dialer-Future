@@ -1733,7 +1733,7 @@ const handleHangUp = (): void => {
     // Get coach-specific recap title
     const getCoachRecapTitle = (): string => {
       if (coachParameter.value === 'jordan-stupar') {
-        return '<strong>Jordan\'s Recap</strong>'
+        return '<strong>Jordan\'s Session Recap</strong>'
       }
       return '<strong>AI Coaching Recap</strong>'
     }
@@ -1929,7 +1929,7 @@ const addSessionSummaryToChat = (isCompleted: boolean = false): void => {
 
       <!-- Results & Next Steps Section -->
       <div style="margin-bottom: 32px;">
-        <h3 style="color: white; font-size: 18px; font-weight: 600; margin-bottom: 16px;"><i class="pi pi-check-circle" style="margin-right: 8px;"></i>AI Coaching</h3>
+        <h3 style="color: white; font-size: 18px; font-weight: 600; margin-bottom: 16px;"><i class="pi pi-check-circle" style="margin-right: 8px;"></i>${coachParameter.value === 'jordan-stupar' ? 'Jordan\'s Session Recap' : 'AI Coaching'}</h3>
         <div style="background-color: rgb(55, 65, 81); border-radius: 8px; padding: 20px;">
           <div style="color: rgb(209, 213, 219); font-size: 14px; font-weight: normal; line-height: 1.5;">
             ${isCompleted ?
