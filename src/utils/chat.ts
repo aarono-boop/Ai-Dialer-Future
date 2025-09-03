@@ -104,7 +104,7 @@ export const createChatUtils = (
         const messageOffsetTop = lastUserMessage.offsetTop
 
         // Force scroll to show user message at top with adequate padding for full visibility
-        const targetPosition = Math.max(0, messageOffsetTop - 50)
+      const targetPosition = Math.max(0, messageOffsetTop - 120)
 
         // Force immediate scroll
         chatMessages.value.scrollTop = targetPosition
