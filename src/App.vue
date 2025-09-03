@@ -2331,6 +2331,14 @@ const handleActionButton = (action: string): void => {
   // Add user message showing their selection
   addUserGoalMessage(`I want to ${action.toLowerCase()}`)
 
+  // Maintain scroll position for goal message even during AI response
+  const maintainGoalPosition = () => {
+    scrollToTopForGoals()
+  }
+
+  // Set up periodic maintenance of scroll position
+  const scrollMaintainer = setInterval(maintainGoalPosition, 300)
+
   // Wait for user message scroll to complete, then add AI response
   setTimeout(() => {
       let response = []
