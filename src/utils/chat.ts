@@ -90,6 +90,33 @@ export const createChatUtils = (
     setTimeout(() => performUserScroll(), 100)
   }
 
+  const scrollToTopForGoals = async (): Promise<void> => {
+    await nextTick()
+
+    // Use multiple attempts with longer delays to ensure it works
+    const forceScrollToGoal = (attempt: number = 0) => {
+      if (!chatMessages.value || attempt > 5) return
+
+      const userMessages = chatMessages.value.querySelectorAll('[data-message-type="user"]')
+
+      if (userMessages.length > 0) {
+        const lastUserMessage = userMessages[userMessages.length - 1] as HTMLElement
+        const messageOffsetTop = lastUserMessage.offsetTop
+
+        // Force scroll to show user message at top with minimal padding
+        const targetPosition = Math.max(0, messageOffsetTop - 10)
+
+        // Force immediate scroll
+        chatMessages.value.scrollTop = targetPosition
+
+        // Continue trying to maintain position
+        setTimeout(() => forceScrollToGoal(attempt + 1), 200)
+      }
+    }
+
+    setTimeout(() => forceScrollToGoal(), 50)
+  }
+
   const addAIMessage = (content: string | string[]): void => {
     const contentArray = Array.isArray(content) ? content : [content]
     messages.value.push({
