@@ -2264,6 +2264,7 @@ const handleAccountCreated = (accountData: any) => {
   closeAccountCreation()
   isSignedIn.value = true
   showActionButtons.value = true
+  updateWelcomeMessageTyping() // Update typing status for welcome message
   addAIMessage('🎉 Welcome to ARKON! Your account has been created successfully. Let\'s start your first smart calling session! What are you trying to accomplish?')
 
   // Ensure scroll happens after action buttons are rendered
