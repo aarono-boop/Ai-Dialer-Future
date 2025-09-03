@@ -244,6 +244,7 @@
             :queueCompletionReady="queueCompletionReady"
             :currentContactIndex="currentContactIndex"
             :totalContacts="contacts.length"
+            :coachParameter="coachParameter"
             @call-back="handleCallBack"
             @next-contact="handleNextContact"
             @hang-up="handleHangUp"
