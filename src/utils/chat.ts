@@ -149,6 +149,25 @@ export const createChatUtils = (
     }, delay)
   }
 
+  const addAIMessageWithTyping = (content: string | string[]): void => {
+    const contentArray = Array.isArray(content) ? content : [content]
+    messages.value.push({
+      type: 'ai',
+      content: contentArray,
+      typing: true
+    })
+    scrollToBottom()
+
+    // Establish focus context after new message appears
+    nextTick(() => {
+      setTimeout(() => {
+        if (headerRef.value?.establishFocusContext) {
+          headerRef.value.establishFocusContext()
+        }
+      }, 100)
+    })
+  }
+
   return {
     scrollToBottom,
     scrollToUserMessage,
@@ -156,6 +175,7 @@ export const createChatUtils = (
     addAIMessageWithoutScroll,
     addUserMessage,
     addSeparatorMessage,
-    addAIMessageWithDelay
+    addAIMessageWithDelay,
+    addAIMessageWithTyping
   }
 }
