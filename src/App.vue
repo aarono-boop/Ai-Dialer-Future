@@ -289,8 +289,8 @@
 
     <!-- Coach Creation Modal for create-coach URL -->
     <CoachCreationModal
-      v-if="managementMode === 'create' && currentPage === 'main'"
-      :visible="true"
+      v-if="managementMode === 'create'"
+      :visible="managementMode === 'create'"
       @coach-created="handleCoachCreated"
       @close="handleCoachModalClose"
     />
