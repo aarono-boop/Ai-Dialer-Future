@@ -2423,12 +2423,9 @@ const handleActionButton = (action: string): void => {
         response = [`I\'ll help you with ${action.toLowerCase()}. Let me prepare your optimal calling strategy.`]
       }
 
-      addAIMessageWithoutScroll(response)
+      addAIMessageWithTyping(response)
 
-      // Show contact preview buttons after AI message appears
-      setTimeout(() => {
-        showContactPreviewButtons.value = true
-      }, 200)
+      // Contact preview buttons will be shown automatically when typing completes
     }, 1000) // Additional delay for scroll completion
   }, 1500) // Initial delay
 }
