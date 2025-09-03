@@ -245,6 +245,7 @@
             :currentContactIndex="currentContactIndex"
             :totalContacts="contacts.length"
             :coachParameter="coachParameter"
+            :aiCoachEnabled="aiCoachEnabled"
             @call-back="handleCallBack"
             @next-contact="handleNextContact"
             @hang-up="handleHangUp"
