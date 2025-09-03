@@ -33,8 +33,15 @@
         role="region"
         aria-label="AI message content"
       >
-        <div v-if="message.typing" v-for="(line, lineIndex) in typedContent" :key="`typed-${lineIndex}`" v-html="line"></div>
-        <div v-else v-for="(line, lineIndex) in message.content" :key="lineIndex" v-html="line"></div>
+        <template v-for="(item, itemIndex) in processedContent" :key="`processed-${itemIndex}`">
+          <div v-if="item.type === 'text' && item.content.trim()" v-html="item.content"></div>
+          <YouTubeVideo
+            v-else-if="item.type === 'video' && item.videoId"
+            :video-id="item.videoId"
+            :autoplay="item.autoplay || false"
+            title="Coach Introduction Video"
+          />
+        </template>
         <slot name="additional-content"></slot>
       </div>
     </div>
