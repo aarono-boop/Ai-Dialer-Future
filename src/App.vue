@@ -372,6 +372,7 @@ import PaymentPage from './components/PaymentPage.vue'
 import Footer from './components/Footer.vue'
 import Dialer from './components/Dialer.vue'
 import CallSeparator from './components/CallSeparator.vue'
+import YouTubeVideo from './components/YouTubeVideo.vue'
 
 // PrimeVue Components (adding Button)
 import Button from 'primevue/button'
@@ -399,7 +400,7 @@ const getDynamicCoachingFeedback = (): string => {
   const coachingMessages = [
     'Great connection! I heard you building rapport early—that\'s your sweet spot. Next call, try mirroring their pace a bit more to deepen that connection.',
     'Nice work staying patient through their objections. I noticed you got stronger as the call progressed. Carry that momentum into the next one.',
-    'You handled that beautifully! Your confidence really came through. Next time, try asking one more discovery question before presenting—it\'ll make your close even stronger.',
+    'You handled that beautifully! Your confidence really came through. Next time, try asking one more discovery question before presenting��it\'ll make your close even stronger.',
     'I loved how you listened for their pain points. Your empathy is one of your strongest assets. Now let\'s work on creating more urgency in your next call.',
     'Solid call! You kept them engaged throughout. I\'d love to see you slow down just a touch during the value proposition—let it sink in.',
     'That was textbook rapport building! Your energy is infectious. Next call, try to qualify their budget earlier in the conversation.',
