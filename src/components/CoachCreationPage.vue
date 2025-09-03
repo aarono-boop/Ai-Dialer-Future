@@ -191,6 +191,20 @@
           </div>
         </div>
       </div>
+
+      <!-- Action Button at Bottom -->
+      <div class="max-w-4xl mx-auto px-6 py-6 border-t border-gray-700">
+        <div class="flex justify-center">
+          <Button
+            label="Create New Coach"
+            :loading="isCreating"
+            @click="handleCreate"
+            :disabled="!canCreate"
+            size="large"
+            class="px-8 py-3 text-lg font-semibold"
+          />
+        </div>
+      </div>
     </div>
   </div>
 </template>
