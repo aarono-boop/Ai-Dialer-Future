@@ -10,7 +10,7 @@
         <Button
           label="Create New Coach"
           icon="pi pi-plus"
-          @click="showCreateModal = true"
+          @click="navigateToCreateCoach"
           class="bg-blue-600 hover:bg-blue-700"
         />
       </div>
@@ -90,7 +90,7 @@
           <Button
             label="Create First Coach"
             icon="pi pi-plus"
-            @click="showCreateModal = true"
+            @click="navigateToCreateCoach"
           />
         </div>
 
@@ -216,11 +216,6 @@
       </Card>
     </div>
 
-    <!-- Coach Creation Modal -->
-    <CoachCreationModal
-      v-model:visible="showCreateModal"
-      @coach-created="handleCoachCreated"
-    />
 
     <!-- Coach Details Modal -->
     <Dialog
@@ -306,7 +301,6 @@ import { useConfirm } from 'primevue/useconfirm'
 import { useToast } from 'primevue/usetoast'
 import type { Coach, CoachCreateData } from '../types/coach'
 import { useCoaches } from '../composables/useCoaches'
-import CoachCreationModal from './CoachCreationModal.vue'
 
 // Composables
 const {
@@ -316,14 +310,14 @@ const {
   removeCoach,
   exportCoaches,
   importCoaches,
-  generateCoachUrl
+  generateCoachUrl,
+  setManagementMode
 } = useCoaches()
 
 const confirm = useConfirm()
 const toast = useToast()
 
 // State
-const showCreateModal = ref(false)
 const showDetailsModal = ref(false)
 const selectedCoach = ref<Coach | null>(null)
 const exportLoading = ref(false)
@@ -335,6 +329,13 @@ const coachesWithVideos = computed(() => coachList.value.filter(coach => coach.v
 const baseUrl = computed(() => `${window.location.origin}${window.location.pathname}`)
 
 // Methods
+const navigateToCreateCoach = () => {
+  // Update URL to navigate to create coach page
+  const url = new URL(window.location.href)
+  url.searchParams.set('create-coach', 'true')
+  window.location.href = url.toString()
+}
+
 const handleCoachCreated = (coachData: CoachCreateData) => {
   try {
     const newCoach = addCoach(coachData)
