@@ -2414,7 +2414,7 @@ const handleActionButton = (action: string): void => {
         response = [`I\'ll help you with ${action.toLowerCase()}. Let me prepare your optimal calling strategy.`]
       }
 
-      addAIMessageWithTyping(response)
+      addAIMessageWithTypingNoScroll(response)
 
       // Contact preview buttons will be shown automatically when typing completes
   }, 800) // Reduced delay for faster response while allowing scroll to complete
