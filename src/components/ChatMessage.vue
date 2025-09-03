@@ -48,10 +48,13 @@
 </template>
 
 <script setup lang="ts">
+import { ref, onMounted, onUnmounted } from 'vue'
+
 // Types
 interface Message {
   type: 'ai' | 'user'
   content: string[]
+  typing?: boolean
 }
 
 // Define props
@@ -59,6 +62,72 @@ const props = defineProps<{
   message: Message
   isWide?: boolean
 }>()
+
+// Typing animation state
+const typedContent = ref<string[]>([])
+const isTyping = ref(false)
+let typingInterval: NodeJS.Timeout | null = null
+
+// Start typing animation
+const startTypingAnimation = (): void => {
+  if (!props.message.typing || props.message.type !== 'ai') return
+
+  isTyping.value = true
+  typedContent.value = []
+
+  let lineIndex = 0
+  let charIndex = 0
+
+  const typeNextCharacter = () => {
+    if (lineIndex >= props.message.content.length) {
+      isTyping.value = false
+      return
+    }
+
+    const currentLine = props.message.content[lineIndex]
+
+    if (charIndex < currentLine.length) {
+      // Add character to current line
+      if (!typedContent.value[lineIndex]) {
+        typedContent.value[lineIndex] = ''
+      }
+      typedContent.value[lineIndex] = currentLine.substring(0, charIndex + 1)
+      charIndex++
+    } else {
+      // Move to next line
+      lineIndex++
+      charIndex = 0
+      // Add empty line for next iteration
+      if (lineIndex < props.message.content.length) {
+        typedContent.value[lineIndex] = ''
+      }
+    }
+  }
+
+  typingInterval = setInterval(typeNextCharacter, 30) // Typing speed
+}
+
+// Stop typing animation
+const stopTypingAnimation = (): void => {
+  if (typingInterval) {
+    clearInterval(typingInterval)
+    typingInterval = null
+  }
+  isTyping.value = false
+}
+
+// Lifecycle
+onMounted(() => {
+  if (props.message.typing) {
+    setTimeout(() => {
+      startTypingAnimation()
+    }, 100) // Small delay before starting
+  }
+})
+
+onUnmounted(() => {
+  stopTypingAnimation()
+})
 
 // Method to determine message width
 const getMessageWidth = (): string => {
