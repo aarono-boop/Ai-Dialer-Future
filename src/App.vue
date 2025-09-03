@@ -690,12 +690,17 @@ const handleTypingComplete = (index: number): void => {
 
   // Check if this is the congratulations message
   if (messages.value[index] && messages.value[index].content[0]?.includes('Congratulations! You\'ve successfully upgraded to the Pro plan')) {
+    console.log('🎊 Congratulations message typing completed!')
     congratulationsTypingComplete.value = true
     // Only show action buttons if they haven't been used yet
+    console.log('🎊 actionButtonsUsed:', actionButtonsUsed.value)
     if (!actionButtonsUsed.value) {
+      console.log('🎊 Showing action buttons after congratulations typing')
       setTimeout(() => {
         showActionButtons.value = true
       }, 200) // Small delay for better UX
+    } else {
+      console.log('🎊 Not showing action buttons - already used')
     }
   }
 }
