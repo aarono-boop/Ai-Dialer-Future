@@ -98,7 +98,7 @@
           <Card
             v-for="coach in coachList"
             :key="coach.id"
-            class="bg-gray-800 border-gray-700 hover:border-gray-600 transition-colors cursor-pointer"
+            class="bg-gray-800 border-gray-700 hover:border-gray-600 transition-colors cursor-pointer rounded-lg"
             @click="viewCoach(coach)"
           >
             <template #content>
