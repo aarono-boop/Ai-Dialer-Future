@@ -751,6 +751,9 @@ const handleLogout = () => {
   totalCalls.value = 0
   connectedCalls.value = 0
 
+  // Reset typing state
+  welcomeTypingComplete.value = false
+
   // Reset to welcome message
   messages.value = [
     {
