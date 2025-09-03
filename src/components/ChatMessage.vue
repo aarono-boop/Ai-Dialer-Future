@@ -86,6 +86,13 @@ const startTypingAnimation = (): void => {
   let lineIndex = 0
   let charIndex = 0
 
+  // Helper function to detect if content is a contact table that should load instantly
+  const isContactTableContent = (content: string): boolean => {
+    return content.includes('<table style=') &&
+           content.includes('Connect Score') &&
+           (content.includes('Sarah Johnson') || content.includes('font-weight: bold'))
+  }
+
   const typeNextCharacter = () => {
     if (lineIndex >= props.message.content.length) {
       isTyping.value = false
@@ -94,6 +101,19 @@ const startTypingAnimation = (): void => {
     }
 
     const currentLine = props.message.content[lineIndex]
+
+    // Check if this line contains contact table content - if so, display it instantly
+    if (charIndex === 0 && isContactTableContent(currentLine)) {
+      typedContent.value[lineIndex] = currentLine
+      lineIndex++
+      charIndex = 0
+
+      // Scroll when displaying contact table instantly
+      if (props.onTypingProgress) {
+        props.onTypingProgress()
+      }
+      return
+    }
 
     if (charIndex < currentLine.length) {
       // Add character to current line
