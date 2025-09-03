@@ -163,7 +163,11 @@ export const createChatUtils = (
       content: contentArray,
       typing: true
     })
-    scrollToBottom()
+
+    // Initial scroll to position the new message
+    nextTick(() => {
+      scrollToBottom()
+    })
 
     // Establish focus context after new message appears
     nextTick(() => {
