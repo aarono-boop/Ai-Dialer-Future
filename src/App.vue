@@ -1401,8 +1401,9 @@ const handleLooksGood = (): void => {
 }
 
 const handleTryAgain = (): void => {
-  // Hide contact preview buttons
+  // Hide contact preview buttons and mark as used
   showContactPreviewButtons.value = false
+  contactPreviewButtonsUsed.value = true
 
   // Add user message showing what button was clicked
   addUserMessage('Try Again')
