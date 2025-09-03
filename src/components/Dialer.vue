@@ -51,13 +51,27 @@
       <div class="mt-3">
         <div class="flex items-center justify-between" style="min-height: 32px; box-sizing: border-box;">
           <div class="flex items-center gap-2" style="flex-shrink: 0;">
+            <!-- Jordan's Avatar when coach parameter is set -->
+            <div v-if="props.coachParameter === 'jordan-stupar'" class="flex items-center gap-2">
+              <img
+                src="https://cdn.builder.io/api/v1/image/assets%2F5aeb07ce25f84dbc869290880d07b71e%2F3bddb1110d0949139407eb0dc708c7ff?format=webp&width=800"
+                alt="Jordan Stupar"
+                class="w-6 h-6 rounded-full object-cover"
+              />
+              <span
+                class="text-gray-300 text-sm cursor-pointer select-none"
+                @click="toggleAICoach(!props.aiCoachEnabled)"
+              >Jordan's AI Coach</span>
+            </div>
+            <!-- Default AI Coach when no coach parameter -->
             <span
+              v-else
               class="text-gray-300 text-sm cursor-pointer select-none"
-              @click="aiCoachEnabled = !aiCoachEnabled"
+              @click="toggleAICoach(!props.aiCoachEnabled)"
             >AI Coach</span>
             <ToggleSwitch
-              v-model="aiCoachEnabled"
-              @change="toggleAICoach"
+              :model-value="props.aiCoachEnabled"
+              @update:model-value="toggleAICoach"
               class="ai-coach-toggle"
             />
           </div>
@@ -340,6 +354,8 @@ const props = defineProps<{
   queueCompletionReady: boolean
   currentContactIndex: number
   totalContacts: number
+  coachParameter: string
+  aiCoachEnabled: boolean
 }>()
 
 // Define emits
@@ -349,7 +365,6 @@ const emit = defineEmits(['call-back', 'next-contact', 'hang-up', 'mute', 'hold'
 const isMuted = ref(false)
 const isOnHold = ref(false)
 const showKeypadModal = ref(false)
-const aiCoachEnabled = ref(true)
 
 // Template refs for PrimeVue buttons
 const muteButtonRef = ref<any>(null)
@@ -648,8 +663,8 @@ const completeQueue = () => {
   emit('complete-queue')
 }
 
-const toggleAICoach = () => {
-  emit('ai-coach-toggle', aiCoachEnabled.value)
+const toggleAICoach = (newValue: boolean) => {
+  emit('ai-coach-toggle', newValue)
 }
 
 const handleHangUpTab = (event: KeyboardEvent) => {

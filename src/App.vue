@@ -25,7 +25,7 @@
             <div class="flex flex-col">
               <template v-for="(message, index) in messages" :key="index">
                 <!-- Regular Chat Message -->
-                <ChatMessage v-if="message.type !== 'separator'" :message="message" :isWide="shouldBeWideMessage(message, index)" :onTypingProgress="message.preserveUserPosition ? undefined : scrollToBottomDuringTyping" @typing-complete="handleTypingComplete(index)">
+                <ChatMessage v-if="message.type !== 'separator'" :message="message" :isWide="shouldBeWideMessage(message, index)" :onTypingProgress="message.preserveUserPosition ? undefined : scrollToBottomDuringTyping" :coachParameter="coachParameter" :aiCoachEnabled="aiCoachEnabled" @typing-complete="handleTypingComplete(index)">
                   <template #additional-content>
                     <!-- File Upload Area - shown inside welcome message for new users or ready to upload message for returning users -->
                     <FileUpload
@@ -75,7 +75,7 @@
               <Button
                 @click="handleLooksGood"
                 severity="primary"
-                label="Looks Good"
+                label="Contact Looks Good"
                 class="flex-1 px-6 py-3 font-semibold"
                 tabindex="3"
               />
@@ -244,6 +244,8 @@
             :queueCompletionReady="queueCompletionReady"
             :currentContactIndex="currentContactIndex"
             :totalContacts="contacts.length"
+            :coachParameter="coachParameter"
+            :aiCoachEnabled="aiCoachEnabled"
             @call-back="handleCallBack"
             @next-contact="handleNextContact"
             @hang-up="handleHangUp"
@@ -431,6 +433,32 @@ const generateCallScript = (contact: any): string[] => {
 
 // Show call connected message followed by script and objection handling
 const showCallConnectedMessages = (contact: any): void => {
+  // Add coach-specific intro message when coach parameter is set AND AI Coach is enabled
+  if (coachParameter.value && aiCoachEnabled.value) {
+    const getCoachCallMessage = (): string => {
+      switch (coachParameter.value) {
+        case 'jordan-stupar':
+          return 'I\'m on the call with you - let\'s crush this together!'
+        default:
+          return 'I\'m on the call with you...'
+      }
+    }
+
+    addAIMessageWithTyping(getCoachCallMessage())
+
+    // Delay before showing connection message
+    setTimeout(() => {
+      showRegularConnectedMessages(contact)
+    }, 1500)
+    return
+  }
+
+  // Show regular messages for no coach or other coaches
+  showRegularConnectedMessages(contact)
+}
+
+// Helper function for regular connected messages
+const showRegularConnectedMessages = (contact: any): void => {
   if (!aiCoachEnabled.value) {
     // Just show basic connection message if AI Coach is disabled
     addAIMessageWithTyping('Great! You\'re connected!')
@@ -443,16 +471,18 @@ const showCallConnectedMessages = (contact: any): void => {
     'Great! You\'re connected!',
     '<br>',
     'Script:',
-    '<span style="color: #fbbf24; font-style: italic;">[The AI learns the nuances of your coaching approach to generate contextual scripts that reflect your unique sales philosophy, language patterns, and proven conversation starters tailored to this specific prospect.]</span>'
+    '<span style="color: #fbbf24; font-style: italic;">[The AI learns the nuances of this coach\'s approach to generate contextual scripts that reflect their unique sales philosophy, language patterns, and proven conversation starters tailored to this specific prospect.]</span>'
   ]
 
   addAIMessageWithTyping(combinedMessage)
   scrollToBottom()
 
-  // Wait 3 seconds then show objection handling
+  // Wait 3 seconds then show objection handling (only if AI Coach is still enabled)
   setTimeout(() => {
-    addAIMessageWithTyping(AI_RESPONSES.OBJECTION_RESPONSE)
-    scrollToBottom()
+    if (aiCoachEnabled.value) {
+      addAIMessageWithTyping(AI_RESPONSES.OBJECTION_RESPONSE)
+      scrollToBottom()
+    }
   }, 3000)
 }
 
@@ -508,6 +538,9 @@ const callDuration = ref<number>(0)
 const isManualHangUp = ref<boolean>(false) // Track if hang up was manual vs automatic
 const queueTime = ref<number>(14)
 const showLoadNewFileButton = ref<boolean>(false)
+
+// Coach parameter for AI Coach functionality
+const coachParameter = ref<string>('')
 
 // Contact data
 const contacts = [
@@ -598,13 +631,26 @@ const isVoicemailScenario = computed(() => {
   return currentContact.value && currentContact.value.name === 'George Sample'
 })
 
+// Coach-specific welcome messages
+const getCoachWelcomeMessage = computed(() => {
+  if (!coachParameter.value) {
+    return 'Welcome to <strong>ARKON</strong>, your AI calling assistant.<br><br>Drop your contact file here and I\'ll show you exactly who\'s most likely to pick up right now.'
+  }
+
+  // Coach-specific welcome messages
+  const coachMessages: Record<string, string> = {
+    'jordan-stupar': 'Welcome to <strong>ARKON</strong>! I\'m your AI calling assistant, trained with <strong>Jordan Stupar\'s</strong> proven sales methodologies.<br><br>Drop your contact file here and I\'ll show you exactly who\'s most likely to pick up right now using Jordan\'s approach.',
+    // Add more coaches as needed
+  }
+
+  return coachMessages[coachParameter.value] || `Welcome to <strong>ARKON</strong>! I'm your AI calling assistant, enhanced with your coach's proven methodologies.<br><br>Drop your contact file here and I\'ll show you exactly who\'s most likely to pick up right now.`
+})
+
 // Chat messages array
 const messages: Ref<Message[]> = ref([
   {
     type: 'ai',
-    content: [
-      'Welcome! I\'m <strong>ARKON (Post MVP)</strong>, your AI calling assistant.<br><br>Drop your contact file here and I\'ll show you exactly who\'s most likely to pick up right now.'
-    ],
+    content: [''], // Will be updated with coach-specific message after URL parsing
     // Only show typing animation for completely new users (not signed in and not returning)
     typing: !isSignedIn.value && !isReturningUser.value
   }
@@ -612,7 +658,7 @@ const messages: Ref<Message[]> = ref([
 
 // Initialize chat utilities
 const chatUtils = createChatUtils(messages, chatMessages, headerRef)
-const { scrollToBottom, scrollToBottomDuringTyping, scrollToUserMessage, scrollToTopForGoals, addAIMessage, addAIMessageWithoutScroll, addUserMessage, addUserGoalMessage, addSeparatorMessage, addAIMessageWithTyping, addAIMessageWithTypingNoScroll } = chatUtils
+const { scrollToBottom, scrollToBottomDuringTyping, scrollToUserMessage, scrollToTopForGoals, addAIMessage, addAIMessageWithoutScroll, addUserMessage, addUserGoalMessage, addUserQueuePausedMessage, addUserQueueCompletedMessage, addSeparatorMessage, addAIMessageWithTyping, addAIMessageWithTypingNoScroll } = chatUtils
 
 // Helper function to identify if a message is the "Ready to upload" message for returning users
 const isReadyToUploadMessage = (message: Message, index: number): boolean => {
@@ -702,7 +748,7 @@ const handleTypingComplete = (index: number): void => {
 const updateWelcomeMessageTyping = (): void => {
   if (messages.value.length > 0 && messages.value[0].type === 'ai') {
     const welcomeMessage = messages.value[0]
-    if (welcomeMessage.content[0].includes('Welcome! I\'m <strong>ARKON (Post MVP)</strong>')) {
+    if (welcomeMessage.content[0].includes('Welcome to <strong>ARKON</strong>') || welcomeMessage.content[0].includes('Drop your contact file here')) {
       // Update typing property based on current user status
       welcomeMessage.typing = !isSignedIn.value && !isReturningUser.value
     }
@@ -794,7 +840,7 @@ const handleLogout = () => {
     {
       type: 'ai',
       content: [
-        'Welcome! I\'m <strong>ARKON (Post MVP)</strong>, your AI calling assistant.<br><br>Drop your contact file here and I\'ll show you exactly who\'s most likely to pick up right now.'
+        getCoachWelcomeMessage.value
       ],
       // Only show typing animation for completely new users (not signed in and not returning)
       typing: !isSignedIn.value && !isReturningUser.value
@@ -1290,7 +1336,7 @@ const sendMessage = (message: string): void => {
         'ARKON\'s practice mode can help you:',
         '• Rehearse your opening pitch with AI feedback',
         '• Practice handling common objections',
-        '• Test different conversation flows',
+        '��� Test different conversation flows',
         '�� Record and review your delivery',
         'Would you like to practice a cold call opening or work on handling objections?'
       ])
@@ -1349,13 +1395,13 @@ const handleLooksGood = (): void => {
   connectionAnalysisTypingComplete.value = false
 
   // Add user message showing what button was clicked
-  addUserMessage('Looks Good')
+  addUserMessage('Contact Looks Good')
 
   if (isReturningUser.value || phoneVerified.value) {
     // Skip phone verification for returning users or if phone was already verified
     setTimeout(() => {
       addAIMessageWithTyping([
-        'I\'ve analyzed your contact\'s phone numbers using real connection data from 900M+ calls, recent phone engagement, calling patterns, and carrier signals—so you only dial numbers likely to connect.<br><br>I\'ve prioritized the phone numbers most likely to connect so you spend time talking, not hitting dead lines.<br><br>Here\'s what I found:<br><div style="margin-left: 1em; text-indent: -1em;">�� 40 numbers have \'High\' Connect Scores and show consistent calling activity in the last 12 months. These are highly likely to be connected and assigned to active subscribers.</div><br><div style="margin-left: 1em; text-indent: -1em;">• 67 numbers have \'Medium\' Connect Scores and are worth calling after you exhaust your \'High\' Connect Score numbers.</div><br><div style="margin-left: 1em; text-indent: -1em;">• 54 numbers have \'Low\' Connect Scores and are likely disconnected or inactive lines that won\'t answer when dialed.</div>'
+        'I\'ve analyzed your contact\'s phone numbers using real connection data from 900M+ calls, recent phone engagement, calling patterns, and carrier signals—so you only dial numbers likely to connect.<br><br>I\'ve prioritized the phone numbers most likely to connect so you spend time talking, not hitting dead lines.<br><br>Here\'s what I found:<br><div style="margin-left: 1em; text-indent: -1em;">• 40 numbers have \'High\' Connect Scores and show consistent calling activity in the last 12 months. These are highly likely to be connected and assigned to active subscribers.</div><br><div style="margin-left: 1em; text-indent: -1em;">• 67 numbers have \'Medium\' Connect Scores and are worth calling after you exhaust your \'High\' Connect Score numbers.</div><br><div style="margin-left: 1em; text-indent: -1em;">• 54 numbers have \'Low\' Connect Scores and are likely disconnected or inactive lines that won\'t answer when dialed.</div>'
       ])
 
       // Skip directly to verified phone and start dialing
@@ -1580,10 +1626,8 @@ const simulateCall = (): void => {
         notes: ''
       })
 
-      // Show voicemail detected message
-      addAIMessageWithTyping('Voicemail detected...')
-      const duration = '00:00'
-      addAIMessageWithTyping(`Call with ${currentContact.value.name} ended. Duration: ${duration}<br><br>Please select a call outcome or enter notes about this call.`)
+      // Show combined voicemail message (no separate call ended message)
+      addAIMessageWithTyping('Voicemail detected...<br><br>Please select a call outcome or enter notes about this call.')
       scrollToBottom()
     }, 4000)
   } else {
@@ -1637,7 +1681,7 @@ const handleNextContact = (): void => {
     callState.value = 'idle'
     callDuration.value = 0
 
-    addAIMessageWithTyping(`Moving to next contact: ${currentContact.value.name}. Preparing to dial...`)
+    addUserMessage('Next contact')
 
     // Add separator message for the new contact
     setTimeout(() => {
@@ -1666,6 +1710,9 @@ const handleHangUp = (): void => {
   // Set flag to indicate this was a manual hang up
   isManualHangUp.value = true
 
+  // Add user message to show they hung up
+  addUserMessage('Call ended')
+
   // Stop timers
   if (callTimer) {
     clearInterval(callTimer)
@@ -1687,8 +1734,16 @@ const handleHangUp = (): void => {
 
   // Only show coaching recap for manual hang ups and if AI Coach is enabled
   if (isManualHangUp.value && aiCoachEnabled.value) {
+    // Get coach-specific recap title
+    const getCoachRecapTitle = (): string => {
+      if (coachParameter.value === 'jordan-stupar') {
+        return '<strong>Jordan\'s Session Recap</strong>'
+      }
+      return '<strong>AI Coaching Recap</strong>'
+    }
+
     addAIMessageWithTyping([
-      '<strong>AI Coaching Recap</strong>',
+      getCoachRecapTitle(),
       '<br>',
       getDynamicCoachingFeedback(),
       '<br>',
@@ -1701,11 +1756,11 @@ const handleHangUp = (): void => {
 }
 
 const handleMute = (muted: boolean): void => {
-  addAIMessage(muted ? 'Microphone muted' : 'Microphone unmuted')
+  addUserMessage(muted ? 'Microphone muted' : 'Microphone unmuted')
 }
 
 const handleHold = (onHold: boolean): void => {
-  addAIMessage(onHold ? 'Call placed on hold' : 'Call resumed')
+  addUserMessage(onHold ? 'Call placed on hold' : 'Call resumed')
 }
 
 const handleKeypad = (): void => {
@@ -1736,7 +1791,7 @@ const handlePauseQueue = (): void => {
   showDialer.value = false
   waitingForNotesInput.value = false
 
-  addAIMessage('Queue paused. You can review your session summary.')
+  addUserQueuePausedMessage('Queue paused')
 
   // Add session summary content to chat
   setTimeout(() => {
@@ -1842,6 +1897,19 @@ const toggleCallLog = (uniqueId?: string): void => {
 
 // Ensure functions are available on mount
 onMounted(() => {
+  // Parse URL parameters for coach functionality
+  const urlParams = new URLSearchParams(window.location.search)
+  const coach = urlParams.get('coach')
+  if (coach) {
+    coachParameter.value = coach
+    console.log('Coach parameter detected:', coach)
+  }
+
+  // Set the initial welcome message based on coach parameter
+  if (messages.value.length > 0 && messages.value[0].type === 'ai') {
+    messages.value[0].content = [getCoachWelcomeMessage.value]
+  }
+
   ;(window as any).triggerFileUpload = triggerFileUpload
   ;(window as any).handleExportFile = handleExportFile
   ;(window as any).toggleCallLog = toggleCallLog
@@ -1861,11 +1929,13 @@ const addSessionSummaryToChat = (isCompleted: boolean = false): void => {
   const uniqueId = Date.now() // Create unique ID for this session summary
   const summaryHTML = `
     <div style="background-color: rgb(31, 41, 55); border-radius: 12px; padding: 16px; margin: 12px 0;">
-      <h2 style="color: white; font-size: 24px; font-weight: 600; margin-bottom: 32px;">${title}</h2>
+      <h2 style="color: white; font-size: 24px; font-weight: 600; margin-bottom: 16px;">${title}</h2>
+      ${isCompleted ? '<p style="color: rgb(209, 213, 219); font-size: 16px; margin-bottom: 32px;">Congratulations! You have completed your entire call queue. All contacts have been processed.</p>' : ''}
 
-      <!-- Results & Next Steps Section -->
+      <!-- Results & Next Steps Section - only show coaching if AI Coach is enabled -->
+      ${aiCoachEnabled.value ? `
       <div style="margin-bottom: 32px;">
-        <h3 style="color: white; font-size: 18px; font-weight: 600; margin-bottom: 16px;"><i class="pi pi-check-circle" style="margin-right: 8px;"></i>AI Coaching</h3>
+        <h3 style="color: white; font-size: 18px; font-weight: 600; margin-bottom: 16px; display: flex; align-items: center;">${coachParameter.value === 'jordan-stupar' ? '<img src="https://cdn.builder.io/api/v1/image/assets%2F5aeb07ce25f84dbc869290880d07b71e%2F3bddb1110d0949139407eb0dc708c7ff?format=webp&width=800" alt="Jordan Stupar" style="width: 18px; height: 18px; border-radius: 50%; object-fit: cover; margin-right: 8px;">' : '<i class="pi pi-check-circle" style="margin-right: 8px;"></i>'}${coachParameter.value === 'jordan-stupar' ? 'Jordan\'s Session Recap' : 'AI Coaching'}</h3>
         <div style="background-color: rgb(55, 65, 81); border-radius: 8px; padding: 20px;">
           <div style="color: rgb(209, 213, 219); font-size: 14px; font-weight: normal; line-height: 1.5;">
             ${isCompleted ?
@@ -1893,6 +1963,14 @@ const addSessionSummaryToChat = (isCompleted: boolean = false): void => {
           </div>
         </div>
       </div>
+      ` : `
+      <!-- Export button for when AI Coach is disabled -->
+      <div style="margin-bottom: 32px;">
+        <button style="background-color: rgb(59, 130, 246); color: white; border: none; border-radius: 6px; padding: 8px 16px; font-size: 14px; font-weight: 500; cursor: pointer; display: inline-flex; align-items: center; gap: 8px;" onclick="handleExportFile()">
+          <i class="pi pi-download"></i> Export Enriched File
+        </button>
+      </div>
+      `}
 
       <!-- Call Log Section -->
       <div style="margin-top: 8px;">
@@ -1960,7 +2038,7 @@ const addSessionSummaryToChat = (isCompleted: boolean = false): void => {
     </div>
   `
 
-  addAIMessage([summaryHTML])
+  addAIMessageWithoutScroll([summaryHTML])
 
   // Show action buttons for continuing or loading new file
   if (!shouldCompleteQueue.value) {
@@ -2096,14 +2174,15 @@ const handleCompleteQueue = (): void => {
   showDialer.value = false
   waitingForNotesInput.value = false
 
-  addAIMessage('Congratulations! You have completed your entire call queue. All contacts have been processed.')
+  // Add user message for queue completion with custom positioning
+  addUserQueueCompletedMessage('Queue completed')
 
-  // Add session summary content to chat
+  // Add session summary content to chat after a delay
   setTimeout(() => {
     addSessionSummaryToChat(true)
     // Show Load New File button
     showLoadNewFileButton.value = true
-  }, 1000)
+  }, 500)
 }
 
 const handleAICoachToggle = (enabled: boolean): void => {

@@ -90,11 +90,11 @@ export const createChatUtils = (
     setTimeout(() => performUserScroll(), 100)
   }
 
-  const scrollToTopForGoals = async (): Promise<void> => {
+  const scrollToTopWithPadding = async (padding: number = 50): Promise<void> => {
     await nextTick()
 
     // Use multiple attempts with longer delays to ensure it works
-    const forceScrollToGoal = (attempt: number = 0) => {
+    const forceScrollToTop = (attempt: number = 0) => {
       if (!chatMessages.value || attempt > 5) return
 
       const userMessages = chatMessages.value.querySelectorAll('[data-message-type="user"]')
@@ -103,18 +103,22 @@ export const createChatUtils = (
         const lastUserMessage = userMessages[userMessages.length - 1] as HTMLElement
         const messageOffsetTop = lastUserMessage.offsetTop
 
-        // Force scroll to show user message at top with adequate padding for full visibility
-        const targetPosition = Math.max(0, messageOffsetTop - 50)
+        // Force scroll to show user message at top with specified padding
+        const targetPosition = Math.max(0, messageOffsetTop - padding)
 
         // Force immediate scroll
         chatMessages.value.scrollTop = targetPosition
 
         // Continue trying to maintain position
-        setTimeout(() => forceScrollToGoal(attempt + 1), 200)
+        setTimeout(() => forceScrollToTop(attempt + 1), 200)
       }
     }
 
-    setTimeout(() => forceScrollToGoal(), 50)
+    setTimeout(() => forceScrollToTop(), 50)
+  }
+
+  const scrollToTopForGoals = async (): Promise<void> => {
+    return scrollToTopWithPadding(50)
   }
 
   const addAIMessage = (content: string | string[]): void => {
@@ -162,6 +166,44 @@ export const createChatUtils = (
 
     // Use the special goal scroll function for goal selections
     scrollToTopForGoals()
+
+    // Establish focus context after new message appears
+    nextTick(() => {
+      setTimeout(() => {
+        if (headerRef.value?.establishFocusContext) {
+          headerRef.value.establishFocusContext()
+        }
+      }, 100)
+    })
+  }
+
+  const addUserQueuePausedMessage = (content: string): void => {
+    messages.value.push({
+      type: 'user',
+      content: [content]
+    })
+
+    // Use the reusable scroll function with more padding for Queue Paused
+    scrollToTopWithPadding(300)
+
+    // Establish focus context after new message appears
+    nextTick(() => {
+      setTimeout(() => {
+        if (headerRef.value?.establishFocusContext) {
+          headerRef.value.establishFocusContext()
+        }
+      }, 100)
+    })
+  }
+
+  const addUserQueueCompletedMessage = (content: string): void => {
+    messages.value.push({
+      type: 'user',
+      content: [content]
+    })
+
+    // Use the reusable scroll function with less padding for Queue Completed
+    scrollToTopWithPadding(250)
 
     // Establish focus context after new message appears
     nextTick(() => {
@@ -261,10 +303,13 @@ export const createChatUtils = (
     scrollToBottomDuringTyping,
     scrollToUserMessage,
     scrollToTopForGoals,
+    scrollToTopWithPadding,
     addAIMessage,
     addAIMessageWithoutScroll,
     addUserMessage,
     addUserGoalMessage,
+    addUserQueuePausedMessage,
+    addUserQueueCompletedMessage,
     addSeparatorMessage,
     addAIMessageWithDelay,
     addAIMessageWithTyping,

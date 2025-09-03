@@ -5,8 +5,18 @@
     :aria-label="`${message.type === 'user' ? 'User' : 'ARKON AI'} message`"
   >
     <div v-if="message.type === 'ai'" class="flex gap-[10px] items-start w-full">
-      <div class="flex items-start justify-center flex-shrink-0 pt-1" role="img" aria-label="ARKON AI avatar">
+      <div class="flex items-start justify-center flex-shrink-0 pt-1" role="img" :aria-label="shouldUseCoachAvatar() ? 'Jordan Stupar avatar' : 'ARKON AI avatar'">
+        <!-- Jordan's Avatar when coach parameter is set and not an ARKON AI system message -->
+        <img
+          v-if="shouldUseCoachAvatar()"
+          src="https://cdn.builder.io/api/v1/image/assets%2F5aeb07ce25f84dbc869290880d07b71e%2F3bddb1110d0949139407eb0dc708c7ff?format=webp&width=800"
+          alt="Jordan Stupar"
+          class="w-[26px] h-[26px] rounded-full object-cover"
+          aria-hidden="true"
+        />
+        <!-- Default ARKON AI Avatar -->
         <div
+          v-else
           class="ai-avatar-gradient"
           aria-hidden="true"
           style="
@@ -63,6 +73,8 @@ const props = defineProps<{
   message: Message
   isWide?: boolean
   onTypingProgress?: () => void
+  coachParameter?: string
+  aiCoachEnabled?: boolean
 }>()
 
 // Define emits
@@ -158,6 +170,52 @@ onMounted(() => {
 onUnmounted(() => {
   stopTypingAnimation()
 })
+
+// Method to determine if coach avatar should be used
+const shouldUseCoachAvatar = (): boolean => {
+  // Always use ARKON avatar if AI coaching is disabled
+  if (props.aiCoachEnabled === false) {
+    return false
+  }
+
+  // Only use coach avatar if coach parameter is set
+  if (props.coachParameter !== 'jordan-stupar') {
+    return false
+  }
+
+  // Check if this is an ARKON AI system message that should always use ARKON avatar
+  const messageText = props.message.content.join(' ')
+  const isArkonSystemMessage =
+    messageText.includes('Welcome to ARKON') ||
+    messageText.includes('ARKON AI') ||
+    messageText.includes('Drop your contact file here') ||
+    messageText.includes('Drag and drop your contact file') ||
+    messageText.includes('Dialer activated') ||
+    messageText.includes('Starting first call') ||
+    messageText.includes('Now please enter any notes about this call') ||
+    messageText.includes('The call outcome and notes have been saved') ||
+    messageText.includes('continue to the next') ||
+    messageText.includes('Moving to next contact') ||
+    messageText.includes('Preparing to dial') ||
+    messageText.includes('Voicemail detected') ||
+    messageText.includes('Call with') && messageText.includes('ended') ||
+    messageText.includes('Please select a call outcome') ||
+    messageText.includes('Congratulations! You have completed your entire call queue') ||
+    messageText.includes('Queue Completed!') ||
+    messageText.includes('successfully upgraded to the Pro plan') ||
+    messageText.includes('analyzed your') && messageText.includes('contacts') ||
+    messageText.includes('Connect Score') ||
+    messageText.includes('add a verified phone number') ||
+    messageText.includes('sent a text with') && messageText.includes('verification code') ||
+    messageText.includes('number') && messageText.includes('is verified') ||
+    messageText.includes('Setting appointments is our bread and butter') ||
+    messageText.includes('Starting your dialing session') ||
+    messageText.includes('Connecting you to your first contact') ||
+    messageText.includes('Resuming call queue')
+
+  // Use ARKON avatar for system messages, coach avatar for coaching content
+  return !isArkonSystemMessage
+}
 
 // Method to determine message width
 const getMessageWidth = (): string => {
