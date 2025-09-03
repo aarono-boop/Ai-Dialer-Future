@@ -889,6 +889,7 @@ const handleGoogleSignin = (): void => {
   isSignedIn.value = true
   isReturningUser.value = true // This is a returning user
   phoneVerified.value = true // Returning users don't need to verify phone again
+  updateWelcomeMessageTyping() // Update typing status for welcome message
   addAIMessage('Welcome back! You\'re signed in with Google.')
   setTimeout(() => {
     addAIMessage('Ready to upload your contact file and start dialing?')
