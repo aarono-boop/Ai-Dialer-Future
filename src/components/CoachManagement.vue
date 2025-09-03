@@ -36,7 +36,7 @@
       <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
         <Card class="bg-gray-800 border-gray-700">
           <template #content>
-            <div class="flex items-center gap-3 p-2">
+            <div class="flex items-center justify-center gap-3 p-2">
               <div class="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
                 <i class="pi pi-users text-sm text-white"></i>
               </div>
@@ -50,7 +50,7 @@
         
         <Card class="bg-gray-800 border-gray-700">
           <template #content>
-            <div class="flex items-center gap-3 p-2">
+            <div class="flex items-center justify-center gap-3 p-2">
               <div class="w-8 h-8 bg-green-600 rounded-lg flex items-center justify-center">
                 <i class="pi pi-check text-sm text-white"></i>
               </div>
@@ -64,7 +64,7 @@
         
         <Card class="bg-gray-800 border-gray-700">
           <template #content>
-            <div class="flex items-center gap-3 p-2">
+            <div class="flex items-center justify-center gap-3 p-2">
               <div class="w-8 h-8 bg-purple-600 rounded-lg flex items-center justify-center">
                 <i class="pi pi-video text-sm text-white"></i>
               </div>
