@@ -2549,6 +2549,27 @@ const handleActionButton = (action: string): void => {
   }, 1500) // Increased delay to ensure user message scroll completes
 }
 
+// Coach Management Methods
+const handleCoachCreated = (coachData: any) => {
+  try {
+    const newCoach = addCoach(coachData)
+    // Redirect to the new coach's page
+    const newUrl = generateCoachUrl(newCoach.name)
+    window.location.href = newUrl
+  } catch (error) {
+    console.error('Error creating coach:', error)
+  }
+}
+
+const handleCoachModalClose = () => {
+  // Return to normal app without management mode
+  const url = new URL(window.location.href)
+  url.searchParams.delete('create-coach')
+  url.searchParams.delete('manage-coaches')
+  url.searchParams.delete('coach-admin')
+  window.location.href = url.toString()
+}
+
 // Lifecycle hook to establish focus context when app loads
 onMounted(() => {
   // Give the app time to fully render, then establish focus context by mimicking header click
