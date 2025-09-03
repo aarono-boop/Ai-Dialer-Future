@@ -109,13 +109,11 @@ export const createChatUtils = (
   }
 
   const addUserMessage = (content: string): void => {
-    console.log('🔥 ADD USER MESSAGE - Called with content:', content)
     messages.value.push({
       type: 'user',
       content: [content]
     })
 
-    console.log('🔥 ADD USER MESSAGE - Message added, calling scrollToUserMessage')
     // Use scrollToUserMessage for better positioning after user messages
     scrollToUserMessage()
 
