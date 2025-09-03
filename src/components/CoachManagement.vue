@@ -102,7 +102,7 @@
             @click="viewCoach(coach)"
           >
             <template #content>
-              <div class="flex items-start gap-4">
+              <div class="flex items-start gap-4 p-2.5">
                 <!-- Avatar -->
                 <div class="flex-shrink-0">
                   <img
