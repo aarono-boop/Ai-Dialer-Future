@@ -190,6 +190,25 @@ export const createChatUtils = (
     })
   }
 
+  const addAIMessageWithTypingNoScroll = (content: string | string[]): void => {
+    const contentArray = Array.isArray(content) ? content : [content]
+    messages.value.push({
+      type: 'ai',
+      content: contentArray,
+      typing: true
+    })
+
+    // Don't scroll - preserve current user message position
+    // Establish focus context after new message appears
+    nextTick(() => {
+      setTimeout(() => {
+        if (headerRef.value?.establishFocusContext) {
+          headerRef.value.establishFocusContext()
+        }
+      }, 100)
+    })
+  }
+
   return {
     scrollToBottom,
     scrollToBottomDuringTyping,
