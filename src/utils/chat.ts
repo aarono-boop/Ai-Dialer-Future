@@ -5,6 +5,7 @@ export interface Message {
   type: 'ai' | 'user' | 'separator'
   content: string[]
   contactName?: string
+  typing?: boolean
 }
 
 export const createChatUtils = (
