@@ -776,6 +776,7 @@ const handleLogout = () => {
 
   // Reset typing state
   welcomeTypingComplete.value = false
+  congratulationsTypingComplete.value = false
 
   // Reset to welcome message
   messages.value = [
