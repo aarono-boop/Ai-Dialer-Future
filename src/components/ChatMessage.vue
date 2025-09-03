@@ -62,6 +62,7 @@ interface Message {
 const props = defineProps<{
   message: Message
   isWide?: boolean
+  onTypingProgress?: () => void
 }>()
 
 // Define emits
