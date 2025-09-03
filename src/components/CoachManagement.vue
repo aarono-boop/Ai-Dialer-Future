@@ -372,7 +372,7 @@
             label="Save Changes"
             :loading="isUpdating"
             @click="saveCoachEdit"
-            :disabled="!editImagePreview"
+            :disabled="!editImagePreview && !isBrokenAvatar"
           />
         </div>
       </template>
@@ -410,6 +410,7 @@ const {
   managementMode,
   addCoach,
   removeCoach,
+  updateCoach,
   exportCoaches,
   importCoaches,
   generateCoachUrl,
@@ -434,6 +435,9 @@ const importFileInput = ref<HTMLInputElement | null>(null)
 const activeCoaches = computed(() => coachList.value.filter(coach => coach.isActive !== false))
 const coachesWithVideos = computed(() => coachList.value.filter(coach => coach.videoId))
 const baseUrl = computed(() => `${window.location.origin}${window.location.pathname}`)
+const isBrokenAvatar = computed(() => {
+  return editingCoach.value?.avatarUrl?.startsWith('blob:') || false
+})
 
 // Methods
 const navigateToCreateCoach = () => {
@@ -662,21 +666,44 @@ const removeEditImage = () => {
 }
 
 const saveCoachEdit = async () => {
-  if (!editingCoach.value || !editImagePreview.value) return
+  if (!editingCoach.value) return
+
+  // Check if we have a new image or need to fix a broken avatar
+  if (!editImagePreview.value && !isBrokenAvatar.value) {
+    toast.add({
+      severity: 'warn',
+      summary: 'No Changes',
+      detail: 'Please upload a new avatar to save changes',
+      life: 3000
+    })
+    return
+  }
 
   isUpdating.value = true
 
   try {
-    // Update the coach's avatar
-    const success = updateCoach(editingCoach.value.id, {
-      avatarUrl: editImagePreview.value
-    })
+    let updates: Partial<Coach> = {}
+
+    if (editImagePreview.value) {
+      // New image uploaded
+      updates.avatarUrl = editImagePreview.value
+    } else if (isBrokenAvatar.value) {
+      // Remove broken blob URL
+      updates.avatarUrl = undefined
+    }
+
+    // Update the coach
+    const success = updateCoach(editingCoach.value.id, updates)
 
     if (success) {
+      const message = editImagePreview.value
+        ? `${editingCoach.value.displayName}'s avatar has been updated`
+        : `${editingCoach.value.displayName}'s broken avatar has been removed`
+
       toast.add({
         severity: 'success',
         summary: 'Coach Updated',
-        detail: `${editingCoach.value.displayName}'s avatar has been updated`,
+        detail: message,
         life: 3000
       })
       cancelEdit()
@@ -688,7 +715,7 @@ const saveCoachEdit = async () => {
     toast.add({
       severity: 'error',
       summary: 'Update Failed',
-      detail: 'Failed to update coach avatar. Please try again.',
+      detail: 'Failed to update coach. Please try again.',
       life: 3000
     })
   } finally {
