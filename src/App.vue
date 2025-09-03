@@ -29,7 +29,7 @@
                   <template #additional-content>
                     <!-- File Upload Area - shown inside welcome message for new users or ready to upload message for returning users -->
                     <FileUpload
-                      v-if="(index === 0 && !isSignedIn) || (isSignedIn && showFileUploadForReturningUser && isReadyToUploadMessage(message, index))"
+                      v-if="(index === 0 && !isSignedIn && welcomeTypingComplete) || (isSignedIn && showFileUploadForReturningUser && isReadyToUploadMessage(message, index))"
                       @trigger-upload="simulateFileUpload"
                       @file-selected="onFileSelect"
                       @file-dropped="simulateFileUpload"
@@ -1657,7 +1657,7 @@ const handleHold = (onHold: boolean): void => {
 }
 
 const handleKeypad = (): void => {
-  addAIMessage('�� Keypad opened')
+  addAIMessage('📱 Keypad opened')
 }
 
 const handlePauseQueue = (): void => {
