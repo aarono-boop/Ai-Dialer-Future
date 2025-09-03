@@ -531,6 +531,7 @@ const showActionButtons = ref<boolean>(false)
 const showFileUploadForReturningUser = ref<boolean>(false)
 const welcomeTypingComplete = ref<boolean>(false)
 const congratulationsTypingComplete = ref<boolean>(false)
+const actionButtonsUsed = ref<boolean>(false)
 const showContactPreviewButtons = ref<boolean>(false)
 const showPhoneVerificationButton = ref<boolean>(false)
 const verificationStep = ref<string>('default') // 'default', 'enter-phone', 'enter-code'
