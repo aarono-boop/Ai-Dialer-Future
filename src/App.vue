@@ -719,6 +719,17 @@ const handleTypingComplete = (index: number): void => {
       }, 200) // Small delay for better UX
     }
   }
+
+  // Check if this is the connection analysis message
+  if (messages.value[index] && messages.value[index].content[0]?.includes('I\'ve analyzed your contact\'s phone numbers using real connection data')) {
+    connectionAnalysisTypingComplete.value = true
+    // Show phone verification button after typing completes (for new users only)
+    if (!isReturningUser.value && !phoneVerified.value) {
+      setTimeout(() => {
+        showPhoneVerificationButton.value = true
+      }, 200) // Small delay for better UX
+    }
+  }
 }
 
 // Update welcome message typing status based on user status
