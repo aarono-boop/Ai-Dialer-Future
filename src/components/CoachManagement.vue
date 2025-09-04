@@ -599,13 +599,7 @@ const handleImport = (event: Event) => {
     try {
       const content = e.target?.result as string
       if (importCoaches(content)) {
-        toast.add({
-          
-          severity: 'success',
-          summary: 'Import Complete',
-          detail: 'Coach configuration imported successfully',
-          life: 3000
-        })
+        // Import success
       } else {
         throw new Error('Invalid format')
       }
