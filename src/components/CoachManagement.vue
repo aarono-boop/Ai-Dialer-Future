@@ -409,9 +409,6 @@
       @change="handleImport"
     />
 
-    <!-- Local Toast container -->
-    <Toast appendTo="body" position="top-right" class="z-[9999]" />
-
   </div>
 </template>
 
