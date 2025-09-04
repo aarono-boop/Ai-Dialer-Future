@@ -373,6 +373,7 @@ const resetForm = () => {
     name: '',
     displayName: '',
     videoUrl: '',
+    websiteUrl: '',
     avatarFile: undefined,
     customMessage: ''
   }
