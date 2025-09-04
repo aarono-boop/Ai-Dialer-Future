@@ -696,8 +696,13 @@ const saveCoachEdit = async () => {
   const hasImageChange = editImagePreview.value || isBrokenAvatar.value
   const hasMessageChange = editCustomMessage.value !== (editingCoach.value.welcomeMessage || '')
   const hasWebsiteChange = editWebsiteUrl.value !== (editingCoach.value.websiteUrl || '')
+  const onlyHighlightsChanged = (() => {
+    const newH = [editHighlight1.value, editHighlight2.value].filter(h => h && h.trim().length > 0)
+    const origH = (editingCoach.value?.highlights || []).slice(0,2)
+    return newH.join('\n') !== origH.join('\n')
+  })()
 
-  if (!hasImageChange && !hasMessageChange && !hasWebsiteChange) {
+  if (!hasImageChange && !hasMessageChange && !hasWebsiteChange && !onlyHighlightsChanged) {
     toast.add({
       severity: 'warn',
       summary: 'No Changes',
