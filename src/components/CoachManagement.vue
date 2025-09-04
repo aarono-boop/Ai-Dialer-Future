@@ -201,6 +201,7 @@
                       icon="pi pi-trash"
                       size="small"
                       severity="danger"
+                      v-tooltip.top="'Delete'"
                       @click.stop="confirmDelete(coach)"
                     />
                     <Message v-if="copiedCoachId === coach.id" severity="success" class="text-xs px-2 py-1">Copied</Message>
