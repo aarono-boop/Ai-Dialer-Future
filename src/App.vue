@@ -290,7 +290,7 @@
                   </div>
                 </div>
 
-                <div v-if="selectedCoachForInfo.highlights && selectedCoachForInfo.highlights.length" class="space-y-1 pl-5">
+                <div v-if="selectedCoachForInfo.highlights && selectedCoachForInfo.highlights.length" class="space-y-1 pl-5 py-[10px]">
                   <label class="text-xl font-medium">Highlights</label>
                   <ul class="text-xs text-gray-300 list-disc list-inside">
                     <li v-for="(h,i) in selectedCoachForInfo.highlights" :key="i">{{ h }}</li>
@@ -299,7 +299,7 @@
 
 
                 <!-- Basic Information -->
-                <div class="space-y-2 pl-5 border-t border-white/10 pt-3 mt-3">
+                <div class="space-y-2 pl-5 border-t border-white/10 pt-[22px] pb-[10px] mt-3">
                   <h4 class="text-xl font-medium">Basic Information</h4>
                   <ul class="text-xs text-gray-300 list-disc list-inside">
                     <li>Role: Sales Coach & Speaker</li>
@@ -309,7 +309,7 @@
                 </div>
 
                 <!-- Key Statistics -->
-                <div class="space-y-2 pl-5 border-t border-white/10 pt-3 mt-3">
+                <div class="space-y-2 pl-5 border-t border-white/10 pt-[22px] pb-[10px] mt-3">
                   <h4 class="text-xl font-medium">Key Statistics</h4>
                   <ul class="text-xs text-gray-300 list-disc list-inside">
                     <li>Avg. connect-rate lift: 27%</li>
@@ -319,7 +319,7 @@
                 </div>
 
                 <!-- Platform Impact -->
-                <div class="space-y-2 pl-5 border-t border-white/10 pt-3 mt-3">
+                <div class="space-y-2 pl-5 border-t border-white/10 pt-[22px] pb-[10px] mt-3">
                   <h4 class="text-xl font-medium">Platform Impact</h4>
                   <ul class="text-xs text-gray-300 list-disc list-inside">
                     <li>Prioritizes best-time-to-call windows</li>
@@ -329,13 +329,13 @@
                 </div>
 
                 <!-- About Coach -->
-                <div class="space-y-2 pl-5 border-t border-white/10 pt-3 mt-3">
+                <div class="space-y-2 pl-5 border-t border-white/10 pt-[22px] pb-[10px] mt-3">
                   <h4 class="text-xl font-medium">About {{ selectedCoachFirstName }}</h4>
                   <p class="text-xs text-gray-300">{{ selectedCoachFirstName }} is known for disciplined daily call blocks, clean qualification, and tight follow‑up cycles. Their approach balances energy with structure so reps stay consistent and close more.</p>
                 </div>
 
                 <!-- Industries Served -->
-                <div class="space-y-2 pl-5 border-t border-white/10 pt-3 mt-3">
+                <div class="space-y-2 pl-5 border-t border-white/10 pt-[22px] pb-[10px] mt-3">
                   <h4 class="text-xl font-medium">Industries Served</h4>
                   <ul class="text-xs text-gray-300 list-disc list-inside">
                     <li>SaaS</li>
@@ -347,7 +347,7 @@
                 </div>
 
                 <!-- Sales Methodology -->
-                <div class="space-y-2 pl-5 border-t border-white/10 pt-3 mt-3">
+                <div class="space-y-2 pl-5 border-t border-white/10 pt-[22px] pb-[10px] mt-3">
                   <h4 class="text-xl font-medium">Sales Methodology</h4>
                   <ul class="text-xs text-gray-300 list-disc list-inside">
                     <li>Pattern interrupts to earn attention fast</li>
@@ -357,7 +357,7 @@
                 </div>
 
                 <!-- Testimonials -->
-                <div class="space-y-2 pl-5 border-t border-white/10 pt-3 mt-3">
+                <div class="space-y-2 pl-5 border-t border-white/10 pt-[22px] pb-[10px] mt-3">
                   <h4 class="text-xl font-medium">Testimonials</h4>
                   <div class="text-xs text-gray-300 space-y-2">
                     <p>“Our connect rate and meetings doubled in 60 days.” — VP Sales, SaaS</p>
