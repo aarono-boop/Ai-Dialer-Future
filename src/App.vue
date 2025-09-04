@@ -440,6 +440,7 @@ import Button from 'primevue/button'
 // PrimeVue Components
 
 // Types
+import type { Coach } from './types/coach'
 interface Message {
   type: 'ai' | 'user' | 'separator'
   content: string[]
