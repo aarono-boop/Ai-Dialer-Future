@@ -525,18 +525,21 @@ const copyCoachUrl = async (coach: Coach) => {
   const url = generateCoachUrl(coach.name)
   await copyToClipboard(url)
   console.log('[CoachManagement] Attempting to show toast', url)
-  toast.add({
-    severity: 'success',
-    summary: 'Url copied',
-    detail: url,
-    life: 5000
-  })
-  setTimeout(() => {
-    const hasToast = document.querySelector('.p-toast-message') || document.querySelector('[data-pc-name="toast"] [data-pc-section="message"]')
-    if (!hasToast) {
-      alert('Url copied')
-    }
-  }, 100)
+  try {
+    toast.add({ severity: 'success', summary: 'Url copied', detail: url, life: 2000 })
+  } catch {}
+}
+
+const showCopiedTooltip = (e: Event) => {
+  const el = e.currentTarget as HTMLElement | null
+  if (!el) return
+  el.focus()
+  setTimeout(() => el.blur(), 1500)
+}
+
+const onCopyClick = async (coach: Coach, e: MouseEvent) => {
+  await copyCoachUrl(coach)
+  showCopiedTooltip(e)
 }
 
 const copyToClipboard = async (text: string) => {
