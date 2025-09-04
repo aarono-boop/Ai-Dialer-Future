@@ -245,6 +245,7 @@ const formData = ref<CoachCreateData>({
   name: '',
   displayName: '',
   videoUrl: '',
+  websiteUrl: '',
   avatarFile: undefined,
   customMessage: ''
 })
