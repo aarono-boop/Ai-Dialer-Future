@@ -408,7 +408,8 @@ const handleCreate = async () => {
     formData.value.name = generateCoachId(formData.value.displayName)
     
     // Emit the coach data
-    emit('coach-created', { ...formData.value })
+    const highlights = [highlight1.value, highlight2.value].filter(h => h && h.trim().length > 0)
+    emit('coach-created', { ...formData.value, highlights })
     
     // Show success message
     toast.add({
