@@ -1,6 +1,6 @@
 <template>
   <div class="w-full">
-    <div class="flex items-center gap-2 mt-[30px]">
+    <div class="flex items-center gap-2 mt-[20px]">
       <Button icon="pi pi-chevron-left" text @click="scroll(-1)" aria-label="Scroll left" />
       <div ref="scroller" class="flex overflow-x-auto gap-3 px-1 py-1" style="scroll-behavior:smooth;">
         <div v-for="coach in coachList" :key="coach.id" class="min-w-[240px]">
