@@ -678,8 +678,9 @@ const saveCoachEdit = async () => {
   // Check if we have changes to save
   const hasImageChange = editImagePreview.value || isBrokenAvatar.value
   const hasMessageChange = editCustomMessage.value !== (editingCoach.value.welcomeMessage || '')
+  const hasWebsiteChange = editWebsiteUrl.value !== (editingCoach.value.websiteUrl || '')
 
-  if (!hasImageChange && !hasMessageChange) {
+  if (!hasImageChange && !hasMessageChange && !hasWebsiteChange) {
     toast.add({
       severity: 'warn',
       summary: 'No Changes',
