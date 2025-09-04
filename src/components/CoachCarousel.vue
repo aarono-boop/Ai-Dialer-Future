@@ -48,3 +48,10 @@ const useCoach = (coach: any) => {
   window.location.href = url
 }
 </script>
+
+<style scoped>
+:deep(.p-card) {
+  border-radius: 0.5rem; /* 8px */
+  overflow: hidden;
+}
+</style>
