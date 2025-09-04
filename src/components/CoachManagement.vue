@@ -182,7 +182,7 @@
                       icon="pi pi-copy"
                       size="small"
                       severity="secondary"
-                      v-tooltip.top="'Copied!'"
+                      v-tooltip.top="getCopyTooltip(coach.id)"
                       @click.stop="onCopyClick(coach, $event)"
                       aria-label="Copy URL"
                     />
@@ -530,16 +530,23 @@ const copyCoachUrl = async (coach: Coach) => {
   } catch {}
 }
 
-const showCopiedTooltip = (e: Event) => {
+const copyTips = ref<Record<string, string>>({})
+const getCopyTooltip = (id: string) => copyTips.value[id] || ''
+
+const showCopiedTooltip = (id: string, e: Event) => {
   const el = e.currentTarget as HTMLElement | null
   if (!el) return
+  copyTips.value[id] = 'Copied!'
   el.focus()
-  setTimeout(() => el.blur(), 1500)
+  setTimeout(() => {
+    copyTips.value[id] = ''
+    el.blur()
+  }, 1500)
 }
 
 const onCopyClick = async (coach: Coach, e: MouseEvent) => {
   await copyCoachUrl(coach)
-  showCopiedTooltip(e)
+  showCopiedTooltip(coach.id, e)
 }
 
 const copyToClipboard = async (text: string) => {
