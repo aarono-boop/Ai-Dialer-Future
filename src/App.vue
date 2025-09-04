@@ -399,8 +399,6 @@ interface Message {
   contactName?: string
 }
 
-// Toast functionality (only for login/vulcan actions)
-const toast = useToast()
 
 // Helper function to handle Connect Score text (no tooltip)
 const wrapConnectScoreWithTooltip = (text: string): string => {
