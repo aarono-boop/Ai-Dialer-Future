@@ -360,12 +360,6 @@
                     <p>“Our connect rate and meetings doubled in 60 days.” — VP Sales, SaaS</p>
                     <p>“The talk tracks are simple and deadly effective.” — SDR Lead, Insurance</p>
                   </div>
-              <div v-if="selectedCoachForInfo?.websiteUrl" class="p-4 border-t border-gray-700 bg-gray-900/90 sticky bottom-0">
-                <a :href="selectedCoachForInfo.websiteUrl" target="_blank" rel="noopener" class="text-link text-sm flex items-center gap-2">
-                  <i class="pi pi-external-link text-sm"></i>
-                  Visit Website
-                </a>
-              </div>
             </div>
           </div>
             </div>
