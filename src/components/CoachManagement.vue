@@ -744,6 +744,7 @@ const cancelEdit = () => {
   editingCoach.value = null
   editImagePreview.value = null
   editCustomMessage.value = ''
+  editWebsiteUrl.value = ''
   if (editFileInput.value) {
     editFileInput.value.value = ''
   }
