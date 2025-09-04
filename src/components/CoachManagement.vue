@@ -703,8 +703,11 @@ const saveCoachEdit = async () => {
     }
 
     if (hasMessageChange) {
-      // Update welcome message
       updates.welcomeMessage = editCustomMessage.value
+    }
+
+    if (editWebsiteUrl.value !== (editingCoach.value.websiteUrl || '')) {
+      updates.websiteUrl = editWebsiteUrl.value || undefined
     }
 
     // Update the coach
