@@ -341,8 +341,6 @@
       @close="closePaymentPage"
     />
 
-    <!-- Toast for notifications -->
-    <Toast class="z-[9999]" position="top-right" appendTo="body" />
 
     <!-- Session Summary now displayed in chat area -->
 
