@@ -440,7 +440,6 @@ const {
 } = useCoaches()
 
 const confirm = useConfirm()
-const toast = useToast()
 
 // State
 const showDetailsModal = ref(false)
