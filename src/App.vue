@@ -391,7 +391,6 @@ import CoachCarousel from './components/CoachCarousel.vue'
 import Button from 'primevue/button'
 
 // PrimeVue Components
-import Toast from 'primevue/toast'
 
 // Types
 interface Message {
