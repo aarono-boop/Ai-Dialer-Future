@@ -20,7 +20,7 @@
                 <div class="w-full mt-auto">
                   <div class="flex flex-col items-center gap-1 w-full">
                     <a href="#" class="text-sm text-purple-400 hover:text-purple-300">Practice Call</a>
-                    <a href="#" class="text-sm text-purple-400 hover:text-purple-300">Learn More</a>
+                    <a href="#" class="text-sm text-purple-400 hover:text-purple-300" @click.prevent="openCoachInfo(coach)">Learn More</a>
                   </div>
                   <div class="flex justify-center">
                     <Button label="Select" size="small" severity="secondary" class="mt-2 w-1/2" @click="useCoach(coach)" />
