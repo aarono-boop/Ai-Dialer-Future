@@ -2572,12 +2572,10 @@ const handleActionButton = (action: string): void => {
 const handleCoachCreated = async (coachData: any) => {
   try {
     const newCoach = await addCoach(coachData)
-    // Notify and then redirect
-    toast.add({ severity: 'success', summary: 'Coach Created', detail: `${newCoach.displayName} created`, life: 5000, closable: true })
     const newUrl = generateCoachUrl(newCoach.name)
     setTimeout(() => {
       window.location.href = newUrl
-    }, 600)
+    }, 100)
   } catch (error) {
     console.error('Error creating coach:', error)
   }
