@@ -531,25 +531,6 @@ const copyCoachUrl = async (coach: Coach) => {
   } catch {}
 }
 
-const copyTips = ref<Record<string, string>>({})
-const getCopyTooltip = (id: string) => copyTips.value[id] || ''
-
-const showCopiedTooltip = (id: string, e: Event) => {
-  const el = e.currentTarget as HTMLElement | null
-  if (!el) return
-  copyTips.value[id] = 'Copied!'
-  el.blur()
-  requestAnimationFrame(() => el.focus())
-  setTimeout(() => {
-    copyTips.value[id] = ''
-    el.blur()
-  }, 1500)
-}
-
-const onCopyClick = async (coach: Coach, e: MouseEvent) => {
-  await copyCoachUrl(coach)
-  showCopiedTooltip(coach.id, e)
-}
 
 const copyToClipboard = async (text: string) => {
   try {
