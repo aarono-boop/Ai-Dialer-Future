@@ -342,7 +342,7 @@
     />
 
     <!-- Toast for notifications -->
-    <Toast class="z-[9999]" position="top-right" />
+    <Toast class="z-[9999]" position="top-right" appendTo="body" />
 
     <!-- Session Summary now displayed in chat area -->
 
@@ -1367,7 +1367,7 @@ const sendMessage = (message: string): void => {
         '<strong>Upcoming appointments:</strong>',
         '<i class="pi pi-check"></i> 2:00 PM - Demo call with Sarah Johnson (confirmed)',
         '• 3:30 PM - Follow-up with ABC Corp (needs confirmation)',
-        '• 4:15 PM - Discovery call with new lead Mike Chen',
+        '��� 4:15 PM - Discovery call with new lead Mike Chen',
         'You have 45 minutes before your next call. Perfect time for some prospecting!'
       ])
     } else if (lowerMessage.includes('tell a joke') || lowerMessage.includes('joke')) {
