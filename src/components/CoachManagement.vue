@@ -85,7 +85,7 @@
             :href="`${baseUrl}?coach=all`"
             target="_blank"
             rel="noopener noreferrer"
-            class="text-purple-400 hover:text-purple-300 flex items-center gap-2 text-sm"
+            class="text-purple-400 hover:text-purple-300 flex items-center gap-2 text-sm ml-[10px]"
             aria-label="Open All Coaches in a new tab"
           >
             <span>All Coaches</span>
