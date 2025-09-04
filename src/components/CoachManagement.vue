@@ -172,11 +172,11 @@
                   <!-- Actions -->
                   <div class="flex gap-2">
                     <Button
-                      label="Test"
+                      icon="pi pi-eye"
                       size="small"
                       severity="secondary"
                       @click.stop="testCoach(coach)"
-                      class="flex-1"
+                      aria-label="Test"
                     />
                     <Button
                       label="Copy URL"
