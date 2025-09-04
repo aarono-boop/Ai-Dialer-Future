@@ -342,7 +342,7 @@
     />
 
     <!-- Toast for notifications -->
-    <Toast />
+    <Toast class="z-[9999]" />
 
     <!-- Session Summary now displayed in chat area -->
 
