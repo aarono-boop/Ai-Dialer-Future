@@ -123,7 +123,10 @@
                 <div class="flex-1 min-w-0">
                   <h3 class="font-semibold text-lg truncate">{{ coach.displayName }}</h3>
                   <p class="text-gray-400 text-sm mb-2">?coach={{ coach.name }}</p>
-                  
+                  <ul v-if="coach.highlights && coach.highlights.length" class="text-xs text-gray-300 list-disc list-inside mb-2">
+                    <li v-for="(h,i) in coach.highlights.slice(0,2)" :key="i">{{ h }}</li>
+                  </ul>
+
                   <!-- Features -->
                   <div class="flex gap-2 mb-3">
                     <Badge
