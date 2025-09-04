@@ -928,6 +928,7 @@ const selectCoachFromPanel = (): void => {
 
 const startPracticeCall = (coach: Coach): void => {
   // Set selected coach and hide carousel
+  isPracticeMode.value = true
   setCurrentCoach(coach.id)
   showCoachCarousel.value = false
 
