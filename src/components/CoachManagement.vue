@@ -192,6 +192,7 @@
                       icon="pi pi-pencil"
                       size="small"
                       severity="secondary"
+                      v-tooltip.top="'Edit'"
                       @click.stop="editCoach(coach)"
                       aria-label="Edit coach"
                     />
