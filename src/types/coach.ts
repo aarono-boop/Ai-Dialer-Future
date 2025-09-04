@@ -23,4 +23,4 @@ export interface CoachConfig {
   defaultCoach?: string
 }
 
-export type CoachManagementMode = 'create' | 'manage' | 'admin' | null
+export type CoachManagementMode = 'create' | 'admin' | null
