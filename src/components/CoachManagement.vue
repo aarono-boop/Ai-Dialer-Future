@@ -183,6 +183,7 @@
                       icon="pi pi-copy"
                       size="small"
                       severity="secondary"
+                      v-tooltip.top="'Copy URL'"
                       @click.stop="onCopyClick(coach)"
                       aria-label="Copy URL"
                     />
