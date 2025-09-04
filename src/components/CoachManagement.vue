@@ -565,16 +565,14 @@ const copyToClipboard = async (text: string) => {
   }
 }
 
-const copyPanels = ref<Record<string, any>>({})
-const setCopyPanelRef = (id: string, el: any) => { if (el) copyPanels.value[id] = el }
+const copiedCoachId = ref<string | number | null>(null)
 
-const onCopyClick = async (coach: Coach, e: MouseEvent) => {
+const onCopyClick = async (coach: Coach) => {
   await copyCoachUrl(coach)
-  const panel = copyPanels.value[coach.id]
-  if (panel) {
-    panel.show(e)
-    setTimeout(() => panel.hide(), 1200)
-  }
+  copiedCoachId.value = coach.id
+  setTimeout(() => {
+    if (copiedCoachId.value === coach.id) copiedCoachId.value = null
+  }, 1200)
 }
 
 const confirmDelete = (coach: Coach) => {
