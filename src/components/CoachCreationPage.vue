@@ -237,7 +237,6 @@ import { ref, computed, watch, onMounted } from 'vue'
 import InputText from 'primevue/inputtext'
 import Textarea from 'primevue/textarea'
 import Button from 'primevue/button'
-import { useToast } from 'primevue/usetoast'
 import type { CoachCreateData } from '../types/coach'
 import { generateCoachId, extractYouTubeVideoId } from '../config/coaches'
 
