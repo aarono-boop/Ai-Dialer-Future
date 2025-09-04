@@ -92,6 +92,17 @@
             <span>All Coaches</span>
             <i class="pi pi-external-link text-xs"></i>
           </a>
+          <a
+            :href="baseUrl"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="text-purple-400 hover:text-purple-300 flex items-center gap-2 text-sm"
+            aria-label="Open default welcome screen in a new tab"
+          >
+            <i class="pi pi-user"></i>
+            <span>No Coach</span>
+            <i class="pi pi-external-link text-xs"></i>
+          </a>
         </div>
 
         <div v-if="coachList.length === 0" class="text-center py-12 bg-gray-800 rounded-lg border border-gray-700">
