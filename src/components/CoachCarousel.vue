@@ -13,7 +13,7 @@
                     {{ coach.displayName.charAt(0) }}
                   </div>
                   <p class="font-semibold text-center truncate w-full">{{ coach.displayName }}</p>
-                  <ul v-if="coach.highlights && coach.highlights.length" class="w-full text-xs text-gray-300 list-disc list-inside space-y-1 text-left">
+                  <ul v-if="coach.highlights && coach.highlights.length" class="w-full text-xs text-gray-300 list-disc list-outside pl-5 space-y-1 text-left">
                     <li v-for="(h, i) in coach.highlights.slice(0, 2)" :key="i">{{ h }}</li>
                   </ul>
                 </div>
