@@ -530,6 +530,12 @@ const copyCoachUrl = async (coach: Coach) => {
     detail: url,
     life: 5000
   })
+  setTimeout(() => {
+    const hasToast = document.querySelector('.p-toast-message') || document.querySelector('[data-pc-name="toast"] [data-pc-section="message"]')
+    if (!hasToast) {
+      alert('Url copied')
+    }
+  }, 100)
 }
 
 const copyToClipboard = async (text: string) => {
