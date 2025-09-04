@@ -28,8 +28,9 @@
                 <ChatMessage v-if="message.type !== 'separator'" :message="message" :isWide="shouldBeWideMessage(message, index)" :onTypingProgress="message.preserveUserPosition ? undefined : scrollToBottomDuringTyping" :coachParameter="coachParameter" :aiCoachEnabled="aiCoachEnabled" @typing-complete="handleTypingComplete(index)">
                   <template #additional-content>
                     <!-- File Upload Area - shown inside welcome message for new users or ready to upload message for returning users -->
+                    <CoachCarousel v-if="index === 0 && showCoachCarousel" />
                     <FileUpload
-                      v-if="(index === 0 && !isSignedIn && welcomeTypingComplete) || (isSignedIn && showFileUploadForReturningUser && isReadyToUploadMessage(message, index))"
+                      v-if="!showCoachCarousel && ((index === 0 && !isSignedIn && welcomeTypingComplete) || (isSignedIn && showFileUploadForReturningUser && isReadyToUploadMessage(message, index)))"
                       @trigger-upload="simulateFileUpload"
                       @file-selected="onFileSelect"
                       @file-dropped="simulateFileUpload"
@@ -387,6 +388,7 @@ import CallSeparator from './components/CallSeparator.vue'
 import YouTubeVideo from './components/YouTubeVideo.vue'
 import CoachManagement from './components/CoachManagement.vue'
 import CoachCreationPage from './components/CoachCreationPage.vue'
+import CoachCarousel from './components/CoachCarousel.vue'
 
 // PrimeVue Components (adding Button)
 import Button from 'primevue/button'
@@ -566,6 +568,9 @@ const {
   coachList,
   generateCoachUrl
 } = useCoaches()
+
+// Show carousel of all coaches when ?coach=all
+const showCoachCarousel = ref<boolean>(false)
 
 // Computed to maintain compatibility with existing code
 const coachParameter = computed(() => currentCoachId.value || '')
@@ -1920,7 +1925,11 @@ onMounted(() => {
   const coachAdmin = urlParams.get('coach-admin')
 
   // Set coach if specified
-  if (coach) {
+  if (coach === 'all') {
+    showCoachCarousel.value = true
+    setCurrentCoach(null)
+    console.log('Coach carousel mode enabled')
+  } else if (coach) {
     setCurrentCoach(coach)
     console.log('Coach parameter detected:', coach)
   }
@@ -1936,7 +1945,13 @@ onMounted(() => {
 
   // Set the initial welcome message based on coach parameter
   if (messages.value.length > 0 && messages.value[0].type === 'ai') {
-    messages.value[0].content = [getCoachWelcomeMessage.value]
+    if (showCoachCarousel.value) {
+      messages.value[0].content = [
+        'Browse all available coaches below and pick one to get started.'
+      ]
+    } else {
+      messages.value[0].content = [getCoachWelcomeMessage.value]
+    }
   }
 
   ;(window as any).triggerFileUpload = triggerFileUpload
