@@ -5,6 +5,7 @@ export interface Coach {
   videoId?: string
   avatarUrl?: string
   websiteUrl?: string
+  highlights?: string[]
   welcomeMessage: string
   createdBy?: string
   createdAt?: string
@@ -16,6 +17,7 @@ export interface CoachCreateData {
   displayName: string
   videoUrl?: string
   websiteUrl?: string
+  highlights?: string[]
   avatarFile?: File
   customMessage?: string
 }
