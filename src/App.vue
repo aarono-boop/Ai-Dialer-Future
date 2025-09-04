@@ -282,7 +282,7 @@
                   <label class="text-sm font-semibold">Intro Video</label>
                   <div class="aspect-video rounded-lg overflow-hidden bg-black/30">
                     <iframe
-                      :src="`https://www.youtube.com/embed/${selectedCoachForInfo.videoId}`"
+                      :src="`https://www.youtube.com/embed/${selectedCoachForInfo.videoId}?autoplay=1&mute=1&playsinline=1`"
                       frameborder="0"
                       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                       allowfullscreen
