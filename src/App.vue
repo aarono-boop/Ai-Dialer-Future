@@ -1947,7 +1947,7 @@ onMounted(() => {
   if (messages.value.length > 0 && messages.value[0].type === 'ai') {
     if (showCoachCarousel.value) {
       messages.value[0].content = [
-        'Browse all available coaches below and pick one to get started.'
+        'Welcome to ARKON by PhoneBurner.<br><br>I\'m here to help you call with confidence and close more deals.<br><br>Choose your sales coach first - everything from your scripts to follow-up strategies will be tailored to their winning approach.'
       ]
     } else {
       messages.value[0].content = [getCoachWelcomeMessage.value]
