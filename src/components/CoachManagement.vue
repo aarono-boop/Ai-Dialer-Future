@@ -179,11 +179,11 @@
                       aria-label="Test"
                     />
                     <Button
-                      label="Copy URL"
+                      icon="pi pi-copy"
                       size="small"
                       severity="secondary"
                       @click.stop="copyCoachUrl(coach)"
-                      class="flex-1"
+                      aria-label="Copy URL"
                     />
                     <Button
                       v-if="coach.createdBy !== 'system'"
