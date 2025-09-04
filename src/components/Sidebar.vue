@@ -60,14 +60,14 @@
       <!-- Avatar when signed in -->
       <div v-if="isSignedIn" class="relative">
         <button
-          class="w-10 h-10 rounded-full bg-gradient-to-r from-blue-500 to-purple-600 flex items-center justify-center hover:scale-105 transition-transform cursor-pointer border-none"
+          class="w-14 h-14 rounded-full bg-gradient-to-r from-blue-500 to-purple-600 flex items-center justify-center hover:scale-105 transition-transform cursor-pointer border-none"
           @click="toggleUserMenu"
           aria-label="User menu"
           type="button"
           tabindex="3"
           ref="userMenuButton"
         >
-          <i class="pi pi-user text-white text-sm" aria-hidden="true"></i>
+          <i class="pi pi-user text-white text-2xl" aria-hidden="true"></i>
         </button>
 
         <!-- User Dropdown Menu -->
