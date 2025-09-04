@@ -182,7 +182,7 @@
                       icon="pi pi-copy"
                       size="small"
                       severity="secondary"
-                      v-tooltip.top="getCopyTooltip(coach.id)"
+                      v-tooltip.focus.top="getCopyTooltip(coach.id)"
                       @click.stop="onCopyClick(coach, $event)"
                       aria-label="Copy URL"
                     />
@@ -537,7 +537,8 @@ const showCopiedTooltip = (id: string, e: Event) => {
   const el = e.currentTarget as HTMLElement | null
   if (!el) return
   copyTips.value[id] = 'Copied!'
-  el.focus()
+  el.blur()
+  requestAnimationFrame(() => el.focus())
   setTimeout(() => {
     copyTips.value[id] = ''
     el.blur()
