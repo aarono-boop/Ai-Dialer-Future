@@ -1367,7 +1367,7 @@ const sendMessage = (message: string): void => {
         '<strong>Upcoming appointments:</strong>',
         '<i class="pi pi-check"></i> 2:00 PM - Demo call with Sarah Johnson (confirmed)',
         '• 3:30 PM - Follow-up with ABC Corp (needs confirmation)',
-        '��� 4:15 PM - Discovery call with new lead Mike Chen',
+        '• 4:15 PM - Discovery call with new lead Mike Chen',
         'You have 45 minutes before your next call. Perfect time for some prospecting!'
       ])
     } else if (lowerMessage.includes('tell a joke') || lowerMessage.includes('joke')) {
@@ -2584,7 +2584,7 @@ const handleCoachCreated = async (coachData: any) => {
   try {
     const newCoach = await addCoach(coachData)
     // Notify and then redirect
-    toast.add({ severity: 'success', summary: 'Coach Created', detail: `${newCoach.displayName} created`, life: 2000 })
+    toast.add({ severity: 'success', summary: 'Coach Created', detail: `${newCoach.displayName} created`, life: 5000, closable: true })
     const newUrl = generateCoachUrl(newCoach.name)
     setTimeout(() => {
       window.location.href = newUrl
