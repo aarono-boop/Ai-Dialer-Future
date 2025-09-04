@@ -903,6 +903,63 @@ const selectCoachFromPanel = (): void => {
   window.location.href = url
 }
 
+const startPracticeCall = (coach: Coach): void => {
+  // Set selected coach and hide carousel
+  setCurrentCoach(coach.id)
+  showCoachCarousel.value = false
+
+  // Ensure main app/dialer visible
+  currentPage.value = 'main'
+  isSignedIn.value = true
+  isReturningUser.value = true
+  hasUploadedFile.value = true
+  updateWelcomeMessageTyping()
+  showDialer.value = true
+
+  // Reset dialer state
+  callState.value = 'idle'
+  currentContactIndex.value = 0
+  totalCalls.value = 0
+  connectedCalls.value = 0
+  callLog.value = []
+
+  // Clear chat and announce practice
+  messages.value = []
+  addAIMessage(`Practice mode activated with <strong>${coach.displayName}</strong>. Placing a sample call...`)
+
+  // Start call after short delay
+  setTimeout(() => {
+    callState.value = 'ringing'
+    queueTimer = setInterval(() => { queueTime.value++ }, 1000)
+
+    // Add separator for the first (and only) practice contact
+    addSeparatorMessage(currentContact.value.name)
+
+    setTimeout(() => {
+      // Connect the call
+      callState.value = 'connected'
+      callDuration.value = 0
+      connectedCalls.value++
+      callTimer = setInterval(() => { callDuration.value++ }, 1000)
+
+      // Coach connection message + advice
+      showCallConnectedMessages(currentContact.value)
+
+      // End practice call automatically, add recap, and complete queue
+      setTimeout(() => {
+        handleHangUp()
+        // Auto set a friendly disposition and complete queue
+        setTimeout(() => {
+          handleDisposition('Practice Call Completed')
+          setTimeout(() => {
+            handleCompleteQueue()
+          }, 1200)
+        }, 1200)
+      }, 8000) // length of practice call
+    }, 2000) // ring duration
+  }, 800)
+}
+
 // Header Methods
 const handleLogin = () => {
   currentPage.value = 'login'
