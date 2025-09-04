@@ -33,52 +33,6 @@
       </div>
       <Button icon="pi pi-chevron-right" text @click="scroll(1)" aria-label="Scroll right" />
     </div>
-
-    <!-- Right-side panel for coach info -->
-    <Dialog
-      v-model:visible="showInfo"
-      modal
-      position="right"
-      :style="{ width: '28rem' }"
-      :header="selectedCoach ? selectedCoach.displayName : 'Coach'"
-      :breakpoints="{ '1199px': '75vw', '575px': '95vw' }"
-    >
-      <div v-if="selectedCoach" class="space-y-4">
-        <div class="flex items-center gap-3">
-          <img v-if="selectedCoach.avatarUrl" :src="selectedCoach.avatarUrl" :alt="selectedCoach.displayName" class="w-12 h-12 rounded-full object-cover" />
-          <div v-else class="w-12 h-12 rounded-full bg-gradient-to-br from-blue-400 to-purple-500 flex items-center justify-center text-white font-semibold">
-            {{ selectedCoach.displayName.charAt(0) }}
-          </div>
-          <div>
-            <p class="text-sm text-gray-300">?coach={{ selectedCoach.name }}</p>
-          </div>
-        </div>
-
-        <div v-if="selectedCoach.highlights && selectedCoach.highlights.length" class="space-y-1">
-          <label class="text-sm font-semibold">Highlights</label>
-          <ul class="text-xs text-gray-300 list-disc list-outside pl-5">
-            <li v-for="(h,i) in selectedCoach.highlights" :key="i">{{ h }}</li>
-          </ul>
-        </div>
-
-        <div v-if="selectedCoach.websiteUrl">
-          <Button as="a" :href="selectedCoach.websiteUrl" target="_blank" rel="noopener" label="Visit Website" icon="pi pi-external-link" severity="secondary" />
-        </div>
-
-        <div v-if="selectedCoach.videoId" class="space-y-2">
-          <label class="text-sm font-semibold">Intro Video</label>
-          <div class="aspect-video rounded-lg overflow-hidden bg-black/30">
-            <iframe
-              :src="`https://www.youtube.com/embed/${selectedCoach.videoId}`"
-              frameborder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowfullscreen
-              class="w-full h-full"
-            ></iframe>
-          </div>
-        </div>
-      </div>
-    </Dialog>
   </div>
 </template>
 
@@ -86,9 +40,12 @@
 import { ref } from 'vue'
 import Card from 'primevue/card'
 import Button from 'primevue/button'
-import Dialog from 'primevue/dialog'
 import { useCoaches } from '../composables/useCoaches'
 import type { Coach } from '../types/coach'
+
+const emit = defineEmits<{
+  (e: 'learn-more', coach: Coach): void
+}>()
 
 const { coachList, generateCoachUrl } = useCoaches()
 
@@ -97,12 +54,8 @@ const scroll = (dir: number) => {
   if (scroller.value) scroller.value.scrollBy({ left: dir * 300, behavior: 'smooth' })
 }
 
-const showInfo = ref(false)
-const selectedCoach = ref<Coach | null>(null)
-
 const openCoachInfo = (coach: Coach) => {
-  selectedCoach.value = coach
-  showInfo.value = true
+  emit('learn-more', coach)
 }
 
 const useCoach = (coach: any) => {
