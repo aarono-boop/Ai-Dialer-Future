@@ -54,6 +54,19 @@
             </small>
           </div>
 
+          <!-- Website URL -->
+          <div class="flex flex-col gap-2">
+            <label for="websiteUrl" class="font-semibold text-white">Website URL (Optional)</label>
+            <InputText
+              id="websiteUrl"
+              v-model="formData.websiteUrl"
+              placeholder="https://example.com"
+              class="w-full"
+              :invalid="!!errors.websiteUrl"
+            />
+            <small v-if="errors.websiteUrl" class="text-red-400">{{ errors.websiteUrl }}</small>
+          </div>
+
           <!-- Avatar Image Upload -->
           <div class="flex flex-col gap-2">
             <label class="font-semibold text-white">Coach Avatar (Optional)</label>
