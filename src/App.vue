@@ -820,6 +820,15 @@ const updateWelcomeMessageTyping = (): void => {
   }
 }
 
+const openCoachInfoPanel = (coach: Coach): void => {
+  selectedCoachForInfo.value = coach
+  showCoachInfoPanel.value = true
+}
+
+const closeCoachInfoPanel = (): void => {
+  showCoachInfoPanel.value = false
+}
+
 // Header Methods
 const handleLogin = () => {
   currentPage.value = 'login'
