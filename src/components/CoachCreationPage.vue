@@ -118,6 +118,16 @@
               Default: "Welcome to ARKON! I'm your AI calling assistant, enhanced with [Coach Name]'s proven methodologies."
             </small>
           </div>
+
+          <!-- Highlights (2 bullets) -->
+          <div class="flex flex-col gap-2">
+            <label class="font-semibold text-white">Highlights (2 bullets)</label>
+            <div class="grid grid-cols-1 gap-2">
+              <InputText v-model="highlight1" placeholder="e.g., Known for high-intent objection handling" class="w-full" />
+              <InputText v-model="highlight2" placeholder="e.g., Data-driven cold calling frameworks" class="w-full" />
+            </div>
+            <small class="text-gray-500">Optional. Shown under the coach in All Coaches view.</small>
+          </div>
         </div>
 
         <!-- Preview Section -->
