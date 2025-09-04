@@ -12,7 +12,7 @@
                   {{ coach.displayName.charAt(0) }}
                 </div>
                 <p class="font-semibold text-center truncate w-full">{{ coach.displayName }}</p>
-                <Button label="Use" size="small" @click="useCoach(coach)" />
+                <Button label="Select" size="small" @click="useCoach(coach)" />
               </div>
             </template>
           </Card>
