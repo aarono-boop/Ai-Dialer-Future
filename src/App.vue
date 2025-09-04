@@ -206,13 +206,22 @@
           </div>
 
           <!-- Load New File Button - shown when queue is completed -->
-          <div v-if="showLoadNewFileButton" class="mt-2 pt-5 flex justify-center">
+          <div v-if="showLoadNewFileButton || (isPracticeMode && showSessionSummary)" class="mt-2 pt-5 flex justify-center">
             <div class="w-[70%] flex justify-center">
               <Button
+                v-if="!isPracticeMode"
                 @click="triggerFileUpload"
                 severity="secondary"
                 label="Load New File"
                 icon="pi pi-upload"
+                class="w-1/2 px-6 py-3 font-semibold flex items-center justify-center gap-2"
+              />
+              <Button
+                v-else
+                @click="returnToCoachesSelection"
+                severity="secondary"
+                label="Return to coaches selection"
+                icon="pi pi-users"
                 class="w-1/2 px-6 py-3 font-semibold flex items-center justify-center gap-2"
               />
             </div>
