@@ -605,13 +605,6 @@ const handleImport = (event: Event) => {
       }
     } catch (error) {
       console.error('Import error:', error)
-      toast.add({
-        
-        severity: 'error',
-        summary: 'Import Failed',
-        detail: 'Failed to import coach configuration. Please check the file format.',
-        life: 3000
-      })
     }
   }
   reader.readAsText(file)
