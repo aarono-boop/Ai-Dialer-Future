@@ -124,13 +124,26 @@ export const useCoaches = () => {
       if (saved) {
         const parsed = JSON.parse(saved)
         // Merge with default config to ensure we have system coaches
-        coachConfig.value = {
-          ...defaultCoachConfig,
-          coaches: {
-            ...defaultCoachConfig.coaches,
-            ...parsed.coaches
+        const mergedCoaches = {
+          ...defaultCoachConfig.coaches,
+          ...parsed.coaches
+        }
+
+        // Migration: Convert Jordan Stupar from system to user coach
+        if (mergedCoaches['jordan-stupar'] && mergedCoaches['jordan-stupar'].createdBy === 'system') {
+          mergedCoaches['jordan-stupar'] = {
+            ...mergedCoaches['jordan-stupar'],
+            createdBy: 'user'
           }
         }
+
+        coachConfig.value = {
+          ...defaultCoachConfig,
+          coaches: mergedCoaches
+        }
+
+        // Save the migrated config back to localStorage
+        saveCoachConfig()
       }
     } catch (error) {
       console.warn('Failed to load coach config from localStorage:', error)
