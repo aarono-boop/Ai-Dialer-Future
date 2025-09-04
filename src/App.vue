@@ -342,7 +342,7 @@
     />
 
     <!-- Toast for notifications -->
-    <Toast class="z-[9999]" group="app" position="top-right" />
+    <Toast class="z-[9999]" position="top-right" />
 
     <!-- Session Summary now displayed in chat area -->
 
@@ -2584,7 +2584,7 @@ const handleCoachCreated = async (coachData: any) => {
   try {
     const newCoach = await addCoach(coachData)
     // Notify and then redirect
-    toast.add({ group: 'app', severity: 'success', summary: 'Coach Created', detail: `${newCoach.displayName} created`, life: 2000 })
+    toast.add({ severity: 'success', summary: 'Coach Created', detail: `${newCoach.displayName} created`, life: 2000 })
     const newUrl = generateCoachUrl(newCoach.name)
     setTimeout(() => {
       window.location.href = newUrl
