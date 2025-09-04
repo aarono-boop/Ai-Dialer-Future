@@ -2,7 +2,7 @@
   <div class="w-full">
     <div class="flex items-center gap-2 mt-[20px]">
       <Button icon="pi pi-chevron-left" text @click="scroll(-1)" aria-label="Scroll left" />
-      <div ref="scroller" class="flex items-stretch overflow-x-auto gap-3 px-1 py-1" style="scroll-behavior:smooth;">
+      <div ref="scroller" class="scroller flex items-stretch overflow-x-auto gap-3 px-1 py-1" style="scroll-behavior:smooth;">
         <div v-for="coach in coachList" :key="coach.id" class="min-w-[260px] flex coach-item">
           <Card class="bg-gray-800 border border-gray-600 rounded-lg hover:border-gray-500 transition-colors h-full w-full">
             <template #content>
@@ -93,4 +93,6 @@ const useCoach = (coach: any) => {
   flex-direction: column;
   flex: 1 1 auto;
 }
+.scroller { -ms-overflow-style: none; scrollbar-width: none; }
+.scroller::-webkit-scrollbar { display: none; height: 0; }
 </style>
