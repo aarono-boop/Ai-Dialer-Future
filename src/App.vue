@@ -271,7 +271,7 @@
                 <h3 class="text-2xl font-semibold truncate">{{ selectedCoachForInfo?.displayName || 'Coach' }}</h3>
               </div>
               <div class="flex items-center gap-2">
-                <Button v-if="selectedCoachForInfo" :label="'Select ' + selectedCoachFirstName + ' as you coach'" size="small" severity="primary" @click="selectCoachFromPanel" :aria-label="'Select ' + selectedCoachFirstName + ' as you coach'" />
+                <Button v-if="selectedCoachForInfo" :label="'Select ' + selectedCoachFirstName + ' as your coach'" size="small" severity="primary" @click="selectCoachFromPanel" :aria-label="'Select ' + selectedCoachFirstName + ' as you coach'" />
                 <Button icon="pi pi-times" text severity="secondary" @click="closeCoachInfoPanel" aria-label="Close coach info" />
               </div>
             </div>
