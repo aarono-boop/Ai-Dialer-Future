@@ -182,10 +182,12 @@
                       icon="pi pi-copy"
                       size="small"
                       severity="secondary"
-                      v-tooltip.focus.top="getCopyTooltip(coach.id)"
                       @click.stop="onCopyClick(coach, $event)"
                       aria-label="Copy URL"
                     />
+                    <OverlayPanel :ref="el => setCopyPanelRef(coach.id, el)" :dismissable="false" :showCloseIcon="false">
+                      <span>Copied!</span>
+                    </OverlayPanel>
                     <Button
                       v-if="coach.createdBy !== 'system'"
                       icon="pi pi-pencil"
