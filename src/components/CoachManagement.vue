@@ -88,7 +88,6 @@
             class="text-purple-400 hover:text-purple-300 flex items-center gap-2 text-sm"
             aria-label="Open All Coaches in a new tab"
           >
-            <i class="pi pi-users"></i>
             <span>All Coaches</span>
             <i class="pi pi-external-link text-xs"></i>
           </a>
