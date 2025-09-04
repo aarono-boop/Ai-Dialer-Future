@@ -241,6 +241,9 @@ import { useToast } from 'primevue/usetoast'
 import type { CoachCreateData } from '../types/coach'
 import { generateCoachId, extractYouTubeVideoId } from '../config/coaches'
 
+const highlight1 = ref('')
+const highlight2 = ref('')
+
 // Emits
 const emit = defineEmits<{
   'coach-created': [coach: CoachCreateData]
