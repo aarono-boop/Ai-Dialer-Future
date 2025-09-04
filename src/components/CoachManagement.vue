@@ -567,6 +567,18 @@ const copyToClipboard = async (text: string) => {
   }
 }
 
+const copyPanels = ref<Record<string, any>>({})
+const setCopyPanelRef = (id: string, el: any) => { if (el) copyPanels.value[id] = el }
+
+const onCopyClick = async (coach: Coach, e: MouseEvent) => {
+  await copyCoachUrl(coach)
+  const panel = copyPanels.value[coach.id]
+  if (panel) {
+    panel.show(e)
+    setTimeout(() => panel.hide(), 1200)
+  }
+}
+
 const confirmDelete = (coach: Coach) => {
   confirm.require({
     message: `Are you sure you want to delete ${coach.displayName}? This action cannot be undone.`,
@@ -576,7 +588,7 @@ const confirmDelete = (coach: Coach) => {
     accept: () => {
       if (removeCoach(coach.id)) {
         toast.add({
-          
+
           severity: 'success',
           summary: 'Coach Deleted',
           detail: `${coach.displayName} has been removed`,
