@@ -600,6 +600,7 @@ const editCoach = (coach: Coach) => {
   editingCoach.value = coach
   editImagePreview.value = null
   editCustomMessage.value = coach.welcomeMessage || ''
+  editWebsiteUrl.value = coach.websiteUrl || ''
   showEditModal.value = true
 }
 
