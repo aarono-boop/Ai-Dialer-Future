@@ -297,6 +297,73 @@
                 <div v-if="selectedCoachForInfo.websiteUrl">
                   <Button as="a" :href="selectedCoachForInfo.websiteUrl" target="_blank" rel="noopener" label="Visit Website" icon="pi pi-external-link" severity="secondary" />
                 </div>
+
+                <!-- Basic Information -->
+                <div class="space-y-2">
+                  <h4 class="text-sm font-semibold">Basic Information</h4>
+                  <ul class="text-xs text-gray-300 list-disc list-outside pl-5">
+                    <li>Role: Sales Coach & Speaker</li>
+                    <li>Experience: 12+ years</li>
+                    <li>Signature Program: Momentum Calls Framework</li>
+                  </ul>
+                </div>
+
+                <!-- Key Statistics -->
+                <div class="space-y-2">
+                  <h4 class="text-sm font-semibold">Key Statistics</h4>
+                  <ul class="text-xs text-gray-300 list-disc list-outside pl-5">
+                    <li>Avg. connect-rate lift: 27%</li>
+                    <li>Time-to-first-meeting reduced: 34%</li>
+                    <li>Teams coached: 250+; reps impacted: 10,000+</li>
+                  </ul>
+                </div>
+
+                <!-- Platform Impact -->
+                <div class="space-y-2">
+                  <h4 class="text-sm font-semibold">Platform Impact</h4>
+                  <ul class="text-xs text-gray-300 list-disc list-outside pl-5">
+                    <li>Prioritizes best-time-to-call windows</li>
+                    <li>Applies objection handling snippets in real time</li>
+                    <li>Auto-generates follow-up tasks with proven cadences</li>
+                  </ul>
+                </div>
+
+                <!-- About Coach -->
+                <div class="space-y-2">
+                  <h4 class="text-sm font-semibold">About {{ selectedCoachFirstName }}</h4>
+                  <p class="text-xs text-gray-300">{{ selectedCoachFirstName }} is known for disciplined daily call blocks, clean qualification, and tight follow‑up cycles. Their approach balances energy with structure so reps stay consistent and close more.</p>
+                </div>
+
+                <!-- Industries Served -->
+                <div class="space-y-2">
+                  <h4 class="text-sm font-semibold">Industries Served</h4>
+                  <ul class="text-xs text-gray-300 list-disc list-outside pl-5">
+                    <li>SaaS</li>
+                    <li>Insurance & Financial Services</li>
+                    <li>Real Estate</li>
+                    <li>Home Services</li>
+                    <li>B2B Services</li>
+                  </ul>
+                </div>
+
+                <!-- Sales Methodology -->
+                <div class="space-y-2">
+                  <h4 class="text-sm font-semibold">Sales Methodology</h4>
+                  <ul class="text-xs text-gray-300 list-disc list-outside pl-5">
+                    <li>Pattern interrupts to earn attention fast</li>
+                    <li>Discovery that surfaces business impact early</li>
+                    <li>Micro‑commitments that advance every call</li>
+                  </ul>
+                </div>
+
+                <!-- Testimonials -->
+                <div class="space-y-2">
+                  <h4 class="text-sm font-semibold">Testimonials</h4>
+                  <div class="text-xs text-gray-300 space-y-2">
+                    <p>“Our connect rate and meetings doubled in 60 days.” — VP Sales, SaaS</p>
+                    <p>“The talk tracks are simple and deadly effective.” — SDR Lead, Insurance</p>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -437,6 +504,8 @@ import Button from 'primevue/button'
 
 // Types
 import type { Coach } from './types/coach'
+const selectedCoachFirstName = computed(() => selectedCoachForInfo.value?.displayName?.split(' ')[0] || 'Coach')
+
 interface Message {
   type: 'ai' | 'user' | 'separator'
   content: string[]
@@ -1487,7 +1556,7 @@ const handleLooksGood = (): void => {
     // Regular flow for new users
     setTimeout(() => {
       addAIMessageWithTyping([
-        'I\'ve analyzed your contact\'s phone numbers using real connection data from 900M+ calls, recent phone engagement, calling patterns, and carrier signals���so you only dial numbers likely to connect.<br><br>I\'ve prioritized the phone numbers most likely to connect so you spend time talking, not hitting dead lines.<br><br>Here\'s what I found:<br><div style="margin-left: 1em; text-indent: -1em;">• 40 numbers have \'High\' Connect Scores and show consistent calling activity in the last 12 months. These are highly likely to be connected and assigned to active subscribers.</div><br><div style="margin-left: 1em; text-indent: -1em;">• 67 numbers have \'Medium\' Connect Scores and are worth calling after you exhaust your \'High\' Connect Score numbers.</div><br><div style="margin-left: 1em; text-indent: -1em;">• 54 numbers have \'Low\' Connect Scores and are likely disconnected or inactive lines that won\'t answer when dialed.</div>'
+        'I\'ve analyzed your contact\'s phone numbers using real connection data from 900M+ calls, recent phone engagement, calling patterns, and carrier signals—so you only dial numbers likely to connect.<br><br>I\'ve prioritized the phone numbers most likely to connect so you spend time talking, not hitting dead lines.<br><br>Here\'s what I found:<br><div style="margin-left: 1em; text-indent: -1em;">• 40 numbers have \'High\' Connect Scores and show consistent calling activity in the last 12 months. These are highly likely to be connected and assigned to active subscribers.</div><br><div style="margin-left: 1em; text-indent: -1em;">• 67 numbers have \'Medium\' Connect Scores and are worth calling after you exhaust your \'High\' Connect Score numbers.</div><br><div style="margin-left: 1em; text-indent: -1em;">• 54 numbers have \'Low\' Connect Scores and are likely disconnected or inactive lines that won\'t answer when dialed.</div>'
       ])
 
       // Phone verification button will be shown automatically when typing completes
