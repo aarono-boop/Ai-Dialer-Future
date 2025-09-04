@@ -263,20 +263,18 @@
         <div v-if="showCoachInfoPanel" class="fixed top-0 right-0 w-1/3 h-screen z-20 bg-gray-900 border-l border-gray-700">
           <div class="h-full flex flex-col">
             <div class="flex items-center justify-between p-4 border-b border-gray-700 bg-gray-900/90 sticky top-0 z-10">
-              <h3 class="text-lg font-semibold truncate">{{ selectedCoachForInfo?.displayName || 'Coach' }}</h3>
+              <div class="flex items-center gap-3 min-w-0">
+                <img v-if="selectedCoachForInfo?.avatarUrl" :src="selectedCoachForInfo.avatarUrl" :alt="selectedCoachForInfo.displayName" class="w-24 h-24 rounded-full object-cover" />
+                <div v-else class="w-24 h-24 rounded-full bg-gradient-to-br from-blue-400 to-purple-500 flex items-center justify-center text-white font-semibold text-3xl">
+                  {{ selectedCoachForInfo?.displayName?.charAt(0) || 'C' }}
+                </div>
+                <h3 class="text-lg font-semibold truncate">{{ selectedCoachForInfo?.displayName || 'Coach' }}</h3>
+              </div>
               <Button icon="pi pi-times" text severity="secondary" @click="closeCoachInfoPanel" aria-label="Close coach info" />
             </div>
             <div class="p-4 overflow-y-auto flex-1 space-y-4">
               <div v-if="selectedCoachForInfo" class="space-y-4">
-                <div class="flex items-center gap-3">
-                  <img v-if="selectedCoachForInfo.avatarUrl" :src="selectedCoachForInfo.avatarUrl" :alt="selectedCoachForInfo.displayName" class="w-24 h-24 rounded-full object-cover" />
-                  <div v-else class="w-24 h-24 rounded-full bg-gradient-to-br from-blue-400 to-purple-500 flex items-center justify-center text-white font-semibold text-3xl">
-                    {{ selectedCoachForInfo.displayName.charAt(0) }}
-                  </div>
-                  <div>
-                    <p class="text-sm text-gray-300">?coach={{ selectedCoachForInfo.name }}</p>
-                  </div>
-                </div>
+                <p class="text-sm text-gray-300">?coach={{ selectedCoachForInfo.name }}</p>
 
                 <div v-if="selectedCoachForInfo.videoId" class="space-y-2">
                   <label class="text-sm font-semibold">Intro Video</label>
