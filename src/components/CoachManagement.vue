@@ -347,6 +347,13 @@
           <label for="editWebsiteUrl" class="font-semibold text-white">Website URL</label>
           <InputText id="editWebsiteUrl" v-model="editWebsiteUrl" class="w-full" placeholder="https://example.com" />
         </div>
+
+        <!-- Highlights (2 bullets) -->
+        <div class="flex flex-col gap-2 mt-4">
+          <label class="font-semibold text-white">Highlights (2 bullets)</label>
+          <InputText v-model="editHighlight1" class="w-full" placeholder="Highlight 1" />
+          <InputText v-model="editHighlight2" class="w-full" placeholder="Highlight 2" />
+        </div>
       </div>
 
       <template #footer>
@@ -418,6 +425,8 @@ const editingCoach = ref<Coach | null>(null)
 const editImagePreview = ref<string | null>(null)
 const editCustomMessage = ref<string>('')
 const editWebsiteUrl = ref<string>('')
+const editHighlight1 = ref<string>('')
+const editHighlight2 = ref<string>('')
 const editFileInput = ref<HTMLInputElement | null>(null)
 const isUpdating = ref(false)
 const exportLoading = ref(false)
@@ -436,7 +445,10 @@ const hasChanges = computed(() => {
   const hasImageChange = editImagePreview.value || isBrokenAvatar.value
   const hasMessageChange = editCustomMessage.value !== (editingCoach.value.welcomeMessage || '')
   const hasWebsiteChange = editWebsiteUrl.value !== (editingCoach.value.websiteUrl || '')
-  return hasImageChange || hasMessageChange || hasWebsiteChange
+  const origH1 = editingCoach.value.highlights?.[0] || ''
+  const origH2 = editingCoach.value.highlights?.[1] || ''
+  const hasHighlightsChange = editHighlight1.value !== origH1 || editHighlight2.value !== origH2
+  return hasImageChange || hasMessageChange || hasWebsiteChange || hasHighlightsChange
 })
 
 // Methods
@@ -607,6 +619,8 @@ const editCoach = (coach: Coach) => {
   editImagePreview.value = null
   editCustomMessage.value = coach.welcomeMessage || ''
   editWebsiteUrl.value = coach.websiteUrl || ''
+  editHighlight1.value = coach.highlights?.[0] || ''
+  editHighlight2.value = coach.highlights?.[1] || ''
   showEditModal.value = true
 }
 
@@ -711,6 +725,13 @@ const saveCoachEdit = async () => {
       updates.websiteUrl = editWebsiteUrl.value || undefined
     }
 
+    const newHighlights = [editHighlight1.value, editHighlight2.value].filter(h => h && h.trim().length > 0)
+    const origH = editingCoach.value.highlights || []
+    const highlightsChanged = newHighlights.join('\n') !== origH.slice(0,2).join('\n')
+    if (highlightsChanged) {
+      updates.highlights = newHighlights.length ? newHighlights.slice(0,2) : undefined
+    }
+
     // Update the coach
     const success = updateCoach(editingCoach.value.id, updates)
 
@@ -763,6 +784,8 @@ const cancelEdit = () => {
   editImagePreview.value = null
   editCustomMessage.value = ''
   editWebsiteUrl.value = ''
+  editHighlight1.value = ''
+  editHighlight2.value = ''
   if (editFileInput.value) {
     editFileInput.value.value = ''
   }
