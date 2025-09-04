@@ -713,10 +713,8 @@ const saveCoachEdit = async () => {
     let updates: Partial<Coach> = {}
 
     if (editImagePreview.value) {
-      // New image uploaded
       updates.avatarUrl = editImagePreview.value
     } else if (isBrokenAvatar.value) {
-      // Remove broken blob URL
       updates.avatarUrl = undefined
     }
 
@@ -730,8 +728,8 @@ const saveCoachEdit = async () => {
 
     const newHighlights = [editHighlight1.value, editHighlight2.value].filter(h => h && h.trim().length > 0)
     const origH = editingCoach.value.highlights || []
-    const highlightsChanged = newHighlights.join('\n') !== origH.slice(0,2).join('\n')
-    if (highlightsChanged) {
+    const hasHighlightsChange = newHighlights.join('\n') !== origH.slice(0,2).join('\n')
+    if (hasHighlightsChange) {
       updates.highlights = newHighlights.length ? newHighlights.slice(0,2) : undefined
     }
 
@@ -740,8 +738,18 @@ const saveCoachEdit = async () => {
 
     if (success) {
       let message = `${editingCoach.value.displayName} has been updated`
-      if (editImagePreview.value && hasMessageChange && hasWebsiteChange) {
+      if (editImagePreview.value && hasMessageChange && hasWebsiteChange && hasHighlightsChange) {
+        message = `${editingCoach.value.displayName}'s avatar, welcome message, website, and highlights have been updated`
+      } else if (hasMessageChange && hasWebsiteChange && hasHighlightsChange) {
+        message = `${editingCoach.value.displayName}'s welcome message, website, and highlights have been updated`
+      } else if (editImagePreview.value && hasWebsiteChange && hasHighlightsChange) {
+        message = `${editingCoach.value.displayName}'s avatar, website, and highlights have been updated`
+      } else if (editImagePreview.value && hasMessageChange && hasHighlightsChange) {
+        message = `${editingCoach.value.displayName}'s avatar, welcome message, and highlights have been updated`
+      } else if (editImagePreview.value && hasMessageChange && hasWebsiteChange) {
         message = `${editingCoach.value.displayName}'s avatar, welcome message, and website have been updated`
+      } else if (hasHighlightsChange) {
+        message = `${editingCoach.value.displayName}'s highlights have been updated`
       } else if (editImagePreview.value && hasMessageChange) {
         message = `${editingCoach.value.displayName}'s avatar and welcome message have been updated`
       } else if (editImagePreview.value && hasWebsiteChange) {
