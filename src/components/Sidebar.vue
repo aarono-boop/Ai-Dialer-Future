@@ -1,5 +1,5 @@
 <template>
-  <aside class="fixed left-0 top-0 h-screen w-16 bg-gray-900 border-r border-gray-700 flex flex-col items-center py-4 z-20" role="navigation" aria-label="Main navigation">
+  <aside class="fixed left-0 top-0 h-screen w-24 bg-gray-900 border-r border-gray-700 flex flex-col items-center py-4 z-20" role="navigation" aria-label="Main navigation">
     <!-- Hidden focus anchor to establish tab context when needed -->
     <button
       ref="focusAnchor"
