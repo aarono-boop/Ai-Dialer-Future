@@ -868,6 +868,8 @@ const handleLogout = () => {
 
   // Reset UI state
   showDialer.value = false
+  showCoachInfoPanel.value = false
+  selectedCoachForInfo.value = null
   showActionButtons.value = false
   showContactPreviewButtons.value = false
   showPhoneVerificationButton.value = false
