@@ -28,7 +28,7 @@
                 <ChatMessage v-if="message.type !== 'separator'" :message="message" :isWide="shouldBeWideMessage(message, index)" :fullWidth="showCoachCarousel && index === 0" :onTypingProgress="message.preserveUserPosition ? undefined : scrollToBottomDuringTyping" :coachParameter="coachParameter" :aiCoachEnabled="aiCoachEnabled" @typing-complete="handleTypingComplete(index)">
                   <template #additional-content>
                     <!-- File Upload Area - shown inside welcome message for new users or ready to upload message for returning users -->
-                    <CoachCarousel v-if="index === 0 && showCoachCarousel" />
+                    <CoachCarousel v-if="index === 0 && showCoachCarousel" @learn-more="openCoachInfoPanel" />
                     <FileUpload
                       v-if="!showCoachCarousel && ((index === 0 && !isSignedIn && welcomeTypingComplete) || (isSignedIn && showFileUploadForReturningUser && isReadyToUploadMessage(message, index)))"
                       @trigger-upload="simulateFileUpload"
