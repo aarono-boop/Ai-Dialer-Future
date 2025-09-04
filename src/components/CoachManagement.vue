@@ -95,7 +95,7 @@
             :href="baseUrl"
             target="_blank"
             rel="noopener noreferrer"
-            class="text-purple-400 hover:text-purple-300 flex items-center gap-2 text-sm"
+            class="text-purple-400 hover:text-purple-300 flex items-center gap-2 text-sm ml-[10px]"
             aria-label="Open default welcome screen in a new tab"
           >
             <span>No Coach</span>
