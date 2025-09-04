@@ -493,6 +493,13 @@ const navigateToCreateCoach = () => {
   window.location.href = url.toString()
 }
 
+const navigateToAllCoaches = () => {
+  const url = new URL(window.location.href)
+  url.searchParams.set('coach', 'all')
+  url.searchParams.delete('create-coach')
+  window.location.href = url.toString()
+}
+
 const handleCoachCreated = async (coachData: CoachCreateData) => {
   try {
     const newCoach = await addCoach(coachData)
