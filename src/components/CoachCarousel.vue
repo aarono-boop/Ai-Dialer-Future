@@ -1,7 +1,7 @@
 <template>
   <div class="w-full">
     <div class="flex items-center gap-2 mt-[20px]">
-      <Button icon="pi pi-chevron-left" text @click="scroll(-1)" aria-label="Scroll left" />
+      <Button icon="pi pi-chevron-left" text @click="scroll(-1)" :disabled="!canScrollLeft" aria-label="Scroll left" />
       <div ref="scroller" class="scroller flex items-stretch overflow-x-auto gap-3 px-1 py-1" style="scroll-behavior:smooth;">
         <div v-for="coach in coachList" :key="coach.id" class="min-w-[260px] flex coach-item">
           <Card class="bg-gray-800 border border-gray-600 rounded-lg hover:border-gray-500 transition-colors h-full w-full">
@@ -31,13 +31,13 @@
           </Card>
         </div>
       </div>
-      <Button icon="pi pi-chevron-right" text @click="scroll(1)" aria-label="Scroll right" />
+      <Button icon="pi pi-chevron-right" text @click="scroll(1)" :disabled="!canScrollRight" aria-label="Scroll right" />
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, onMounted, onUnmounted, watch } from 'vue'
 import Card from 'primevue/card'
 import Button from 'primevue/button'
 import { useCoaches } from '../composables/useCoaches'
@@ -50,6 +50,17 @@ const emit = defineEmits<{
 const { coachList, generateCoachUrl } = useCoaches()
 
 const scroller = ref<HTMLElement | null>(null)
+const canScrollLeft = ref(false)
+const canScrollRight = ref(false)
+
+const updateScrollButtons = () => {
+  const el = scroller.value
+  if (!el) { canScrollLeft.value = false; canScrollRight.value = false; return }
+  const maxScrollLeft = el.scrollWidth - el.clientWidth
+  canScrollLeft.value = el.scrollLeft > 1
+  canScrollRight.value = el.scrollLeft < maxScrollLeft - 1
+}
+
 const getStep = (): number => {
   const el = scroller.value
   if (!el) return 0
@@ -64,7 +75,22 @@ const scroll = (dir: number) => {
   if (!el) return
   const step = getStep() || 900 // fallback approx
   el.scrollBy({ left: dir * step, behavior: 'smooth' })
+  // Update after scroll completes
+  setTimeout(updateScrollButtons, 350)
 }
+
+onMounted(() => {
+  updateScrollButtons()
+  scroller.value?.addEventListener('scroll', updateScrollButtons, { passive: true })
+  window.addEventListener('resize', updateScrollButtons)
+})
+
+onUnmounted(() => {
+  scroller.value?.removeEventListener('scroll', updateScrollButtons as EventListener)
+  window.removeEventListener('resize', updateScrollButtons)
+})
+
+watch(() => coachList.length, () => setTimeout(updateScrollButtons, 0))
 
 const openCoachInfo = (coach: Coach) => {
   emit('learn-more', coach)
