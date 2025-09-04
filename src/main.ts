@@ -22,7 +22,6 @@ app.use(PrimeVue, {
   }
 })
 
-app.use(ToastService)
 app.use(ConfirmationService)
 
 app.mount('#app')
