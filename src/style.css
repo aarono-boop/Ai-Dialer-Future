@@ -198,6 +198,7 @@ div[class*="overflow-y-auto"]::-webkit-scrollbar-thumb:hover {
   border-radius: 6px !important;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6) !important;
   padding: 0.25rem 0.5rem !important;
+  font-size: 0.75rem !important; /* 12px */
 }
 /* Arrow colors for each side */
 .p-tooltip.p-tooltip-top .p-tooltip-arrow { border-top-color: #111827 !important; }
