@@ -4,7 +4,7 @@
       <Button icon="pi pi-chevron-left" text @click="scroll(-1)" aria-label="Scroll left" />
       <div ref="scroller" class="flex overflow-x-auto gap-3 px-1 py-1" style="scroll-behavior:smooth;">
         <div v-for="coach in coachList" :key="coach.id" class="min-w-[260px]">
-          <Card class="bg-gray-800 border border-gray-700 rounded-lg hover:border-gray-600 transition-colors">
+          <Card class="bg-gray-800 border border-gray-600 rounded-lg hover:border-gray-500 transition-colors">
             <template #content>
               <div class="flex flex-col items-center gap-3 p-4">
                 <img v-if="coach.avatarUrl" :src="coach.avatarUrl" :alt="coach.displayName" class="w-24 h-24 rounded-full object-cover" />
