@@ -19,7 +19,7 @@
                 </div>
                 <div class="w-full mt-auto">
                   <div class="flex flex-col items-center gap-1 w-full">
-                    <a href="#" class="text-sm text-purple-400 hover:text-purple-300">Practice Call</a>
+                    <a href="#" class="text-sm text-purple-400 hover:text-purple-300" @click.prevent="practiceCall(coach)">Practice Call</a>
                     <a href="#" class="text-sm text-purple-400 hover:text-purple-300" @click.prevent="openCoachInfo(coach)">Learn More</a>
                   </div>
                   <div class="flex justify-center">
@@ -45,6 +45,7 @@ import type { Coach } from '../types/coach'
 
 const emit = defineEmits<{
   (e: 'learn-more', coach: Coach): void
+  (e: 'practice', coach: Coach): void
 }>()
 
 const { coachList, generateCoachUrl } = useCoaches()
@@ -94,6 +95,10 @@ watch(() => coachList.length, () => setTimeout(updateScrollButtons, 0))
 
 const openCoachInfo = (coach: Coach) => {
   emit('learn-more', coach)
+}
+
+const practiceCall = (coach: Coach) => {
+  emit('practice', coach)
 }
 
 const useCoach = (coach: any) => {
