@@ -288,6 +288,20 @@ watch(() => formData.value.videoUrl, (newValue) => {
   }
 })
 
+watch(() => formData.value.websiteUrl, (newValue) => {
+  if (!newValue) {
+    delete errors.value.websiteUrl
+    return
+  }
+  try {
+    const u = new URL(newValue)
+    if (!u.protocol.startsWith('http')) throw new Error('invalid')
+    delete errors.value.websiteUrl
+  } catch {
+    errors.value.websiteUrl = 'Please enter a valid website URL (https://...)'
+  }
+})
+
 // Methods
 const triggerFileUpload = () => {
   fileInput.value?.click()
