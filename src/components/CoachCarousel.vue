@@ -13,10 +13,6 @@
                 </div>
                 <div class="min-w-0 flex-1">
                   <p class="font-semibold truncate">{{ coach.displayName }}</p>
-                  <div class="flex items-center gap-2 mt-1">
-                    <Badge v-if="coach.videoId" value="Video" severity="info" class="text-xs" />
-                    <Badge v-if="coach.avatarUrl" value="Avatar" severity="success" class="text-xs" />
-                  </div>
                 </div>
                 <Button label="Use" size="small" @click="useCoach(coach)" />
               </div>
@@ -33,7 +29,6 @@
 import { ref } from 'vue'
 import Card from 'primevue/card'
 import Button from 'primevue/button'
-import Badge from 'primevue/badge'
 import { useCoaches } from '../composables/useCoaches'
 
 const { coachList, generateCoachUrl } = useCoaches()
