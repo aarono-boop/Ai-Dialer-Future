@@ -945,17 +945,7 @@ const startPracticeCall = (coach: Coach): void => {
       // Coach connection message + advice
       showCallConnectedMessages(currentContact.value)
 
-      // End practice call automatically, add recap, and complete queue
-      setTimeout(() => {
-        handleHangUp()
-        // Auto set a friendly disposition and complete queue
-        setTimeout(() => {
-          handleDisposition('Practice Call Completed')
-          setTimeout(() => {
-            handleCompleteQueue()
-          }, 1200)
-        }, 1200)
-      }, 8000) // length of practice call
+      // Remain connected for manual user hang-up and disposition in practice mode
     }, 2000) // ring duration
   }, 800)
 }
