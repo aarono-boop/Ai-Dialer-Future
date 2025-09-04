@@ -581,13 +581,6 @@ const handleExport = async () => {
     URL.revokeObjectURL(url)
   } catch (error) {
     console.error('Export error:', error)
-    toast.add({
-      
-      severity: 'error',
-      summary: 'Export Failed',
-      detail: 'Failed to export coach configuration',
-      life: 3000
-    })
   } finally {
     exportLoading.value = false
   }
