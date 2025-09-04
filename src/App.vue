@@ -270,7 +270,7 @@
               <div v-if="selectedCoachForInfo" class="space-y-4">
                 <div class="flex items-center gap-3">
                   <img v-if="selectedCoachForInfo.avatarUrl" :src="selectedCoachForInfo.avatarUrl" :alt="selectedCoachForInfo.displayName" class="w-24 h-24 rounded-full object-cover" />
-                  <div v-else class="w-12 h-12 rounded-full bg-gradient-to-br from-blue-400 to-purple-500 flex items-center justify-center text-white font-semibold">
+                  <div v-else class="w-24 h-24 rounded-full bg-gradient-to-br from-blue-400 to-purple-500 flex items-center justify-center text-white font-semibold text-3xl">
                     {{ selectedCoachForInfo.displayName.charAt(0) }}
                   </div>
                   <div>
