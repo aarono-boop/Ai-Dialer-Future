@@ -716,12 +716,20 @@ const saveCoachEdit = async () => {
 
     if (success) {
       let message = `${editingCoach.value.displayName} has been updated`
-      if (editImagePreview.value && hasMessageChange) {
+      if (editImagePreview.value && hasMessageChange && hasWebsiteChange) {
+        message = `${editingCoach.value.displayName}'s avatar, welcome message, and website have been updated`
+      } else if (editImagePreview.value && hasMessageChange) {
         message = `${editingCoach.value.displayName}'s avatar and welcome message have been updated`
+      } else if (editImagePreview.value && hasWebsiteChange) {
+        message = `${editingCoach.value.displayName}'s avatar and website have been updated`
+      } else if (hasMessageChange && hasWebsiteChange) {
+        message = `${editingCoach.value.displayName}'s welcome message and website have been updated`
       } else if (editImagePreview.value) {
         message = `${editingCoach.value.displayName}'s avatar has been updated`
       } else if (hasMessageChange) {
         message = `${editingCoach.value.displayName}'s welcome message has been updated`
+      } else if (hasWebsiteChange) {
+        message = `${editingCoach.value.displayName}'s website has been updated`
       } else if (isBrokenAvatar.value) {
         message = `${editingCoach.value.displayName}'s broken avatar has been removed`
       }
