@@ -159,8 +159,6 @@ const emit = defineEmits<{
   'close': []
 }>()
 
-// Toast for notifications
-const toast = useToast()
 
 // Form data
 const formData = ref<CoachCreateData>({
