@@ -287,9 +287,9 @@
                   </div>
                 </div>
 
-                <div v-if="selectedCoachForInfo.highlights && selectedCoachForInfo.highlights.length" class="space-y-1">
-                  <label class="text-sm font-semibold">Highlights</label>
-                  <ul class="text-xs text-gray-300 list-disc list-outside pl-5">
+                <div v-if="selectedCoachForInfo.highlights && selectedCoachForInfo.highlights.length" class="space-y-1 pl-5">
+                  <label class="text-lg font-semibold">Highlights</label>
+                  <ul class="text-xs text-gray-300 list-disc list-outside">
                     <li v-for="(h,i) in selectedCoachForInfo.highlights" :key="i">{{ h }}</li>
                   </ul>
                 </div>
@@ -299,9 +299,9 @@
                 </div>
 
                 <!-- Basic Information -->
-                <div class="space-y-2">
-                  <h4 class="text-sm font-semibold">Basic Information</h4>
-                  <ul class="text-xs text-gray-300 list-disc list-outside pl-5">
+                <div class="space-y-2 pl-5">
+                  <h4 class="text-lg font-semibold">Basic Information</h4>
+                  <ul class="text-xs text-gray-300 list-disc list-outside">
                     <li>Role: Sales Coach & Speaker</li>
                     <li>Experience: 12+ years</li>
                     <li>Signature Program: Momentum Calls Framework</li>
@@ -309,9 +309,9 @@
                 </div>
 
                 <!-- Key Statistics -->
-                <div class="space-y-2">
-                  <h4 class="text-sm font-semibold">Key Statistics</h4>
-                  <ul class="text-xs text-gray-300 list-disc list-outside pl-5">
+                <div class="space-y-2 pl-5">
+                  <h4 class="text-lg font-semibold">Key Statistics</h4>
+                  <ul class="text-xs text-gray-300 list-disc list-outside">
                     <li>Avg. connect-rate lift: 27%</li>
                     <li>Time-to-first-meeting reduced: 34%</li>
                     <li>Teams coached: 250+; reps impacted: 10,000+</li>
@@ -319,9 +319,9 @@
                 </div>
 
                 <!-- Platform Impact -->
-                <div class="space-y-2">
-                  <h4 class="text-sm font-semibold">Platform Impact</h4>
-                  <ul class="text-xs text-gray-300 list-disc list-outside pl-5">
+                <div class="space-y-2 pl-5">
+                  <h4 class="text-lg font-semibold">Platform Impact</h4>
+                  <ul class="text-xs text-gray-300 list-disc list-outside">
                     <li>Prioritizes best-time-to-call windows</li>
                     <li>Applies objection handling snippets in real time</li>
                     <li>Auto-generates follow-up tasks with proven cadences</li>
@@ -329,15 +329,15 @@
                 </div>
 
                 <!-- About Coach -->
-                <div class="space-y-2">
-                  <h4 class="text-sm font-semibold">About {{ selectedCoachFirstName }}</h4>
+                <div class="space-y-2 pl-5">
+                  <h4 class="text-lg font-semibold">About {{ selectedCoachFirstName }}</h4>
                   <p class="text-xs text-gray-300">{{ selectedCoachFirstName }} is known for disciplined daily call blocks, clean qualification, and tight follow‑up cycles. Their approach balances energy with structure so reps stay consistent and close more.</p>
                 </div>
 
                 <!-- Industries Served -->
-                <div class="space-y-2">
-                  <h4 class="text-sm font-semibold">Industries Served</h4>
-                  <ul class="text-xs text-gray-300 list-disc list-outside pl-5">
+                <div class="space-y-2 pl-5">
+                  <h4 class="text-lg font-semibold">Industries Served</h4>
+                  <ul class="text-xs text-gray-300 list-disc list-outside">
                     <li>SaaS</li>
                     <li>Insurance & Financial Services</li>
                     <li>Real Estate</li>
@@ -347,9 +347,9 @@
                 </div>
 
                 <!-- Sales Methodology -->
-                <div class="space-y-2">
-                  <h4 class="text-sm font-semibold">Sales Methodology</h4>
-                  <ul class="text-xs text-gray-300 list-disc list-outside pl-5">
+                <div class="space-y-2 pl-5">
+                  <h4 class="text-lg font-semibold">Sales Methodology</h4>
+                  <ul class="text-xs text-gray-300 list-disc list-outside">
                     <li>Pattern interrupts to earn attention fast</li>
                     <li>Discovery that surfaces business impact early</li>
                     <li>Micro‑commitments that advance every call</li>
@@ -357,14 +357,20 @@
                 </div>
 
                 <!-- Testimonials -->
-                <div class="space-y-2">
-                  <h4 class="text-sm font-semibold">Testimonials</h4>
+                <div class="space-y-2 pl-5">
+                  <h4 class="text-lg font-semibold">Testimonials</h4>
                   <div class="text-xs text-gray-300 space-y-2">
                     <p>“Our connect rate and meetings doubled in 60 days.” — VP Sales, SaaS</p>
                     <p>“The talk tracks are simple and deadly effective.” — SDR Lead, Insurance</p>
                   </div>
-                </div>
+              <div v-if="selectedCoachForInfo?.websiteUrl" class="p-4 border-t border-gray-700 bg-gray-900/90 sticky bottom-0">
+                <a :href="selectedCoachForInfo.websiteUrl" target="_blank" rel="noopener" class="text-link text-sm flex items-center gap-2">
+                  <i class="pi pi-external-link text-sm"></i>
+                  Visit Website
+                </a>
               </div>
+            </div>
+          </div>
             </div>
           </div>
         </div>
@@ -1537,7 +1543,7 @@ const handleLooksGood = (): void => {
     // Skip phone verification for returning users or if phone was already verified
     setTimeout(() => {
       addAIMessageWithTyping([
-        'I\'ve analyzed your contact\'s phone numbers using real connection data from 900M+ calls, recent phone engagement, calling patterns, and carrier signals—so you only dial numbers likely to connect.<br><br>I\'ve prioritized the phone numbers most likely to connect so you spend time talking, not hitting dead lines.<br><br>Here\'s what I found:<br><div style="margin-left: 1em; text-indent: -1em;">• 40 numbers have \'High\' Connect Scores and show consistent calling activity in the last 12 months. These are highly likely to be connected and assigned to active subscribers.</div><br><div style="margin-left: 1em; text-indent: -1em;">• 67 numbers have \'Medium\' Connect Scores and are worth calling after you exhaust your \'High\' Connect Score numbers.</div><br><div style="margin-left: 1em; text-indent: -1em;">• 54 numbers have \'Low\' Connect Scores and are likely disconnected or inactive lines that won\'t answer when dialed.</div>'
+        'I\'ve analyzed your contact\'s phone numbers using real connection data from 900M+ calls, recent phone engagement, calling patterns, and carrier signals—so you only dial numbers likely to connect.<br><br>I\'ve prioritized the phone numbers most likely to connect so you spend time talking, not hitting dead lines.<br><br>Here\'s what I found:<br><div style="margin-left: 1em; text-indent: -1em;">• 40 numbers have \'High\' Connect Scores and show consistent calling activity in the last 12 months. These are highly likely to be connected and assigned to active subscribers.</div><br><div style="margin-left: 1em; text-indent: -1em;">�� 67 numbers have \'Medium\' Connect Scores and are worth calling after you exhaust your \'High\' Connect Score numbers.</div><br><div style="margin-left: 1em; text-indent: -1em;">• 54 numbers have \'Low\' Connect Scores and are likely disconnected or inactive lines that won\'t answer when dialed.</div>'
       ])
 
       // Skip directly to verified phone and start dialing
