@@ -270,7 +270,10 @@
                 </div>
                 <h3 class="text-2xl font-semibold truncate">{{ selectedCoachForInfo?.displayName || 'Coach' }}</h3>
               </div>
-              <Button icon="pi pi-times" text severity="secondary" @click="closeCoachInfoPanel" aria-label="Close coach info" />
+              <div class="flex items-center gap-2">
+                <Button v-if="selectedCoachForInfo" label="Select This Coach" size="small" severity="primary" @click="selectCoachFromPanel" aria-label="Select this coach" />
+                <Button icon="pi pi-times" text severity="secondary" @click="closeCoachInfoPanel" aria-label="Close coach info" />
+              </div>
             </div>
             <div class="p-4 overflow-y-auto flex-1 space-y-4">
               <div v-if="selectedCoachForInfo" class="space-y-4">
@@ -889,6 +892,12 @@ const openCoachInfoPanel = (coach: Coach): void => {
 
 const closeCoachInfoPanel = (): void => {
   showCoachInfoPanel.value = false
+}
+
+const selectCoachFromPanel = (): void => {
+  if (!selectedCoachForInfo.value) return
+  const url = generateCoachUrl(selectedCoachForInfo.value.name)
+  window.location.href = url
 }
 
 // Header Methods
