@@ -487,22 +487,8 @@ const navigateToCreateCoach = () => {
 const handleCoachCreated = async (coachData: CoachCreateData) => {
   try {
     const newCoach = await addCoach(coachData)
-    toast.add({
-      
-      severity: 'success',
-      summary: 'Coach Created',
-      detail: `${newCoach.displayName} is now available at ?coach=${newCoach.name}`,
-      life: 5000
-    })
   } catch (error) {
     console.error('Error creating coach:', error)
-    toast.add({
-      
-      severity: 'error',
-      summary: 'Error',
-      detail: 'Failed to create coach. Please try again.',
-      life: 3000
-    })
   }
 }
 
@@ -519,10 +505,6 @@ const testCoach = (coach: Coach) => {
 const copyCoachUrl = async (coach: Coach) => {
   const url = generateCoachUrl(coach.name)
   await copyToClipboard(url)
-  console.log('[CoachManagement] Attempting to show toast', url)
-  try {
-    toast.add({ severity: 'success', summary: 'Url copied', detail: url, life: 2000 })
-  } catch {}
 }
 
 
@@ -658,23 +640,13 @@ const handleEditImageDrop = (event: DragEvent) => {
 const validateAndSetEditImage = (file: File) => {
   // Validate file type
   if (!file.type.startsWith('image/')) {
-    toast.add({
-      severity: 'error',
-      summary: 'Invalid File',
-      detail: 'Please select an image file',
-      life: 3000
-    })
+    console.warn('Invalid File: Please select an image file')
     return
   }
 
   // Validate file size (2MB)
   if (file.size > 2 * 1024 * 1024) {
-    toast.add({
-      severity: 'error',
-      summary: 'File Too Large',
-      detail: 'Image must be less than 2MB',
-      life: 3000
-    })
+    console.warn('File Too Large: Image must be less than 2MB')
     return
   }
 
@@ -707,12 +679,7 @@ const saveCoachEdit = async () => {
   })()
 
   if (!hasImageChange && !hasMessageChange && !hasWebsiteChange && !onlyHighlightsChanged) {
-    toast.add({
-      severity: 'warn',
-      summary: 'No Changes',
-      detail: 'Please make changes to save',
-      life: 3000
-    })
+    console.warn('No changes to save')
     return
   }
 
@@ -746,53 +713,12 @@ const saveCoachEdit = async () => {
     const success = updateCoach(editingCoach.value.id, updates)
 
     if (success) {
-      let message = `${editingCoach.value.displayName} has been updated`
-      if (editImagePreview.value && hasMessageChange && hasWebsiteChange && hasHighlightsChange) {
-        message = `${editingCoach.value.displayName}'s avatar, welcome message, website, and highlights have been updated`
-      } else if (hasMessageChange && hasWebsiteChange && hasHighlightsChange) {
-        message = `${editingCoach.value.displayName}'s welcome message, website, and highlights have been updated`
-      } else if (editImagePreview.value && hasWebsiteChange && hasHighlightsChange) {
-        message = `${editingCoach.value.displayName}'s avatar, website, and highlights have been updated`
-      } else if (editImagePreview.value && hasMessageChange && hasHighlightsChange) {
-        message = `${editingCoach.value.displayName}'s avatar, welcome message, and highlights have been updated`
-      } else if (editImagePreview.value && hasMessageChange && hasWebsiteChange) {
-        message = `${editingCoach.value.displayName}'s avatar, welcome message, and website have been updated`
-      } else if (hasHighlightsChange) {
-        message = `${editingCoach.value.displayName}'s highlights have been updated`
-      } else if (editImagePreview.value && hasMessageChange) {
-        message = `${editingCoach.value.displayName}'s avatar and welcome message have been updated`
-      } else if (editImagePreview.value && hasWebsiteChange) {
-        message = `${editingCoach.value.displayName}'s avatar and website have been updated`
-      } else if (hasMessageChange && hasWebsiteChange) {
-        message = `${editingCoach.value.displayName}'s welcome message and website have been updated`
-      } else if (editImagePreview.value) {
-        message = `${editingCoach.value.displayName}'s avatar has been updated`
-      } else if (hasMessageChange) {
-        message = `${editingCoach.value.displayName}'s welcome message has been updated`
-      } else if (hasWebsiteChange) {
-        message = `${editingCoach.value.displayName}'s website has been updated`
-      } else if (isBrokenAvatar.value) {
-        message = `${editingCoach.value.displayName}'s broken avatar has been removed`
-      }
-
-      toast.add({
-        severity: 'success',
-        summary: 'Coach Updated',
-        detail: message,
-        life: 3000
-      })
       cancelEdit()
     } else {
       throw new Error('Failed to update coach')
     }
   } catch (error) {
     console.error('Error updating coach:', error)
-    toast.add({
-      severity: 'error',
-      summary: 'Update Failed',
-      detail: 'Failed to update coach. Please try again.',
-      life: 3000
-    })
   } finally {
     isUpdating.value = false
   }
