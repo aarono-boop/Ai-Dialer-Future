@@ -2303,8 +2303,8 @@ const addSessionSummaryToChat = (isCompleted: boolean = false): void => {
   if (!shouldCompleteQueue.value) {
     showContinueQueueButton.value = true
   } else {
-    // Show Load New File button when queue is completed
-    showLoadNewFileButton.value = true
+    // Show Load New File button when queue is completed (not in practice mode)
+    showLoadNewFileButton.value = !isPracticeMode.value
   }
 }
 
