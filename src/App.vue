@@ -2439,8 +2439,8 @@ const handleCompleteQueue = (): void => {
   // Add session summary content to chat after a delay
   setTimeout(() => {
     addSessionSummaryToChat(true)
-    // Show Load New File button
-    showLoadNewFileButton.value = true
+    // Show Load New File button (not in practice mode)
+    showLoadNewFileButton.value = !isPracticeMode.value
   }, 500)
 }
 
