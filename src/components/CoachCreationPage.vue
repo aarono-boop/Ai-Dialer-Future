@@ -408,24 +408,10 @@ const handleCreate = async () => {
     const highlights = [highlight1.value, highlight2.value].filter(h => h && h.trim().length > 0)
     emit('coach-created', { ...formData.value, highlights })
     
-    // Show success message
-    toast.add({
-      severity: 'success',
-      summary: 'Coach Created',
-      detail: `${formData.value.displayName} has been created successfully!`,
-      life: 3000
-    })
-    
     // Reset form
     resetForm()
   } catch (error) {
     console.error('Error creating coach:', error)
-    toast.add({
-      severity: 'error',
-      summary: 'Error',
-      detail: 'Failed to create coach. Please try again.',
-      life: 3000
-    })
   } finally {
     isCreating.value = false
   }
