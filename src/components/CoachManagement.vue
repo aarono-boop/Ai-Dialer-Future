@@ -558,13 +558,7 @@ const confirmDelete = (coach: Coach) => {
     acceptClass: 'p-button-danger',
     accept: () => {
       if (removeCoach(coach.id)) {
-        toast.add({
-
-          severity: 'success',
-          summary: 'Coach Deleted',
-          detail: `${coach.displayName} has been removed`,
-          life: 3000
-        })
+        // Coach deleted
       }
     }
   })
