@@ -397,7 +397,7 @@ const navigateToManagement = () => {
   // Navigate to coach management page
   const url = new URL(window.location.href)
   url.searchParams.delete('create-coach')
-  url.searchParams.set('manage-coaches', 'true')
+  url.searchParams.set('coach-admin', 'true')
   window.location.href = url.toString()
 }
 
