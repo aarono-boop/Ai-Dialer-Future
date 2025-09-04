@@ -98,7 +98,6 @@
             class="text-purple-400 hover:text-purple-300 flex items-center gap-2 text-sm"
             aria-label="Open default welcome screen in a new tab"
           >
-            <i class="pi pi-user"></i>
             <span>No Coach</span>
             <i class="pi pi-external-link text-xs"></i>
           </a>
