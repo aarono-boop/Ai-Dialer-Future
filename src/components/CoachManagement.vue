@@ -79,39 +79,19 @@
 
       <!-- Coach Grid -->
       <div class="mb-8">
-        <div class="flex justify-between items-center mb-4">
+        <div class="flex items-center gap-3 mb-4">
           <h2 class="text-xl font-semibold">Your Coaches</h2>
-          <div class="flex gap-3 items-center">
-            <Button
-              label="All Coaches"
-              icon="pi pi-users"
-              severity="secondary"
-              size="small"
-              @click="navigateToAllCoaches"
-            />
-            <!-- Export/Import Config Buttons -->
-            <Button
-              :label="exportLoading ? 'Exporting...' : 'Export Config'"
-              icon="pi pi-download"
-              severity="secondary"
-              size="small"
-              @click="handleExport"
-              :loading="exportLoading"
-            />
-            <Button
-              label="Import Config"
-              icon="pi pi-upload"
-              severity="secondary"
-              size="small"
-              @click="handleImportClick"
-            />
-            <Button
-              label="Create New Coach"
-              icon="pi pi-plus"
-              @click="navigateToCreateCoach"
-              class="bg-blue-600 hover:bg-blue-700"
-            />
-          </div>
+          <a
+            :href="`${baseUrl}?coach=all`"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="text-purple-400 hover:text-purple-300 flex items-center gap-2 text-sm"
+            aria-label="Open All Coaches in a new tab"
+          >
+            <i class="pi pi-users"></i>
+            <span>All Coaches</span>
+            <i class="pi pi-external-link text-xs"></i>
+          </a>
         </div>
 
         <div v-if="coachList.length === 0" class="text-center py-12 bg-gray-800 rounded-lg border border-gray-700">
@@ -493,12 +473,6 @@ const navigateToCreateCoach = () => {
   window.location.href = url.toString()
 }
 
-const navigateToAllCoaches = () => {
-  const url = new URL(window.location.href)
-  url.searchParams.set('coach', 'all')
-  url.searchParams.delete('create-coach')
-  window.location.href = url.toString()
-}
 
 const handleCoachCreated = async (coachData: CoachCreateData) => {
   try {
