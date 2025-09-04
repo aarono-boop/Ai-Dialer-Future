@@ -278,17 +278,6 @@
                   </div>
                 </div>
 
-                <div v-if="selectedCoachForInfo.highlights && selectedCoachForInfo.highlights.length" class="space-y-1">
-                  <label class="text-sm font-semibold">Highlights</label>
-                  <ul class="text-xs text-gray-300 list-disc list-outside pl-5">
-                    <li v-for="(h,i) in selectedCoachForInfo.highlights" :key="i">{{ h }}</li>
-                  </ul>
-                </div>
-
-                <div v-if="selectedCoachForInfo.websiteUrl">
-                  <Button as="a" :href="selectedCoachForInfo.websiteUrl" target="_blank" rel="noopener" label="Visit Website" icon="pi pi-external-link" severity="secondary" />
-                </div>
-
                 <div v-if="selectedCoachForInfo.videoId" class="space-y-2">
                   <label class="text-sm font-semibold">Intro Video</label>
                   <div class="aspect-video rounded-lg overflow-hidden bg-black/30">
@@ -300,6 +289,17 @@
                       class="w-full h-full"
                     ></iframe>
                   </div>
+                </div>
+
+                <div v-if="selectedCoachForInfo.highlights && selectedCoachForInfo.highlights.length" class="space-y-1">
+                  <label class="text-sm font-semibold">Highlights</label>
+                  <ul class="text-xs text-gray-300 list-disc list-outside pl-5">
+                    <li v-for="(h,i) in selectedCoachForInfo.highlights" :key="i">{{ h }}</li>
+                  </ul>
+                </div>
+
+                <div v-if="selectedCoachForInfo.websiteUrl">
+                  <Button as="a" :href="selectedCoachForInfo.websiteUrl" target="_blank" rel="noopener" label="Visit Website" icon="pi pi-external-link" severity="secondary" />
                 </div>
               </div>
             </div>
