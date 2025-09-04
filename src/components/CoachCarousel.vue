@@ -59,5 +59,10 @@ const useCoach = (coach: any) => {
 :deep(.p-card) {
   border-radius: 0.5rem; /* 8px */
   overflow: hidden;
+  height: 100%;
+}
+:deep(.p-card .p-card-content) {
+  height: 100%;
+  display: flex;
 }
 </style>
