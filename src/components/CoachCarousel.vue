@@ -6,14 +6,12 @@
         <div v-for="coach in coachList" :key="coach.id" class="min-w-[260px]">
           <Card class="bg-gray-800 border-gray-700 rounded-lg hover:border-gray-600 transition-colors">
             <template #content>
-              <div class="flex items-center gap-3 p-3">
-                <img v-if="coach.avatarUrl" :src="coach.avatarUrl" :alt="coach.displayName" class="w-10 h-10 rounded-full object-cover" />
-                <div v-else class="w-10 h-10 rounded-full bg-gradient-to-br from-blue-400 to-purple-500 flex items-center justify-center text-white font-semibold">
+              <div class="flex flex-col items-center gap-3 p-4">
+                <img v-if="coach.avatarUrl" :src="coach.avatarUrl" :alt="coach.displayName" class="w-20 h-20 rounded-full object-cover" />
+                <div v-else class="w-20 h-20 rounded-full bg-gradient-to-br from-blue-400 to-purple-500 flex items-center justify-center text-white font-semibold text-xl">
                   {{ coach.displayName.charAt(0) }}
                 </div>
-                <div class="min-w-0 flex-1">
-                  <p class="font-semibold truncate">{{ coach.displayName }}</p>
-                </div>
+                <p class="font-semibold text-center truncate w-full">{{ coach.displayName }}</p>
                 <Button label="Use" size="small" @click="useCoach(coach)" />
               </div>
             </template>
