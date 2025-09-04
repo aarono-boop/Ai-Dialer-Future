@@ -64,5 +64,6 @@ const useCoach = (coach: any) => {
 :deep(.p-card .p-card-content) {
   height: 100%;
   display: flex;
+  flex-direction: column;
 }
 </style>
