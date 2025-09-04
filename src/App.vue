@@ -508,6 +508,29 @@ import Button from 'primevue/button'
 // Types
 import type { Coach } from './types/coach'
 const selectedCoachFirstName = computed(() => selectedCoachForInfo.value?.displayName?.split(' ')[0] || 'Coach')
+const isPracticeMode = ref<boolean>(false)
+
+const returnToCoachesSelection = (): void => {
+  isPracticeMode.value = false
+  showDialer.value = false
+  showLoadNewFileButton.value = false
+  showContinueQueueButton.value = false
+  setCurrentCoach(null)
+  showCoachCarousel.value = true
+  currentPage.value = 'main'
+  const newUrl = `${window.location.pathname}?coach=all`
+  window.history.replaceState({}, '', newUrl)
+  messages.value = [
+    {
+      type: 'ai',
+      content: [
+        'Welcome to ARKON by PhoneBurner.<br><br>I\'m here to help you call with confidence and close more deals.<br><br>Choose your sales coach first - everything from your scripts to follow-up strategies will be tailored to their winning approach.'
+      ],
+      typing: false
+    }
+  ]
+  nextTick(() => scrollToBottom())
+}
 
 interface Message {
   type: 'ai' | 'user' | 'separator'
