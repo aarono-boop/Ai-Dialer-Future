@@ -1,6 +1,7 @@
 import { createApp } from 'vue'
 import PrimeVue from 'primevue/config'
 import ConfirmationService from 'primevue/confirmationservice'
+import Tooltip from 'primevue/tooltip'
 import { customTheme } from './design-system/tokens/primevue'
 import 'primeicons/primeicons.css'
 import App from './App.vue'
@@ -23,6 +24,8 @@ app.use(PrimeVue, {
 })
 
 app.use(ConfirmationService)
+
+app.directive('tooltip', Tooltip)
 
 app.mount('#app')
 

@@ -175,6 +175,7 @@
                       icon="pi pi-eye"
                       size="small"
                       severity="secondary"
+                      v-tooltip.top="'View'"
                       @click.stop="testCoach(coach)"
                       aria-label="Test"
                     />
