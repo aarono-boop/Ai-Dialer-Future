@@ -16,8 +16,8 @@
                   <li v-for="(h, i) in coach.highlights.slice(0, 2)" :key="i">{{ h }}</li>
                 </ul>
                 <div class="flex flex-col items-center gap-1 mt-2 w-full">
-                  <Button label="Practice Call" size="small" text class="w-auto" />
-                  <Button label="Learn More" size="small" text class="w-auto" />
+                  <a href="#" class="text-sm text-purple-400 hover:text-purple-300">Practice Call</a>
+                  <a href="#" class="text-sm text-purple-400 hover:text-purple-300">Learn More</a>
                 </div>
                 <Button label="Select" size="small" class="mt-2" @click="useCoach(coach)" />
               </div>
