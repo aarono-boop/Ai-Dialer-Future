@@ -579,14 +579,6 @@ const handleExport = async () => {
     document.body.removeChild(link)
     
     URL.revokeObjectURL(url)
-    
-    toast.add({
-      
-      severity: 'success',
-      summary: 'Export Complete',
-      detail: 'Coach configuration downloaded successfully',
-      life: 3000
-    })
   } catch (error) {
     console.error('Export error:', error)
     toast.add({
