@@ -4,7 +4,7 @@
       <Button icon="pi pi-chevron-left" text @click="scroll(-1)" aria-label="Scroll left" />
       <div ref="scroller" class="flex overflow-x-auto gap-3 px-1 py-1" style="scroll-behavior:smooth;">
         <div v-for="coach in coachList" :key="coach.id" class="min-w-[260px]">
-          <Card class="bg-gray-800 border-gray-700 rounded-lg hover:border-gray-600 transition-colors">
+          <Card class="bg-gray-800 border border-gray-700 rounded-lg hover:border-gray-600 transition-colors">
             <template #content>
               <div class="flex flex-col items-center gap-3 p-4">
                 <img v-if="coach.avatarUrl" :src="coach.avatarUrl" :alt="coach.displayName" class="w-24 h-24 rounded-full object-cover" />
@@ -12,12 +12,12 @@
                   {{ coach.displayName.charAt(0) }}
                 </div>
                 <p class="font-semibold text-center truncate w-full">{{ coach.displayName }}</p>
-                <ul v-if="coach.highlights && coach.highlights.length" class="text-xs text-gray-300 list-disc list-inside space-y-1 text-center">
+                <ul v-if="coach.highlights && coach.highlights.length" class="w-full text-xs text-gray-300 list-disc list-inside space-y-1 text-left">
                   <li v-for="(h, i) in coach.highlights.slice(0, 2)" :key="i">{{ h }}</li>
                 </ul>
-                <div class="flex items-center justify-center gap-2 mt-2">
-                  <Button label="Practice Call" size="small" text />
-                  <Button label="Learn More" size="small" text />
+                <div class="flex flex-col items-center gap-1 mt-2 w-full">
+                  <Button label="Practice Call" size="small" text class="w-auto" />
+                  <Button label="Learn More" size="small" text class="w-auto" />
                 </div>
                 <Button label="Select" size="small" class="mt-2" @click="useCoach(coach)" />
               </div>
