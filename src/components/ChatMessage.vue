@@ -5,15 +5,24 @@
     :aria-label="`${message.type === 'user' ? 'User' : 'ARKON AI'} message`"
   >
     <div v-if="message.type === 'ai'" class="flex gap-[10px] items-start w-full">
-      <div class="flex items-start justify-center flex-shrink-0 pt-1" role="img" :aria-label="shouldUseCoachAvatar() ? 'Jordan Stupar avatar' : 'ARKON AI avatar'">
-        <!-- Jordan's Avatar when coach parameter is set and not an ARKON AI system message -->
-        <img
-          v-if="shouldUseCoachAvatar()"
-          src="https://cdn.builder.io/api/v1/image/assets%2F5aeb07ce25f84dbc869290880d07b71e%2F3bddb1110d0949139407eb0dc708c7ff?format=webp&width=800"
-          alt="Jordan Stupar"
-          class="w-[26px] h-[26px] rounded-full object-cover"
-          aria-hidden="true"
-        />
+      <div class="flex items-start justify-center flex-shrink-0 pt-1" role="img" :aria-label="getAvatarLabel()">
+        <!-- Dynamic Coach Avatar when coach is set and not an ARKON AI system message -->
+        <template v-if="shouldUseCoachAvatar() && currentCoach">
+          <img
+            v-if="currentCoach.avatarUrl"
+            :src="currentCoach.avatarUrl"
+            :alt="currentCoach.displayName"
+            class="w-[26px] h-[26px] rounded-full object-cover"
+            aria-hidden="true"
+          />
+          <div
+            v-else
+            class="w-[26px] h-[26px] rounded-full bg-gradient-to-br from-blue-400 to-purple-500 flex items-center justify-center text-white text-xs font-semibold"
+            aria-hidden="true"
+          >
+            {{ getCoachInitials(currentCoach.displayName) }}
+          </div>
+        </template>
         <!-- Default ARKON AI Avatar -->
         <div
           v-else
@@ -33,8 +42,15 @@
         role="region"
         aria-label="AI message content"
       >
-        <div v-if="message.typing" v-for="(line, lineIndex) in typedContent" :key="`typed-${lineIndex}`" v-html="line"></div>
-        <div v-else v-for="(line, lineIndex) in message.content" :key="lineIndex" v-html="line"></div>
+        <template v-for="(item, itemIndex) in processedContent" :key="`processed-${itemIndex}`">
+          <div v-if="item.type === 'text' && item.content.trim()" v-html="item.content"></div>
+          <YouTubeVideo
+            v-else-if="item.type === 'video' && item.videoId"
+            :video-id="item.videoId"
+            :autoplay="item.autoplay || false"
+            title="Coach Introduction Video"
+          />
+        </template>
         <slot name="additional-content"></slot>
       </div>
     </div>
@@ -59,7 +75,9 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted } from 'vue'
+import { ref, onMounted, onUnmounted, computed } from 'vue'
+import YouTubeVideo from './YouTubeVideo.vue'
+import { useCoaches } from '../composables/useCoaches'
 
 // Types
 interface Message {
@@ -82,10 +100,69 @@ const emit = defineEmits<{
   typingComplete: []
 }>()
 
+// Coach system integration
+const { currentCoach } = useCoaches()
+
 // Typing animation state
 const typedContent = ref<string[]>(props.message.typing ? props.message.content.map(() => '') : [])
 const isTyping = ref(false)
 let typingInterval: NodeJS.Timeout | null = null
+
+// Helper methods
+const getCoachInitials = (name: string): string => {
+  return name
+    .split(' ')
+    .map(word => word.charAt(0))
+    .join('')
+    .toUpperCase()
+    .slice(0, 2)
+}
+
+const getAvatarLabel = (): string => {
+  if (shouldUseCoachAvatar() && currentCoach.value) {
+    return `${currentCoach.value.displayName} avatar`
+  }
+  return 'ARKON AI avatar'
+}
+
+// Process message content to extract video information
+const processedContent = computed(() => {
+  const content = props.message.typing ? typedContent.value : props.message.content
+  const processedLines: Array<{type: 'text' | 'video', content: string, videoId?: string, autoplay?: boolean}> = []
+
+  content.forEach(line => {
+    const videoMatch = line.match(/<div class="coach-video-container" data-video-id="([^"]+)" data-autoplay="([^"]+)"><\/div>/)
+
+    if (videoMatch) {
+      // Split the line into parts before and after the video
+      const beforeVideo = line.substring(0, line.indexOf(videoMatch[0]))
+      const afterVideo = line.substring(line.indexOf(videoMatch[0]) + videoMatch[0].length)
+
+      // Add text before video if it exists
+      if (beforeVideo.trim()) {
+        processedLines.push({type: 'text', content: beforeVideo})
+      }
+
+      // Add video
+      processedLines.push({
+        type: 'video',
+        content: '',
+        videoId: videoMatch[1],
+        autoplay: videoMatch[2] === 'true'
+      })
+
+      // Add text after video if it exists
+      if (afterVideo.trim()) {
+        processedLines.push({type: 'text', content: afterVideo})
+      }
+    } else {
+      // Regular text line
+      processedLines.push({type: 'text', content: line})
+    }
+  })
+
+  return processedLines
+})
 
 // Start typing animation
 const startTypingAnimation = (): void => {
@@ -178,8 +255,8 @@ const shouldUseCoachAvatar = (): boolean => {
     return false
   }
 
-  // Only use coach avatar if coach parameter is set
-  if (props.coachParameter !== 'jordan-stupar') {
+  // Only use coach avatar if a coach is currently selected
+  if (!currentCoach.value) {
     return false
   }
 
@@ -202,6 +279,7 @@ const shouldUseCoachAvatar = (): boolean => {
     messageText.includes('Please select a call outcome') ||
     messageText.includes('Congratulations! You have completed your entire call queue') ||
     messageText.includes('Queue Completed!') ||
+    messageText.includes('Queue Paused!') ||
     messageText.includes('successfully upgraded to the Pro plan') ||
     messageText.includes('analyzed your') && messageText.includes('contacts') ||
     messageText.includes('Connect Score') ||

@@ -14,7 +14,7 @@
     />
 
     <!-- Main App Content -->
-    <main v-if="currentPage === 'main'" class="ml-16 flex-1 flex items-start justify-center p-8 relative z-[5]" :style="showDialer ? 'margin-right: 33.333333%' : ''">
+    <main v-if="currentPage === 'main' && !managementMode" class="ml-16 flex-1 flex items-start justify-center p-8 relative z-[5]" :style="showDialer ? 'margin-right: 33.333333%' : ''">
       <div class="flex gap-6 w-full max-w-[1400px] h-[80vh] mt-2.5">
         <!-- Chat Container -->
         <div class="w-full max-w-6xl mx-auto rounded-xl px-5">
@@ -284,8 +284,18 @@
       />
     </div>
 
+    <!-- Coach Management Interface -->
+    <CoachManagement v-if="managementMode === 'admin' && currentPage === 'main'" />
+
+    <!-- Coach Creation Page for create-coach URL -->
+    <CoachCreationPage
+      v-if="managementMode === 'create'"
+      @coach-created="handleCoachCreated"
+      @cancel="handleCoachModalClose"
+    />
+
     <!-- Footer -->
-    <Footer v-if="currentPage === 'main'" :style="showDialer ? 'margin-right: 33.333333%' : ''" :showDialer="showDialer" :queuePaused="queuePaused" @skip-to-dialer="skipToDialer" />
+    <Footer v-if="currentPage === 'main' && !managementMode" :style="showDialer ? 'margin-right: 33.333333%' : ''" :showDialer="showDialer" :queuePaused="queuePaused" @skip-to-dialer="skipToDialer" />
 
     <!-- Screen Reader Live Region for Announcements -->
     <div
@@ -354,6 +364,8 @@ import { showContactPreview } from './utils/contactPreview'
 import { clearFocusAndEstablishContext, focusChatInput, announceToScreenReader } from './utils/focus'
 import { createChatUtils, type Message } from './utils/chat'
 import { getResponseForKeywords, AI_RESPONSES } from './utils/aiResponses'
+import { useCoaches } from './composables/useCoaches'
+import type { CoachManagementMode, CoachCreateData } from './types/coach'
 
 // Components
 import Sidebar from './components/Sidebar.vue'
@@ -372,6 +384,9 @@ import PaymentPage from './components/PaymentPage.vue'
 import Footer from './components/Footer.vue'
 import Dialer from './components/Dialer.vue'
 import CallSeparator from './components/CallSeparator.vue'
+import YouTubeVideo from './components/YouTubeVideo.vue'
+import CoachManagement from './components/CoachManagement.vue'
+import CoachCreationPage from './components/CoachCreationPage.vue'
 
 // PrimeVue Components (adding Button)
 import Button from 'primevue/button'
@@ -539,8 +554,21 @@ const isManualHangUp = ref<boolean>(false) // Track if hang up was manual vs aut
 const queueTime = ref<number>(14)
 const showLoadNewFileButton = ref<boolean>(false)
 
-// Coach parameter for AI Coach functionality
-const coachParameter = ref<string>('')
+// Initialize coach management system
+const {
+  currentCoachId,
+  currentCoach,
+  welcomeMessage,
+  managementMode,
+  setCurrentCoach,
+  setManagementMode,
+  addCoach,
+  coachList,
+  generateCoachUrl
+} = useCoaches()
+
+// Computed to maintain compatibility with existing code
+const coachParameter = computed(() => currentCoachId.value || '')
 
 // Contact data
 const contacts = [
@@ -631,20 +659,8 @@ const isVoicemailScenario = computed(() => {
   return currentContact.value && currentContact.value.name === 'George Sample'
 })
 
-// Coach-specific welcome messages
-const getCoachWelcomeMessage = computed(() => {
-  if (!coachParameter.value) {
-    return 'Welcome to <strong>ARKON</strong>, your AI calling assistant.<br><br>Drop your contact file here and I\'ll show you exactly who\'s most likely to pick up right now.'
-  }
-
-  // Coach-specific welcome messages
-  const coachMessages: Record<string, string> = {
-    'jordan-stupar': 'Welcome to <strong>ARKON</strong>! I\'m your AI calling assistant, trained with <strong>Jordan Stupar\'s</strong> proven sales methodologies.<br><br>Drop your contact file here and I\'ll show you exactly who\'s most likely to pick up right now using Jordan\'s approach.',
-    // Add more coaches as needed
-  }
-
-  return coachMessages[coachParameter.value] || `Welcome to <strong>ARKON</strong>! I'm your AI calling assistant, enhanced with your coach's proven methodologies.<br><br>Drop your contact file here and I\'ll show you exactly who\'s most likely to pick up right now.`
-})
+// Use the welcome message from the coach system
+const getCoachWelcomeMessage = welcomeMessage
 
 // Chat messages array
 const messages: Ref<Message[]> = ref([
@@ -1897,12 +1913,25 @@ const toggleCallLog = (uniqueId?: string): void => {
 
 // Ensure functions are available on mount
 onMounted(() => {
-  // Parse URL parameters for coach functionality
+  // Parse URL parameters for coach functionality and management modes
   const urlParams = new URLSearchParams(window.location.search)
   const coach = urlParams.get('coach')
+  const createCoach = urlParams.get('create-coach')
+  const coachAdmin = urlParams.get('coach-admin')
+
+  // Set coach if specified
   if (coach) {
-    coachParameter.value = coach
+    setCurrentCoach(coach)
     console.log('Coach parameter detected:', coach)
+  }
+
+  // Set management mode based on URL parameters
+  if (createCoach === 'true') {
+    setManagementMode('create')
+    console.log('Coach creation mode enabled')
+  } else if (coachAdmin) {
+    setManagementMode('admin')
+    console.log('Coach admin mode enabled')
   }
 
   // Set the initial welcome message based on coach parameter
@@ -1923,6 +1952,26 @@ onUnmounted(() => {
   delete (window as any).toggleCallLog
 })
 
+// Helper functions for session summary
+const getCoachAvatarHtml = (): string => {
+  if (currentCoach.value?.avatarUrl) {
+    return `<img src="${currentCoach.value.avatarUrl}" alt="${currentCoach.value.displayName}" style="width: 18px; height: 18px; border-radius: 50%; object-fit: cover; margin-right: 8px;">`
+  } else if (currentCoach.value) {
+    const initials = currentCoach.value.displayName
+      .split(' ')
+      .map(word => word.charAt(0))
+      .join('')
+      .toUpperCase()
+      .slice(0, 2)
+    return `<div style="width: 18px; height: 18px; border-radius: 50%; background: linear-gradient(135deg, #60a5fa 0%, #7b68ee 100%); display: inline-flex; align-items: center; justify-content: center; margin-right: 8px; font-size: 10px; font-weight: bold; color: white;">${initials}</div>`
+  }
+  return '<i class="pi pi-check-circle" style="margin-right: 8px;"></i>'
+}
+
+const getCoachTitle = (): string => {
+  return currentCoach.value ? `${currentCoach.value.displayName}'s Session Recap` : 'AI Coaching'
+}
+
 const addSessionSummaryToChat = (isCompleted: boolean = false): void => {
   // Create session summary content as HTML
   const title = isCompleted ? 'Queue Completed!' : 'Queue Paused!'
@@ -1935,7 +1984,7 @@ const addSessionSummaryToChat = (isCompleted: boolean = false): void => {
       <!-- Results & Next Steps Section - only show coaching if AI Coach is enabled -->
       ${aiCoachEnabled.value ? `
       <div style="margin-bottom: 32px;">
-        <h3 style="color: white; font-size: 18px; font-weight: 600; margin-bottom: 16px; display: flex; align-items: center;">${coachParameter.value === 'jordan-stupar' ? '<img src="https://cdn.builder.io/api/v1/image/assets%2F5aeb07ce25f84dbc869290880d07b71e%2F3bddb1110d0949139407eb0dc708c7ff?format=webp&width=800" alt="Jordan Stupar" style="width: 18px; height: 18px; border-radius: 50%; object-fit: cover; margin-right: 8px;">' : '<i class="pi pi-check-circle" style="margin-right: 8px;"></i>'}${coachParameter.value === 'jordan-stupar' ? 'Jordan\'s Session Recap' : 'AI Coaching'}</h3>
+        <h3 style="color: white; font-size: 18px; font-weight: 600; margin-bottom: 16px; display: flex; align-items: center;">${getCoachAvatarHtml()}${getCoachTitle()}</h3>
         <div style="background-color: rgb(55, 65, 81); border-radius: 8px; padding: 20px;">
           <div style="color: rgb(209, 213, 219); font-size: 14px; font-weight: normal; line-height: 1.5;">
             ${isCompleted ?
@@ -2513,6 +2562,23 @@ const handleActionButton = (action: string): void => {
 
       // Contact preview buttons will be shown automatically when typing completes
   }, 1500) // Increased delay to ensure user message scroll completes
+}
+
+// Coach Management Methods
+const handleCoachCreated = async (coachData: any) => {
+  try {
+    const newCoach = await addCoach(coachData)
+    // Redirect to the new coach's page
+    const newUrl = generateCoachUrl(newCoach.name)
+    window.location.href = newUrl
+  } catch (error) {
+    console.error('Error creating coach:', error)
+  }
+}
+
+const handleCoachModalClose = () => {
+  // Simply set management mode to null for testing
+  setManagementMode(null)
 }
 
 // Lifecycle hook to establish focus context when app loads
