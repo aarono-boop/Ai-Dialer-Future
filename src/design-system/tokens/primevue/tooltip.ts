@@ -8,7 +8,7 @@ export default {
     borderRadius: '{border.radius.md}',
     padding: '0.25rem 0.5rem',
     shadow: '{overlay.popover.shadow}',
-    fontSize: '{form.field.sm.font.size}'
+    fontSize: '{form.field.xs.font.size}'
   },
   arrow: {
     size: '6px'
