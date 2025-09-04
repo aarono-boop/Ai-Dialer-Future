@@ -2,11 +2,11 @@
   <div class="w-full">
     <div class="flex items-center gap-2 mt-[20px]">
       <Button icon="pi pi-chevron-left" text @click="scroll(-1)" aria-label="Scroll left" />
-      <div ref="scroller" class="flex overflow-x-auto gap-3 px-1 py-1" style="scroll-behavior:smooth;">
-        <div v-for="coach in coachList" :key="coach.id" class="min-w-[260px]">
-          <Card class="bg-gray-800 border border-gray-600 rounded-lg hover:border-gray-500 transition-colors">
+      <div ref="scroller" class="flex items-stretch overflow-x-auto gap-3 px-1 py-1" style="scroll-behavior:smooth;">
+        <div v-for="coach in coachList" :key="coach.id" class="min-w-[260px] flex">
+          <Card class="bg-gray-800 border border-gray-600 rounded-lg hover:border-gray-500 transition-colors h-full w-full">
             <template #content>
-              <div class="flex flex-col items-center gap-3 p-4">
+              <div class="flex flex-col justify-between items-center gap-3 p-4 h-full min-h-[320px]">
                 <img v-if="coach.avatarUrl" :src="coach.avatarUrl" :alt="coach.displayName" class="w-24 h-24 rounded-full object-cover" />
                 <div v-else class="w-24 h-24 rounded-full bg-gradient-to-br from-blue-400 to-purple-500 flex items-center justify-center text-white font-semibold text-2xl">
                   {{ coach.displayName.charAt(0) }}
