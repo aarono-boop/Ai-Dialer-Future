@@ -15,6 +15,10 @@
                 <ul v-if="coach.highlights && coach.highlights.length" class="text-xs text-gray-300 list-disc list-inside space-y-1 text-center">
                   <li v-for="(h, i) in coach.highlights.slice(0, 2)" :key="i">{{ h }}</li>
                 </ul>
+                <div class="flex items-center justify-center gap-2 mt-2">
+                  <Button label="Practice Call" size="small" text />
+                  <Button label="Learn More" size="small" text />
+                </div>
                 <Button label="Select" size="small" class="mt-2" @click="useCoach(coach)" />
               </div>
             </template>
