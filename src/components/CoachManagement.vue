@@ -520,10 +520,11 @@ const copyCoachUrl = async (coach: Coach) => {
   const url = generateCoachUrl(coach.name)
   await copyToClipboard(url)
   toast.add({
-    
     severity: 'success',
     summary: 'Url copied',
-    life: 2000
+    detail: url,
+    life: 5000,
+    closable: true
   })
 }
 
