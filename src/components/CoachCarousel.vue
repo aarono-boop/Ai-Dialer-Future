@@ -3,7 +3,7 @@
     <div class="flex items-center gap-2 mt-[20px]">
       <Button icon="pi pi-chevron-left" text @click="scroll(-1)" aria-label="Scroll left" />
       <div ref="scroller" class="flex items-stretch overflow-x-auto gap-3 px-1 py-1" style="scroll-behavior:smooth;">
-        <div v-for="coach in coachList" :key="coach.id" class="min-w-[260px] flex">
+        <div v-for="coach in coachList" :key="coach.id" class="min-w-[260px] flex coach-item">
           <Card class="bg-gray-800 border border-gray-600 rounded-lg hover:border-gray-500 transition-colors h-full w-full">
             <template #content>
               <div class="flex flex-col items-center gap-3 p-4 h-full min-h-[320px]">
@@ -50,8 +50,20 @@ const emit = defineEmits<{
 const { coachList, generateCoachUrl } = useCoaches()
 
 const scroller = ref<HTMLElement | null>(null)
+const getStep = (): number => {
+  const el = scroller.value
+  if (!el) return 0
+  const firstItem = el.querySelector<HTMLElement>('.coach-item')
+  if (!firstItem) return 0
+  const itemWidth = firstItem.getBoundingClientRect().width
+  const gap = parseFloat(getComputedStyle(el).columnGap || getComputedStyle(el).gap || '0')
+  return (itemWidth + (isNaN(gap) ? 0 : gap)) * 3
+}
 const scroll = (dir: number) => {
-  if (scroller.value) scroller.value.scrollBy({ left: dir * 300, behavior: 'smooth' })
+  const el = scroller.value
+  if (!el) return
+  const step = getStep() || 900 // fallback approx
+  el.scrollBy({ left: dir * step, behavior: 'smooth' })
 }
 
 const openCoachInfo = (coach: Coach) => {
