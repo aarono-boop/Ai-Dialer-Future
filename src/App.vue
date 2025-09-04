@@ -274,7 +274,6 @@
             </div>
             <div class="p-4 overflow-y-auto flex-1 space-y-4">
               <div v-if="selectedCoachForInfo" class="space-y-4">
-                <p class="text-sm text-gray-300">?coach={{ selectedCoachForInfo.name }}</p>
 
                 <div v-if="selectedCoachForInfo.videoId" class="space-y-2">
                   <label class="text-sm font-semibold">Intro Video</label>
