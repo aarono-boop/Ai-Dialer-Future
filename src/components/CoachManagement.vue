@@ -182,7 +182,8 @@
                       icon="pi pi-copy"
                       size="small"
                       severity="secondary"
-                      @click.stop="copyCoachUrl(coach)"
+                      v-tooltip.top="'Copied!'"
+                      @click.stop="onCopyClick(coach, $event)"
                       aria-label="Copy URL"
                     />
                     <Button
