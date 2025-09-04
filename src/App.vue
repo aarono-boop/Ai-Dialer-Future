@@ -268,7 +268,7 @@
                 <div v-else class="w-24 h-24 rounded-full bg-gradient-to-br from-blue-400 to-purple-500 flex items-center justify-center text-white font-semibold text-3xl">
                   {{ selectedCoachForInfo?.displayName?.charAt(0) || 'C' }}
                 </div>
-                <h3 class="text-lg font-semibold truncate">{{ selectedCoachForInfo?.displayName || 'Coach' }}</h3>
+                <h3 class="text-2xl font-semibold truncate">{{ selectedCoachForInfo?.displayName || 'Coach' }}</h3>
               </div>
               <Button icon="pi pi-times" text severity="secondary" @click="closeCoachInfoPanel" aria-label="Close coach info" />
             </div>
