@@ -408,8 +408,6 @@
       @change="handleImport"
     />
 
-    <!-- Local Toast container -->
-    <Toast class="z-[9999]" group="coach" position="top-right" />
   </div>
 </template>
 
@@ -422,7 +420,6 @@ import Dialog from 'primevue/dialog'
 import Textarea from 'primevue/textarea'
 import InputText from 'primevue/inputtext'
 import ConfirmDialog from 'primevue/confirmdialog'
-import Toast from 'primevue/toast'
 import { useConfirm } from 'primevue/useconfirm'
 import { useToast } from 'primevue/usetoast'
 import type { Coach, CoachCreateData } from '../types/coach'
@@ -491,7 +488,7 @@ const handleCoachCreated = async (coachData: CoachCreateData) => {
   try {
     const newCoach = await addCoach(coachData)
     toast.add({
-      group: 'coach',
+      
       severity: 'success',
       summary: 'Coach Created',
       detail: `${newCoach.displayName} is now available at ?coach=${newCoach.name}`,
@@ -500,7 +497,7 @@ const handleCoachCreated = async (coachData: CoachCreateData) => {
   } catch (error) {
     console.error('Error creating coach:', error)
     toast.add({
-      group: 'coach',
+      
       severity: 'error',
       summary: 'Error',
       detail: 'Failed to create coach. Please try again.',
@@ -523,7 +520,7 @@ const copyCoachUrl = async (coach: Coach) => {
   const url = generateCoachUrl(coach.name)
   await copyToClipboard(url)
   toast.add({
-    group: 'coach',
+    
     severity: 'success',
     summary: 'Url copied',
     life: 2000
@@ -553,7 +550,7 @@ const confirmDelete = (coach: Coach) => {
     accept: () => {
       if (removeCoach(coach.id)) {
         toast.add({
-          group: 'coach',
+          
           severity: 'success',
           summary: 'Coach Deleted',
           detail: `${coach.displayName} has been removed`,
@@ -581,7 +578,7 @@ const handleExport = async () => {
     URL.revokeObjectURL(url)
     
     toast.add({
-      group: 'coach',
+      
       severity: 'success',
       summary: 'Export Complete',
       detail: 'Coach configuration downloaded successfully',
@@ -590,7 +587,7 @@ const handleExport = async () => {
   } catch (error) {
     console.error('Export error:', error)
     toast.add({
-      group: 'coach',
+      
       severity: 'error',
       summary: 'Export Failed',
       detail: 'Failed to export coach configuration',
@@ -615,7 +612,7 @@ const handleImport = (event: Event) => {
       const content = e.target?.result as string
       if (importCoaches(content)) {
         toast.add({
-          group: 'coach',
+          
           severity: 'success',
           summary: 'Import Complete',
           detail: 'Coach configuration imported successfully',
@@ -627,7 +624,7 @@ const handleImport = (event: Event) => {
     } catch (error) {
       console.error('Import error:', error)
       toast.add({
-        group: 'coach',
+        
         severity: 'error',
         summary: 'Import Failed',
         detail: 'Failed to import coach configuration. Please check the file format.',
