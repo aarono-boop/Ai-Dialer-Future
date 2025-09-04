@@ -391,6 +391,8 @@ const resetForm = () => {
     avatarFile: undefined,
     customMessage: ''
   }
+  highlight1.value = ''
+  highlight2.value = ''
   errors.value = {}
   imagePreview.value = null
   isCreating.value = false
