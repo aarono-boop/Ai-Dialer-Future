@@ -206,7 +206,7 @@
           </div>
 
           <!-- Load New File Button - shown when queue is completed -->
-          <div v-if="showLoadNewFileButton || (isPracticeMode && showSessionSummary)" class="mt-2 pt-5 flex justify-center">
+          <div v-if="showLoadNewFileButton || (isPracticeMode && !showDialer)" class="mt-2 pt-5 flex justify-center">
             <div class="w-[70%] flex justify-center">
               <Button
                 v-if="!isPracticeMode"
