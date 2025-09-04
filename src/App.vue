@@ -893,12 +893,7 @@ const handleLogout = () => {
 }
 
 const handleSwitchToVulcan = () => {
-  toast.add({
-    severity: 'info',
-    summary: 'Switch to Vulcan',
-    detail: 'Switching to Vulcan...',
-    life: 3000
-  })
+  console.log('Switch to Vulcan')
 }
 
 const showProductPage = () => {
