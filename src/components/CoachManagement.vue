@@ -409,7 +409,7 @@
     />
 
     <!-- Local Toast container -->
-    <Toast />
+    <Toast class="z-[9999]" />
   </div>
 </template>
 
