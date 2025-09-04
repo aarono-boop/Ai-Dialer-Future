@@ -285,7 +285,7 @@
     </div>
 
     <!-- Coach Management Interface -->
-    <CoachManagement v-if="(managementMode === 'manage' || managementMode === 'admin') && currentPage === 'main'" />
+    <CoachManagement v-if="managementMode === 'admin' && currentPage === 'main'" />
 
     <!-- Coach Creation Page for create-coach URL -->
     <CoachCreationPage
@@ -1917,7 +1917,6 @@ onMounted(() => {
   const urlParams = new URLSearchParams(window.location.search)
   const coach = urlParams.get('coach')
   const createCoach = urlParams.get('create-coach')
-  const manageCoaches = urlParams.get('manage-coaches')
   const coachAdmin = urlParams.get('coach-admin')
 
   // Set coach if specified
@@ -1930,9 +1929,6 @@ onMounted(() => {
   if (createCoach === 'true') {
     setManagementMode('create')
     console.log('Coach creation mode enabled')
-  } else if (manageCoaches === 'true') {
-    setManagementMode('manage')
-    console.log('Coach management mode enabled')
   } else if (coachAdmin) {
     setManagementMode('admin')
     console.log('Coach admin mode enabled')
