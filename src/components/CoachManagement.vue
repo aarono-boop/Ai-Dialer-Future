@@ -518,9 +518,8 @@ const copyCoachUrl = async (coach: Coach) => {
   await copyToClipboard(url)
   toast.add({
     severity: 'success',
-    summary: 'URL Copied',
-    detail: `Coach URL for ${coach.displayName} copied to clipboard`,
-    life: 3000
+    summary: 'Url copied',
+    life: 2000
   })
 }
 
