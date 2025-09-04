@@ -170,7 +170,7 @@
                   </div>
 
                   <!-- Actions -->
-                  <div class="flex gap-2">
+                  <div class="flex gap-2 items-center">
                     <Button
                       icon="pi pi-eye"
                       size="small"
@@ -182,12 +182,9 @@
                       icon="pi pi-copy"
                       size="small"
                       severity="secondary"
-                      @click.stop="onCopyClick(coach, $event)"
+                      @click.stop="onCopyClick(coach)"
                       aria-label="Copy URL"
                     />
-                    <OverlayPanel :ref="el => setCopyPanelRef(coach.id, el)" :dismissable="false" :showCloseIcon="false">
-                      <span>Copied!</span>
-                    </OverlayPanel>
                     <Button
                       v-if="coach.createdBy !== 'system'"
                       icon="pi pi-pencil"
@@ -203,6 +200,7 @@
                       severity="danger"
                       @click.stop="confirmDelete(coach)"
                     />
+                    <Message v-if="copiedCoachId === coach.id" severity="success" class="text-xs px-2 py-1">Copied</Message>
                   </div>
                 </div>
               </div>
