@@ -429,7 +429,8 @@ const hasChanges = computed(() => {
   if (!editingCoach.value) return false
   const hasImageChange = editImagePreview.value || isBrokenAvatar.value
   const hasMessageChange = editCustomMessage.value !== (editingCoach.value.welcomeMessage || '')
-  return hasImageChange || hasMessageChange
+  const hasWebsiteChange = editWebsiteUrl.value !== (editingCoach.value.websiteUrl || '')
+  return hasImageChange || hasMessageChange || hasWebsiteChange
 })
 
 // Methods
