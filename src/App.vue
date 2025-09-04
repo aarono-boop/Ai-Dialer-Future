@@ -288,8 +288,8 @@
                 </div>
 
                 <div v-if="selectedCoachForInfo.highlights && selectedCoachForInfo.highlights.length" class="space-y-1 pl-5">
-                  <label class="text-lg font-semibold">Highlights</label>
-                  <ul class="text-xs text-gray-300 list-disc list-outside">
+                  <label class="text-xl font-semibold">Highlights</label>
+                  <ul class="text-xs text-gray-300 list-disc list-inside">
                     <li v-for="(h,i) in selectedCoachForInfo.highlights" :key="i">{{ h }}</li>
                   </ul>
                 </div>
@@ -297,8 +297,8 @@
 
                 <!-- Basic Information -->
                 <div class="space-y-2 pl-5">
-                  <h4 class="text-lg font-semibold">Basic Information</h4>
-                  <ul class="text-xs text-gray-300 list-disc list-outside">
+                  <h4 class="text-xl font-semibold">Basic Information</h4>
+                  <ul class="text-xs text-gray-300 list-disc list-inside">
                     <li>Role: Sales Coach & Speaker</li>
                     <li>Experience: 12+ years</li>
                     <li>Signature Program: Momentum Calls Framework</li>
@@ -307,8 +307,8 @@
 
                 <!-- Key Statistics -->
                 <div class="space-y-2 pl-5">
-                  <h4 class="text-lg font-semibold">Key Statistics</h4>
-                  <ul class="text-xs text-gray-300 list-disc list-outside">
+                  <h4 class="text-xl font-semibold">Key Statistics</h4>
+                  <ul class="text-xs text-gray-300 list-disc list-inside">
                     <li>Avg. connect-rate lift: 27%</li>
                     <li>Time-to-first-meeting reduced: 34%</li>
                     <li>Teams coached: 250+; reps impacted: 10,000+</li>
@@ -317,8 +317,8 @@
 
                 <!-- Platform Impact -->
                 <div class="space-y-2 pl-5">
-                  <h4 class="text-lg font-semibold">Platform Impact</h4>
-                  <ul class="text-xs text-gray-300 list-disc list-outside">
+                  <h4 class="text-xl font-semibold">Platform Impact</h4>
+                  <ul class="text-xs text-gray-300 list-disc list-inside">
                     <li>Prioritizes best-time-to-call windows</li>
                     <li>Applies objection handling snippets in real time</li>
                     <li>Auto-generates follow-up tasks with proven cadences</li>
@@ -327,14 +327,14 @@
 
                 <!-- About Coach -->
                 <div class="space-y-2 pl-5">
-                  <h4 class="text-lg font-semibold">About {{ selectedCoachFirstName }}</h4>
+                  <h4 class="text-xl font-semibold">About {{ selectedCoachFirstName }}</h4>
                   <p class="text-xs text-gray-300">{{ selectedCoachFirstName }} is known for disciplined daily call blocks, clean qualification, and tight follow‑up cycles. Their approach balances energy with structure so reps stay consistent and close more.</p>
                 </div>
 
                 <!-- Industries Served -->
                 <div class="space-y-2 pl-5">
-                  <h4 class="text-lg font-semibold">Industries Served</h4>
-                  <ul class="text-xs text-gray-300 list-disc list-outside">
+                  <h4 class="text-xl font-semibold">Industries Served</h4>
+                  <ul class="text-xs text-gray-300 list-disc list-inside">
                     <li>SaaS</li>
                     <li>Insurance & Financial Services</li>
                     <li>Real Estate</li>
@@ -345,8 +345,8 @@
 
                 <!-- Sales Methodology -->
                 <div class="space-y-2 pl-5">
-                  <h4 class="text-lg font-semibold">Sales Methodology</h4>
-                  <ul class="text-xs text-gray-300 list-disc list-outside">
+                  <h4 class="text-xl font-semibold">Sales Methodology</h4>
+                  <ul class="text-xs text-gray-300 list-disc list-inside">
                     <li>Pattern interrupts to earn attention fast</li>
                     <li>Discovery that surfaces business impact early</li>
                     <li>Micro‑commitments that advance every call</li>
@@ -355,7 +355,7 @@
 
                 <!-- Testimonials -->
                 <div class="space-y-2 pl-5">
-                  <h4 class="text-lg font-semibold">Testimonials</h4>
+                  <h4 class="text-xl font-semibold">Testimonials</h4>
                   <div class="text-xs text-gray-300 space-y-2">
                     <p>“Our connect rate and meetings doubled in 60 days.” — VP Sales, SaaS</p>
                     <p>“The talk tracks are simple and deadly effective.” — SDR Lead, Insurance</p>
@@ -520,7 +520,7 @@ const getDynamicCoachingFeedback = (): string => {
   const coachingMessages = [
     'Great connection! I heard you building rapport early—that\'s your sweet spot. Next call, try mirroring their pace a bit more to deepen that connection.',
     'Nice work staying patient through their objections. I noticed you got stronger as the call progressed. Carry that momentum into the next one.',
-    'You handled that beautifully! Your confidence really came through. Next time, try asking one more discovery question before presenting—it\'ll make your close even stronger.',
+    'You handled that beautifully! Your confidence really came through. Next time, try asking one more discovery question before presenting���it\'ll make your close even stronger.',
     'I loved how you listened for their pain points. Your empathy is one of your strongest assets. Now let\'s work on creating more urgency in your next call.',
     'Solid call! You kept them engaged throughout. I\'d love to see you slow down just a touch during the value proposition—let it sink in.',
     'That was textbook rapport building! Your energy is infectious. Next call, try to qualify their budget earlier in the conversation.',
