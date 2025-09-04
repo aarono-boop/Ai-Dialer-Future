@@ -6,20 +6,26 @@
         <div v-for="coach in coachList" :key="coach.id" class="min-w-[260px] flex">
           <Card class="bg-gray-800 border border-gray-600 rounded-lg hover:border-gray-500 transition-colors h-full w-full">
             <template #content>
-              <div class="flex flex-col justify-between items-center gap-3 p-4 h-full min-h-[320px]">
-                <img v-if="coach.avatarUrl" :src="coach.avatarUrl" :alt="coach.displayName" class="w-24 h-24 rounded-full object-cover" />
-                <div v-else class="w-24 h-24 rounded-full bg-gradient-to-br from-blue-400 to-purple-500 flex items-center justify-center text-white font-semibold text-2xl">
-                  {{ coach.displayName.charAt(0) }}
+              <div class="flex flex-col items-center gap-3 p-4 h-full min-h-[320px]">
+                <div class="flex flex-col items-center gap-3 w-full flex-1">
+                  <img v-if="coach.avatarUrl" :src="coach.avatarUrl" :alt="coach.displayName" class="w-24 h-24 rounded-full object-cover" />
+                  <div v-else class="w-24 h-24 rounded-full bg-gradient-to-br from-blue-400 to-purple-500 flex items-center justify-center text-white font-semibold text-2xl">
+                    {{ coach.displayName.charAt(0) }}
+                  </div>
+                  <p class="font-semibold text-center truncate w-full">{{ coach.displayName }}</p>
+                  <ul v-if="coach.highlights && coach.highlights.length" class="w-full text-xs text-gray-300 list-disc list-inside space-y-1 text-left">
+                    <li v-for="(h, i) in coach.highlights.slice(0, 2)" :key="i">{{ h }}</li>
+                  </ul>
                 </div>
-                <p class="font-semibold text-center truncate w-full">{{ coach.displayName }}</p>
-                <ul v-if="coach.highlights && coach.highlights.length" class="w-full text-xs text-gray-300 list-disc list-inside space-y-1 text-left">
-                  <li v-for="(h, i) in coach.highlights.slice(0, 2)" :key="i">{{ h }}</li>
-                </ul>
-                <div class="flex flex-col items-center gap-1 mt-2 w-full">
-                  <a href="#" class="text-sm text-purple-400 hover:text-purple-300">Practice Call</a>
-                  <a href="#" class="text-sm text-purple-400 hover:text-purple-300">Learn More</a>
+                <div class="w-full mt-auto">
+                  <div class="flex flex-col items-center gap-1 w-full">
+                    <a href="#" class="text-sm text-purple-400 hover:text-purple-300">Practice Call</a>
+                    <a href="#" class="text-sm text-purple-400 hover:text-purple-300">Learn More</a>
+                  </div>
+                  <div class="flex justify-center">
+                    <Button label="Select" size="small" severity="secondary" class="mt-2 w-1/2" @click="useCoach(coach)" />
+                  </div>
                 </div>
-                <Button label="Select" size="small" severity="secondary" class="mt-2 w-1/2" @click="useCoach(coach)" />
               </div>
             </template>
           </Card>
