@@ -258,6 +258,53 @@
             @ai-coach-toggle="handleAICoachToggle"
           />
         </div>
+
+        <!-- Coach Info Panel -->
+        <div v-if="showCoachInfoPanel" class="fixed top-0 right-0 w-1/3 h-screen z-20 bg-gray-900 border-l border-gray-700">
+          <div class="h-full flex flex-col">
+            <div class="flex items-center justify-between p-4 border-b border-gray-700 bg-gray-900/90 sticky top-0 z-10">
+              <h3 class="text-lg font-semibold truncate">{{ selectedCoachForInfo?.displayName || 'Coach' }}</h3>
+              <Button icon="pi pi-times" text severity="secondary" @click="closeCoachInfoPanel" aria-label="Close coach info" />
+            </div>
+            <div class="p-4 overflow-y-auto flex-1 space-y-4">
+              <div v-if="selectedCoachForInfo" class="space-y-4">
+                <div class="flex items-center gap-3">
+                  <img v-if="selectedCoachForInfo.avatarUrl" :src="selectedCoachForInfo.avatarUrl" :alt="selectedCoachForInfo.displayName" class="w-12 h-12 rounded-full object-cover" />
+                  <div v-else class="w-12 h-12 rounded-full bg-gradient-to-br from-blue-400 to-purple-500 flex items-center justify-center text-white font-semibold">
+                    {{ selectedCoachForInfo.displayName.charAt(0) }}
+                  </div>
+                  <div>
+                    <p class="text-sm text-gray-300">?coach={{ selectedCoachForInfo.name }}</p>
+                  </div>
+                </div>
+
+                <div v-if="selectedCoachForInfo.highlights && selectedCoachForInfo.highlights.length" class="space-y-1">
+                  <label class="text-sm font-semibold">Highlights</label>
+                  <ul class="text-xs text-gray-300 list-disc list-outside pl-5">
+                    <li v-for="(h,i) in selectedCoachForInfo.highlights" :key="i">{{ h }}</li>
+                  </ul>
+                </div>
+
+                <div v-if="selectedCoachForInfo.websiteUrl">
+                  <Button as="a" :href="selectedCoachForInfo.websiteUrl" target="_blank" rel="noopener" label="Visit Website" icon="pi pi-external-link" severity="secondary" />
+                </div>
+
+                <div v-if="selectedCoachForInfo.videoId" class="space-y-2">
+                  <label class="text-sm font-semibold">Intro Video</label>
+                  <div class="aspect-video rounded-lg overflow-hidden bg-black/30">
+                    <iframe
+                      :src="`https://www.youtube.com/embed/${selectedCoachForInfo.videoId}`"
+                      frameborder="0"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allowfullscreen
+                      class="w-full h-full"
+                    ></iframe>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </main>
 
