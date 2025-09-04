@@ -692,7 +692,7 @@ const isReadyToUploadMessage = (message: Message, index: number): boolean => {
 // Helper function to determine which messages should be wide (for file upload)
 const shouldBeWideMessage = (message: Message, index: number): boolean => {
   // Make message wide if it contains file upload content
-  return (index === 0 && !isSignedIn.value) || // Welcome message for new users
+  return (index === 0 && (!isSignedIn.value || showCoachCarousel.value)) || // Welcome or All Coaches message
          (isSignedIn.value && showFileUploadForReturningUser.value && isReadyToUploadMessage(message, index)) // Upload message for returning users
 }
 
