@@ -341,6 +341,12 @@
             <div class="mt-2 bg-gray-800/90 border border-white/20 rounded-lg p-3 text-sm" v-html="getEditMessagePreview()"></div>
           </div>
         </div>
+
+        <!-- Website URL -->
+        <div class="flex flex-col gap-2 mt-4">
+          <label for="editWebsiteUrl" class="font-semibold text-white">Website URL</label>
+          <InputText id="editWebsiteUrl" v-model="editWebsiteUrl" class="w-full" placeholder="https://example.com" />
+        </div>
       </div>
 
       <template #footer>
