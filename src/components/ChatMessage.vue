@@ -90,6 +90,7 @@ interface Message {
 const props = defineProps<{
   message: Message
   isWide?: boolean
+  fullWidth?: boolean
   onTypingProgress?: () => void
   coachParameter?: string
   aiCoachEnabled?: boolean
@@ -303,6 +304,10 @@ const getMessageWidth = (): string => {
   )
 
   if (isSessionSummary) {
+    return 'w-full'
+  }
+
+  if (props.fullWidth) {
     return 'w-full'
   }
 
