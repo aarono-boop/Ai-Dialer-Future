@@ -64,6 +64,7 @@ export const useCoaches = () => {
       displayName: coachData.displayName,
       videoId,
       avatarUrl,
+      websiteUrl: coachData.websiteUrl || undefined,
       welcomeMessage: coachData.customMessage || `Welcome to <strong>ARKON</strong>! I'm your AI calling assistant, enhanced with <strong>${coachData.displayName}'s</strong> proven methodologies.`,
       isActive: true,
       createdBy: 'user',
