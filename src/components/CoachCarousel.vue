@@ -19,7 +19,7 @@
                   <a href="#" class="text-sm text-purple-400 hover:text-purple-300">Practice Call</a>
                   <a href="#" class="text-sm text-purple-400 hover:text-purple-300">Learn More</a>
                 </div>
-                <Button label="Select" size="small" class="mt-2" @click="useCoach(coach)" />
+                <Button label="Select" size="small" severity="secondary" class="mt-2 w-1/2" @click="useCoach(coach)" />
               </div>
             </template>
           </Card>
