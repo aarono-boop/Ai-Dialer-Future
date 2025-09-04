@@ -12,7 +12,10 @@
                   {{ coach.displayName.charAt(0) }}
                 </div>
                 <p class="font-semibold text-center truncate w-full">{{ coach.displayName }}</p>
-                <Button label="Select" size="small" @click="useCoach(coach)" />
+                <ul v-if="coach.highlights && coach.highlights.length" class="text-xs text-gray-300 list-disc list-inside space-y-1 text-center">
+                  <li v-for="(h, i) in coach.highlights.slice(0, 2)" :key="i">{{ h }}</li>
+                </ul>
+                <Button label="Select" size="small" class="mt-2" @click="useCoach(coach)" />
               </div>
             </template>
           </Card>
