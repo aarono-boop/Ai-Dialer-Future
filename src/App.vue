@@ -2203,6 +2203,7 @@ onUnmounted(() => {
   delete (window as any).triggerFileUpload
   delete (window as any).handleExportFile
   delete (window as any).toggleCallLog
+  window.removeEventListener('arkon-go-home', goToMainApp)
 })
 
 // Helper functions for session summary
