@@ -176,26 +176,6 @@
         </Card>
       </div>
 
-      <!-- Portfolio Snapshot -->
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <Card class="bg-gray-800 border-gray-700 md:col-start-3">
-          <template #title>
-            <div class="flex items-center gap-2"><i class="pi pi-chart-bar"></i><span>Portfolio Snapshot</span></div>
-          </template>
-          <template #content>
-            <div class="space-y-3 text-sm">
-              <div class="flex items-center justify-between">
-                <span class="text-gray-400">Student Retention Rate</span>
-                <Tag :value="retentionRate + '%'" severity="success" />
-              </div>
-              <div class="flex items-center justify-between">
-                <span class="text-gray-400">Average Student Tenure</span>
-                <span class="font-semibold">{{ avgTenure }} months</span>
-              </div>
-            </div>
-          </template>
-        </Card>
-      </div>
     </div>
   </div>
 </template>
@@ -207,7 +187,6 @@ import Button from 'primevue/button'
 import Dropdown from 'primevue/dropdown'
 import DataTable from 'primevue/datatable'
 import Column from 'primevue/column'
-import Tag from 'primevue/tag'
 import ProgressBar from 'primevue/progressbar'
 import Chart from 'primevue/chart'
 import { useCoaches } from '../composables/useCoaches'
@@ -245,8 +224,6 @@ const monthlyEarnings = computed(() => rand(82000, 138000, 941))
 const appointments = computed(() => rand(3200, 8200, 877))
 const activeStudents = computed(() => rand(1200, 4200, 883))
 const newStudents = computed(() => Math.max(100, Math.round(activeStudents.value * 0.08)))
-const retentionRate = computed(() => 85 + (seed.value % 10))
-const avgTenure = computed(() => 6 + (seed.value % 12))
 
 // Revenue trend (6 months)
 const months = computed(() => Array.from({ length: 6 }, (_, i) => new Date(new Date().setMonth(new Date().getMonth() - (5 - i))).toLocaleString(undefined, { month: 'short' })))
@@ -288,9 +265,6 @@ const studentsNeedingAttention = computed(() => {
   return names.map((n, i) => ({ name: n, reason: reasons[i] }))
 })
 
-const newStudents30d = computed(() => newStudents.value + ((seed.value % 5)))
-const messagesSent = computed(() => 200 + (seed.value % 300))
-const avgWeeklySessions = computed(() => 2 + (seed.value % 4))
 
 const exportReport = () => {
   const blob = new Blob([JSON.stringify({ coach: coach.value?.name, when: new Date().toISOString() }, null, 2)], { type: 'application/json' })
