@@ -139,7 +139,6 @@ const toggleUserMenu = () => {
 }
 
 // Robust home click: emit event and broadcast global event
-const emit = defineEmits(['login', 'logout', 'show-product', 'go-home'])
 const handleHomeClick = () => {
   emit('go-home')
   try {
