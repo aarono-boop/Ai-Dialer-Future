@@ -340,7 +340,7 @@
                 <!-- About Coach -->
                 <div class="space-y-2 pl-5 border-t border-white/10 pt-[22px] pb-[10px] mt-3">
                   <h4 class="text-xl font-medium">About {{ selectedCoachFirstName }}</h4>
-                  <p class="text-xs text-gray-300">{{ selectedCoachFirstName }} is known for disciplined daily call blocks, clean qualification, and tight follow��up cycles. Their approach balances energy with structure so reps stay consistent and close more.</p>
+                  <p class="text-xs text-gray-300">{{ selectedCoachFirstName }} is known for disciplined daily call blocks, clean qualification, and tight follow‑up cycles. Their approach balances energy with structure so reps stay consistent and close more.</p>
                 </div>
 
                 <!-- Industries Served -->
@@ -2135,6 +2135,7 @@ onMounted(() => {
   const coach = urlParams.get('coach')
   const createCoach = urlParams.get('create-coach')
   const coachAdmin = urlParams.get('coach-admin')
+  const coachDashboard = urlParams.get('coach-dashboard')
 
   // Set coach if specified
   if (coach === 'all') {
