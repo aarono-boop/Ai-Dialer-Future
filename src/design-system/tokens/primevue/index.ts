@@ -12,6 +12,7 @@ export { default as inputtext } from './inputtext'
 export { default as toggleswitch } from './toggleswitch'
 export { default as tooltip } from './tooltip'
 export { default as theme, customTheme } from './theme'
+export { default as vulcan7Theme } from './vulcan7'
 
 // Export individual token categories for easy access
 export const tokens = {
