@@ -143,21 +143,19 @@
         </Card>
         <Card class="bg-gray-800 border-gray-700">
           <template #title>
-            <div class="flex items-center gap-2"><i class="pi pi-clipboard"></i><span>Coaching Actions</span></div>
+            <div class="flex items-center gap-2"><i class="pi pi-bell"></i><span>Students Requiring Attention</span></div>
           </template>
           <template #content>
             <div class="space-y-3">
-              <div class="flex items-center justify-between bg-gray-700 rounded p-3">
-                <div class="flex items-center gap-2"><i class="pi pi-calendar text-blue-300"></i><span>Schedule Group Session</span></div>
-                <Button label="Schedule" icon="pi pi-arrow-right" size="small" @click="noop" />
-              </div>
-              <div class="flex items-center justify-between bg-gray-700 rounded p-3">
-                <div class="flex items-center gap-2"><i class="pi pi-video text-purple-300"></i><span>Send Video Message to All</span></div>
-                <Button label="Send" icon="pi pi-send" size="small" @click="noop" />
-              </div>
-              <div class="flex items-center justify-between bg-gray-700 rounded p-3">
-                <div class="flex items-center gap-2"><i class="pi pi-file-edit text-green-300"></i><span>Update Coaching Scripts</span></div>
-                <Button label="Update" icon="pi pi-pencil" size="small" @click="noop" />
+              <div v-for="s in studentsNeedingAttention" :key="s.name" class="flex items-center justify-between bg-gray-700/60 rounded px-3 py-2">
+                <div class="flex items-center gap-2 min-w-0">
+                  <i class="pi pi-exclamation-circle text-red-400"></i>
+                  <div class="min-w-0">
+                    <p class="truncate font-medium">{{ s.name }}</p>
+                    <p class="text-xs text-red-300 truncate">{{ s.reason }}</p>
+                  </div>
+                </div>
+                <Button label="Intervene" size="small" text severity="danger" @click="noop" />
               </div>
             </div>
           </template>
