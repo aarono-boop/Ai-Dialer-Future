@@ -180,6 +180,14 @@
                       aria-label="Test"
                     />
                     <Button
+                      icon="pi pi-chart-line"
+                      size="small"
+                      severity="info"
+                      v-tooltip.top="'Dashboard'"
+                      @click.stop="openDashboard(coach)"
+                      aria-label="Open dashboard"
+                    />
+                    <Button
                       icon="pi pi-copy"
                       size="small"
                       severity="secondary"
