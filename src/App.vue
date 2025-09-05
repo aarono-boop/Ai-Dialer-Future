@@ -1142,7 +1142,22 @@ const showProductPage = () => {
 }
 
 const goToMainApp = () => {
+  // Set page and clear any special modes/panels
   currentPage.value = 'main'
+  showCoachDashboard.value = false
+  dashboardCoachName.value = null
+  setManagementMode(null)
+  showDialer.value = false
+  showCoachInfoPanel.value = false
+  selectedCoachForInfo.value = null
+
+  // Clean URL of special parameters
+  try {
+    const url = new URL(window.location.href)
+    ;['coach-dashboard','coach-admin','create-coach','coach'].forEach(p => url.searchParams.delete(p))
+    const qs = url.searchParams.toString()
+    window.history.replaceState({}, '', qs ? `${url.pathname}?${qs}` : url.pathname)
+  } catch {}
 
   // Clear any existing focus when navigating to main app
   nextTick(() => {
