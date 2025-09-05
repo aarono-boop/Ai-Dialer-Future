@@ -232,6 +232,16 @@ const stopTypingAnimation = (): void => {
   isTyping.value = false
 }
 
+const isV7 = computed(() => new URLSearchParams(window.location.search).get('v7') === 'true')
+
+const aiAvatarStyle = computed(() => ({
+  width: '26px',
+  height: '26px',
+  background: isV7.value ? 'var(--p-primary-color)' : 'linear-gradient(135deg, #60a5fa 0%, #7b68ee 100%)',
+  mask: "url('https://cdn.builder.io/api/v1/image/assets%2F5aeb07ce25f84dbc869290880d07b71e%2F2b49ccc7e5f74919a9a706fa2916dd90?format=webp&width=800') center/contain no-repeat",
+  WebkitMask: "url('https://cdn.builder.io/api/v1/image/assets%2F5aeb07ce25f84dbc869290880d07b71e%2F2b49ccc7e5f74919a9a706fa2916dd90?format=webp&width=800') center/contain no-repeat"
+}))
+
 // Lifecycle
 onMounted(() => {
   if (props.message.typing) {
