@@ -24,7 +24,7 @@
       </div>
 
       <!-- KPI Cards -->
-      <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+      <div class="grid grid-cols-1 md:grid-cols-5 gap-4">
         <Card class="bg-gray-800 border-gray-700">
           <template #content>
             <div class="flex items-center gap-3">
@@ -65,6 +65,18 @@
               <div>
                 <p class="text-gray-400 text-xs">New Students (Mo.)</p>
                 <p class="text-2xl font-bold">{{ newStudents }}</p>
+              </div>
+            </div>
+          </template>
+        </Card
+        >
+        <Card class="bg-gray-800 border-gray-700">
+          <template #content>
+            <div class="flex items-center gap-3">
+              <div class="w-9 h-9 bg-gray-700 rounded-lg flex items-center justify-center"><i class="pi pi-user text-teal-300"></i></div>
+              <div>
+                <p class="text-gray-400 text-xs">Total Students</p>
+                <p class="text-2xl font-bold">{{ activeStudents }}</p>
               </div>
             </div>
           </template>
@@ -172,10 +184,6 @@
           </template>
           <template #content>
             <div class="space-y-3 text-sm">
-              <div class="flex items-center justify-between">
-                <span class="text-gray-400">Total Students</span>
-                <span class="font-semibold">{{ activeStudents }}</span>
-              </div>
               <div class="flex items-center justify-between">
                 <span class="text-gray-400">Student Retention Rate</span>
                 <Tag :value="retentionRate + '%'" severity="success" />
