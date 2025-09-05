@@ -28,13 +28,7 @@
           v-else
           class="ai-avatar-gradient"
           aria-hidden="true"
-          style="
-            width: 26px;
-            height: 26px;
-            background: linear-gradient(135deg, #60a5fa 0%, #7b68ee 100%);
-            mask: url('https://cdn.builder.io/api/v1/image/assets%2F5aeb07ce25f84dbc869290880d07b71e%2F2b49ccc7e5f74919a9a706fa2916dd90?format=webp&width=800') center/contain no-repeat;
-            -webkit-mask: url('https://cdn.builder.io/api/v1/image/assets%2F5aeb07ce25f84dbc869290880d07b71e%2F2b49ccc7e5f74919a9a706fa2916dd90?format=webp&width=800') center/contain no-repeat;
-          "
+          :style="aiAvatarStyle"
         ></div>
       </div>
       <div
