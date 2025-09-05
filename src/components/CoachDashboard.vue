@@ -198,7 +198,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from 'vue'
+import { computed, ref, watch } from 'vue'
 import Card from 'primevue/card'
 import Button from 'primevue/button'
 import Dropdown from 'primevue/dropdown'
@@ -307,7 +307,7 @@ const shareText = ref('')
 
 const buildShareText = () => {
   const selected = shareList.value.filter(s => s.selected).map(s => s.name)
-  const medals = ['🥇', '🥈', '🥉']
+  const medals = ['����', '🥈', '🥉']
   const lines = selected.map((n, i) => `${medals[i] || '🏅'} ${n}`)
   return [
     'Incredible performance from my students this week! 🚀 Shoutout to our top performers on the leaderboard:',
