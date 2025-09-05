@@ -514,6 +514,12 @@ const testCoach = (coach: Coach) => {
   window.open(url, '_blank')
 }
 
+const openDashboard = (coach: Coach) => {
+  const url = new URL(window.location.href)
+  url.searchParams.set('coach-dashboard', coach.name)
+  window.open(url.toString(), '_blank')
+}
+
 const copyCoachUrl = async (coach: Coach) => {
   const url = generateCoachUrl(coach.name)
   await copyToClipboard(url)
