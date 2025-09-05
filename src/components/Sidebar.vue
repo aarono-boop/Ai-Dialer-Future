@@ -1,5 +1,5 @@
 <template>
-  <aside class="fixed left-0 top-0 h-screen w-24 bg-gray-900 border-r border-gray-700 flex flex-col items-center py-4 z-20" role="navigation" aria-label="Main navigation">
+  <aside class="fixed left-0 top-0 h-screen w-16 bg-gray-900 border-r border-gray-700 flex flex-col items-center py-4 z-20" role="navigation" aria-label="Main navigation">
     <!-- Hidden focus anchor to establish tab context when needed -->
     <button
       ref="focusAnchor"
@@ -60,14 +60,14 @@
       <!-- Avatar when signed in -->
       <div v-if="isSignedIn" class="relative">
         <button
-          class="w-24 h-24 rounded-full bg-gradient-to-r from-blue-500 to-purple-600 flex items-center justify-center hover:scale-105 transition-transform cursor-pointer border-none"
+          class="w-14 h-14 rounded-full bg-gradient-to-r from-blue-500 to-purple-600 flex items-center justify-center hover:scale-105 transition-transform cursor-pointer border-none"
           @click="toggleUserMenu"
           aria-label="User menu"
           type="button"
           tabindex="3"
           ref="userMenuButton"
         >
-          <i class="pi pi-user text-white text-4xl" aria-hidden="true"></i>
+          <i class="pi pi-user text-white text-2xl" aria-hidden="true"></i>
         </button>
 
         <!-- User Dropdown Menu -->
