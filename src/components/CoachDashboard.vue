@@ -113,8 +113,8 @@
           </template>
           <template #content>
             <DataTable :value="leaderboard" size="large" class="text-sm" :pt="{ headerRow: { class: 'h-12' }, bodyRow: { class: 'h-14' } }">
-              <Column field="rank" header="#" style="width: 50px" headerClass="py-4 px-4" bodyClass="py-4 px-4" />
-              <Column header="Student" headerClass="py-4 px-4" bodyClass="py-4 px-4">
+              <Column field="rank" header="#" style="width: 50px" headerClass="py-6 px-5" bodyClass="py-6 px-5" />
+              <Column header="Student" headerClass="py-6 px-5" bodyClass="py-6 px-5">
                 <template #body="{ data }">
                   <div class="flex items-center gap-2">
                     <div class="w-7 h-7 rounded-full bg-gradient-to-br from-blue-400 to-purple-500"></div>
@@ -122,12 +122,12 @@
                   </div>
                 </template>
               </Column>
-              <Column field="calls" header="Calls" headerClass="py-4 px-4" bodyClass="py-4 px-4" />
-              <Column field="conversions" header="Appointments Set" headerClass="py-4 px-4" bodyClass="py-4 px-4" />
-              <Column header="Conversion %" headerClass="py-4 px-4" bodyClass="py-4 px-4">
+              <Column field="calls" header="Calls" headerClass="py-6 px-5" bodyClass="py-6 px-5" />
+              <Column field="conversions" header="Appointments Set" headerClass="py-6 px-5" bodyClass="py-6 px-5" />
+              <Column header="Conversion %" headerClass="py-6 px-5" bodyClass="py-6 px-5">
                 <template #body="{ data }">{{ (data.conversions / Math.max(1, data.calls) * 100).toFixed(1) }}%</template>
               </Column>
-              <Column header="Score" headerClass="py-4 px-4" bodyClass="py-4 px-4">
+              <Column header="Score" headerClass="py-6 px-5" bodyClass="py-6 px-5">
                 <template #body="{ data }">
                   <div class="flex items-center justify-end">
                     <span class="font-medium">{{ data.score }}%</span>
