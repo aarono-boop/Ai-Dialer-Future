@@ -103,9 +103,10 @@ let rafId: number | null = null
 const canContinue = computed(() => micOk.value && speakerOk.value)
 
 const dropdownPT = computed(() => ({
-  root: { style: { background: 'var(--p-surface-100)', border: '1px solid rgba(255,255,255,0.15)', borderRadius: '6px' } },
-  panel: { style: { background: 'var(--p-surface-100)', border: '1px solid rgba(255,255,255,0.15)' } },
-  list: { style: { background: 'var(--p-surface-100)' } },
+  root: { style: { background: 'var(--p-surface-0)', border: '1px solid rgba(255,255,255,0.12)', borderRadius: '6px' } },
+  panel: { style: { background: 'var(--p-surface-0)', border: '1px solid rgba(255,255,255,0.12)' } },
+  content: { style: { background: 'var(--p-surface-0)' } },
+  list: { style: { background: 'var(--p-surface-0)' } },
   item: { class: 'hover:bg-white/10' }
 }))
 
