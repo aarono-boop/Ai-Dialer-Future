@@ -121,7 +121,7 @@
               <Column header="Student" headerClass="py-6 px-5" bodyClass="py-6 px-5">
                 <template #body="{ data }">
                   <div class="flex items-center gap-2">
-                    <div class="w-7 h-7 rounded-full bg-gradient-to-br from-blue-400 to-purple-500"></div>
+                    <Avatar :image="getAvatarUrl(data.name)" shape="circle" style="width: 28px; height: 28px" />
                     <span>{{ data.name }}</span>
                   </div>
                 </template>
@@ -154,6 +154,7 @@
               <div v-for="s in studentsNeedingAttention" :key="s.name" class="flex items-center justify-between bg-gray-700/60 rounded px-3 py-2">
                 <div class="flex items-center gap-2 min-w-0">
                   <i class="pi pi-exclamation-circle text-red-400"></i>
+                  <Avatar :image="getAvatarUrl(s.name)" shape="circle" style="width: 28px; height: 28px" />
                   <div class="min-w-0">
                     <p class="truncate font-medium">{{ s.name }}</p>
                     <p class="text-xs text-red-300 truncate">{{ s.reason }}</p>
@@ -174,7 +175,7 @@
             <div v-for="item in shareList" :key="item.rank" class="flex items-center justify-between bg-gray-800 border border-gray-700 rounded-xl px-4 py-3">
               <div class="flex items-center gap-3 min-w-0">
                 <Checkbox v-model="item.selected" :binary="true" />
-                <Avatar :label="item.name.split(' ').map(p=>p[0]).join('')" class="bg-gradient-to-br from-blue-400 to-purple-500 text-white" shape="circle" size="large" />
+                <Avatar :image="getAvatarUrl(item.name)" shape="circle" size="large" />
                 <span class="font-medium truncate">{{ item.name }}</span>
               </div>
               <span class="text-gray-400 text-sm whitespace-nowrap">Rank #{{ item.rank }}</span>
@@ -220,6 +221,32 @@ const coachInitials = computed(() => {
   const n = coach.value?.displayName || 'C D'
   return n.split(' ').map(p => p[0]).join('').toUpperCase().slice(0,2)
 })
+
+// Fake avatar pool (static images)
+const avatarPool = [
+  'https://randomuser.me/api/portraits/men/32.jpg',
+  'https://randomuser.me/api/portraits/women/44.jpg',
+  'https://randomuser.me/api/portraits/men/12.jpg',
+  'https://randomuser.me/api/portraits/women/65.jpg',
+  'https://randomuser.me/api/portraits/men/71.jpg',
+  'https://randomuser.me/api/portraits/women/19.jpg',
+  'https://randomuser.me/api/portraits/men/5.jpg',
+  'https://randomuser.me/api/portraits/women/28.jpg',
+  'https://randomuser.me/api/portraits/men/36.jpg',
+  'https://randomuser.me/api/portraits/women/11.jpg',
+  'https://randomuser.me/api/portraits/men/7.jpg',
+  'https://randomuser.me/api/portraits/women/72.jpg',
+  'https://randomuser.me/api/portraits/men/50.jpg',
+  'https://randomuser.me/api/portraits/women/52.jpg',
+  'https://randomuser.me/api/portraits/men/8.jpg',
+  'https://randomuser.me/api/portraits/women/9.jpg'
+]
+const getAvatarUrl = (name: string) => {
+  let h = 0
+  for (let i = 0; i < name.length; i++) h = Math.imul(31, h) + name.charCodeAt(i) | 0
+  const idx = Math.abs(h) % avatarPool.length
+  return avatarPool[idx]
+}
 const landingUrl = computed(() => generateCoachUrl(props.coachName || ''))
 
 const ranges = [
