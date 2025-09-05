@@ -11,7 +11,7 @@
     <!-- Logo at top -->
     <button
       class="flex items-center justify-center p-2 hover:bg-gray-800 rounded-lg transition-colors cursor-pointer bg-transparent border-none"
-      @click="$emit('go-home')"
+      @click="handleHomeClick"
       aria-label="Return to ARKON home page"
       type="button"
       tabindex="1"
@@ -136,6 +136,15 @@ const showUserMenu = ref(false)
 // Toggle user menu
 const toggleUserMenu = () => {
   showUserMenu.value = !showUserMenu.value
+}
+
+// Robust home click: emit event and broadcast global event
+const emit = defineEmits(['login', 'logout', 'show-product', 'go-home'])
+const handleHomeClick = () => {
+  emit('go-home')
+  try {
+    window.dispatchEvent(new CustomEvent('arkon-go-home'))
+  } catch {}
 }
 
 // Handle logout
