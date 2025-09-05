@@ -2145,6 +2145,9 @@ const toggleCallLog = (uniqueId?: string): void => {
 
 // Ensure functions are available on mount
 onMounted(() => {
+  // Global go-home event from Sidebar (fallback)
+  window.addEventListener('arkon-go-home', goToMainApp)
+
   // Parse URL parameters for coach functionality and management modes
   const urlParams = new URLSearchParams(window.location.search)
   const coach = urlParams.get('coach')
