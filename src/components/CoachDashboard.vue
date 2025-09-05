@@ -122,9 +122,20 @@
                   </div>
                 </template>
               </Column>
-              <Column field="calls" header="Calls" headerClass="py-6 px-5" bodyClass="py-6 px-5" headerStyle="text-align:right" bodyStyle="text-align:right" :pt="{ headerContent: { class: 'w-full justify-end' } }" />
-              <Column field="conversions" header="Appointments Set" headerClass="py-6 px-5" bodyClass="py-6 px-5" headerStyle="text-align:right" bodyStyle="text-align:right" :pt="{ headerContent: { class: 'w-full justify-end' } }" />
-              <Column header="Conversion %" headerClass="py-6 px-5" bodyClass="py-6 px-5" headerStyle="text-align:right" bodyStyle="text-align:right" :pt="{ headerContent: { class: 'w-full justify-end' } }">
+              <Column field="calls" headerClass="py-6 px-5" bodyClass="py-6 px-5" bodyStyle="text-align:right">
+                <template #header>
+                  <div class="w-full text-right">Calls</div>
+                </template>
+              </Column>
+              <Column field="conversions" headerClass="py-6 px-5" bodyClass="py-6 px-5" bodyStyle="text-align:right">
+                <template #header>
+                  <div class="w-full text-right">Appointments Set</div>
+                </template>
+              </Column>
+              <Column headerClass="py-6 px-5" bodyClass="py-6 px-5" bodyStyle="text-align:right">
+                <template #header>
+                  <div class="w-full text-right">Conversion %</div>
+                </template>
                 <template #body="{ data }">{{ (data.conversions / Math.max(1, data.calls) * 100).toFixed(1) }}%</template>
               </Column>
             </DataTable>
