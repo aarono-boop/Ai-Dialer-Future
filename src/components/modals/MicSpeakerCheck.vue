@@ -24,7 +24,13 @@
               placeholder="Select microphone"
               class="flex-1"
               variant="filled"
-              appendTo="self"
+              appendTo="body"
+              :pt="{
+                wrapper: { style: { background: 'var(--p-surface-100)', border: '1px solid rgba(255,255,255,0.15)', borderRadius: '6px' } },
+                input: { style: { background: 'var(--p-surface-100)' } },
+                panel: { style: { background: 'var(--p-surface-100)', border: '1px solid rgba(255,255,255,0.15)' } },
+                item: { class: 'hover:bg-white/10' }
+              }"
               @change="restartMic"
             />
             <Button :label="isMicActive ? 'Restart' : 'Enable'" :severity="isMicActive ? 'secondary' : 'primary'" size="small" @click="restartMic" />
