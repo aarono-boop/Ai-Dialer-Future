@@ -468,6 +468,12 @@
       @close="closePaymentPage"
     />
 
+    <!-- Mic/Speaker Check Modal -->
+    <MicSpeakerCheck
+      :visible="showMicSpeakerCheck"
+      @close="showMicSpeakerCheck = false"
+      @passed="onAudioCheckPassed"
+    />
 
     <!-- Session Summary now displayed in chat area -->
 
@@ -514,6 +520,7 @@ import CoachManagement from './components/CoachManagement.vue'
 import CoachCreationPage from './components/CoachCreationPage.vue'
 import CoachCarousel from './components/CoachCarousel.vue'
 import CoachDashboard from './components/CoachDashboard.vue'
+import MicSpeakerCheck from './components/modals/MicSpeakerCheck.vue'
 
 // PrimeVue Components (adding Button)
 import Button from 'primevue/button'
@@ -665,6 +672,7 @@ const showTermsModal = ref<boolean>(false)
 const showAccountCreation = ref<boolean>(false)
 const showPricingPage = ref<boolean>(false)
 const showPaymentPage = ref<boolean>(false)
+const showMicSpeakerCheck = ref<boolean>(false)
 const isSignedIn = ref<boolean>(false)
 const isReturningUser = ref<boolean>(false) // Track if user logged in vs created new account
 const showActionButtons = ref<boolean>(false)
@@ -1804,6 +1812,16 @@ const handleTryAnotherNumber = (): void => {
 }
 
 const handleStartDialing = (): void => {
+  // Open mic/speaker check before starting
+  showMicSpeakerCheck.value = true
+}
+
+const onAudioCheckPassed = (): void => {
+  showMicSpeakerCheck.value = false
+  startDialSession()
+}
+
+const startDialSession = (): void => {
   // Hide start dialing button
   showStartDialingButton.value = false
 
@@ -1822,7 +1840,7 @@ const handleStartDialing = (): void => {
 
     // Add separator for the first call
     setTimeout(() => {
-      addSeparatorMessage(currentContact.value.name) // Sam Sample (current contact at index 0)
+      addSeparatorMessage(currentContact.value.name)
 
       // Start the call simulation after showing separator
       setTimeout(() => {
