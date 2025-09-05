@@ -1,181 +1,132 @@
 <template>
-  <div class="min-h-screen bg-gray-900 text-white p-8">
+  <div class="min-h-screen bg-gray-900 text-white p-6">
     <div class="max-w-7xl mx-auto space-y-6">
-      <!-- Header -->
-      <div class="flex items-center justify-between">
-        <div class="flex items-center gap-4">
-          <img
-            v-if="coach?.avatarUrl"
-            :src="coach.avatarUrl"
-            :alt="coach.displayName"
-            class="w-12 h-12 rounded-full object-cover"
-          />
-          <div v-else class="w-12 h-12 rounded-full bg-gradient-to-br from-blue-400 to-purple-500 flex items-center justify-center">
-            <span class="text-white font-semibold text-lg">{{ coachInitials }}</span>
+      <!-- Top Bar -->
+      <div class="flex items-center justify-between bg-gray-800/60 border border-gray-700 rounded-xl px-4 py-3">
+        <div class="flex items-center gap-3 min-w-0">
+          <img v-if="coach?.avatarUrl" :src="coach.avatarUrl" :alt="coach.displayName" class="w-10 h-10 rounded-full object-cover" />
+          <div v-else class="w-10 h-10 rounded-full bg-gradient-to-br from-blue-400 to-purple-500 flex items-center justify-center">
+            <span class="text-white font-semibold">{{ coachInitials }}</span>
           </div>
-          <div>
-            <h1 class="text-2xl font-bold">{{ coach?.displayName || 'Coach' }} Dashboard</h1>
-            <p class="text-gray-400 text-sm">Insights across students, earnings, and coaching impact</p>
+          <div class="truncate">
+            <div class="flex items-center gap-2">
+              <h1 class="text-xl font-bold truncate">{{ coach?.displayName || 'Coach' }}'s Dashboard</h1>
+              <a :href="landingUrl" target="_blank" class="text-blue-300 text-xs hover:underline whitespace-nowrap">View Landing Page</a>
+            </div>
+            <p class="text-gray-400 text-xs">7‑Figure Sales Coach</p>
           </div>
         </div>
-        <div class="flex items-center gap-3">
-          <Dropdown v-model="selectedRange" :options="ranges" optionLabel="label" optionValue="value" class="w-44" />
+        <div class="flex items-center gap-2">
+          <Dropdown v-model="selectedRange" :options="ranges" optionLabel="label" optionValue="value" class="w-40" />
           <Button label="Export" icon="pi pi-download" severity="secondary" size="small" @click="exportReport" />
+          <Button label="Back to App" icon="pi pi-arrow-left" severity="secondary" size="small" text @click="goBack" />
         </div>
       </div>
 
       <!-- KPI Cards -->
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
         <Card class="bg-gray-800 border-gray-700">
           <template #content>
-            <div class="flex items-center justify-between">
+            <div class="flex items-center gap-3">
+              <div class="w-9 h-9 bg-gray-700 rounded-lg flex items-center justify-center"><i class="pi pi-wallet text-blue-300"></i></div>
               <div>
-                <p class="text-gray-400 text-sm">Monthly Earnings</p>
-                <p class="text-3xl font-bold">{{ currency(monthlyEarnings) }}</p>
-              </div>
-              <i class="pi pi-wallet text-2xl text-blue-400"></i>
-            </div>
-            <div class="mt-3">
-              <ProgressBar :value="earningsGrowthPercent" showValue />
-              <small class="text-gray-400">{{ earningsGrowthLabel }}</small>
-            </div>
-          </template>
-        </Card>
-        <Card class="bg-gray-800 border-gray-700">
-          <template #content>
-            <div class="flex items-center justify-between">
-              <div>
-                <p class="text-gray-400 text-sm">Active Students</p>
-                <p class="text-3xl font-bold">{{ activeStudents }}</p>
-              </div>
-              <i class="pi pi-users text-2xl text-green-400"></i>
-            </div>
-            <div class="mt-3 grid grid-cols-2 gap-2 text-sm">
-              <div class="bg-gray-700 rounded p-2">
-                <div class="text-gray-400">New</div>
-                <div class="font-semibold">{{ newStudents }}</div>
-              </div>
-              <div class="bg-gray-700 rounded p-2">
-                <div class="text-gray-400">Retention</div>
-                <div class="font-semibold">{{ retentionRate }}%</div>
+                <p class="text-gray-400 text-xs">Monthly Earnings</p>
+                <p class="text-2xl font-bold">{{ currency(monthlyEarnings) }}</p>
               </div>
             </div>
           </template>
         </Card>
         <Card class="bg-gray-800 border-gray-700">
           <template #content>
-            <div class="flex items-center justify-between">
+            <div class="flex items-center gap-3">
+              <div class="w-9 h-9 bg-gray-700 rounded-lg flex items-center justify-center"><i class="pi pi-users text-green-300"></i></div>
               <div>
-                <p class="text-gray-400 text-sm">Portfolio Snapshot</p>
-                <p class="text-3xl font-bold">{{ portfolioScore }}%</p>
+                <p class="text-gray-400 text-xs">Active Students</p>
+                <p class="text-2xl font-bold">{{ activeStudents }}</p>
               </div>
-              <i class="pi pi-chart-bar text-2xl text-purple-400"></i>
             </div>
-            <div class="mt-3 space-y-2">
+          </template>
+        </Card>
+        <Card class="bg-gray-800 border-gray-700">
+          <template #content>
+            <div class="flex items-center gap-3">
+              <div class="w-9 h-9 bg-gray-700 rounded-lg flex items-center justify-center"><i class="pi pi-calendar text-cyan-300"></i></div>
               <div>
-                <div class="flex justify-between text-sm"><span>Engagement</span><span>{{ engagement }}%</span></div>
-                <ProgressBar :value="engagement" />
+                <p class="text-gray-400 text-xs">Appointments Set (Mo.)</p>
+                <p class="text-2xl font-bold">{{ appointments }}</p>
               </div>
+            </div>
+          </template>
+        </Card>
+        <Card class="bg-gray-800 border-gray-700">
+          <template #content>
+            <div class="flex items-center gap-3">
+              <div class="w-9 h-9 bg-gray-700 rounded-lg flex items-center justify-center"><i class="pi pi-user-plus text-emerald-300"></i></div>
               <div>
-                <div class="flex justify-between text-sm"><span>Completion</span><span>{{ completion }}%</span></div>
-                <ProgressBar :value="completion" severity="success" />
-              </div>
-              <div>
-                <div class="flex justify-between text-sm"><span>Consistency</span><span>{{ consistency }}%</span></div>
-                <ProgressBar :value="consistency" severity="info" />
+                <p class="text-gray-400 text-xs">New Students (Mo.)</p>
+                <p class="text-2xl font-bold">{{ newStudents }}</p>
               </div>
             </div>
           </template>
         </Card>
       </div>
 
-      <!-- Revenue Trend & Attention List -->
+      <!-- Revenue Trend and Attention -->
       <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
         <Card class="bg-gray-800 border-gray-700 lg:col-span-2">
           <template #title>
-            <div class="flex items-center gap-2"><i class="pi pi-chart-line"></i><span>Revenue Trend</span></div>
+            <div class="flex items-center gap-2"><i class="pi pi-chart-line"></i><span>Revenue Trends (6 Months)</span></div>
           </template>
           <template #content>
-            <DataTable :value="revenueRows" size="small" class="text-sm">
-              <Column field="month" header="Month" />
-              <Column header="Revenue">
-                <template #body="{ data }">{{ currency(data.amount) }}</template>
-              </Column>
-              <Column header="Trend">
-                <template #body="{ data }">
-                  <ProgressBar :value="Math.round((data.amount / maxRevenue) * 100)" style="height: 8px" />
-                </template>
-              </Column>
-            </DataTable>
+            <Chart type="line" :data="revenueChartData" :options="revenueChartOptions" class="w-full h-64" />
           </template>
         </Card>
         <Card class="bg-gray-800 border-gray-700">
           <template #title>
-            <div class="flex items-center gap-2"><i class="pi pi-bell"></i><span>Students Needing Attention</span></div>
-          </template>
-          <template #content>
-            <DataTable :value="studentsNeedingAttention" size="small" class="text-sm" :rows="5" :paginator="studentsNeedingAttention.length > 5">
-              <Column field="name" header="Student" />
-              <Column field="reason" header="Reason" />
-              <Column header="Priority">
-                <template #body="{ data }">
-                  <Tag :value="data.priority" :severity="prioritySeverity(data.priority)" />
-                </template>
-              </Column>
-            </DataTable>
-          </template>
-        </Card>
-      </div>
-
-      <!-- Coaching Action Items & Leaderboard -->
-      <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
-        <Card class="bg-gray-800 border-gray-700">
-          <template #title>
-            <div class="flex items-center gap-2"><i class="pi pi-clipboard"></i><span>Coaching Action Items</span></div>
+            <div class="flex items-center gap-2"><i class="pi pi-bell"></i><span>Students Requiring Attention</span></div>
           </template>
           <template #content>
             <div class="space-y-3">
-              <div class="flex items-center justify-between bg-gray-700 rounded p-3">
-                <div class="flex items-center gap-2">
-                  <i class="pi pi-calendar text-blue-300"></i>
-                  <span>Schedule group session</span>
+              <div v-for="s in studentsNeedingAttention" :key="s.name" class="flex items-center justify-between bg-gray-700/60 rounded px-3 py-2">
+                <div class="flex items-center gap-2 min-w-0">
+                  <i class="pi pi-exclamation-circle text-red-400"></i>
+                  <div class="min-w-0">
+                    <p class="truncate font-medium">{{ s.name }}</p>
+                    <p class="text-xs text-red-300 truncate">{{ s.reason }}</p>
+                  </div>
                 </div>
-                <Button label="Schedule" icon="pi pi-arrow-right" size="small" @click="noop" />
-              </div>
-              <div class="flex items-center justify-between bg-gray-700 rounded p-3">
-                <div class="flex items-center gap-2">
-                  <i class="pi pi-video text-purple-300"></i>
-                  <span>Send a video message to students</span>
-                </div>
-                <Button label="Send" icon="pi pi-send" size="small" @click="noop" />
-              </div>
-              <div class="flex items-center justify-between bg-gray-700 rounded p-3">
-                <div class="flex items-center gap-2">
-                  <i class="pi pi-file-edit text-green-300"></i>
-                  <span>Update scripts</span>
-                </div>
-                <Button label="Update" icon="pi pi-pencil" size="small" @click="noop" />
-              </div>
-              <div class="flex items-center justify-between bg-gray-700 rounded p-3">
-                <div class="flex items-center gap-2">
-                  <i class="pi pi-cog text-yellow-300"></i>
-                  <span>Update coaching methodology</span>
-                </div>
-                <Button label="Review" icon="pi pi-cog" size="small" @click="noop" />
+                <Button label="Intervene" size="small" text severity="danger" @click="noop" />
               </div>
             </div>
           </template>
         </Card>
+      </div>
+
+      <!-- Leaderboard and Actions -->
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
         <Card class="bg-gray-800 border-gray-700 lg:col-span-2">
           <template #title>
-            <div class="flex items-center gap-2"><i class="pi pi-trophy"></i><span>Student Performance Leaderboard</span></div>
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-2"><i class="pi pi-trophy"></i><span>Student Performance Leaderboard</span></div>
+              <Button icon="pi pi-share-alt" label="Share" size="small" text @click="noop" />
+            </div>
           </template>
           <template #content>
-            <DataTable :value="leaderboard" size="small" class="text-sm" :rows="7" :paginator="leaderboard.length > 7">
-              <Column field="rank" header="#" style="width: 60px" />
-              <Column field="name" header="Student" />
+            <DataTable :value="leaderboard" size="small" class="text-sm">
+              <Column field="rank" header="#" style="width: 50px" />
+              <Column header="Student">
+                <template #body="{ data }">
+                  <div class="flex items-center gap-2">
+                    <div class="w-7 h-7 rounded-full bg-gradient-to-br from-blue-400 to-purple-500"></div>
+                    <span>{{ data.name }}</span>
+                  </div>
+                </template>
+              </Column>
               <Column field="calls" header="Calls" />
-              <Column field="conversions" header="Conversions" />
+              <Column field="conversions" header="Appointments Set" />
+              <Column header="Conversion %">
+                <template #body="{ data }">{{ (data.conversions / Math.max(1, data.calls) * 100).toFixed(1) }}%</template>
+              </Column>
               <Column header="Score">
                 <template #body="{ data }">
                   <div class="flex items-center gap-2">
@@ -187,40 +138,49 @@
             </DataTable>
           </template>
         </Card>
+        <Card class="bg-gray-800 border-gray-700">
+          <template #title>
+            <div class="flex items-center gap-2"><i class="pi pi-clipboard"></i><span>Coaching Actions</span></div>
+          </template>
+          <template #content>
+            <div class="space-y-3">
+              <div class="flex items-center justify-between bg-gray-700 rounded p-3">
+                <div class="flex items-center gap-2"><i class="pi pi-calendar text-blue-300"></i><span>Schedule Group Session</span></div>
+                <Button label="Schedule" icon="pi pi-arrow-right" size="small" @click="noop" />
+              </div>
+              <div class="flex items-center justify-between bg-gray-700 rounded p-3">
+                <div class="flex items-center gap-2"><i class="pi pi-video text-purple-300"></i><span>Send Video Message to All</span></div>
+                <Button label="Send" icon="pi pi-send" size="small" @click="noop" />
+              </div>
+              <div class="flex items-center justify-between bg-gray-700 rounded p-3">
+                <div class="flex items-center gap-2"><i class="pi pi-file-edit text-green-300"></i><span>Update Coaching Scripts</span></div>
+                <Button label="Update" icon="pi pi-pencil" size="small" @click="noop" />
+              </div>
+            </div>
+          </template>
+        </Card>
       </div>
 
-      <!-- Network Insights -->
+      <!-- Portfolio Snapshot -->
       <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <Card class="bg-gray-800 border-gray-700">
-          <template #content>
-            <div class="flex items-center justify-between">
-              <div>
-                <p class="text-gray-400 text-sm">New Students (30d)</p>
-                <p class="text-2xl font-bold">{{ newStudents30d }}</p>
-              </div>
-              <i class="pi pi-user-plus text-xl text-teal-400"></i>
-            </div>
+        <Card class="bg-gray-800 border-gray-700 md:col-start-3">
+          <template #title>
+            <div class="flex items-center gap-2"><i class="pi pi-chart-bar"></i><span>Portfolio Snapshot</span></div>
           </template>
-        </Card>
-        <Card class="bg-gray-800 border-gray-700">
           <template #content>
-            <div class="flex items-center justify-between">
-              <div>
-                <p class="text-gray-400 text-sm">Messages Sent (30d)</p>
-                <p class="text-2xl font-bold">{{ messagesSent }}</p>
+            <div class="space-y-3 text-sm">
+              <div class="flex items-center justify-between">
+                <span class="text-gray-400">Total Students</span>
+                <span class="font-semibold">{{ activeStudents }}</span>
               </div>
-              <i class="pi pi-envelope text-xl text-indigo-400"></i>
-            </div>
-          </template>
-        </Card>
-        <Card class="bg-gray-800 border-gray-700">
-          <template #content>
-            <div class="flex items-center justify-between">
-              <div>
-                <p class="text-gray-400 text-sm">Avg Weekly Sessions</p>
-                <p class="text-2xl font-bold">{{ avgWeeklySessions }}</p>
+              <div class="flex items-center justify-between">
+                <span class="text-gray-400">Student Retention Rate</span>
+                <Tag :value="retentionRate + '%'" severity="success" />
               </div>
-              <i class="pi pi-clock text-xl text-amber-400"></i>
+              <div class="flex items-center justify-between">
+                <span class="text-gray-400">Average Student Tenure</span>
+                <span class="font-semibold">{{ avgTenure }} months</span>
+              </div>
             </div>
           </template>
         </Card>
@@ -238,16 +198,18 @@ import DataTable from 'primevue/datatable'
 import Column from 'primevue/column'
 import Tag from 'primevue/tag'
 import ProgressBar from 'primevue/progressbar'
+import Chart from 'primevue/chart'
 import { useCoaches } from '../composables/useCoaches'
 
 const props = defineProps<{ coachName?: string | null }>()
 
-const { coachList } = useCoaches()
+const { coachList, generateCoachUrl } = useCoaches()
 const coach = computed(() => coachList.value.find(c => c.name === props.coachName) || null)
 const coachInitials = computed(() => {
   const n = coach.value?.displayName || 'C D'
   return n.split(' ').map(p => p[0]).join('').toUpperCase().slice(0,2)
 })
+const landingUrl = computed(() => generateCoachUrl(props.coachName || ''))
 
 const ranges = [
   { label: 'Last 30 days', value: '30d' },
@@ -268,58 +230,55 @@ const rand = (min:number, max:number, m:number=997) => {
   return Math.round(min + (max - min) * r)
 }
 
-const monthlyEarnings = computed(() => rand(1800, 8400, 941))
-const earningsPrev = computed(() => rand(1200, 7800, 839))
-const earningsGrowthPercent = computed(() => {
-  const prev = earningsPrev.value || 1
-  return Math.max(0, Math.min(100, Math.round(((monthlyEarnings.value - prev) / prev) * 100)))
-})
-const earningsGrowthLabel = computed(() => `${earningsGrowthPercent.value >= 0 ? 'Up' : 'Down'} ${Math.abs(earningsGrowthPercent.value)}% vs prior`)
+const monthlyEarnings = computed(() => rand(82000, 138000, 941))
+const appointments = computed(() => rand(3200, 8200, 877))
+const activeStudents = computed(() => rand(1200, 4200, 883))
+const newStudents = computed(() => Math.max(100, Math.round(activeStudents.value * 0.08)))
+const retentionRate = computed(() => 85 + (seed.value % 10))
+const avgTenure = computed(() => 6 + (seed.value % 12))
 
-const activeStudents = computed(() => rand(12, 120, 883))
-const newStudents = computed(() => Math.max(1, Math.round(activeStudents.value * 0.1)))
-const retentionRate = computed(() => 70 + (seed.value % 25))
+// Revenue trend (6 months)
+const months = computed(() => Array.from({ length: 6 }, (_, i) => new Date(new Date().setMonth(new Date().getMonth() - (5 - i))).toLocaleString(undefined, { month: 'short' })))
+const revenueSeries = computed(() => months.value.map((_, i) => 60000 + i * 8000 + ((seed.value % 5) * 1500)))
+const revenueChartData = computed(() => ({
+  labels: months.value,
+  datasets: [
+    {
+      label: 'Revenue',
+      data: revenueSeries.value,
+      borderColor: '#60a5fa',
+      backgroundColor: 'rgba(96,165,250,0.2)',
+      fill: true,
+      tension: 0.35,
+      pointRadius: 0
+    }
+  ]
+}))
+const revenueChartOptions = {
+  responsive: true,
+  plugins: { legend: { display: false } },
+  scales: {
+    x: { ticks: { color: '#9CA3AF' }, grid: { display: false } },
+    y: { ticks: { color: '#9CA3AF' }, grid: { color: 'rgba(255,255,255,0.05)' } }
+  }
+}
 
-const engagement = computed(() => 60 + (seed.value % 30))
-const completion = computed(() => 50 + (seed.value % 40))
-const consistency = computed(() => 55 + (seed.value % 35))
-const portfolioScore = computed(() => Math.round((engagement.value + completion.value + consistency.value) / 3))
-
-const revenueRows = computed(() => {
-  const base = monthlyEarnings.value
-  const arr = Array.from({length: 6}, (_, i) => ({
-    month: new Date(new Date().setMonth(new Date().getMonth() - (5 - i))).toLocaleString(undefined, { month: 'short' }),
-    amount: Math.max(500, Math.round(base * (0.6 + (i*0.05)) - ((seed.value % 7) * 20)))
-  }))
-  return arr
-})
-const maxRevenue = computed(() => revenueRows.value.reduce((m, r) => Math.max(m, r.amount), 0))
+const leaderboard = computed(() => Array.from({length: 8}, (_, i) => ({
+  rank: i + 1,
+  name: ['Alex Riley','Samantha Chen','Marcus Bell','Jessica Vazquez','Noah Green','Emma Brooks','Liam Carter','Mia Patel'][i],
+  calls: 900 + ((seed.value + i) % 600),
+  conversions: 60 + ((seed.value + i) % 80),
+  score: 50 + ((seed.value + i) % 50)
+})))
 
 const studentsNeedingAttention = computed(() => {
-  const reasons = ['No activity 7d', 'Low connect rate', 'Missed session', 'Falling behind']
-  const priorities: ('High'|'Medium'|'Low')[] = ['High','Medium','Low']
-  const names = ['Avery','Blake','Casey','Drew','Emerson','Finley','Hayden','Jordan','Kai','Logan','Morgan','Parker']
-  return Array.from({length: 8}, (_, i) => ({
-    name: `${names[(i + seed.value) % names.length]} ${String.fromCharCode(65 + i)}`,
-    reason: reasons[(i + (seed.value % 3)) % reasons.length],
-    priority: priorities[(i + (seed.value % 2)) % priorities.length]
-  }))
-})
-
-const prioritySeverity = (p: string) => p === 'High' ? 'danger' : p === 'Medium' ? 'warn' : 'info'
-
-const leaderboard = computed(() => {
-  return Array.from({length: 12}, (_, i) => ({
-    rank: i + 1,
-    name: `Student ${i + 1}`,
-    calls: 40 + ((seed.value + i) % 60),
-    conversions: 5 + ((seed.value + i) % 12),
-    score: 50 + ((seed.value + i) % 50)
-  }))
+  const reasons = ['Low Answer Rate: 22%','Declining Call Volume: -15%','Poor Conversion: 1.2%','Not Logging In: 5 days ago']
+  const names = ['Kevin Thompson','Brenda Garcia','Tom Franklin','Olivia White']
+  return names.map((n, i) => ({ name: n, reason: reasons[i] }))
 })
 
 const newStudents30d = computed(() => newStudents.value + ((seed.value % 5)))
-const messagesSent = computed(() => 20 + (seed.value % 80))
+const messagesSent = computed(() => 200 + (seed.value % 300))
 const avgWeeklySessions = computed(() => 2 + (seed.value % 4))
 
 const exportReport = () => {
@@ -333,5 +292,6 @@ const exportReport = () => {
 }
 
 const currency = (n: number) => '$' + Number(n || 0).toLocaleString()
+const goBack = () => { window.location.href = window.location.pathname }
 const noop = () => {}
 </script>
