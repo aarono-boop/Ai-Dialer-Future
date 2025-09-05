@@ -180,14 +180,6 @@
                       aria-label="Test"
                     />
                     <Button
-                      icon="pi pi-chart-line"
-                      size="small"
-                      severity="info"
-                      v-tooltip.top="'Dashboard'"
-                      @click.stop="openDashboard(coach)"
-                      aria-label="Open dashboard"
-                    />
-                    <Button
                       icon="pi pi-copy"
                       size="small"
                       severity="secondary"
@@ -203,6 +195,14 @@
                       v-tooltip.top="'Edit'"
                       @click.stop="editCoach(coach)"
                       aria-label="Edit coach"
+                    />
+                    <Button
+                      icon="pi pi-chart-line"
+                      size="small"
+                      severity="info"
+                      v-tooltip.top="'Dashboard'"
+                      @click.stop="openDashboard(coach)"
+                      aria-label="Open dashboard"
                     />
                     <Button
                       v-if="managementMode === 'admin' && coach.createdBy !== 'system'"
