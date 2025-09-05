@@ -79,8 +79,28 @@
 
       <!-- Coach Grid -->
       <div class="mb-8">
-        <div class="flex justify-between items-center mb-4">
+        <div class="flex items-center gap-3 mb-4">
           <h2 class="text-xl font-semibold">Your Coaches</h2>
+          <a
+            :href="`${baseUrl}?coach=all`"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="text-purple-400 hover:text-purple-300 flex items-center gap-2 text-sm ml-[10px]"
+            aria-label="Open All Coaches in a new tab"
+          >
+            <span>All Coaches</span>
+            <i class="pi pi-external-link text-xs"></i>
+          </a>
+          <a
+            :href="baseUrl"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="text-purple-400 hover:text-purple-300 flex items-center gap-2 text-sm ml-[10px]"
+            aria-label="Open default welcome screen in a new tab"
+          >
+            <span>No Coach</span>
+            <i class="pi pi-external-link text-xs"></i>
+          </a>
         </div>
 
         <div v-if="coachList.length === 0" class="text-center py-12 bg-gray-800 rounded-lg border border-gray-700">
@@ -123,7 +143,10 @@
                 <div class="flex-1 min-w-0">
                   <h3 class="font-semibold text-lg truncate">{{ coach.displayName }}</h3>
                   <p class="text-gray-400 text-sm mb-2">?coach={{ coach.name }}</p>
-                  
+                  <ul v-if="coach.highlights && coach.highlights.length" class="text-xs text-gray-300 list-disc list-outside pl-5 mb-2 mx-auto inline-block text-left">
+                    <li v-for="(h,i) in coach.highlights.slice(0,2)" :key="i">{{ h }}</li>
+                  </ul>
+
                   <!-- Features -->
                   <div class="flex gap-2 mb-3">
                     <Badge
@@ -147,26 +170,29 @@
                   </div>
 
                   <!-- Actions -->
-                  <div class="flex gap-2">
+                  <div class="flex gap-2 items-center">
                     <Button
-                      label="Test"
+                      icon="pi pi-eye"
                       size="small"
                       severity="secondary"
+                      v-tooltip.top="'View'"
                       @click.stop="testCoach(coach)"
-                      class="flex-1"
+                      aria-label="Test"
                     />
                     <Button
-                      label="Copy URL"
+                      icon="pi pi-copy"
                       size="small"
                       severity="secondary"
-                      @click.stop="copyCoachUrl(coach)"
-                      class="flex-1"
+                      v-tooltip.top="'Copy URL'"
+                      @click.stop="onCopyClick(coach)"
+                      aria-label="Copy URL"
                     />
                     <Button
                       v-if="coach.createdBy !== 'system'"
                       icon="pi pi-pencil"
                       size="small"
                       severity="secondary"
+                      v-tooltip.top="'Edit'"
                       @click.stop="editCoach(coach)"
                       aria-label="Edit coach"
                     />
@@ -175,8 +201,10 @@
                       icon="pi pi-trash"
                       size="small"
                       severity="danger"
+                      v-tooltip.top="'Delete'"
                       @click.stop="confirmDelete(coach)"
                     />
+                    <Message v-if="copiedCoachId === coach.id" severity="success" class="text-xs px-2 py-1">Copied</Message>
                   </div>
                 </div>
               </div>
@@ -341,6 +369,19 @@
             <div class="mt-2 bg-gray-800/90 border border-white/20 rounded-lg p-3 text-sm" v-html="getEditMessagePreview()"></div>
           </div>
         </div>
+
+        <!-- Website URL -->
+        <div class="flex flex-col gap-2 mt-4">
+          <label for="editWebsiteUrl" class="font-semibold text-white">Website URL</label>
+          <InputText id="editWebsiteUrl" v-model="editWebsiteUrl" class="w-full" placeholder="https://example.com" />
+        </div>
+
+        <!-- Highlights (2 bullets) -->
+        <div class="flex flex-col gap-2 mt-4">
+          <label class="font-semibold text-white">Highlights (2 bullets)</label>
+          <InputText v-model="editHighlight1" class="w-full" placeholder="Highlight 1" />
+          <InputText v-model="editHighlight2" class="w-full" placeholder="Highlight 2" />
+        </div>
       </div>
 
       <template #footer>
@@ -371,6 +412,7 @@
       class="hidden"
       @change="handleImport"
     />
+
   </div>
 </template>
 
@@ -381,9 +423,10 @@ import Button from 'primevue/button'
 import Badge from 'primevue/badge'
 import Dialog from 'primevue/dialog'
 import Textarea from 'primevue/textarea'
+import InputText from 'primevue/inputtext'
 import ConfirmDialog from 'primevue/confirmdialog'
+import Message from 'primevue/message'
 import { useConfirm } from 'primevue/useconfirm'
-import { useToast } from 'primevue/usetoast'
 import type { Coach, CoachCreateData } from '../types/coach'
 import { useCoaches } from '../composables/useCoaches'
 
@@ -401,7 +444,6 @@ const {
 } = useCoaches()
 
 const confirm = useConfirm()
-const toast = useToast()
 
 // State
 const showDetailsModal = ref(false)
@@ -410,6 +452,9 @@ const selectedCoach = ref<Coach | null>(null)
 const editingCoach = ref<Coach | null>(null)
 const editImagePreview = ref<string | null>(null)
 const editCustomMessage = ref<string>('')
+const editWebsiteUrl = ref<string>('')
+const editHighlight1 = ref<string>('')
+const editHighlight2 = ref<string>('')
 const editFileInput = ref<HTMLInputElement | null>(null)
 const isUpdating = ref(false)
 const exportLoading = ref(false)
@@ -427,7 +472,11 @@ const hasChanges = computed(() => {
   if (!editingCoach.value) return false
   const hasImageChange = editImagePreview.value || isBrokenAvatar.value
   const hasMessageChange = editCustomMessage.value !== (editingCoach.value.welcomeMessage || '')
-  return hasImageChange || hasMessageChange
+  const hasWebsiteChange = editWebsiteUrl.value !== (editingCoach.value.websiteUrl || '')
+  const origH1 = editingCoach.value.highlights?.[0] || ''
+  const origH2 = editingCoach.value.highlights?.[1] || ''
+  const hasHighlightsChange = editHighlight1.value !== origH1 || editHighlight2.value !== origH2
+  return hasImageChange || hasMessageChange || hasWebsiteChange || hasHighlightsChange
 })
 
 // Methods
@@ -438,23 +487,12 @@ const navigateToCreateCoach = () => {
   window.location.href = url.toString()
 }
 
+
 const handleCoachCreated = async (coachData: CoachCreateData) => {
   try {
     const newCoach = await addCoach(coachData)
-    toast.add({
-      severity: 'success',
-      summary: 'Coach Created',
-      detail: `${newCoach.displayName} is now available at ?coach=${newCoach.name}`,
-      life: 5000
-    })
   } catch (error) {
     console.error('Error creating coach:', error)
-    toast.add({
-      severity: 'error',
-      summary: 'Error',
-      detail: 'Failed to create coach. Please try again.',
-      life: 3000
-    })
   }
 }
 
@@ -471,13 +509,8 @@ const testCoach = (coach: Coach) => {
 const copyCoachUrl = async (coach: Coach) => {
   const url = generateCoachUrl(coach.name)
   await copyToClipboard(url)
-  toast.add({
-    severity: 'success',
-    summary: 'URL Copied',
-    detail: `Coach URL for ${coach.displayName} copied to clipboard`,
-    life: 3000
-  })
 }
+
 
 const copyToClipboard = async (text: string) => {
   try {
@@ -493,6 +526,16 @@ const copyToClipboard = async (text: string) => {
   }
 }
 
+const copiedCoachId = ref<string | number | null>(null)
+
+const onCopyClick = async (coach: Coach) => {
+  await copyCoachUrl(coach)
+  copiedCoachId.value = coach.id
+  setTimeout(() => {
+    if (copiedCoachId.value === coach.id) copiedCoachId.value = null
+  }, 1200)
+}
+
 const confirmDelete = (coach: Coach) => {
   confirm.require({
     message: `Are you sure you want to delete ${coach.displayName}? This action cannot be undone.`,
@@ -501,12 +544,7 @@ const confirmDelete = (coach: Coach) => {
     acceptClass: 'p-button-danger',
     accept: () => {
       if (removeCoach(coach.id)) {
-        toast.add({
-          severity: 'success',
-          summary: 'Coach Deleted',
-          detail: `${coach.displayName} has been removed`,
-          life: 3000
-        })
+        // Coach deleted
       }
     }
   })
@@ -527,21 +565,8 @@ const handleExport = async () => {
     document.body.removeChild(link)
     
     URL.revokeObjectURL(url)
-    
-    toast.add({
-      severity: 'success',
-      summary: 'Export Complete',
-      detail: 'Coach configuration downloaded successfully',
-      life: 3000
-    })
   } catch (error) {
     console.error('Export error:', error)
-    toast.add({
-      severity: 'error',
-      summary: 'Export Failed',
-      detail: 'Failed to export coach configuration',
-      life: 3000
-    })
   } finally {
     exportLoading.value = false
   }
@@ -560,23 +585,12 @@ const handleImport = (event: Event) => {
     try {
       const content = e.target?.result as string
       if (importCoaches(content)) {
-        toast.add({
-          severity: 'success',
-          summary: 'Import Complete',
-          detail: 'Coach configuration imported successfully',
-          life: 3000
-        })
+        // Import success
       } else {
         throw new Error('Invalid format')
       }
     } catch (error) {
       console.error('Import error:', error)
-      toast.add({
-        severity: 'error',
-        summary: 'Import Failed',
-        detail: 'Failed to import coach configuration. Please check the file format.',
-        life: 3000
-      })
     }
   }
   reader.readAsText(file)
@@ -597,6 +611,9 @@ const editCoach = (coach: Coach) => {
   editingCoach.value = coach
   editImagePreview.value = null
   editCustomMessage.value = coach.welcomeMessage || ''
+  editWebsiteUrl.value = coach.websiteUrl || ''
+  editHighlight1.value = coach.highlights?.[0] || ''
+  editHighlight2.value = coach.highlights?.[1] || ''
   showEditModal.value = true
 }
 
@@ -627,23 +644,13 @@ const handleEditImageDrop = (event: DragEvent) => {
 const validateAndSetEditImage = (file: File) => {
   // Validate file type
   if (!file.type.startsWith('image/')) {
-    toast.add({
-      severity: 'error',
-      summary: 'Invalid File',
-      detail: 'Please select an image file',
-      life: 3000
-    })
+    console.warn('Invalid File: Please select an image file')
     return
   }
 
   // Validate file size (2MB)
   if (file.size > 2 * 1024 * 1024) {
-    toast.add({
-      severity: 'error',
-      summary: 'File Too Large',
-      detail: 'Image must be less than 2MB',
-      life: 3000
-    })
+    console.warn('File Too Large: Image must be less than 2MB')
     return
   }
 
@@ -668,14 +675,15 @@ const saveCoachEdit = async () => {
   // Check if we have changes to save
   const hasImageChange = editImagePreview.value || isBrokenAvatar.value
   const hasMessageChange = editCustomMessage.value !== (editingCoach.value.welcomeMessage || '')
+  const hasWebsiteChange = editWebsiteUrl.value !== (editingCoach.value.websiteUrl || '')
+  const onlyHighlightsChanged = (() => {
+    const newH = [editHighlight1.value, editHighlight2.value].filter(h => h && h.trim().length > 0)
+    const origH = (editingCoach.value?.highlights || []).slice(0,2)
+    return newH.join('\n') !== origH.join('\n')
+  })()
 
-  if (!hasImageChange && !hasMessageChange) {
-    toast.add({
-      severity: 'warn',
-      summary: 'No Changes',
-      detail: 'Please make changes to save',
-      life: 3000
-    })
+  if (!hasImageChange && !hasMessageChange && !hasWebsiteChange && !onlyHighlightsChanged) {
+    console.warn('No changes to save')
     return
   }
 
@@ -685,51 +693,36 @@ const saveCoachEdit = async () => {
     let updates: Partial<Coach> = {}
 
     if (editImagePreview.value) {
-      // New image uploaded
       updates.avatarUrl = editImagePreview.value
     } else if (isBrokenAvatar.value) {
-      // Remove broken blob URL
       updates.avatarUrl = undefined
     }
 
     if (hasMessageChange) {
-      // Update welcome message
       updates.welcomeMessage = editCustomMessage.value
+    }
+
+    if (editWebsiteUrl.value !== (editingCoach.value.websiteUrl || '')) {
+      updates.websiteUrl = editWebsiteUrl.value || undefined
+    }
+
+    const newHighlights = [editHighlight1.value, editHighlight2.value].filter(h => h && h.trim().length > 0)
+    const origH = editingCoach.value.highlights || []
+    const hasHighlightsChange = newHighlights.join('\n') !== origH.slice(0,2).join('\n')
+    if (hasHighlightsChange) {
+      updates.highlights = newHighlights.length ? newHighlights.slice(0,2) : undefined
     }
 
     // Update the coach
     const success = updateCoach(editingCoach.value.id, updates)
 
     if (success) {
-      let message = `${editingCoach.value.displayName} has been updated`
-      if (editImagePreview.value && hasMessageChange) {
-        message = `${editingCoach.value.displayName}'s avatar and welcome message have been updated`
-      } else if (editImagePreview.value) {
-        message = `${editingCoach.value.displayName}'s avatar has been updated`
-      } else if (hasMessageChange) {
-        message = `${editingCoach.value.displayName}'s welcome message has been updated`
-      } else if (isBrokenAvatar.value) {
-        message = `${editingCoach.value.displayName}'s broken avatar has been removed`
-      }
-
-      toast.add({
-        severity: 'success',
-        summary: 'Coach Updated',
-        detail: message,
-        life: 3000
-      })
       cancelEdit()
     } else {
       throw new Error('Failed to update coach')
     }
   } catch (error) {
     console.error('Error updating coach:', error)
-    toast.add({
-      severity: 'error',
-      summary: 'Update Failed',
-      detail: 'Failed to update coach. Please try again.',
-      life: 3000
-    })
   } finally {
     isUpdating.value = false
   }
@@ -740,6 +733,9 @@ const cancelEdit = () => {
   editingCoach.value = null
   editImagePreview.value = null
   editCustomMessage.value = ''
+  editWebsiteUrl.value = ''
+  editHighlight1.value = ''
+  editHighlight2.value = ''
   if (editFileInput.value) {
     editFileInput.value.value = ''
   }

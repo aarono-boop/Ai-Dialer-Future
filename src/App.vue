@@ -14,7 +14,7 @@
     />
 
     <!-- Main App Content -->
-    <main v-if="currentPage === 'main' && !managementMode" class="ml-16 flex-1 flex items-start justify-center p-8 relative z-[5]" :style="showDialer ? 'margin-right: 33.333333%' : ''">
+    <main v-if="currentPage === 'main' && !managementMode" class="ml-24 flex-1 flex items-start justify-center p-8 relative z-[5]" :style="(showDialer || showCoachInfoPanel) ? 'margin-right: 33.333333%' : ''">
       <div class="flex gap-6 w-full max-w-[1400px] h-[80vh] mt-2.5">
         <!-- Chat Container -->
         <div class="w-full max-w-6xl mx-auto rounded-xl px-5">
@@ -25,11 +25,12 @@
             <div class="flex flex-col">
               <template v-for="(message, index) in messages" :key="index">
                 <!-- Regular Chat Message -->
-                <ChatMessage v-if="message.type !== 'separator'" :message="message" :isWide="shouldBeWideMessage(message, index)" :onTypingProgress="message.preserveUserPosition ? undefined : scrollToBottomDuringTyping" :coachParameter="coachParameter" :aiCoachEnabled="aiCoachEnabled" @typing-complete="handleTypingComplete(index)">
+                <ChatMessage v-if="message.type !== 'separator'" :message="message" :isWide="shouldBeWideMessage(message, index)" :fullWidth="showCoachCarousel && index === 0" :onTypingProgress="message.preserveUserPosition ? undefined : scrollToBottomDuringTyping" :coachParameter="coachParameter" :aiCoachEnabled="aiCoachEnabled" @typing-complete="handleTypingComplete(index)">
                   <template #additional-content>
                     <!-- File Upload Area - shown inside welcome message for new users or ready to upload message for returning users -->
+                    <CoachCarousel v-if="index === 0 && showCoachCarousel" @learn-more="openCoachInfoPanel" @practice="startPracticeCall" />
                     <FileUpload
-                      v-if="(index === 0 && !isSignedIn && welcomeTypingComplete) || (isSignedIn && showFileUploadForReturningUser && isReadyToUploadMessage(message, index))"
+                      v-if="!showCoachCarousel && ((index === 0 && !isSignedIn && welcomeTypingComplete) || (isSignedIn && showFileUploadForReturningUser && isReadyToUploadMessage(message, index)))"
                       @trigger-upload="simulateFileUpload"
                       @file-selected="onFileSelect"
                       @file-dropped="simulateFileUpload"
@@ -205,13 +206,22 @@
           </div>
 
           <!-- Load New File Button - shown when queue is completed -->
-          <div v-if="showLoadNewFileButton" class="mt-2 pt-5 flex justify-center">
+          <div v-if="showLoadNewFileButton || (isPracticeMode && !showDialer)" class="mt-2 pt-5 flex justify-center">
             <div class="w-[70%] flex justify-center">
               <Button
+                v-if="!isPracticeMode"
                 @click="triggerFileUpload"
                 severity="secondary"
                 label="Load New File"
                 icon="pi pi-upload"
+                class="w-1/2 px-6 py-3 font-semibold flex items-center justify-center gap-2"
+              />
+              <Button
+                v-else
+                @click="returnToCoachesSelection"
+                severity="secondary"
+                label="Return to coaches selection"
+                icon="pi pi-users"
                 class="w-1/2 px-6 py-3 font-semibold flex items-center justify-center gap-2"
               />
             </div>
@@ -257,18 +267,131 @@
             @ai-coach-toggle="handleAICoachToggle"
           />
         </div>
+
+        <!-- Coach Info Panel -->
+        <div v-if="showCoachInfoPanel" class="fixed top-0 right-0 w-1/3 h-screen z-20 bg-gray-900 border-l border-gray-700">
+          <div class="h-full flex flex-col">
+            <div class="flex items-center justify-between p-4 border-b border-gray-700 bg-gray-900/90 sticky top-0 z-10">
+              <div class="flex items-center gap-3 min-w-0">
+                <img v-if="selectedCoachForInfo?.avatarUrl" :src="selectedCoachForInfo.avatarUrl" :alt="selectedCoachForInfo.displayName" class="w-24 h-24 rounded-full object-cover" />
+                <div v-else class="w-24 h-24 rounded-full bg-gradient-to-br from-blue-400 to-purple-500 flex items-center justify-center text-white font-semibold text-3xl">
+                  {{ selectedCoachForInfo?.displayName?.charAt(0) || 'C' }}
+                </div>
+                <h3 class="text-2xl font-semibold truncate">{{ selectedCoachForInfo?.displayName || 'Coach' }}</h3>
+              </div>
+              <div class="flex items-center gap-2">
+                <Button v-if="selectedCoachForInfo" :label="'Select ' + selectedCoachFirstName + ' as your coach'" size="small" severity="primary" @click="selectCoachFromPanel" :aria-label="'Select ' + selectedCoachFirstName + ' as your coach'" />
+                <Button icon="pi pi-times" text severity="secondary" @click="closeCoachInfoPanel" aria-label="Close coach info" />
+              </div>
+            </div>
+            <div class="p-4 overflow-y-auto flex-1 space-y-4">
+              <div v-if="selectedCoachForInfo" class="space-y-4">
+
+                <div v-if="selectedCoachForInfo.videoId" class="space-y-2">
+                  <div class="aspect-video rounded-lg overflow-hidden bg-black/30">
+                    <iframe
+                      :src="`https://www.youtube.com/embed/${selectedCoachForInfo.videoId}?autoplay=1&mute=1&playsinline=1`"
+                      frameborder="0"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allowfullscreen
+                      class="w-full h-full"
+                    ></iframe>
+                  </div>
+                </div>
+
+                <div v-if="selectedCoachForInfo.highlights && selectedCoachForInfo.highlights.length" class="space-y-1 pl-5 py-[10px]">
+                  <label class="text-xl font-medium">Highlights</label>
+                  <ul class="text-xs text-gray-300 list-disc list-inside">
+                    <li v-for="(h,i) in selectedCoachForInfo.highlights" :key="i">{{ h }}</li>
+                  </ul>
+                </div>
+
+
+                <!-- Basic Information -->
+                <div class="space-y-2 pl-5 border-t border-white/10 pt-[22px] pb-[10px] mt-3">
+                  <h4 class="text-xl font-medium">Basic Information</h4>
+                  <ul class="text-xs text-gray-300 list-disc list-inside">
+                    <li>Role: Sales Coach & Speaker</li>
+                    <li>Experience: 12+ years</li>
+                    <li>Signature Program: Momentum Calls Framework</li>
+                  </ul>
+                </div>
+
+                <!-- Key Statistics -->
+                <div class="space-y-2 pl-5 border-t border-white/10 pt-[22px] pb-[10px] mt-3">
+                  <h4 class="text-xl font-medium">Key Statistics</h4>
+                  <ul class="text-xs text-gray-300 list-disc list-inside">
+                    <li>Avg. connect-rate lift: 27%</li>
+                    <li>Time-to-first-meeting reduced: 34%</li>
+                    <li>Teams coached: 250+; reps impacted: 10,000+</li>
+                  </ul>
+                </div>
+
+                <!-- Platform Impact -->
+                <div class="space-y-2 pl-5 border-t border-white/10 pt-[22px] pb-[10px] mt-3">
+                  <h4 class="text-xl font-medium">Platform Impact</h4>
+                  <ul class="text-xs text-gray-300 list-disc list-inside">
+                    <li>Prioritizes best-time-to-call windows</li>
+                    <li>Applies objection handling snippets in real time</li>
+                    <li>Auto-generates follow-up tasks with proven cadences</li>
+                  </ul>
+                </div>
+
+                <!-- About Coach -->
+                <div class="space-y-2 pl-5 border-t border-white/10 pt-[22px] pb-[10px] mt-3">
+                  <h4 class="text-xl font-medium">About {{ selectedCoachFirstName }}</h4>
+                  <p class="text-xs text-gray-300">{{ selectedCoachFirstName }} is known for disciplined daily call blocks, clean qualification, and tight follow‑up cycles. Their approach balances energy with structure so reps stay consistent and close more.</p>
+                </div>
+
+                <!-- Industries Served -->
+                <div class="space-y-2 pl-5 border-t border-white/10 pt-[22px] pb-[10px] mt-3">
+                  <h4 class="text-xl font-medium">Industries Served</h4>
+                  <ul class="text-xs text-gray-300 list-disc list-inside">
+                    <li>SaaS</li>
+                    <li>Insurance & Financial Services</li>
+                    <li>Real Estate</li>
+                    <li>Home Services</li>
+                    <li>B2B Services</li>
+                  </ul>
+                </div>
+
+                <!-- Sales Methodology -->
+                <div class="space-y-2 pl-5 border-t border-white/10 pt-[22px] pb-[10px] mt-3">
+                  <h4 class="text-xl font-medium">Sales Methodology</h4>
+                  <ul class="text-xs text-gray-300 list-disc list-inside">
+                    <li>Pattern interrupts to earn attention fast</li>
+                    <li>Discovery that surfaces business impact early</li>
+                    <li>Micro‑commitments that advance every call</li>
+                  </ul>
+                </div>
+
+                <!-- Testimonials -->
+                <div class="space-y-2 pl-5 border-t border-white/10 pt-[22px] pb-[10px] mt-3">
+                  <h4 class="text-xl font-medium">Testimonials</h4>
+                  <div class="text-xs text-gray-300 space-y-2">
+                    <p>“Our connect rate and meetings doubled in 60 days.” — VP Sales, SaaS</p>
+                    <p>“The talk tracks are simple and deadly effective.” — SDR Lead, Insurance</p>
+                  </div>
+                <div v-if="selectedCoachForInfo?.websiteUrl" class="sticky bottom-0 -mb-4 -mx-4 px-4 py-3 border-t border-gray-700 bg-gray-900/90 flex justify-center">
+                  <a :href="selectedCoachForInfo.websiteUrl" target="_blank" rel="noopener" class="text-link text-sm inline-flex items-center gap-2 text-center"><i class="pi pi-external-link text-sm" aria-hidden="true"></i>Visit {{ selectedCoachForInfo?.displayName }}'s Website</a>
+                </div>
+            </div>
+          </div>
+            </div>
+          </div>
+        </div>
       </div>
     </main>
 
     <!-- Product Page -->
-    <div v-if="currentPage === 'product'" class="ml-16">
+    <div v-if="currentPage === 'product'" class="ml-24">
       <ProductPage
         @go-to-app="goToMainApp"
       />
     </div>
 
     <!-- Login Page -->
-    <div v-if="currentPage === 'login'" class="ml-16">
+    <div v-if="currentPage === 'login'" class="ml-24">
       <LoginPage
         @google-signin="handleGoogleSignin"
         @login-success="handleLoginSuccess"
@@ -277,7 +400,7 @@
     </div>
 
     <!-- Signup Page -->
-    <div v-if="currentPage === 'signup'" class="ml-16">
+    <div v-if="currentPage === 'signup'" class="ml-24">
       <SignupPage
         @google-signup="handleGoogleSignupFromSignup"
         @switch-to-signin="switchToSigninFromSignup"
@@ -295,7 +418,7 @@
     />
 
     <!-- Footer -->
-    <Footer v-if="currentPage === 'main' && !managementMode" :style="showDialer ? 'margin-right: 33.333333%' : ''" :showDialer="showDialer" :queuePaused="queuePaused" @skip-to-dialer="skipToDialer" />
+    <Footer v-if="currentPage === 'main' && !managementMode" :style="(showDialer || showCoachInfoPanel) ? 'margin-right: 33.333333%' : ''" :showDialer="showDialer" :queuePaused="queuePaused" @skip-to-dialer="skipToDialer" />
 
     <!-- Screen Reader Live Region for Announcements -->
     <div
@@ -340,8 +463,6 @@
       @close="closePaymentPage"
     />
 
-    <!-- Toast for notifications -->
-    <Toast />
 
     <!-- Session Summary now displayed in chat area -->
 
@@ -359,7 +480,6 @@
 
 <script setup lang="ts">
 import { ref, nextTick, computed, onMounted, onUnmounted, type Ref } from 'vue'
-import { useToast } from 'primevue/usetoast'
 import { showContactPreview } from './utils/contactPreview'
 import { clearFocusAndEstablishContext, focusChatInput, announceToScreenReader } from './utils/focus'
 import { createChatUtils, type Message } from './utils/chat'
@@ -387,22 +507,46 @@ import CallSeparator from './components/CallSeparator.vue'
 import YouTubeVideo from './components/YouTubeVideo.vue'
 import CoachManagement from './components/CoachManagement.vue'
 import CoachCreationPage from './components/CoachCreationPage.vue'
+import CoachCarousel from './components/CoachCarousel.vue'
 
 // PrimeVue Components (adding Button)
 import Button from 'primevue/button'
 
 // PrimeVue Components
-import Toast from 'primevue/toast'
 
 // Types
+import type { Coach } from './types/coach'
+const selectedCoachFirstName = computed(() => selectedCoachForInfo.value?.displayName?.split(' ')[0] || 'Coach')
+const isPracticeMode = ref<boolean>(false)
+
+const returnToCoachesSelection = (): void => {
+  isPracticeMode.value = false
+  showDialer.value = false
+  showLoadNewFileButton.value = false
+  showContinueQueueButton.value = false
+  setCurrentCoach(null)
+  showCoachCarousel.value = true
+  currentPage.value = 'main'
+  const newUrl = `${window.location.pathname}?coach=all`
+  window.history.replaceState({}, '', newUrl)
+  messages.value = [
+    {
+      type: 'ai',
+      content: [
+        'Welcome to ARKON by PhoneBurner.<br><br>I\'m here to help you call with confidence and close more deals.<br><br>Choose your sales coach first - everything from your scripts to follow-up strategies will be tailored to their winning approach.'
+      ],
+      typing: false
+    }
+  ]
+  nextTick(() => scrollToBottom())
+}
+
 interface Message {
   type: 'ai' | 'user' | 'separator'
   content: string[]
   contactName?: string
 }
 
-// Toast functionality (only for login/vulcan actions)
-const toast = useToast()
 
 // Helper function to handle Connect Score text (no tooltip)
 const wrapConnectScoreWithTooltip = (text: string): string => {
@@ -414,7 +558,7 @@ const getDynamicCoachingFeedback = (): string => {
   const coachingMessages = [
     'Great connection! I heard you building rapport early—that\'s your sweet spot. Next call, try mirroring their pace a bit more to deepen that connection.',
     'Nice work staying patient through their objections. I noticed you got stronger as the call progressed. Carry that momentum into the next one.',
-    'You handled that beautifully! Your confidence really came through. Next time, try asking one more discovery question before presenting—it\'ll make your close even stronger.',
+    'You handled that beautifully! Your confidence really came through. Next time, try asking one more discovery question before presenting���it\'ll make your close even stronger.',
     'I loved how you listened for their pain points. Your empathy is one of your strongest assets. Now let\'s work on creating more urgency in your next call.',
     'Solid call! You kept them engaged throughout. I\'d love to see you slow down just a touch during the value proposition—let it sink in.',
     'That was textbook rapport building! Your energy is infectious. Next call, try to qualify their budget earlier in the conversation.',
@@ -533,6 +677,8 @@ const showVerificationButtons = ref<boolean>(false)
 const phoneVerified = ref<boolean>(false) // Track if phone has been verified in this session
 const showStartDialingButton = ref<boolean>(false)
 const showDialer = ref<boolean>(false)
+const showCoachInfoPanel = ref<boolean>(false)
+const selectedCoachForInfo = ref<Coach | null>(null)
 const showDispositionButtons = ref<boolean>(false)
 const aiCoachEnabled = ref<boolean>(true)
 const showSessionSummary = ref<boolean>(false)
@@ -566,6 +712,9 @@ const {
   coachList,
   generateCoachUrl
 } = useCoaches()
+
+// Show carousel of all coaches when ?coach=all
+const showCoachCarousel = ref<boolean>(false)
 
 // Computed to maintain compatibility with existing code
 const coachParameter = computed(() => currentCoachId.value || '')
@@ -687,7 +836,7 @@ const isReadyToUploadMessage = (message: Message, index: number): boolean => {
 // Helper function to determine which messages should be wide (for file upload)
 const shouldBeWideMessage = (message: Message, index: number): boolean => {
   // Make message wide if it contains file upload content
-  return (index === 0 && !isSignedIn.value) || // Welcome message for new users
+  return (index === 0 && (!isSignedIn.value || showCoachCarousel.value)) || // Welcome or All Coaches message
          (isSignedIn.value && showFileUploadForReturningUser.value && isReadyToUploadMessage(message, index)) // Upload message for returning users
 }
 
@@ -771,6 +920,69 @@ const updateWelcomeMessageTyping = (): void => {
   }
 }
 
+const openCoachInfoPanel = (coach: Coach): void => {
+  selectedCoachForInfo.value = coach
+  showCoachInfoPanel.value = true
+}
+
+const closeCoachInfoPanel = (): void => {
+  showCoachInfoPanel.value = false
+}
+
+const selectCoachFromPanel = (): void => {
+  if (!selectedCoachForInfo.value) return
+  const url = generateCoachUrl(selectedCoachForInfo.value.name)
+  window.location.href = url
+}
+
+const startPracticeCall = (coach: Coach): void => {
+  // Set selected coach and hide carousel
+  isPracticeMode.value = true
+  setCurrentCoach(coach.id)
+  showCoachCarousel.value = false
+
+  // Ensure main app/dialer visible
+  currentPage.value = 'main'
+  isSignedIn.value = true
+  isReturningUser.value = true
+  hasUploadedFile.value = true
+  updateWelcomeMessageTyping()
+  showDialer.value = true
+
+  // Reset dialer state
+  callState.value = 'idle'
+  currentContactIndex.value = 0
+  totalCalls.value = 0
+  connectedCalls.value = 0
+  callLog.value = []
+
+  // Clear chat and announce practice
+  messages.value = []
+  addAIMessage(`Practice mode activated with <strong>${coach.displayName}</strong>. Placing a sample call...`)
+
+  // Start call after short delay
+  setTimeout(() => {
+    callState.value = 'ringing'
+    queueTimer = setInterval(() => { queueTime.value++ }, 1000)
+
+    // Add separator for the first (and only) practice contact
+    addSeparatorMessage(currentContact.value.name)
+
+    setTimeout(() => {
+      // Connect the call
+      callState.value = 'connected'
+      callDuration.value = 0
+      connectedCalls.value++
+      callTimer = setInterval(() => { callDuration.value++ }, 1000)
+
+      // Coach connection message + advice
+      showCallConnectedMessages(currentContact.value)
+
+      // Remain connected for manual user hang-up and disposition in practice mode
+    }, 2000) // ring duration
+  }, 800)
+}
+
 // Header Methods
 const handleLogin = () => {
   currentPage.value = 'login'
@@ -810,6 +1022,8 @@ const handleLogout = () => {
 
   // Reset UI state
   showDialer.value = false
+  showCoachInfoPanel.value = false
+  selectedCoachForInfo.value = null
   showActionButtons.value = false
   showContactPreviewButtons.value = false
   showPhoneVerificationButton.value = false
@@ -894,12 +1108,7 @@ const handleLogout = () => {
 }
 
 const handleSwitchToVulcan = () => {
-  toast.add({
-    severity: 'info',
-    summary: 'Switch to Vulcan',
-    detail: 'Switching to Vulcan...',
-    life: 3000
-  })
+  console.log('Switch to Vulcan')
 }
 
 const showProductPage = () => {
@@ -1920,7 +2129,11 @@ onMounted(() => {
   const coachAdmin = urlParams.get('coach-admin')
 
   // Set coach if specified
-  if (coach) {
+  if (coach === 'all') {
+    showCoachCarousel.value = true
+    setCurrentCoach(null)
+    console.log('Coach carousel mode enabled')
+  } else if (coach) {
     setCurrentCoach(coach)
     console.log('Coach parameter detected:', coach)
   }
@@ -1936,7 +2149,13 @@ onMounted(() => {
 
   // Set the initial welcome message based on coach parameter
   if (messages.value.length > 0 && messages.value[0].type === 'ai') {
-    messages.value[0].content = [getCoachWelcomeMessage.value]
+    if (showCoachCarousel.value) {
+      messages.value[0].content = [
+        'Welcome to ARKON by PhoneBurner.<br><br>I\'m here to help you call with confidence and close more deals.<br><br>Choose your sales coach first - everything from your scripts to follow-up strategies will be tailored to their winning approach.'
+      ]
+    } else {
+      messages.value[0].content = [getCoachWelcomeMessage.value]
+    }
   }
 
   ;(window as any).triggerFileUpload = triggerFileUpload
@@ -2093,8 +2312,8 @@ const addSessionSummaryToChat = (isCompleted: boolean = false): void => {
   if (!shouldCompleteQueue.value) {
     showContinueQueueButton.value = true
   } else {
-    // Show Load New File button when queue is completed
-    showLoadNewFileButton.value = true
+    // Show Load New File button when queue is completed (not in practice mode)
+    showLoadNewFileButton.value = !isPracticeMode.value
   }
 }
 
@@ -2229,8 +2448,8 @@ const handleCompleteQueue = (): void => {
   // Add session summary content to chat after a delay
   setTimeout(() => {
     addSessionSummaryToChat(true)
-    // Show Load New File button
-    showLoadNewFileButton.value = true
+    // Show Load New File button (not in practice mode)
+    showLoadNewFileButton.value = !isPracticeMode.value
   }, 500)
 }
 
@@ -2568,9 +2787,10 @@ const handleActionButton = (action: string): void => {
 const handleCoachCreated = async (coachData: any) => {
   try {
     const newCoach = await addCoach(coachData)
-    // Redirect to the new coach's page
     const newUrl = generateCoachUrl(newCoach.name)
-    window.location.href = newUrl
+    setTimeout(() => {
+      window.location.href = newUrl
+    }, 100)
   } catch (error) {
     console.error('Error creating coach:', error)
   }

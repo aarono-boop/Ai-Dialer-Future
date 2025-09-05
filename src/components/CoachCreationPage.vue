@@ -54,6 +54,19 @@
             </small>
           </div>
 
+          <!-- Website URL -->
+          <div class="flex flex-col gap-2">
+            <label for="websiteUrl" class="font-semibold text-white">Website URL (Optional)</label>
+            <InputText
+              id="websiteUrl"
+              v-model="formData.websiteUrl"
+              placeholder="https://example.com"
+              class="w-full"
+              :invalid="!!errors.websiteUrl"
+            />
+            <small v-if="errors.websiteUrl" class="text-red-400">{{ errors.websiteUrl }}</small>
+          </div>
+
           <!-- Avatar Image Upload -->
           <div class="flex flex-col gap-2">
             <label class="font-semibold text-white">Coach Avatar (Optional)</label>
@@ -104,6 +117,16 @@
             <small class="text-gray-400">
               Default: "Welcome to ARKON! I'm your AI calling assistant, enhanced with [Coach Name]'s proven methodologies."
             </small>
+          </div>
+
+          <!-- Highlights (2 bullets) -->
+          <div class="flex flex-col gap-2">
+            <label class="font-semibold text-white">Highlights (2 bullets)</label>
+            <div class="grid grid-cols-1 gap-2">
+              <InputText v-model="highlight1" placeholder="e.g., Known for high-intent objection handling" class="w-full" />
+              <InputText v-model="highlight2" placeholder="e.g., Data-driven cold calling frameworks" class="w-full" />
+            </div>
+            <small class="text-gray-500">Optional. Shown under the coach in All Coaches view.</small>
           </div>
         </div>
 
@@ -214,9 +237,11 @@ import { ref, computed, watch, onMounted } from 'vue'
 import InputText from 'primevue/inputtext'
 import Textarea from 'primevue/textarea'
 import Button from 'primevue/button'
-import { useToast } from 'primevue/usetoast'
 import type { CoachCreateData } from '../types/coach'
 import { generateCoachId, extractYouTubeVideoId } from '../config/coaches'
+
+const highlight1 = ref('')
+const highlight2 = ref('')
 
 // Emits
 const emit = defineEmits<{
@@ -224,14 +249,13 @@ const emit = defineEmits<{
   'cancel': []
 }>()
 
-// Toast for notifications
-const toast = useToast()
 
 // Form data
 const formData = ref<CoachCreateData>({
   name: '',
   displayName: '',
   videoUrl: '',
+  websiteUrl: '',
   avatarFile: undefined,
   customMessage: ''
 })
@@ -285,6 +309,20 @@ watch(() => formData.value.videoUrl, (newValue) => {
     errors.value.videoUrl = 'Please enter a valid YouTube URL'
   } else {
     delete errors.value.videoUrl
+  }
+})
+
+watch(() => formData.value.websiteUrl, (newValue) => {
+  if (!newValue) {
+    delete errors.value.websiteUrl
+    return
+  }
+  try {
+    const u = new URL(newValue)
+    if (!u.protocol.startsWith('http')) throw new Error('invalid')
+    delete errors.value.websiteUrl
+  } catch {
+    errors.value.websiteUrl = 'Please enter a valid website URL (https://...)'
   }
 })
 
@@ -346,9 +384,12 @@ const resetForm = () => {
     name: '',
     displayName: '',
     videoUrl: '',
+    websiteUrl: '',
     avatarFile: undefined,
     customMessage: ''
   }
+  highlight1.value = ''
+  highlight2.value = ''
   errors.value = {}
   imagePreview.value = null
   isCreating.value = false
@@ -364,26 +405,13 @@ const handleCreate = async () => {
     formData.value.name = generateCoachId(formData.value.displayName)
     
     // Emit the coach data
-    emit('coach-created', { ...formData.value })
-    
-    // Show success message
-    toast.add({
-      severity: 'success',
-      summary: 'Coach Created',
-      detail: `${formData.value.displayName} has been created successfully!`,
-      life: 3000
-    })
+    const highlights = [highlight1.value, highlight2.value].filter(h => h && h.trim().length > 0)
+    emit('coach-created', { ...formData.value, highlights })
     
     // Reset form
     resetForm()
   } catch (error) {
     console.error('Error creating coach:', error)
-    toast.add({
-      severity: 'error',
-      summary: 'Error',
-      detail: 'Failed to create coach. Please try again.',
-      life: 3000
-    })
   } finally {
     isCreating.value = false
   }

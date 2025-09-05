@@ -144,7 +144,6 @@ import Dialog from 'primevue/dialog'
 import InputText from 'primevue/inputtext'
 import Textarea from 'primevue/textarea'
 import Button from 'primevue/button'
-import { useToast } from 'primevue/usetoast'
 import type { CoachCreateData } from '../types/coach'
 import { generateCoachId, extractYouTubeVideoId } from '../config/coaches'
 
@@ -160,8 +159,6 @@ const emit = defineEmits<{
   'close': []
 }>()
 
-// Toast for notifications
-const toast = useToast()
 
 // Form data
 const formData = ref<CoachCreateData>({
@@ -300,24 +297,10 @@ const handleCreate = async () => {
     // Emit the coach data
     emit('coach-created', { ...formData.value })
     
-    // Show success message
-    toast.add({
-      severity: 'success',
-      summary: 'Coach Created',
-      detail: `${formData.value.displayName} has been created successfully!`,
-      life: 3000
-    })
-    
     // Close modal and reset form
     onClose()
   } catch (error) {
     console.error('Error creating coach:', error)
-    toast.add({
-      severity: 'error',
-      summary: 'Error',
-      detail: 'Failed to create coach. Please try again.',
-      life: 3000
-    })
   } finally {
     isCreating.value = false
   }
