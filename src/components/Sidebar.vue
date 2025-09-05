@@ -124,7 +124,7 @@ const props = defineProps<{
 }>()
 
 // Define emits for parent component communication
-const emit = defineEmits(['login', 'logout', 'show-product', 'go-home'])
+const emitSidebar = defineEmits(['login', 'logout', 'show-product', 'go-home'])
 
 // Template refs
 const focusAnchor = ref<HTMLElement | null>(null)
@@ -140,7 +140,7 @@ const toggleUserMenu = () => {
 
 // Robust home click: emit event and broadcast global event
 const handleHomeClick = () => {
-  emit('go-home')
+  emitSidebar('go-home')
   try {
     window.dispatchEvent(new CustomEvent('arkon-go-home'))
   } catch {}
@@ -149,7 +149,7 @@ const handleHomeClick = () => {
 // Handle logout
 const handleLogout = () => {
   showUserMenu.value = false
-  emit('logout')
+  emitSidebar('logout')
 }
 
 // Close menu when clicking outside
