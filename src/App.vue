@@ -408,7 +408,7 @@
     </div>
 
     <!-- Coach Management Interface -->
-    <CoachManagement v-if="managementMode === 'admin' && currentPage === 'main'" />
+    <CoachManagement v-if="managementMode === 'admin' && currentPage === 'main' && !showCoachDashboard" />
 
     <!-- Coach Creation Page for create-coach URL -->
     <CoachCreationPage
