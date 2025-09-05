@@ -4,6 +4,7 @@ import dialogTokens from './dialog'
 import inputtextTokens from './inputtext'
 import toggleswitchTokens from './toggleswitch'
 import tooltipTokens from './tooltip'
+import dropdownTokens from './dropdown'
 
 export { default as base } from './base'
 export { default as button } from './button'
@@ -11,6 +12,7 @@ export { default as dialog } from './dialog'
 export { default as inputtext } from './inputtext'
 export { default as toggleswitch } from './toggleswitch'
 export { default as tooltip } from './tooltip'
+export { default as dropdown } from './dropdown'
 export { default as theme, customTheme } from './theme'
 export { default as vulcan7Theme } from './vulcan7'
 
@@ -21,5 +23,6 @@ export const tokens = {
     dialog: dialogTokens,
     inputtext: inputtextTokens,
     toggleswitch: toggleswitchTokens,
-    tooltip: tooltipTokens
+    tooltip: tooltipTokens,
+    dropdown: dropdownTokens
 }
