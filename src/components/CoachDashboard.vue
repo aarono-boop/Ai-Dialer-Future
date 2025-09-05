@@ -73,7 +73,7 @@
 
       <!-- Revenue Trend and Attention -->
       <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
-        <Card class="bg-gray-800 border-gray-700 lg:col-span-2">
+        <Card class="bg-gray-800 border-gray-700 lg:col-span-3">
           <template #title>
             <div class="flex items-center gap-2"><i class="pi pi-chart-line"></i><span>Revenue Trends (6 Months)</span></div>
           </template>
