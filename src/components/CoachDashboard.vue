@@ -112,7 +112,7 @@
             </div>
           </template>
           <template #content>
-            <DataTable :value="leaderboard" size="small" class="text-sm" :pt="{ bodyCell: { class: 'py-3 px-2' }, headerCell: { class: 'py-3 px-2' } }">
+            <DataTable :value="leaderboard" size="large" class="text-sm" :pt="{ bodyCell: { class: 'py-4 px-4' }, headerCell: { class: 'py-4 px-4' } }">
               <Column field="rank" header="#" style="width: 50px" />
               <Column header="Student">
                 <template #body="{ data }">
@@ -130,7 +130,7 @@
               <Column header="Score">
                 <template #body="{ data }">
                   <div class="flex items-center gap-2">
-                    <ProgressBar :value="data.score" style="height: 8px; flex: 1" />
+                    <ProgressBar :value="data.score" :showValue="false" style="height: 8px; flex: 1" />
                     <span class="w-10 text-right">{{ data.score }}%</span>
                   </div>
                 </template>
