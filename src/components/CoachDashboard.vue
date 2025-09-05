@@ -112,7 +112,7 @@
             </div>
           </template>
           <template #content>
-            <DataTable :value="leaderboard" size="small" class="text-sm">
+            <DataTable :value="leaderboard" size="small" class="text-sm" :pt="{ bodyCell: { class: 'py-3 px-2' }, headerCell: { class: 'py-3 px-2' } }">
               <Column field="rank" header="#" style="width: 50px" />
               <Column header="Student">
                 <template #body="{ data }">
