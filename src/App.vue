@@ -2147,6 +2147,13 @@ onMounted(() => {
     console.log('Coach parameter detected:', coach)
   }
 
+  // Show coach dashboard if requested
+  if (coachDashboard) {
+    showCoachDashboard.value = true
+    dashboardCoachName.value = coachDashboard
+    setCurrentCoach(coachDashboard)
+  }
+
   // Set management mode based on URL parameters
   if (createCoach === 'true') {
     setManagementMode('create')
