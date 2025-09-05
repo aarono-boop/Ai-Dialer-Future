@@ -14,7 +14,7 @@
     />
 
     <!-- Main App Content -->
-    <main v-if="currentPage === 'main' && !managementMode" class="ml-16 flex-1 flex items-start justify-center p-8 relative z-[5]" :style="(showDialer || showCoachInfoPanel) ? 'margin-right: 33.333333%' : ''">
+    <main v-if="currentPage === 'main' && !managementMode && !showCoachDashboard" class="ml-16 flex-1 flex items-start justify-center p-8 relative z-[5]" :style="(showDialer || showCoachInfoPanel) ? 'margin-right: 33.333333%' : ''">
       <div class="flex gap-6 w-full max-w-[1400px] h-[80vh] mt-2.5">
         <!-- Chat Container -->
         <div class="w-full max-w-6xl mx-auto rounded-xl px-5">
