@@ -14,7 +14,7 @@
     />
 
     <!-- Main App Content -->
-    <main v-if="currentPage === 'main' && !managementMode" class="ml-24 flex-1 flex items-start justify-center p-8 relative z-[5]" :style="(showDialer || showCoachInfoPanel) ? 'margin-right: 33.333333%' : ''">
+    <main v-if="currentPage === 'main' && !managementMode" class="ml-16 flex-1 flex items-start justify-center p-8 relative z-[5]" :style="(showDialer || showCoachInfoPanel) ? 'margin-right: 33.333333%' : ''">
       <div class="flex gap-6 w-full max-w-[1400px] h-[80vh] mt-2.5">
         <!-- Chat Container -->
         <div class="w-full max-w-6xl mx-auto rounded-xl px-5">
@@ -384,14 +384,14 @@
     </main>
 
     <!-- Product Page -->
-    <div v-if="currentPage === 'product'" class="ml-24">
+    <div v-if="currentPage === 'product'" class="ml-16">
       <ProductPage
         @go-to-app="goToMainApp"
       />
     </div>
 
     <!-- Login Page -->
-    <div v-if="currentPage === 'login'" class="ml-24">
+    <div v-if="currentPage === 'login'" class="ml-16">
       <LoginPage
         @google-signin="handleGoogleSignin"
         @login-success="handleLoginSuccess"
@@ -400,7 +400,7 @@
     </div>
 
     <!-- Signup Page -->
-    <div v-if="currentPage === 'signup'" class="ml-24">
+    <div v-if="currentPage === 'signup'" class="ml-16">
       <SignupPage
         @google-signup="handleGoogleSignupFromSignup"
         @switch-to-signin="switchToSigninFromSignup"
