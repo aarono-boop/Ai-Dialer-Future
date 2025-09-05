@@ -31,7 +31,7 @@
                 content: { style: { background: 'var(--p-surface-100)' } },
                 list: { style: { background: 'var(--p-surface-100)' } },
                 item: { class: 'hover:bg-white/10' }
-              ]"
+              }"
               @change="restartMic"
             />
             <Button :label="isMicActive ? 'Restart' : 'Enable'" :severity="isMicActive ? 'secondary' : 'primary'" size="small" @click="restartMic" />
