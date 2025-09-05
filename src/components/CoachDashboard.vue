@@ -31,7 +31,7 @@
             <div class="flex items-center justify-between">
               <div>
                 <p class="text-gray-400 text-sm">Monthly Earnings</p>
-                <p class="text-3xl font-bold">${{ monthlyEarnings.toLocaleString() }}</p>
+                <p class="text-3xl font-bold">{{ currency(monthlyEarnings) }}</p>
               </div>
               <i class="pi pi-wallet text-2xl text-blue-400"></i>
             </div>
@@ -99,7 +99,7 @@
             <DataTable :value="revenueRows" size="small" class="text-sm">
               <Column field="month" header="Month" />
               <Column header="Revenue">
-                <template #body="{ data }">${{ data.amount.toLocaleString() }}</template>
+                <template #body="{ data }">{{ currency(data.amount) }}</template>
               </Column>
               <Column header="Trend">
                 <template #body="{ data }">
@@ -230,7 +230,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 import Card from 'primevue/card'
 import Button from 'primevue/button'
 import Dropdown from 'primevue/dropdown'
@@ -332,5 +332,6 @@ const exportReport = () => {
   URL.revokeObjectURL(url)
 }
 
+const currency = (n: number) => '$' + Number(n || 0).toLocaleString()
 const noop = () => {}
 </script>
