@@ -78,7 +78,7 @@
             <div class="flex items-center gap-2"><i class="pi pi-chart-line"></i><span>Revenue Trends (6 Months)</span></div>
           </template>
           <template #content>
-            <Chart type="line" :data="revenueChartData" :options="revenueChartOptions" class="w-full h-64" />
+            <Chart type="line" :data="revenueChartData" :options="revenueChartOptions" class="w-full" style="width: 100%; height: 16rem;" />
           </template>
         </Card>
         <Card class="bg-gray-800 border-gray-700">
@@ -257,7 +257,7 @@ const revenueChartData = computed(() => ({
     }
   ]
 }))
-const revenueChartOptions = {
+const revenueChartOptions = { maintainAspectRatio: false,
   responsive: true,
   plugins: { legend: { display: false } },
   scales: {
