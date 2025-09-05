@@ -513,6 +513,7 @@ import YouTubeVideo from './components/YouTubeVideo.vue'
 import CoachManagement from './components/CoachManagement.vue'
 import CoachCreationPage from './components/CoachCreationPage.vue'
 import CoachCarousel from './components/CoachCarousel.vue'
+import CoachDashboard from './components/CoachDashboard.vue'
 
 // PrimeVue Components (adding Button)
 import Button from 'primevue/button'
