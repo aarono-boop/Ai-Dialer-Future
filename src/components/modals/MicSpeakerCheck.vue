@@ -43,7 +43,7 @@
           </div>
           <div class="flex items-center gap-3">
             <Button icon="pi pi-play" :label="testingSpeaker ? 'Playing' : 'Play Test Sound'" severity="secondary" :disabled="testingSpeaker" @click="playTestTone" />
-            <Button icon="pi pi-check" label="I heard it" severity="success" @click="markSpeakerHeard" />
+            <Button :icon="speakerOk ? 'pi pi-check' : ''" label="I heard it" :severity="speakerOk ? 'success' : 'secondary'" @click="markSpeakerHeard" />
           </div>
         </div>
       </div>
