@@ -206,6 +206,10 @@ import DataTable from 'primevue/datatable'
 import Column from 'primevue/column'
 import ProgressBar from 'primevue/progressbar'
 import Chart from 'primevue/chart'
+import Dialog from 'primevue/dialog'
+import Checkbox from 'primevue/checkbox'
+import Textarea from 'primevue/textarea'
+import Avatar from 'primevue/avatar'
 import { useCoaches } from '../composables/useCoaches'
 
 const props = defineProps<{ coachName?: string | null }>()
