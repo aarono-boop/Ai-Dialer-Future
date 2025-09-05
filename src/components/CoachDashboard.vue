@@ -299,5 +299,36 @@ const exportReport = () => {
 
 const currency = (n: number) => '$' + Number(n || 0).toLocaleString()
 const goBack = () => { window.location.href = window.location.pathname }
+
+// Share dialog state
+const showShare = ref(false)
+const shareList = ref<{ rank:number; name:string; selected:boolean }[]>([])
+const shareText = ref('')
+
+const buildShareText = () => {
+  const selected = shareList.value.filter(s => s.selected).map(s => s.name)
+  const medals = ['🥇', '🥈', '🥉']
+  const lines = selected.map((n, i) => `${medals[i] || '🏅'} ${n}`)
+  return [
+    'Incredible performance from my students this week! 🚀 Shoutout to our top performers on the leaderboard:',
+    '',
+    ...lines
+  ].join('\n')
+}
+
+const openShare = () => {
+  shareList.value = leaderboard.value.slice(0, 5).map((s, i) => ({ rank: s.rank, name: s.name, selected: i < 3 }))
+  shareText.value = buildShareText()
+  showShare.value = true
+}
+
+watch(shareList, () => { shareText.value = buildShareText() }, { deep: true })
+
+const copyShareText = async () => {
+  try {
+    await navigator.clipboard.writeText(shareText.value)
+  } catch {}
+}
+
 const noop = () => {}
 </script>
