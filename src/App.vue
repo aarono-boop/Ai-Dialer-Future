@@ -383,6 +383,11 @@
       </div>
     </main>
 
+    <!-- Coach Dashboard Page -->
+    <div v-if="showCoachDashboard" class="ml-16">
+      <CoachDashboard :coachName="dashboardCoachName" />
+    </div>
+
     <!-- Product Page -->
     <div v-if="currentPage === 'product'" class="ml-16">
       <ProductPage
