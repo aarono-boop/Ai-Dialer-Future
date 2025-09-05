@@ -1494,6 +1494,7 @@ const sendMessage = (message: string): void => {
 
     // Show the next step
     showStartDialingButton.value = true
+    audioCheckPassed.value = false
 
     setTimeout(() => {
       addAIMessage([
@@ -1686,6 +1687,7 @@ const handleLooksGood = (): void => {
           `Great! Your number ${phoneNumber} is verified and set as your Caller ID.<br><br>As the dialer calls each person, their contact information will be displayed. The first contact that will be called is Sam Sample.`
         ])
         showStartDialingButton.value = true
+        audioCheckPassed.value = false
         scrollToBottom()
       }, 1500)
 
