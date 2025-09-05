@@ -123,8 +123,26 @@
             </div>
           </div>
 
-          <!-- Start Dialing Button - always visible when active -->
-          <div v-if="showStartDialingButton" class="mt-2 pt-5 flex justify-center">
+          <!-- Audio Check Step (shown before Start Dialing) -->
+          <div v-if="showStartDialingButton && !audioCheckPassed" class="mt-2 pt-5 flex justify-center">
+            <div class="w-[70%] flex flex-col items-center gap-3">
+              <div class="text-sm text-gray-300 flex items-center gap-2">
+                <i class="pi pi-microphone" aria-hidden="true"></i>
+                <i class="pi pi-volume-up" aria-hidden="true"></i>
+                <span>Before you start, please test your mic and speakers.</span>
+              </div>
+              <Button
+                icon="pi pi-check"
+                label="Run Audio Check"
+                class="w-1/2 py-3 font-semibold"
+                @click="showMicSpeakerCheck = true"
+                tabindex="3"
+              />
+            </div>
+          </div>
+
+          <!-- Start Dialing Button (only after audio check passes) -->
+          <div v-if="showStartDialingButton && audioCheckPassed" class="mt-2 pt-5 flex justify-center">
             <div class="w-[70%] flex justify-center">
               <Button
                 @click="handleStartDialing"
@@ -673,6 +691,7 @@ const showAccountCreation = ref<boolean>(false)
 const showPricingPage = ref<boolean>(false)
 const showPaymentPage = ref<boolean>(false)
 const showMicSpeakerCheck = ref<boolean>(false)
+const audioCheckPassed = ref<boolean>(false)
 const isSignedIn = ref<boolean>(false)
 const isReturningUser = ref<boolean>(false) // Track if user logged in vs created new account
 const showActionButtons = ref<boolean>(false)
@@ -1812,13 +1831,12 @@ const handleTryAnotherNumber = (): void => {
 }
 
 const handleStartDialing = (): void => {
-  // Open mic/speaker check before starting
-  showMicSpeakerCheck.value = true
+  startDialSession()
 }
 
 const onAudioCheckPassed = (): void => {
   showMicSpeakerCheck.value = false
-  startDialSession()
+  audioCheckPassed.value = true
 }
 
 const startDialSession = (): void => {
