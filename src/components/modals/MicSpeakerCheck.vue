@@ -25,7 +25,7 @@
               class="flex-1"
               @change="restartMic"
             />
-            <Button :label="isMicActive ? 'Restart' : 'Enable'" size="small" @click="restartMic" />
+            <Button :label="isMicActive ? 'Restart' : 'Enable'" :severity="isMicActive ? 'secondary' : 'primary'" size="small" @click="restartMic" />
           </div>
           <div class="space-y-1">
             <ProgressBar :value="micLevel" />
@@ -42,7 +42,7 @@
             <span class="text-sm" :class="speakerOk ? 'text-green-400' : 'text-gray-400'">{{ speakerOk ? 'Heard' : (testingSpeaker ? 'Playing test...' : 'Not tested') }}</span>
           </div>
           <div class="flex items-center gap-3">
-            <Button icon="pi pi-play" :label="testingSpeaker ? 'Playing' : 'Play Test Sound'" :disabled="testingSpeaker" @click="playTestTone" />
+            <Button icon="pi pi-play" :label="testingSpeaker ? 'Playing' : 'Play Test Sound'" severity="secondary" :disabled="testingSpeaker" @click="playTestTone" />
             <Button icon="pi pi-check" label="I heard it" severity="success" @click="markSpeakerHeard" />
           </div>
         </div>
