@@ -24,11 +24,7 @@
               placeholder="Select microphone"
               class="flex-1"
               variant="filled"
-              :pt="{
-                panel: { class: 'bg-gray-800/95 border border-white/10 rounded-md shadow-lg backdrop-blur' },
-                wrapper: { class: 'bg-gray-800/70 border border-white/10 rounded-md' },
-                item: { class: 'hover:bg-white/10' }
-              }"
+              appendTo="self"
               @change="restartMic"
             />
             <Button :label="isMicActive ? 'Restart' : 'Enable'" :severity="isMicActive ? 'secondary' : 'primary'" size="small" @click="restartMic" />
