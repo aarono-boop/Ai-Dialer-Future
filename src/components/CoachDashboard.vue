@@ -166,6 +166,33 @@
         </Card>
       </div>
 
+      <!-- Share Top Performers Modal -->
+      <Dialog v-model:visible="showShare" modal header="Share Top Performers" :style="{ width: '42rem' }" :breakpoints="{ '960px': '95vw' }">
+        <div class="space-y-4">
+          <p class="text-gray-300 text-sm">Select which students to include in your post.</p>
+          <div class="space-y-3">
+            <div v-for="item in shareList" :key="item.rank" class="flex items-center justify-between bg-gray-800 border border-gray-700 rounded-xl px-4 py-3">
+              <div class="flex items-center gap-3 min-w-0">
+                <Checkbox v-model="item.selected" :binary="true" />
+                <Avatar :label="item.name.split(' ').map(p=>p[0]).join('')" class="bg-gradient-to-br from-blue-400 to-purple-500 text-white" shape="circle" size="large" />
+                <span class="font-medium truncate">{{ item.name }}</span>
+              </div>
+              <span class="text-gray-400 text-sm whitespace-nowrap">Rank #{{ item.rank }}</span>
+            </div>
+          </div>
+
+          <div>
+            <Textarea v-model="shareText" autoResize rows="6" class="w-full" />
+          </div>
+
+          <div class="flex items-center gap-3">
+            <Button label="Copy Text" class="flex-1" @click="copyShareText" />
+            <Button icon="pi pi-twitter" text aria-label="Share on X" />
+            <Button icon="pi pi-linkedin" text aria-label="Share on LinkedIn" />
+            <Button icon="pi pi-facebook" text aria-label="Share on Facebook" />
+          </div>
+        </div>
+      </Dialog>
     </div>
   </div>
 </template>
