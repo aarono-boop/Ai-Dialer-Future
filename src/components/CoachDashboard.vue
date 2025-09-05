@@ -127,13 +127,6 @@
               <Column header="Conversion %" headerClass="py-6 px-5" bodyClass="py-6 px-5">
                 <template #body="{ data }">{{ (data.conversions / Math.max(1, data.calls) * 100).toFixed(1) }}%</template>
               </Column>
-              <Column header="Score" headerClass="py-6 px-5" bodyClass="py-6 px-5">
-                <template #body="{ data }">
-                  <div class="flex items-center justify-end">
-                    <span class="font-medium">{{ data.score }}%</span>
-                  </div>
-                </template>
-              </Column>
             </DataTable>
           </template>
         </Card>
