@@ -112,7 +112,7 @@
           <template #title>
             <div class="flex items-center justify-between">
               <div class="flex items-center gap-2"><i class="pi pi-trophy"></i><span>Student Performance Leaderboard</span></div>
-              <Button icon="pi pi-share-alt" label="Share" size="small" text @click="noop" />
+              <Button icon="pi pi-share-alt" label="Share" size="small" text @click="openShare" />
             </div>
           </template>
           <template #content>
