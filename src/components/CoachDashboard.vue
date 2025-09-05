@@ -112,9 +112,9 @@
             </div>
           </template>
           <template #content>
-            <DataTable :value="leaderboard" size="large" class="text-sm" :pt="{ bodyCell: { class: 'py-4 px-4' }, headerCell: { class: 'py-4 px-4' } }">
-              <Column field="rank" header="#" style="width: 50px" />
-              <Column header="Student">
+            <DataTable :value="leaderboard" size="large" class="text-sm">
+              <Column field="rank" header="#" style="width: 50px" headerClass="py-4 px-4" bodyClass="py-4 px-4" />
+              <Column header="Student" headerClass="py-4 px-4" bodyClass="py-4 px-4">
                 <template #body="{ data }">
                   <div class="flex items-center gap-2">
                     <div class="w-7 h-7 rounded-full bg-gradient-to-br from-blue-400 to-purple-500"></div>
@@ -122,16 +122,15 @@
                   </div>
                 </template>
               </Column>
-              <Column field="calls" header="Calls" />
-              <Column field="conversions" header="Appointments Set" />
-              <Column header="Conversion %">
+              <Column field="calls" header="Calls" headerClass="py-4 px-4" bodyClass="py-4 px-4" />
+              <Column field="conversions" header="Appointments Set" headerClass="py-4 px-4" bodyClass="py-4 px-4" />
+              <Column header="Conversion %" headerClass="py-4 px-4" bodyClass="py-4 px-4">
                 <template #body="{ data }">{{ (data.conversions / Math.max(1, data.calls) * 100).toFixed(1) }}%</template>
               </Column>
-              <Column header="Score">
+              <Column header="Score" headerClass="py-4 px-4" bodyClass="py-4 px-4">
                 <template #body="{ data }">
-                  <div class="flex items-center gap-2">
-                    <ProgressBar :value="data.score" :showValue="false" style="height: 8px; flex: 1" />
-                    <span class="w-10 text-right">{{ data.score }}%</span>
+                  <div class="flex items-center justify-end">
+                    <span class="font-medium">{{ data.score }}%</span>
                   </div>
                 </template>
               </Column>
