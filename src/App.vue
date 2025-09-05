@@ -2023,10 +2023,9 @@ const handleHangUp = (): void => {
   if (isManualHangUp.value && aiCoachEnabled.value) {
     // Get coach-specific recap title
     const getCoachRecapTitle = (): string => {
-      if (coachParameter.value === 'jordan-stupar') {
-        return '<strong>Jordan\'s Session Recap</strong>'
-      }
-      return '<strong>AI Coaching Recap</strong>'
+      const name = currentCoach.value?.displayName || 'Coach'
+      const first = name.split(' ')[0]
+      return `<strong>${first}'s Call Recap</strong>`
     }
 
     addAIMessageWithTyping([
