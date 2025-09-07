@@ -274,5 +274,5 @@ onUnmounted(() => teardown())
 /* Global to affect portal (appendTo=body) */
 .mic-dropdown-panel { background-color: var(--p-surface-800) !important; font-size: 0.875rem; }
 .mic-dropdown-panel .p-dropdown-items { padding: 4px; }
-.mic-dropdown-panel .p-dropdown-item { padding: 8px 12px; line-height: 1.5; font-size: 0.875rem; }
+.mic-dropdown-panel .p-dropdown-item { padding: 12px 12px; line-height: 2.5; font-size: 0.875rem; }
 </style>
