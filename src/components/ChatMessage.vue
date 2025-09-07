@@ -77,7 +77,7 @@
           />
         </div>
         <Dialog v-model:visible="showPositiveModal" modal header="Feedback" :style="{ width: '28rem' }" :breakpoints="{ '960px': '90vw' }">
-          <div class="text-sm mb-3" :style="{ color: 'var(--p-surface-300)' }">Please provide details: (optional)</div>
+          <div class="text-sm mb-3" :style="{ color: 'var(--p-surface-100)' }">Please provide details: (optional)</div>
           <Textarea
             v-model="feedbackText"
             autoResize
@@ -443,5 +443,11 @@ const getMessageWidth = (): string => {
 :deep(.ai-actions .p-button:active) {
   background-color: transparent !important;
   color: var(--p-surface-200);
+}
+
+/* Feedback dialog placeholder styling */
+:deep(.ai-feedback-dialog .p-textarea::placeholder) {
+  color: var(--p-surface-500);
+  font-size: 0.875rem;
 }
 </style>
