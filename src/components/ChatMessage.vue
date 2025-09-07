@@ -60,8 +60,8 @@
           <Button
             text
             icon="pi pi-thumbs-up"
-            aria-label="Thumbs up"
-            v-tooltip.bottom="'Thumbs up'"
+            aria-label="Give positive feedback"
+            v-tooltip.bottom="'Give positive feedback'"
             :aria-pressed="selectedVote === 'up'"
             @click="handleThumbs('up')"
             :style="selectedVote === 'up' ? { color: 'var(--p-green-500)', padding: '6px' } : { padding: '6px' }"
@@ -69,8 +69,8 @@
           <Button
             text
             icon="pi pi-thumbs-down"
-            aria-label="Thumbs down"
-            v-tooltip.bottom="'Thumbs down'"
+            aria-label="Give negative feedback"
+            v-tooltip.bottom="'Give negative feedback'"
             :aria-pressed="selectedVote === 'down'"
             @click="handleThumbs('down')"
             :style="selectedVote === 'down' ? { color: 'var(--p-red-500)', padding: '6px' } : { padding: '6px' }"
