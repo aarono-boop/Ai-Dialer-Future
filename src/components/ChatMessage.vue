@@ -55,7 +55,7 @@
             aria-label="Thumbs up"
             :aria-pressed="selectedVote === 'up'"
             @click="handleThumbs('up')"
-            :style="{ color: selectedVote === 'up' ? 'var(--p-green-500)' : 'var(--p-surface-300)' }"
+            :style="{ color: selectedVote === 'up' ? 'var(--p-green-500)' : 'var(--p-surface-300)', padding: '6px' }"
           />
           <Button
             text
@@ -63,7 +63,7 @@
             aria-label="Thumbs down"
             :aria-pressed="selectedVote === 'down'"
             @click="handleThumbs('down')"
-            :style="{ color: selectedVote === 'down' ? 'var(--p-red-500)' : 'var(--p-surface-300)' }"
+            :style="{ color: selectedVote === 'down' ? 'var(--p-red-500)' : 'var(--p-surface-300)', padding: '6px' }"
           />
         </div>
       </div>
