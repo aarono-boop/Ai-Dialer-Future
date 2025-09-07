@@ -404,12 +404,12 @@ const getMessageWidth = (): string => {
 /* AI action buttons styling - use tokens, no background */
 :deep(.ai-actions .p-button) {
   background-color: transparent !important;
-  color: var(--p-surface-600) !important;
+  color: var(--p-surface-600);
 }
 :deep(.ai-actions .p-button:hover),
 :deep(.ai-actions .p-button:focus),
 :deep(.ai-actions .p-button:active) {
   background-color: transparent !important;
-  color: var(--p-surface-300) !important;
+  color: var(--p-surface-200);
 }
 </style>
