@@ -53,6 +53,7 @@
             text
             icon="pi pi-copy"
             aria-label="Copy message"
+            v-tooltip.bottom="'Copy message'"
             @click="handleCopy"
             :style="{ padding: '6px' }"
           />
@@ -60,6 +61,7 @@
             text
             icon="pi pi-thumbs-up"
             aria-label="Thumbs up"
+            v-tooltip.bottom="'Thumbs up'"
             :aria-pressed="selectedVote === 'up'"
             @click="handleThumbs('up')"
             :style="selectedVote === 'up' ? { color: 'var(--p-green-500)', padding: '6px' } : { padding: '6px' }"
@@ -68,6 +70,7 @@
             text
             icon="pi pi-thumbs-down"
             aria-label="Thumbs down"
+            v-tooltip.bottom="'Thumbs down'"
             :aria-pressed="selectedVote === 'down'"
             @click="handleThumbs('down')"
             :style="selectedVote === 'down' ? { color: 'var(--p-red-500)', padding: '6px' } : { padding: '6px' }"
