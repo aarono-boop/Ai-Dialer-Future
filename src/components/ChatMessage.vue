@@ -76,6 +76,14 @@
             :style="selectedVote === 'down' ? { color: 'var(--p-red-500)', padding: '6px' } : { padding: '6px' }"
           />
         </div>
+        <Dialog v-model:visible="showPositiveModal" modal header="Feedback" :style="{ width: '28rem' }" :breakpoints="{ '960px': '90vw' }">
+          <div class="text-sm mb-3" :style="{ color: 'var(--p-surface-300)' }">Please provide details: (optional)</div>
+          <Textarea v-model="feedbackText" autoResize rows="4" class="w-full" :placeholder="'What was satisfying about this response?'" />
+          <template #footer>
+            <Button label="Submit" icon="pi pi-check" @click="submitPositiveFeedback" />
+            <Button label="Cancel" text icon="pi pi-times" @click="cancelPositiveFeedback" />
+          </template>
+        </Dialog>
       </div>
     </div>
     
@@ -103,6 +111,8 @@ import { ref, onMounted, onUnmounted, computed } from 'vue'
 import YouTubeVideo from './YouTubeVideo.vue'
 import { useCoaches } from '../composables/useCoaches'
 import Button from 'primevue/button'
+import Dialog from 'primevue/dialog'
+import Textarea from 'primevue/textarea'
 
 // Types
 interface Message {
@@ -125,12 +135,18 @@ const props = defineProps<{
 const emit = defineEmits<{
   typingComplete: []
   aiFeedback: [{ vote: 'up' | 'down', message: Message }]
+  aiPositiveFeedback: [{ message: Message, details: string }]
 }>()
 
 const selectedVote = ref<'up' | 'down' | null>(null)
+const showPositiveModal = ref(false)
+const feedbackText = ref('')
 
 const handleThumbs = (vote: 'up' | 'down') => {
   selectedVote.value = vote
+  if (vote === 'up') {
+    showPositiveModal.value = true
+  }
   emit('aiFeedback', { vote, message: props.message })
 }
 
@@ -158,6 +174,15 @@ const handleCopy = async () => {
     document.execCommand('copy')
     document.body.removeChild(ta)
   }
+}
+
+const submitPositiveFeedback = () => {
+  emit('aiPositiveFeedback', { message: props.message, details: feedbackText.value.trim() })
+  showPositiveModal.value = false
+}
+
+const cancelPositiveFeedback = () => {
+  showPositiveModal.value = false
 }
 
 // Coach system integration
