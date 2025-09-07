@@ -31,21 +31,23 @@
           :style="aiAvatarStyle"
         ></div>
       </div>
-      <div
-        :class="['bg-gray-800/90 border border-white/20 rounded-lg p-5 text-sm overflow-hidden', getMessageWidth()]"
-        role="region"
-        aria-label="AI message content"
-      >
-        <template v-for="(item, itemIndex) in processedContent" :key="`processed-${itemIndex}`">
-          <div v-if="item.type === 'text' && item.content.trim()" v-html="item.content"></div>
-          <YouTubeVideo
-            v-else-if="item.type === 'video' && item.videoId"
-            :video-id="item.videoId"
-            :autoplay="item.autoplay || false"
-            title="Coach Introduction Video"
-          />
-        </template>
-        <slot name="additional-content"></slot>
+      <div :class="getMessageWidth()" class="flex flex-col">
+        <div
+          class="bg-gray-800/90 border border-white/20 rounded-lg p-5 text-sm overflow-hidden"
+          role="region"
+          aria-label="AI message content"
+        >
+          <template v-for="(item, itemIndex) in processedContent" :key="`processed-${itemIndex}`">
+            <div v-if="item.type === 'text' && item.content.trim()" v-html="item.content"></div>
+            <YouTubeVideo
+              v-else-if="item.type === 'video' && item.videoId"
+              :video-id="item.videoId"
+              :autoplay="item.autoplay || false"
+              title="Coach Introduction Video"
+            />
+          </template>
+          <slot name="additional-content"></slot>
+        </div>
         <div class="mt-3 flex items-center justify-end gap-2" role="group" aria-label="AI message actions">
           <Button
             text
