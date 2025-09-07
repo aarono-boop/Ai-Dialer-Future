@@ -47,8 +47,22 @@
         </template>
         <slot name="additional-content"></slot>
         <div class="mt-3 flex items-center justify-end gap-2" role="group" aria-label="AI message actions">
-          <Button text icon="pi pi-thumbs-up" aria-label="Thumbs up" @click="handleThumbs('up')" :style="{ color: 'var(--p-surface-500)' }" />
-          <Button text icon="pi pi-thumbs-down" aria-label="Thumbs down" @click="handleThumbs('down')" :style="{ color: 'var(--p-surface-500)' }" />
+          <Button
+            text
+            icon="pi pi-thumbs-up"
+            aria-label="Thumbs up"
+            :aria-pressed="selectedVote === 'up'"
+            @click="handleThumbs('up')"
+            :style="{ color: selectedVote === 'up' ? 'var(--p-green-500)' : 'var(--p-surface-500)' }"
+          />
+          <Button
+            text
+            icon="pi pi-thumbs-down"
+            aria-label="Thumbs down"
+            :aria-pressed="selectedVote === 'down'"
+            @click="handleThumbs('down')"
+            :style="{ color: selectedVote === 'down' ? 'var(--p-red-500)' : 'var(--p-surface-500)' }"
+          />
         </div>
       </div>
     </div>
@@ -101,7 +115,10 @@ const emit = defineEmits<{
   aiFeedback: [{ vote: 'up' | 'down', message: Message }]
 }>()
 
+const selectedVote = ref<'up' | 'down' | null>(null)
+
 const handleThumbs = (vote: 'up' | 'down') => {
+  selectedVote.value = vote
   emit('aiFeedback', { vote, message: props.message })
 }
 
