@@ -27,10 +27,10 @@
               appendTo="body"
               :pt="{
                 root: { style: { background: 'var(--p-surface-800)', border: '1px solid rgba(255,255,255,0.15)', borderRadius: '6px', padding: '0.5rem' } },
-                panel: { style: { background: 'var(--p-surface-800)', border: '1px solid rgba(255,255,255,0.15)' } },
-                content: { style: { background: 'var(--p-surface-800)', padding: '0.25rem' } },
-                list: { style: { background: 'var(--p-surface-800)' } },
-                item: { class: 'hover:bg-white/10', style: { padding: '0.5rem 0.75rem' } }
+                panel: { class: 'mic-dropdown-panel', style: { background: 'var(--p-surface-800)', border: '1px solid rgba(255,255,255,0.15)' } },
+                content: { class: 'mic-dropdown-content', style: { background: 'var(--p-surface-800)', padding: '0.25rem' } },
+                list: { class: 'mic-dropdown-list', style: { background: 'var(--p-surface-800)' } },
+                item: { class: 'mic-dropdown-item hover:bg-white/10', style: { padding: '0.5rem 0.75rem' } }
               }"
               @change="restartMic"
             />
@@ -104,10 +104,10 @@ const canContinue = computed(() => micOk.value && speakerOk.value)
 
 const dropdownPT = computed(() => ({
   root: { style: { background: 'var(--p-surface-800)', border: '1px solid rgba(255,255,255,0.12)', borderRadius: '6px', padding: '0.5rem' } },
-  panel: { style: { background: 'var(--p-surface-800)', border: '1px solid rgba(255,255,255,0.12)' } },
-  content: { style: { background: 'var(--p-surface-800)', padding: '0.25rem' } },
-  list: { style: { background: 'var(--p-surface-800)' } },
-  item: { class: 'hover:bg-white/10', style: { padding: '0.5rem 0.75rem' } }
+  panel: { class: 'mic-dropdown-panel', style: { background: 'var(--p-surface-800)', border: '1px solid rgba(255,255,255,0.12)' } },
+  content: { class: 'mic-dropdown-content', style: { background: 'var(--p-surface-800)', padding: '0.25rem' } },
+  list: { class: 'mic-dropdown-list', style: { background: 'var(--p-surface-800)' } },
+  item: { class: 'mic-dropdown-item hover:bg-white/10', style: { padding: '0.5rem 0.75rem' } }
 }))
 
 watch(() => props.visible, (v) => {
@@ -268,4 +268,11 @@ onUnmounted(() => teardown())
   line-height: 1.5 !important; /* more breathing room */
   border-radius: var(--p-border-radius);
 }
+</style>
+
+<style>
+/* Global to affect portal (appendTo=body) */
+.mic-dropdown-panel { background-color: var(--p-surface-800) !important; font-size: 0.875rem; }
+.mic-dropdown-panel .p-dropdown-items { padding: 4px; }
+.mic-dropdown-panel .p-dropdown-item { padding: 8px 12px; line-height: 1.5; font-size: 0.875rem; }
 </style>
