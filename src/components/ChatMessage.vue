@@ -48,14 +48,14 @@
           </template>
           <slot name="additional-content"></slot>
         </div>
-        <div class="mt-3 flex items-center justify-end gap-2" role="group" aria-label="AI message actions">
+        <div class="mt-3 flex items-center justify-end gap-1" role="group" aria-label="AI message actions">
           <Button
             text
             icon="pi pi-thumbs-up"
             aria-label="Thumbs up"
             :aria-pressed="selectedVote === 'up'"
             @click="handleThumbs('up')"
-            :style="{ color: selectedVote === 'up' ? 'var(--p-green-500)' : 'var(--p-surface-500)' }"
+            :style="{ color: selectedVote === 'up' ? 'var(--p-green-500)' : 'var(--p-surface-300)' }"
           />
           <Button
             text
@@ -63,7 +63,7 @@
             aria-label="Thumbs down"
             :aria-pressed="selectedVote === 'down'"
             @click="handleThumbs('down')"
-            :style="{ color: selectedVote === 'down' ? 'var(--p-red-500)' : 'var(--p-surface-500)' }"
+            :style="{ color: selectedVote === 'down' ? 'var(--p-red-500)' : 'var(--p-surface-300)' }"
           />
         </div>
       </div>
