@@ -46,6 +46,10 @@
           />
         </template>
         <slot name="additional-content"></slot>
+        <div class="mt-3 flex items-center justify-end gap-2" role="group" aria-label="AI message actions">
+          <Button text icon="pi pi-thumbs-up" aria-label="Thumbs up" @click="handleThumbs('up')" />
+          <Button text icon="pi pi-thumbs-down" aria-label="Thumbs down" @click="handleThumbs('down')" />
+        </div>
       </div>
     </div>
     
@@ -72,6 +76,7 @@
 import { ref, onMounted, onUnmounted, computed } from 'vue'
 import YouTubeVideo from './YouTubeVideo.vue'
 import { useCoaches } from '../composables/useCoaches'
+import Button from 'primevue/button'
 
 // Types
 interface Message {
@@ -93,7 +98,12 @@ const props = defineProps<{
 // Define emits
 const emit = defineEmits<{
   typingComplete: []
+  aiFeedback: [{ vote: 'up' | 'down', message: Message }]
 }>()
+
+const handleThumbs = (vote: 'up' | 'down') => {
+  emit('aiFeedback', { vote, message: props.message })
+}
 
 // Coach system integration
 const { currentCoach } = useCoaches()
