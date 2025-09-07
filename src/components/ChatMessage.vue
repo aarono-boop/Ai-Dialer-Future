@@ -91,6 +91,21 @@
             <Button label="Submit" icon="pi pi-check" @click="submitPositiveFeedback" />
           </template>
         </Dialog>
+        <Dialog v-model:visible="showNegativeModal" modal header="Feedback" class="ai-feedback-dialog" :style="{ width: '28rem' }" :breakpoints="{ '960px': '90vw' }">
+          <div class="text-sm mb-3" :style="{ color: 'var(--p-surface-100)' }">Please provide details: (optional)</div>
+          <Textarea
+            v-model="negativeFeedbackText"
+            autoResize
+            rows="4"
+            class="w-full feedback-textarea"
+            :placeholder="'What was satisfying about this response?'"
+            :style="{ border: '1px solid var(--p-surface-600)', borderRadius: 'var(--p-border-radius)', backgroundColor: 'transparent', fontSize: '0.875rem', padding: '0.5rem' }"
+          />
+          <template #footer>
+            <Button label="Cancel" severity="secondary" text icon="pi pi-times" @click="cancelNegativeFeedback" />
+            <Button label="Submit" icon="pi pi-check" @click="submitNegativeFeedback" />
+          </template>
+        </Dialog>
       </div>
     </div>
     
@@ -143,16 +158,21 @@ const emit = defineEmits<{
   typingComplete: []
   aiFeedback: [{ vote: 'up' | 'down', message: Message }]
   aiPositiveFeedback: [{ message: Message, details: string }]
+  aiNegativeFeedback: [{ message: Message, details: string }]
 }>()
 
 const selectedVote = ref<'up' | 'down' | null>(null)
 const showPositiveModal = ref(false)
+const showNegativeModal = ref(false)
 const feedbackText = ref('')
+const negativeFeedbackText = ref('')
 
 const handleThumbs = (vote: 'up' | 'down') => {
   selectedVote.value = vote
   if (vote === 'up') {
     showPositiveModal.value = true
+  } else if (vote === 'down') {
+    showNegativeModal.value = true
   }
   emit('aiFeedback', { vote, message: props.message })
 }
@@ -190,6 +210,15 @@ const submitPositiveFeedback = () => {
 
 const cancelPositiveFeedback = () => {
   showPositiveModal.value = false
+}
+
+const submitNegativeFeedback = () => {
+  emit('aiNegativeFeedback', { message: props.message, details: negativeFeedbackText.value.trim() })
+  showNegativeModal.value = false
+}
+
+const cancelNegativeFeedback = () => {
+  showNegativeModal.value = false
 }
 
 // Coach system integration
