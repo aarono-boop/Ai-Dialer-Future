@@ -48,7 +48,7 @@
           </template>
           <slot name="additional-content"></slot>
         </div>
-        <div class="mt-1 flex items-center justify-end gap-0" role="group" aria-label="AI message actions">
+        <div v-if="!message.typing || !isTyping" class="mt-1 flex items-center justify-end gap-0" role="group" aria-label="AI message actions">
           <Button
             text
             icon="pi pi-copy"
