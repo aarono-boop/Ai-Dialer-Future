@@ -76,7 +76,7 @@
             :style="selectedVote === 'down' ? { color: 'var(--p-red-500)', padding: '6px' } : { padding: '6px' }"
           />
         </div>
-        <Dialog v-model:visible="showPositiveModal" modal header="Feedback" :style="{ width: '28rem' }" :breakpoints="{ '960px': '90vw' }">
+        <Dialog v-model:visible="showPositiveModal" modal header="Feedback" class="ai-feedback-dialog" :style="{ width: '28rem' }" :breakpoints="{ '960px': '90vw' }">
           <div class="text-sm mb-3" :style="{ color: 'var(--p-surface-100)' }">Please provide details: (optional)</div>
           <Textarea
             v-model="feedbackText"
@@ -84,7 +84,7 @@
             rows="4"
             class="w-full"
             :placeholder="'What was satisfying about this response?'"
-            :style="{ border: '1px solid var(--p-surface-600)', borderRadius: 'var(--p-border-radius)', backgroundColor: 'transparent' }"
+            :style="{ border: '1px solid var(--p-surface-600)', borderRadius: 'var(--p-border-radius)', backgroundColor: 'transparent', fontSize: '0.875rem', padding: '0.5rem' }"
           />
           <template #footer>
             <Button label="Cancel" severity="secondary" text icon="pi pi-times" @click="cancelPositiveFeedback" />
