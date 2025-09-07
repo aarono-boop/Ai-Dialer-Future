@@ -51,6 +51,13 @@
         <div class="mt-1 flex items-center justify-end gap-0" role="group" aria-label="AI message actions">
           <Button
             text
+            icon="pi pi-copy"
+            aria-label="Copy message"
+            @click="handleCopy"
+            :style="{ color: 'var(--p-surface-300)', padding: '6px' }"
+          />
+          <Button
+            text
             icon="pi pi-thumbs-up"
             aria-label="Thumbs up"
             :aria-pressed="selectedVote === 'up'"
@@ -122,6 +129,32 @@ const selectedVote = ref<'up' | 'down' | null>(null)
 const handleThumbs = (vote: 'up' | 'down') => {
   selectedVote.value = vote
   emit('aiFeedback', { vote, message: props.message })
+}
+
+const stripHtml = (html: string): string => {
+  const el = document.createElement('div')
+  el.innerHTML = html
+  return el.textContent || el.innerText || ''
+}
+
+const handleCopy = async () => {
+  const lines = processedContent.value
+    .filter(item => item.type === 'text')
+    .map(item => stripHtml(item.content))
+  const text = lines.join('\n').trim()
+
+  try {
+    await navigator.clipboard.writeText(text)
+  } catch {
+    const ta = document.createElement('textarea')
+    ta.value = text
+    ta.style.position = 'fixed'
+    ta.style.opacity = '0'
+    document.body.appendChild(ta)
+    ta.select()
+    document.execCommand('copy')
+    document.body.removeChild(ta)
+  }
 }
 
 // Coach system integration
