@@ -275,5 +275,4 @@ onUnmounted(() => teardown())
 .mic-dropdown-panel { background-color: var(--p-surface-800) !important; font-size: 0.875rem; }
 .mic-dropdown-panel .p-dropdown-items { padding: 4px; }
 .mic-dropdown-panel .p-dropdown-item { padding: 12px 12px; line-height: 2.5; font-size: 0.875rem; }
-p-select-option li {padding: 5px 10px; font-size: 0.875rem; }
 </style>
