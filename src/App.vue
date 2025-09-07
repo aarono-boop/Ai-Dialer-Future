@@ -14,7 +14,7 @@
     />
 
     <!-- Main App Content -->
-    <main v-if="currentPage === 'main' && !managementMode" class="ml-24 flex-1 flex items-start justify-center p-8 relative z-[5]" :style="(showDialer || showCoachInfoPanel) ? 'margin-right: 33.333333%' : ''">
+    <main v-if="currentPage === 'main' && !managementMode && !showCoachDashboard" class="ml-16 flex-1 flex items-start justify-center p-8 relative z-[5]" :style="(showDialer || showCoachInfoPanel) ? 'margin-right: 33.333333%' : ''">
       <div class="flex gap-6 w-full max-w-[1400px] h-[80vh] mt-2.5">
         <!-- Chat Container -->
         <div class="w-full max-w-6xl mx-auto rounded-xl px-5">
@@ -123,8 +123,26 @@
             </div>
           </div>
 
-          <!-- Start Dialing Button - always visible when active -->
-          <div v-if="showStartDialingButton" class="mt-2 pt-5 flex justify-center">
+          <!-- Audio Check Step (shown before Start Dialing) -->
+          <div v-if="showStartDialingButton && !audioCheckPassed" class="mt-2 pt-5 flex justify-center">
+            <div class="w-[70%] flex flex-col items-center gap-3">
+              <div class="text-sm text-gray-300 flex items-center gap-2">
+                <i class="pi pi-microphone" aria-hidden="true"></i>
+                <i class="pi pi-volume-up" aria-hidden="true"></i>
+                <span>Before you start, please test your mic and speakers.</span>
+              </div>
+              <Button
+                icon="pi pi-check"
+                label="Run Audio Check"
+                class="w-1/2 py-3 font-semibold"
+                @click="showMicSpeakerCheck = true"
+                tabindex="3"
+              />
+            </div>
+          </div>
+
+          <!-- Start Dialing Button (only after audio check passes) -->
+          <div v-if="showStartDialingButton && audioCheckPassed" class="mt-2 pt-5 flex justify-center">
             <div class="w-[70%] flex justify-center">
               <Button
                 @click="handleStartDialing"
@@ -370,7 +388,7 @@
                   <h4 class="text-xl font-medium">Testimonials</h4>
                   <div class="text-xs text-gray-300 space-y-2">
                     <p>“Our connect rate and meetings doubled in 60 days.” — VP Sales, SaaS</p>
-                    <p>“The talk tracks are simple and deadly effective.” — SDR Lead, Insurance</p>
+                    <p>“The talk tracks are simple and deadly effective.�� — SDR Lead, Insurance</p>
                   </div>
                 <div v-if="selectedCoachForInfo?.websiteUrl" class="sticky bottom-0 -mb-4 -mx-4 px-4 py-3 border-t border-gray-700 bg-gray-900/90 flex justify-center">
                   <a :href="selectedCoachForInfo.websiteUrl" target="_blank" rel="noopener" class="text-link text-sm inline-flex items-center gap-2 text-center"><i class="pi pi-external-link text-sm" aria-hidden="true"></i>Visit {{ selectedCoachForInfo?.displayName }}'s Website</a>
@@ -383,15 +401,20 @@
       </div>
     </main>
 
+    <!-- Coach Dashboard Page -->
+    <div v-if="showCoachDashboard" class="ml-16">
+      <CoachDashboard :coachName="dashboardCoachName" />
+    </div>
+
     <!-- Product Page -->
-    <div v-if="currentPage === 'product'" class="ml-24">
+    <div v-if="currentPage === 'product'" class="ml-16">
       <ProductPage
         @go-to-app="goToMainApp"
       />
     </div>
 
     <!-- Login Page -->
-    <div v-if="currentPage === 'login'" class="ml-24">
+    <div v-if="currentPage === 'login'" class="ml-16">
       <LoginPage
         @google-signin="handleGoogleSignin"
         @login-success="handleLoginSuccess"
@@ -400,7 +423,7 @@
     </div>
 
     <!-- Signup Page -->
-    <div v-if="currentPage === 'signup'" class="ml-24">
+    <div v-if="currentPage === 'signup'" class="ml-16">
       <SignupPage
         @google-signup="handleGoogleSignupFromSignup"
         @switch-to-signin="switchToSigninFromSignup"
@@ -408,7 +431,7 @@
     </div>
 
     <!-- Coach Management Interface -->
-    <CoachManagement v-if="managementMode === 'admin' && currentPage === 'main'" />
+    <CoachManagement v-if="managementMode === 'admin' && currentPage === 'main' && !showCoachDashboard" />
 
     <!-- Coach Creation Page for create-coach URL -->
     <CoachCreationPage
@@ -463,6 +486,12 @@
       @close="closePaymentPage"
     />
 
+    <!-- Mic/Speaker Check Modal -->
+    <MicSpeakerCheck
+      :visible="showMicSpeakerCheck"
+      @close="showMicSpeakerCheck = false"
+      @passed="onAudioCheckPassed"
+    />
 
     <!-- Session Summary now displayed in chat area -->
 
@@ -508,6 +537,8 @@ import YouTubeVideo from './components/YouTubeVideo.vue'
 import CoachManagement from './components/CoachManagement.vue'
 import CoachCreationPage from './components/CoachCreationPage.vue'
 import CoachCarousel from './components/CoachCarousel.vue'
+import CoachDashboard from './components/CoachDashboard.vue'
+import MicSpeakerCheck from './components/modals/MicSpeakerCheck.vue'
 
 // PrimeVue Components (adding Button)
 import Button from 'primevue/button'
@@ -647,6 +678,8 @@ const showRegularConnectedMessages = (contact: any): void => {
 
 // Reactive data
 const currentPage = ref<string>('main') // 'main', 'product', 'login', 'signup'
+const showCoachDashboard = ref(false)
+const dashboardCoachName = ref<string | null>(null)
 const chatInputRef = ref<any>(null)
 const chatMessages = ref<HTMLElement | null>(null)
 const screenReaderAnnouncements = ref<HTMLElement | null>(null)
@@ -657,6 +690,8 @@ const showTermsModal = ref<boolean>(false)
 const showAccountCreation = ref<boolean>(false)
 const showPricingPage = ref<boolean>(false)
 const showPaymentPage = ref<boolean>(false)
+const showMicSpeakerCheck = ref<boolean>(false)
+const audioCheckPassed = ref<boolean>(false)
 const isSignedIn = ref<boolean>(false)
 const isReturningUser = ref<boolean>(false) // Track if user logged in vs created new account
 const showActionButtons = ref<boolean>(false)
@@ -1134,7 +1169,22 @@ const showProductPage = () => {
 }
 
 const goToMainApp = () => {
+  // Set page and clear any special modes/panels
   currentPage.value = 'main'
+  showCoachDashboard.value = false
+  dashboardCoachName.value = null
+  setManagementMode(null)
+  showDialer.value = false
+  showCoachInfoPanel.value = false
+  selectedCoachForInfo.value = null
+
+  // Clean URL of special parameters
+  try {
+    const url = new URL(window.location.href)
+    ;['coach-dashboard','coach-admin','create-coach','coach'].forEach(p => url.searchParams.delete(p))
+    const qs = url.searchParams.toString()
+    window.history.replaceState({}, '', qs ? `${url.pathname}?${qs}` : url.pathname)
+  } catch {}
 
   // Clear any existing focus when navigating to main app
   nextTick(() => {
@@ -1444,6 +1494,7 @@ const sendMessage = (message: string): void => {
 
     // Show the next step
     showStartDialingButton.value = true
+    audioCheckPassed.value = false
 
     setTimeout(() => {
       addAIMessage([
@@ -1636,6 +1687,7 @@ const handleLooksGood = (): void => {
           `Great! Your number ${phoneNumber} is verified and set as your Caller ID.<br><br>As the dialer calls each person, their contact information will be displayed. The first contact that will be called is Sam Sample.`
         ])
         showStartDialingButton.value = true
+        audioCheckPassed.value = false
         scrollToBottom()
       }, 1500)
 
@@ -1781,6 +1833,16 @@ const handleTryAnotherNumber = (): void => {
 }
 
 const handleStartDialing = (): void => {
+  startDialSession()
+}
+
+const onAudioCheckPassed = (): void => {
+  showMicSpeakerCheck.value = false
+  audioCheckPassed.value = true
+  addUserMessage('Audio check success')
+}
+
+const startDialSession = (): void => {
   // Hide start dialing button
   showStartDialingButton.value = false
 
@@ -1799,7 +1861,7 @@ const handleStartDialing = (): void => {
 
     // Add separator for the first call
     setTimeout(() => {
-      addSeparatorMessage(currentContact.value.name) // Sam Sample (current contact at index 0)
+      addSeparatorMessage(currentContact.value.name)
 
       // Start the call simulation after showing separator
       setTimeout(() => {
@@ -1961,10 +2023,9 @@ const handleHangUp = (): void => {
   if (isManualHangUp.value && aiCoachEnabled.value) {
     // Get coach-specific recap title
     const getCoachRecapTitle = (): string => {
-      if (coachParameter.value === 'jordan-stupar') {
-        return '<strong>Jordan\'s Session Recap</strong>'
-      }
-      return '<strong>AI Coaching Recap</strong>'
+      const name = currentCoach.value?.displayName || 'Coach'
+      const first = name.split(' ')[0]
+      return `<strong>${first}'s Call Recap</strong>`
     }
 
     addAIMessageWithTyping([
@@ -2122,11 +2183,15 @@ const toggleCallLog = (uniqueId?: string): void => {
 
 // Ensure functions are available on mount
 onMounted(() => {
+  // Global go-home event from Sidebar (fallback)
+  window.addEventListener('arkon-go-home', goToMainApp)
+
   // Parse URL parameters for coach functionality and management modes
   const urlParams = new URLSearchParams(window.location.search)
   const coach = urlParams.get('coach')
   const createCoach = urlParams.get('create-coach')
   const coachAdmin = urlParams.get('coach-admin')
+  const coachDashboard = urlParams.get('coach-dashboard')
 
   // Set coach if specified
   if (coach === 'all') {
@@ -2136,6 +2201,13 @@ onMounted(() => {
   } else if (coach) {
     setCurrentCoach(coach)
     console.log('Coach parameter detected:', coach)
+  }
+
+  // Show coach dashboard if requested
+  if (coachDashboard) {
+    showCoachDashboard.value = true
+    dashboardCoachName.value = coachDashboard
+    setCurrentCoach(coachDashboard)
   }
 
   // Set management mode based on URL parameters
@@ -2169,6 +2241,7 @@ onUnmounted(() => {
   delete (window as any).triggerFileUpload
   delete (window as any).handleExportFile
   delete (window as any).toggleCallLog
+  window.removeEventListener('arkon-go-home', goToMainApp)
 })
 
 // Helper functions for session summary

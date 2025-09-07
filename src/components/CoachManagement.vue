@@ -197,6 +197,14 @@
                       aria-label="Edit coach"
                     />
                     <Button
+                      icon="pi pi-chart-line"
+                      size="small"
+                      severity="info"
+                      v-tooltip.top="'Dashboard'"
+                      @click.stop="openDashboard(coach)"
+                      aria-label="Open dashboard"
+                    />
+                    <Button
                       v-if="managementMode === 'admin' && coach.createdBy !== 'system'"
                       icon="pi pi-trash"
                       size="small"
@@ -504,6 +512,12 @@ const viewCoach = (coach: Coach) => {
 const testCoach = (coach: Coach) => {
   const url = generateCoachUrl(coach.name)
   window.open(url, '_blank')
+}
+
+const openDashboard = (coach: Coach) => {
+  const url = new URL(window.location.href)
+  url.searchParams.set('coach-dashboard', coach.name)
+  window.open(url.toString(), '_blank')
 }
 
 const copyCoachUrl = async (coach: Coach) => {

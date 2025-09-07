@@ -5,6 +5,7 @@ import dialog from './dialog'
 import inputtext from './inputtext'
 import toggleswitch from './toggleswitch'
 import tooltip from './tooltip'
+import dropdown from './dropdown'
 
 export const customTheme = definePreset(base, {
     components: {
@@ -12,7 +13,8 @@ export const customTheme = definePreset(base, {
         dialog,
         inputtext,
         toggleswitch,
-        tooltip
+        tooltip,
+        dropdown
     }
 })
 
