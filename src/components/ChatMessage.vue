@@ -447,7 +447,7 @@ const getMessageWidth = (): string => {
 
 /* Feedback dialog placeholder styling */
 :deep(.ai-feedback-dialog .p-textarea::placeholder) {
-  color: var(--p-surface-500);
+  color: var(--p-surface-400);
   font-size: 0.875rem;
 }
 </style>
