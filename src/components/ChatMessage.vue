@@ -48,13 +48,13 @@
           </template>
           <slot name="additional-content"></slot>
         </div>
-        <div v-if="!message.typing || !isTyping" class="mt-1 flex items-center justify-end gap-0" role="group" aria-label="AI message actions">
+        <div v-if="!message.typing || !isTyping" class="ai-actions mt-1 flex items-center justify-end gap-0" role="group" aria-label="AI message actions">
           <Button
             text
             icon="pi pi-copy"
             aria-label="Copy message"
             @click="handleCopy"
-            :style="{ color: 'var(--p-surface-300)', padding: '6px' }"
+            :style="{ padding: '6px' }"
           />
           <Button
             text
@@ -62,7 +62,7 @@
             aria-label="Thumbs up"
             :aria-pressed="selectedVote === 'up'"
             @click="handleThumbs('up')"
-            :style="{ color: selectedVote === 'up' ? 'var(--p-green-500)' : 'var(--p-surface-300)', padding: '6px' }"
+            :style="selectedVote === 'up' ? { color: 'var(--p-green-500)', padding: '6px' } : { padding: '6px' }"
           />
           <Button
             text
@@ -70,7 +70,7 @@
             aria-label="Thumbs down"
             :aria-pressed="selectedVote === 'down'"
             @click="handleThumbs('down')"
-            :style="{ color: selectedVote === 'down' ? 'var(--p-red-500)' : 'var(--p-surface-300)', padding: '6px' }"
+            :style="selectedVote === 'down' ? { color: 'var(--p-red-500)', padding: '6px' } : { padding: '6px' }"
           />
         </div>
       </div>
@@ -396,5 +396,17 @@ const getMessageWidth = (): string => {
 *:focus-visible {
   outline: 2px solid #60a5fa !important;
   outline-offset: 2px !important;
+}
+
+/* AI action buttons styling - use tokens, no background */
+:deep(.ai-actions .p-button) {
+  background-color: transparent !important;
+  color: var(--p-surface-600) !important;
+}
+:deep(.ai-actions .p-button:hover),
+:deep(.ai-actions .p-button:focus),
+:deep(.ai-actions .p-button:active) {
+  background-color: transparent !important;
+  color: var(--p-surface-300) !important;
 }
 </style>
