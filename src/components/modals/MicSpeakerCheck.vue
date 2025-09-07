@@ -26,11 +26,11 @@
               variant="filled"
               appendTo="body"
               :pt="{
-                root: { style: { background: 'var(--p-surface-700)', border: '1px solid rgba(255,255,255,0.15)', borderRadius: '6px' } },
-                panel: { style: { background: 'var(--p-surface-700)', border: '1px solid rgba(255,255,255,0.15)' } },
-                content: { style: { background: 'var(--p-surface-700)' } },
-                list: { style: { background: 'var(--p-surface-700)' } },
-                item: { class: 'hover:bg-white/10' }
+                root: { style: { background: 'var(--p-surface-800)', border: '1px solid rgba(255,255,255,0.15)', borderRadius: '6px', padding: '0.5rem' } },
+                panel: { style: { background: 'var(--p-surface-800)', border: '1px solid rgba(255,255,255,0.15)' } },
+                content: { style: { background: 'var(--p-surface-800)', padding: '0.25rem' } },
+                list: { style: { background: 'var(--p-surface-800)' } },
+                item: { class: 'hover:bg-white/10', style: { padding: '0.5rem 0.75rem' } }
               }"
               @change="restartMic"
             />
@@ -103,11 +103,11 @@ let rafId: number | null = null
 const canContinue = computed(() => micOk.value && speakerOk.value)
 
 const dropdownPT = computed(() => ({
-  root: { style: { background: 'var(--p-surface-700)', border: '1px solid rgba(255,255,255,0.12)', borderRadius: '6px' } },
-  panel: { style: { background: 'var(--p-surface-700)', border: '1px solid rgba(255,255,255,0.12)' } },
-  content: { style: { background: 'var(--p-surface-700)' } },
-  list: { style: { background: 'var(--p-surface-700)' } },
-  item: { class: 'hover:bg-white/10' }
+  root: { style: { background: 'var(--p-surface-800)', border: '1px solid rgba(255,255,255,0.12)', borderRadius: '6px', padding: '0.5rem' } },
+  panel: { style: { background: 'var(--p-surface-800)', border: '1px solid rgba(255,255,255,0.12)' } },
+  content: { style: { background: 'var(--p-surface-800)', padding: '0.25rem' } },
+  list: { style: { background: 'var(--p-surface-800)' } },
+  item: { class: 'hover:bg-white/10', style: { padding: '0.5rem 0.75rem' } }
 }))
 
 watch(() => props.visible, (v) => {
