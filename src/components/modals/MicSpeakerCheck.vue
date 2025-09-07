@@ -247,3 +247,25 @@ const teardown = () => {
 
 onUnmounted(() => teardown())
 </script>
+
+<style scoped>
+/* Dropdown panel typography and spacing */
+:deep(.p-dropdown) {
+  font-size: 0.875rem; /* 14px for trigger */
+}
+:deep(.p-dropdown .p-dropdown-label) {
+  font-size: 0.875rem !important;
+}
+:deep(.p-dropdown-panel) {
+  background-color: var(--p-surface-800) !important;
+  font-size: 0.875rem; /* 14px list text */
+}
+:deep(.p-dropdown-panel .p-dropdown-items) {
+  padding: 0.25rem; /* space from panel edges */
+}
+:deep(.p-dropdown-panel .p-dropdown-item) {
+  padding: 0.5rem 0.75rem !important; /* item padding */
+  line-height: 1.5 !important; /* more breathing room */
+  border-radius: var(--p-border-radius);
+}
+</style>
