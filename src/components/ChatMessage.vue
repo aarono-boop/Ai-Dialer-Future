@@ -82,7 +82,7 @@
             v-model="feedbackText"
             autoResize
             rows="4"
-            class="w-full"
+            class="w-full feedback-textarea"
             :placeholder="'What was satisfying about this response?'"
             :style="{ border: '1px solid var(--p-surface-600)', borderRadius: 'var(--p-border-radius)', backgroundColor: 'transparent', fontSize: '0.875rem', padding: '0.5rem' }"
           />
@@ -449,8 +449,10 @@ const getMessageWidth = (): string => {
 :deep(.ai-feedback-dialog .p-textarea::placeholder),
 :deep(.ai-feedback-dialog textarea::placeholder),
 :deep(.ai-feedback-dialog .p-inputtext::placeholder),
-:deep(.ai-feedback-dialog .p-inputtextarea::placeholder) {
+:deep(.ai-feedback-dialog .p-inputtextarea::placeholder),
+:deep(.ai-feedback-dialog .feedback-textarea::placeholder) {
   color: var(--p-surface-400) !important;
-  font-size: 0.875rem;
+  font-size: 0.875rem !important;
+  opacity: 1 !important;
 }
 </style>
