@@ -98,7 +98,7 @@
             autoResize
             rows="4"
             class="w-full feedback-textarea"
-            :placeholder="'What was satisfying about this response?'"
+            :placeholder="'What was unsatisfying about this response?'"
             :style="{ border: '1px solid var(--p-surface-600)', borderRadius: 'var(--p-border-radius)', backgroundColor: 'transparent', fontSize: '0.875rem', padding: '0.5rem' }"
           />
           <template #footer>
