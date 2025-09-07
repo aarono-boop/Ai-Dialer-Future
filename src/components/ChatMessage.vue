@@ -78,10 +78,17 @@
         </div>
         <Dialog v-model:visible="showPositiveModal" modal header="Feedback" :style="{ width: '28rem' }" :breakpoints="{ '960px': '90vw' }">
           <div class="text-sm mb-3" :style="{ color: 'var(--p-surface-300)' }">Please provide details: (optional)</div>
-          <Textarea v-model="feedbackText" autoResize rows="4" class="w-full" :placeholder="'What was satisfying about this response?'" />
+          <Textarea
+            v-model="feedbackText"
+            autoResize
+            rows="4"
+            class="w-full"
+            :placeholder="'What was satisfying about this response?'"
+            :style="{ border: '1px solid var(--p-surface-600)', borderRadius: 'var(--p-border-radius)', backgroundColor: 'transparent' }"
+          />
           <template #footer>
+            <Button label="Cancel" severity="secondary" text icon="pi pi-times" @click="cancelPositiveFeedback" />
             <Button label="Submit" icon="pi pi-check" @click="submitPositiveFeedback" />
-            <Button label="Cancel" text icon="pi pi-times" @click="cancelPositiveFeedback" />
           </template>
         </Dialog>
       </div>
