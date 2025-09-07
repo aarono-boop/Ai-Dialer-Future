@@ -47,8 +47,8 @@
         </template>
         <slot name="additional-content"></slot>
         <div class="mt-3 flex items-center justify-end gap-2" role="group" aria-label="AI message actions">
-          <Button text icon="pi pi-thumbs-up" aria-label="Thumbs up" @click="handleThumbs('up')" />
-          <Button text icon="pi pi-thumbs-down" aria-label="Thumbs down" @click="handleThumbs('down')" />
+          <Button text icon="pi pi-thumbs-up" aria-label="Thumbs up" @click="handleThumbs('up')" :style="{ color: 'var(--p-surface-500)' }" />
+          <Button text icon="pi pi-thumbs-down" aria-label="Thumbs down" @click="handleThumbs('down')" :style="{ color: 'var(--p-surface-500)' }" />
         </div>
       </div>
     </div>
