@@ -123,6 +123,26 @@
             </div>
           </div>
 
+          <!-- Caller ID Choice Buttons (shown after verification message) -->
+          <div v-if="showCallerIdChoiceButtons" class="mt-2 pt-5 flex justify-center">
+            <div class="w-[70%] flex gap-3">
+              <Button
+                @click="selectCallerId('personal')"
+                severity="secondary"
+                label="Use Personal Caller ID"
+                class="flex-1 px-6 py-3 font-semibold"
+                tabindex="3"
+              />
+              <Button
+                @click="selectCallerId('armor')"
+                severity="primary"
+                label="Use ARMOR® Number (Recommended)"
+                class="flex-1 px-6 py-3 font-semibold"
+                tabindex="4"
+              />
+            </div>
+          </div>
+
           <!-- Audio Check Step (shown before Start Dialing) -->
           <div v-if="showStartDialingButton && !audioCheckPassed" class="mt-2 pt-5 flex justify-center">
             <div class="w-[70%] flex flex-col items-center gap-3">
@@ -711,6 +731,7 @@ const enteredPhoneNumber = ref<string>('')
 const showVerificationButtons = ref<boolean>(false)
 const phoneVerified = ref<boolean>(false) // Track if phone has been verified in this session
 const showStartDialingButton = ref<boolean>(false)
+const showCallerIdChoiceButtons = ref<boolean>(false)
 const showDialer = ref<boolean>(false)
 const showCoachInfoPanel = ref<boolean>(false)
 const selectedCoachForInfo = ref<Coach | null>(null)
@@ -1475,7 +1496,8 @@ const sendMessage = (message: string): void => {
     verificationCodeTypingComplete.value = false // Reset typing state
 
     setTimeout(() => {
-      addAIMessageWithTyping(`Perfect. We've sent a text with 6-digit verification code to ${message}. Please enter it below to continue.`)
+      const fm = formatPhoneNumber(message)
+      addAIMessageWithTyping(`Perfect. We've sent a text with 6-digit verification code to ${fm}. Please enter it below to continue.`)
       scrollToBottom()
     }, 1000)
     return
@@ -1492,13 +1514,27 @@ const sendMessage = (message: string): void => {
     phoneVerified.value = true
     verificationStep.value = 'default'
 
-    // Show the next step
-    showStartDialingButton.value = true
+    // Next: present caller ID choice instead of jumping to audio check
+    showCallerIdChoiceButtons.value = true
     audioCheckPassed.value = false
 
+    const formatted = formatPhoneNumber(enteredPhoneNumber.value)
     setTimeout(() => {
       addAIMessage([
-        `Great! Your number ${enteredPhoneNumber.value} is verified and set as your Caller ID.<br><br>As the dialer calls each person, their contact information will be displayed. The first contact that will be called is Sam Sample.`
+        `Great! Your number ${formatted} is verified, but our ARMOR® test results across 3 carriers show 1 flag for spam on AT&T.<br><br><div style="margin: 4px 0 10px 0; color: var(--p-surface-200); font-size: 0.9em;">Carrier results</div><div style="display: flex; gap: 12px; justify-content: space-between;">
+  <div style="text-align: center; width: 32%; display: flex; flex-direction: column;">
+    <div style="font-weight: 600; margin-bottom: 6px;">AT&amp;T</div>
+    <img src="https://cdn.builder.io/api/v1/image/assets%2F5aeb07ce25f84dbc869290880d07b71e%2Fde975ceb671f4509ba23ee1c030bec02?format=webp&width=800" alt="AT&T flagged as spam" style="width: 100%; max-width: 140px; border-radius: 8px; margin: 0 auto; display: block;" />
+  </div>
+  <div style="text-align: center; width: 32%; display: flex; flex-direction: column; margin: 0 auto;">
+    <div style="font-weight: 600; margin-bottom: 6px;">T-Mobile</div>
+    <img src="https://cdn.builder.io/api/v1/image/assets%2F5aeb07ce25f84dbc869290880d07b71e%2Fe853c377f12e40d1ae7e549eb5a11cfa?format=webp&width=800" alt="T-Mobile clean" style="width: 100%; max-width: 140px; border-radius: 8px; margin: 0 auto; display: block;" />
+  </div>
+  <div style="text-align: center; width: 32%; display: flex; flex-direction: column;">
+    <div style="font-weight: 600; margin-bottom: 6px;">Verizon</div>
+    <img src="https://cdn.builder.io/api/v1/image/assets%2F5aeb07ce25f84dbc869290880d07b71e%2Fe853c377f12e40d1ae7e549eb5a11cfa?format=webp&width=800" alt="Verizon clean" style="width: 100%; max-width: 140px; border-radius: 8px; margin: 0 auto; display: block;" />
+  </div>
+</div><br>To ensure your calls connect, we've provided you with a free ARMOR® number to protect against false flags. This includes comprehensive number monitoring, remediation, and answer rate analytics.<br><br>Which number would you like to use for your Caller ID?`
       ])
       scrollToBottom()
     }, 1000)
@@ -1680,13 +1716,26 @@ const handleLooksGood = (): void => {
         'I\'ve analyzed your contact\'s phone numbers using real connection data from 900M+ calls, recent phone engagement, calling patterns, and carrier signals—so you only dial numbers likely to connect.<br><br>I\'ve prioritized the phone numbers most likely to connect so you spend time talking, not hitting dead lines.<br><br>Here\'s what I found:<br><div style="margin-left: 1em; text-indent: -1em;">• 40 numbers have \'High\' Connect Scores and show consistent calling activity in the last 12 months. These are highly likely to be connected and assigned to active subscribers.</div><br><div style="margin-left: 1em; text-indent: -1em;">• 67 numbers have \'Medium\' Connect Scores and are worth calling after you exhaust your \'High\' Connect Score numbers.</div><br><div style="margin-left: 1em; text-indent: -1em;">• 54 numbers have \'Low\' Connect Scores and are likely disconnected or inactive lines that won\'t answer when dialed.</div>'
       ])
 
-      // Skip directly to verified phone and start dialing
+      // Present caller ID choice after verification/returning user
       setTimeout(() => {
-        const phoneNumber = enteredPhoneNumber.value || '(971) 235-1723'
+        const personal = enteredPhoneNumber.value ? formatPhoneNumber(enteredPhoneNumber.value) : '(971) 235-1723'
         addAIMessage([
-          `Great! Your number ${phoneNumber} is verified and set as your Caller ID.<br><br>As the dialer calls each person, their contact information will be displayed. The first contact that will be called is Sam Sample.`
+          `Great! Your number ${personal} is verified, but our ARMOR® test results across 3 carriers show 1 flag for spam on AT&T.<br><br><div style="margin: 4px 0 10px 0; color: var(--p-surface-200); font-size: 0.9em;">Carrier results</div><div style="display: flex; gap: 12px; justify-content: space-between;">
+  <div style="text-align: center; width: 32%; display: flex; flex-direction: column;">
+    <div style="font-weight: 600; margin-bottom: 6px;">AT&amp;T</div>
+    <img src="https://cdn.builder.io/api/v1/image/assets%2F5aeb07ce25f84dbc869290880d07b71e%2Fde975ceb671f4509ba23ee1c030bec02?format=webp&width=800" alt="AT&T flagged as spam" style="width: 100%; max-width: 140px; border-radius: 8px; margin: 0 auto; display: block;" />
+  </div>
+  <div style="text-align: center; width: 32%; display: flex; flex-direction: column; margin: 0 auto;">
+    <div style="font-weight: 600; margin-bottom: 6px;">T-Mobile</div>
+    <img src="https://cdn.builder.io/api/v1/image/assets%2F5aeb07ce25f84dbc869290880d07b71e%2Fe853c377f12e40d1ae7e549eb5a11cfa?format=webp&width=800" alt="T-Mobile clean" style="width: 100%; max-width: 140px; border-radius: 8px; margin: 0 auto; display: block;" />
+  </div>
+  <div style="text-align: center; width: 32%; display: flex; flex-direction: column;">
+    <div style="font-weight: 600; margin-bottom: 6px;">Verizon</div>
+    <img src="https://cdn.builder.io/api/v1/image/assets%2F5aeb07ce25f84dbc869290880d07b71e%2Fe853c377f12e40d1ae7e549eb5a11cfa?format=webp&width=800" alt="Verizon clean" style="width: 100%; max-width: 140px; border-radius: 8px; margin: 0 auto; display: block;" />
+  </div>
+</div><br>To ensure your calls connect, we've provided you with a free ARMOR® number to protect against false flags. This includes comprehensive number monitoring, remediation, and answer rate analytics.<br><br>Which number would you like to use for your Caller ID?`
         ])
-        showStartDialingButton.value = true
+        showCallerIdChoiceButtons.value = true
         audioCheckPassed.value = false
         scrollToBottom()
       }, 1500)
@@ -1800,7 +1849,8 @@ const handleResendCode = (): void => {
 
   // Add AI response
   setTimeout(() => {
-    addAIMessage(`We've sent a new verification code to ${enteredPhoneNumber.value}. Please check your messages.`)
+    const fm = formatPhoneNumber(enteredPhoneNumber.value)
+    addAIMessage(`We've sent a new verification code to ${fm}. Please check your messages.`)
   }, 1000)
 }
 
@@ -1840,6 +1890,30 @@ const onAudioCheckPassed = (): void => {
   showMicSpeakerCheck.value = false
   audioCheckPassed.value = true
   addUserMessage('Audio check success')
+}
+
+const formatPhoneNumber = (input: string): string => {
+  if (!input) return input
+  const digits = input.replace(/\D/g, '')
+  const cleaned = digits.length >= 10 ? digits.slice(-10) : digits
+  if (cleaned.length === 10) {
+    const area = cleaned.slice(0, 3)
+    const prefix = cleaned.slice(3, 6)
+    const line = cleaned.slice(6)
+    return `(${area}) ${prefix}-${line}`
+  }
+  return input
+}
+
+const selectCallerId = (choice: 'personal' | 'armor'): void => {
+  if (choice === 'personal') {
+    addUserMessage('Use Personal Caller ID')
+  } else {
+    addUserMessage('Use ARMOR® Number (Recommended)')
+  }
+  showCallerIdChoiceButtons.value = false
+  showStartDialingButton.value = true
+  audioCheckPassed.value = false
 }
 
 const startDialSession = (): void => {

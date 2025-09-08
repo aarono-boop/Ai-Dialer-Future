@@ -31,21 +31,81 @@
           :style="aiAvatarStyle"
         ></div>
       </div>
-      <div
-        :class="['bg-gray-800/90 border border-white/20 rounded-lg p-5 text-sm overflow-hidden', getMessageWidth()]"
-        role="region"
-        aria-label="AI message content"
-      >
-        <template v-for="(item, itemIndex) in processedContent" :key="`processed-${itemIndex}`">
-          <div v-if="item.type === 'text' && item.content.trim()" v-html="item.content"></div>
-          <YouTubeVideo
-            v-else-if="item.type === 'video' && item.videoId"
-            :video-id="item.videoId"
-            :autoplay="item.autoplay || false"
-            title="Coach Introduction Video"
+      <div :class="getMessageWidth()" class="flex flex-col">
+        <div
+          class="bg-gray-800/90 border border-white/20 rounded-lg p-5 text-sm overflow-hidden"
+          role="region"
+          aria-label="AI message content"
+        >
+          <template v-for="(item, itemIndex) in processedContent" :key="`processed-${itemIndex}`">
+            <div v-if="item.type === 'text' && item.content.trim()" v-html="item.content"></div>
+            <YouTubeVideo
+              v-else-if="item.type === 'video' && item.videoId"
+              :video-id="item.videoId"
+              :autoplay="item.autoplay || false"
+              title="Coach Introduction Video"
+            />
+          </template>
+          <slot name="additional-content"></slot>
+        </div>
+        <div v-if="!message.typing || !isTyping" class="ai-actions mt-1 flex items-center justify-end gap-0" role="group" aria-label="AI message actions">
+          <Button
+            text
+            icon="pi pi-copy"
+            aria-label="Copy message"
+            v-tooltip.bottom="'Copy message'"
+            @click="handleCopy"
+            :style="{ padding: '6px' }"
           />
-        </template>
-        <slot name="additional-content"></slot>
+          <Button
+            text
+            icon="pi pi-thumbs-up"
+            aria-label="Give positive feedback"
+            v-tooltip.bottom="'Give positive feedback'"
+            :aria-pressed="selectedVote === 'up'"
+            @click="handleThumbs('up')"
+            :style="selectedVote === 'up' ? { color: 'var(--p-green-500)', padding: '6px' } : { padding: '6px' }"
+          />
+          <Button
+            text
+            icon="pi pi-thumbs-down"
+            aria-label="Give negative feedback"
+            v-tooltip.bottom="'Give negative feedback'"
+            :aria-pressed="selectedVote === 'down'"
+            @click="handleThumbs('down')"
+            :style="selectedVote === 'down' ? { color: 'var(--p-red-500)', padding: '6px' } : { padding: '6px' }"
+          />
+        </div>
+        <Dialog v-model:visible="showPositiveModal" modal header="Feedback" class="ai-feedback-dialog" :style="{ width: '28rem' }" :breakpoints="{ '960px': '90vw' }">
+          <div class="text-sm mb-3" :style="{ color: 'var(--p-surface-100)' }">Please provide details: (optional)</div>
+          <Textarea
+            v-model="feedbackText"
+            autoResize
+            rows="4"
+            class="w-full feedback-textarea"
+            :placeholder="'What was satisfying about this response?'"
+            :style="{ border: '1px solid var(--p-surface-600)', borderRadius: 'var(--p-border-radius)', backgroundColor: 'transparent', fontSize: '0.875rem', padding: '0.5rem' }"
+          />
+          <template #footer>
+            <Button label="Cancel" severity="secondary" text icon="pi pi-times" @click="cancelPositiveFeedback" />
+            <Button label="Submit" icon="pi pi-check" @click="submitPositiveFeedback" />
+          </template>
+        </Dialog>
+        <Dialog v-model:visible="showNegativeModal" modal header="Feedback" class="ai-feedback-dialog" :style="{ width: '28rem' }" :breakpoints="{ '960px': '90vw' }">
+          <div class="text-sm mb-3" :style="{ color: 'var(--p-surface-100)' }">Please provide details: (optional)</div>
+          <Textarea
+            v-model="negativeFeedbackText"
+            autoResize
+            rows="4"
+            class="w-full feedback-textarea"
+            :placeholder="'What was unsatisfying about this response?'"
+            :style="{ border: '1px solid var(--p-surface-600)', borderRadius: 'var(--p-border-radius)', backgroundColor: 'transparent', fontSize: '0.875rem', padding: '0.5rem' }"
+          />
+          <template #footer>
+            <Button label="Cancel" severity="secondary" text icon="pi pi-times" @click="cancelNegativeFeedback" />
+            <Button label="Submit" icon="pi pi-check" @click="submitNegativeFeedback" />
+          </template>
+        </Dialog>
       </div>
     </div>
     
@@ -72,6 +132,9 @@
 import { ref, onMounted, onUnmounted, computed } from 'vue'
 import YouTubeVideo from './YouTubeVideo.vue'
 import { useCoaches } from '../composables/useCoaches'
+import Button from 'primevue/button'
+import Dialog from 'primevue/dialog'
+import Textarea from 'primevue/textarea'
 
 // Types
 interface Message {
@@ -93,7 +156,70 @@ const props = defineProps<{
 // Define emits
 const emit = defineEmits<{
   typingComplete: []
+  aiFeedback: [{ vote: 'up' | 'down', message: Message }]
+  aiPositiveFeedback: [{ message: Message, details: string }]
+  aiNegativeFeedback: [{ message: Message, details: string }]
 }>()
+
+const selectedVote = ref<'up' | 'down' | null>(null)
+const showPositiveModal = ref(false)
+const showNegativeModal = ref(false)
+const feedbackText = ref('')
+const negativeFeedbackText = ref('')
+
+const handleThumbs = (vote: 'up' | 'down') => {
+  selectedVote.value = vote
+  if (vote === 'up') {
+    showPositiveModal.value = true
+  } else if (vote === 'down') {
+    showNegativeModal.value = true
+  }
+  emit('aiFeedback', { vote, message: props.message })
+}
+
+const stripHtml = (html: string): string => {
+  const el = document.createElement('div')
+  el.innerHTML = html
+  return el.textContent || el.innerText || ''
+}
+
+const handleCopy = async () => {
+  const lines = processedContent.value
+    .filter(item => item.type === 'text')
+    .map(item => stripHtml(item.content))
+  const text = lines.join('\n').trim()
+
+  try {
+    await navigator.clipboard.writeText(text)
+  } catch {
+    const ta = document.createElement('textarea')
+    ta.value = text
+    ta.style.position = 'fixed'
+    ta.style.opacity = '0'
+    document.body.appendChild(ta)
+    ta.select()
+    document.execCommand('copy')
+    document.body.removeChild(ta)
+  }
+}
+
+const submitPositiveFeedback = () => {
+  emit('aiPositiveFeedback', { message: props.message, details: feedbackText.value.trim() })
+  showPositiveModal.value = false
+}
+
+const cancelPositiveFeedback = () => {
+  showPositiveModal.value = false
+}
+
+const submitNegativeFeedback = () => {
+  emit('aiNegativeFeedback', { message: props.message, details: negativeFeedbackText.value.trim() })
+  showNegativeModal.value = false
+}
+
+const cancelNegativeFeedback = () => {
+  showNegativeModal.value = false
+}
 
 // Coach system integration
 const { currentCoach } = useCoaches()
@@ -334,5 +460,28 @@ const getMessageWidth = (): string => {
 *:focus-visible {
   outline: 2px solid #60a5fa !important;
   outline-offset: 2px !important;
+}
+
+/* AI action buttons styling - use tokens, no background */
+:deep(.ai-actions .p-button) {
+  background-color: transparent !important;
+  color: var(--p-surface-600);
+}
+:deep(.ai-actions .p-button:hover),
+:deep(.ai-actions .p-button:focus),
+:deep(.ai-actions .p-button:active) {
+  background-color: transparent !important;
+  color: var(--p-surface-200);
+}
+
+/* Feedback dialog placeholder styling */
+:deep(.ai-feedback-dialog .p-textarea::placeholder),
+:deep(.ai-feedback-dialog textarea::placeholder),
+:deep(.ai-feedback-dialog .p-inputtext::placeholder),
+:deep(.ai-feedback-dialog .p-inputtextarea::placeholder),
+:deep(.ai-feedback-dialog .feedback-textarea::placeholder) {
+  color: var(--p-surface-400) !important;
+  font-size: 0.875rem !important;
+  opacity: 1 !important;
 }
 </style>
