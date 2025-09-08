@@ -55,20 +55,26 @@
                                 text
                                 class="p-0"
                                 :pt="{ root: { style: { background: 'transparent', border: 'none', padding: 0 } } }"
-                                :aria-label="n === 2 ? 'Connect Salesforce' : 'Connect HubSpot'"
-                                @click="n === 2 ? openCrmModal('Salesforce') : openCrmModal('HubSpot')"
+                                :aria-label="n === 2 ? 'Connect Salesforce' : n === 3 ? 'Connect Zoho' : 'Connect HubSpot'"
+                                @click="n === 2 ? openCrmModal('Salesforce') : n === 3 ? openCrmModal('Zoho') : openCrmModal('HubSpot')"
                               >
                                 <img
-                                  v-if="n !== 2"
-                                  src="https://cdn.builder.io/api/v1/image/assets%2F5aeb07ce25f84dbc869290880d07b71e%2Faf17ec5c1e8545bebd6770b6234a2791?format=webp&width=800"
-                                  alt="HubSpot logo"
-                                  style="height: 28px; width: auto; display: block; object-fit: contain; filter: grayscale(1) brightness(0) invert(1);"
-                                />
-                                <img
-                                  v-else
+                                  v-if="n === 2"
                                   src="https://cdn.builder.io/api/v1/image/assets%2F5aeb07ce25f84dbc869290880d07b71e%2F3019387748a04b48af354bc9f50e69b2?format=webp&width=800"
                                   alt="Salesforce logo"
                                   style="height: 56px; width: auto; display: block; object-fit: contain;"
+                                />
+                                <img
+                                  v-else-if="n === 3"
+                                  src="https://cdn.builder.io/api/v1/image/assets%2F5aeb07ce25f84dbc869290880d07b71e%2F1575d79060254ef29c58b358eed4fcb7?format=webp&width=800"
+                                  alt="Zoho logo"
+                                  style="height: 28px; width: auto; display: block; object-fit: contain;"
+                                />
+                                <img
+                                  v-else
+                                  src="https://cdn.builder.io/api/v1/image/assets%2F5aeb07ce25f84dbc869290880d07b71e%2Faf17ec5c1e8545bebd6770b6234a2791?format=webp&width=800"
+                                  alt="HubSpot logo"
+                                  style="height: 28px; width: auto; display: block; object-fit: contain; filter: grayscale(1) brightness(0) invert(1);"
                                 />
                               </Button>
                             </div>
