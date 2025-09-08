@@ -45,7 +45,7 @@
                         </div>
                         <Card class="w-full" :pt="{ root: { style: { background: 'var(--p-surface-800)', border: '1px solid var(--p-surface-600)', borderRadius: '8px', height: 'calc(13rem - 20px)', display: 'flex', flexDirection: 'column' } }, body: { style: { flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' } } }">
                           <template #title>
-                            <div style="padding-bottom: 20px;">Connect your CRM</div>
+                            <div style="padding-bottom: 10px;">Connect your CRM</div>
                           </template>
                           <template #content>
                             <div class="grid grid-cols-4 w-full h-full items-center justify-items-center" style="column-gap: 18px; row-gap: 6px;">
