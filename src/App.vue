@@ -1473,6 +1473,32 @@ const switchToSigninFromSignup = (): void => {
   })
 }
 
+// Navigate to signup page helper
+const proceedToCreateAccount = (): void => {
+  currentPage.value = 'signup'
+  showCreateAccountCTA.value = false
+  nextTick(() => {
+    if (document.activeElement instanceof HTMLElement) {
+      document.activeElement.blur()
+    }
+    setTimeout(() => {
+      if (headerRef.value && headerRef.value.establishFocusContext) {
+        headerRef.value.establishFocusContext()
+      }
+    }, 100)
+    announceToScreenReader('Navigated to signup page. Press Tab to navigate with keyboard.')
+  })
+}
+
+const showCreateAccountPrompt = (type: 'upload' | 'crm'): void => {
+  const msg = type === 'upload'
+    ? "Success! Your contact sheet has been uploaded. We'll begin analyzing your data, but first please create an account to continue."
+    : "Success! You're connected to your CRM. We'll begin analyzing your data, but first please create an account to continue."
+  addAIMessageWithTyping(msg)
+  showCreateAccountCTA.value = true
+  scrollToBottom()
+}
+
 // File Upload Methods
 const simulateFileUpload = () => {
   hasUploadedFile.value = true
