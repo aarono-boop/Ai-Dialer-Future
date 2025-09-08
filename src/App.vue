@@ -55,32 +55,38 @@
                                 text
                                 class="p-0"
                                 :pt="{ root: { style: { background: 'transparent', border: 'none', padding: 0 } } }"
-                                :aria-label="n === 2 ? 'Connect Salesforce' : n === 3 ? 'Connect Zoho' : n === 4 ? 'Connect Follow Up Boss' : n === 5 ? 'Connect Pipedrive' : n === 6 ? 'Connect SugarCRM' : n === 7 ? 'Connect Insightly' : 'Connect HubSpot'"
-                                @click="n === 2 ? openCrmModal('Salesforce') : n === 3 ? openCrmModal('Zoho') : n === 4 ? openCrmModal('Follow Up Boss') : n === 5 ? openCrmModal('Pipedrive') : n === 6 ? openCrmModal('SugarCRM') : n === 7 ? openCrmModal('Insightly') : openCrmModal('HubSpot')"
+                                :aria-label="n === 1 ? 'Connect Follow Up Boss' : n === 2 ? 'Connect HubSpot' : n === 3 ? 'Connect Insightly' : n === 4 ? 'Connect Pipedrive' : n === 5 ? 'Connect Salesforce' : n === 6 ? 'Connect SugarCRM' : n === 7 ? 'Connect Zendesk' : 'Connect Zoho'"
+                                @click="n === 1 ? openCrmModal('Follow Up Boss') : n === 2 ? openCrmModal('HubSpot') : n === 3 ? openCrmModal('Insightly') : n === 4 ? openCrmModal('Pipedrive') : n === 5 ? openCrmModal('Salesforce') : n === 6 ? openCrmModal('SugarCRM') : n === 7 ? openCrmModal('Zendesk') : openCrmModal('Zoho')"
                               >
                                 <img
-                                  v-if="n === 2"
-                                  src="https://cdn.builder.io/api/v1/image/assets%2F5aeb07ce25f84dbc869290880d07b71e%2F3019387748a04b48af354bc9f50e69b2?format=webp&width=800"
-                                  alt="Salesforce logo"
-                                  style="height: 56px; width: auto; display: block; object-fit: contain;"
-                                />
-                                <img
-                                  v-else-if="n === 3"
-                                  src="https://commons.wikimedia.org/wiki/Special:FilePath/ZOHO_logo_2023.svg"
-                                  alt="Zoho logo"
-                                  style="height: calc(28px * 4 / 3); width: auto; display: block; object-fit: contain; background: transparent;"
-                                />
-                                <img
-                                  v-else-if="n === 4"
+                                  v-if="n === 1"
                                   src="https://cdn.builder.io/api/v1/image/assets%2F5aeb07ce25f84dbc869290880d07b71e%2Fe999ed7796124b4ba95e483edf6cc182?format=webp&width=800"
                                   alt="Follow Up Boss logo"
                                   style="height: 28px; width: auto; display: block; object-fit: contain;"
                                 />
                                 <img
-                                  v-else-if="n === 5"
+                                  v-else-if="n === 2"
+                                  src="https://cdn.builder.io/api/v1/image/assets%2F5aeb07ce25f84dbc869290880d07b71e%2Faf17ec5c1e8545bebd6770b6234a2791?format=webp&width=800"
+                                  alt="HubSpot logo"
+                                  style="height: 28px; width: auto; display: block; object-fit: contain; filter: grayscale(1) brightness(0) invert(1);"
+                                />
+                                <img
+                                  v-else-if="n === 3"
+                                  src="https://cdn.builder.io/api/v1/image/assets%2F5aeb07ce25f84dbc869290880d07b71e%2Fe62e4eefd2aa47c894a95d73bdd13079?format=webp&width=800"
+                                  alt="Insightly logo"
+                                  style="height: 28px; width: auto; display: block; object-fit: contain;"
+                                />
+                                <img
+                                  v-else-if="n === 4"
                                   src="https://commons.wikimedia.org/wiki/Special:FilePath/Pipedrive_logo.svg"
                                   alt="Pipedrive logo"
                                   style="height: 28px; width: auto; display: block; object-fit: contain;"
+                                />
+                                <img
+                                  v-else-if="n === 5"
+                                  src="https://cdn.builder.io/api/v1/image/assets%2F5aeb07ce25f84dbc869290880d07b71e%2F3019387748a04b48af354bc9f50e69b2?format=webp&width=800"
+                                  alt="Salesforce logo"
+                                  style="height: 56px; width: auto; display: block; object-fit: contain;"
                                 />
                                 <img
                                   v-else-if="n === 6"
@@ -90,15 +96,15 @@
                                 />
                                 <img
                                   v-else-if="n === 7"
-                                  src="https://cdn.builder.io/api/v1/image/assets%2F5aeb07ce25f84dbc869290880d07b71e%2Fe62e4eefd2aa47c894a95d73bdd13079?format=webp&width=800"
-                                  alt="Insightly logo"
+                                  src="https://cdn.builder.io/api/v1/image/assets%2F5aeb07ce25f84dbc869290880d07b71e%2Febd5f1835f2a48f5bf3f1f29f64f7460?format=webp&width=800"
+                                  alt="Zendesk logo"
                                   style="height: 28px; width: auto; display: block; object-fit: contain;"
                                 />
                                 <img
                                   v-else
-                                  src="https://cdn.builder.io/api/v1/image/assets%2F5aeb07ce25f84dbc869290880d07b71e%2Faf17ec5c1e8545bebd6770b6234a2791?format=webp&width=800"
-                                  alt="HubSpot logo"
-                                  style="height: 28px; width: auto; display: block; object-fit: contain; filter: grayscale(1) brightness(0) invert(1);"
+                                  src="https://commons.wikimedia.org/wiki/Special:FilePath/ZOHO_logo_2023.svg"
+                                  alt="Zoho logo"
+                                  style="height: calc(28px * 4 / 3); width: auto; display: block; object-fit: contain; background: transparent;"
                                 />
                               </Button>
                             </div>
