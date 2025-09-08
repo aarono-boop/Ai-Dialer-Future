@@ -2893,10 +2893,18 @@ const handlePurchaseCompleted = () => {
   // Add user message confirming account creation and upgrade
   addUserMessage('Account created & upgraded')
 
-  // Add AI congratulations message with typing animation and scroll into view
+  // Pin this flow to top like goals: maintain top position and add AI without auto-scroll
+  const maintainTop = () => {
+    scrollToTopForGoals()
+  }
+  const maintainer = setInterval(maintainTop, 300)
+
   setTimeout(() => {
-    addAIMessageWithTyping('Congratulations! You\'ve successfully upgraded to the Pro plan and have unlimited access to all features.<br><br>To help us understand what your goals are, what are you trying to accomplish?')
-    setTimeout(() => scrollToBottom(), 100)
+    // One more forced top position before adding AI response
+    scrollToTopForGoals()
+    addAIMessageWithTypingNoScroll('Congratulations! You\'ve successfully upgraded to the Pro plan and have unlimited access to all features.<br><br>To help us understand what your goals are, what are you trying to accomplish?')
+    // Stop maintaining after typing starts
+    setTimeout(() => clearInterval(maintainer), 2000)
   }, 500)
 }
 
