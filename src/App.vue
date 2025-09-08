@@ -72,7 +72,7 @@
                                 />
                                 <img
                                   v-else-if="n === 4"
-                                  src="https://cdn.builder.io/api/v1/image/assets%2F5aeb07ce25f84dbc869290880d07b71e%2F5c243c274d46461a9895f3042f82ef1e?format=webp&width=800"
+                                  src="https://cdn.builder.io/api/v1/image/assets%2F5aeb07ce25f84dbc869290880d07b71e%2Fe999ed7796124b4ba95e483edf6cc182?format=webp&width=800"
                                   alt="Follow Up Boss logo"
                                   style="height: 28px; width: auto; display: block; object-fit: contain;"
                                 />
@@ -1721,7 +1721,7 @@ const sendMessage = (message: string): void => {
         'I can configure your session with:',
         '• <strong>Target audience:</strong> High-priority prospects, warm leads, or follow-ups',
         '• <strong>Call duration:</strong> 30 min, 1 hour, or 2-hour session',
-        '• <strong>Connect goals:</strong> Number of conversations you want to have',
+        '��� <strong>Connect goals:</strong> Number of conversations you want to have',
         'What type of prospects do you want to focus on for this session?'
       ])
     } else if (lowerMessage.includes('set a reminder') || lowerMessage.includes('reminder')) {
