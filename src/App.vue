@@ -66,9 +66,9 @@
                                 />
                                 <img
                                   v-else-if="n === 2"
-                                  src="https://cdn.builder.io/api/v1/image/assets%2F5aeb07ce25f84dbc869290880d07b71e%2Faf17ec5c1e8545bebd6770b6234a2791?format=webp&width=800"
+                                  src="https://cdn.builder.io/api/v1/image/assets%2F5aeb07ce25f84dbc869290880d07b71e%2Fe1e0d2b2dedf4f5c99650544aa5db11f?format=webp&width=800"
                                   alt="HubSpot logo"
-                                  style="height: 28px; width: auto; display: block; object-fit: contain; filter: grayscale(1) brightness(0) invert(1);"
+                                  style="height: 28px; width: auto; display: block; object-fit: contain;"
                                 />
                                 <img
                                   v-else-if="n === 3"
