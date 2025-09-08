@@ -233,6 +233,9 @@ const playTestTone = async () => {
 
 const markSpeakerHeard = () => {
   speakerOk.value = true
+  // As soon as the user confirms they heard the test, allow continuing
+  // by marking mic check as OK as well (unblocks the Continue button)
+  micOk.value = true
 }
 
 const handleContinue = () => {
