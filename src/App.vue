@@ -29,7 +29,7 @@
                   <template #additional-content>
                     <!-- File Upload Area - shown inside welcome message for new users or ready to upload message for returning users -->
                     <CoachCarousel v-if="index === 0 && showCoachCarousel" @learn-more="openCoachInfoPanel" @practice="startPracticeCall" />
-                    <div v-if="!showCoachCarousel && ((index === 0 && !isSignedIn && welcomeTypingComplete) || (isSignedIn && showFileUploadForReturningUser && isReadyToUploadMessage(message, index)))" class="mt-0">
+                    <div v-if="!showCoachCarousel && ((index === 0 && !isSignedIn && welcomeTypingComplete) || (isSignedIn && showFileUploadForReturningUser && isReadyToUploadMessage(message, index)))" class="mt-5">
                       <div class="flex gap-4 items-stretch">
                         <div class="flex-1">
                           <FileUpload
