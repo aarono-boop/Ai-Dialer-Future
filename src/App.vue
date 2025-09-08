@@ -31,19 +31,19 @@
                     <CoachCarousel v-if="index === 0 && showCoachCarousel" @learn-more="openCoachInfoPanel" @practice="startPracticeCall" />
                     <div v-if="!showCoachCarousel && ((index === 0 && !isSignedIn && welcomeTypingComplete) || (isSignedIn && showFileUploadForReturningUser && isReadyToUploadMessage(message, index)))" class="mt-5">
                       <div class="flex flex-col gap-4 items-stretch">
-                        <div class="w-full">
+                        <div class="w-full" style="order: 3;">
                           <FileUpload
-                            height="calc(13rem - 50px)"
+                            height="calc(13rem - 20px)"
                             :no-top-margin="true"
                             @trigger-upload="simulateFileUpload"
                             @file-selected="onFileSelect"
                             @file-dropped="simulateFileUpload"
                           />
                         </div>
-                        <div class="flex items-center justify-center my-1">
+                        <div class="flex items-center justify-center my-1" style="order: 2;">
                           <span class="text-sm" style="color: var(--p-surface-200);">OR</span>
                         </div>
-                        <Card class="w-full" :pt="{ root: { style: { background: 'var(--p-surface-800)', border: '1px solid var(--p-surface-600)', borderRadius: '8px', height: 'calc(13rem - 20px)', display: 'flex', flexDirection: 'column' } }, body: { style: { flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' } } }">
+                        <Card class="w-full" :pt="{ root: { style: { background: 'var(--p-surface-800)', border: '1px solid var(--p-surface-600)', borderRadius: '8px', height: 'calc(13rem - 20px)', display: 'flex', flexDirection: 'column', order: 1 } }, body: { style: { flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' } } }">
                           <template #title>
                             <div style="padding-bottom: 10px;">Connect your CRM</div>
                           </template>
