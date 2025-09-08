@@ -31,7 +31,7 @@ export const generateCoachWelcomeMessage = (coach: Coach): string => {
   }
 
   // Add the call-to-action
-  message += `<br><br>Drop your contact file here and I'll show you exactly who's most likely to pick up right now using ${coach.displayName}'s approach.`
+  message += `<br><br>Drop your contact file here or connect to your CRM and I'll show you exactly who's most likely to pick up right now using ${coach.displayName}'s approach.`
 
   return message
 }
