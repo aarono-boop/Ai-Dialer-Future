@@ -40,6 +40,9 @@
                             @file-dropped="simulateFileUpload"
                           />
                         </div>
+                        <div class="flex items-center justify-center my-1">
+                          <span class="text-sm" style="color: var(--p-surface-200);">OR</span>
+                        </div>
                         <Card class="w-full" :pt="{ root: { style: { background: 'var(--p-surface-800)', border: '1px solid var(--p-surface-600)', borderRadius: '8px', height: 'calc(13rem - 50px)', display: 'flex', flexDirection: 'column' } }, body: { style: { flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' } } }">
                           <template #title>
                             <div style="padding-bottom: 20px;">Connect your CRM</div>
