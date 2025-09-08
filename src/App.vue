@@ -1496,7 +1496,8 @@ const sendMessage = (message: string): void => {
     verificationCodeTypingComplete.value = false // Reset typing state
 
     setTimeout(() => {
-      addAIMessageWithTyping(`Perfect. We've sent a text with 6-digit verification code to ${message}. Please enter it below to continue.`)
+      const fm = formatPhoneNumber(message)
+      addAIMessageWithTyping(`Perfect. We've sent a text with 6-digit verification code to ${fm}. Please enter it below to continue.`)
       scrollToBottom()
     }, 1000)
     return
