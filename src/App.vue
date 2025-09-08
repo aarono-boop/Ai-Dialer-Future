@@ -78,7 +78,7 @@
                                 />
                                 <img
                                   v-else-if="n === 5"
-                                  src="https://cdn.builder.io/api/v1/image/assets%2F5aeb07ce25f84dbc869290880d07b71e%2F3df27039e103473fa7f1375cdf188033?format=webp&width=800"
+                                  src="https://commons.wikimedia.org/wiki/Special:FilePath/Pipedrive_logo.svg"
                                   alt="Pipedrive logo"
                                   style="height: 28px; width: auto; display: block; object-fit: contain;"
                                 />
