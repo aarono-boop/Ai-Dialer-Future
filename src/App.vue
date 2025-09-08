@@ -1557,21 +1557,7 @@ const onFileSelect = (file: File): void => {
       showContactPreview(addAIMessage, (show: boolean) => showContactPreviewButtons.value = show, scrollToBottom)
     }, 1500)
   } else {
-    // New user, go to signup page
-    currentPage.value = 'signup'
-
-    // Clear any existing focus when navigating to signup page
-    nextTick(() => {
-      if (document.activeElement instanceof HTMLElement) {
-        document.activeElement.blur()
-      }
-      setTimeout(() => {
-        if (headerRef.value && headerRef.value.establishFocusContext) {
-          headerRef.value.establishFocusContext()
-        }
-      }, 100)
-      announceToScreenReader('Navigated to signup page. Press Tab to navigate with keyboard.')
-    })
+    showCreateAccountPrompt('upload')
   }
 }
 
