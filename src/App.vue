@@ -68,7 +68,7 @@
                                   v-else
                                   src="https://cdn.builder.io/api/v1/image/assets%2F5aeb07ce25f84dbc869290880d07b71e%2F3019387748a04b48af354bc9f50e69b2?format=webp&width=800"
                                   alt="Salesforce logo"
-                                  style="height: 28px; width: auto; display: block; object-fit: contain;"
+                                  style="height: 56px; width: auto; display: block; object-fit: contain;"
                                 />
                               </Button>
                             </div>
