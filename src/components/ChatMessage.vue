@@ -441,7 +441,7 @@ const getMessageWidth = (): string => {
     return 'w-full'
   }
 
-  return props.isWide ? 'w-3/5' : 'max-w-[60%]'
+  return props.isWide ? 'w-[calc(60%+100px)]' : 'max-w-[60%]'
 }
 </script>
 
