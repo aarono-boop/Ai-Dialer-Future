@@ -29,12 +29,25 @@
                   <template #additional-content>
                     <!-- File Upload Area - shown inside welcome message for new users or ready to upload message for returning users -->
                     <CoachCarousel v-if="index === 0 && showCoachCarousel" @learn-more="openCoachInfoPanel" @practice="startPracticeCall" />
-                    <FileUpload
-                      v-if="!showCoachCarousel && ((index === 0 && !isSignedIn && welcomeTypingComplete) || (isSignedIn && showFileUploadForReturningUser && isReadyToUploadMessage(message, index)))"
-                      @trigger-upload="simulateFileUpload"
-                      @file-selected="onFileSelect"
-                      @file-dropped="simulateFileUpload"
-                    />
+                    <div v-if="!showCoachCarousel && ((index === 0 && !isSignedIn && welcomeTypingComplete) || (isSignedIn && showFileUploadForReturningUser && isReadyToUploadMessage(message, index)))" class="mt-0">
+                      <div class="flex gap-4 items-stretch">
+                        <div class="flex-1">
+                          <FileUpload
+                            @trigger-upload="simulateFileUpload"
+                            @file-selected="onFileSelect"
+                            @file-dropped="simulateFileUpload"
+                          />
+                        </div>
+                        <Card class="flex-1" :pt="{ root: { style: { background: 'var(--p-surface-800)', border: '1px solid var(--p-surface-600)', borderRadius: '8px' } }, body: { style: { minHeight: '8rem', display: 'flex', alignItems: 'center', justifyContent: 'center' } } }">
+                          <template #title>
+                            Connect you CRM
+                          </template>
+                          <div class="text-sm" style="color: var(--p-surface-0);">
+
+                          </div>
+                        </Card>
+                      </div>
+                    </div>
                   </template>
                 </ChatMessage>
 
