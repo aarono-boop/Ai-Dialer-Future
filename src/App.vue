@@ -102,7 +102,7 @@
                                 />
                                 <img
                                   v-else
-                                  src="https://commons.wikimedia.org/wiki/Special:FilePath/ZOHO_logo_2023.svg"
+                                  src="https://cdn.builder.io/api/v1/image/assets%2F5aeb07ce25f84dbc869290880d07b71e%2F0f977503ad8c485883ae42af7e44de70?format=webp&width=800"
                                   alt="Zoho logo"
                                   style="height: calc(28px * 4 / 3); width: auto; display: block; object-fit: contain; background: transparent;"
                                 />
