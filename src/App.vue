@@ -1521,7 +1521,20 @@ const sendMessage = (message: string): void => {
     const formatted = formatPhoneNumber(enteredPhoneNumber.value)
     setTimeout(() => {
       addAIMessage([
-        `Great! Your number ${formatted} is verified, but our ARMOR® test results across 3 carriers show 1 flag for spam on AT&T.<br><br>To ensure your calls connect, we've provided you with a free ARMOR® number to protect against false flags. This includes comprehensive number monitoring, remediation, and answer rate analytics.<br><br>Which number would you like to use for your Caller ID?`
+        `Great! Your number ${formatted} is verified, but our ARMOR® test results across 3 carriers show 1 flag for spam on AT&T.<br><br><div style="margin: 4px 0 10px 0; color: var(--p-surface-200); font-size: 0.9em;">Carrier results</div><div style="display: flex; gap: 12px; justify-content: space-between;">
+  <div style="text-align: center; width: 32%;">
+    <div style="font-weight: 600; margin-bottom: 6px;">AT&amp;T</div>
+    <img src="https://cdn.builder.io/api/v1/image/assets%2F5aeb07ce25f84dbc869290880d07b71e%2Fde975ceb671f4509ba23ee1c030bec02?format=webp&width=800" alt="AT&T flagged as spam" style="width: 100%; max-width: 140px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.15);" />
+  </div>
+  <div style="text-align: center; width: 32%;">
+    <div style="font-weight: 600; margin-bottom: 6px;">T-Mobile</div>
+    <img src="https://cdn.builder.io/api/v1/image/assets%2F5aeb07ce25f84dbc869290880d07b71e%2Fe853c377f12e40d1ae7e549eb5a11cfa?format=webp&width=800" alt="T-Mobile clean" style="width: 100%; max-width: 140px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.15);" />
+  </div>
+  <div style="text-align: center; width: 32%;">
+    <div style="font-weight: 600; margin-bottom: 6px;">Verizon</div>
+    <img src="https://cdn.builder.io/api/v1/image/assets%2F5aeb07ce25f84dbc869290880d07b71e%2Fe853c377f12e40d1ae7e549eb5a11cfa?format=webp&width=800" alt="Verizon clean" style="width: 100%; max-width: 140px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.15);" />
+  </div>
+</div><br>To ensure your calls connect, we've provided you with a free ARMOR® number to protect against false flags. This includes comprehensive number monitoring, remediation, and answer rate analytics.<br><br>Which number would you like to use for your Caller ID?`
       ])
       scrollToBottom()
     }, 1000)
@@ -1707,7 +1720,20 @@ const handleLooksGood = (): void => {
       setTimeout(() => {
         const personal = enteredPhoneNumber.value ? formatPhoneNumber(enteredPhoneNumber.value) : '(971) 235-1723'
         addAIMessage([
-          `Great! Your number ${personal} is verified, but our ARMOR® test results across 3 carriers show 1 flag for spam on AT&T.<br><br>To ensure your calls connect, we've provided you with a free ARMOR® number to protect against false flags. This includes comprehensive number monitoring, remediation, and answer rate analytics.<br><br>Which number would you like to use for your Caller ID?`
+          `Great! Your number ${personal} is verified, but our ARMOR® test results across 3 carriers show 1 flag for spam on AT&T.<br><br><div style="margin: 4px 0 10px 0; color: var(--p-surface-200); font-size: 0.9em;">Carrier results</div><div style="display: flex; gap: 12px; justify-content: space-between;">
+  <div style="text-align: center; width: 32%;">
+    <div style="font-weight: 600; margin-bottom: 6px;">AT&amp;T</div>
+    <img src="https://cdn.builder.io/api/v1/image/assets%2F5aeb07ce25f84dbc869290880d07b71e%2Fde975ceb671f4509ba23ee1c030bec02?format=webp&width=800" alt="AT&T flagged as spam" style="width: 100%; max-width: 140px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.15);" />
+  </div>
+  <div style="text-align: center; width: 32%;">
+    <div style="font-weight: 600; margin-bottom: 6px;">T-Mobile</div>
+    <img src="https://cdn.builder.io/api/v1/image/assets%2F5aeb07ce25f84dbc869290880d07b71e%2Fe853c377f12e40d1ae7e549eb5a11cfa?format=webp&width=800" alt="T-Mobile clean" style="width: 100%; max-width: 140px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.15);" />
+  </div>
+  <div style="text-align: center; width: 32%;">
+    <div style="font-weight: 600; margin-bottom: 6px;">Verizon</div>
+    <img src="https://cdn.builder.io/api/v1/image/assets%2F5aeb07ce25f84dbc869290880d07b71e%2Fe853c377f12e40d1ae7e549eb5a11cfa?format=webp&width=800" alt="Verizon clean" style="width: 100%; max-width: 140px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.15);" />
+  </div>
+</div><br>To ensure your calls connect, we've provided you with a free ARMOR® number to protect against false flags. This includes comprehensive number monitoring, remediation, and answer rate analytics.<br><br>Which number would you like to use for your Caller ID?`
         ])
         showCallerIdChoiceButtons.value = true
         audioCheckPassed.value = false
