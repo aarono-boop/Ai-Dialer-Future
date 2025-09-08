@@ -2880,7 +2880,11 @@ const handlePurchaseCompleted = () => {
   currentPage.value = 'main'
   isSignedIn.value = true
   isReturningUser.value = false // This is a new user
-  updateWelcomeMessageTyping() // Update typing status for welcome message
+
+  // Ensure the initial welcome bubble does not retype
+  if (messages.value.length > 0 && messages.value[0].type === 'ai') {
+    messages.value[0].typing = false
+  }
 
   // Reset congratulations typing completion and action buttons used state
   congratulationsTypingComplete.value = false
@@ -2889,9 +2893,10 @@ const handlePurchaseCompleted = () => {
   // Add user message confirming account creation and upgrade
   addUserMessage('Account created & upgraded')
 
-  // Add AI congratulations message with typing animation (action buttons will show after typing completes)
+  // Add AI congratulations message with typing animation and scroll into view
   setTimeout(() => {
     addAIMessageWithTyping('Congratulations! You\'ve successfully upgraded to the Pro plan and have unlimited access to all features.<br><br>To help us understand what your goals are, what are you trying to accomplish?')
+    setTimeout(() => scrollToBottom(), 100)
   }, 500)
 }
 
