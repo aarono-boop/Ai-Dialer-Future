@@ -575,6 +575,7 @@ import MicSpeakerCheck from './components/modals/MicSpeakerCheck.vue'
 
 // PrimeVue Components (adding Button)
 import Button from 'primevue/button'
+import Card from 'primevue/card'
 
 // PrimeVue Components
 
