@@ -72,7 +72,7 @@
                                 />
                                 <img
                                   v-else-if="n === 3"
-                                  src="https://cdn.builder.io/api/v1/image/assets%2F5aeb07ce25f84dbc869290880d07b71e%2Fe62e4eefd2aa47c894a95d73bdd13079?format=webp&width=800"
+                                  src="https://cdn.builder.io/api/v1/image/assets%2F5aeb07ce25f84dbc869290880d07b71e%2F12a89d7381b9422bb8e5b31e99815f59?format=webp&width=800"
                                   alt="Insightly logo"
                                   style="height: 28px; width: auto; display: block; object-fit: contain;"
                                 />
