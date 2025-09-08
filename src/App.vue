@@ -1638,8 +1638,15 @@ const sendMessage = (message: string): void => {
 
     setTimeout(() => {
       const fm = formatPhoneNumber(message)
-      addAIMessageWithTyping(`Perfect. We've sent a text with 6-digit verification code to ${fm}. Please enter it below to continue.`)
-      scrollToBottom()
+      // Maintain top position like goals while typing the verification prompt
+      const maintainTop = () => {
+        scrollToTopForGoals()
+      }
+      const maintainer = setInterval(maintainTop, 300)
+      // Add without auto-scroll to keep the phone input message pinned
+      addAIMessageWithTypingNoScroll(`Perfect. We've sent a text with 6-digit verification code to ${fm}. Please enter it below to continue.`)
+      // Stop maintaining after the typing starts
+      setTimeout(() => clearInterval(maintainer), 2000)
     }, 1000)
     return
   }
@@ -1750,7 +1757,7 @@ const sendMessage = (message: string): void => {
       addAIMessage([
         '<i class="pi pi-star"></i> I\'d love to show you ARKON in action!',
         'Let me set up a personalized demo where you can see:',
-        '• Live contact scoring and prioritization',
+        '�� Live contact scoring and prioritization',
         '• Real-time dialing with connect predictions',
         '��� Smart call disposition and follow-up automation',
         'What\'s your preferred time? I can schedule something for today or tomorrow.'
