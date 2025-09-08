@@ -66,7 +66,7 @@
                                 />
                                 <img
                                   v-else-if="n === 3"
-                                  src="https://cdn.builder.io/api/v1/image/assets%2F5aeb07ce25f84dbc869290880d07b71e%2F1575d79060254ef29c58b358eed4fcb7?format=webp&width=800"
+                                  src="https://commons.wikimedia.org/wiki/Special:FilePath/ZOHO_logo_2023.svg"
                                   alt="Zoho logo"
                                   style="height: calc(28px * 4 / 3); width: auto; display: block; object-fit: contain; background: transparent;"
                                 />
