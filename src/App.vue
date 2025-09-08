@@ -1666,9 +1666,17 @@ const sendMessage = (message: string): void => {
     showCallerIdChoiceButtons.value = true
     audioCheckPassed.value = false
 
+    // Pin the user's 6-digit code message to the top like goals/account-created flows
+    scrollToTopForGoals()
+    const maintainTop = () => {
+      scrollToTopForGoals()
+    }
+    const maintainer = setInterval(maintainTop, 300)
+
     const formatted = formatPhoneNumber(enteredPhoneNumber.value)
     setTimeout(() => {
-      addAIMessage([
+      // Add AI response without auto-scrolling; keep the user message pinned
+      addAIMessageWithTypingNoScroll([
         `Great! Your number ${formatted} is verified, but our ARMOR® test results across 3 carriers show 1 flag for spam on AT&T.<br><br><div style="margin: 4px 0 10px 0; color: var(--p-surface-200); font-size: 0.9em;">Carrier results</div><div style="display: flex; gap: 12px; justify-content: space-between;">
   <div style="text-align: center; width: 32%; display: flex; flex-direction: column;">
     <div style="font-weight: 600; margin-bottom: 6px;">AT&amp;T</div>
@@ -1684,7 +1692,8 @@ const sendMessage = (message: string): void => {
   </div>
 </div><br>To ensure your calls connect, we've provided you with a free ARMOR® number to protect against false flags. This includes comprehensive number monitoring, remediation, and answer rate analytics.<br><br>Which number would you like to use for your Caller ID?`
       ])
-      scrollToBottom()
+      // Stop maintaining after typing starts
+      setTimeout(() => clearInterval(maintainer), 2000)
     }, 1000)
     return
   }
@@ -1757,7 +1766,7 @@ const sendMessage = (message: string): void => {
       addAIMessage([
         '<i class="pi pi-star"></i> I\'d love to show you ARKON in action!',
         'Let me set up a personalized demo where you can see:',
-        '�� Live contact scoring and prioritization',
+        '• Live contact scoring and prioritization',
         '• Real-time dialing with connect predictions',
         '��� Smart call disposition and follow-up automation',
         'What\'s your preferred time? I can schedule something for today or tomorrow.'
