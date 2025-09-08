@@ -55,8 +55,8 @@
                                 text
                                 class="p-0"
                                 :pt="{ root: { style: { background: 'transparent', border: 'none', padding: 0 } } }"
-                                :aria-label="n === 2 ? 'Connect Salesforce' : n === 3 ? 'Connect Zoho' : 'Connect HubSpot'"
-                                @click="n === 2 ? openCrmModal('Salesforce') : n === 3 ? openCrmModal('Zoho') : openCrmModal('HubSpot')"
+                                :aria-label="n === 2 ? 'Connect Salesforce' : n === 3 ? 'Connect Zoho' : n === 4 ? 'Connect Follow Up Boss' : 'Connect HubSpot'"
+                                @click="n === 2 ? openCrmModal('Salesforce') : n === 3 ? openCrmModal('Zoho') : n === 4 ? openCrmModal('Follow Up Boss') : openCrmModal('HubSpot')"
                               >
                                 <img
                                   v-if="n === 2"
@@ -69,6 +69,12 @@
                                   src="https://commons.wikimedia.org/wiki/Special:FilePath/ZOHO_logo_2023.svg"
                                   alt="Zoho logo"
                                   style="height: calc(28px * 4 / 3); width: auto; display: block; object-fit: contain; background: transparent;"
+                                />
+                                <img
+                                  v-else-if="n === 4"
+                                  src="https://cdn.builder.io/api/v1/image/assets%2F5aeb07ce25f84dbc869290880d07b71e%2F5c243c274d46461a9895f3042f82ef1e?format=webp&width=800"
+                                  alt="Follow Up Boss logo"
+                                  style="height: 28px; width: auto; display: block; object-fit: contain;"
                                 />
                                 <img
                                   v-else
@@ -1806,7 +1812,7 @@ const handleLooksGood = (): void => {
       setTimeout(() => {
         const personal = enteredPhoneNumber.value ? formatPhoneNumber(enteredPhoneNumber.value) : '(971) 235-1723'
         addAIMessage([
-          `Great! Your number ${personal} is verified, but our ARMOR® test results across 3 carriers show 1 flag for spam on AT&T.<br><br><div style="margin: 4px 0 10px 0; color: var(--p-surface-200); font-size: 0.9em;">Carrier results</div><div style="display: flex; gap: 12px; justify-content: space-between;">
+          `Great! Your number ${personal} is verified, but our ARMOR�� test results across 3 carriers show 1 flag for spam on AT&T.<br><br><div style="margin: 4px 0 10px 0; color: var(--p-surface-200); font-size: 0.9em;">Carrier results</div><div style="display: flex; gap: 12px; justify-content: space-between;">
   <div style="text-align: center; width: 32%; display: flex; flex-direction: column;">
     <div style="font-weight: 600; margin-bottom: 6px;">AT&amp;T</div>
     <img src="https://cdn.builder.io/api/v1/image/assets%2F5aeb07ce25f84dbc869290880d07b71e%2Fde975ceb671f4509ba23ee1c030bec02?format=webp&width=800" alt="AT&T flagged as spam" style="width: 100%; max-width: 140px; border-radius: 8px; margin: 0 auto; display: block;" />
