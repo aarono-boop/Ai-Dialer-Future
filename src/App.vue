@@ -48,7 +48,7 @@
                             <div style="padding-bottom: 20px;">Connect your CRM</div>
                           </template>
                           <template #content>
-                            <div class="grid grid-cols-4 w-full h-full items-center justify-items-center" style="column-gap: 30px; row-gap: 10px;">
+                            <div class="grid grid-cols-4 w-full h-full items-center justify-items-center" style="column-gap: 18px; row-gap: 6px;">
                               <Button
                                 v-for="n in 8"
                                 :key="n"
