@@ -1488,6 +1488,12 @@ const switchToSigninFromSignup = (): void => {
 
 // Navigate to signup page helper
 const proceedToCreateAccount = (): void => {
+  // Stop any pending 'create an account' typing bubbles
+  messages.value.forEach((m: any) => {
+    if (m?.type === 'ai' && m?.typing && Array.isArray(m.content) && m.content.join(' ').toLowerCase().includes('create an account')) {
+      m.typing = false
+    }
+  })
   currentPage.value = 'signup'
   showCreateAccountCTA.value = false
   nextTick(() => {
@@ -2889,6 +2895,14 @@ const handlePurchaseCompleted = () => {
   // Reset congratulations typing completion and action buttons used state
   congratulationsTypingComplete.value = false
   actionButtonsUsed.value = false
+  showCreateAccountCTA.value = false
+
+  // Stop any pending 'create an account' typing bubbles (CRM/connect or upload)
+  messages.value.forEach((m: any) => {
+    if (m?.type === 'ai' && m?.typing && Array.isArray(m.content) && m.content.join(' ').toLowerCase().includes('create an account')) {
+      m.typing = false
+    }
+  })
 
   // Add user message confirming account creation and upgrade
   addUserMessage('Account created & upgraded')
