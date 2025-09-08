@@ -1823,7 +1823,8 @@ const handleResendCode = (): void => {
 
   // Add AI response
   setTimeout(() => {
-    addAIMessage(`We've sent a new verification code to ${enteredPhoneNumber.value}. Please check your messages.`)
+    const fm = formatPhoneNumber(enteredPhoneNumber.value)
+    addAIMessage(`We've sent a new verification code to ${fm}. Please check your messages.`)
   }, 1000)
 }
 
