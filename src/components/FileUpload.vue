@@ -8,6 +8,7 @@
       @keydown.enter="triggerFileInput"
       @keydown.space.prevent="triggerFileInput"
       class="upload-area"
+      :style="props.height ? { height: props.height } : {}"
       tabindex="3"
       role="button"
       aria-label="Click or drag and drop to upload contact file"
@@ -44,6 +45,9 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
+
+// Props
+const props = defineProps<{ height?: string }>()
 
 // Define emits
 const emit = defineEmits(['trigger-upload', 'file-selected', 'file-dropped'])
