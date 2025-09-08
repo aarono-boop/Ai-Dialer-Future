@@ -90,7 +90,7 @@
                                 />
                                 <img
                                   v-else-if="n === 6"
-                                  src="https://cdn.builder.io/api/v1/image/assets%2F5aeb07ce25f84dbc869290880d07b71e%2Ffaa2d25310e34412b2d5816d17f88d6b?format=webp&width=800"
+                                  src="https://cdn.builder.io/api/v1/image/assets%2F5aeb07ce25f84dbc869290880d07b71e%2Fc76e447676844822add4c32826ad616f?format=webp&width=800"
                                   alt="SugarCRM logo"
                                   style="height: 28px; width: auto; display: block; object-fit: contain;"
                                 />
@@ -505,7 +505,7 @@
                 <div class="space-y-2 pl-5 border-t border-white/10 pt-[22px] pb-[10px] mt-3">
                   <h4 class="text-xl font-medium">Testimonials</h4>
                   <div class="text-xs text-gray-300 space-y-2">
-                    <p>“Our connect rate and meetings doubled in 60 days.” — VP Sales, SaaS</p>
+                    <p>“Our connect rate and meetings doubled in 60 days.�� — VP Sales, SaaS</p>
                     <p>“The talk tracks are simple and deadly effective.�� — SDR Lead, Insurance</p>
                   </div>
                 <div v-if="selectedCoachForInfo?.websiteUrl" class="sticky bottom-0 -mb-4 -mx-4 px-4 py-3 border-t border-gray-700 bg-gray-900/90 flex justify-center">
