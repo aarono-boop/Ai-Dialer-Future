@@ -45,7 +45,7 @@
                             <div style="padding-bottom: 20px;">Connect your CRM</div>
                           </template>
                           <template #content>
-                            <div class="grid grid-cols-2 w-full h-full items-center justify-items-center" style="gap: 30px;">
+                            <div class="grid grid-cols-2 w-full h-full items-center justify-items-center" style="column-gap: 30px; row-gap: 20px;">
                               <img v-for="n in 8" :key="n" src="https://cdn.builder.io/api/v1/image/assets%2F5aeb07ce25f84dbc869290880d07b71e%2Faf17ec5c1e8545bebd6770b6234a2791?format=webp&width=800" alt="HubSpot logo" style="height: 28px; width: auto; display: block; object-fit: contain; filter: grayscale(1) brightness(0) invert(1);" />
                             </div>
                           </template>
