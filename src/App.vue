@@ -46,7 +46,17 @@
                           </template>
                           <template #content>
                             <div class="grid grid-cols-2 w-full h-full items-center justify-items-center" style="column-gap: 30px; row-gap: 20px;">
-                              <img v-for="n in 8" :key="n" src="https://cdn.builder.io/api/v1/image/assets%2F5aeb07ce25f84dbc869290880d07b71e%2Faf17ec5c1e8545bebd6770b6234a2791?format=webp&width=800" alt="HubSpot logo" style="height: 28px; width: auto; display: block; object-fit: contain; filter: grayscale(1) brightness(0) invert(1);" />
+                              <Button
+                                v-for="n in 8"
+                                :key="n"
+                                text
+                                class="p-0"
+                                :pt="{ root: { style: { background: 'transparent', border: 'none', padding: 0 } } }"
+                                aria-label="Connect HubSpot"
+                                @click="openCrmModal('HubSpot')"
+                              >
+                                <img src="https://cdn.builder.io/api/v1/image/assets%2F5aeb07ce25f84dbc869290880d07b71e%2Faf17ec5c1e8545bebd6770b6234a2791?format=webp&width=800" alt="HubSpot logo" style="height: 28px; width: auto; display: block; object-fit: contain; filter: grayscale(1) brightness(0) invert(1);" />
+                              </Button>
                             </div>
                           </template>
                         </Card>
@@ -64,6 +74,27 @@
 
 
           </div>
+
+          <!-- CRM Sign-in Modal -->
+          <Dialog v-model:visible="showCrmModal" modal :header="`Connect ${selectedCrmName}`" :style="{ width: '28rem' }" :breakpoints="{ '960px': '90vw' }">
+            <div class="flex flex-col gap-3">
+              <div class="text-sm" style="color: var(--p-surface-200)">Sign in to your {{ selectedCrmName }} account</div>
+              <div class="flex flex-col gap-2">
+                <label class="text-sm" for="crm-email">Email</label>
+                <InputText id="crm-email" v-model="crmEmail" class="w-full" placeholder="you@company.com" />
+              </div>
+              <div class="flex flex-col gap-2">
+                <label class="text-sm" for="crm-pass">Password / API Key</label>
+                <Password id="crm-pass" v-model="crmPassword" toggleMask :feedback="false" class="w-full" :inputStyle="{ width: '100%' }" />
+              </div>
+            </div>
+            <template #footer>
+              <div class="flex items-center justify-end gap-2 w-full">
+                <Button label="Cancel" severity="secondary" @click="showCrmModal = false" />
+                <Button label="Connect" icon="pi pi-check" @click="connectCrm" :disabled="!crmEmail || !crmPassword" />
+              </div>
+            </template>
+          </Dialog>
 
           <!-- Action Buttons - positioned above chat input -->
           <div v-if="showActionButtons && !actionButtonsUsed" class="mt-2 pt-5 flex justify-center">
@@ -580,6 +611,9 @@ import MicSpeakerCheck from './components/modals/MicSpeakerCheck.vue'
 // PrimeVue Components (adding Button)
 import Button from 'primevue/button'
 import Card from 'primevue/card'
+import Dialog from 'primevue/dialog'
+import InputText from 'primevue/inputtext'
+import Password from 'primevue/password'
 
 // PrimeVue Components
 
@@ -587,6 +621,20 @@ import Card from 'primevue/card'
 import type { Coach } from './types/coach'
 const selectedCoachFirstName = computed(() => selectedCoachForInfo.value?.displayName?.split(' ')[0] || 'Coach')
 const isPracticeMode = ref<boolean>(false)
+
+// CRM sign-in modal state
+const showCrmModal = ref(false)
+const selectedCrmName = ref('HubSpot')
+const crmEmail = ref('')
+const crmPassword = ref('')
+const openCrmModal = (name: string) => {
+  selectedCrmName.value = name
+  showCrmModal.value = true
+}
+const connectCrm = () => {
+  // Placeholder connect handler
+  showCrmModal.value = false
+}
 
 const returnToCoachesSelection = (): void => {
   isPracticeMode.value = false
