@@ -1869,7 +1869,7 @@ const onAudioCheckPassed = (): void => {
 const formatPhoneNumber = (input: string): string => {
   if (!input) return input
   const digits = input.replace(/\D/g, '')
-  const cleaned = digits.length === 11 && digits.startsWith('1') ? digits.slice(1) : digits
+  const cleaned = digits.length >= 10 ? digits.slice(-10) : digits
   if (cleaned.length === 10) {
     const area = cleaned.slice(0, 3)
     const prefix = cleaned.slice(3, 6)
