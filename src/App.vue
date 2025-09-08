@@ -828,6 +828,7 @@ const showPricingPage = ref<boolean>(false)
 const showPaymentPage = ref<boolean>(false)
 const showMicSpeakerCheck = ref<boolean>(false)
 const audioCheckPassed = ref<boolean>(false)
+const showCreateAccountCTA = ref<boolean>(false)
 const isSignedIn = ref<boolean>(false)
 const isReturningUser = ref<boolean>(false) // Track if user logged in vs created new account
 const showActionButtons = ref<boolean>(false)
