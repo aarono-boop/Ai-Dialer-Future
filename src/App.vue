@@ -74,7 +74,7 @@
                                   v-else-if="n === 3"
                                   src="https://cdn.builder.io/api/v1/image/assets%2F5aeb07ce25f84dbc869290880d07b71e%2F12a89d7381b9422bb8e5b31e99815f59?format=webp&width=800"
                                   alt="Insightly logo"
-                                  style="height: 28px; width: auto; display: block; object-fit: contain;"
+                                  style="height: 33px; width: auto; display: block; object-fit: contain;"
                                 />
                                 <img
                                   v-else-if="n === 4"
@@ -2918,7 +2918,7 @@ const handleGoogleSignupFromAccount = () => {
     isSignedIn.value = true
     showActionButtons.value = true
     updateWelcomeMessageTyping() // Update typing status for welcome message
-    addAIMessage('🎉 Welcome to ARKON! Your account has been created successfully. Let\'s start your first smart calling session! What are you trying to accomplish?')
+    addAIMessage('���� Welcome to ARKON! Your account has been created successfully. Let\'s start your first smart calling session! What are you trying to accomplish?')
 
     // Ensure scroll happens after action buttons are rendered
   setTimeout(() => {
