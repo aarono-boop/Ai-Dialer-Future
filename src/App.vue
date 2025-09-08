@@ -682,8 +682,15 @@ const openCrmModal = (name: string) => {
   showCrmModal.value = true
 }
 const connectCrm = () => {
-  // Placeholder connect handler
   showCrmModal.value = false
+  if (isSignedIn.value) {
+    addAIMessageWithTyping(`You're now connected to <strong>${selectedCrmName.value}</strong>. We'll start analyzing your data.`)
+    scrollToBottom()
+  } else {
+    addAIMessageWithTyping(`Success! <strong>${selectedCrmName.value}</strong> is connected. We'll begin analyzing your data, but first please create an account to continue.`)
+    showCreateAccountCTA.value = true
+    scrollToBottom()
+  }
 }
 
 const returnToCoachesSelection = (): void => {
