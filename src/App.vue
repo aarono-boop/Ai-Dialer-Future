@@ -44,9 +44,11 @@
                           <template #title>
                             Connect your CRM
                           </template>
-                          <div class="flex items-center justify-center w-full h-full">
-                            <img src="https://cdn.builder.io/api/v1/image/assets%2F5aeb07ce25f84dbc869290880d07b71e%2Fef6624953e4140599503bf95a33e21b2?format=webp&width=800" alt="HubSpot logo" style="height: 56px; width: 140px; display: block; object-fit: none; object-position: right top; filter: drop-shadow(0 1px 2px rgba(0,0,0,0.6));" />
-                          </div>
+                          <template #content>
+                            <div class="flex items-center justify-center w-full h-full">
+                              <img src="https://cdn.builder.io/api/v1/image/assets%2F5aeb07ce25f84dbc869290880d07b71e%2Fef6624953e4140599503bf95a33e21b2?format=webp&width=800" alt="HubSpot logo" style="height: 56px; width: auto; display: block; object-fit: contain; filter: drop-shadow(0 1px 2px rgba(0,0,0,0.6));" />
+                            </div>
+                          </template>
                         </Card>
                       </div>
                     </div>
