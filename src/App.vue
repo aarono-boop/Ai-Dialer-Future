@@ -188,6 +188,19 @@
             </div>
           </div>
 
+          <!-- Create Account CTA - shown after upload or CRM connect for new users -->
+          <div v-if="showCreateAccountCTA && !isSignedIn" class="mt-2 pt-5 flex justify-center">
+            <div class="w-[70%] flex justify-center">
+              <Button
+                @click="proceedToCreateAccount"
+                severity="primary"
+                label="Create Account to Continue"
+                class="w-1/2 px-8 py-3 font-semibold"
+                tabindex="3"
+              />
+            </div>
+          </div>
+
           <!-- Phone Verification Button - always visible when active -->
           <div v-if="showPhoneVerificationButton && verificationStep === 'default'" class="mt-2 pt-5 flex justify-center">
             <div class="w-[70%] flex justify-center">
