@@ -80,7 +80,7 @@
                                   v-else-if="n === 4"
                                   src="https://commons.wikimedia.org/wiki/Special:FilePath/Pipedrive_logo.svg"
                                   alt="Pipedrive logo"
-                                  style="height: 28px; width: auto; display: block; object-fit: contain;"
+                                  style="height: 56px; width: auto; display: block; object-fit: contain; filter: brightness(0) invert(1);"
                                 />
                                 <img
                                   v-else-if="n === 5"
