@@ -30,8 +30,8 @@
                     <!-- File Upload Area - shown inside welcome message for new users or ready to upload message for returning users -->
                     <CoachCarousel v-if="index === 0 && showCoachCarousel" @learn-more="openCoachInfoPanel" @practice="startPracticeCall" />
                     <div v-if="!showCoachCarousel && ((index === 0 && !isSignedIn && welcomeTypingComplete) || (isSignedIn && showFileUploadForReturningUser && isReadyToUploadMessage(message, index)))" class="mt-5">
-                      <div class="flex gap-4 items-stretch">
-                        <div class="flex-1">
+                      <div class="flex flex-col gap-4 items-stretch">
+                        <div class="w-full">
                           <FileUpload
                             height="calc(13rem + 50px)"
                             :no-top-margin="true"
@@ -40,7 +40,7 @@
                             @file-dropped="simulateFileUpload"
                           />
                         </div>
-                        <Card class="flex-1" :pt="{ root: { style: { background: 'var(--p-surface-800)', border: '1px solid var(--p-surface-600)', borderRadius: '8px', height: 'calc(13rem + 50px)', display: 'flex', flexDirection: 'column' } }, body: { style: { flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' } } }">
+                        <Card class="w-full" :pt="{ root: { style: { background: 'var(--p-surface-800)', border: '1px solid var(--p-surface-600)', borderRadius: '8px', height: 'calc(13rem + 50px)', display: 'flex', flexDirection: 'column' } }, body: { style: { flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' } } }">
                           <template #title>
                             <div style="padding-bottom: 20px;">Connect your CRM</div>
                           </template>
