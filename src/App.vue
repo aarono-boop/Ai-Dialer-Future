@@ -34,6 +34,7 @@
                         <div class="flex-1">
                           <FileUpload
                             height="10rem"
+                            :no-top-margin="true"
                             @trigger-upload="simulateFileUpload"
                             @file-selected="onFileSelect"
                             @file-dropped="simulateFileUpload"
