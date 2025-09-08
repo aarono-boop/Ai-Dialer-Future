@@ -45,8 +45,8 @@
                             Connect your CRM
                           </template>
                           <template #content>
-                            <div class="flex items-center justify-center w-full h-full">
-                              <img src="https://cdn.builder.io/api/v1/image/assets%2F5aeb07ce25f84dbc869290880d07b71e%2Faf17ec5c1e8545bebd6770b6234a2791?format=webp&width=800" alt="HubSpot logo" style="height: 56px; width: auto; display: block; object-fit: contain; filter: grayscale(1) brightness(0) invert(1);" />
+                            <div class="grid grid-cols-2 gap-3 w-full h-full items-center justify-items-center">
+                              <img v-for="n in 8" :key="n" src="https://cdn.builder.io/api/v1/image/assets%2F5aeb07ce25f84dbc869290880d07b71e%2Faf17ec5c1e8545bebd6770b6234a2791?format=webp&width=800" alt="HubSpot logo" style="height: 28px; width: auto; display: block; object-fit: contain; filter: grayscale(1) brightness(0) invert(1);" />
                             </div>
                           </template>
                         </Card>
