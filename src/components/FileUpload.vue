@@ -1,5 +1,5 @@
 <template>
-  <div class="w-full mt-4 flex flex-col justify-start items-start gap-4">
+  <div :class="['w-full', props.noTopMargin ? 'mt-0' : 'mt-4', 'flex flex-col justify-start items-start gap-4']">
     <div
       @dragover.prevent="handleDragOver"
       @dragleave="handleDragLeave"
@@ -47,7 +47,7 @@
 import { ref } from 'vue'
 
 // Props
-const props = defineProps<{ height?: string }>()
+const props = defineProps<{ height?: string; noTopMargin?: boolean }>()
 
 // Define emits
 const emit = defineEmits(['trigger-upload', 'file-selected', 'file-dropped'])
