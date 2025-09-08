@@ -197,7 +197,7 @@ const previewMessage = computed(() => {
     message += `<br><br><div style="padding: 8px; background: #374151; border-radius: 4px; color: #9ca3af; font-size: 12px;">📹 Video will be embedded here</div>`
   }
   
-  message += `<br><br>Drop your contact file here and I'll show you exactly who's most likely to pick up right now using ${formData.value.displayName}'s approach.`
+  message += `<br><br>Drop your contact file here or connect to your CRM and I'll show you exactly who's most likely to pick up right now using ${formData.value.displayName}'s approach.`
   
   return message
 })
