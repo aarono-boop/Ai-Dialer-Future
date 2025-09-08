@@ -68,8 +68,8 @@
           Permissions required: Microphone access and audio playback
         </div>
         <div class="flex items-center gap-2">
-          <Button label="Cancel" severity="secondary" @click="emit('close')" />
-          <Button label="Continue" :disabled="!canContinue" @click="handleContinue" />
+          <Button label="Cancel" severity="secondary" type="button" @click="emit('close')" />
+          <Button label="Continue" :disabled="!canContinue" type="button" @click="handleContinue" />
         </div>
       </div>
     </template>
@@ -236,9 +236,7 @@ const markSpeakerHeard = () => {
 }
 
 const handleContinue = () => {
-  if (canContinue.value) {
-    emit('passed')
-  }
+  emit('passed')
 }
 
 const teardown = () => {
