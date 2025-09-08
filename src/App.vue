@@ -33,14 +33,14 @@
                       <div class="flex gap-4 items-stretch">
                         <div class="flex-1">
                           <FileUpload
-                            height="10rem"
+                            height="13rem"
                             :no-top-margin="true"
                             @trigger-upload="simulateFileUpload"
                             @file-selected="onFileSelect"
                             @file-dropped="simulateFileUpload"
                           />
                         </div>
-                        <Card class="flex-1" :pt="{ root: { style: { background: 'var(--p-surface-800)', border: '1px solid var(--p-surface-600)', borderRadius: '8px', height: '10rem', display: 'flex', flexDirection: 'column' } }, body: { style: { flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' } } }">
+                        <Card class="flex-1" :pt="{ root: { style: { background: 'var(--p-surface-800)', border: '1px solid var(--p-surface-600)', borderRadius: '8px', height: '13rem', display: 'flex', flexDirection: 'column' } }, body: { style: { flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' } } }">
                           <template #title>
                             Connect your CRM
                           </template>
