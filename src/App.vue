@@ -55,8 +55,8 @@
                                 text
                                 class="p-0"
                                 :pt="{ root: { style: { background: 'transparent', border: 'none', padding: 0 } } }"
-                                :aria-label="n === 2 ? 'Connect Salesforce' : n === 3 ? 'Connect Zoho' : n === 4 ? 'Connect Follow Up Boss' : n === 5 ? 'Connect Pipedrive' : n === 6 ? 'Connect SugarCRM' : 'Connect HubSpot'"
-                                @click="n === 2 ? openCrmModal('Salesforce') : n === 3 ? openCrmModal('Zoho') : n === 4 ? openCrmModal('Follow Up Boss') : n === 5 ? openCrmModal('Pipedrive') : n === 6 ? openCrmModal('SugarCRM') : openCrmModal('HubSpot')"
+                                :aria-label="n === 2 ? 'Connect Salesforce' : n === 3 ? 'Connect Zoho' : n === 4 ? 'Connect Follow Up Boss' : n === 5 ? 'Connect Pipedrive' : n === 6 ? 'Connect SugarCRM' : n === 7 ? 'Connect Insightly' : 'Connect HubSpot'"
+                                @click="n === 2 ? openCrmModal('Salesforce') : n === 3 ? openCrmModal('Zoho') : n === 4 ? openCrmModal('Follow Up Boss') : n === 5 ? openCrmModal('Pipedrive') : n === 6 ? openCrmModal('SugarCRM') : n === 7 ? openCrmModal('Insightly') : openCrmModal('HubSpot')"
                               >
                                 <img
                                   v-if="n === 2"
@@ -86,6 +86,12 @@
                                   v-else-if="n === 6"
                                   src="https://cdn.builder.io/api/v1/image/assets%2F5aeb07ce25f84dbc869290880d07b71e%2Ffaa2d25310e34412b2d5816d17f88d6b?format=webp&width=800"
                                   alt="SugarCRM logo"
+                                  style="height: 28px; width: auto; display: block; object-fit: contain;"
+                                />
+                                <img
+                                  v-else-if="n === 7"
+                                  src="https://cdn.builder.io/api/v1/image/assets%2F5aeb07ce25f84dbc869290880d07b71e%2Fe62e4eefd2aa47c894a95d73bdd13079?format=webp&width=800"
+                                  alt="Insightly logo"
                                   style="height: 28px; width: auto; display: block; object-fit: contain;"
                                 />
                                 <img
