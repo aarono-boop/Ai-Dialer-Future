@@ -399,7 +399,7 @@
           <Dialog v-model:visible="showPromptLibrary" modal header="Prompt Library" :style="{ width: '51%' }" :pt="{ root: { style: { marginLeft: '50px', overflow: 'hidden' } }, content: { style: { height: '345px', overflowY: 'auto', overflowX: 'hidden', paddingRight: '12px', paddingBottom: '10px', boxSizing: 'border-box', scrollbarGutter: 'stable', borderBottomRightRadius: 'inherit' } } }" :breakpoints="{ '960px': '95vw' }">
             <div class="flex flex-col gap-3 text-left w-full">
               <div v-if="favoritePrompts.length" class="w-full">
-                <div class="mb-2 text-sm font-semibold" style="color: var(--p-blue-500);">Favorites</div>
+                <div class="mb-2 font-semibold" style="color: var(--p-blue-500); font-size: 16px;">Favorites</div>
                 <div class="flex flex-col gap-1 w-full">
                   <div v-for="(p, i) in favoritePrompts" :key="'fav-'+i" class="w-full flex items-center justify-between" :style="{ fontSize: '14px', lineHeight: '18px' }">
                     <a href="#" @click.prevent="selectPrompt(p)" class="inline-flex items-center gap-2 no-underline hover:no-underline" style="padding-left: 55px;" :aria-label="p">
@@ -429,7 +429,7 @@
                     :label="section.title"
                     icon="pi pi-chevron-right"
                     class="p-0 inline-flex items-center gap-2 no-underline hover:no-underline"
-                    :pt="{ root: { style: { padding: '0', background: 'transparent', boxShadow: 'none', color: 'var(--p-blue-500)', minWidth: '20px !important', minHeight: '20px !important', textDecoration: 'none' } }, icon: { style: { fontSize: '0.8rem', color: 'var(--p-blue-500)', transform: isSectionCollapsed(section.title) ? 'rotate(0deg)' : 'rotate(90deg)' } }, label: { style: { color: 'var(--p-blue-500)', textDecoration: 'none' } } }"
+                    :pt="{ root: { style: { padding: '0', background: 'transparent', boxShadow: 'none', color: 'var(--p-blue-500)', minWidth: '20px !important', minHeight: '20px !important', textDecoration: 'none' } }, icon: { style: { fontSize: '0.8rem', color: 'var(--p-blue-500)', transform: isSectionCollapsed(section.title) ? 'rotate(0deg)' : 'rotate(90deg)' } }, label: { style: { color: 'var(--p-blue-500)', textDecoration: 'none', fontSize: '16px' } } }"
                     :aria-label="(isSectionCollapsed(section.title) ? 'Expand ' : 'Collapse ') + section.title"
                   />
                 </div>
