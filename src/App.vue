@@ -402,7 +402,7 @@
                 <div class="mb-2 text-sm font-semibold" style="color: var(--p-blue-500);">Favorites</div>
                 <div class="flex flex-col gap-1 w-full">
                   <div v-for="(p, i) in favoritePrompts" :key="'fav-'+i" class="w-full flex items-center justify-between" :style="{ fontSize: '14px', lineHeight: '18px' }">
-                    <a href="#" @click.prevent="selectPrompt(p)" class="inline-flex items-center gap-1 pl-3" :aria-label="p">
+                    <a href="#" @click.prevent="selectPrompt(p)" class="inline-flex items-center gap-1" style="padding-left: 55px;" :aria-label="p">
                       <i class="pi pi-circle-fill" aria-hidden="true" style="font-size: 0.3rem; color: var(--p-surface-0);"></i>
                       <span style="color: var(--p-surface-0);">{{ p }}</span>
                     </a>
@@ -435,7 +435,7 @@
                 </div>
                 <div v-if="!isSectionCollapsed(section.title)" class="flex flex-col gap-1 w-full">
                   <div v-for="(p, i) in section.items" :key="i" class="w-full flex items-center justify-between" :style="{ fontSize: '14px', lineHeight: '18px' }">
-                    <a href="#" @click.prevent="selectPrompt(p)" class="inline-flex items-center gap-1 pl-3" :aria-label="p">
+                    <a href="#" @click.prevent="selectPrompt(p)" class="inline-flex items-center gap-1" style="padding-left: 55px;" :aria-label="p">
                       <i class="pi pi-circle-fill" aria-hidden="true" style="font-size: 0.3rem; color: var(--p-surface-0);"></i>
                       <span style="color: var(--p-surface-0);">{{ p }}</span>
                     </a>
