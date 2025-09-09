@@ -3292,13 +3292,25 @@ const rescheduleAllFollowups = (): void => {
 // Handlers for Email Drafts CTA (from 3-weeks prompt)
 const sendSelectedEmails = (): void => {
   addUserMessage('Send Emails')
+  // Hide all CTAs
   showEmailDraftsCta.value = false
+  showCallNowCta.value = false
+  showNewLeadsCta.value = false
+  showYesterdayNoAnswerCta.value = false
+  showTodayFollowupsCta.value = false
+  showHighAttemptsCta.value = false
   const tmpl = selectedEmailTemplate.value || 'Selected Template'
   addAIMessage(`Sending '${tmpl}' emails to these contacts. You can review status in your CRM.`)
 }
 const saveEmailsForLater = (): void => {
   addUserMessage('Save For Later')
+  // Hide all CTAs
   showEmailDraftsCta.value = false
+  showCallNowCta.value = false
+  showNewLeadsCta.value = false
+  showYesterdayNoAnswerCta.value = false
+  showTodayFollowupsCta.value = false
+  showHighAttemptsCta.value = false
   const tmpl = selectedEmailTemplate.value || 'Selected Template'
   addAIMessage(`Saved '${tmpl}' email drafts for later. You can send them anytime from drafts.`)
 }
@@ -3871,12 +3883,12 @@ onMounted(() => {
 .email-drafts-listbox :deep(.p-listbox-option.p-listbox-option-selected),
 .email-drafts-listbox :deep(.p-listbox-option[aria-selected="true"]),
 .email-drafts-listbox :deep(.p-listbox-option.p-focus) {
-  background-color: var(--p-blue-600);
-  color: var(--p-surface-0);
+  background-color: var(--p-blue-600) !important;
+  color: var(--p-surface-0) !important;
 }
 .email-drafts-listbox :deep(.p-listbox-option:hover) {
-  background-color: var(--p-blue-800);
-  color: var(--p-surface-0);
+  background-color: var(--p-blue-800) !important;
+  color: var(--p-surface-0) !important;
 }
 .email-drafts-listbox :deep(.p-listbox-option) {
   border-radius: 6px;
