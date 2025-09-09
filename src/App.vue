@@ -397,18 +397,23 @@
 
           <!-- Prompt Library Dialog -->
           <Dialog v-model:visible="showPromptLibrary" modal header="Prompt Library" :style="{ width: '26rem' }" :breakpoints="{ '960px': '95vw' }">
-            <div class="flex flex-col items-start gap-2 text-left">
-              <a
-                v-for="(p, i) in promptItems"
-                :key="i"
-                href="#"
-                @click.prevent="selectPrompt(p)"
-                class="inline-flex items-center gap-2"
-                :aria-label="p"
-              >
-                <i class="pi pi-angle-right" aria-hidden="true"></i>
-                <span style="color: var(--p-blue-500);">{{ p }}</span>
-              </a>
+            <div class="flex flex-col gap-4 text-left w-full">
+              <div v-for="(section, si) in promptSections" :key="si" class="w-full">
+                <div class="mb-2 text-sm font-semibold" style="color: var(--p-surface-200);">{{ section.title }}</div>
+                <div class="flex flex-col items-start gap-2">
+                  <a
+                    v-for="(p, i) in section.items"
+                    :key="i"
+                    href="#"
+                    @click.prevent="selectPrompt(p)"
+                    class="inline-flex items-center gap-2"
+                    :aria-label="p"
+                  >
+                    <i class="pi pi-angle-right" aria-hidden="true"></i>
+                    <span style="color: var(--p-blue-500);">{{ p }}</span>
+                  </a>
+                </div>
+              </div>
             </div>
           </Dialog>
 
@@ -545,7 +550,7 @@
                   <h4 class="text-xl font-medium">Testimonials</h4>
                   <div class="text-xs text-gray-300 space-y-2">
                     <p>“Our connect rate and meetings doubled in 60 days.” — VP Sales, SaaS</p>
-                    <p>��The talk tracks are simple and deadly effective.�� — SDR Lead, Insurance</p>
+                    <p>“The talk tracks are simple and deadly effective.�� — SDR Lead, Insurance</p>
                   </div>
                 <div v-if="selectedCoachForInfo?.websiteUrl" class="sticky bottom-0 -mb-4 -mx-4 px-4 py-3 border-t border-gray-700 bg-gray-900/90 flex justify-center">
                   <a :href="selectedCoachForInfo.websiteUrl" target="_blank" rel="noopener" class="text-link text-sm inline-flex items-center gap-2 text-center"><i class="pi pi-external-link text-sm" aria-hidden="true"></i>Visit {{ selectedCoachForInfo?.displayName }}'s Website</a>
@@ -922,7 +927,19 @@ const showLoadNewFileButton = ref<boolean>(false)
 
 // Prompt Library state
 const showPromptLibrary = ref<boolean>(false)
-const promptItems = ref<string[]>(['Show me leads not called in 3 weeks'])
+const promptSections = ref<{ title: string; items: string[] }[]>([
+  {
+    title: 'Time-Based Contact Queries',
+    items: [
+      "Show me leads not called in 3 weeks",
+      "Show me contacts I haven't called in the last 30 days",
+      'Which leads were added this week but not contacted yet?',
+      "Find all prospects I called yesterday who didn't answer",
+      'Show me follow-ups scheduled for today',
+      'Which contacts have I called more than 5 times without a live answer?'
+    ]
+  }
+])
 const openPromptLibrary = (): void => {
   showPromptLibrary.value = true
 }
