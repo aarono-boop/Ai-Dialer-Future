@@ -412,7 +412,7 @@
                       rounded
                       severity="secondary"
                       class="w-5 h-5"
-                      :pt="{ root: { style: { padding: '0', width: '20px', height: '20px', minWidth: '20px', lineHeight: '20px', borderRadius: '50%', background: 'transparent', boxShadow: 'none', '--p-button-hover-background': 'transparent', '--p-button-active-background': 'transparent' } }, icon: { style: { fontSize: '1rem' } } }"
+                      :pt="{ root: { style: { padding: '0', width: '20px', height: '20px', minWidth: '20px', lineHeight: '20px', borderRadius: '50%', background: 'transparent', boxShadow: 'none', '--p-button-hover-background': 'transparent', '--p-button-active-background': 'transparent', '--p-button-padding-x': '0', '--p-button-padding-y': '0', '--p-button-icon-only-width': '20px' } }, icon: { style: { fontSize: '1rem' } } }"
                       :icon="isFavorite(p) ? 'pi pi-star-fill' : 'pi pi-star'"
                       :aria-label="isFavorite(p) ? 'Remove from favorites' : 'Add to favorites'"
                     />
@@ -434,7 +434,7 @@
                       rounded
                       severity="secondary"
                       class="w-5 h-5"
-                      :pt="{ root: { style: { padding: '0', width: '20px', height: '20px', minWidth: '20px', lineHeight: '20px', borderRadius: '50%', background: 'transparent', boxShadow: 'none', '--p-button-hover-background': 'transparent', '--p-button-active-background': 'transparent' } }, icon: { style: { fontSize: '1rem' } } }"
+                      :pt="{ root: { style: { padding: '0', width: '20px', height: '20px', minWidth: '20px', lineHeight: '20px', borderRadius: '50%', background: 'transparent', boxShadow: 'none', '--p-button-hover-background': 'transparent', '--p-button-active-background': 'transparent', '--p-button-padding-x': '0', '--p-button-padding-y': '0', '--p-button-icon-only-width': '20px' } }, icon: { style: { fontSize: '1rem' } } }"
                       :icon="isFavorite(p) ? 'pi pi-star-fill' : 'pi pi-star'"
                       :aria-label="isFavorite(p) ? 'Remove from favorites' : 'Add to favorites'"
                     />
