@@ -1071,6 +1071,13 @@ const handleTypingComplete = (index: number): void => {
     welcomeTypingComplete.value = true
   }
 
+  // Show call-now button after leads-not-called list finishes typing
+  if (messages.value[index] && messages.value[index].content.some(line => line.includes('Here are 10 leads not called in the last 3 weeks'))) {
+    setTimeout(() => {
+      callNowButtonIndex.value = index
+    }, 150)
+  }
+
   // Check if this is the congratulations message
   if (messages.value[index] && messages.value[index].content[0]?.includes('Congratulations! You\'ve successfully upgraded to the Pro plan')) {
     congratulationsTypingComplete.value = true
