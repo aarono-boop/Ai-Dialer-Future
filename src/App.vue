@@ -974,7 +974,7 @@ const showLoadNewFileButton = ref<boolean>(false)
 
 // Prompt Library state
 const showPromptLibrary = ref<boolean>(false)
-const favoritePrompts = ref<string[]>(["Show me leads not called in 3 weeks"])
+const favoritePrompts = ref<string[]>([])
 const isFavorite = (p: string): boolean => favoritePrompts.value.includes(p)
 const toggleFavorite = (p: string): void => {
   if (isFavorite(p)) {
@@ -3273,7 +3273,7 @@ const handleGoogleSignupFromAccount = () => {
     isSignedIn.value = true
     showActionButtons.value = true
     updateWelcomeMessageTyping() // Update typing status for welcome message
-    addAIMessage('���� Welcome to ARKON! Your account has been created successfully. Let\'s start your first smart calling session! What are you trying to accomplish?')
+    addAIMessage('����� Welcome to ARKON! Your account has been created successfully. Let\'s start your first smart calling session! What are you trying to accomplish?')
 
     // Ensure scroll happens after action buttons are rendered
   setTimeout(() => {
