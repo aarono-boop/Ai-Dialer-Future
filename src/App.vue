@@ -224,7 +224,7 @@
           <div v-if="showEmailDraftsCta" class="mt-2 pt-3 flex justify-center">
             <div class="w-[70%] flex justify-center">
               <div class="w-full flex flex-col gap-3">
-                <Listbox v-model="selectedEmailTemplate" :options="emailTemplates" class="w-full" :pt="{ root: { style: { width: '100%' } } }" />
+                <Listbox v-model="selectedEmailTemplate" :options="emailTemplates" optionLabel="label" optionValue="value" class="w-full" :pt="{ root: { style: { width: '100%' } } }" />
                 <div class="grid grid-cols-2 gap-3">
                   <Button label="Send Emails" icon="pi pi-send" @click="sendSelectedEmails" class="w-full px-6 py-3 font-semibold" />
                   <Button label="Save For Later" severity="secondary" @click="saveEmailsForLater" class="w-full px-6 py-3 font-medium" />
@@ -2126,7 +2126,7 @@ const sendMessage = (message: string): void => {
         'Let me set up a personalized demo where you can see:',
         '• Live contact scoring and prioritization',
         '• Real-time dialing with connect predictions',
-        '��� Smart call disposition and follow-up automation',
+        '���� Smart call disposition and follow-up automation',
         'What\'s your preferred time? I can schedule something for today or tomorrow.'
       ])
     } else if (lowerMessage.includes('who i should call now') || lowerMessage.includes('who should i call')) {
