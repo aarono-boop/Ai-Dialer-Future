@@ -1866,6 +1866,17 @@ const sendMessage = (message: string): void => {
         'She has an <strong>89% pickup rate</strong> and is most likely available now.',
         'Ready to call Jenn?'
       ])
+    } else if (
+      (lowerMessage.includes('not called') && (lowerMessage.includes('3 weeks') || lowerMessage.includes('three weeks') || lowerMessage.includes('21 days')))
+      || lowerMessage.includes('leads not called in 3 weeks')
+    ) {
+      const names = ['Avery Collins','Noah Price','Mia Turner','Liam Brooks','Sofia Perez','Ethan Gray','Isabella Reed','Mason Clark','Olivia Hayes','James Walker']
+      const list = names.map((n, i) => `${i + 1}. ${n} — last contacted ${22 + i} days ago`)
+      addAIMessageWithTyping([
+        '<i class="pi pi-users"></i> Here are 10 leads not called in the last 3 weeks:',
+        ...list,
+        'Would you like me to start calling these now?'
+      ])
     } else if (lowerMessage.includes('call') || lowerMessage.includes('start')) {
       addAIMessage([
         'Perfect! Let\'s start calling. <i class="pi pi-phone"></i>',
