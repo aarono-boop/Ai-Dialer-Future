@@ -396,7 +396,7 @@
           </div>
 
           <!-- Prompt Library Dialog -->
-          <Dialog v-model:visible="showPromptLibrary" modal header="Prompt Library" :style="{ width: '26rem' }" :breakpoints="{ '960px': '95vw' }">
+          <Dialog v-model:visible="showPromptLibrary" modal header="Prompt Library" :style="{ width: 'calc(26rem + 200px)' }" :breakpoints="{ '960px': '95vw' }">
             <div class="flex flex-col gap-4 text-left w-full">
               <div v-for="(section, si) in promptSections" :key="si" class="w-full">
                 <div class="mb-2 text-sm font-semibold" style="color: var(--p-surface-200);">{{ section.title }}</div>
@@ -932,7 +932,6 @@ const promptSections = ref<{ title: string; items: string[] }[]>([
     title: 'Time-Based Contact Queries',
     items: [
       "Show me leads not called in 3 weeks",
-      "Show me contacts I haven't called in the last 30 days",
       'Which leads were added this week but not contacted yet?',
       "Find all prospects I called yesterday who didn't answer",
       'Show me follow-ups scheduled for today',
