@@ -412,7 +412,7 @@
                       rounded
                       severity="secondary"
                       class="w-5 h-5"
-                      :pt="{ root: { style: { padding: '0', width: '20px', height: '20px', minWidth: '20px', lineHeight: '20px', borderRadius: '50%', background: 'transparent', boxShadow: 'none', '--p-button-hover-background': 'transparent', '--p-button-active-background': 'transparent', '--p-button-padding-x': '0', '--p-button-padding-y': '0', '--p-button-icon-only-width': '20px' } }, icon: { style: { fontSize: '1rem' } } }"
+                      :pt="{ root: { style: { padding: '0', width: '20px', height: '20px', minWidth: '20px !important', minHeight: '20px !important', lineHeight: '20px', borderRadius: '50%', background: 'transparent', boxShadow: 'none', '--p-button-hover-background': 'transparent', '--p-button-active-background': 'transparent', '--p-button-padding-x': '0', '--p-button-padding-y': '0', '--p-button-icon-only-width': '20px' } }, icon: { style: { fontSize: '1rem' } } }"
                       :icon="isFavorite(p) ? 'pi pi-star-fill' : 'pi pi-star'"
                       :aria-label="isFavorite(p) ? 'Remove from favorites' : 'Add to favorites'"
                     />
@@ -426,8 +426,8 @@
                     @click="toggleSection(section.title)"
                     link
                     severity="secondary"
-                    class="p-0 w-[18px] h-[18px]"
-                    :pt="{ root: { style: { padding: '0', width: '18px', height: '18px', minWidth: '18px', '--p-button-padding-x': '0', '--p-button-padding-y': '0', '--p-button-icon-only-width': '18px', background: 'transparent', boxShadow: 'none' } }, icon: { style: { fontSize: '0.8rem', transform: isSectionCollapsed(section.title) ? 'rotate(0deg)' : 'rotate(90deg)' } } }"
+                    class="p-0"
+                    :pt="{ root: { style: { padding: '0', width: '20px', height: '20px', minWidth: '20px !important', minHeight: '20px !important', '--p-button-padding-x': '0', '--p-button-padding-y': '0', '--p-button-icon-only-width': '20px', background: 'transparent', boxShadow: 'none' } }, icon: { style: { fontSize: '0.8rem', transform: isSectionCollapsed(section.title) ? 'rotate(0deg)' : 'rotate(90deg)' } } }"
                     icon="pi pi-chevron-right"
                     :aria-label="(isSectionCollapsed(section.title) ? 'Expand ' : 'Collapse ') + section.title"
                   />
@@ -445,7 +445,7 @@
                       rounded
                       severity="secondary"
                       class="w-5 h-5"
-                      :pt="{ root: { style: { padding: '0', width: '20px', height: '20px', minWidth: '20px', lineHeight: '20px', borderRadius: '50%', background: 'transparent', boxShadow: 'none', '--p-button-hover-background': 'transparent', '--p-button-active-background': 'transparent', '--p-button-padding-x': '0', '--p-button-padding-y': '0', '--p-button-icon-only-width': '20px' } }, icon: { style: { fontSize: '1rem' } } }"
+                      :pt="{ root: { style: { padding: '0', width: '20px', height: '20px', minWidth: '20px !important', minHeight: '20px !important', lineHeight: '20px', borderRadius: '50%', background: 'transparent', boxShadow: 'none', '--p-button-hover-background': 'transparent', '--p-button-active-background': 'transparent', '--p-button-padding-x': '0', '--p-button-padding-y': '0', '--p-button-icon-only-width': '20px' } }, icon: { style: { fontSize: '1rem' } } }"
                       :icon="isFavorite(p) ? 'pi pi-star-fill' : 'pi pi-star'"
                       :aria-label="isFavorite(p) ? 'Remove from favorites' : 'Add to favorites'"
                     />
