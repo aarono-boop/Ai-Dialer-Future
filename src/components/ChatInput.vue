@@ -24,6 +24,14 @@
         aria-label="Send message"
         :aria-describedby="!inputValue.trim() ? 'send-button-help' : ''"
       />
+      <Button
+        v-if="showPromptLibraryIcon"
+        @click="emit('open-prompt-library')"
+        text
+        icon="pi pi-book"
+        class="w-10 h-10 flex items-center justify-center text-white transition-colors duration-200 hover:opacity-80"
+        aria-label="Open prompt library"
+      />
     </div>
     <div id="chat-input-help" class="sr-only">
       Press Enter to send your message or use the send button
@@ -42,10 +50,11 @@ import InputText from 'primevue/inputtext'
 // Define props
 const props = defineProps<{
   customPlaceholder?: string
+  showPromptLibraryIcon?: boolean
 }>()
 
 // Define emits
-const emit = defineEmits(['send-message', 'voice-input'])
+const emit = defineEmits(['send-message', 'voice-input', 'open-prompt-library'])
 
 // Reactive data
 const inputValue = ref<string>('')
