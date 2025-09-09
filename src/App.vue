@@ -193,7 +193,7 @@
           </div>
 
           <!-- Call Now CTA - appears after leads list response -->
-          <div v-if="showCallNowCta && !showEmailDraftsCta" class="mt-2 pt-5 flex justify-center">
+          <div v-if="showCallNowCta && !showEmailDraftsCta && lastAIContains('Here are 10 leads not called in the last 3 weeks')" class="mt-2 pt-5 flex justify-center">
             <div class="w-[70%] flex justify-center">
               <div class="w-full grid grid-cols-2 gap-3">
                 <!-- Top-left primary -->
@@ -209,7 +209,7 @@
           </div>
 
           <!-- New Leads Added This Week CTA -->
-          <div v-if="showNewLeadsCta" class="mt-2 pt-5 flex justify-center">
+          <div v-if="showNewLeadsCta && lastAIContains(`Here are new leads added this week that haven't been contacted yet`)" class="mt-2 pt-5 flex justify-center">
             <div class="w-[70%] flex justify-center">
               <div class="w-full grid grid-cols-2 gap-3">
                 <!-- Top-left primary -->
@@ -235,7 +235,7 @@
           </div>
 
           <!-- Yesterday No-Answer CTA -->
-          <div v-if="showYesterdayNoAnswerCta" class="mt-2 pt-5 flex justify-center">
+          <div v-if="showYesterdayNoAnswerCta && lastAIContains(`Here are prospects you called yesterday who didn't answer`)" class="mt-2 pt-5 flex justify-center">
             <div class="w-[70%] flex justify-center">
               <div class="w-full grid grid-cols-2 gap-3">
                 <!-- Top-left primary -->
@@ -251,7 +251,7 @@
           </div>
 
           <!-- Today's Follow-ups CTA -->
-          <div v-if="showTodayFollowupsCta" class="mt-2 pt-5 flex justify-center">
+          <div v-if="showTodayFollowupsCta && lastAIContains(`Here are today's scheduled callbacks`)" class="mt-2 pt-5 flex justify-center">
             <div class="w-[70%] flex justify-center">
               <div class="w-full grid grid-cols-2 gap-3">
                 <!-- Top-left primary -->
@@ -267,7 +267,7 @@
           </div>
 
           <!-- High Attempts Without Live Answer CTA -->
-          <div v-if="showHighAttemptsCta" class="mt-2 pt-5 flex justify-center">
+          <div v-if="showHighAttemptsCta && lastAIContains('Here are contacts with 5+ call attempts without a live answer')" class="mt-2 pt-5 flex justify-center">
             <div class="w-[70%] flex justify-center">
               <div class="w-full grid grid-cols-2 gap-3">
                 <!-- Top-left primary -->
@@ -1456,6 +1456,16 @@ const handleTypingComplete = (index: number): void => {
 }
 
 // Update welcome message typing status based on user status
+const lastAIContains = (substr: string): boolean => {
+  for (let i = messages.value.length - 1; i >= 0; i--) {
+    const m = messages.value[i]
+    if (m.type === 'ai') {
+      return m.content?.some((line: string) => typeof line === 'string' && line.includes(substr)) || false
+    }
+  }
+  return false
+}
+
 const updateWelcomeMessageTyping = (): void => {
   if (messages.value.length > 0 && messages.value[0].type === 'ai') {
     const welcomeMessage = messages.value[0]
