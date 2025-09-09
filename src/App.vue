@@ -1428,7 +1428,6 @@ const handleGoogleSignin = (): void => {
   phoneVerified.value = true // Returning users don't need to verify phone again
   // Remove initial long welcome bubble when returning
   messages.value = []
-  addAIMessage('Welcome back! You\'re signed in with Google.')
   // Show brief prior welcome bubble, then welcome-back bubble
   addAIMessage('Welcome to the ARMOR® AI Dialer, your AI calling assistant.')
   addAIMessage("Welcome back! You're signed in with Google.")
