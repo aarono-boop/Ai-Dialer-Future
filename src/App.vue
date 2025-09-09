@@ -411,8 +411,8 @@
                       text
                       rounded
                       severity="secondary"
-                      class="w-10 h-10"
-                      :pt="{ root: { style: { padding: '0' } } }"
+                      class="w-6 h-6"
+                      :pt="{ root: { style: { padding: '0' } }, icon: { style: { fontSize: '0.875rem' } } }"
                       :icon="isFavorite(p) ? 'pi pi-star-fill' : 'pi pi-star'"
                       :aria-label="isFavorite(p) ? 'Remove from favorites' : 'Add to favorites'"
                     />
@@ -433,8 +433,8 @@
                       text
                       rounded
                       severity="secondary"
-                      class="w-10 h-10"
-                      :pt="{ root: { style: { padding: '0' } } }"
+                      class="w-6 h-6"
+                      :pt="{ root: { style: { padding: '0' } }, icon: { style: { fontSize: '0.875rem' } } }"
                       :icon="isFavorite(p) ? 'pi pi-star-fill' : 'pi pi-star'"
                       :aria-label="isFavorite(p) ? 'Remove from favorites' : 'Add to favorites'"
                     />
