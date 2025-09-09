@@ -1630,6 +1630,15 @@ const sendMessage = (message: string): void => {
   // Add user message
   addUserMessage(message)
 
+  // If user says yes, start the dialer immediately
+  const trimmed = message.trim().toLowerCase()
+  if (trimmed === 'yes' || trimmed.startsWith('yes ')) {
+    addAIMessage('Great, starting the dialer now...')
+    callNowButtonIndex.value = null
+    setTimeout(() => skipToDialer(), 300)
+    return
+  }
+
   // Handle notes input for disposition (but not during session summary)
   if (waitingForNotesInput.value && showDialer.value && !showContinueQueueButton.value) {
     waitingForNotesInput.value = false
