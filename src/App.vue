@@ -1426,7 +1426,8 @@ const handleGoogleSignin = (): void => {
   isSignedIn.value = true
   isReturningUser.value = true // This is a returning user
   phoneVerified.value = true // Returning users don't need to verify phone again
-  updateWelcomeMessageTyping() // Update typing status for welcome message
+  // Remove initial long welcome bubble when returning
+  messages.value = []
   addAIMessage('Welcome back! You\'re signed in with Google.')
   // Do not prompt for upload; assume user already connected/uploaded previously
   showFileUploadForReturningUser.value = false
@@ -1452,7 +1453,8 @@ const handleLoginSuccess = (userData: any): void => {
   isSignedIn.value = true
   isReturningUser.value = true // This is a returning user
   phoneVerified.value = true // Returning users don't need to verify phone again
-  updateWelcomeMessageTyping() // Update typing status for welcome message
+  // Remove initial long welcome bubble when returning
+  messages.value = []
 
   // Returning user: do not show upload prompt
   addAIMessage(`Welcome back, ${userData.name}!`)
