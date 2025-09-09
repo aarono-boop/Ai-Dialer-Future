@@ -220,6 +220,22 @@
             </div>
           </div>
 
+          <!-- Yesterday No-Answer CTA -->
+          <div v-if="showYesterdayNoAnswerCta" class="mt-2 pt-5 flex justify-center">
+            <div class="w-[70%] flex justify-center">
+              <div class="w-full grid grid-cols-2 gap-3">
+                <!-- Top-left primary -->
+                <Button label="Start Follow-up Calls" icon="pi pi-phone" @click="startFollowUpCalls" class="w-full px-6 py-3 font-semibold" />
+                <!-- Top-right secondary -->
+                <Button v-if="isSignedIn" label="Send Text Messages" severity="secondary" @click="sendTextsToNoAnswers" class="w-full px-5 py-3 font-medium" />
+                <!-- Bottom-left secondary -->
+                <Button v-if="isSignedIn" label="Try at Different Time" severity="secondary" @click="tryDifferentTime" class="w-full px-5 py-3 font-medium" />
+                <!-- Bottom-right secondary -->
+                <Button v-if="isSignedIn" label="Skip These" severity="secondary" @click="skipTheseNoAnswers" class="w-full px-5 py-3 font-medium" />
+              </div>
+            </div>
+          </div>
+
           <!-- Create Account CTA - shown after upload or CRM connect for new users -->
           <div v-if="showCreateAccountCTA && !isSignedIn" class="mt-2 pt-5 flex justify-center">
             <div class="w-[70%] flex justify-center">
@@ -948,6 +964,7 @@ const isReturningUser = ref<boolean>(false) // Track if user logged in vs create
 const showActionButtons = ref<boolean>(false)
 const showCallNowCta = ref<boolean>(false)
 const showNewLeadsCta = ref<boolean>(false)
+const showYesterdayNoAnswerCta = ref<boolean>(false)
 const showFileUploadForReturningUser = ref<boolean>(false)
 const welcomeTypingComplete = ref<boolean>(false)
 const congratulationsTypingComplete = ref<boolean>(false)
@@ -1242,7 +1259,7 @@ const { scrollToBottom, scrollToBottomDuringTyping, scrollToUserMessage, scrollT
 
 // Hide the Call Now CTA automatically when the dialer is shown
 watch(() => showDialer.value, (val) => {
-  if (val) { showCallNowCta.value = false; showNewLeadsCta.value = false }
+  if (val) { showCallNowCta.value = false; showNewLeadsCta.value = false; showYesterdayNoAnswerCta.value = false }
 })
 
 // Ensure chat container and window scroll are reset to the very top
@@ -1290,6 +1307,11 @@ const handleTypingComplete = (index: number): void => {
   if (!showDialer.value && messages.value[index] && messages.value[index].content.some(line => line.includes("Here are new leads added this week that haven't been contacted yet"))) {
     setTimeout(() => {
       if (!showDialer.value) showNewLeadsCta.value = true
+    }, 150)
+  }
+  if (!showDialer.value && messages.value[index] && messages.value[index].content.some(line => line.includes("Here are prospects you called yesterday who didn't answer"))) {
+    setTimeout(() => {
+      if (!showDialer.value) showYesterdayNoAnswerCta.value = true
     }, 150)
   }
 
@@ -2125,6 +2147,45 @@ const sendMessage = (message: string): void => {
         '<i class="pi pi-users"></i> Here are 10 leads not called in the last 3 weeks:<br><br>',
         table,
         '<br>Would you like me to start calling these now?'
+      ])
+    } else if (
+      lowerMessage.includes('yesterday') && (lowerMessage.includes("didn't answer") || lowerMessage.includes('did not answer') || lowerMessage.includes('no answer') || lowerMessage.includes('busy') || lowerMessage.includes('voicemail'))
+    ) {
+      const prospects = [
+        { name: 'Samantha Lee', disposition: 'Voicemail' },
+        { name: 'Marcus Allen', disposition: 'Busy' },
+        { name: 'Priya Desai', disposition: 'No Answer' },
+        { name: 'Diego Ramos', disposition: 'Voicemail' },
+        { name: 'Emily Chen', disposition: 'No Answer' },
+        { name: 'Owen Wright', disposition: 'Busy' }
+      ]
+      const rows = prospects.map((p, i) => `
+        <tr>
+          <td style=\"padding: 6px 8px 6px 0; width: 28px; color: var(--p-surface-300);\">${i + 1}.</td>
+          <td style=\"padding: 6px 0;\">${p.name}</td>
+          <td style=\"padding: 6px 0; text-align: right; color: var(--p-surface-200);\">Yesterday</td>
+          <td style=\"padding: 6px 0; text-align: right; color: var(--p-surface-0); font-weight: 600;\">${p.disposition}</td>
+        </tr>
+      `).join('')
+      const table = `
+        <table style=\"width: 100%; border-collapse: collapse; margin-top: 4px;\">
+          <thead>
+            <tr>
+              <th style=\"text-align: left; color: var(--p-surface-200); font-weight: 500; padding-bottom: 6px;\"></th>
+              <th style=\"text-align: left; color: var(--p-surface-200); font-weight: 500; padding-bottom: 6px;\">Name</th>
+              <th style=\"text-align: right; color: var(--p-surface-200); font-weight: 500; padding-bottom: 6px;\">Date</th>
+              <th style=\"text-align: right; color: var(--p-surface-200); font-weight: 600; padding-bottom: 6px;\">Disposition</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${rows}
+          </tbody>
+        </table>
+      `
+      addAIMessageWithTyping([
+        '<i class="pi pi-history"></i> Here are prospects you called yesterday who didn\'t answer:<br><br>',
+        table,
+        '<br>Would you like to start follow-up calls or take a different action?'
       ])
     } else if (
       lowerMessage.includes('added this week') && (lowerMessage.includes('not contacted') || lowerMessage.includes('not contacted yet') || lowerMessage.includes('uncontacted'))
@@ -2989,6 +3050,24 @@ const saveAsCallList = (): void => {
 const dismissCallOptions = (): void => {
   showCallNowCta.value = false
   addAIMessage("Okay, I won't take action right now. Let me know when you're ready.")
+}
+
+// Handlers for Yesterday No-Answer CTA
+const startFollowUpCalls = (): void => {
+  showYesterdayNoAnswerCta.value = false
+  skipToDialer()
+}
+const sendTextsToNoAnswers = (): void => {
+  showYesterdayNoAnswerCta.value = false
+  addAIMessage("I'll prepare text messages for these contacts to increase your chances of connecting.")
+}
+const tryDifferentTime = (): void => {
+  showYesterdayNoAnswerCta.value = false
+  addAIMessage("Okay, I'll suggest optimal times to try again based on recent pickup patterns.")
+}
+const skipTheseNoAnswers = (): void => {
+  showYesterdayNoAnswerCta.value = false
+  addAIMessage("Skipping these for now. You can revisit them anytime.")
 }
 
 // Handlers for New Leads CTA
