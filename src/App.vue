@@ -252,6 +252,22 @@
             </div>
           </div>
 
+          <!-- High Attempts Without Live Answer CTA -->
+          <div v-if="showHighAttemptsCta" class="mt-2 pt-5 flex justify-center">
+            <div class="w-[70%] flex justify-center">
+              <div class="w-full grid grid-cols-2 gap-3">
+                <!-- Top-left primary -->
+                <Button label="Switch to Email" icon="pi pi-envelope" @click="switchToEmailHighAttempts" class="w-full px-6 py-3 font-semibold" />
+                <!-- Top-right secondary -->
+                <Button v-if="isSignedIn" label="Try SMS Instead" severity="secondary" @click="trySmsInsteadHighAttempts" class="w-full px-5 py-3 font-medium" />
+                <!-- Bottom-left secondary -->
+                <Button v-if="isSignedIn" label="Try Different Times" severity="secondary" @click="tryDifferentTimesHighAttempts" class="w-full px-5 py-3 font-medium" />
+                <!-- Bottom-right secondary -->
+                <Button v-if="isSignedIn" label="Move to Inactive" severity="secondary" @click="moveToInactiveHighAttempts" class="w-full px-5 py-3 font-medium" />
+              </div>
+            </div>
+          </div>
+
           <!-- Create Account CTA - shown after upload or CRM connect for new users -->
           <div v-if="showCreateAccountCTA && !isSignedIn" class="mt-2 pt-5 flex justify-center">
             <div class="w-[70%] flex justify-center">
@@ -982,6 +998,7 @@ const showCallNowCta = ref<boolean>(false)
 const showNewLeadsCta = ref<boolean>(false)
 const showYesterdayNoAnswerCta = ref<boolean>(false)
 const showTodayFollowupsCta = ref<boolean>(false)
+const showHighAttemptsCta = ref<boolean>(false)
 const showFileUploadForReturningUser = ref<boolean>(false)
 const welcomeTypingComplete = ref<boolean>(false)
 const congratulationsTypingComplete = ref<boolean>(false)
@@ -1276,7 +1293,7 @@ const { scrollToBottom, scrollToBottomDuringTyping, scrollToUserMessage, scrollT
 
 // Hide the Call Now CTA automatically when the dialer is shown
 watch(() => showDialer.value, (val) => {
-  if (val) { showCallNowCta.value = false; showNewLeadsCta.value = false; showYesterdayNoAnswerCta.value = false; showTodayFollowupsCta.value = false }
+  if (val) { showCallNowCta.value = false; showNewLeadsCta.value = false; showYesterdayNoAnswerCta.value = false; showTodayFollowupsCta.value = false; showHighAttemptsCta.value = false }
 })
 
 // Ensure chat container and window scroll are reset to the very top
@@ -1334,6 +1351,11 @@ const handleTypingComplete = (index: number): void => {
   if (!showDialer.value && messages.value[index] && messages.value[index].content.some(line => line.includes("Here are today's scheduled callbacks"))) {
     setTimeout(() => {
       if (!showDialer.value) showTodayFollowupsCta.value = true
+    }, 150)
+  }
+  if (!showDialer.value && messages.value[index] && messages.value[index].content.some(line => line.includes('Here are contacts with 5+ call attempts without a live answer'))) {
+    setTimeout(() => {
+      if (!showDialer.value) showHighAttemptsCta.value = true
     }, 150)
   }
 
@@ -2169,6 +2191,45 @@ const sendMessage = (message: string): void => {
         '<i class="pi pi-users"></i> Here are 10 leads not called in the last 3 weeks:<br><br>',
         table,
         '<br>Would you like me to start calling these now?'
+      ])
+    } else if (
+      (lowerMessage.includes('more than 5 times') || lowerMessage.includes('5+')) && (lowerMessage.includes('without a live answer') || lowerMessage.includes('no live answer'))
+    ) {
+      const records = [
+        { name: 'Taylor Reed', attempts: 7, disposition: 'No Answer' },
+        { name: 'Jamal Carter', attempts: 6, disposition: 'Voicemail' },
+        { name: 'Hannah Kim', attempts: 8, disposition: 'Busy' },
+        { name: 'Miguel Alvarez', attempts: 9, disposition: 'No Answer' },
+        { name: 'Ava Thompson', attempts: 6, disposition: 'Voicemail' },
+        { name: 'Ryan Patel', attempts: 7, disposition: 'No Answer' }
+      ]
+      const rows = records.map((r, i) => `
+        <tr>
+          <td style=\"padding: 6px 8px 6px 0; width: 28px; color: var(--p-surface-300);\">${i + 1}.</td>
+          <td style=\"padding: 6px 0;\">${r.name}</td>
+          <td style=\"padding: 6px 0; text-align: right; color: var(--p-surface-0); font-weight: 600;\">${r.attempts}</td>
+          <td style=\"padding: 6px 0; text-align: right; color: var(--p-surface-200);\">${r.disposition}</td>
+        </tr>
+      `).join('')
+      const table = `
+        <table style=\"width: 100%; border-collapse: collapse; margin-top: 4px;\">
+          <thead>
+            <tr>
+              <th style=\"text-align: left; color: var(--p-surface-200); font-weight: 500; padding-bottom: 6px;\"></th>
+              <th style=\"text-align: left; color: var(--p-surface-200); font-weight: 500; padding-bottom: 6px;\">Name</th>
+              <th style=\"text-align: right; color: var(--p-surface-200); font-weight: 600; padding-bottom: 6px;\">Attempts</th>
+              <th style=\"text-align: right; color: var(--p-surface-200); font-weight: 500; padding-bottom: 6px;\">Last Disposition</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${rows}
+          </tbody>
+        </table>
+      `
+      addAIMessageWithTyping([
+        '<i class="pi pi-chart-line"></i> Here are contacts with 5+ call attempts without a live answer:<br><br>',
+        table,
+        '<br>What would you like to do next?'
       ])
     } else if (
       lowerMessage.includes('follow-ups') && lowerMessage.includes('today')
@@ -3167,6 +3228,24 @@ const sendReminderEmails = (): void => {
 const rescheduleAllFollowups = (): void => {
   showTodayFollowupsCta.value = false
   addAIMessage("All follow-ups have been queued for rescheduling. Adjust times in your calendar settings.")
+}
+
+// Handlers for High Attempts CTA
+const switchToEmailHighAttempts = (): void => {
+  showHighAttemptsCta.value = false
+  addAIMessage("I'll prepare outreach emails for these contacts and move them to an email-first sequence.")
+}
+const trySmsInsteadHighAttempts = (): void => {
+  showHighAttemptsCta.value = false
+  addAIMessage("I will generate SMS drafts to attempt re-engagement via text.")
+}
+const tryDifferentTimesHighAttempts = (): void => {
+  showHighAttemptsCta.value = false
+  addAIMessage("I'll recommend alternative call windows based on historical pickup patterns.")
+}
+const moveToInactiveHighAttempts = (): void => {
+  showHighAttemptsCta.value = false
+  addAIMessage("These contacts have been moved to Inactive. You can restore them anytime from settings.")
 }
 
 const skipToDialer = (): void => {
