@@ -1014,8 +1014,14 @@ const showYesterdayNoAnswerCta = ref<boolean>(false)
 const showTodayFollowupsCta = ref<boolean>(false)
 const showHighAttemptsCta = ref<boolean>(false)
 const showEmailDraftsCta = ref<boolean>(false)
-const emailTemplates = ref<string[]>(['Polite Check-in', 'We Missed You', 'Value Follow-up', 'Case Study Share', 'Last Attempt Before Pause'])
-const selectedEmailTemplate = ref<string | null>(emailTemplates.value[0])
+const emailTemplates = ref<Array<{ label: string; value: string }>>([
+  { label: 'Polite Check-in', value: 'Polite Check-in' },
+  { label: 'We Missed You', value: 'We Missed You' },
+  { label: 'Value Follow-up', value: 'Value Follow-up' },
+  { label: 'Case Study Share', value: 'Case Study Share' },
+  { label: 'Last Attempt Before Pause', value: 'Last Attempt Before Pause' }
+])
+const selectedEmailTemplate = ref<string | null>(emailTemplates.value[0].value)
 const showFileUploadForReturningUser = ref<boolean>(false)
 const welcomeTypingComplete = ref<boolean>(false)
 const congratulationsTypingComplete = ref<boolean>(false)
