@@ -3185,7 +3185,7 @@ const startDialerFromPrompt = (): void => {
 const sendFollowUpEmails = (): void => {
   addUserMessage('Send Follow-up Emails')
   showCallNowCta.value = false
-  const listHtml = emailTemplates.value.map(t => `• ${t}`).join('<br>')
+  const listHtml = emailTemplates.value.map(t => `• ${t.label}`).join('<br>')
   addAIMessageWithTyping([
     "What email drafts would you like use?<br><br>",
     listHtml
