@@ -191,13 +191,15 @@
           <!-- Call Now CTA - appears after leads list response -->
           <div v-if="showCallNowCta" class="mt-2 pt-5 flex justify-center">
             <div class="w-[70%] flex justify-center">
-              <div class="w-full flex flex-col items-center gap-3">
-                <Button label="Yes let's call them now" icon="pi pi-phone" @click="startDialerFromPrompt" class="w-1/2 px-6 py-3 font-semibold" />
-                <div v-if="isSignedIn" class="w-full flex flex-wrap justify-center gap-2">
-                  <Button label="Send Follow-up Emails" severity="secondary" @click="sendFollowUpEmails" class="px-5 py-2 font-medium" />
-                  <Button label="Save as Call List" severity="secondary" @click="saveAsCallList" class="px-5 py-2 font-medium" />
-                  <Button label="Not Now" severity="secondary" @click="dismissCallOptions" class="px-5 py-2 font-medium" />
-                </div>
+              <div class="w-full grid grid-cols-2 gap-3">
+                <!-- Top-left primary -->
+                <Button label="Yes let's call them now" icon="pi pi-phone" @click="startDialerFromPrompt" class="w-full px-6 py-3 font-semibold" />
+                <!-- Top-right secondary -->
+                <Button v-if="isSignedIn" label="Send Follow-up Emails" severity="secondary" @click="sendFollowUpEmails" class="w-full px-5 py-3 font-medium" />
+                <!-- Bottom-left secondary -->
+                <Button v-if="isSignedIn" label="Save as Call List" severity="secondary" @click="saveAsCallList" class="w-full px-5 py-3 font-medium" />
+                <!-- Bottom-right secondary -->
+                <Button v-if="isSignedIn" label="Not Now" severity="secondary" @click="dismissCallOptions" class="w-full px-5 py-3 font-medium" />
               </div>
             </div>
           </div>
