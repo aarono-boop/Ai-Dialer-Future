@@ -408,11 +408,11 @@
                     </a>
                     <Button
                       @click="toggleFavorite(p)"
-                      text
+                      link
                       rounded
                       severity="secondary"
                       class="w-5 h-5"
-                      :pt="{ root: { style: { padding: '0', width: '20px', height: '20px', minWidth: '20px', lineHeight: '20px', borderRadius: '50%' } }, icon: { style: { fontSize: '0.75rem' } } }"
+                      :pt="{ root: { style: { padding: '0', width: '20px', height: '20px', minWidth: '20px', lineHeight: '20px', borderRadius: '50%', background: 'transparent', boxShadow: 'none', '--p-button-hover-background': 'transparent', '--p-button-active-background': 'transparent' } }, icon: { style: { fontSize: '1rem' } } }"
                       :icon="isFavorite(p) ? 'pi pi-star-fill' : 'pi pi-star'"
                       :aria-label="isFavorite(p) ? 'Remove from favorites' : 'Add to favorites'"
                     />
@@ -430,11 +430,11 @@
                     </a>
                     <Button
                       @click="toggleFavorite(p)"
-                      text
+                      link
                       rounded
                       severity="secondary"
                       class="w-5 h-5"
-                      :pt="{ root: { style: { padding: '0', width: '20px', height: '20px', minWidth: '20px', lineHeight: '20px', borderRadius: '50%' } }, icon: { style: { fontSize: '0.75rem' } } }"
+                      :pt="{ root: { style: { padding: '0', width: '20px', height: '20px', minWidth: '20px', lineHeight: '20px', borderRadius: '50%', background: 'transparent', boxShadow: 'none', '--p-button-hover-background': 'transparent', '--p-button-active-background': 'transparent' } }, icon: { style: { fontSize: '1rem' } } }"
                       :icon="isFavorite(p) ? 'pi pi-star-fill' : 'pi pi-star'"
                       :aria-label="isFavorite(p) ? 'Remove from favorites' : 'Add to favorites'"
                     />
