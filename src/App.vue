@@ -399,12 +399,12 @@
           <Dialog v-model:visible="showPromptLibrary" modal header="Prompt Library" :style="{ width: '49.5%' }" :pt="{ root: { style: { marginLeft: '50px', overflow: 'hidden' } }, content: { style: { height: '345px', overflowY: 'auto', overflowX: 'hidden', paddingRight: '12px', paddingBottom: '10px', boxSizing: 'border-box', scrollbarGutter: 'stable', borderBottomRightRadius: 'inherit' } } }" :breakpoints="{ '960px': '95vw' }">
             <div class="flex flex-col gap-3 text-left w-full">
               <div v-if="favoritePrompts.length" class="w-full">
-                <div class="mb-2 text-sm font-semibold" style="color: var(--p-surface-200);">Favorites</div>
+                <div class="mb-2 text-sm font-semibold" style="color: var(--p-blue-500);">Favorites</div>
                 <div class="flex flex-col gap-1 w-full">
                   <div v-for="(p, i) in favoritePrompts" :key="'fav-'+i" class="w-full flex items-center justify-between" :style="{ fontSize: '14px', lineHeight: '18px' }">
                     <a href="#" @click.prevent="selectPrompt(p)" class="inline-flex items-center gap-1" :aria-label="p">
-                      <i class="pi pi-angle-right" aria-hidden="true"></i>
-                      <span style="color: var(--p-blue-500);">{{ p }}</span>
+                      <i class="pi pi-circle-fill" aria-hidden="true" style="font-size: 0.5rem;"></i>
+                      <span style="color: var(--p-surface-0);">{{ p }}</span>
                     </a>
                     <Button
                       @click="toggleFavorite(p)"
@@ -421,12 +421,12 @@
               </div>
 
               <div v-for="(section, si) in promptSections" :key="si" class="w-full">
-                <div class="mb-2 text-sm font-semibold" style="color: var(--p-surface-200);">{{ section.title }}</div>
+                <div class="mb-2 text-sm font-semibold" style="color: var(--p-blue-500);">{{ section.title }}</div>
                 <div class="flex flex-col gap-1 w-full">
                   <div v-for="(p, i) in section.items" :key="i" class="w-full flex items-center justify-between" :style="{ fontSize: '14px', lineHeight: '18px' }">
                     <a href="#" @click.prevent="selectPrompt(p)" class="inline-flex items-center gap-1" :aria-label="p">
-                      <i class="pi pi-angle-right" aria-hidden="true"></i>
-                      <span style="color: var(--p-blue-500);">{{ p }}</span>
+                      <i class="pi pi-circle-fill" aria-hidden="true" style="font-size: 0.5rem;"></i>
+                      <span style="color: var(--p-surface-0);">{{ p }}</span>
                     </a>
                     <Button
                       @click="toggleFavorite(p)"
