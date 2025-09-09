@@ -298,9 +298,8 @@ const startTypingAnimation = (): void => {
 
   // Helper function to detect if content is a contact table that should load instantly
   const isContactTableContent = (content: string): boolean => {
-    return content.includes('<table style=') &&
-           content.includes('Connect Score') &&
-           (content.includes('Sarah Johnson') || content.includes('font-weight: bold'))
+    // Display any table content instantly to avoid jitter during typing
+    return content.includes('<table')
   }
 
   const typeNextCharacter = () => {
