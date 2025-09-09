@@ -421,8 +421,19 @@
               </div>
 
               <div v-for="(section, si) in promptSections" :key="si" class="w-full">
-                <div class="mb-2 text-sm font-semibold" style="color: var(--p-blue-500);">{{ section.title }}</div>
-                <div class="flex flex-col gap-1 w-full">
+                <div class="mb-2 text-sm font-semibold flex items-center gap-2" style="color: var(--p-blue-500);">
+                  <Button
+                    @click="toggleSection(section.title)"
+                    link
+                    severity="secondary"
+                    class="p-0 w-[18px] h-[18px]"
+                    :pt="{ root: { style: { padding: '0', width: '18px', height: '18px', minWidth: '18px', '--p-button-padding-x': '0', '--p-button-padding-y': '0', '--p-button-icon-only-width': '18px', background: 'transparent', boxShadow: 'none' } }, icon: { style: { fontSize: '0.8rem', transform: isSectionCollapsed(section.title) ? 'rotate(0deg)' : 'rotate(90deg)' } } }"
+                    icon="pi pi-chevron-right"
+                    :aria-label="(isSectionCollapsed(section.title) ? 'Expand ' : 'Collapse ') + section.title"
+                  />
+                  <span>{{ section.title }}</span>
+                </div>
+                <div v-if="!isSectionCollapsed(section.title)" class="flex flex-col gap-1 w-full">
                   <div v-for="(p, i) in section.items" :key="i" class="w-full flex items-center justify-between" :style="{ fontSize: '14px', lineHeight: '18px' }">
                     <a href="#" @click.prevent="selectPrompt(p)" class="inline-flex items-center gap-1 pl-3" :aria-label="p">
                       <i class="pi pi-circle-fill" aria-hidden="true" style="font-size: 0.3rem; color: var(--p-surface-0);"></i>
@@ -1046,6 +1057,9 @@ const promptSections = ref<{ title: string; items: string[] }[]>([
     ]
   }
 ])
+const collapsedSections = ref<Record<string, boolean>>({ 'Time-Based Contact Queries': true })
+const isSectionCollapsed = (title: string): boolean => !!collapsedSections.value[title]
+const toggleSection = (title: string): void => { collapsedSections.value[title] = !isSectionCollapsed(title) }
 const openPromptLibrary = (): void => {
   showPromptLibrary.value = true
 }
