@@ -3154,96 +3154,116 @@ const continueQueue = (): void => {
 }
 
 const startDialerFromPrompt = (): void => {
+  addUserMessage("Yes let's call them now")
   showCallNowCta.value = false
   skipToDialer()
 }
 
 const sendFollowUpEmails = (): void => {
+  addUserMessage('Send Follow-up Emails')
   showCallNowCta.value = false
   addAIMessage("I'll draft and queue follow-up emails for these leads. You can review them in your CRM drafts.")
 }
 
 const saveAsCallList = (): void => {
+  addUserMessage('Save as Call List')
   showCallNowCta.value = false
   addAIMessage("Saved these leads as a new call list: 'Leads not called in 3 weeks'. You can open it from the Dialer.")
 }
 
 const dismissCallOptions = (): void => {
+  addUserMessage('Not Now')
   showCallNowCta.value = false
   addAIMessage("Okay, I won't take action right now. Let me know when you're ready.")
 }
 
 // Handlers for Yesterday No-Answer CTA
 const startFollowUpCalls = (): void => {
+  addUserMessage('Start Follow-up Calls')
   showYesterdayNoAnswerCta.value = false
   skipToDialer()
 }
 const sendTextsToNoAnswers = (): void => {
+  addUserMessage('Send Text Messages')
   showYesterdayNoAnswerCta.value = false
   addAIMessage("I'll prepare text messages for these contacts to increase your chances of connecting.")
 }
 const tryDifferentTime = (): void => {
+  addUserMessage('Try at Different Time')
   showYesterdayNoAnswerCta.value = false
   addAIMessage("Okay, I'll suggest optimal times to try again based on recent pickup patterns.")
 }
 const skipTheseNoAnswers = (): void => {
+  addUserMessage('Skip These')
   showYesterdayNoAnswerCta.value = false
   addAIMessage("Skipping these for now. You can revisit them anytime.")
 }
 
 // Handlers for New Leads CTA
 const startNewLeadDialSession = (): void => {
+  addUserMessage('Start New Lead Dial Session')
   showNewLeadsCta.value = false
   skipToDialer()
 }
 
 const sendWelcomeEmailsFirst = (): void => {
+  addUserMessage('Send Welcome Emails First')
   showNewLeadsCta.value = false
   addAIMessage("I'll generate welcome emails for these new leads and queue them for your review.")
 }
 
 const scheduleForLater = (): void => {
+  addUserMessage('Schedule for Later')
   showNewLeadsCta.value = false
   addAIMessage("Scheduled a new lead dial session for later. You can adjust in your Dialer settings.")
 }
 
 const dismissNewLeadOptions = (): void => {
+  addUserMessage('Not Now')
   showNewLeadsCta.value = false
   addAIMessage("Okay, no action taken for now.")
 }
 
 // Handlers for Today's Follow-ups CTA
 const callInOrderOfTime = (): void => {
+  addUserMessage('Call in Order of Time')
   showTodayFollowupsCta.value = false
   skipToDialer()
 }
 const callHighestPriorityFirst = (): void => {
+  addUserMessage('Call Highest Priority First')
   showTodayFollowupsCta.value = false
   addAIMessage("I'll prioritize follow-ups by urgency and likelihood to convert.")
 }
 const sendReminderEmails = (): void => {
+  addUserMessage('Send Reminder Emails')
   showTodayFollowupsCta.value = false
   addAIMessage("Sending reminder emails to today’s follow-ups. You'll find drafts ready in your CRM.")
 }
 const rescheduleAllFollowups = (): void => {
+  addUserMessage('Reschedule All')
   showTodayFollowupsCta.value = false
   addAIMessage("All follow-ups have been queued for rescheduling. Adjust times in your calendar settings.")
 }
 
 // Handlers for High Attempts CTA
 const switchToEmailHighAttempts = (): void => {
+  addUserMessage('Switch to Email')
   showHighAttemptsCta.value = false
   addAIMessage("I'll prepare outreach emails for these contacts and move them to an email-first sequence.")
 }
 const trySmsInsteadHighAttempts = (): void => {
+  addUserMessage('Try SMS Instead')
   showHighAttemptsCta.value = false
   addAIMessage("I will generate SMS drafts to attempt re-engagement via text.")
 }
 const tryDifferentTimesHighAttempts = (): void => {
+  addUserMessage('Try Different Times')
   showHighAttemptsCta.value = false
   addAIMessage("I'll recommend alternative call windows based on historical pickup patterns.")
 }
 const moveToInactiveHighAttempts = (): void => {
+  addUserMessage('Move to Inactive')
   showHighAttemptsCta.value = false
   addAIMessage("These contacts have been moved to Inactive. You can restore them anytime from settings.")
 }
