@@ -402,7 +402,7 @@
                 <div class="mb-2 text-sm font-semibold" style="color: var(--p-surface-200);">Favorites</div>
                 <div class="flex flex-col gap-1 w-full">
                   <div v-for="(p, i) in favoritePrompts" :key="'fav-'+i" class="w-full flex items-center justify-between" :style="{ fontSize: '14px', lineHeight: '18px' }">
-                    <a href="#" @click.prevent="selectPrompt(p)" class="inline-flex items-center gap-2" :aria-label="p">
+                    <a href="#" @click.prevent="selectPrompt(p)" class="inline-flex items-center gap-1" :aria-label="p">
                       <i class="pi pi-angle-right" aria-hidden="true"></i>
                       <span style="color: var(--p-blue-500);">{{ p }}</span>
                     </a>
@@ -411,8 +411,8 @@
                       text
                       rounded
                       severity="secondary"
-                      class="w-6 h-6"
-                      :pt="{ root: { style: { padding: '0' } }, icon: { style: { fontSize: '0.875rem' } } }"
+                      class="w-5 h-5"
+                      :pt="{ root: { style: { padding: '0', width: '18px', height: '18px', minWidth: '18px', borderRadius: '50%' } }, icon: { style: { fontSize: '0.75rem' } } }"
                       :icon="isFavorite(p) ? 'pi pi-star-fill' : 'pi pi-star'"
                       :aria-label="isFavorite(p) ? 'Remove from favorites' : 'Add to favorites'"
                     />
@@ -424,7 +424,7 @@
                 <div class="mb-2 text-sm font-semibold" style="color: var(--p-surface-200);">{{ section.title }}</div>
                 <div class="flex flex-col gap-1 w-full">
                   <div v-for="(p, i) in section.items" :key="i" class="w-full flex items-center justify-between" :style="{ fontSize: '14px', lineHeight: '18px' }">
-                    <a href="#" @click.prevent="selectPrompt(p)" class="inline-flex items-center gap-2" :aria-label="p">
+                    <a href="#" @click.prevent="selectPrompt(p)" class="inline-flex items-center gap-1" :aria-label="p">
                       <i class="pi pi-angle-right" aria-hidden="true"></i>
                       <span style="color: var(--p-blue-500);">{{ p }}</span>
                     </a>
@@ -433,8 +433,8 @@
                       text
                       rounded
                       severity="secondary"
-                      class="w-6 h-6"
-                      :pt="{ root: { style: { padding: '0' } }, icon: { style: { fontSize: '0.875rem' } } }"
+                      class="w-5 h-5"
+                      :pt="{ root: { style: { padding: '0', width: '18px', height: '18px', minWidth: '18px', borderRadius: '50%' } }, icon: { style: { fontSize: '0.75rem' } } }"
                       :icon="isFavorite(p) ? 'pi pi-star-fill' : 'pi pi-star'"
                       :aria-label="isFavorite(p) ? 'Remove from favorites' : 'Add to favorites'"
                     />
