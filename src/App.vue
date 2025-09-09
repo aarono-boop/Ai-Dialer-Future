@@ -646,7 +646,7 @@
 </style>
 
 <script setup lang="ts">
-import { ref, nextTick, computed, onMounted, onUnmounted, type Ref } from 'vue'
+import { ref, nextTick, computed, onMounted, onUnmounted, watch, type Ref } from 'vue'
 import { showContactPreview } from './utils/contactPreview'
 import { clearFocusAndEstablishContext, focusChatInput, announceToScreenReader } from './utils/focus'
 import { createChatUtils, type Message } from './utils/chat'
