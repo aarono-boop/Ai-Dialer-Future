@@ -856,6 +856,7 @@ const showCreateAccountCTA = ref<boolean>(false)
 const isSignedIn = ref<boolean>(false)
 const isReturningUser = ref<boolean>(false) // Track if user logged in vs created new account
 const showActionButtons = ref<boolean>(false)
+const callNowButtonIndex = ref<number | null>(null)
 const showFileUploadForReturningUser = ref<boolean>(false)
 const welcomeTypingComplete = ref<boolean>(false)
 const congratulationsTypingComplete = ref<boolean>(false)
