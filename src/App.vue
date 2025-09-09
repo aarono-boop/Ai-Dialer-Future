@@ -832,6 +832,7 @@ import Card from 'primevue/card'
 import Dialog from 'primevue/dialog'
 import InputText from 'primevue/inputtext'
 import Password from 'primevue/password'
+import Listbox from 'primevue/listbox'
 
 // PrimeVue Components
 
