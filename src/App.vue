@@ -1016,7 +1016,7 @@ const messages: Ref<Message[]> = ref([
 
 // Initialize chat utilities
 const chatUtils = createChatUtils(messages, chatMessages, headerRef)
-const { scrollToBottom, scrollToBottomDuringTyping, scrollToUserMessage, scrollToTopForGoals, addAIMessage, addAIMessageWithoutScroll, addUserMessage, addUserGoalMessage, addUserQueuePausedMessage, addUserQueueCompletedMessage, addSeparatorMessage, addAIMessageWithTyping, addAIMessageWithTypingNoScroll } = chatUtils
+const { scrollToBottom, scrollToBottomDuringTyping, scrollToUserMessage, scrollToTopForGoals, addAIMessage, addAIMessageWithoutScroll, addUserMessage, addUserGoalMessage, addUserQueuePausedMessage, addUserQueueCompletedMessage, addSeparatorMessage, addAIMessageWithTyping, addAIMessageWithTypingNoScroll, suppressScrolling } = chatUtils
 
 // Ensure chat container and window scroll are reset to the very top
 const scrollChatToTop = () => {
@@ -1824,7 +1824,7 @@ const sendMessage = (message: string): void => {
         '<i class="pi pi-users"></i> Great idea! Call practice makes perfect.',
         'ARKON\'s practice mode can help you:',
         '• Rehearse your opening pitch with AI feedback',
-        '• Practice handling common objections',
+        '�� Practice handling common objections',
         '��� Test different conversation flows',
         '�� Record and review your delivery',
         'Would you like to practice a cold call opening or work on handling objections?'
