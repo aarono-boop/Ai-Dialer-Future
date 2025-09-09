@@ -985,6 +985,9 @@ const contacts = [
     industry: 'Enterprise Solutions',
     companySize: '500+ employees',
     leadSource: 'Trade Show',
+    sourceType: 'crm',
+    sourceName: 'Pipedrive',
+    sourceUrl: 'https://example.pipedrive.com/person/42',
     notes: ''
   }
 ]
