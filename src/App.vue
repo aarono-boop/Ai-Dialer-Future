@@ -220,6 +220,19 @@
             </div>
           </div>
 
+          <!-- Email Drafts Selection CTA (for 3-weeks prompt) -->
+          <div v-if="showEmailDraftsCta" class="mt-2 pt-3 flex justify-center">
+            <div class="w-[70%] flex justify-center">
+              <div class="w-full flex flex-col gap-3">
+                <Listbox v-model="selectedEmailTemplate" :options="emailTemplates" class="w-full" :pt="{ root: { style: { width: '100%' } } }" />
+                <div class="grid grid-cols-2 gap-3">
+                  <Button label="Send Emails" icon="pi pi-send" @click="sendSelectedEmails" class="w-full px-6 py-3 font-semibold" />
+                  <Button label="Save For Later" severity="secondary" @click="saveEmailsForLater" class="w-full px-6 py-3 font-medium" />
+                </div>
+              </div>
+            </div>
+          </div>
+
           <!-- Yesterday No-Answer CTA -->
           <div v-if="showYesterdayNoAnswerCta" class="mt-2 pt-5 flex justify-center">
             <div class="w-[70%] flex justify-center">
@@ -2122,7 +2135,7 @@ const sendMessage = (message: string): void => {
       addAIMessage([
         '<i class="pi pi-bolt"></i> Let\'s fire up a power dialing session!',
         'I can configure your session with:',
-        '• <strong>Target audience:</strong> High-priority prospects, warm leads, or follow-ups',
+        '��� <strong>Target audience:</strong> High-priority prospects, warm leads, or follow-ups',
         '• <strong>Call duration:</strong> 30 min, 1 hour, or 2-hour session',
         '• <strong>Connect goals:</strong> Number of conversations you want to have',
         'What type of prospects do you want to focus on for this session?'
@@ -3505,7 +3518,7 @@ const handleTermsCancel = () => {
   showActionButtons.value = false
   // Clear messages and show welcome message
   messages.value = []
-  addAIMessage('������ Welcome to ARKON! I\'m your AI calling assistant. I\'ll help you connect with more prospects and close more deals. What would you like to accomplish today?')
+  addAIMessage('���� Welcome to ARKON! I\'m your AI calling assistant. I\'ll help you connect with more prospects and close more deals. What would you like to accomplish today?')
 
   // Set focus context for header
   nextTick(() => {
