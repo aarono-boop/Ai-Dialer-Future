@@ -3868,13 +3868,18 @@ onMounted(() => {
   padding: 0;
 }
 
-.email-drafts-listbox :deep(.p-listbox-option.p-listbox-option-selected) {
-  background-color: var(--p-blue-700);
+.email-drafts-listbox :deep(.p-listbox-option.p-listbox-option-selected),
+.email-drafts-listbox :deep(.p-listbox-option[aria-selected="true"]),
+.email-drafts-listbox :deep(.p-listbox-option.p-focus) {
+  background-color: var(--p-blue-600);
   color: var(--p-surface-0);
 }
 .email-drafts-listbox :deep(.p-listbox-option:hover) {
-  background-color: var(--p-blue-900);
+  background-color: var(--p-blue-800);
   color: var(--p-surface-0);
+}
+.email-drafts-listbox :deep(.p-listbox-option) {
+  border-radius: 6px;
 }
 
 </style>
