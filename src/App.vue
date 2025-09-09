@@ -2135,7 +2135,7 @@ const sendMessage = (message: string): void => {
       addAIMessage([
         '<i class="pi pi-bolt"></i> Let\'s fire up a power dialing session!',
         'I can configure your session with:',
-        '��� <strong>Target audience:</strong> High-priority prospects, warm leads, or follow-ups',
+        '• <strong>Target audience:</strong> High-priority prospects, warm leads, or follow-ups',
         '• <strong>Call duration:</strong> 30 min, 1 hour, or 2-hour session',
         '• <strong>Connect goals:</strong> Number of conversations you want to have',
         'What type of prospects do you want to focus on for this session?'
@@ -3265,6 +3265,20 @@ const rescheduleAllFollowups = (): void => {
   addUserMessage('Reschedule All')
   showTodayFollowupsCta.value = false
   addAIMessage("All follow-ups have been queued for rescheduling. Adjust times in your calendar settings.")
+}
+
+// Handlers for Email Drafts CTA (from 3-weeks prompt)
+const sendSelectedEmails = (): void => {
+  addUserMessage('Send Emails')
+  showEmailDraftsCta.value = false
+  const tmpl = selectedEmailTemplate.value || 'Selected Template'
+  addAIMessage(`Sending '${tmpl}' emails to these contacts. You can review status in your CRM.`)
+}
+const saveEmailsForLater = (): void => {
+  addUserMessage('Save For Later')
+  showEmailDraftsCta.value = false
+  const tmpl = selectedEmailTemplate.value || 'Selected Template'
+  addAIMessage(`Saved '${tmpl}' email drafts for later. You can send them anytime from drafts.`)
 }
 
 // Handlers for High Attempts CTA
