@@ -112,10 +112,6 @@
                         </Card>
                       </div>
                     </div>
-                    <!-- Call Now button after leads list typing completes -->
-                    <div v-if="callNowButtonIndex === index" class="mt-3 flex justify-end">
-                      <Button label="Yes let's call them now" icon="pi pi-phone" @click="startDialerFromPrompt" />
-                    </div>
                   </template>
                 </ChatMessage>
 
@@ -189,6 +185,13 @@
                 class="flex-1 px-6 py-3 font-semibold"
                 tabindex="4"
               />
+            </div>
+          </div>
+
+          <!-- Call Now CTA - appears after leads list response -->
+          <div v-if="showCallNowCta" class="mt-2 pt-5 flex justify-center">
+            <div class="w-[70%] flex justify-center">
+              <Button label="Yes let's call them now" icon="pi pi-phone" @click="startDialerFromPrompt" class="w-1/2 px-6 py-3 font-semibold" />
             </div>
           </div>
 
@@ -749,7 +752,7 @@ const getDynamicCoachingFeedback = (): string => {
   const coachingMessages = [
     'Great connection! I heard you building rapport early—that\'s your sweet spot. Next call, try mirroring their pace a bit more to deepen that connection.',
     'Nice work staying patient through their objections. I noticed you got stronger as the call progressed. Carry that momentum into the next one.',
-    'You handled that beautifully! Your confidence really came through. Next time, try asking one more discovery question before presenting�����it\'ll make your close even stronger.',
+    'You handled that beautifully! Your confidence really came through. Next time, try asking one more discovery question before presenting����it\'ll make your close even stronger.',
     'I loved how you listened for their pain points. Your empathy is one of your strongest assets. Now let\'s work on creating more urgency in your next call.',
     'Solid call! You kept them engaged throughout. I\'d love to see you slow down just a touch during the value proposition—let it sink in.',
     'That was textbook rapport building! Your energy is infectious. Next call, try to qualify their budget earlier in the conversation.',
@@ -856,7 +859,7 @@ const showCreateAccountCTA = ref<boolean>(false)
 const isSignedIn = ref<boolean>(false)
 const isReturningUser = ref<boolean>(false) // Track if user logged in vs created new account
 const showActionButtons = ref<boolean>(false)
-const callNowButtonIndex = ref<number | null>(null)
+const showCallNowCta = ref<boolean>(false)
 const showFileUploadForReturningUser = ref<boolean>(false)
 const welcomeTypingComplete = ref<boolean>(false)
 const congratulationsTypingComplete = ref<boolean>(false)
@@ -1074,7 +1077,7 @@ const handleTypingComplete = (index: number): void => {
   // Show call-now button after leads-not-called list finishes typing
   if (messages.value[index] && messages.value[index].content.some(line => line.includes('Here are 10 leads not called in the last 3 weeks'))) {
     setTimeout(() => {
-      callNowButtonIndex.value = index
+      showCallNowCta.value = true
     }, 150)
   }
 
@@ -1634,7 +1637,7 @@ const sendMessage = (message: string): void => {
   const trimmed = message.trim().toLowerCase()
   if (trimmed === 'yes' || trimmed.startsWith('yes ')) {
     addAIMessage('Great, starting the dialer now...')
-    callNowButtonIndex.value = null
+    showCallNowCta.value = false
     setTimeout(() => skipToDialer(), 300)
     return
   }
@@ -1859,7 +1862,7 @@ const sendMessage = (message: string): void => {
         'ARKON\'s practice mode can help you:',
         '• Rehearse your opening pitch with AI feedback',
         '• Practice handling common objections',
-        '��� Test different conversation flows',
+        '���� Test different conversation flows',
         '�� Record and review your delivery',
         'Would you like to practice a cold call opening or work on handling objections?'
       ])
@@ -2716,7 +2719,7 @@ const continueQueue = (): void => {
 }
 
 const startDialerFromPrompt = (): void => {
-  callNowButtonIndex.value = null
+  showCallNowCta.value = false
   skipToDialer()
 }
 
