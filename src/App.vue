@@ -29,6 +29,10 @@
                   <template #additional-content>
                     <!-- File Upload Area - shown inside welcome message for new users or ready to upload message for returning users -->
                     <CoachCarousel v-if="index === 0 && showCoachCarousel" @learn-more="openCoachInfoPanel" @practice="startPracticeCall" />
+                    <!-- Email drafts selector inside AI bubble -->
+                    <div v-if="showEmailDraftsCta && message.type === 'ai' && message.content.some(c => c.includes('What email drafts would you like use?'))" class="mt-3">
+                      <Listbox v-model="selectedEmailTemplate" :options="emailTemplates" optionLabel="label" optionValue="value" class="w-full" :pt="{ root: { style: { width: '100%' } } }" />
+                    </div>
                     <div v-if="!showCoachCarousel && ((index === 0 && !isSignedIn && welcomeTypingComplete) || (isSignedIn && showFileUploadForReturningUser && isReadyToUploadMessage(message, index)))" class="mt-5">
                       <div class="flex flex-col gap-4 items-stretch">
                         <div class="w-full" style="order: 3;">
@@ -220,15 +224,12 @@
             </div>
           </div>
 
-          <!-- Email Drafts Selection CTA (for 3-weeks prompt) -->
+          <!-- Email Drafts Actions (buttons only) -->
           <div v-if="showEmailDraftsCta" class="mt-2 pt-3 flex justify-center">
             <div class="w-[70%] flex justify-center">
-              <div class="w-full flex flex-col gap-3">
-                <Listbox v-model="selectedEmailTemplate" :options="emailTemplates" optionLabel="label" optionValue="value" class="w-full" :pt="{ root: { style: { width: '100%' } } }" />
-                <div class="grid grid-cols-2 gap-3">
-                  <Button label="Send Emails" icon="pi pi-send" @click="sendSelectedEmails" class="w-full px-6 py-3 font-semibold" />
-                  <Button label="Save For Later" severity="secondary" @click="saveEmailsForLater" class="w-full px-6 py-3 font-medium" />
-                </div>
+              <div class="w-full grid grid-cols-2 gap-3">
+                <Button label="Send Emails" icon="pi pi-send" @click="sendSelectedEmails" class="w-full px-6 py-3 font-semibold" />
+                <Button label="Save For Later" severity="secondary" @click="saveEmailsForLater" class="w-full px-6 py-3 font-medium" />
               </div>
             </div>
           </div>
