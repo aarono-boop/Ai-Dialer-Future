@@ -396,7 +396,7 @@
           </div>
 
           <!-- Prompt Library Dialog -->
-          <Dialog v-model:visible="showPromptLibrary" modal header="Prompt Library" :style="{ width: '49.5%' }" :pt="{ root: { style: { marginLeft: '50px', overflow: 'hidden' } }, content: { style: { height: '345px', overflowY: 'auto', overflowX: 'hidden', paddingRight: '12px', paddingBottom: '10px', boxSizing: 'border-box', scrollbarGutter: 'stable', borderBottomRightRadius: 'inherit' } } }" :breakpoints="{ '960px': '95vw' }">
+          <Dialog v-model:visible="showPromptLibrary" modal header="Prompt Library" :style="{ width: '51%' }" :pt="{ root: { style: { marginLeft: '50px', overflow: 'hidden' } }, content: { style: { height: '345px', overflowY: 'auto', overflowX: 'hidden', paddingRight: '12px', paddingBottom: '10px', boxSizing: 'border-box', scrollbarGutter: 'stable', borderBottomRightRadius: 'inherit' } } }" :breakpoints="{ '960px': '95vw' }">
             <div class="flex flex-col gap-3 text-left w-full">
               <div v-if="favoritePrompts.length" class="w-full">
                 <div class="mb-2 text-sm font-semibold" style="color: var(--p-blue-500);">Favorites</div>
