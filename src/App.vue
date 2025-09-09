@@ -1038,6 +1038,11 @@ const messages: Ref<Message[]> = ref([
 const chatUtils = createChatUtils(messages, chatMessages, headerRef)
 const { scrollToBottom, scrollToBottomDuringTyping, scrollToUserMessage, scrollToTopForGoals, addAIMessage, addAIMessageWithoutScroll, addUserMessage, addUserGoalMessage, addUserQueuePausedMessage, addUserQueueCompletedMessage, addSeparatorMessage, addAIMessageWithTyping, addAIMessageWithTypingNoScroll, suppressScrolling } = chatUtils
 
+// Hide the Call Now CTA automatically when the dialer is shown
+watch(() => showDialer.value, (val) => {
+  if (val) showCallNowCta.value = false
+})
+
 // Ensure chat container and window scroll are reset to the very top
 const scrollChatToTop = () => {
   const el = chatMessages.value
