@@ -1430,7 +1430,7 @@ const handleGoogleSignin = (): void => {
   messages.value = []
   // Show brief prior welcome bubble, then welcome-back bubble
   addAIMessage('Welcome to the ARMOR® AI Dialer, your AI calling assistant.')
-  addAIMessage("Welcome back! You're signed in with Google.<br><br>What would you like to do?")
+  addAIMessageWithTyping("Welcome back! You're signed in with Google.<br><br>What would you like to do?")
   // Do not prompt for upload; assume user already connected/uploaded previously
   showFileUploadForReturningUser.value = false
 
