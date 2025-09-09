@@ -1018,6 +1018,20 @@ const messages: Ref<Message[]> = ref([
 const chatUtils = createChatUtils(messages, chatMessages, headerRef)
 const { scrollToBottom, scrollToBottomDuringTyping, scrollToUserMessage, scrollToTopForGoals, addAIMessage, addAIMessageWithoutScroll, addUserMessage, addUserGoalMessage, addUserQueuePausedMessage, addUserQueueCompletedMessage, addSeparatorMessage, addAIMessageWithTyping, addAIMessageWithTypingNoScroll } = chatUtils
 
+// Ensure chat container and window scroll are reset to the very top
+const scrollChatToTop = () => {
+  const el = chatMessages.value
+  if (el) {
+    el.scrollTop = 0
+    try {
+      el.scrollTo({ top: 0, behavior: 'auto' })
+    } catch {}
+  }
+  try {
+    window.scrollTo({ top: 0, behavior: 'auto' })
+  } catch {}
+}
+
 // Helper function to identify if a message is the "Ready to upload" message for returning users
 const isReadyToUploadMessage = (message: Message, index: number): boolean => {
   if (message.type !== 'ai') return false
