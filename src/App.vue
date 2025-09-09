@@ -1428,11 +1428,8 @@ const handleGoogleSignin = (): void => {
   phoneVerified.value = true // Returning users don't need to verify phone again
   updateWelcomeMessageTyping() // Update typing status for welcome message
   addAIMessage('Welcome back! You\'re signed in with Google.')
-  setTimeout(() => {
-    addAIMessage('Ready to upload your contact file and start dialing?')
-    showFileUploadForReturningUser.value = true
-    scrollToBottom()
-  }, 1000)
+  // Do not prompt for upload; assume user already connected/uploaded previously
+  showFileUploadForReturningUser.value = false
 
   // Clear any existing focus when navigating back to main app
   nextTick(() => {
@@ -1457,14 +1454,9 @@ const handleLoginSuccess = (userData: any): void => {
   phoneVerified.value = true // Returning users don't need to verify phone again
   updateWelcomeMessageTyping() // Update typing status for welcome message
 
-  // Since they're a returning user who has already set goals,
-  // skip directly to file upload stage
-  addAIMessage(`Welcome back, ${userData.name}! Ready to upload your contact file and start dialing?`)
-
-  setTimeout(() => {
-    showFileUploadForReturningUser.value = true
-    scrollToBottom()
-  }, 500)
+  // Returning user: do not show upload prompt
+  addAIMessage(`Welcome back, ${userData.name}!`)
+  showFileUploadForReturningUser.value = false
 
   // Clear any existing focus when navigating back to main app
   nextTick(() => {
