@@ -937,6 +937,16 @@ const promptSections = ref<{ title: string; items: string[] }[]>([
       'Show me follow-ups scheduled for today',
       'Which contacts have I called more than 5 times without a live answer?'
     ]
+  },
+  {
+    title: 'Performance & Outcome Analysis',
+    items: [
+      'Show me my highest converting lead sources from last month',
+      "Which contacts answered my calls but haven't scheduled appointments?",
+      "Find leads that opened my emails but haven't been called",
+      "Show me contacts marked as 'interested' but no follow-up scheduled",
+      'Which prospects went to voicemail 3+ times in a row?'
+    ]
   }
 ])
 const openPromptLibrary = (): void => {
