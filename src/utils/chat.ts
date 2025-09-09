@@ -14,8 +14,24 @@ export const createChatUtils = (
   chatMessages: any,
   headerRef: any
 ) => {
+  // When true, all auto bottom scrolls are skipped temporarily
+  let suppressScroll = false
+
+  const setScrollSuppressed = (value: boolean) => {
+    suppressScroll = value
+  }
+
+  const suppressScrolling = (durationMs: number = 1500) => {
+    suppressScroll = true
+    setTimeout(() => {
+      suppressScroll = false
+    }, durationMs)
+  }
+
   const scrollToBottom = async (): Promise<void> => {
     await nextTick()
+
+    if (suppressScroll) return
 
     // Enhanced scroll function with multiple attempts to handle dynamic content
     const performScroll = (attempt: number = 0) => {
@@ -43,6 +59,7 @@ export const createChatUtils = (
   }
 
   const scrollToBottomDuringTyping = (): void => {
+    if (suppressScroll) return
     // Optimized version for frequent calls during typing animation
     if (chatMessages.value) {
       chatMessages.value.scrollTop = chatMessages.value.scrollHeight
@@ -313,6 +330,9 @@ export const createChatUtils = (
     addSeparatorMessage,
     addAIMessageWithDelay,
     addAIMessageWithTyping,
-    addAIMessageWithTypingNoScroll
+    addAIMessageWithTypingNoScroll,
+    // Controls for scroll suppression
+    setScrollSuppressed,
+    suppressScrolling
   }
 }
