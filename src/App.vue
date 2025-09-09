@@ -412,7 +412,7 @@
                       rounded
                       severity="secondary"
                       class="w-5 h-5"
-                      :pt="{ root: { style: { padding: '0', width: '18px', height: '18px', minWidth: '18px', borderRadius: '50%' } }, icon: { style: { fontSize: '0.75rem' } } }"
+                      :pt="{ root: { style: { padding: '0', width: '20px', height: '20px', minWidth: '20px', lineHeight: '20px', borderRadius: '50%' } }, icon: { style: { fontSize: '0.75rem' } } }"
                       :icon="isFavorite(p) ? 'pi pi-star-fill' : 'pi pi-star'"
                       :aria-label="isFavorite(p) ? 'Remove from favorites' : 'Add to favorites'"
                     />
@@ -434,7 +434,7 @@
                       rounded
                       severity="secondary"
                       class="w-5 h-5"
-                      :pt="{ root: { style: { padding: '0', width: '18px', height: '18px', minWidth: '18px', borderRadius: '50%' } }, icon: { style: { fontSize: '0.75rem' } } }"
+                      :pt="{ root: { style: { padding: '0', width: '20px', height: '20px', minWidth: '20px', lineHeight: '20px', borderRadius: '50%' } }, icon: { style: { fontSize: '0.75rem' } } }"
                       :icon="isFavorite(p) ? 'pi pi-star-fill' : 'pi pi-star'"
                       :aria-label="isFavorite(p) ? 'Remove from favorites' : 'Add to favorites'"
                     />
