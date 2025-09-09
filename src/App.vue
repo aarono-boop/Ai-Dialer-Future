@@ -396,7 +396,7 @@
           </div>
 
           <!-- Prompt Library Dialog -->
-          <Dialog v-model:visible="showPromptLibrary" modal header="Prompt Library" :style="{ width: '52%' }" :pt="{ content: { style: { height: '300px', overflow: 'auto' } } }" :breakpoints="{ '960px': '95vw' }">
+          <Dialog v-model:visible="showPromptLibrary" modal header="Prompt Library" :style="{ width: '51%' }" :pt="{ root: { style: { marginLeft: '30px' } }, content: { style: { height: '325px', overflow: 'auto' } } }" :breakpoints="{ '960px': '95vw' }">
             <div class="flex flex-col gap-4 text-left w-full">
               <div v-for="(section, si) in promptSections" :key="si" class="w-full">
                 <div class="mb-2 text-sm font-semibold" style="color: var(--p-surface-200);">{{ section.title }}</div>
