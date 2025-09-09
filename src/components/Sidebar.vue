@@ -15,6 +15,7 @@
       aria-label="Return to ARKON home page"
       type="button"
       tabindex="1"
+      v-tooltip.right="'Home'"
     >
       <img
         src="https://cdn.builder.io/api/v1/image/assets%2F5aeb07ce25f84dbc869290880d07b71e%2F971acdb98a6e45828a85c08e6de84643?format=webp&width=800"
