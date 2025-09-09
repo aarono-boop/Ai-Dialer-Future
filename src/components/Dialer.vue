@@ -123,7 +123,7 @@
               </tr>
               <tr>
                 <td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af;">Email:</td>
-                <td style="padding: 4px 0; color: white;">{{ currentContact.email }}</td>
+                <td style="padding: 4px 0; color: white;"><a :href="`mailto:${currentContact.email}`" class="underline" aria-label="Send email">{{ currentContact.email }}</a></td>
               </tr>
               <tr>
                 <td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af;">Address:</td>
