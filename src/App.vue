@@ -550,7 +550,7 @@
                   <h4 class="text-xl font-medium">Testimonials</h4>
                   <div class="text-xs text-gray-300 space-y-2">
                     <p>“Our connect rate and meetings doubled in 60 days.” — VP Sales, SaaS</p>
-                    <p>“The talk tracks are simple and deadly effective.�� — SDR Lead, Insurance</p>
+                    <p>“The talk tracks are simple and deadly effective.���� — SDR Lead, Insurance</p>
                   </div>
                 <div v-if="selectedCoachForInfo?.websiteUrl" class="sticky bottom-0 -mb-4 -mx-4 px-4 py-3 border-t border-gray-700 bg-gray-900/90 flex justify-center">
                   <a :href="selectedCoachForInfo.websiteUrl" target="_blank" rel="noopener" class="text-link text-sm inline-flex items-center gap-2 text-center"><i class="pi pi-external-link text-sm" aria-hidden="true"></i>Visit {{ selectedCoachForInfo?.displayName }}'s Website</a>
@@ -946,6 +946,66 @@ const promptSections = ref<{ title: string; items: string[] }[]>([
       "Find leads that opened my emails but haven't been called",
       "Show me contacts marked as 'interested' but no follow-up scheduled",
       'Which prospects went to voicemail 3+ times in a row?'
+    ]
+  },
+  {
+    title: 'Lead Prioritization & Scoring',
+    items: [
+      'Show me my hottest prospects based on recent activity',
+      "Find contacts in my pipeline who haven't been touched in 2 weeks",
+      'Which leads responded positively to my last SMS?',
+      'Show me prospects from high-value companies I should call first',
+      'Find contacts who visited our website after my last call'
+    ]
+  },
+  {
+    title: 'Segmentation & Targeting',
+    items: [
+      'Show me all real estate contacts in California',
+      'Find prospects in the mortgage industry with upcoming renewals',
+      'Which contacts are decision makers vs. influencers?',
+      'Show me leads from referral partners who need follow-up',
+      "Find all contacts tagged as 'warm' but not called this month"
+    ]
+  },
+  {
+    title: 'Campaign & List Management',
+    items: [
+      "Create a call list of prospects who didn't answer last week",
+      'Show me contacts ready for my next nurture sequence',
+      'Which leads bounced from my email campaign?',
+      "Find prospects who fit my ideal customer profile but aren't being worked",
+      'Show me contacts who should be moved from cold to warm status'
+    ]
+  },
+  {
+    title: 'Relationship & Context Queries',
+    items: [
+      "What's the history with [contact name]?",
+      'Show me all contacts at [company name]',
+      'Which prospects mentioned budget concerns in my notes?',
+      'Find contacts who expressed interest in [specific product/service]',
+      'Show me leads who asked to be called back at specific times'
+    ]
+  },
+  {
+    title: 'Compliance & Data Quality',
+    items: [
+      'Show me contacts with missing phone numbers',
+      "Which leads haven't been dispositioned properly?",
+      'Find duplicate contacts in my database',
+      'Show me contacts who requested to be removed from calling',
+      'Which phone numbers are flagged as potentially spam?'
+    ]
+  },
+  {
+    title: 'Goal-Oriented Tasks',
+    items: [
+      'Help me build a call list to hit 100 dials today',
+      'Show me the 20 most promising prospects for this week',
+      'Find contacts most likely to convert based on my recent wins',
+      "Which prospects should I prioritize to hit my monthly quota?",
+      'Show me contacts that match my recent closed deals'
     ]
   }
 ])
@@ -2430,7 +2490,7 @@ const handleHold = (onHold: boolean): void => {
 }
 
 const handleKeypad = (): void => {
-  addAIMessage('📱 Keypad opened')
+  addAIMessage('�� Keypad opened')
 }
 
 const handlePauseQueue = (): void => {
