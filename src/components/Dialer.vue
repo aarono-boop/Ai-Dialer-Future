@@ -82,8 +82,8 @@
               class="ai-coach-toggle"
             />
           </div>
-          <div class="text-gray-400 text-sm text-center">
-            Queue Time: <span class="text-white">{{ formatTime(queueTime) }}</span>
+          <div class="text-gray-400 text-sm text-center w-[160px] flex-shrink-0">
+            Queue Time: <span class="text-white font-mono tabular-nums">{{ formatTime(queueTime) }}</span>
           </div>
           <Button
             v-if="!shouldCompleteQueue"
