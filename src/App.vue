@@ -1862,7 +1862,7 @@ const sendMessage = (message: string): void => {
         'ARKON\'s practice mode can help you:',
         '• Rehearse your opening pitch with AI feedback',
         '• Practice handling common objections',
-        '���� Test different conversation flows',
+        '��� Test different conversation flows',
         '�� Record and review your delivery',
         'Would you like to practice a cold call opening or work on handling objections?'
       ])
@@ -2724,6 +2724,8 @@ const startDialerFromPrompt = (): void => {
 }
 
 const skipToDialer = (): void => {
+  // Hide Call Now CTA if visible
+  showCallNowCta.value = false
   // Skip all setup steps and go directly to dialer for internal testing
   currentPage.value = 'main'
   isSignedIn.value = true
