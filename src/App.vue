@@ -1057,8 +1057,10 @@ const promptSections = ref<{ title: string; items: string[] }[]>([
     ]
   }
 ])
-const collapsedSections = ref<Record<string, boolean>>({ 'Time-Based Contact Queries': true })
-const isSectionCollapsed = (title: string): boolean => !!collapsedSections.value[title]
+const collapsedSections = ref<Record<string, boolean>>(
+  Object.fromEntries(promptSections.value.map(s => [s.title, true]))
+)
+const isSectionCollapsed = (title: string): boolean => collapsedSections.value[title] !== false
 const toggleSection = (title: string): void => { collapsedSections.value[title] = !isSectionCollapsed(title) }
 const openPromptLibrary = (): void => {
   showPromptLibrary.value = true
