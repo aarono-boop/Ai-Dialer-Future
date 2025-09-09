@@ -383,6 +383,13 @@
             </div>
           </div>
 
+          <!-- Prompt Library Trigger -->
+          <div v-if="isSignedIn" class="mt-2 pt-2.5 flex justify-center">
+            <div class="w-[70%] flex justify-end">
+              <Button icon="pi pi-book" label="Prompts" text @click="openPromptLibrary" aria-label="Open prompt library" />
+            </div>
+          </div>
+
           <!-- Chat Input - positioned at bottom -->
           <div class="mt-2 pt-2.5 mb-4">
             <ChatInput
@@ -392,6 +399,21 @@
               @voice-input="handleVoiceInput"
             />
           </div>
+
+          <!-- Prompt Library Dialog -->
+          <Dialog v-model:visible="showPromptLibrary" modal header="Prompt Library" :style="{ width: '26rem' }" :breakpoints="{ '960px': '95vw' }">
+            <div class="flex flex-col gap-2">
+              <Button
+                v-for="(p, i) in promptItems"
+                :key="i"
+                :label="p"
+                icon="pi pi-angle-right"
+                class="w-full justify-start"
+                text
+                @click="selectPrompt(p)"
+              />
+            </div>
+          </Dialog>
 
           </div>
         </div>
@@ -900,6 +922,24 @@ const callDuration = ref<number>(0)
 const isManualHangUp = ref<boolean>(false) // Track if hang up was manual vs automatic
 const queueTime = ref<number>(14)
 const showLoadNewFileButton = ref<boolean>(false)
+
+// Prompt Library state
+const showPromptLibrary = ref<boolean>(false)
+const promptItems = ref<string[]>(['Show me leads not called in 3 weeks'])
+const openPromptLibrary = (): void => {
+  showPromptLibrary.value = true
+}
+const selectPrompt = (text: string): void => {
+  if (chatInputRef.value && chatInputRef.value.setInputValue) {
+    chatInputRef.value.setInputValue(text)
+  }
+  nextTick(() => {
+    if (chatInputRef.value && chatInputRef.value.focus) {
+      chatInputRef.value.focus()
+    }
+  })
+  showPromptLibrary.value = false
+}
 
 // Initialize coach management system
 const {
@@ -1867,7 +1907,7 @@ const sendMessage = (message: string): void => {
         'ARKON\'s practice mode can help you:',
         '• Rehearse your opening pitch with AI feedback',
         '• Practice handling common objections',
-        '��� Test different conversation flows',
+        '����� Test different conversation flows',
         '�� Record and review your delivery',
         'Would you like to practice a cold call opening or work on handling objections?'
       ])
