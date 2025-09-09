@@ -398,15 +398,17 @@
           <!-- Prompt Library Dialog -->
           <Dialog v-model:visible="showPromptLibrary" modal header="Prompt Library" :style="{ width: '26rem' }" :breakpoints="{ '960px': '95vw' }">
             <div class="flex flex-col items-start gap-2 text-left">
-              <Button
+              <a
                 v-for="(p, i) in promptItems"
                 :key="i"
-                :label="p"
-                icon="pi pi-angle-right"
-                class="justify-start"
-                text
-                @click="selectPrompt(p)"
-              />
+                href="#"
+                @click.prevent="selectPrompt(p)"
+                class="inline-flex items-center gap-2"
+                :aria-label="p"
+              >
+                <i class="pi pi-angle-right" aria-hidden="true"></i>
+                <span style="color: var(--p-primary-color);">{{ p }}</span>
+              </a>
             </div>
           </Dialog>
 
