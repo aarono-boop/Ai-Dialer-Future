@@ -3165,7 +3165,12 @@ const startDialerFromPrompt = (): void => {
 const sendFollowUpEmails = (): void => {
   addUserMessage('Send Follow-up Emails')
   showCallNowCta.value = false
-  addAIMessage("I'll draft and queue follow-up emails for these leads. You can review them in your CRM drafts.")
+  const listHtml = emailTemplates.value.map(t => `• ${t}`).join('<br>')
+  addAIMessageWithTyping([
+    "What email drafts would you like use?<br><br>",
+    listHtml
+  ])
+  showEmailDraftsCta.value = true
 }
 
 const saveAsCallList = (): void => {
@@ -3500,7 +3505,7 @@ const handleTermsCancel = () => {
   showActionButtons.value = false
   // Clear messages and show welcome message
   messages.value = []
-  addAIMessage('���� Welcome to ARKON! I\'m your AI calling assistant. I\'ll help you connect with more prospects and close more deals. What would you like to accomplish today?')
+  addAIMessage('������ Welcome to ARKON! I\'m your AI calling assistant. I\'ll help you connect with more prospects and close more deals. What would you like to accomplish today?')
 
   // Set focus context for header
   nextTick(() => {
