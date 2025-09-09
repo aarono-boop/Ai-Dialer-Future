@@ -1429,6 +1429,9 @@ const handleGoogleSignin = (): void => {
   // Remove initial long welcome bubble when returning
   messages.value = []
   addAIMessage('Welcome back! You\'re signed in with Google.')
+  // Show brief prior welcome bubble, then welcome-back bubble
+  addAIMessage('Welcome to the ARMOR® AI Dialer, your AI calling assistant.')
+  addAIMessage("Welcome back! You're signed in with Google.")
   // Do not prompt for upload; assume user already connected/uploaded previously
   showFileUploadForReturningUser.value = false
 
@@ -1456,8 +1459,10 @@ const handleLoginSuccess = (userData: any): void => {
   // Remove initial long welcome bubble when returning
   messages.value = []
 
-  // Returning user: do not show upload prompt
+  // Show brief prior welcome bubble, then welcome-back bubble
+  addAIMessage('Welcome to the ARMOR® AI Dialer, your AI calling assistant.')
   addAIMessage(`Welcome back, ${userData.name}!`)
+  // Returning user: do not show upload prompt
   showFileUploadForReturningUser.value = false
 
   // Clear any existing focus when navigating back to main app
