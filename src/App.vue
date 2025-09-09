@@ -1293,7 +1293,7 @@ const { scrollToBottom, scrollToBottomDuringTyping, scrollToUserMessage, scrollT
 
 // Hide the Call Now CTA automatically when the dialer is shown
 watch(() => showDialer.value, (val) => {
-  if (val) { showCallNowCta.value = false; showNewLeadsCta.value = false; showYesterdayNoAnswerCta.value = false; showTodayFollowupsCta.value = false; showHighAttemptsCta.value = false }
+  if (val) { showCallNowCta.value = false; showNewLeadsCta.value = false; showYesterdayNoAnswerCta.value = false; showTodayFollowupsCta.value = false; showHighAttemptsCta.value = false; showEmailDraftsCta.value = false }
 })
 
 // Ensure chat container and window scroll are reset to the very top
