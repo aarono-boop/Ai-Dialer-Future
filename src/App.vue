@@ -1372,6 +1372,9 @@ const goToMainApp = () => {
       }
     }, 100)
 
+    // Temporarily suppress auto-scroll-to-bottom from chat utils
+    suppressScrolling(2000)
+
     // Ensure scroll position is at the very top (account for async rendering)
     scrollChatToTop()
     requestAnimationFrame(() => scrollChatToTop())
@@ -1824,7 +1827,7 @@ const sendMessage = (message: string): void => {
         '<i class="pi pi-users"></i> Great idea! Call practice makes perfect.',
         'ARKON\'s practice mode can help you:',
         '• Rehearse your opening pitch with AI feedback',
-        '�� Practice handling common objections',
+        '• Practice handling common objections',
         '��� Test different conversation flows',
         '�� Record and review your delivery',
         'Would you like to practice a cold call opening or work on handling objections?'
