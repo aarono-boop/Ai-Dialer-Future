@@ -421,17 +421,17 @@
               </div>
 
               <div v-for="(section, si) in promptSections" :key="si" class="w-full">
-                <div class="mb-2 text-sm font-semibold flex items-center gap-2" style="color: var(--p-blue-500);">
+                <div class="mb-2 text-sm font-semibold">
                   <Button
                     @click="toggleSection(section.title)"
                     link
                     severity="secondary"
-                    class="p-0"
-                    :pt="{ root: { style: { padding: '0', width: '20px', height: '20px', minWidth: '20px !important', minHeight: '20px !important', '--p-button-padding-x': '0', '--p-button-padding-y': '0', '--p-button-icon-only-width': '20px', background: 'transparent', boxShadow: 'none' } }, icon: { style: { fontSize: '0.8rem', transform: isSectionCollapsed(section.title) ? 'rotate(0deg)' : 'rotate(90deg)' } } }"
+                    :label="section.title"
                     icon="pi pi-chevron-right"
+                    class="p-0 inline-flex items-center gap-2"
+                    :pt="{ root: { style: { padding: '0', background: 'transparent', boxShadow: 'none', color: 'var(--p-blue-500)', minWidth: '20px !important', minHeight: '20px !important' } }, icon: { style: { fontSize: '0.8rem', color: 'var(--p-blue-500)', transform: isSectionCollapsed(section.title) ? 'rotate(0deg)' : 'rotate(90deg)' } }, label: { style: { color: 'var(--p-blue-500)' } } }"
                     :aria-label="(isSectionCollapsed(section.title) ? 'Expand ' : 'Collapse ') + section.title"
                   />
-                  <span>{{ section.title }}</span>
                 </div>
                 <div v-if="!isSectionCollapsed(section.title)" class="flex flex-col gap-1 w-full">
                   <div v-for="(p, i) in section.items" :key="i" class="w-full flex items-center justify-between" :style="{ fontSize: '14px', lineHeight: '18px' }">
@@ -1994,7 +1994,7 @@ const sendMessage = (message: string): void => {
     } else if (lowerMessage.includes('connected to more calls') || lowerMessage.includes('get connected')) {
       addAIMessage([
         '<i class="pi pi-chart-line"></i> Great question! Here are ARKON\'s proven strategies to boost your connect rates:',
-        '• <strong>Smart Timing:</strong> Calls prospects when they\'re most likely to answer',
+        '��� <strong>Smart Timing:</strong> Calls prospects when they\'re most likely to answer',
         '• <strong>Local Presence:</strong> Uses local numbers to increase pickup rates',
         '• <strong>Voicemail Drop:</strong> Leaves personalized messages when they don\'t answer',
         '• <strong>Follow-up Sequences:</strong> Automatically schedules optimal callback times',
