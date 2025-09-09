@@ -191,7 +191,14 @@
           <!-- Call Now CTA - appears after leads list response -->
           <div v-if="showCallNowCta" class="mt-2 pt-5 flex justify-center">
             <div class="w-[70%] flex justify-center">
-              <Button label="Yes let's call them now" icon="pi pi-phone" @click="startDialerFromPrompt" class="w-1/2 px-6 py-3 font-semibold" />
+              <div class="w-full flex flex-col items-center gap-3">
+                <Button label="Yes let's call them now" icon="pi pi-phone" @click="startDialerFromPrompt" class="w-1/2 px-6 py-3 font-semibold" />
+                <div v-if="isSignedIn" class="w-full flex flex-wrap justify-center gap-2">
+                  <Button label="Send Follow-up Emails" severity="secondary" @click="sendFollowUpEmails" class="px-5 py-2 font-medium" />
+                  <Button label="Save as Call List" severity="secondary" @click="saveAsCallList" class="px-5 py-2 font-medium" />
+                  <Button label="Not Now" severity="secondary" @click="dismissCallOptions" class="px-5 py-2 font-medium" />
+                </div>
+              </div>
             </div>
           </div>
 
@@ -2902,6 +2909,21 @@ const continueQueue = (): void => {
 const startDialerFromPrompt = (): void => {
   showCallNowCta.value = false
   skipToDialer()
+}
+
+const sendFollowUpEmails = (): void => {
+  showCallNowCta.value = false
+  addAIMessage("I'll draft and queue follow-up emails for these leads. You can review them in your CRM drafts.")
+}
+
+const saveAsCallList = (): void => {
+  showCallNowCta.value = false
+  addAIMessage("Saved these leads as a new call list: 'Leads not called in 3 weeks'. You can open it from the Dialer.")
+}
+
+const dismissCallOptions = (): void => {
+  showCallNowCta.value = false
+  addAIMessage("Okay, I won't take action right now. Let me know when you're ready.")
 }
 
 const skipToDialer = (): void => {
