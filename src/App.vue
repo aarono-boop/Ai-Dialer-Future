@@ -204,6 +204,22 @@
             </div>
           </div>
 
+          <!-- New Leads Added This Week CTA -->
+          <div v-if="showNewLeadsCta" class="mt-2 pt-5 flex justify-center">
+            <div class="w-[70%] flex justify-center">
+              <div class="w-full grid grid-cols-2 gap-3">
+                <!-- Top-left primary -->
+                <Button label="Start New Lead Dial Session" icon="pi pi-phone" @click="startNewLeadDialSession" class="w-full px-6 py-3 font-semibold" />
+                <!-- Top-right secondary -->
+                <Button v-if="isSignedIn" label="Send Welcome Emails First" severity="secondary" @click="sendWelcomeEmailsFirst" class="w-full px-5 py-3 font-medium" />
+                <!-- Bottom-left secondary -->
+                <Button v-if="isSignedIn" label="Schedule for Later" severity="secondary" @click="scheduleForLater" class="w-full px-5 py-3 font-medium" />
+                <!-- Bottom-right secondary -->
+                <Button v-if="isSignedIn" label="Not Now" severity="secondary" @click="dismissNewLeadOptions" class="w-full px-5 py-3 font-medium" />
+              </div>
+            </div>
+          </div>
+
           <!-- Create Account CTA - shown after upload or CRM connect for new users -->
           <div v-if="showCreateAccountCTA && !isSignedIn" class="mt-2 pt-5 flex justify-center">
             <div class="w-[70%] flex justify-center">
@@ -931,6 +947,7 @@ const isSignedIn = ref<boolean>(false)
 const isReturningUser = ref<boolean>(false) // Track if user logged in vs created new account
 const showActionButtons = ref<boolean>(false)
 const showCallNowCta = ref<boolean>(false)
+const showNewLeadsCta = ref<boolean>(false)
 const showFileUploadForReturningUser = ref<boolean>(false)
 const welcomeTypingComplete = ref<boolean>(false)
 const congratulationsTypingComplete = ref<boolean>(false)
@@ -1225,7 +1242,7 @@ const { scrollToBottom, scrollToBottomDuringTyping, scrollToUserMessage, scrollT
 
 // Hide the Call Now CTA automatically when the dialer is shown
 watch(() => showDialer.value, (val) => {
-  if (val) showCallNowCta.value = false
+  if (val) { showCallNowCta.value = false; showNewLeadsCta.value = false }
 })
 
 // Ensure chat container and window scroll are reset to the very top
@@ -1268,6 +1285,11 @@ const handleTypingComplete = (index: number): void => {
   if (!showDialer.value && messages.value[index] && messages.value[index].content.some(line => line.includes('Here are 10 leads not called in the last 3 weeks'))) {
     setTimeout(() => {
       if (!showDialer.value) showCallNowCta.value = true
+    }, 150)
+  }
+  if (!showDialer.value && messages.value[index] && messages.value[index].content.some(line => line.includes("Here are new leads added this week that haven't been contacted yet"))) {
+    setTimeout(() => {
+      if (!showDialer.value) showNewLeadsCta.value = true
     }, 150)
   }
 
@@ -2104,6 +2126,47 @@ const sendMessage = (message: string): void => {
         table,
         '<br>Would you like me to start calling these now?'
       ])
+    } else if (
+      lowerMessage.includes('added this week') && (lowerMessage.includes('not contacted') || lowerMessage.includes('not contacted yet') || lowerMessage.includes('uncontacted'))
+    ) {
+      const leads = [
+        { name: 'Chloe Harris', date: 'Mon', source: 'Website' },
+        { name: 'Evan Brooks', date: 'Mon', source: 'HubSpot' },
+        { name: 'Zoe Mitchell', date: 'Tue', source: 'Referral' },
+        { name: 'Lucas Nguyen', date: 'Tue', source: 'LinkedIn' },
+        { name: 'Aiden Rivera', date: 'Wed', source: 'Salesforce' },
+        { name: 'Layla Scott', date: 'Wed', source: 'Website' },
+        { name: 'Henry Adams', date: 'Thu', source: 'Zoho' },
+        { name: 'Nora Bennett', date: 'Thu', source: 'Pipedrive' }
+      ]
+      const rows = leads.map((l, i) => `
+        <tr>
+          <td style=\"padding: 6px 8px 6px 0; width: 28px; color: var(--p-surface-300);\">${i + 1}.</td>
+          <td style=\"padding: 6px 0;\">${l.name}</td>
+          <td style=\"padding: 6px 0; text-align: right; color: var(--p-surface-200);\">${l.date}</td>
+          <td style=\"padding: 6px 0; text-align: right; color: var(--p-surface-200);\">${l.source}</td>
+        </tr>
+      `).join('')
+      const table = `
+        <table style=\"width: 100%; border-collapse: collapse; margin-top: 4px;\">
+          <thead>
+            <tr>
+              <th style=\"text-align: left; color: var(--p-surface-200); font-weight: 500; padding-bottom: 6px;\"></th>
+              <th style=\"text-align: left; color: var(--p-surface-200); font-weight: 500; padding-bottom: 6px;\">Name</th>
+              <th style=\"text-align: right; color: var(--p-surface-200); font-weight: 500; padding-bottom: 6px;\">Date Added</th>
+              <th style=\"text-align: right; color: var(--p-surface-200); font-weight: 500; padding-bottom: 6px;\">Source</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${rows}
+          </tbody>
+        </table>
+      `
+      addAIMessageWithTyping([
+        '<i class="pi pi-user-plus"></i> Here are new leads added this week that haven\'t been contacted yet:<br><br>',
+        table,
+        '<br>How would you like to proceed?'
+      ])
     } else if (lowerMessage.includes('call') || lowerMessage.includes('start')) {
       addAIMessage([
         'Perfect! Let\'s start calling. <i class="pi pi-phone"></i>',
@@ -2926,6 +2989,27 @@ const saveAsCallList = (): void => {
 const dismissCallOptions = (): void => {
   showCallNowCta.value = false
   addAIMessage("Okay, I won't take action right now. Let me know when you're ready.")
+}
+
+// Handlers for New Leads CTA
+const startNewLeadDialSession = (): void => {
+  showNewLeadsCta.value = false
+  skipToDialer()
+}
+
+const sendWelcomeEmailsFirst = (): void => {
+  showNewLeadsCta.value = false
+  addAIMessage("I'll generate welcome emails for these new leads and queue them for your review.")
+}
+
+const scheduleForLater = (): void => {
+  showNewLeadsCta.value = false
+  addAIMessage("Scheduled a new lead dial session for later. You can adjust in your Dialer settings.")
+}
+
+const dismissNewLeadOptions = (): void => {
+  showNewLeadsCta.value = false
+  addAIMessage("Okay, no action taken for now.")
 }
 
 const skipToDialer = (): void => {
