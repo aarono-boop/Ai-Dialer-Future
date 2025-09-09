@@ -1871,10 +1871,23 @@ const sendMessage = (message: string): void => {
       || lowerMessage.includes('leads not called in 3 weeks')
     ) {
       const names = ['Avery Collins','Noah Price','Mia Turner','Liam Brooks','Sofia Perez','Ethan Gray','Isabella Reed','Mason Clark','Olivia Hayes','James Walker']
-      const list = names.map((n, i) => `<div style="margin-bottom: 8px;">${i + 1}. ${n} — last contacted ${22 + i} days ago</div>`)
+      const rows = names.map((n, i) => `
+        <tr>
+          <td style="padding: 6px 8px 6px 0; width: 28px; color: var(--p-surface-300);">${i + 1}.</td>
+          <td style="padding: 6px 0;">${n}</td>
+          <td style="padding: 6px 0; text-align: right; color: var(--p-surface-200);">${22 + i} days ago</td>
+        </tr>
+      `).join('')
+      const table = `
+        <table style="width: 100%; border-collapse: collapse; margin-top: 4px;">
+          <tbody>
+            ${rows}
+          </tbody>
+        </table>
+      `
       addAIMessageWithTyping([
-        '<i class="pi pi-users"></i> Here are 10 leads not called in the last 3 weeks:<br>',
-        ...list,
+        '<i class="pi pi-users"></i> Here are 10 leads not called in the last 3 weeks:<br><br>',
+        table,
         '<br>Would you like me to start calling these now?'
       ])
     } else if (lowerMessage.includes('call') || lowerMessage.includes('start')) {
