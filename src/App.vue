@@ -112,6 +112,10 @@
                         </Card>
                       </div>
                     </div>
+                    <!-- Call Now button after leads list typing completes -->
+                    <div v-if="callNowButtonIndex === index" class="mt-3 flex justify-end">
+                      <Button label="Yes let's call them now" icon="pi pi-phone" @click="startDialerFromPrompt" />
+                    </div>
                   </template>
                 </ChatMessage>
 
