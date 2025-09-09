@@ -928,6 +928,9 @@ const contacts = [
     industry: 'Technology / SaaS',
     companySize: '250-500 employees',
     leadSource: 'Webinar Registration',
+    sourceType: 'crm',
+    sourceName: 'Salesforce',
+    sourceUrl: 'https://example.my.salesforce.com/lightning/r/Lead/00Q5g00000ABC123/view',
     notes: ''
   },
   {
