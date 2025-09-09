@@ -402,7 +402,7 @@
                 <div class="mb-2 font-semibold" style="color: var(--p-blue-500); font-size: 14px;">Favorites</div>
                 <div class="flex flex-col gap-1 w-full">
                   <div v-for="(p, i) in favoritePrompts" :key="'fav-'+i" class="w-full flex items-center justify-between" :style="{ fontSize: '14px', lineHeight: '18px' }">
-                    <a href="#" @click.prevent="selectPrompt(p)" class="inline-flex items-center gap-2 no-underline hover:no-underline" style="padding-left: 55px;" :aria-label="p">
+                    <a href="#" @click.prevent="selectPrompt(p)" class="inline-flex items-center gap-2 no-underline hover:no-underline" style="padding-left: 25px;" :aria-label="p">
                       <i class="pi pi-circle-fill" aria-hidden="true" style="font-size: 0.3rem; color: var(--p-surface-0);"></i>
                       <span style="color: var(--p-surface-0);">{{ p }}</span>
                     </a>
@@ -435,7 +435,7 @@
                 </div>
                 <div v-if="!isSectionCollapsed(section.title)" class="flex flex-col gap-1 w-full">
                   <div v-for="(p, i) in section.items" :key="i" class="w-full flex items-center justify-between" :style="{ fontSize: '14px', lineHeight: '18px' }">
-                    <a href="#" @click.prevent="selectPrompt(p)" class="inline-flex items-center gap-2 no-underline hover:no-underline" style="padding-left: 55px;" :aria-label="p">
+                    <a href="#" @click.prevent="selectPrompt(p)" class="inline-flex items-center gap-2 no-underline hover:no-underline" style="padding-left: 25px;" :aria-label="p">
                       <i class="pi pi-circle-fill" aria-hidden="true" style="font-size: 0.3rem; color: var(--p-surface-0);"></i>
                       <span style="color: var(--p-surface-0);">{{ p }}</span>
                     </a>
