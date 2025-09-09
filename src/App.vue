@@ -402,7 +402,7 @@
                 <div class="mb-2 text-sm font-semibold" style="color: var(--p-blue-500);">Favorites</div>
                 <div class="flex flex-col gap-1 w-full">
                   <div v-for="(p, i) in favoritePrompts" :key="'fav-'+i" class="w-full flex items-center justify-between" :style="{ fontSize: '14px', lineHeight: '18px' }">
-                    <a href="#" @click.prevent="selectPrompt(p)" class="inline-flex items-center gap-2" style="padding-left: 55px;" :aria-label="p">
+                    <a href="#" @click.prevent="selectPrompt(p)" class="inline-flex items-center gap-2 no-underline hover:no-underline" style="padding-left: 55px;" :aria-label="p">
                       <i class="pi pi-circle-fill" aria-hidden="true" style="font-size: 0.3rem; color: var(--p-surface-0);"></i>
                       <span style="color: var(--p-surface-0);">{{ p }}</span>
                     </a>
@@ -428,14 +428,14 @@
                     severity="secondary"
                     :label="section.title"
                     icon="pi pi-chevron-right"
-                    class="p-0 inline-flex items-center gap-2"
-                    :pt="{ root: { style: { padding: '0', background: 'transparent', boxShadow: 'none', color: 'var(--p-blue-500)', minWidth: '20px !important', minHeight: '20px !important' } }, icon: { style: { fontSize: '0.8rem', color: 'var(--p-blue-500)', transform: isSectionCollapsed(section.title) ? 'rotate(0deg)' : 'rotate(90deg)' } }, label: { style: { color: 'var(--p-blue-500)' } } }"
+                    class="p-0 inline-flex items-center gap-2 no-underline hover:no-underline"
+                    :pt="{ root: { style: { padding: '0', background: 'transparent', boxShadow: 'none', color: 'var(--p-blue-500)', minWidth: '20px !important', minHeight: '20px !important', textDecoration: 'none' } }, icon: { style: { fontSize: '0.8rem', color: 'var(--p-blue-500)', transform: isSectionCollapsed(section.title) ? 'rotate(0deg)' : 'rotate(90deg)' } }, label: { style: { color: 'var(--p-blue-500)', textDecoration: 'none' } } }"
                     :aria-label="(isSectionCollapsed(section.title) ? 'Expand ' : 'Collapse ') + section.title"
                   />
                 </div>
                 <div v-if="!isSectionCollapsed(section.title)" class="flex flex-col gap-1 w-full">
                   <div v-for="(p, i) in section.items" :key="i" class="w-full flex items-center justify-between" :style="{ fontSize: '14px', lineHeight: '18px' }">
-                    <a href="#" @click.prevent="selectPrompt(p)" class="inline-flex items-center gap-2" style="padding-left: 55px;" :aria-label="p">
+                    <a href="#" @click.prevent="selectPrompt(p)" class="inline-flex items-center gap-2 no-underline hover:no-underline" style="padding-left: 55px;" :aria-label="p">
                       <i class="pi pi-circle-fill" aria-hidden="true" style="font-size: 0.3rem; color: var(--p-surface-0);"></i>
                       <span style="color: var(--p-surface-0);">{{ p }}</span>
                     </a>
