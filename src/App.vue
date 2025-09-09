@@ -383,18 +383,13 @@
             </div>
           </div>
 
-          <!-- Prompt Library Trigger -->
-          <div v-if="isSignedIn" class="mt-2 pt-2.5 flex justify-center">
-            <div class="w-[70%] flex justify-end">
-              <Button icon="pi pi-book" label="Prompts" text @click="openPromptLibrary" aria-label="Open prompt library" />
-            </div>
-          </div>
-
           <!-- Chat Input - positioned at bottom -->
           <div class="mt-2 pt-2.5 mb-4">
             <ChatInput
               ref="chatInputRef"
               :customPlaceholder="getPlaceholderText()"
+              :showPromptLibraryIcon="isSignedIn"
+              @open-prompt-library="openPromptLibrary"
               @send-message="sendMessage"
               @voice-input="handleVoiceInput"
             />
@@ -1907,7 +1902,7 @@ const sendMessage = (message: string): void => {
         'ARKON\'s practice mode can help you:',
         '• Rehearse your opening pitch with AI feedback',
         '• Practice handling common objections',
-        '����� Test different conversation flows',
+        '��� Test different conversation flows',
         '�� Record and review your delivery',
         'Would you like to practice a cold call opening or work on handling objections?'
       ])
