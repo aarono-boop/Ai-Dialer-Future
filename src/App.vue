@@ -31,7 +31,7 @@
                     <CoachCarousel v-if="index === 0 && showCoachCarousel" @learn-more="openCoachInfoPanel" @practice="startPracticeCall" />
                     <!-- Email drafts selector inside AI bubble -->
                     <div v-if="showEmailDraftsCta && message.type === 'ai' && message.content.some(c => c.includes('What email drafts would you like use?'))" class="mt-3">
-                      <Listbox v-model="selectedEmailTemplate" :options="emailTemplates" optionLabel="label" optionValue="value" class="w-full" :pt="{ root: { style: { width: '100%' } } }" />
+                      <Listbox v-model="selectedEmailTemplate" :options="emailTemplates" optionLabel="label" optionValue="value" class="w-full email-drafts-listbox" :pt="{ root: { style: { width: '100%' } } }" />
                     </div>
                     <div v-if="!showCoachCarousel && ((index === 0 && !isSignedIn && welcomeTypingComplete) || (isSignedIn && showFileUploadForReturningUser && isReadyToUploadMessage(message, index)))" class="mt-5">
                       <div class="flex flex-col gap-4 items-stretch">
@@ -3202,10 +3202,8 @@ const sendFollowUpEmails = (): void => {
   showTodayFollowupsCta.value = false
   showHighAttemptsCta.value = false
 
-  const listHtml = emailTemplates.value.map(t => `• ${t.label}`).join('<br>')
   addAIMessageWithTyping([
-    "What email drafts would you like use?<br><br>",
-    listHtml
+    "What email drafts would you like use?"
   ])
   showEmailDraftsCta.value = true
 }
