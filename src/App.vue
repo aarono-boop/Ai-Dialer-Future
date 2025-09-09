@@ -1075,9 +1075,9 @@ const handleTypingComplete = (index: number): void => {
   }
 
   // Show call-now button after leads-not-called list finishes typing
-  if (messages.value[index] && messages.value[index].content.some(line => line.includes('Here are 10 leads not called in the last 3 weeks'))) {
+  if (!showDialer.value && messages.value[index] && messages.value[index].content.some(line => line.includes('Here are 10 leads not called in the last 3 weeks'))) {
     setTimeout(() => {
-      showCallNowCta.value = true
+      if (!showDialer.value) showCallNowCta.value = true
     }, 150)
   }
 
