@@ -397,13 +397,13 @@
 
           <!-- Prompt Library Dialog -->
           <Dialog v-model:visible="showPromptLibrary" modal header="Prompt Library" :style="{ width: '26rem' }" :breakpoints="{ '960px': '95vw' }">
-            <div class="flex flex-col gap-2">
+            <div class="flex flex-col items-start gap-2 text-left">
               <Button
                 v-for="(p, i) in promptItems"
                 :key="i"
                 :label="p"
                 icon="pi pi-angle-right"
-                class="w-full justify-start"
+                class="justify-start"
                 text
                 @click="selectPrompt(p)"
               />
