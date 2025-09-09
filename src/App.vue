@@ -189,7 +189,7 @@
           </div>
 
           <!-- Call Now CTA - appears after leads list response -->
-          <div v-if="showCallNowCta" class="mt-2 pt-5 flex justify-center">
+          <div v-if="showCallNowCta && !showEmailDraftsCta" class="mt-2 pt-5 flex justify-center">
             <div class="w-[70%] flex justify-center">
               <div class="w-full grid grid-cols-2 gap-3">
                 <!-- Top-left primary -->
@@ -1317,6 +1317,16 @@ const { scrollToBottom, scrollToBottomDuringTyping, scrollToUserMessage, scrollT
 // Hide the Call Now CTA automatically when the dialer is shown
 watch(() => showDialer.value, (val) => {
   if (val) { showCallNowCta.value = false; showNewLeadsCta.value = false; showYesterdayNoAnswerCta.value = false; showTodayFollowupsCta.value = false; showHighAttemptsCta.value = false; showEmailDraftsCta.value = false }
+})
+
+watch(() => showEmailDraftsCta.value, (on) => {
+  if (on) {
+    showCallNowCta.value = false
+    showNewLeadsCta.value = false
+    showYesterdayNoAnswerCta.value = false
+    showTodayFollowupsCta.value = false
+    showHighAttemptsCta.value = false
+  }
 })
 
 // Ensure chat container and window scroll are reset to the very top
@@ -3184,7 +3194,13 @@ const startDialerFromPrompt = (): void => {
 
 const sendFollowUpEmails = (): void => {
   addUserMessage('Send Follow-up Emails')
+  // Hide any other CTAs
   showCallNowCta.value = false
+  showNewLeadsCta.value = false
+  showYesterdayNoAnswerCta.value = false
+  showTodayFollowupsCta.value = false
+  showHighAttemptsCta.value = false
+
   const listHtml = emailTemplates.value.map(t => `• ${t.label}`).join('<br>')
   addAIMessageWithTyping([
     "What email drafts would you like use?<br><br>",
