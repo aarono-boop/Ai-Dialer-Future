@@ -37,6 +37,7 @@
       aria-label="View product information"
       type="button"
       tabindex="2"
+      v-tooltip.right="'About'"
     >
       <i class="pi pi-phone text-xl"></i>
     </button>
@@ -90,13 +91,14 @@
 
       <!-- Login button when not signed in -->
       <button
-        v-else
-        class="flex items-center justify-center p-2 hover:bg-gray-800 rounded-lg transition-colors cursor-pointer bg-transparent border-none text-gray-400 hover:text-white"
-        @click="$emit('login')"
-        aria-label="Sign in to your account"
-        type="button"
-        tabindex="3"
-      >
+      v-else
+      class="flex items-center justify-center p-2 hover:bg-gray-800 rounded-lg transition-colors cursor-pointer bg-transparent border-none text-gray-400 hover:text-white"
+      @click="$emit('login')"
+      aria-label="Sign in to your account"
+      type="button"
+      tabindex="3"
+      v-tooltip.right="'Login'"
+    >
         <i class="pi pi-sign-in text-xl"></i>
       </button>
     </div>
