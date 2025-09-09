@@ -745,7 +745,7 @@ const getDynamicCoachingFeedback = (): string => {
   const coachingMessages = [
     'Great connection! I heard you building rapport early—that\'s your sweet spot. Next call, try mirroring their pace a bit more to deepen that connection.',
     'Nice work staying patient through their objections. I noticed you got stronger as the call progressed. Carry that momentum into the next one.',
-    'You handled that beautifully! Your confidence really came through. Next time, try asking one more discovery question before presenting���it\'ll make your close even stronger.',
+    'You handled that beautifully! Your confidence really came through. Next time, try asking one more discovery question before presenting����it\'ll make your close even stronger.',
     'I loved how you listened for their pain points. Your empathy is one of your strongest assets. Now let\'s work on creating more urgency in your next call.',
     'Solid call! You kept them engaged throughout. I\'d love to see you slow down just a touch during the value proposition—let it sink in.',
     'That was textbook rapport building! Your energy is infectious. Next call, try to qualify their budget earlier in the conversation.',
@@ -1372,15 +1372,11 @@ const goToMainApp = () => {
       }
     }, 100)
 
-    // Ensure scroll position is at the very top
-    setTimeout(() => {
-      if (chatMessages.value) {
-        chatMessages.value.scrollTop = 0
-      }
-      try {
-        window.scrollTo({ top: 0, behavior: 'auto' })
-      } catch {}
-    }, 0)
+    // Ensure scroll position is at the very top (account for async rendering)
+    scrollChatToTop()
+    requestAnimationFrame(() => scrollChatToTop())
+    setTimeout(scrollChatToTop, 100)
+    setTimeout(scrollChatToTop, 300)
 
     // Announce page change to screen readers
     announceToScreenReader('Returned to main application. Press Tab to navigate with keyboard.')
