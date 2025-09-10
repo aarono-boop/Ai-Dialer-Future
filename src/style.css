@@ -187,6 +187,19 @@ div[class*="overflow-y-auto"]::-webkit-scrollbar-thumb:hover {
   text-indent: 5px !important;
 }
 
+/* Prevent hover padding collapse for all modal footer buttons */
+.p-dialog .p-dialog-footer .p-button,
+.p-dialog .p-dialog-footer .p-button:hover,
+.p-dialog .p-dialog-footer .p-button:focus,
+.p-dialog .p-dialog-footer .p-button:active,
+div[data-pc-name="dialog"] .p-dialog-footer .p-button,
+div[data-pc-name="dialog"] .p-dialog-footer .p-button:hover,
+div[data-pc-name="dialog"] .p-dialog-footer .p-button:focus,
+div[data-pc-name="dialog"] .p-dialog-footer .p-button:active {
+  padding: 0.5rem 0.75rem !important;
+  box-sizing: border-box;
+}
+
 /* PrimeVue Tooltip dark styling */
 /* Prefer token variables when supported, with direct rules as fallback */
 .p-tooltip {
