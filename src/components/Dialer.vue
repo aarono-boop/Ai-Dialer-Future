@@ -197,6 +197,7 @@
                   icon="pi pi-plus"
                   label="Add note"
                   class="shrink-0"
+                  :pt="{ root: { style: { padding: '4px 8px', fontSize: '.75rem' } } }"
                   @click="addNote"
                 />
               </div>
