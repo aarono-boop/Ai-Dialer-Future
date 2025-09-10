@@ -326,6 +326,23 @@
       </div>
     </div>
 
+    <!-- Transfer Modal -->
+    <Dialog
+      v-model:visible="showTransferDialog"
+      modal
+      header="Transfer Call"
+      :pt="{ root: { style: { width: '420px' } }, header: { style: { padding: '16px 16px 8px' } }, content: { style: { padding: '0 16px 8px' } }, footer: { style: { padding: '8px 16px 16px' } } }"
+    >
+      <div class="space-y-3">
+        <label for="transfer-to" class="text-sm" style="color: var(--p-surface-0);">Who would you like to transfer the call to?</label>
+        <InputText id="transfer-to" v-model="transferTarget" class="w-full" placeholder="Name, extension, or number" />
+        <div class="flex justify-end gap-2 pt-2">
+          <Button label="Cancel" severity="secondary" text @click="cancelTransfer" />
+          <Button label="Transfer" icon="pi pi-share-alt" :disabled="!transferTarget.trim()" @click="confirmTransfer" />
+        </div>
+      </div>
+    </Dialog>
+
     <!-- Keypad Modal -->
     <div v-if="showKeypadModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50" @click="closeKeypad" @keydown="handleKeypadKeydown" tabindex="-1">
       <div class="bg-gray-800 rounded-lg w-80 mx-4 my-8 overflow-hidden" @click.stop style="padding: 24px; min-height: 400px;">
@@ -404,6 +421,8 @@ import ToggleSwitch from 'primevue/toggleswitch'
 import TabView from 'primevue/tabview'
 import TabPanel from 'primevue/tabpanel'
 import Textarea from 'primevue/textarea'
+import Dialog from 'primevue/dialog'
+import InputText from 'primevue/inputtext'
 import { useCoaches } from '../composables/useCoaches'
 
 // Connect Score tooltip content
@@ -470,6 +489,10 @@ const { currentCoach } = useCoaches()
 const notesList = ref<{ date: string; text: string }[]>([])
 const newNote = ref('')
 
+// Transfer modal state
+const showTransferDialog = ref(false)
+const transferTarget = ref('')
+
 const formatDateTime = (d = new Date()): string => {
   const f = new Intl.DateTimeFormat('en-US', {
     month: 'short', day: 'numeric', year: 'numeric', hour: 'numeric', minute: '2-digit'
@@ -493,7 +516,19 @@ const initNotes = () => {
 onMounted(initNotes)
 
 const transferCall = () => {
-  emit('transfer')
+  showTransferDialog.value = true
+}
+
+const confirmTransfer = () => {
+  if (!transferTarget.value.trim()) return
+  emit('transfer', transferTarget.value.trim())
+  showTransferDialog.value = false
+  transferTarget.value = ''
+}
+
+const cancelTransfer = () => {
+  showTransferDialog.value = false
+  transferTarget.value = ''
 }
 
 const addNote = () => {
