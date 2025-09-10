@@ -181,11 +181,24 @@
             </template>
             <div class="space-y-4 text-sm" style="color: var(--p-surface-0);">
               <!-- Create Note -->
-              <div class="space-y-2">
-                <Textarea v-model="newNote" autoResize rows="3" placeholder="Type a note..." class="w-full" />
-                <div class="flex justify-end">
-                  <Button :disabled="!newNote.trim()" size="small" icon="pi pi-plus" label="Add note" @click="addNote" />
-                </div>
+              <div class="flex items-start gap-2">
+                <Textarea
+                  v-model="newNote"
+                  :autoResize="false"
+                  rows="2"
+                  placeholder="Type a note..."
+                  class="w-full flex-1"
+                  :pt="{ root: { style: { background: 'var(--p-surface-800)', border: '1px solid var(--p-surface-600)', color: 'var(--p-surface-0)' } } }"
+                  style="overflow: auto;"
+                />
+                <Button
+                  :disabled="!newNote.trim()"
+                  size="small"
+                  icon="pi pi-plus"
+                  label="Add note"
+                  class="shrink-0"
+                  @click="addNote"
+                />
               </div>
               <!-- Notes List -->
               <div v-for="(n, i) in notesList" :key="i" class="flex items-start gap-2">
