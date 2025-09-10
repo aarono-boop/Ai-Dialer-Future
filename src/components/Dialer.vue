@@ -110,7 +110,7 @@
         </div>
 
         <TabView :pt="{ inkbar: { style: { display: 'none' } } }">
-          <TabPanel>
+          <TabPanel value="details">
             <template #header>
               <span class="flex items-center gap-2"><i class="pi pi-id-card"></i><span>Details</span></span>
             </template>
@@ -175,14 +175,14 @@
               </table>
             </div>
           </TabPanel>
-          <TabPanel>
+          <TabPanel value="notes">
             <template #header>
               <span class="flex items-center gap-2"><i class="pi pi-pencil"></i><span>Notes</span></span>
             </template>
             <div class="space-y-4 text-sm" style="color: var(--p-surface-0);">
               <!-- Create Note -->
               <div class="space-y-2">
-                <InputTextarea v-model="newNote" autoResize rows="3" placeholder="Type a note..." class="w-full" />
+                <Textarea v-model="newNote" autoResize rows="3" placeholder="Type a note..." class="w-full" />
                 <div class="flex justify-end">
                   <Button :disabled="!newNote.trim()" size="small" icon="pi pi-plus" label="Add note" @click="addNote" />
                 </div>
@@ -197,7 +197,7 @@
               </div>
             </div>
           </TabPanel>
-          <TabPanel>
+          <TabPanel value="activity">
             <template #header>
               <span class="flex items-center gap-2"><i class="pi pi-history"></i><span>Activity</span></span>
             </template>
@@ -372,12 +372,12 @@
 </template>
 
 <script setup lang="ts">
-import { ref, nextTick, computed } from 'vue'
+import { ref, nextTick, computed, onMounted } from 'vue'
 import Button from 'primevue/button'
 import ToggleSwitch from 'primevue/toggleswitch'
 import TabView from 'primevue/tabview'
 import TabPanel from 'primevue/tabpanel'
-import InputTextarea from 'primevue/inputtextarea'
+import Textarea from 'primevue/textarea'
 import { useCoaches } from '../composables/useCoaches'
 
 // Connect Score tooltip content
@@ -387,7 +387,7 @@ const connectScoreTooltip = `Connect Score is a premium add-on feature that uses
 • Engagement history
 �� Phone metadata
 
-This lets teams focus their efforts on numbers with the greatest chance of a live answer���improving connect rates, morale, and performance.`
+This lets teams focus their efforts on numbers with the greatest chance of a live answer����improving connect rates, morale, and performance.`
 
 // Define props
 const props = defineProps<{
