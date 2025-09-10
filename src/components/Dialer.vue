@@ -1083,7 +1083,7 @@ const handleHoldKeydown = (event: KeyboardEvent) => {
 
 :deep(.p-tabview .p-tabview-tablist .p-tabview-tablist-item > a.p-tabview-tab-header),
 :deep(.p-tabview .p-tabview-nav .p-tabview-tablist-item > a.p-tabview-tab-header) {
-  border-bottom: 2px solid transparent !important;
+  border-bottom: 1px solid transparent !important;
   padding-bottom: 6px !important;
 }
 
