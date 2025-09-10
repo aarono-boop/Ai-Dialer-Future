@@ -488,10 +488,10 @@
               <div class="sticky top-0 z-10 bg-gray-900/80 pt-1 pb-1">
                 <InputText v-model="promptSearch" placeholder="Search prompts..." class="w-full" :pt="{ root: { style: { background: 'var(--p-surface-800)', border: '1px solid var(--p-surface-600)', color: 'var(--p-surface-0)' } } }" />
               </div>
-              <div v-if="favoritePrompts.length" class="w-full">
+              <div v-if="filteredFavoritePrompts.length" class="w-full">
                 <div class="mb-2 font-semibold" style="color: var(--p-blue-500); font-size: 14px;">Favorites</div>
                 <div class="flex flex-col gap-1 w-full">
-                  <div v-for="(p, i) in favoritePrompts" :key="'fav-'+i" class="w-full flex items-center justify-between" :style="{ fontSize: '14px', lineHeight: '18px' }">
+                  <div v-for="(p, i) in filteredFavoritePrompts" :key="'fav-'+i" class="w-full flex items-center justify-between" :style="{ fontSize: '14px', lineHeight: '18px' }">
                     <a href="#" @click.prevent="selectPrompt(p)" class="inline-flex items-center gap-2 no-underline hover:no-underline" style="padding-left: 25px;" :aria-label="p">
                       <i class="pi pi-circle-fill" aria-hidden="true" style="font-size: 0.3rem; color: var(--p-surface-0);"></i>
                       <span style="color: var(--p-surface-0);">{{ p }}</span>
@@ -510,7 +510,7 @@
                 </div>
               </div>
 
-              <div v-for="(section, si) in promptSections" :key="si" class="w-full">
+              <div v-for="(section, si) in promptSections" :key="si" class="w-full" v-if="getFilteredItems(section.items).length">
                 <div class="mb-2 text-sm font-semibold">
                   <Button
                     @click="toggleSection(section.title)"
@@ -523,8 +523,8 @@
                     :aria-label="(isSectionCollapsed(section.title) ? 'Expand ' : 'Collapse ') + section.title"
                   />
                 </div>
-                <div v-if="!isSectionCollapsed(section.title)" class="flex flex-col gap-1 w-full">
-                  <div v-for="(p, i) in section.items" :key="i" class="w-full flex items-center justify-between" :style="{ fontSize: '14px', lineHeight: '18px' }">
+                <div v-if="!isSectionCollapsed(section.title) || promptSearch.trim()" class="flex flex-col gap-1 w-full">
+                  <div v-for="(p, i) in getFilteredItems(section.items)" :key="i" class="w-full flex items-center justify-between" :style="{ fontSize: '14px', lineHeight: '18px' }">
                     <a href="#" @click.prevent="selectPrompt(p)" class="inline-flex items-center gap-2 no-underline hover:no-underline" style="padding-left: 25px;" :aria-label="p">
                       <i class="pi pi-circle-fill" aria-hidden="true" style="font-size: 0.3rem; color: var(--p-surface-0);"></i>
                       <span style="color: var(--p-surface-0);">{{ p }}</span>
