@@ -1096,7 +1096,7 @@ const handleHoldKeydown = (event: KeyboardEvent) => {
 
 :deep(.p-tabview .p-tabview-tablist .p-tabview-tablist-item[data-p-active="true"] > a.p-tabview-tab-header .p-tabview-tab-title),
 :deep(.p-tabview .p-tabview-nav .p-tabview-tablist-item[data-p-active="true"] > a.p-tabview-tab-header .p-tabview-tab-title) {
-  color: var(--p-primary-color) !important;
+  color: var(--p-blue-500) !important;
 }
 
 /* Custom ToggleSwitch styling - try multiple approaches */
