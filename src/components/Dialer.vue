@@ -139,11 +139,11 @@
                   </tr>
                   <tr>
                     <td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af;">Website:</td>
-                    <td style="padding: 4px 0; color: white;"><a :href="currentContact.website && currentContact.website.startsWith('http') ? currentContact.website : `https://${currentContact.website}`" target="_blank" rel="noopener noreferrer" class="underline" aria-label="Visit website">{{ currentContact.website }}</a></td>
+                    <td style="padding: 4px 0; color: white;"><a :href="normalizeHref(currentContact.website)" target="_blank" rel="noopener noreferrer" class="underline" aria-label="Visit website">{{ displayUrl(currentContact.website) }}</a></td>
                   </tr>
                   <tr>
                     <td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af;">LinkedIn:</td>
-                    <td style="padding: 4px 0; color: white;"><a :href="currentContact.linkedin && currentContact.linkedin.startsWith('http') ? currentContact.linkedin : `https://${currentContact.linkedin}`" target="_blank" rel="noopener noreferrer" class="underline" aria-label="View LinkedIn profile">{{ currentContact.linkedin }}</a></td>
+                    <td style="padding: 4px 0; color: white;"><a :href="normalizeHref(currentContact.linkedin)" target="_blank" rel="noopener noreferrer" class="underline" aria-label="View LinkedIn profile">{{ displayUrl(currentContact.linkedin) }}</a></td>
                   </tr>
                   <tr>
                     <td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af;">Industry:</td>
@@ -487,6 +487,16 @@ const addNote = () => {
   if (!text) return
   notesList.value.unshift({ date: formatDateTime(new Date()), text })
   newNote.value = ''
+}
+
+// URL helpers: keep href intact but simplify visible text
+const normalizeHref = (url?: string) => {
+  if (!url) return ''
+  return url.startsWith('http') ? url : `https://${url}`
+}
+const displayUrl = (url?: string) => {
+  if (!url) return ''
+  return url.replace(/^https?:\/\/(www\.)?/i, '')
 }
 
 // Activity timeline (sample data)
