@@ -428,6 +428,16 @@ const notes = computed(() => {
   ]
 })
 
+// Activity timeline (sample data)
+const activities = computed(() => {
+  return [
+    { date: 'Mar 6, 2025 9:04 AM', type: 'Call Connected', icon: 'pi-phone', text: 'Spoke 6m 12s. Qualified interest; scheduled demo for Tue 10:00 AM.' },
+    { date: 'Mar 5, 2025 3:18 PM', type: 'Email Sent', icon: 'pi-envelope', text: 'Intro email sent with case study and calendar link.' },
+    { date: 'Mar 5, 2025 3:12 PM', type: 'Voicemail', icon: 'pi-volume-up', text: 'No answer; left voicemail with callback number.' },
+    { date: 'Mar 4, 2025 11:45 AM', type: 'Call Attempt', icon: 'pi-phone', text: 'Rang 5 times; no pickup.' }
+  ]
+})
+
 // Helper method for coach initials
 const getCoachInitials = (name: string): string => {
   return name
