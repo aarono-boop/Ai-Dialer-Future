@@ -1116,7 +1116,7 @@ const handleHoldKeydown = (event: KeyboardEvent) => {
 
 :deep(.p-tabview .p-tabview-tablist .p-tabview-tablist-item[data-p-active="true"] > a.p-tabview-tab-header .p-tabview-tab-title),
 :deep(.p-tabview .p-tabview-nav .p-tabview-tablist-item[data-p-active="true"] > a.p-tabview-tab-header .p-tabview-tab-title) {
-  color: var(--p-blue-500) !important;
+  color: var(--p-blue-400) !important;
 }
 
 :deep(.p-tabview .p-tabview-tablist .p-tabview-tablist-item:not([data-p-active="true"]) > a.p-tabview-tab-header),
