@@ -573,6 +573,7 @@
             @pause-queue="handlePauseQueue"
             @complete-queue="handleCompleteQueue"
             @ai-coach-toggle="handleAICoachToggle"
+            @transfer="handleTransfer"
           />
         </div>
 
@@ -2859,6 +2860,12 @@ const handleMute = (muted: boolean): void => {
 
 const handleHold = (onHold: boolean): void => {
   addUserMessage(onHold ? 'Call placed on hold' : 'Call resumed')
+}
+
+const handleTransfer = (selection: string): void => {
+  const name = (selection || '').split('|')[0] || 'teammate'
+  addUserMessage(`Call transferred to ${name}.`)
+  handleNextContact()
 }
 
 const handleKeypad = (): void => {
