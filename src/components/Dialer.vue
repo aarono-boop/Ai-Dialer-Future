@@ -356,11 +356,13 @@
             item: { class: 'mic-dropdown-item hover:bg-white/10', style: { padding: '5px' } }
           }"
         />
-        <div class="flex justify-end gap-2 pt-2">
+      </div>
+      <template #footer>
+        <div class="flex items-center justify-end gap-2 w-full">
           <Button label="Cancel" severity="secondary" @click="cancelTransfer" />
           <Button label="Transfer" icon="pi pi-share-alt" :disabled="!transferSelection" @click="confirmTransfer" />
         </div>
-      </div>
+      </template>
     </Dialog>
 
     <!-- Keypad Modal -->
