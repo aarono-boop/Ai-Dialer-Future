@@ -1163,6 +1163,17 @@ const collapsedSections = ref<Record<string, boolean>>(
 )
 const isSectionCollapsed = (title: string): boolean => collapsedSections.value[title] !== false
 const toggleSection = (title: string): void => { collapsedSections.value[title] = !isSectionCollapsed(title) }
+
+// Prompt Library search
+const promptSearch = ref<string>('')
+const normalize = (s: string) => s.toLowerCase()
+const getFilteredItems = (items: string[]): string[] => {
+  const q = promptSearch.value.trim().toLowerCase()
+  if (!q) return items
+  return items.filter(p => normalize(p).includes(q))
+}
+const filteredFavoritePrompts = computed(() => getFilteredItems(favoritePrompts.value))
+
 const openPromptLibrary = (): void => {
   showPromptLibrary.value = true
 }
