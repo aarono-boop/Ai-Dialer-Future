@@ -358,9 +358,11 @@
         />
         <div class="flex justify-end gap-2 pt-2">
           <Button label="Cancel" severity="secondary" text @click="cancelTransfer"
-            :pt="{ root: { style: { borderWidth: '1px', borderStyle: 'solid', borderColor: 'transparent', padding: '0.5rem 0.75rem' } } }"
+            :pt="{ root: { style: { '--p-button-border-width': '1px', borderWidth: '1px', borderStyle: 'solid', borderColor: 'transparent', padding: '0.5rem 0.75rem', height: '2.25rem', lineHeight: '1', boxSizing: 'border-box' } } }"
           />
-          <Button label="Transfer" icon="pi pi-share-alt" :disabled="!transferSelection" @click="confirmTransfer" />
+          <Button label="Transfer" icon="pi pi-share-alt" :disabled="!transferSelection" @click="confirmTransfer"
+            :pt="{ root: { style: { '--p-button-border-width': '1px', borderWidth: '1px', borderStyle: 'solid', padding: '0.5rem 0.75rem', height: '2.25rem', lineHeight: '1', boxSizing: 'border-box' } } }"
+          />
         </div>
       </div>
     </Dialog>
