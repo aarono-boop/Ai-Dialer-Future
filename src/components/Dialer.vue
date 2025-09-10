@@ -335,10 +335,10 @@
     >
       <div class="space-y-3">
         <label for="transfer-to" class="text-sm" style="color: var(--p-surface-0);">Who would you like to transfer the call to?</label>
-        <InputText id="transfer-to" v-model="transferTarget" class="w-full" placeholder="Name, extension, or number" />
+        <Dropdown id="transfer-to" v-model="transferSelection" :options="transferOptions" optionLabel="label" optionValue="value" filter class="w-full" placeholder="Select teammate" />
         <div class="flex justify-end gap-2 pt-2">
           <Button label="Cancel" severity="secondary" text @click="cancelTransfer" />
-          <Button label="Transfer" icon="pi pi-share-alt" :disabled="!transferTarget.trim()" @click="confirmTransfer" />
+          <Button label="Transfer" icon="pi pi-share-alt" :disabled="!transferSelection" @click="confirmTransfer" />
         </div>
       </div>
     </Dialog>
@@ -422,7 +422,7 @@ import TabView from 'primevue/tabview'
 import TabPanel from 'primevue/tabpanel'
 import Textarea from 'primevue/textarea'
 import Dialog from 'primevue/dialog'
-import InputText from 'primevue/inputtext'
+import Dropdown from 'primevue/dropdown'
 import { useCoaches } from '../composables/useCoaches'
 
 // Connect Score tooltip content
@@ -491,7 +491,14 @@ const newNote = ref('')
 
 // Transfer modal state
 const showTransferDialog = ref(false)
-const transferTarget = ref('')
+const transferSelection = ref<string | null>(null)
+const transferOptions = [
+  { label: 'Alex Johnson (ext 201) — (312) 555-1201', value: 'Alex Johnson|201|(312) 555-1201' },
+  { label: 'Morgan Lee (ext 225) — (415) 555-2225', value: 'Morgan Lee|225|(415) 555-2225' },
+  { label: 'Priya Singh (ext 233) — (646) 555-1233', value: 'Priya Singh|233|(646) 555-1233' },
+  { label: 'Diego Alvarez (ext 244) — (213) 555-1244', value: 'Diego Alvarez|244|(213) 555-1244' },
+  { label: 'Samantha Park (ext 257) — (617) 555-1257', value: 'Samantha Park|257|(617) 555-1257' }
+] as const
 
 const formatDateTime = (d = new Date()): string => {
   const f = new Intl.DateTimeFormat('en-US', {
@@ -520,15 +527,15 @@ const transferCall = () => {
 }
 
 const confirmTransfer = () => {
-  if (!transferTarget.value.trim()) return
-  emit('transfer', transferTarget.value.trim())
+  if (!transferSelection.value) return
+  emit('transfer', transferSelection.value)
   showTransferDialog.value = false
-  transferTarget.value = ''
+  transferSelection.value = null
 }
 
 const cancelTransfer = () => {
   showTransferDialog.value = false
-  transferTarget.value = ''
+  transferSelection.value = null
 }
 
 const addNote = () => {
