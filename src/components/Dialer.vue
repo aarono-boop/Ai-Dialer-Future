@@ -357,7 +357,9 @@
           }"
         />
         <div class="flex justify-end gap-2 pt-2">
-          <Button label="Cancel" severity="secondary" text @click="cancelTransfer" />
+          <Button label="Cancel" severity="secondary" text @click="cancelTransfer"
+            :pt="{ root: { style: { borderWidth: '1px', borderStyle: 'solid', borderColor: 'transparent', padding: '0.5rem 0.75rem' } } }"
+          />
           <Button label="Transfer" icon="pi pi-share-alt" :disabled="!transferSelection" @click="confirmTransfer" />
         </div>
       </div>
@@ -452,7 +454,7 @@ const connectScoreTooltip = `Connect Score is a premium add-on feature that uses
 • Engagement history
 �� Phone metadata
 
-This lets teams focus their efforts on numbers with the greatest chance of a live answer����improving connect rates, morale, and performance.`
+This lets teams focus their efforts on numbers with the greatest chance of a live answer���improving connect rates, morale, and performance.`
 
 // Define props
 const props = defineProps<{
