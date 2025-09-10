@@ -1068,6 +1068,23 @@ const handleHoldKeydown = (event: KeyboardEvent) => {
   background-color: #b91c1c !important; /* red-700 - darker red for hover */
 }
 
+/* TabView active tab underline and base nav styling */
+:deep(.p-tabview .p-tabview-nav) {
+  border-bottom: 1px solid var(--p-surface-600);
+}
+
+:deep(.p-tabview .p-tabview-ink-bar) {
+  display: none;
+}
+
+:deep(.p-tabview .p-tabview-nav .p-tabview-tablist-item .p-tabview-tab-header) {
+  border-bottom: 2px solid transparent;
+}
+
+:deep(.p-tabview .p-tabview-nav .p-tabview-tablist-item.p-tabview-tablist-item-active .p-tabview-tab-header) {
+  border-bottom-color: var(--p-primary-color);
+}
+
 /* Custom ToggleSwitch styling - try multiple approaches */
 .custom-toggle .p-toggleswitch-slider {
   background-color: #374151 !important; /* Default background - gray-700 */
