@@ -938,6 +938,12 @@ const handleHoldKeydown = (event: KeyboardEvent) => {
 </script>
 
 <style scoped>
+:deep(.fixed-padding-button.p-button),
+:deep(.fixed-padding-button.p-button:hover),
+:deep(.fixed-padding-button.p-button:focus),
+:deep(.fixed-padding-button.p-button:active) {
+  padding: 0.5rem 0.75rem !important;
+}
 /* Custom scrollbar for contact details */
 ::-webkit-scrollbar {
   width: 4px;
