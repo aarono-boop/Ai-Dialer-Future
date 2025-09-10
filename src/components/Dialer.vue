@@ -331,7 +331,8 @@
       v-model:visible="showTransferDialog"
       modal
       header="Transfer Call"
-      :pt="{ root: { style: { width: '480px', minHeight: '220px' } }, header: { style: { padding: '16px 16px 8px' } }, content: { style: { padding: '0 16px 8px', overflowY: 'visible', maxHeight: 'none' } }, footer: { style: { padding: '8px 16px 16px' } } }"
+      :style="{ width: '28rem' }"
+      :breakpoints="{ '960px': '90vw' }"
     >
       <div class="space-y-3">
         <label for="transfer-to" class="text-sm" style="color: var(--p-surface-0);">Who would you like to transfer the call to?</label>
