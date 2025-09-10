@@ -120,10 +120,11 @@
         />
         <Button
           @click="$emit('trigger-file-upload')"
-          severity="secondary"
+          severity="primary"
           size="large"
           class="flex-1"
           label="Export Enriched File"
+          icon="pi pi-download"
         />
       </div>
     </div>
