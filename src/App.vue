@@ -510,7 +510,7 @@
                 </div>
               </div>
 
-              <div v-for="(section, si) in promptSections" :key="si" class="w-full" v-if="getFilteredItems(section.items).length">
+              <div v-for="(section, si) in filteredPromptSections" :key="si" class="w-full">
                 <div class="mb-2 text-sm font-semibold">
                   <Button
                     @click="toggleSection(section.title)"
@@ -524,7 +524,7 @@
                   />
                 </div>
                 <div v-if="!isSectionCollapsed(section.title) || promptSearch.trim()" class="flex flex-col gap-1 w-full">
-                  <div v-for="(p, i) in getFilteredItems(section.items)" :key="i" class="w-full flex items-center justify-between" :style="{ fontSize: '14px', lineHeight: '18px' }">
+                  <div v-for="(p, i) in section.items" :key="i" class="w-full flex items-center justify-between" :style="{ fontSize: '14px', lineHeight: '18px' }">
                     <a href="#" @click.prevent="selectPrompt(p)" class="inline-flex items-center gap-2 no-underline hover:no-underline" style="padding-left: 25px;" :aria-label="p">
                       <i class="pi pi-circle-fill" aria-hidden="true" style="font-size: 0.3rem; color: var(--p-surface-0);"></i>
                       <span style="color: var(--p-surface-0);">{{ p }}</span>
@@ -1176,6 +1176,13 @@ const getFilteredItems = (items: string[]): string[] => {
   return items.filter(p => normalize(p).includes(q))
 }
 const filteredFavoritePrompts = computed(() => getFilteredItems(favoritePrompts.value))
+const filteredPromptSections = computed(() => {
+  const q = promptSearch.value.trim()
+  if (!q) return promptSections.value
+  return promptSections.value
+    .map(s => ({ title: s.title, items: getFilteredItems(s.items) }))
+    .filter(s => s.items.length)
+})
 
 const openPromptLibrary = (): void => {
   showPromptLibrary.value = true
@@ -3686,7 +3693,7 @@ const handleAccountCreated = (accountData: any) => {
   isSignedIn.value = true
   showActionButtons.value = true
   updateWelcomeMessageTyping() // Update typing status for welcome message
-  addAIMessage('🎉 Welcome to ARKON! Your account has been created successfully. Let\'s start your first smart calling session! What are you trying to accomplish?')
+  addAIMessage('���� Welcome to ARKON! Your account has been created successfully. Let\'s start your first smart calling session! What are you trying to accomplish?')
 
   // Ensure scroll happens after action buttons are rendered
   setTimeout(() => {
