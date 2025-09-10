@@ -492,6 +492,10 @@ const initNotes = () => {
 
 onMounted(initNotes)
 
+const transferCall = () => {
+  emit('transfer')
+}
+
 const addNote = () => {
   const text = newNote.value.trim()
   if (!text) return
