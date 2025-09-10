@@ -274,6 +274,16 @@
             <i class="pi pi-pause"></i>
             <span class="text-xs">{{ isOnHold ? 'Resume' : 'Hold' }}</span>
           </Button>
+
+          <Button
+            @click="transferCall"
+            :disabled="callState === 'idle'"
+            severity="secondary"
+            class="flex flex-row items-center justify-center gap-1 py-3"
+          >
+            <i class="pi pi-share-alt"></i>
+            <span class="text-xs">Transfer</span>
+          </Button>
         </div>
 
         <!-- Hang Up Button -->
