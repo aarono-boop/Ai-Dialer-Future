@@ -188,7 +188,7 @@
                   rows="2"
                   placeholder="Type a note..."
                   class="w-full flex-1"
-                  :pt="{ root: { style: { background: 'var(--p-surface-800)', border: '1px solid var(--p-surface-600)', color: 'var(--p-surface-0)', padding: '5px', fontSize: '.75rem', borderRadius: 'var(--p-border-radius-sm)' } } }"
+                  :pt="{ root: { style: { background: 'var(--p-surface-800)', border: '1px solid var(--p-surface-600)', color: 'var(--p-surface-0)', padding: '10px', fontSize: '.75rem', borderRadius: 'var(--p-border-radius-sm)' } } }"
                   style="overflow: auto;"
                 />
                 <Button
@@ -197,7 +197,9 @@
                   icon="pi pi-plus"
                   label="Add note"
                   class="shrink-0"
-                  :pt="{ root: { style: { padding: '4px 8px', fontSize: '.75rem' } } }"
+                  severity="secondary"
+                  size="small"
+                  class="pause-queue-compact shrink-0"
                   @click="addNote"
                 />
               </div>
