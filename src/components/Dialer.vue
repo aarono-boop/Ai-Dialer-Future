@@ -356,7 +356,7 @@ const connectScoreTooltip = `Connect Score is a premium add-on feature that uses
 
 • Carrier data
 • Engagement history
-�� Phone metadata
+���� Phone metadata
 
 This lets teams focus their efforts on numbers with the greatest chance of a live answer���improving connect rates, morale, and performance.`
 
@@ -1121,12 +1121,12 @@ const handleHoldKeydown = (event: KeyboardEvent) => {
 
 :deep(.p-tabview .p-tabview-tablist .p-tabview-tablist-item:not([data-p-active="true"]) > a.p-tabview-tab-header),
 :deep(.p-tabview .p-tabview-nav .p-tabview-tablist-item:not([data-p-active="true"]) > a.p-tabview-tab-header) {
-  color: var(--p-blue-300) !important;
+  color: var(--p-surface-0) !important;
 }
 
 :deep(.p-tabview .p-tabview-tablist .p-tabview-tablist-item:not([data-p-active="true"]) > a.p-tabview-tab-header .p-tabview-tab-title),
 :deep(.p-tabview .p-tabview-nav .p-tabview-tablist-item:not([data-p-active="true"]) > a.p-tabview-tab-header .p-tabview-tab-title) {
-  color: var(--p-blue-300) !important;
+  color: var(--p-surface-0) !important;
 }
 
 /* Custom ToggleSwitch styling - try multiple approaches */
