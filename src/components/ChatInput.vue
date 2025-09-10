@@ -27,6 +27,7 @@
       <Button
         v-if="showPromptLibraryIcon"
         @click="emit('open-prompt-library')"
+        v-tooltip="'Open prompt library'"
         text
         icon="pi pi-book"
         class="w-10 h-10 flex items-center justify-center text-white transition-colors duration-200 hover:opacity-80"
