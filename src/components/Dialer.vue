@@ -1079,10 +1079,16 @@ const handleHoldKeydown = (event: KeyboardEvent) => {
 
 :deep(.p-tabview .p-tabview-nav .p-tabview-tablist-item .p-tabview-tab-header) {
   border-bottom: 2px solid transparent;
+  padding-bottom: 6px;
 }
 
 :deep(.p-tabview .p-tabview-nav .p-tabview-tablist-item.p-tabview-tablist-item-active .p-tabview-tab-header) {
   border-bottom-color: var(--p-primary-color);
+  color: var(--p-primary-color);
+}
+
+:deep(.p-tabview .p-tabview-nav .p-tabview-tablist-item.p-tabview-tablist-item-active .p-tabview-tab-title) {
+  color: var(--p-primary-color);
 }
 
 /* Custom ToggleSwitch styling - try multiple approaches */
