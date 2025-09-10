@@ -335,7 +335,27 @@
     >
       <div class="space-y-3">
         <label for="transfer-to" class="text-sm" style="color: var(--p-surface-0);">Who would you like to transfer the call to?</label>
-        <Dropdown id="transfer-to" v-model="transferSelection" :options="transferOptions" optionLabel="label" optionValue="value" filter class="w-full" placeholder="Select teammate" />
+        <Dropdown
+          id="transfer-to"
+          v-model="transferSelection"
+          :options="transferOptions"
+          optionLabel="label"
+          optionValue="value"
+          filter
+          class="w-full"
+          placeholder="Select teammate"
+          variant="filled"
+          appendTo="body"
+          :pt="{
+            root: { style: { background: 'var(--p-surface-800)', border: '1px solid rgba(255,255,255,0.15)', borderRadius: '4px', padding: '5px' } },
+            panel: { class: 'mic-dropdown-panel', style: { background: 'var(--p-surface-800)', border: '1px solid rgba(255,255,255,0.15)', borderRadius: '4px' } },
+            overlay: { class: 'mic-dropdown-panel', style: { background: 'var(--p-surface-800)', border: '1px solid rgba(255,255,255,0.15)', borderRadius: '4px' } },
+            content: { class: 'mic-dropdown-content', style: { background: 'var(--p-surface-800)', padding: '5px' } },
+            list: { class: 'mic-dropdown-list', style: { background: 'var(--p-surface-800)' } },
+            items: { class: 'mic-dropdown-list', style: { background: 'var(--p-surface-800)' } },
+            item: { class: 'mic-dropdown-item hover:bg-white/10', style: { padding: '5px' } }
+          }"
+        />
         <div class="flex justify-end gap-2 pt-2">
           <Button label="Cancel" severity="secondary" text @click="cancelTransfer" />
           <Button label="Transfer" icon="pi pi-share-alt" :disabled="!transferSelection" @click="confirmTransfer" />
