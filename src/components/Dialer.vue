@@ -109,7 +109,7 @@
           <p class="text-white text-sm">{{ currentContact.title }} at {{ currentContact.company }}</p>
         </div>
 
-        <TabView>
+        <TabView :pt="{ inkbar: { style: { height: '2px', backgroundColor: 'var(--p-primary-color)' } }, nav: { style: { borderBottom: '1px solid var(--p-surface-600)' } } }">
           <TabPanel header="Details">
             <div class="text-sm">
               <table style="width: 100%; border-collapse: collapse;">
