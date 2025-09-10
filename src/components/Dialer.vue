@@ -189,6 +189,20 @@
               </div>
             </div>
           </TabPanel>
+          <TabPanel>
+            <template #header>
+              <span class="flex items-center gap-2"><i class="pi pi-history"></i><span>Activity</span></span>
+            </template>
+            <div class="space-y-3 text-sm" style="color: var(--p-surface-0);">
+              <div v-for="(a, i) in activities" :key="i" class="flex items-start gap-2">
+                <i :class="['pi', a.icon, 'mt-1']" style="color: var(--p-blue-400);"></i>
+                <div>
+                  <div class="text-xs" style="color: var(--p-surface-300);">{{ a.date }} · {{ a.type }}</div>
+                  <div style="white-space: pre-wrap;">{{ a.text }}</div>
+                </div>
+              </div>
+            </div>
+          </TabPanel>
         </TabView>
       </div>
     </div>
