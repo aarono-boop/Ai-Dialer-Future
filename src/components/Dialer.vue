@@ -173,8 +173,14 @@
             </div>
           </TabPanel>
           <TabPanel header="Notes">
-            <div class="text-sm" style="color: var(--p-surface-0); white-space: pre-wrap;">
-              {{ currentContact.notes || 'No notes yet.' }}
+            <div class="space-y-3 text-sm" style="color: var(--p-surface-0);">
+              <div v-for="(n, i) in notes" :key="i" class="flex items-start gap-2">
+                <i class="pi pi-clock mt-1" style="color: var(--p-blue-400);"></i>
+                <div>
+                  <div class="text-xs" style="color: var(--p-surface-300);">{{ n.date }}</div>
+                  <div style="white-space: pre-wrap;">{{ n.text }}</div>
+                </div>
+              </div>
             </div>
           </TabPanel>
         </TabView>
@@ -401,6 +407,20 @@ const keypadButtonRef = ref<any>(null)
 
 // Coach system integration
 const { currentCoach } = useCoaches()
+
+// Notes for contact (sample history if none present)
+const notes = computed(() => {
+  if (props.currentContact && props.currentContact.notes) {
+    return [
+      { date: 'Today 2:15 PM', text: props.currentContact.notes }
+    ]
+  }
+  return [
+    { date: 'Mar 4, 2025 3:42 PM', text: 'Call answered. Spoke with Sam; interested in a quick demo next week. Sent follow-up email with calendar link.' },
+    { date: 'Feb 26, 2025 11:08 AM', text: 'Left voicemail #2. Mentioned recent product updates and invited to book time.' },
+    { date: 'Feb 19, 2025 9:31 AM', text: 'Left voicemail #1. Number rang 5 times; no pickup.' }
+  ]
+})
 
 // Helper method for coach initials
 const getCoachInitials = (name: string): string => {
