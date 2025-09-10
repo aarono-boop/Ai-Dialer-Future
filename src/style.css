@@ -181,6 +181,12 @@ div[class*="overflow-y-auto"]::-webkit-scrollbar-thumb:hover {
   background: #6b7280 !important;
 }
 
+/* Dropdown label extra left padding for certain dropdowns */
+.mic-like-dropdown .p-dropdown-label,
+.mic-like-dropdown .p-select-label {
+  text-indent: 5px !important;
+}
+
 /* PrimeVue Tooltip dark styling */
 /* Prefer token variables when supported, with direct rules as fallback */
 .p-tooltip {

@@ -22,7 +22,7 @@
               optionLabel="label"
               optionValue="deviceId"
               placeholder="Select microphone"
-              class="flex-1"
+              class="flex-1 mic-like-dropdown"
               variant="filled"
               appendTo="body"
               :pt="{
