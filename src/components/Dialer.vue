@@ -342,7 +342,7 @@
           optionLabel="label"
           optionValue="value"
           filter
-          class="w-full"
+          class="w-full mic-like-dropdown"
           placeholder="Select teammate"
           variant="filled"
           appendTo="body"
@@ -452,7 +452,7 @@ const connectScoreTooltip = `Connect Score is a premium add-on feature that uses
 • Engagement history
 �� Phone metadata
 
-This lets teams focus their efforts on numbers with the greatest chance of a live answer���improving connect rates, morale, and performance.`
+This lets teams focus their efforts on numbers with the greatest chance of a live answer����improving connect rates, morale, and performance.`
 
 // Define props
 const props = defineProps<{
