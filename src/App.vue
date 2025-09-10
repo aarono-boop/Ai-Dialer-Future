@@ -29,7 +29,7 @@
                   <template #additional-content>
                     <!-- File Upload Area - shown inside welcome message for new users or ready to upload message for returning users -->
                     <FileUpload
-                      v-if="(index === 0 && !isSignedIn) || (isSignedIn && showFileUploadForReturningUser && isReadyToUploadMessage(message, index))"
+                      v-if="(index === 0 && (!isSignedIn || (isSignedIn && showFileUploadForReturningUser))) || (isSignedIn && showFileUploadForReturningUser && isReadyToUploadMessage(message, index))"
                       @trigger-upload="simulateFileUpload"
                       @file-selected="onFileSelect"
                       @file-dropped="simulateFileUpload"
@@ -746,6 +746,51 @@ const showProductPage = () => {
 
 const goToMainApp = () => {
   currentPage.value = 'main'
+
+  if (isSignedIn.value) {
+    // Reset UI state but keep user signed in
+    showDialer.value = false
+    showActionButtons.value = false
+    showContactPreviewButtons.value = false
+    showPhoneVerificationButton.value = false
+    showStartDialingButton.value = false
+    showDispositionButtons.value = false
+    showContinueQueueButton.value = false
+    waitingForNotesInput.value = false
+    currentDisposition.value = ''
+    showSessionSummary.value = false
+    showLoadNewFileButton.value = false
+    hasUploadedFile.value = false
+
+    // Reset calling state
+    callState.value = 'ended'
+    callDuration.value = 0
+    queueTime.value = 14
+    currentContactIndex.value = 0
+    dispositionSet.value = false
+    queuePaused.value = false
+    queueCompletionReady.value = false
+    waitingForTryAgainResponse.value = false
+    dispositionButtonClicked.value = false
+
+    // Reset messages to welcome
+    messages.value = [
+      {
+        type: 'ai',
+        content: [
+          'Welcome! I\'m <strong>ARKON</strong>, your AI calling assistant.<\br><\br>Drop your contact file here and I\'ll show you exactly who\'s most likely to pick up right now.'
+        ]
+      }
+    ]
+
+    // Show file upload under welcome for signed-in users
+    showFileUploadForReturningUser.value = true
+
+    // Clear any timers
+    if (callTimer) { clearInterval(callTimer); callTimer = null }
+    if (queueTimer) { clearInterval(queueTimer); queueTimer = null }
+    if (callSimulationTimeout) { clearTimeout(callSimulationTimeout); callSimulationTimeout = null }
+  }
 
   // Clear any existing focus when navigating to main app
   nextTick(() => {
