@@ -260,6 +260,7 @@ onUnmounted(() => teardown())
 :deep(.p-dropdown .p-dropdown-label),
 :deep(.p-select .p-select-label) {
   font-size: 0.875rem !important;
+  text-indent: 5px !important;
 }
 :deep(.p-dropdown-panel),
 :deep(.p-select-overlay) {
