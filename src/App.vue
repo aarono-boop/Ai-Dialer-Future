@@ -483,7 +483,7 @@
           </div>
 
           <!-- Prompt Library Dialog -->
-          <Dialog v-model:visible="showPromptLibrary" modal appendTo="body" header="Prompt Library" :style="{ width: '51%', zIndex: 1000 }" :pt="{ root: { style: { marginLeft: '50px', overflow: 'hidden' } }, content: { style: { height: '345px', overflowY: 'auto', overflowX: 'hidden', paddingRight: '12px', paddingBottom: '10px', boxSizing: 'border-box', scrollbarGutter: 'stable', borderBottomRightRadius: 'inherit' } } }" :breakpoints="{ '960px': '95vw' }">
+          <Dialog v-model:visible="showPromptLibrary" modal appendTo="body" header="Prompt Library" :style="{ width: '51%', zIndex: 1000 }" :pt="{ root: { style: { marginLeft: '50px', overflow: 'hidden' } }, header: { style: { padding: '20px 20px 10px' } }, content: { style: { height: '345px', overflowY: 'auto', overflowX: 'hidden', paddingRight: '12px', paddingBottom: '10px', boxSizing: 'border-box', scrollbarGutter: 'stable', borderBottomRightRadius: 'inherit' } } }" :breakpoints="{ '960px': '95vw' }">
             <div class="flex flex-col gap-3 text-left w-full">
               <div class="sticky top-0 z-10 pt-1 pb-1">
                 <InputText v-model="promptSearch" placeholder="Search prompts..." class="w-full" :pt="{ root: { style: { background: 'var(--p-surface-800)', border: '1px solid var(--p-surface-600)', color: 'var(--p-surface-0)' } } }" />
