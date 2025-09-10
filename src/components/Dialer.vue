@@ -118,47 +118,47 @@
               <table style="width: 100%; border-collapse: collapse;">
                 <tbody>
                   <tr>
-                    <td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af;">Phone:</td>
+                    <td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af; white-space: nowrap;">Phone:</td>
                     <td style="padding: 4px 0; color: white;">{{ currentContact.phone }}</td>
                   </tr>
                   <tr>
-                    <td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af;">Connect Score:</td>
+                    <td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af; white-space: nowrap;">Connect Score:</td>
                     <td style="padding: 4px 0; color: white;">{{ currentContact.connectScore }}</td>
                   </tr>
                   <tr>
-                    <td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af;">Email:</td>
+                    <td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af; white-space: nowrap;">Email:</td>
                     <td style="padding: 4px 0; color: white;"><a :href="`mailto:${currentContact.email}`" class="underline" aria-label="Send email">{{ currentContact.email }}</a></td>
                   </tr>
                   <tr>
-                    <td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af;">Address:</td>
+                    <td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af; white-space: nowrap;">Address:</td>
                     <td style="padding: 4px 0; color: white;">{{ currentContact.address }}</td>
                   </tr>
                   <tr>
-                    <td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af;">Local Time:</td>
+                    <td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af; white-space: nowrap;">Local Time:</td>
                     <td style="padding: 4px 0; color: white;">{{ currentContact.localTime }}</td>
                   </tr>
                   <tr>
-                    <td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af;">Website:</td>
+                    <td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af; white-space: nowrap;">Website:</td>
                     <td style="padding: 4px 0; color: white;"><a :href="normalizeHref(currentContact.website)" target="_blank" rel="noopener noreferrer" class="underline" aria-label="Visit website">{{ displayUrl(currentContact.website) }}</a></td>
                   </tr>
                   <tr>
-                    <td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af;">LinkedIn:</td>
+                    <td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af; white-space: nowrap;">LinkedIn:</td>
                     <td style="padding: 4px 0; color: white;"><a :href="normalizeHref(currentContact.linkedin)" target="_blank" rel="noopener noreferrer" class="underline" aria-label="View LinkedIn profile">{{ displayUrl(currentContact.linkedin) }}</a></td>
                   </tr>
                   <tr>
-                    <td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af;">Industry:</td>
+                    <td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af; white-space: nowrap;">Industry:</td>
                     <td style="padding: 4px 0; color: white;">{{ currentContact.industry }}</td>
                   </tr>
                   <tr>
-                    <td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af;">Company Size:</td>
+                    <td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af; white-space: nowrap;">Company Size:</td>
                     <td style="padding: 4px 0; color: white;">{{ currentContact.companySize }}</td>
                   </tr>
                   <tr>
-                    <td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af;">Lead Source:</td>
+                    <td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af; white-space: nowrap;">Lead Source:</td>
                     <td style="padding: 4px 0; color: white;">{{ currentContact.leadSource }}</td>
                   </tr>
                   <tr v-if="currentContact.sourceUrl">
-                    <td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af;">Data Source:</td>
+                    <td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af; white-space: nowrap;">Data Source:</td>
                     <td style="padding: 4px 0; color: white;">
                       <a
                         :href="currentContact.sourceUrl && currentContact.sourceUrl.startsWith('http') ? currentContact.sourceUrl : `https://${currentContact.sourceUrl}`"
