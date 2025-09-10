@@ -112,7 +112,7 @@
         <TabView :pt="{ inkbar: { style: { display: 'none' } } }">
           <TabPanel value="details">
             <template #header>
-              <span class="flex items-center gap-2"><i class="pi pi-id-card"></i><span>Details</span></span>
+              <span class="flex items-center gap-2 text-xs"><i class="pi pi-id-card"></i><span>Details</span></span>
             </template>
             <div class="text-sm">
               <table style="width: 100%; border-collapse: collapse;">
@@ -177,7 +177,7 @@
           </TabPanel>
           <TabPanel value="notes">
             <template #header>
-              <span class="flex items-center gap-2"><i class="pi pi-pencil"></i><span>Notes</span></span>
+              <span class="flex items-center gap-2 text-xs"><i class="pi pi-pencil"></i><span>Notes</span></span>
             </template>
             <div class="space-y-4 text-sm" style="color: var(--p-surface-0);">
               <!-- Create Note -->
@@ -215,7 +215,7 @@
           </TabPanel>
           <TabPanel value="activity">
             <template #header>
-              <span class="flex items-center gap-2"><i class="pi pi-history"></i><span>Activity</span></span>
+              <span class="flex items-center gap-2 text-xs"><i class="pi pi-history"></i><span>Activity</span></span>
             </template>
             <div class="space-y-3 text-sm" style="color: var(--p-surface-0);">
               <div v-for="(a, i) in activities" :key="i" class="flex items-start gap-2">
