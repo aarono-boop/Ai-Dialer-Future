@@ -179,8 +179,16 @@
             <template #header>
               <span class="flex items-center gap-2"><i class="pi pi-pencil"></i><span>Notes</span></span>
             </template>
-            <div class="space-y-3 text-sm" style="color: var(--p-surface-0);">
-              <div v-for="(n, i) in notes" :key="i" class="flex items-start gap-2">
+            <div class="space-y-4 text-sm" style="color: var(--p-surface-0);">
+              <!-- Create Note -->
+              <div class="space-y-2">
+                <InputTextarea v-model="newNote" autoResize rows="3" placeholder="Type a note..." class="w-full" />
+                <div class="flex justify-end">
+                  <Button :disabled="!newNote.trim()" size="small" icon="pi pi-plus" label="Add note" @click="addNote" />
+                </div>
+              </div>
+              <!-- Notes List -->
+              <div v-for="(n, i) in notesList" :key="i" class="flex items-start gap-2">
                 <i class="pi pi-clock mt-1" style="color: var(--p-blue-400);"></i>
                 <div>
                   <div class="text-xs" style="color: var(--p-surface-300);">{{ n.date }}</div>
@@ -369,6 +377,7 @@ import Button from 'primevue/button'
 import ToggleSwitch from 'primevue/toggleswitch'
 import TabView from 'primevue/tabview'
 import TabPanel from 'primevue/tabpanel'
+import InputTextarea from 'primevue/inputtextarea'
 import { useCoaches } from '../composables/useCoaches'
 
 // Connect Score tooltip content
@@ -429,18 +438,37 @@ const keypadButtonRef = ref<any>(null)
 const { currentCoach } = useCoaches()
 
 // Notes for contact (sample history if none present)
-const notes = computed(() => {
+const notesList = ref<{ date: string; text: string }[]>([])
+const newNote = ref('')
+
+const formatDateTime = (d = new Date()): string => {
+  const f = new Intl.DateTimeFormat('en-US', {
+    month: 'short', day: 'numeric', year: 'numeric', hour: 'numeric', minute: '2-digit'
+  })
+  return f.format(d)
+}
+
+const initNotes = () => {
+  notesList.value = []
   if (props.currentContact && props.currentContact.notes) {
-    return [
-      { date: 'Today 2:15 PM', text: props.currentContact.notes }
+    notesList.value.push({ date: `Today ${new Date().toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' })}` , text: props.currentContact.notes })
+  } else {
+    notesList.value = [
+      { date: 'Mar 4, 2025 3:42 PM', text: 'Call answered. Spoke with Sam; interested in a quick demo next week. Sent follow-up email with calendar link.' },
+      { date: 'Feb 26, 2025 11:08 AM', text: 'Left voicemail #2. Mentioned recent product updates and invited to book time.' },
+      { date: 'Feb 19, 2025 9:31 AM', text: 'Left voicemail #1. Number rang 5 times; no pickup.' }
     ]
   }
-  return [
-    { date: 'Mar 4, 2025 3:42 PM', text: 'Call answered. Spoke with Sam; interested in a quick demo next week. Sent follow-up email with calendar link.' },
-    { date: 'Feb 26, 2025 11:08 AM', text: 'Left voicemail #2. Mentioned recent product updates and invited to book time.' },
-    { date: 'Feb 19, 2025 9:31 AM', text: 'Left voicemail #1. Number rang 5 times; no pickup.' }
-  ]
-})
+}
+
+onMounted(initNotes)
+
+const addNote = () => {
+  const text = newNote.value.trim()
+  if (!text) return
+  notesList.value.unshift({ date: formatDateTime(new Date()), text })
+  newNote.value = ''
+}
 
 // Activity timeline (sample data)
 const activities = computed(() => {
