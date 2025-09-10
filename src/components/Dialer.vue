@@ -142,7 +142,7 @@
                     <td style="padding: 4px 0; color: white;"><a :href="currentContact.website && currentContact.website.startsWith('http') ? currentContact.website : `https://${currentContact.website}`" target="_blank" rel="noopener noreferrer" class="underline" aria-label="Visit website">{{ currentContact.website }}</a></td>
                   </tr>
                   <tr>
-                    <td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af;">LinkedIn Profile:</td>
+                    <td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af;">LinkedIn:</td>
                     <td style="padding: 4px 0; color: white;"><a :href="currentContact.linkedin && currentContact.linkedin.startsWith('http') ? currentContact.linkedin : `https://${currentContact.linkedin}`" target="_blank" rel="noopener noreferrer" class="underline" aria-label="View LinkedIn profile">{{ currentContact.linkedin }}</a></td>
                   </tr>
                   <tr>
