@@ -109,7 +109,7 @@
           <p class="text-white text-sm">{{ currentContact.title }} at {{ currentContact.company }}</p>
         </div>
 
-        <TabView :pt="{ inkbar: { style: { height: '2px', backgroundColor: 'var(--p-primary-color)' } }, nav: { style: { borderBottom: '1px solid var(--p-surface-600)' } } }">
+        <TabView :pt="{ inkbar: { style: { display: 'none' } }, nav: { style: { borderBottom: '1px solid var(--p-surface-600)' } } }">
           <TabPanel header="Details">
             <div class="text-sm">
               <table style="width: 100%; border-collapse: collapse;">
@@ -350,7 +350,7 @@ const connectScoreTooltip = `Connect Score is a premium add-on feature that uses
 
 • Carrier data
 • Engagement history
-• Phone metadata
+�� Phone metadata
 
 This lets teams focus their efforts on numbers with the greatest chance of a live answer���improving connect rates, morale, and performance.`
 
