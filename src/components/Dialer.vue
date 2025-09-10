@@ -109,7 +109,7 @@
           <p class="text-white text-sm">{{ currentContact.title }} at {{ currentContact.company }}</p>
         </div>
 
-        <TabView :pt="{ inkbar: { style: { display: 'none' } }, nav: { style: { borderBottom: '1px solid var(--p-surface-600)' } } }">
+        <TabView :pt="{ inkbar: { style: { display: 'none' } } }">
           <TabPanel header="Details">
             <div class="text-sm">
               <table style="width: 100%; border-collapse: collapse;">
@@ -1070,7 +1070,7 @@ const handleHoldKeydown = (event: KeyboardEvent) => {
 
 /* TabView active tab underline and base nav styling */
 :deep(.p-tabview .p-tabview-nav) {
-  border-bottom: 1px solid var(--p-surface-600);
+  border-bottom: none;
 }
 
 :deep(.p-tabview .p-tabview-ink-bar) {
