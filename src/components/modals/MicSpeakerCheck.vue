@@ -262,18 +262,18 @@ onUnmounted(() => teardown())
   font-size: 0.875rem; /* 14px list text */
 }
 :deep(.p-dropdown-panel .p-dropdown-items) {
-  padding: 0.25rem; /* space from panel edges */
+  padding: 10px; /* space from panel edges */
 }
 :deep(.p-dropdown-panel .p-dropdown-item) {
-  padding: 0.5rem 0.75rem !important; /* item padding */
+  padding: 10px !important; /* item padding */
   line-height: 1.5 !important; /* more breathing room */
-  border-radius: var(--p-border-radius);
+  border-radius: 4px;
 }
 </style>
 
 <style>
 /* Global to affect portal (appendTo=body) */
-.mic-dropdown-panel { background-color: var(--p-surface-800) !important; font-size: 0.875rem; }
-.mic-dropdown-panel .p-dropdown-items { padding: 4px; }
-.mic-dropdown-panel .p-dropdown-item { padding: 12px 12px; line-height: 2.5; font-size: 0.875rem; }
+.mic-dropdown-panel { background-color: var(--p-surface-800) !important; font-size: 0.875rem; border-radius: 4px; }
+.mic-dropdown-panel .p-dropdown-items { padding: 10px; }
+.mic-dropdown-panel .p-dropdown-item { padding: 10px; line-height: 1.8; font-size: 0.875rem; border-radius: 4px; }
 </style>
