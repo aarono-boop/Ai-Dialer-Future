@@ -26,13 +26,13 @@
               variant="filled"
               appendTo="body"
               :pt="{
-                root: { style: { background: 'var(--p-surface-800)', border: '1px solid rgba(255,255,255,0.15)', borderRadius: '4px', padding: '10px' } },
+                root: { style: { background: 'var(--p-surface-800)', border: '1px solid rgba(255,255,255,0.15)', borderRadius: '4px', padding: '5px' } },
                 panel: { class: 'mic-dropdown-panel', style: { background: 'var(--p-surface-800)', border: '1px solid rgba(255,255,255,0.15)', borderRadius: '4px' } },
                 overlay: { class: 'mic-dropdown-panel', style: { background: 'var(--p-surface-800)', border: '1px solid rgba(255,255,255,0.15)', borderRadius: '4px' } },
-                content: { class: 'mic-dropdown-content', style: { background: 'var(--p-surface-800)', padding: '10px' } },
+                content: { class: 'mic-dropdown-content', style: { background: 'var(--p-surface-800)', padding: '5px' } },
                 list: { class: 'mic-dropdown-list', style: { background: 'var(--p-surface-800)' } },
                 items: { class: 'mic-dropdown-list', style: { background: 'var(--p-surface-800)' } },
-                item: { class: 'mic-dropdown-item hover:bg-white/10', style: { padding: '10px' } }
+                item: { class: 'mic-dropdown-item hover:bg-white/10', style: { padding: '5px' } }
               }"
               @change="restartMic"
             />
@@ -269,11 +269,11 @@ onUnmounted(() => teardown())
 }
 :deep(.p-dropdown-panel .p-dropdown-items),
 :deep(.p-select-overlay .p-select-list) {
-  padding: 10px; /* space from panel edges */
+  padding: 5px; /* space from panel edges */
 }
 :deep(.p-dropdown-panel .p-dropdown-item),
 :deep(.p-select-overlay .p-select-option) {
-  padding: 10px !important; /* item padding */
+  padding: 5px !important; /* item padding */
   line-height: 1.5 !important; /* more breathing room */
   border-radius: 4px;
 }
@@ -282,11 +282,11 @@ onUnmounted(() => teardown())
 <style>
 /* Global to affect portal (appendTo=body) */
 .mic-dropdown-panel { background-color: var(--p-surface-800) !important; font-size: 0.875rem; border-radius: 4px !important; }
-.mic-dropdown-panel .p-dropdown-items { padding: 10px; }
-.mic-dropdown-panel .p-dropdown-item { padding: 10px; line-height: 1.8; font-size: 0.875rem; border-radius: 4px; }
+.mic-dropdown-panel .p-dropdown-items { padding: 5px; max-height: 400px; }
+.mic-dropdown-panel .p-dropdown-item { padding: 5px; line-height: 1.8; font-size: 0.875rem; border-radius: 4px; }
 
 /* PrimeVue v4 classnames */
 .p-select-overlay { background-color: var(--p-surface-800) !important; font-size: 0.875rem; border-radius: 4px !important; }
-.p-select-overlay .p-select-list { padding: 10px; }
-.p-select-overlay .p-select-option { padding: 10px; line-height: 1.8; font-size: 0.875rem; border-radius: 4px; }
+.p-select-overlay .p-select-list { padding: 5px; max-height: 400px; }
+.p-select-overlay .p-select-option { padding: 5px; line-height: 1.8; font-size: 0.875rem; border-radius: 4px; }
 </style>
