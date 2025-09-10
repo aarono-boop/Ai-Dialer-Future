@@ -360,8 +360,8 @@
       </div>
       <template #footer>
         <div class="flex items-center justify-end gap-2 w-full">
-          <Button label="Cancel" severity="secondary" @click="cancelTransfer" />
-          <Button label="Transfer" icon="pi pi-share-alt" :disabled="!transferSelection" @click="confirmTransfer" />
+          <Button label="Cancel" severity="secondary" @click="cancelTransfer" class="fixed-padding-button" />
+          <Button label="Transfer" icon="pi pi-share-alt" :disabled="!transferSelection" @click="confirmTransfer" class="fixed-padding-button" />
         </div>
       </template>
     </Dialog>
