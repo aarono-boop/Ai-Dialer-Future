@@ -37,7 +37,7 @@
                       <div class="flex flex-col gap-4 items-stretch">
                         <div class="w-full" style="order: 3;">
                           <FileUpload
-                            height="calc(13rem - 20px)"
+                            height="calc(8.6667rem - 20px)"
                             :no-top-margin="true"
                             @trigger-upload="simulateFileUpload"
                             @file-selected="onFileSelect"
