@@ -236,7 +236,7 @@
       <!-- Call Controls (visible when not ended) -->
       <div v-if="callState !== 'ended'" class="space-y-3">
         <!-- Call Control Buttons -->
-        <div class="grid grid-cols-3 gap-3">
+        <div class="grid grid-cols-4 gap-3">
           <Button
             ref="muteButtonRef"
             @click="toggleMute"
