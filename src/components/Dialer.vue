@@ -105,8 +105,8 @@
       <div class="space-y-4">
         <!-- Contact Header -->
         <div>
-          <h3 class="text-white text-lg font-bold ml-[15px]">{{ currentContact.name }}</h3>
-          <p class="text-white text-sm ml-[15px]">{{ currentContact.title }} at {{ currentContact.company }}</p>
+          <h3 class="text-white text-lg font-bold ml-[17px]">{{ currentContact.name }}</h3>
+          <p class="text-white text-sm ml-[17px]">{{ currentContact.title }} at {{ currentContact.company }}</p>
         </div>
 
         <TabView :pt="{ inkbar: { style: { display: 'none' } } }">
