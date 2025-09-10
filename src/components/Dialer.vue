@@ -109,71 +109,75 @@
           <p class="text-white text-sm">{{ currentContact.title }} at {{ currentContact.company }}</p>
         </div>
 
-        <!-- Contact Details -->
-        <div class="text-sm">
-          <table style="width: 100%; border-collapse: collapse;">
-            <tbody>
-              <tr>
-                <td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af;">Phone:</td>
-                <td style="padding: 4px 0; color: white;">{{ currentContact.phone }}</td>
-              </tr>
-              <tr>
-                <td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af;">Connect Score:</td>
-                <td style="padding: 4px 0; color: white;">{{ currentContact.connectScore }}</td>
-              </tr>
-              <tr>
-                <td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af;">Email:</td>
-                <td style="padding: 4px 0; color: white;"><a :href="`mailto:${currentContact.email}`" class="underline" aria-label="Send email">{{ currentContact.email }}</a></td>
-              </tr>
-              <tr>
-                <td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af;">Address:</td>
-                <td style="padding: 4px 0; color: white;">{{ currentContact.address }}</td>
-              </tr>
-              <tr>
-                <td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af;">Local Time:</td>
-                <td style="padding: 4px 0; color: white;">{{ currentContact.localTime }}</td>
-              </tr>
-              <tr>
-                <td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af;">Website:</td>
-                <td style="padding: 4px 0; color: white;"><a :href="currentContact.website && currentContact.website.startsWith('http') ? currentContact.website : `https://${currentContact.website}`" target="_blank" rel="noopener noreferrer" class="underline" aria-label="Visit website">{{ currentContact.website }}</a></td>
-              </tr>
-              <tr>
-                <td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af;">LinkedIn Profile:</td>
-                <td style="padding: 4px 0; color: white;"><a :href="currentContact.linkedin && currentContact.linkedin.startsWith('http') ? currentContact.linkedin : `https://${currentContact.linkedin}`" target="_blank" rel="noopener noreferrer" class="underline" aria-label="View LinkedIn profile">{{ currentContact.linkedin }}</a></td>
-              </tr>
-              <tr>
-                <td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af;">Industry:</td>
-                <td style="padding: 4px 0; color: white;">{{ currentContact.industry }}</td>
-              </tr>
-              <tr>
-                <td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af;">Company Size:</td>
-                <td style="padding: 4px 0; color: white;">{{ currentContact.companySize }}</td>
-              </tr>
-              <tr>
-                <td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af;">Lead Source:</td>
-                <td style="padding: 4px 0; color: white;">{{ currentContact.leadSource }}</td>
-              </tr>
-              <tr v-if="currentContact.notes">
-                <td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af;">Notes:</td>
-                <td style="padding: 4px 0; color: white; white-space: pre-wrap;">{{ currentContact.notes }}</td>
-              </tr>
-              <tr v-if="currentContact.sourceUrl">
-                <td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af;">Data Source:</td>
-                <td style="padding: 4px 0; color: white;">
-                  <a
-                    :href="currentContact.sourceUrl && currentContact.sourceUrl.startsWith('http') ? currentContact.sourceUrl : `https://${currentContact.sourceUrl}`"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    class="underline"
-                    :aria-label="currentContact.sourceType === 'crm' ? 'Open CRM record' : 'Open source spreadsheet'"
-                  >
-                    {{ currentContact.sourceName || (currentContact.sourceType === 'crm' ? 'CRM Record' : 'Spreadsheet') }}
-                  </a>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+        <TabView>
+          <TabPanel header="Details">
+            <div class="text-sm">
+              <table style="width: 100%; border-collapse: collapse;">
+                <tbody>
+                  <tr>
+                    <td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af;">Phone:</td>
+                    <td style="padding: 4px 0; color: white;">{{ currentContact.phone }}</td>
+                  </tr>
+                  <tr>
+                    <td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af;">Connect Score:</td>
+                    <td style="padding: 4px 0; color: white;">{{ currentContact.connectScore }}</td>
+                  </tr>
+                  <tr>
+                    <td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af;">Email:</td>
+                    <td style="padding: 4px 0; color: white;"><a :href="`mailto:${currentContact.email}`" class="underline" aria-label="Send email">{{ currentContact.email }}</a></td>
+                  </tr>
+                  <tr>
+                    <td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af;">Address:</td>
+                    <td style="padding: 4px 0; color: white;">{{ currentContact.address }}</td>
+                  </tr>
+                  <tr>
+                    <td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af;">Local Time:</td>
+                    <td style="padding: 4px 0; color: white;">{{ currentContact.localTime }}</td>
+                  </tr>
+                  <tr>
+                    <td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af;">Website:</td>
+                    <td style="padding: 4px 0; color: white;"><a :href="currentContact.website && currentContact.website.startsWith('http') ? currentContact.website : `https://${currentContact.website}`" target="_blank" rel="noopener noreferrer" class="underline" aria-label="Visit website">{{ currentContact.website }}</a></td>
+                  </tr>
+                  <tr>
+                    <td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af;">LinkedIn Profile:</td>
+                    <td style="padding: 4px 0; color: white;"><a :href="currentContact.linkedin && currentContact.linkedin.startsWith('http') ? currentContact.linkedin : `https://${currentContact.linkedin}`" target="_blank" rel="noopener noreferrer" class="underline" aria-label="View LinkedIn profile">{{ currentContact.linkedin }}</a></td>
+                  </tr>
+                  <tr>
+                    <td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af;">Industry:</td>
+                    <td style="padding: 4px 0; color: white;">{{ currentContact.industry }}</td>
+                  </tr>
+                  <tr>
+                    <td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af;">Company Size:</td>
+                    <td style="padding: 4px 0; color: white;">{{ currentContact.companySize }}</td>
+                  </tr>
+                  <tr>
+                    <td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af;">Lead Source:</td>
+                    <td style="padding: 4px 0; color: white;">{{ currentContact.leadSource }}</td>
+                  </tr>
+                  <tr v-if="currentContact.sourceUrl">
+                    <td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af;">Data Source:</td>
+                    <td style="padding: 4px 0; color: white;">
+                      <a
+                        :href="currentContact.sourceUrl && currentContact.sourceUrl.startsWith('http') ? currentContact.sourceUrl : `https://${currentContact.sourceUrl}`"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="underline"
+                        :aria-label="currentContact.sourceType === 'crm' ? 'Open CRM record' : 'Open source spreadsheet'"
+                      >
+                        {{ currentContact.sourceName || (currentContact.sourceType === 'crm' ? 'CRM Record' : 'Spreadsheet') }}
+                      </a>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </TabPanel>
+          <TabPanel header="Notes">
+            <div class="text-sm" style="color: var(--p-surface-0); white-space: pre-wrap;">
+              {{ currentContact.notes || 'No notes yet.' }}
+            </div>
+          </TabPanel>
+        </TabView>
       </div>
     </div>
 
@@ -337,6 +341,8 @@
 import { ref, nextTick, computed } from 'vue'
 import Button from 'primevue/button'
 import ToggleSwitch from 'primevue/toggleswitch'
+import TabView from 'primevue/tabview'
+import TabPanel from 'primevue/tabpanel'
 import { useCoaches } from '../composables/useCoaches'
 
 // Connect Score tooltip content
