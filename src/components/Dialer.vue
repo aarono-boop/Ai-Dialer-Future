@@ -110,7 +110,10 @@
         </div>
 
         <TabView :pt="{ inkbar: { style: { display: 'none' } } }">
-          <TabPanel header="Details">
+          <TabPanel>
+            <template #header>
+              <span class="flex items-center gap-2"><i class="pi pi-id-card"></i><span>Details</span></span>
+            </template>
             <div class="text-sm">
               <table style="width: 100%; border-collapse: collapse;">
                 <tbody>
@@ -172,7 +175,10 @@
               </table>
             </div>
           </TabPanel>
-          <TabPanel header="Notes">
+          <TabPanel>
+            <template #header>
+              <span class="flex items-center gap-2"><i class="pi pi-pencil"></i><span>Notes</span></span>
+            </template>
             <div class="space-y-3 text-sm" style="color: var(--p-surface-0);">
               <div v-for="(n, i) in notes" :key="i" class="flex items-start gap-2">
                 <i class="pi pi-clock mt-1" style="color: var(--p-blue-400);"></i>
@@ -356,7 +362,7 @@ const connectScoreTooltip = `Connect Score is a premium add-on feature that uses
 
 • Carrier data
 • Engagement history
-���� Phone metadata
+�� Phone metadata
 
 This lets teams focus their efforts on numbers with the greatest chance of a live answer���improving connect rates, morale, and performance.`
 
