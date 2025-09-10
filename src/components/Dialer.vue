@@ -1099,6 +1099,16 @@ const handleHoldKeydown = (event: KeyboardEvent) => {
   color: var(--p-blue-500) !important;
 }
 
+:deep(.p-tabview .p-tabview-tablist .p-tabview-tablist-item:not([data-p-active="true"]) > a.p-tabview-tab-header),
+:deep(.p-tabview .p-tabview-nav .p-tabview-tablist-item:not([data-p-active="true"]) > a.p-tabview-tab-header) {
+  color: var(--p-blue-300) !important;
+}
+
+:deep(.p-tabview .p-tabview-tablist .p-tabview-tablist-item:not([data-p-active="true"]) > a.p-tabview-tab-header .p-tabview-tab-title),
+:deep(.p-tabview .p-tabview-nav .p-tabview-tablist-item:not([data-p-active="true"]) > a.p-tabview-tab-header .p-tabview-tab-title) {
+  color: var(--p-blue-300) !important;
+}
+
 /* Custom ToggleSwitch styling - try multiple approaches */
 .custom-toggle .p-toggleswitch-slider {
   background-color: #374151 !important; /* Default background - gray-700 */
