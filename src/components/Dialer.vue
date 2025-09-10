@@ -181,7 +181,7 @@
             </template>
             <div class="space-y-4 text-sm" style="color: var(--p-surface-0);">
               <!-- Create Note -->
-              <div class="space-y-2">
+              <div class="space-y-1">
                 <Textarea
                   v-model="newNote"
                   :autoResize="false"
