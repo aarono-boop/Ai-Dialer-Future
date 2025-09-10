@@ -196,9 +196,7 @@
                   size="small"
                   icon="pi pi-plus"
                   label="Add note"
-                  class="shrink-0"
                   severity="secondary"
-                  size="small"
                   class="pause-queue-compact shrink-0"
                   @click="addNote"
                 />
