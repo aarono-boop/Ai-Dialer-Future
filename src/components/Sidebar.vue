@@ -45,15 +45,12 @@
 
     <!-- Dashboard link (only when signed in under a coach) -->
     <button
-      v-if="isSignedIn"
+      v-if="isSignedIn && currentCoach"
       :class="[
         'flex items-center justify-center p-2 mt-2 rounded-lg transition-colors cursor-pointer border-none',
-        props.currentPage === 'dashboard'
-          ? 'bg-blue-600 text-white'
-          : 'bg-transparent text-gray-400 hover:bg-gray-800 hover:text-white'
+        'bg-transparent text-gray-400 hover:bg-gray-800 hover:text-white'
       ]"
-      @click="$emit('show-dashboard')"
-      aria-label="Open dashboard"
+      aria-label="Dashboard"
       type="button"
       tabindex="3"
       v-tooltip.right="'Dashboard'"
@@ -135,7 +132,7 @@ const props = defineProps<{
 }>()
 
 // Define emits for parent component communication
-const emitSidebar = defineEmits(['login', 'logout', 'show-product', 'go-home', 'show-dashboard'])
+const emitSidebar = defineEmits(['login', 'logout', 'show-product', 'go-home'])
 
 // Template refs
 const focusAnchor = ref<HTMLElement | null>(null)
