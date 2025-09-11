@@ -126,7 +126,7 @@
 
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted, computed } from 'vue'
-import { useCoaches } from '@/src/composables/useCoaches'
+import { useCoaches } from '../composables/useCoaches'
 
 // Define props
 const props = defineProps<{
