@@ -11,6 +11,7 @@
       @logout="handleLogout"
       @show-product="showProductPage"
       @go-home="goToMainApp"
+      @show-dashboard="openUserDashboard"
     />
 
     <!-- Main App Content -->
@@ -2167,7 +2168,7 @@ const sendMessage = (message: string): void => {
       addAIMessage([
         '<i class="pi pi-star"></i> I\'d love to show you ARKON in action!',
         'Let me set up a personalized demo where you can see:',
-        '• Live contact scoring and prioritization',
+        '�� Live contact scoring and prioritization',
         '• Real-time dialing with connect predictions',
         '���� Smart call disposition and follow-up automation',
         'What\'s your preferred time? I can schedule something for today or tomorrow.'
@@ -2860,6 +2861,17 @@ const handleMute = (muted: boolean): void => {
 
 const handleHold = (onHold: boolean): void => {
   addUserMessage(onHold ? 'Call placed on hold' : 'Call resumed')
+}
+
+const openUserDashboard = (): void => {
+  // If a coach is selected, open their dashboard; otherwise open generic dashboard view
+  if (currentCoach.value?.name) {
+    dashboardCoachName.value = currentCoach.value.name
+  } else {
+    dashboardCoachName.value = null
+  }
+  showCoachDashboard.value = true
+  currentPage.value = 'main'
 }
 
 const handleTransfer = (selection: string): void => {
