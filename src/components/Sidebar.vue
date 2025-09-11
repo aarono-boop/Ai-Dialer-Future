@@ -45,7 +45,7 @@
 
     <!-- Dashboard link (only when signed in under a coach) -->
     <button
-      v-if="isSignedIn && currentCoach"
+      v-if="isSignedIn"
       :class="[
         'flex items-center justify-center p-2 mt-2 rounded-lg transition-colors cursor-pointer border-none',
         props.currentPage === 'dashboard'
