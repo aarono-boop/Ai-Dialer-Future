@@ -43,6 +43,24 @@
       <i class="pi pi-info-circle text-xl"></i>
     </button>
 
+    <!-- Dashboard link (only when signed in under a coach) -->
+    <button
+      v-if="isSignedIn && currentCoach"
+      :class="[
+        'flex items-center justify-center p-2 mt-2 rounded-lg transition-colors cursor-pointer border-none',
+        props.currentPage === 'dashboard'
+          ? 'bg-blue-600 text-white'
+          : 'bg-transparent text-gray-400 hover:bg-gray-800 hover:text-white'
+      ]"
+      @click="$emit('show-dashboard')"
+      aria-label="Open dashboard"
+      type="button"
+      tabindex="3"
+      v-tooltip.right="'Dashboard'"
+    >
+      <i class="pi pi-chart-bar text-xl"></i>
+    </button>
+
     <!-- Spacer to push user actions to bottom -->
     <div class="flex-1"></div>
 
@@ -108,6 +126,7 @@
 
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted, computed } from 'vue'
+import { useCoaches } from '@/src/composables/useCoaches'
 
 // Define props
 const props = defineProps<{
@@ -116,7 +135,7 @@ const props = defineProps<{
 }>()
 
 // Define emits for parent component communication
-const emitSidebar = defineEmits(['login', 'logout', 'show-product', 'go-home'])
+const emitSidebar = defineEmits(['login', 'logout', 'show-product', 'go-home', 'show-dashboard'])
 
 // Template refs
 const focusAnchor = ref<HTMLElement | null>(null)
@@ -124,6 +143,9 @@ const userMenuButton = ref<HTMLElement | null>(null)
 
 // User menu state
 const showUserMenu = ref(false)
+
+// Coach context
+const { currentCoach } = useCoaches()
 
 // Toggle user menu
 const toggleUserMenu = () => {
