@@ -11,10 +11,11 @@
       @logout="handleLogout"
       @show-product="showProductPage"
       @go-home="goToMainApp"
+      @show-student-dashboard="openStudentDashboard"
     />
 
     <!-- Main App Content -->
-    <main v-if="currentPage === 'main' && !managementMode && !showCoachDashboard" class="ml-16 flex-1 flex items-start justify-center p-8 relative z-[5]" :style="(showDialer || showCoachInfoPanel) ? 'margin-right: 33.333333%' : ''">
+    <main v-if="currentPage === 'main' && !managementMode && !showCoachDashboard && !showStudentDashboard" class="ml-16 flex-1 flex items-start justify-center p-8 relative z-[5]" :style="(showDialer || showCoachInfoPanel) ? 'margin-right: 33.333333%' : ''">
       <div class="flex gap-6 w-full max-w-[1400px] h-[80vh] mt-2.5">
         <!-- Chat Container -->
         <div class="w-full max-w-6xl mx-auto rounded-xl px-5">
@@ -697,6 +698,11 @@
       <CoachDashboard :coachName="dashboardCoachName" />
     </div>
 
+    <!-- Student Dashboard Page (blank for now) -->
+    <div v-if="showStudentDashboard" class="ml-16">
+      <StudentDashboard :coachName="studentCoachName" />
+    </div>
+
     <!-- Product Page -->
     <div v-if="currentPage === 'product'" class="ml-16">
       <ProductPage
@@ -829,6 +835,7 @@ import CoachManagement from './components/CoachManagement.vue'
 import CoachCreationPage from './components/CoachCreationPage.vue'
 import CoachCarousel from './components/CoachCarousel.vue'
 import CoachDashboard from './components/CoachDashboard.vue'
+import StudentDashboard from './components/StudentDashboard.vue'
 import MicSpeakerCheck from './components/modals/MicSpeakerCheck.vue'
 
 // PrimeVue Components (adding Button)
@@ -997,6 +1004,8 @@ const showRegularConnectedMessages = (contact: any): void => {
 const currentPage = ref<string>('main') // 'main', 'product', 'login', 'signup'
 const showCoachDashboard = ref(false)
 const dashboardCoachName = ref<string | null>(null)
+const showStudentDashboard = ref(false)
+const studentCoachName = ref<string | null>(null)
 const chatInputRef = ref<any>(null)
 const chatMessages = ref<HTMLElement | null>(null)
 const screenReaderAnnouncements = ref<HTMLElement | null>(null)
@@ -2860,6 +2869,13 @@ const handleMute = (muted: boolean): void => {
 
 const handleHold = (onHold: boolean): void => {
   addUserMessage(onHold ? 'Call placed on hold' : 'Call resumed')
+}
+
+const openStudentDashboard = (): void => {
+  showCoachDashboard.value = false
+  showStudentDashboard.value = true
+  studentCoachName.value = currentCoach.value?.name || null
+  currentPage.value = 'main'
 }
 
 const openUserDashboard = (): void => {
