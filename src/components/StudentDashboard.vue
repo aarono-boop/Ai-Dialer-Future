@@ -1,9 +1,11 @@
 <template>
-  <div class="p-6" role="region" aria-label="Student Dashboard">
-    <h1 class="text-2xl font-semibold mb-2">
-      {{ title }}
-    </h1>
-    <p class="text-sm text-gray-400">This page is intentionally blank for now. We will build out the student dashboard here.</p>
+  <div class="min-h-screen bg-gray-900 text-white p-8" role="region" aria-label="Student Dashboard">
+    <div class="max-w-6xl mx-auto">
+      <h1 class="text-3xl font-bold mb-2">
+        {{ title }}
+      </h1>
+      <p class="text-sm text-gray-400">This page is intentionally blank for now. We will build out the student dashboard here.</p>
+    </div>
   </div>
 </template>
 
