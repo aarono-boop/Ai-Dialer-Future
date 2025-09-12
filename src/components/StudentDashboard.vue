@@ -21,9 +21,28 @@
         </div>
       </div>
 
-      <!-- Placeholder body -->
-      <div class="bg-gray-800/40 border border-gray-700 rounded-xl p-6 text-gray-300 text-sm">
-        This page is intentionally blank for now. We will build out the student dashboard here.
+      <!-- Students Table Card -->
+      <div class="bg-gray-800/40 border border-gray-700 rounded-xl p-4">
+        <DataTable :value="students" size="large" :pt="{ headerRow: { class: 'h-12' }, bodyRow: { class: 'h-14' } }">
+          <Column field="rank" header="#" style="width: 60px" headerClass="py-6 px-4" bodyClass="py-6 px-4" />
+          <Column header="Avatar" headerClass="py-6 px-4" bodyClass="py-6 px-4">
+            <template #body="{ data }">
+              <Avatar :image="getAvatarUrl(data.name)" shape="circle" style="width: 32px; height: 32px" />
+            </template>
+          </Column>
+          <Column field="name" header="Student Name" headerClass="py-6 px-4" bodyClass="py-6 px-4" />
+          <Column header="Subscription" headerClass="py-6 px-4" bodyClass="py-6 px-4">
+            <template #body="{ data }">
+              <Badge :value="data.subscription" :severity="subscriptionSeverity(data.subscription)" />
+            </template>
+          </Column>
+          <Column field="callVolume" header="Calls" headerClass="py-6 px-4" bodyClass="py-6 px-4" bodyStyle="text-align:right" />
+          <Column header="Answer Rate" headerClass="py-6 px-4" bodyClass="py-6 px-4" bodyStyle="text-align:right">
+            <template #body="{ data }">{{ (data.answerRate * 100).toFixed(1) }}%</template>
+          </Column>
+          <Column field="appointments" header="Appointments" headerClass="py-6 px-4" bodyClass="py-6 px-4" bodyStyle="text-align:right" />
+          <Column field="followUps" header="Follow-ups" headerClass="py-6 px-4" bodyClass="py-6 px-4" bodyStyle="text-align:right" />
+        </DataTable>
       </div>
     </div>
   </div>
@@ -33,6 +52,10 @@
 import { computed, ref } from 'vue'
 import Button from 'primevue/button'
 import Dropdown from 'primevue/dropdown'
+import DataTable from 'primevue/datatable'
+import Column from 'primevue/column'
+import Avatar from 'primevue/avatar'
+import Badge from 'primevue/badge'
 import { useCoaches } from '../composables/useCoaches'
 
 const props = defineProps<{ coachName: string | null }>()
@@ -59,6 +82,59 @@ const ranges = [
   { label: 'Year to date', value: 'ytd' }
 ]
 const selectedRange = ref('30d')
+
+// Student table data
+type SubscriptionLevel = 'Premium' | 'Platinum' | 'Standard'
+interface StudentRow {
+  rank: number
+  name: string
+  subscription: SubscriptionLevel
+  callVolume: number
+  answerRate: number // 0..1
+  appointments: number
+  followUps: number
+}
+
+const students = ref<StudentRow[]>([
+  { rank: 1, name: 'Alex Johnson',   subscription: 'Platinum', callVolume: 420, answerRate: 0.41, appointments: 36, followUps: 18 },
+  { rank: 2, name: 'Maria Garcia',   subscription: 'Premium',  callVolume: 395, answerRate: 0.38, appointments: 32, followUps: 21 },
+  { rank: 3, name: 'Liam Smith',     subscription: 'Standard', callVolume: 360, answerRate: 0.35, appointments: 29, followUps: 17 },
+  { rank: 4, name: 'Sophia Lee',     subscription: 'Platinum', callVolume: 345, answerRate: 0.42, appointments: 31, followUps: 19 },
+  { rank: 5, name: 'Noah Williams',  subscription: 'Premium',  callVolume: 330, answerRate: 0.33, appointments: 27, followUps: 15 },
+  { rank: 6, name: 'Emma Davis',     subscription: 'Standard', callVolume: 315, answerRate: 0.29, appointments: 22, followUps: 14 },
+  { rank: 7, name: 'Olivia Martinez',subscription: 'Premium',  callVolume: 298, answerRate: 0.31, appointments: 24, followUps: 13 },
+  { rank: 8, name: 'William Brown',  subscription: 'Standard', callVolume: 287, answerRate: 0.27, appointments: 20, followUps: 12 },
+  { rank: 9, name: 'Ava Taylor',     subscription: 'Platinum', callVolume: 275, answerRate: 0.36, appointments: 23, followUps: 11 },
+  { rank:10, name: 'James Wilson',   subscription: 'Standard', callVolume: 260, answerRate: 0.25, appointments: 19, followUps: 10 }
+])
+
+// Fake avatar pool and deterministic avatar selector based on name
+const avatarPool = [
+  'https://randomuser.me/api/portraits/men/32.jpg',
+  'https://randomuser.me/api/portraits/women/44.jpg',
+  'https://randomuser.me/api/portraits/men/12.jpg',
+  'https://randomuser.me/api/portraits/women/68.jpg',
+  'https://randomuser.me/api/portraits/men/76.jpg',
+  'https://randomuser.me/api/portraits/women/35.jpg',
+  'https://randomuser.me/api/portraits/men/28.jpg',
+  'https://randomuser.me/api/portraits/women/19.jpg',
+  'https://randomuser.me/api/portraits/men/5.jpg',
+  'https://randomuser.me/api/portraits/women/7.jpg'
+]
+const getAvatarUrl = (name: string) => {
+  let h = 0
+  for (let i = 0; i < name.length; i++) h = Math.imul(31, h) + name.charCodeAt(i) | 0
+  const idx = Math.abs(h) % avatarPool.length
+  return avatarPool[idx]
+}
+
+const subscriptionSeverity = (level: SubscriptionLevel) => {
+  switch (level) {
+    case 'Platinum': return 'info'
+    case 'Premium': return 'success'
+    default: return 'secondary'
+  }
+}
 
 const goBack = () => { window.location.href = window.location.pathname }
 </script>
