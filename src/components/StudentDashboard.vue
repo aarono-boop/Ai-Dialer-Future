@@ -37,7 +37,7 @@ import { useCoaches } from '../composables/useCoaches'
 
 const props = defineProps<{ coachName: string | null }>()
 
-const { coachList } = useCoaches()
+const { coachList, generateCoachUrl } = useCoaches()
 const coach = computed(() => coachList.value.find(c => c.name === props.coachName) || null)
 const coachInitials = computed(() => {
   const n = coach.value?.displayName || 'C D'
@@ -51,5 +51,5 @@ const ranges = [
 ]
 const selectedRange = ref('30d')
 
-const goBack = () => { window.location.href = window.location.pathname }
+const goBack = () => { window.location.href = generateCoachUrl(props.coachName || '') }
 </script>
