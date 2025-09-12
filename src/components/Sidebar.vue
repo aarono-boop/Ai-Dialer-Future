@@ -50,10 +50,11 @@
         'flex items-center justify-center p-2 mt-2 rounded-lg transition-colors cursor-pointer border-none',
         'bg-transparent text-gray-400 hover:bg-gray-800 hover:text-white'
       ]"
-      aria-label="Dashboard"
+      @click="$emit('show-student-dashboard')"
+      aria-label="Open Student Dashboard"
       type="button"
       tabindex="3"
-      v-tooltip.right="'Dashboard'"
+      v-tooltip.right="`Student Dashboard`"
     >
       <i class="pi pi-chart-bar text-xl"></i>
     </button>
@@ -132,7 +133,7 @@ const props = defineProps<{
 }>()
 
 // Define emits for parent component communication
-const emitSidebar = defineEmits(['login', 'logout', 'show-product', 'go-home'])
+const emitSidebar = defineEmits(['login', 'logout', 'show-product', 'go-home', 'show-student-dashboard'])
 
 // Template refs
 const focusAnchor = ref<HTMLElement | null>(null)
