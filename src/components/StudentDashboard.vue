@@ -11,14 +11,12 @@
           <div class="truncate">
             <div class="flex items-center gap-2">
               <h1 class="text-xl font-bold truncate">{{ headerTitle }}</h1>
-              <a v-if="coach" :href="landingUrl" target="_blank" class="text-blue-300 text-xs hover:underline whitespace-nowrap">View Landing Page</a>
             </div>
             <p class="text-gray-400 text-xs">Student Performance Overview</p>
           </div>
         </div>
         <div class="flex items-center gap-2">
           <Dropdown v-model="selectedRange" :options="ranges" optionLabel="label" optionValue="value" class="w-40" />
-          <Button label="Export" icon="pi pi-download" severity="secondary" size="small" @click="exportReport" />
           <Button label="Back to App" icon="pi pi-arrow-left" severity="secondary" size="small" text @click="goBack" />
         </div>
       </div>
@@ -48,13 +46,12 @@ const displayName = computed(() => {
 })
 const headerTitle = computed(() => displayName.value ? `${displayName.value}'s Student Dashboard` : 'Student Dashboard')
 
-const { coachList, generateCoachUrl } = useCoaches()
+const { coachList } = useCoaches()
 const coach = computed(() => props.coachName ? coachList.value.find(c => c.name === props.coachName) || null : null)
 const coachInitials = computed(() => {
   const n = coach.value?.displayName || 'S D'
   return n.split(' ').map(p => p[0]).join('').toUpperCase().slice(0,2)
 })
-const landingUrl = computed(() => generateCoachUrl(props.coachName || ''))
 
 const ranges = [
   { label: 'Last 30 days', value: '30d' },
@@ -62,16 +59,6 @@ const ranges = [
   { label: 'Year to date', value: 'ytd' }
 ]
 const selectedRange = ref('30d')
-
-const exportReport = () => {
-  const blob = new Blob([JSON.stringify({ coach: coach.value?.name, when: new Date().toISOString() }, null, 2)], { type: 'application/json' })
-  const url = URL.createObjectURL(blob)
-  const a = document.createElement('a')
-  a.href = url
-  a.download = `${coach.value?.name || 'student'}-dashboard-${new Date().toISOString().slice(0,10)}.json`
-  a.click()
-  URL.revokeObjectURL(url)
-}
 
 const goBack = () => { window.location.href = window.location.pathname }
 </script>
