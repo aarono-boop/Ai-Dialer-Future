@@ -694,13 +694,19 @@
     </main>
 
     <!-- Coach Dashboard Page -->
-    <div v-if="showCoachDashboard" class="ml-16">
-      <CoachDashboard :coachName="dashboardCoachName" />
+    <div v-if="showCoachDashboard" class="ml-16 flex flex-col min-h-screen">
+      <div class="flex-1">
+        <CoachDashboard :coachName="dashboardCoachName" />
+      </div>
+      <Footer :showDialer="false" :queuePaused="queuePaused" @skip-to-dialer="skipToDialer" />
     </div>
 
     <!-- Student Dashboard Page (blank for now) -->
-    <div v-if="showStudentDashboard" class="ml-16">
-      <StudentDashboard :coachName="studentCoachName" />
+    <div v-if="showStudentDashboard" class="ml-16 flex flex-col min-h-screen">
+      <div class="flex-1">
+        <StudentDashboard :coachName="studentCoachName" />
+      </div>
+      <Footer :showDialer="false" :queuePaused="queuePaused" @skip-to-dialer="skipToDialer" />
     </div>
 
     <!-- Product Page -->
