@@ -11,7 +11,6 @@
           <div class="truncate">
             <div class="flex items-center gap-2">
               <h1 class="text-xl font-bold truncate">{{ coach?.displayName || 'Coach' }}'s Student Dashboard</h1>
-              <a v-if="landingUrl" :href="landingUrl" target="_blank" class="text-blue-300 text-xs hover:underline whitespace-nowrap">View Landing Page</a>
             </div>
             <p class="text-gray-400 text-xs">Student cohort overview</p>
           </div>
@@ -38,13 +37,12 @@ import { useCoaches } from '../composables/useCoaches'
 
 const props = defineProps<{ coachName: string | null }>()
 
-const { coachList, generateCoachUrl } = useCoaches()
+const { coachList } = useCoaches()
 const coach = computed(() => coachList.value.find(c => c.name === props.coachName) || null)
 const coachInitials = computed(() => {
   const n = coach.value?.displayName || 'C D'
   return n.split(' ').map(p => p[0]).join('').toUpperCase().slice(0,2)
 })
-const landingUrl = computed(() => generateCoachUrl(props.coachName || ''))
 
 const ranges = [
   { label: 'Last 30 days', value: '30d' },
