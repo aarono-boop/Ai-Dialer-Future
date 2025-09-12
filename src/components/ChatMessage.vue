@@ -7,7 +7,7 @@
     <div v-if="message.type === 'ai'" class="flex gap-[10px] items-start w-full">
       <div class="flex items-start justify-center flex-shrink-0 pt-1" role="img" aria-label="ARKON AI avatar">
         <div class="w-[26px] h-[26px] flex items-center justify-center" aria-hidden="true">
-          <i class="pi pi-sparkles text-transparent text-sm" style="-webkit-text-stroke: 2px var(--p-primary-color); text-stroke: 2px var(--p-primary-color);"></i>
+          <i class="pi pi-sparkles text-transparent text-sm" style="-webkit-text-stroke: 1px var(--p-primary-color); text-stroke: 1px var(--p-primary-color);"></i>
         </div>
       </div>
       <div
