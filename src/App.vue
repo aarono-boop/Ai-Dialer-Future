@@ -706,7 +706,6 @@
       <div class="flex-1">
         <StudentDashboard :coachName="studentCoachName" />
       </div>
-      <Footer :showDialer="false" :queuePaused="queuePaused" @skip-to-dialer="skipToDialer" />
     </div>
 
     <!-- Product Page -->
