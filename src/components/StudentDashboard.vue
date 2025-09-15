@@ -90,16 +90,16 @@
         </div>
         <div class="w-1/3">
           <div class="bg-gray-800/40 border border-gray-700 rounded-xl p-4">
-            <!-- User header for this section -->
-            <div class="flex items-center gap-3 mb-3">
-              <Avatar :image="getAvatarUrl(currentStudent.name)" shape="circle" style="width: 36px; height: 36px" :class="!optInIdentity ? 'blur-sm' : ''" />
-              <div>
-                <div class="font-semibold text-white">{{ optInIdentity ? currentStudent.name : 'Anonymous' }}</div>
-                <div class="text-xs text-gray-400">Logged in</div>
-              </div>
-            </div>
-
-            <DataTable :value="studentSummary" header="My Summary" scrollable scrollHeight="730px" :tableStyle="{ tableLayout: 'fixed' }" size="large" :pt="{ root: { style: { borderRadius: '12px', overflow: 'hidden' } }, header: { style: { border: 'none', borderBottom: 'none', background: 'var(--p-surface-800)', padding: '10px 16px' } }, headerRow: { class: 'h-12', style: { background: 'var(--p-surface-800)' } }, headerCell: { style: { border: 'none', background: 'var(--p-surface-800)', padding: '12px 16px' } }, bodyRow: { class: 'h-14' }, bodyCell: { style: { padding: '12px 16px' } } }">
+            <DataTable :value="studentSummary" scrollable scrollHeight="730px" :tableStyle="{ tableLayout: 'fixed' }" size="large" :pt="{ root: { style: { borderRadius: '12px', overflow: 'hidden' } }, header: { style: { border: 'none', borderBottom: 'none', background: 'var(--p-surface-800)', padding: '10px 16px' } }, headerRow: { class: 'h-12', style: { background: 'var(--p-surface-800)' } }, headerCell: { style: { border: 'none', background: 'var(--p-surface-800)', padding: '12px 16px' } }, bodyRow: { class: 'h-14' }, bodyCell: { style: { padding: '12px 16px' } } }">
+              <template #header>
+                <div class="flex items-center justify-between">
+                  <div class="flex items-center gap-3">
+                    <Avatar :image="getAvatarUrl(currentStudent.name)" shape="circle" style="width: 28px; height: 28px" :class="!optInIdentity ? 'blur-sm' : ''" />
+                    <div class="font-semibold" style="color: var(--p-surface-0)">{{ optInIdentity ? currentStudent.name : 'Anonymous' }}</div>
+                  </div>
+                  <span class="text-sm" style="color: var(--p-surface-300)">My Summary</span>
+                </div>
+              </template>
               <Column field="label" header="Metric" headerClass="py-6 px-4" :headerStyle="{ paddingLeft: '16px' }" bodyClass="py-6 px-4" :bodyStyle="{ paddingLeft: '16px' }" />
               <Column headerClass="py-6" bodyClass="py-6 px-4" :bodyStyle="{ textAlign: 'right', paddingRight: '16px' }">
                 <template #header>
