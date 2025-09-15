@@ -111,8 +111,8 @@
           </div>
 
           <!-- Contact Coach Area -->
-          <div class="mt-4">
-            <Card :pt="{ root: { style: { background: 'var(--p-surface-800)', border: '1px solid var(--p-surface-600)', borderRadius: '12px' } }, body: { style: { padding: '16px' } } }">
+          <div class="mt-4 bg-gray-800/40 border border-gray-700 rounded-xl p-4">
+            <Card :pt="{ root: { style: { background: 'transparent', border: 'none', borderRadius: '0' } }, body: { style: { padding: '0' } } }">
               <template #title>
                 <div class="flex items-center gap-2">
                   <img v-if="coach?.avatarUrl" :src="coach.avatarUrl" :alt="coach.displayName" class="w-6 h-6 rounded-full object-cover" />
