@@ -16,7 +16,14 @@
           </div>
         </div>
         <div class="flex items-center gap-2">
-          <Dropdown v-model="selectedRange" :options="ranges" optionLabel="label" optionValue="value" class="w-40" />
+          <Dropdown
+            v-model="selectedRange"
+            :options="ranges"
+            optionLabel="label"
+            optionValue="value"
+            class="w-40"
+            :pt="{ root: { style: { border: '1px solid var(--p-surface-600)', borderRadius: '10px', background: 'var(--p-surface-800)' } } }"
+          />
           <Button icon="pi pi-cog" severity="secondary" text rounded aria-label="Dashboard settings" />
         </div>
       </div>
