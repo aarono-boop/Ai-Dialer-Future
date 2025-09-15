@@ -21,8 +21,18 @@
             :options="ranges"
             optionLabel="label"
             optionValue="value"
-            class="w-40"
-            :pt="{ root: { style: { border: '1px solid var(--p-surface-600)', borderRadius: '10px', background: 'var(--p-surface-800)' } } }"
+            class="w-40 mic-like-dropdown"
+            variant="filled"
+            appendTo="body"
+            :pt="{
+              root: { style: { background: 'var(--p-surface-800)', border: '1px solid rgba(255,255,255,0.12)', borderRadius: '6px', padding: '0.5rem' } },
+              panel: { class: 'mic-dropdown-panel', style: { background: 'var(--p-surface-800)', border: '1px solid rgba(255,255,255,0.12)' } },
+              overlay: { class: 'mic-dropdown-panel', style: { background: 'var(--p-surface-800)', border: '1px solid rgba(255,255,255,0.12)' } },
+              content: { class: 'mic-dropdown-content', style: { background: 'var(--p-surface-800)', padding: '0.25rem' } },
+              list: { class: 'mic-dropdown-list', style: { background: 'var(--p-surface-800)' } },
+              items: { class: 'mic-dropdown-list', style: { background: 'var(--p-surface-800)' } },
+              item: { class: 'mic-dropdown-item hover:bg-white/10', style: { padding: '0.5rem 0.75rem' } }
+            }"
           />
           <Button icon="pi pi-cog" severity="secondary" text rounded aria-label="Dashboard settings" />
         </div>
