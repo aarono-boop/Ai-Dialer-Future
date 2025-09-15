@@ -97,7 +97,7 @@
                     <Avatar :image="getAvatarUrl(currentStudent.name)" shape="circle" style="width: 28px; height: 28px" :class="!optInIdentity ? 'blur-sm' : ''" />
                     <div class="font-semibold" style="color: var(--p-surface-0)">{{ optInIdentity ? currentStudent.name : 'Anonymous' }}</div>
                   </div>
-                  <span class="text-sm" style="color: var(--p-surface-300)">My Summary</span>
+                  <Badge :value="userSubscription" :severity="subscriptionSeverity(userSubscription)" />
                 </div>
               </template>
               <Column field="label" header="Metric" headerClass="py-6 px-4" :headerStyle="{ paddingLeft: '16px' }" bodyClass="py-6 px-4" :bodyStyle="{ paddingLeft: '16px' }" />
@@ -234,6 +234,11 @@ const showSettingsDialog = ref(false)
 const optInIdentity = ref(true)
 
 const currentStudent = computed(() => students.value[0] ?? { name: 'Student' } as StudentRow)
+
+const userSubscription = computed<SubscriptionLevel>(() => {
+  const v = studentSummary.value.find(i => i.label === 'Subscription')?.value as string | undefined
+  return (v === 'Premium' || v === 'Platinum' || v === 'Standard') ? v : 'Standard'
+})
 
 const studentSummary = computed(() => ([
   { label: 'Subscription', value: 'Premium' },
