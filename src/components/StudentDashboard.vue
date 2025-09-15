@@ -36,12 +36,12 @@
               <Badge :value="data.subscription" :severity="subscriptionSeverity(data.subscription)" />
             </template>
           </Column>
-          <Column field="callVolume" header="Calls" headerClass="py-6 px-4" bodyClass="py-6 px-4" bodyStyle="text-align:right" />
-          <Column header="Answer Rate" headerClass="py-6 px-4" bodyClass="py-6 px-4" bodyStyle="text-align:right">
+          <Column field="callVolume" header="Calls" headerClass="py-6 px-4" headerStyle="text-align:right" bodyClass="py-6 px-4" bodyStyle="text-align:right" />
+          <Column header="Answer Rate" headerClass="py-6 px-4" headerStyle="text-align:right" bodyClass="py-6 px-4" bodyStyle="text-align:right">
             <template #body="{ data }">{{ (data.answerRate * 100).toFixed(1) }}%</template>
           </Column>
-          <Column field="appointments" header="Appointments" headerClass="py-6 px-4" bodyClass="py-6 px-4" bodyStyle="text-align:right" />
-          <Column field="followUps" header="Follow-ups" headerClass="py-6 px-4" bodyClass="py-6 px-4" bodyStyle="text-align:right" />
+          <Column field="appointments" header="Appointments" headerClass="py-6 px-4" headerStyle="text-align:right" bodyClass="py-6 px-4" bodyStyle="text-align:right" />
+          <Column field="followUps" header="Follow-ups" headerClass="py-6 px-4" headerStyle="text-align:right" bodyClass="py-6 px-4" bodyStyle="text-align:right" />
         </DataTable>
       </div>
     </div>
