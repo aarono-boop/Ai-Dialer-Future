@@ -38,52 +38,66 @@
         </div>
       </div>
 
-      <!-- Students Table Card -->
-      <div class="bg-gray-800/40 border border-gray-700 rounded-xl p-4">
-        <DataTable :value="students" scrollable scrollHeight="730px" :tableStyle="{ tableLayout: 'fixed' }" size="large" :pt="{ header: { style: { border: 'none', borderBottom: 'none' } }, headerRow: { class: 'h-12' }, headerCell: { style: { border: 'none' } }, bodyRow: { class: 'h-14' } }">
-          <template #header>
-            <div class="flex items-center justify-between">
-              <span class="font-semibold" style="color: var(--p-surface-0)">Top 20 Students</span>
-            </div>
-          </template>
-          <Column field="rank" header="#" style="width: 60px" headerClass="py-6 px-4" bodyClass="py-6 px-4" />
-          <Column header="Avatar" headerClass="py-6 px-4" bodyClass="py-6 px-4">
-            <template #body="{ data }">
-              <Avatar :image="getAvatarUrl(data.name)" shape="circle" style="width: 32px; height: 32px" :class="data.anonymous ? 'blur-sm' : ''" />
-            </template>
-          </Column>
-          <Column header="Student Name" headerClass="py-6 px-4" bodyClass="py-6 px-4">
-            <template #body="{ data }">
-              <span :class="data.anonymous ? 'blur-sm select-none' : ''">{{ data.name }}</span>
-            </template>
-          </Column>
-          <Column header="Subscription" headerClass="py-6 px-4" bodyClass="py-6 px-4">
-            <template #body="{ data }">
-              <Badge :value="data.subscription" :severity="subscriptionSeverity(data.subscription)" />
-            </template>
-          </Column>
-          <Column field="callVolume" headerClass="py-6 px-4" bodyClass="py-6 px-4" bodyStyle="text-align:right">
-            <template #header>
-              <div class="ml-auto text-right">Calls</div>
-            </template>
-          </Column>
-          <Column headerClass="py-6 px-4" bodyClass="py-6 px-4" bodyStyle="text-align:right">
-            <template #header>
-              <div class="ml-auto text-right">Answer Rate</div>
-            </template>
-            <template #body="{ data }">{{ (data.answerRate * 100).toFixed(1) }}%</template>
-          </Column>
-          <Column field="appointments" headerClass="py-6 px-4" bodyClass="py-6 px-4" bodyStyle="text-align:right">
-            <template #header>
-              <div class="ml-auto text-right">Appointments</div>
-            </template>
-          </Column>
-          <Column field="followUps" headerClass="py-6 px-4" bodyClass="py-6 px-4" bodyStyle="text-align:right">
-            <template #header>
-              <div class="ml-auto text-right">Follow-ups</div>
-            </template>
-          </Column>
-        </DataTable>
+      <!-- Two-Column Layout: 2/3 Students table, 1/3 Student area -->
+      <div class="flex gap-4">
+        <div class="w-2/3">
+          <div class="bg-gray-800/40 border border-gray-700 rounded-xl p-4">
+            <DataTable :value="students" scrollable scrollHeight="730px" :tableStyle="{ tableLayout: 'fixed' }" size="large" :pt="{ header: { style: { border: 'none', borderBottom: 'none' } }, headerRow: { class: 'h-12' }, headerCell: { style: { border: 'none' } }, bodyRow: { class: 'h-14' } }">
+              <template #header>
+                <div class="flex items-center justify-between">
+                  <span class="font-semibold" style="color: var(--p-surface-0)">Top 20 Students</span>
+                </div>
+              </template>
+              <Column field="rank" header="#" style="width: 60px" headerClass="py-6 px-4" bodyClass="py-6 px-4" />
+              <Column header="Avatar" headerClass="py-6 px-4" bodyClass="py-6 px-4">
+                <template #body="{ data }">
+                  <Avatar :image="getAvatarUrl(data.name)" shape="circle" style="width: 32px; height: 32px" :class="data.anonymous ? 'blur-sm' : ''" />
+                </template>
+              </Column>
+              <Column header="Student Name" headerClass="py-6 px-4" bodyClass="py-6 px-4">
+                <template #body="{ data }">
+                  <span :class="data.anonymous ? 'blur-sm select-none' : ''">{{ data.name }}</span>
+                </template>
+              </Column>
+              <Column header="Subscription" headerClass="py-6 px-4" bodyClass="py-6 px-4">
+                <template #body="{ data }">
+                  <Badge :value="data.subscription" :severity="subscriptionSeverity(data.subscription)" />
+                </template>
+              </Column>
+              <Column field="callVolume" headerClass="py-6 px-4" bodyClass="py-6 px-4" bodyStyle="text-align:right">
+                <template #header>
+                  <div class="ml-auto text-right">Calls</div>
+                </template>
+              </Column>
+              <Column headerClass="py-6 px-4" bodyClass="py-6 px-4" bodyStyle="text-align:right">
+                <template #header>
+                  <div class="ml-auto text-right">Answer Rate</div>
+                </template>
+                <template #body="{ data }">{{ (data.answerRate * 100).toFixed(1) }}%</template>
+              </Column>
+              <Column field="appointments" headerClass="py-6 px-4" bodyClass="py-6 px-4" bodyStyle="text-align:right">
+                <template #header>
+                  <div class="ml-auto text-right">Appointments</div>
+                </template>
+              </Column>
+              <Column field="followUps" headerClass="py-6 px-4" bodyClass="py-6 px-4" bodyStyle="text-align:right">
+                <template #header>
+                  <div class="ml-auto text-right">Follow-ups</div>
+                </template>
+              </Column>
+            </DataTable>
+          </div>
+        </div>
+        <div class="w-1/3">
+          <div class="bg-gray-800/40 border border-gray-700 rounded-xl p-4">
+            <DataTable :value="studentSummary" header="My Summary" scrollable scrollHeight="730px" :tableStyle="{ tableLayout: 'fixed' }" size="large" :pt="{ header: { style: { border: 'none', borderBottom: 'none' } }, headerRow: { class: 'h-12' }, headerCell: { style: { border: 'none' } }, bodyRow: { class: 'h-14' } }">
+              <Column field="label" header="Metric" headerClass="py-6 px-4" bodyClass="py-6 px-4" />
+              <Column header="Value" headerClass="py-6 px-4" bodyClass="py-6 px-4" bodyStyle="text-align:right">
+                <template #body="{ data }">{{ data.value }}</template>
+              </Column>
+            </DataTable>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -150,6 +164,19 @@ const ranges = [
 const selectedRange = ref('30d')
 const showSettingsDialog = ref(false)
 const optInIdentity = ref(true)
+
+const studentSummary = computed(() => ([
+  { label: 'Subscription', value: 'Premium' },
+  { label: 'Calls', value: 284 },
+  { label: 'Answer Rate', value: '32.5%' },
+  { label: 'Appointments', value: 21 },
+  { label: 'Follow-ups', value: 12 },
+  { label: 'Opt-In Identity', value: optInIdentity.value ? 'Enabled' : 'Anonymous' },
+  { label: 'Connect CRM', value: 'Not Connected' },
+  { label: 'Next Session', value: 'Tomorrow 10:00 AM' },
+  { label: 'Last Dial Session', value: 'Today 2:15 PM' },
+  { label: 'Call Goal', value: '300 / 500' }
+]))
 
 // Student table data
 type SubscriptionLevel = 'Premium' | 'Platinum' | 'Standard'
