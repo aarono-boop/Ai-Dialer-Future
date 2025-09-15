@@ -48,7 +48,7 @@
                   <span class="font-semibold" style="color: var(--p-surface-0)">Top 20 Students</span>
                 </div>
               </template>
-              <Column field="rank" header="#" style="width: 60px" headerClass="py-6 px-4" bodyClass="py-6 px-4" />
+              <Column field="rank" header="#" style="width: 60px" headerClass="py-6 px-4" :headerStyle="{ paddingLeft: '16px' }" bodyClass="py-6 px-4" :bodyStyle="{ paddingLeft: '16px' }" />
               <Column header="Avatar" headerClass="py-6 px-4" bodyClass="py-6 px-4">
                 <template #body="{ data }">
                   <Avatar :image="getAvatarUrl(data.name)" shape="circle" style="width: 32px; height: 32px" :class="data.anonymous ? 'blur-sm' : ''" />
@@ -80,9 +80,9 @@
                   <div class="ml-auto text-right">Appointments</div>
                 </template>
               </Column>
-              <Column field="followUps" headerClass="py-6 px-4" bodyClass="py-6 px-4" bodyStyle="text-align:right">
+              <Column field="followUps" headerClass="py-6 px-4" bodyClass="py-6 px-4" :bodyStyle="{ textAlign: 'right', paddingRight: '16px' }">
                 <template #header>
-                  <div class="ml-auto text-right">Follow-ups</div>
+                  <div class="ml-auto text-right pr-4">Follow-ups</div>
                 </template>
               </Column>
             </DataTable>
@@ -100,10 +100,10 @@
             </div>
 
             <DataTable :value="studentSummary" header="My Summary" scrollable scrollHeight="730px" :tableStyle="{ tableLayout: 'fixed' }" size="large" :pt="{ root: { style: { borderRadius: '12px', overflow: 'hidden' } }, header: { style: { border: 'none', borderBottom: 'none', background: 'var(--p-surface-800)', padding: '10px 16px' } }, headerRow: { class: 'h-12', style: { background: 'var(--p-surface-800)' } }, headerCell: { style: { border: 'none', background: 'var(--p-surface-800)', padding: '12px 16px' } }, bodyRow: { class: 'h-14' }, bodyCell: { style: { padding: '12px 16px' } } }">
-              <Column field="label" header="Metric" headerClass="py-6 px-4" bodyClass="py-6 px-4" />
-              <Column headerClass="py-6 px-4" bodyClass="py-6 px-4" bodyStyle="text-align:right">
+              <Column field="label" header="Metric" headerClass="py-6 px-4" :headerStyle="{ paddingLeft: '16px' }" bodyClass="py-6 px-4" :bodyStyle="{ paddingLeft: '16px' }" />
+              <Column headerClass="py-6" bodyClass="py-6 px-4" :bodyStyle="{ textAlign: 'right', paddingRight: '16px' }">
                 <template #header>
-                  <div class="ml-auto text-right">Value</div>
+                  <div class="ml-auto text-right pr-4">Value</div>
                 </template>
                 <template #body="{ data }">{{ data.value }}</template>
               </Column>
