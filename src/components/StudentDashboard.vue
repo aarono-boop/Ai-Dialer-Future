@@ -126,11 +126,11 @@
               </template>
               <template #content>
                 <div class="space-y-3">
-                  <div class="space-y-1">
+                  <div class="space-y-1 px-4">
                     <label class="text-sm text-gray-300">Subject</label>
                     <InputText v-model="contactSubject" class="w-full" :pt="{ root: { style: { background: 'var(--p-surface-900)', border: '1px solid var(--p-surface-600)' } } }" />
                   </div>
-                  <div class="space-y-1">
+                  <div class="space-y-1 px-4">
                     <label class="text-sm text-gray-300">Message</label>
                     <Textarea v-model="contactMessage" rows="4" autoResize class="w-full" :pt="{ root: { style: { background: 'var(--p-surface-900)', border: '1px solid var(--p-surface-600)' } } }" />
                   </div>
