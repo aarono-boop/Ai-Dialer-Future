@@ -109,6 +109,37 @@
               </Column>
             </DataTable>
           </div>
+
+          <!-- Contact Coach Area -->
+          <div class="mt-4">
+            <Card :pt="{ root: { style: { background: 'var(--p-surface-800)', border: '1px solid var(--p-surface-600)', borderRadius: '12px' } }, body: { style: { padding: '16px' } } }">
+              <template #title>
+                <div class="flex items-center gap-2">
+                  <img v-if="coach?.avatarUrl" :src="coach.avatarUrl" :alt="coach.displayName" class="w-6 h-6 rounded-full object-cover" />
+                  <div v-else class="w-6 h-6 rounded-full bg-gradient-to-br from-blue-400 to-purple-500 flex items-center justify-center text-white text-xs font-semibold">
+                    {{ coachInitials }}
+                  </div>
+                  <span>Contact Your Coach</span>
+                </div>
+              </template>
+              <template #content>
+                <div class="space-y-3">
+                  <div class="space-y-1">
+                    <label class="text-sm text-gray-300">Subject</label>
+                    <InputText v-model="contactSubject" class="w-full" :pt="{ root: { style: { background: 'var(--p-surface-900)', border: '1px solid var(--p-surface-600)' } } }" />
+                  </div>
+                  <div class="space-y-1">
+                    <label class="text-sm text-gray-300">Message</label>
+                    <Textarea v-model="contactMessage" rows="4" autoResize class="w-full" :pt="{ root: { style: { background: 'var(--p-surface-900)', border: '1px solid var(--p-surface-600)' } } }" />
+                  </div>
+                  <div class="flex items-center justify-end gap-2 pt-1">
+                    <Button icon="pi pi-calendar" label="Request Appointment" severity="secondary" size="small" @click="requestAppointment" />
+                    <Button icon="pi pi-send" label="Send" :disabled="!contactMessage?.trim()" size="small" @click="sendMessage" />
+                  </div>
+                </div>
+              </template>
+            </Card>
+          </div>
         </div>
       </div>
     </div>
@@ -136,6 +167,14 @@
       </div>
     </template>
   </Dialog>
+
+  <!-- Contact confirmation dialog -->
+  <Dialog :visible="showContactConfirm" modal header="Coach Contact" :style="{ width: '24rem' }" @update:visible="(v: boolean) => showContactConfirm = v">
+    <div class="text-sm text-gray-300">Your request has been recorded. We’ll notify your coach.</div>
+    <template #footer>
+      <Button label="Close" severity="secondary" @click="showContactConfirm = false" />
+    </template>
+  </Dialog>
 </template>
 
 <script setup lang="ts">
@@ -148,6 +187,9 @@ import Avatar from 'primevue/avatar'
 import Badge from 'primevue/badge'
 import Dialog from 'primevue/dialog'
 import ToggleSwitch from 'primevue/toggleswitch'
+import Card from 'primevue/card'
+import InputText from 'primevue/inputtext'
+import Textarea from 'primevue/textarea'
 import { useCoaches } from '../composables/useCoaches'
 
 const props = defineProps<{ coachName: string | null }>()
@@ -191,6 +233,21 @@ const studentSummary = computed(() => ([
   { label: 'Last Dial Session', value: 'Today 2:15 PM' },
   { label: 'Call Goal', value: '300 / 500' }
 ]))
+
+// Coach contact form state
+const contactSubject = ref('')
+const contactMessage = ref('')
+const showContactConfirm = ref(false)
+
+const sendMessage = () => {
+  if (!contactMessage.value.trim()) return
+  showContactConfirm.value = true
+  contactSubject.value = ''
+  contactMessage.value = ''
+}
+const requestAppointment = () => {
+  showContactConfirm.value = true
+}
 
 // Student table data
 type SubscriptionLevel = 'Premium' | 'Platinum' | 'Standard'
