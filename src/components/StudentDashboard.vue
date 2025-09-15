@@ -99,7 +99,7 @@
               </div>
             </div>
 
-            <DataTable :value="studentSummary" header="My Summary" scrollable scrollHeight="730px" :tableStyle="{ tableLayout: 'fixed' }" size="large" :pt="{ header: { style: { border: 'none', borderBottom: 'none', background: 'var(--p-surface-800)' } }, headerRow: { class: 'h-12', style: { background: 'var(--p-surface-800)' } }, headerCell: { style: { border: 'none', background: 'var(--p-surface-800)' } }, bodyRow: { class: 'h-14' } }">
+            <DataTable :value="studentSummary" header="My Summary" scrollable scrollHeight="730px" :tableStyle="{ tableLayout: 'fixed' }" size="large" :pt="{ root: { style: { borderRadius: '12px', overflow: 'hidden' } }, header: { style: { border: 'none', borderBottom: 'none', background: 'var(--p-surface-800)', padding: '10px 16px' } }, headerRow: { class: 'h-12', style: { background: 'var(--p-surface-800)' } }, headerCell: { style: { border: 'none', background: 'var(--p-surface-800)', padding: '12px 16px' } }, bodyRow: { class: 'h-14' }, bodyCell: { style: { padding: '12px 16px' } } }">
               <Column field="label" header="Metric" headerClass="py-6 px-4" bodyClass="py-6 px-4" />
               <Column headerClass="py-6 px-4" bodyClass="py-6 px-4" bodyStyle="text-align:right">
                 <template #header>
