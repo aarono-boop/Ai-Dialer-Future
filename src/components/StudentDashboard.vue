@@ -101,7 +101,7 @@
 
             <DataTable :value="studentSummary" header="My Summary" scrollable scrollHeight="730px" :tableStyle="{ tableLayout: 'fixed' }" size="large" :pt="{ header: { style: { border: 'none', borderBottom: 'none' } }, headerRow: { class: 'h-12' }, headerCell: { style: { border: 'none' } }, bodyRow: { class: 'h-14' } }">
               <Column field="label" header="Metric" headerClass="py-6 px-4" bodyClass="py-6 px-4" />
-              <Column header="Value" headerClass="py-6 px-4" bodyClass="py-6 px-4" bodyStyle="text-align:right">
+              <Column header="Value" headerClass="py-6 px-4" headerStyle="text-align:right" bodyClass="py-6 px-4" bodyStyle="text-align:right">
                 <template #body="{ data }">{{ data.value }}</template>
               </Column>
             </DataTable>
