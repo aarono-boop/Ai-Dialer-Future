@@ -237,7 +237,7 @@ const currentStudent = computed(() => students.value[0] ?? { name: 'Student' } a
 
 const studentSummary = computed(() => ([
   { label: 'Subscription', value: 'Premium' },
-  { label: 'Calls', value: 284 },
+  { label: 'Calls', value: '420/500' },
   { label: 'Answer Rate', value: '32.5%' },
   { label: 'Appointments', value: 21 },
   { label: 'Follow-ups', value: 12 },
@@ -245,7 +245,6 @@ const studentSummary = computed(() => ([
   { label: 'Connect CRM', value: 'Not Connected' },
   { label: 'Next Session', value: 'Tomorrow 10:00 AM' },
   { label: 'Last Dial Session', value: 'Today 2:15 PM' },
-  { label: 'Call Goal', value: '300 / 500' }
 ]))
 
 // Coach contact form state
