@@ -111,7 +111,7 @@
           </div>
 
           <!-- Contact Coach Area -->
-          <div class="mt-4 bg-gray-800/40 border border-gray-700 rounded-xl p-4">
+          <div class="mt-4 bg-gray-800/40 border border-gray-700 rounded-xl p-0">
             <Card :pt="{ root: { style: { background: 'transparent', border: 'none', borderRadius: '0' } }, body: { style: { padding: '0' } } }">
               <template #title>
                 <div class="flex items-center justify-between" :style="{ background: 'var(--p-surface-800)', padding: '10px 16px', borderRadius: '12px 12px 0 0' }">
