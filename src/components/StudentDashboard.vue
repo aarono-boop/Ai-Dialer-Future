@@ -17,6 +17,7 @@
         </div>
         <div class="flex items-center gap-2">
           <Dropdown v-model="selectedRange" :options="ranges" optionLabel="label" optionValue="value" class="w-40" />
+          <Button icon="pi pi-cog" severity="secondary" text rounded aria-label="Dashboard settings" />
         </div>
       </div>
 
@@ -65,6 +66,7 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
 import Dropdown from 'primevue/dropdown'
+import Button from 'primevue/button'
 import DataTable from 'primevue/datatable'
 import Column from 'primevue/column'
 import Avatar from 'primevue/avatar'
