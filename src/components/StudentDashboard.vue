@@ -44,10 +44,14 @@
           <Column field="rank" header="#" style="width: 60px" headerClass="py-6 px-4" bodyClass="py-6 px-4" />
           <Column header="Avatar" headerClass="py-6 px-4" bodyClass="py-6 px-4">
             <template #body="{ data }">
-              <Avatar :image="getAvatarUrl(data.name)" shape="circle" style="width: 32px; height: 32px" />
+              <Avatar :image="getAvatarUrl(data.name)" shape="circle" style="width: 32px; height: 32px" :class="data.anonymous ? 'blur-sm' : ''" />
             </template>
           </Column>
-          <Column field="name" header="Student Name" headerClass="py-6 px-4" bodyClass="py-6 px-4" />
+          <Column header="Student Name" headerClass="py-6 px-4" bodyClass="py-6 px-4">
+            <template #body="{ data }">
+              <span :class="data.anonymous ? 'blur-sm select-none' : ''">{{ data.name }}</span>
+            </template>
+          </Column>
           <Column header="Subscription" headerClass="py-6 px-4" bodyClass="py-6 px-4">
             <template #body="{ data }">
               <Badge :value="data.subscription" :severity="subscriptionSeverity(data.subscription)" />
@@ -152,19 +156,20 @@ interface StudentRow {
   answerRate: number // 0..1
   appointments: number
   followUps: number
+  anonymous: boolean
 }
 
 const students = ref<StudentRow[]>([
-  { rank: 1, name: 'Alex Johnson',   subscription: 'Platinum', callVolume: 420, answerRate: 0.41, appointments: 36, followUps: 18 },
-  { rank: 2, name: 'Maria Garcia',   subscription: 'Premium',  callVolume: 395, answerRate: 0.38, appointments: 32, followUps: 21 },
-  { rank: 3, name: 'Liam Smith',     subscription: 'Standard', callVolume: 360, answerRate: 0.35, appointments: 29, followUps: 17 },
-  { rank: 4, name: 'Sophia Lee',     subscription: 'Platinum', callVolume: 345, answerRate: 0.42, appointments: 31, followUps: 19 },
-  { rank: 5, name: 'Noah Williams',  subscription: 'Premium',  callVolume: 330, answerRate: 0.33, appointments: 27, followUps: 15 },
-  { rank: 6, name: 'Emma Davis',     subscription: 'Standard', callVolume: 315, answerRate: 0.29, appointments: 22, followUps: 14 },
-  { rank: 7, name: 'Olivia Martinez',subscription: 'Premium',  callVolume: 298, answerRate: 0.31, appointments: 24, followUps: 13 },
-  { rank: 8, name: 'William Brown',  subscription: 'Standard', callVolume: 287, answerRate: 0.27, appointments: 20, followUps: 12 },
-  { rank: 9, name: 'Ava Taylor',     subscription: 'Platinum', callVolume: 275, answerRate: 0.36, appointments: 23, followUps: 11 },
-  { rank:10, name: 'James Wilson',   subscription: 'Standard', callVolume: 260, answerRate: 0.25, appointments: 19, followUps: 10 }
+  { rank: 1,  name: 'Alex Johnson',    subscription: 'Platinum', callVolume: 420, answerRate: 0.41, appointments: 36, followUps: 18, anonymous: false },
+  { rank: 2,  name: 'Maria Garcia',    subscription: 'Premium',  callVolume: 395, answerRate: 0.38, appointments: 32, followUps: 21, anonymous: true },
+  { rank: 3,  name: 'Liam Smith',      subscription: 'Standard', callVolume: 360, answerRate: 0.35, appointments: 29, followUps: 17, anonymous: false },
+  { rank: 4,  name: 'Sophia Lee',      subscription: 'Platinum', callVolume: 345, answerRate: 0.42, appointments: 31, followUps: 19, anonymous: false },
+  { rank: 5,  name: 'Noah Williams',   subscription: 'Premium',  callVolume: 330, answerRate: 0.33, appointments: 27, followUps: 15, anonymous: false },
+  { rank: 6,  name: 'Emma Davis',      subscription: 'Standard', callVolume: 315, answerRate: 0.29, appointments: 22, followUps: 14, anonymous: true },
+  { rank: 7,  name: 'Olivia Martinez', subscription: 'Premium',  callVolume: 298, answerRate: 0.31, appointments: 24, followUps: 13, anonymous: false },
+  { rank: 8,  name: 'William Brown',   subscription: 'Standard', callVolume: 287, answerRate: 0.27, appointments: 20, followUps: 12, anonymous: true },
+  { rank: 9,  name: 'Ava Taylor',      subscription: 'Platinum', callVolume: 275, answerRate: 0.36, appointments: 23, followUps: 11, anonymous: false },
+  { rank: 10, name: 'James Wilson',    subscription: 'Standard', callVolume: 260, answerRate: 0.25, appointments: 19, followUps: 10, anonymous: false }
 ])
 
 // Fake avatar pool and deterministic avatar selector based on name
