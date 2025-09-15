@@ -235,13 +235,9 @@ const optInIdentity = ref(true)
 
 const currentStudent = computed(() => students.value[0] ?? { name: 'Student' } as StudentRow)
 
-const userSubscription = computed<SubscriptionLevel>(() => {
-  const v = studentSummary.value.find(i => i.label === 'Subscription')?.value as string | undefined
-  return (v === 'Premium' || v === 'Platinum' || v === 'Standard') ? v : 'Standard'
-})
+const userSubscription = computed<SubscriptionLevel>(() => currentStudent.value?.subscription ?? 'Standard')
 
 const studentSummary = computed(() => ([
-  { label: 'Subscription', value: 'Premium' },
   { label: 'Calls', value: '420/500' },
   { label: 'Answer Rate', value: '32.5%' },
   { label: 'Appointments', value: 21 },
