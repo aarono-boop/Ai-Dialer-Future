@@ -34,7 +34,7 @@
               item: { class: 'mic-dropdown-item hover:bg-white/10', style: { padding: '0.5rem 0.75rem' } }
             }"
           />
-          <Button icon="pi pi-cog" severity="secondary" text rounded aria-label="Dashboard settings" />
+          <Button icon="pi pi-cog" severity="secondary" text rounded aria-label="Dashboard settings" @click="showSettingsDialog = true" />
         </div>
       </div>
 
@@ -78,6 +78,29 @@
       </div>
     </div>
   </div>
+  <Dialog
+    :visible="showSettingsDialog"
+    modal
+    header="Dashboard Settings"
+    :breakpoints="{ '960px': '95vw' }"
+    :style="{ width: '28rem' }"
+    @update:visible="(v: boolean) => showSettingsDialog = v"
+  >
+    <div class="space-y-4">
+      <div class="flex items-center justify-between">
+        <div>
+          <div class="font-medium">Show my information</div>
+          <div class="text-sm text-gray-400">When off, your name and avatar will be hidden to remain anonymous.</div>
+        </div>
+        <ToggleSwitch v-model="optInIdentity" />
+      </div>
+    </div>
+    <template #footer>
+      <div class="flex items-center justify-end gap-2 w-full">
+        <Button label="Close" severity="secondary" @click="showSettingsDialog = false" />
+      </div>
+    </template>
+  </Dialog>
 </template>
 
 <script setup lang="ts">
@@ -88,6 +111,8 @@ import DataTable from 'primevue/datatable'
 import Column from 'primevue/column'
 import Avatar from 'primevue/avatar'
 import Badge from 'primevue/badge'
+import Dialog from 'primevue/dialog'
+import ToggleSwitch from 'primevue/toggleswitch'
 import { useCoaches } from '../composables/useCoaches'
 
 const props = defineProps<{ coachName: string | null }>()
@@ -114,6 +139,8 @@ const ranges = [
   { label: 'Year to date', value: 'ytd' }
 ]
 const selectedRange = ref('30d')
+const showSettingsDialog = ref(false)
+const optInIdentity = ref(true)
 
 // Student table data
 type SubscriptionLevel = 'Premium' | 'Platinum' | 'Standard'
