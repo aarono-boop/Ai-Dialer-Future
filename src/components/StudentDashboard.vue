@@ -114,12 +114,14 @@
           <div class="mt-4 bg-gray-800/40 border border-gray-700 rounded-xl p-4">
             <Card :pt="{ root: { style: { background: 'transparent', border: 'none', borderRadius: '0' } }, body: { style: { padding: '0' } } }">
               <template #title>
-                <div class="flex items-center gap-2">
-                  <img v-if="coach?.avatarUrl" :src="coach.avatarUrl" :alt="coach.displayName" class="w-6 h-6 rounded-full object-cover" />
-                  <div v-else class="w-6 h-6 rounded-full bg-gradient-to-br from-blue-400 to-purple-500 flex items-center justify-center text-white text-xs font-semibold">
-                    {{ coachInitials }}
+                <div class="flex items-center justify-between" :style="{ background: 'var(--p-surface-800)', padding: '10px 16px', borderRadius: '12px 12px 0 0' }">
+                  <div class="flex items-center gap-2">
+                    <img v-if="coach?.avatarUrl" :src="coach.avatarUrl" :alt="coach.displayName" class="w-6 h-6 rounded-full object-cover" />
+                    <div v-else class="w-6 h-6 rounded-full bg-gradient-to-br from-blue-400 to-purple-500 flex items-center justify-center text-white text-xs font-semibold">
+                      {{ coachInitials }}
+                    </div>
+                    <span class="font-semibold" style="color: var(--p-surface-0)">Contact Your Coach</span>
                   </div>
-                  <span>Contact Your Coach</span>
                 </div>
               </template>
               <template #content>
