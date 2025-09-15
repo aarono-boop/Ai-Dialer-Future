@@ -88,7 +88,7 @@
   >
     <div class="space-y-4">
       <div class="flex items-center justify-between">
-        <div>
+        <div class="w-4/5">
           <div class="font-medium">Show my information</div>
           <div class="text-sm text-gray-400">When off, your name and avatar will be hidden to remain anonymous.</div>
         </div>
