@@ -40,7 +40,7 @@
 
       <!-- Students Table Card -->
       <div class="bg-gray-800/40 border border-gray-700 rounded-xl p-4">
-        <DataTable :value="students" size="large" :pt="{ headerRow: { class: 'h-12' }, bodyRow: { class: 'h-14' } }">
+        <DataTable :value="students" header="Top 20 Students" scrollable scrollHeight="420px" :tableStyle="{ tableLayout: 'fixed' }" size="large" :pt="{ headerRow: { class: 'h-12' }, bodyRow: { class: 'h-14' } }">
           <Column field="rank" header="#" style="width: 60px" headerClass="py-6 px-4" bodyClass="py-6 px-4" />
           <Column header="Avatar" headerClass="py-6 px-4" bodyClass="py-6 px-4">
             <template #body="{ data }">
@@ -169,7 +169,17 @@ const students = ref<StudentRow[]>([
   { rank: 7,  name: 'Olivia Martinez', subscription: 'Premium',  callVolume: 298, answerRate: 0.31, appointments: 24, followUps: 13, anonymous: false },
   { rank: 8,  name: 'William Brown',   subscription: 'Standard', callVolume: 287, answerRate: 0.27, appointments: 20, followUps: 12, anonymous: true },
   { rank: 9,  name: 'Ava Taylor',      subscription: 'Platinum', callVolume: 275, answerRate: 0.36, appointments: 23, followUps: 11, anonymous: false },
-  { rank: 10, name: 'James Wilson',    subscription: 'Standard', callVolume: 260, answerRate: 0.25, appointments: 19, followUps: 10, anonymous: false }
+  { rank: 10, name: 'James Wilson',    subscription: 'Standard', callVolume: 260, answerRate: 0.25, appointments: 19, followUps: 10, anonymous: false },
+  { rank: 11, name: 'Mia Thompson',    subscription: 'Premium',  callVolume: 255, answerRate: 0.28, appointments: 18, followUps: 9,  anonymous: false },
+  { rank: 12, name: 'Benjamin Clark',  subscription: 'Standard', callVolume: 248, answerRate: 0.26, appointments: 17, followUps: 9,  anonymous: true },
+  { rank: 13, name: 'Charlotte Hall',  subscription: 'Platinum', callVolume: 242, answerRate: 0.34, appointments: 21, followUps: 10, anonymous: false },
+  { rank: 14, name: 'Lucas Young',     subscription: 'Premium',  callVolume: 237, answerRate: 0.29, appointments: 19, followUps: 10, anonymous: false },
+  { rank: 15, name: 'Amelia King',     subscription: 'Standard', callVolume: 230, answerRate: 0.24, appointments: 16, followUps: 8,  anonymous: true },
+  { rank: 16, name: 'Henry Scott',     subscription: 'Premium',  callVolume: 224, answerRate: 0.27, appointments: 17, followUps: 8,  anonymous: false },
+  { rank: 17, name: 'Evelyn Green',    subscription: 'Standard', callVolume: 219, answerRate: 0.22, appointments: 14, followUps: 7,  anonymous: false },
+  { rank: 18, name: 'Alexander Baker', subscription: 'Platinum', callVolume: 213, answerRate: 0.31, appointments: 18, followUps: 9,  anonymous: true },
+  { rank: 19, name: 'Harper Adams',    subscription: 'Premium',  callVolume: 208, answerRate: 0.23, appointments: 15, followUps: 7,  anonymous: false },
+  { rank: 20, name: 'Daniel Perez',    subscription: 'Standard', callVolume: 200, answerRate: 0.21, appointments: 13, followUps: 6,  anonymous: false }
 ])
 
 // Fake avatar pool and deterministic avatar selector based on name
