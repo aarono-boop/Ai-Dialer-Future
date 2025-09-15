@@ -36,12 +36,27 @@
               <Badge :value="data.subscription" :severity="subscriptionSeverity(data.subscription)" />
             </template>
           </Column>
-          <Column field="callVolume" header="Calls" headerClass="py-6 px-4" headerStyle="text-align:right" bodyClass="py-6 px-4" bodyStyle="text-align:right" />
-          <Column header="Answer Rate" headerClass="py-6 px-4" headerStyle="text-align:right" bodyClass="py-6 px-4" bodyStyle="text-align:right">
+          <Column field="callVolume" headerClass="py-6 px-4" bodyClass="py-6 px-4" bodyStyle="text-align:right">
+            <template #header>
+              <div class="ml-auto text-right">Calls</div>
+            </template>
+          </Column>
+          <Column headerClass="py-6 px-4" bodyClass="py-6 px-4" bodyStyle="text-align:right">
+            <template #header>
+              <div class="ml-auto text-right">Answer Rate</div>
+            </template>
             <template #body="{ data }">{{ (data.answerRate * 100).toFixed(1) }}%</template>
           </Column>
-          <Column field="appointments" header="Appointments" headerClass="py-6 px-4" headerStyle="text-align:right" bodyClass="py-6 px-4" bodyStyle="text-align:right" />
-          <Column field="followUps" header="Follow-ups" headerClass="py-6 px-4" headerStyle="text-align:right" bodyClass="py-6 px-4" bodyStyle="text-align:right" />
+          <Column field="appointments" headerClass="py-6 px-4" bodyClass="py-6 px-4" bodyStyle="text-align:right">
+            <template #header>
+              <div class="ml-auto text-right">Appointments</div>
+            </template>
+          </Column>
+          <Column field="followUps" headerClass="py-6 px-4" bodyClass="py-6 px-4" bodyStyle="text-align:right">
+            <template #header>
+              <div class="ml-auto text-right">Follow-ups</div>
+            </template>
+          </Column>
         </DataTable>
       </div>
     </div>
