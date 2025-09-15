@@ -90,6 +90,15 @@
         </div>
         <div class="w-1/3">
           <div class="bg-gray-800/40 border border-gray-700 rounded-xl p-4">
+            <!-- User header for this section -->
+            <div class="flex items-center gap-3 mb-3">
+              <Avatar :image="getAvatarUrl(currentStudent.name)" shape="circle" style="width: 36px; height: 36px" :class="!optInIdentity ? 'blur-sm' : ''" />
+              <div>
+                <div class="font-semibold text-white">{{ optInIdentity ? currentStudent.name : 'Anonymous' }}</div>
+                <div class="text-xs text-gray-400">Logged in</div>
+              </div>
+            </div>
+
             <DataTable :value="studentSummary" header="My Summary" scrollable scrollHeight="730px" :tableStyle="{ tableLayout: 'fixed' }" size="large" :pt="{ header: { style: { border: 'none', borderBottom: 'none' } }, headerRow: { class: 'h-12' }, headerCell: { style: { border: 'none' } }, bodyRow: { class: 'h-14' } }">
               <Column field="label" header="Metric" headerClass="py-6 px-4" bodyClass="py-6 px-4" />
               <Column header="Value" headerClass="py-6 px-4" bodyClass="py-6 px-4" bodyStyle="text-align:right">
@@ -164,6 +173,8 @@ const ranges = [
 const selectedRange = ref('30d')
 const showSettingsDialog = ref(false)
 const optInIdentity = ref(true)
+
+const currentStudent = computed(() => students.value[0] ?? { name: 'Student' } as StudentRow)
 
 const studentSummary = computed(() => ([
   { label: 'Subscription', value: 'Premium' },
