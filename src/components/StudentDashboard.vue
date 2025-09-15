@@ -127,14 +127,14 @@
               <template #content>
                 <div class="space-y-3">
                   <div class="space-y-1 px-4">
-                    <label class="text-sm text-gray-300">Subject</label>
+                    <label class="text-sm text-gray-300 mt-4">Subject</label>
                     <InputText v-model="contactSubject" class="w-full" :pt="{ root: { style: { background: 'var(--p-surface-900)', border: '1px solid var(--p-surface-600)' } } }" />
                   </div>
                   <div class="space-y-1 px-4">
                     <label class="text-sm text-gray-300">Message</label>
                     <Textarea v-model="contactMessage" rows="4" autoResize class="w-full" :pt="{ root: { style: { background: 'var(--p-surface-900)', border: '1px solid var(--p-surface-600)' } } }" />
                   </div>
-                  <div class="flex items-center justify-end gap-2 pt-1">
+                  <div class="flex items-center justify-end gap-2 pt-1 mb-4">
                     <Button icon="pi pi-calendar" label="Request Appointment" severity="secondary" size="small" @click="requestAppointment" />
                     <Button icon="pi pi-send" label="Send" :disabled="!contactMessage?.trim()" size="small" @click="sendMessage" />
                   </div>
