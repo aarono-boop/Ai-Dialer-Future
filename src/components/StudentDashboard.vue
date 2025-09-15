@@ -17,7 +17,6 @@
         </div>
         <div class="flex items-center gap-2">
           <Dropdown v-model="selectedRange" :options="ranges" optionLabel="label" optionValue="value" class="w-40" />
-          <Button label="Back to App" icon="pi pi-arrow-left" severity="secondary" size="small" text @click="goBack" />
         </div>
       </div>
 
@@ -65,7 +64,6 @@
 
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import Button from 'primevue/button'
 import Dropdown from 'primevue/dropdown'
 import DataTable from 'primevue/datatable'
 import Column from 'primevue/column'
@@ -151,5 +149,4 @@ const subscriptionSeverity = (level: SubscriptionLevel) => {
   }
 }
 
-const goBack = () => { window.location.href = window.location.pathname }
 </script>
