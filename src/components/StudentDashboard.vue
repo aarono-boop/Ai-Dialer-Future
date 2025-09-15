@@ -90,7 +90,7 @@
         </div>
         <div class="w-1/3">
           <div class="bg-gray-800/40 border border-gray-700 rounded-xl p-4">
-            <DataTable :value="studentSummary" scrollable scrollHeight="730px" :tableStyle="{ tableLayout: 'fixed' }" size="large" :pt="{ root: { style: { borderRadius: '12px', overflow: 'hidden' } }, header: { style: { border: 'none', borderBottom: 'none', background: 'var(--p-surface-800)', padding: '10px 16px' } }, headerRow: { class: 'h-12', style: { background: 'var(--p-surface-800)' } }, headerCell: { style: { border: 'none', background: 'var(--p-surface-800)', padding: '12px 16px' } }, bodyRow: { class: 'h-14', style: { borderBottom: 'none', boxShadow: 'none' } }, bodyCell: { style: { padding: '12px 16px', borderBottom: 'none', borderTop: 'none' } } }">
+            <DataTable :value="studentSummary" scrollable scrollHeight="730px" :tableStyle="{ tableLayout: 'fixed' }" size="large" :pt="{ root: { class: 'student-details-table', style: { borderRadius: '12px', overflow: 'hidden' } }, header: { style: { border: 'none', borderBottom: 'none', background: 'var(--p-surface-800)', padding: '10px 16px' } }, headerRow: { class: 'h-12', style: { background: 'var(--p-surface-800)' } }, headerCell: { style: { border: 'none', background: 'var(--p-surface-800)', padding: '12px 16px' } }, bodyRow: { class: 'h-14', style: { borderBottom: 'none', boxShadow: 'none' } }, bodyCell: { style: { padding: '12px 16px', borderBottom: 'none', borderTop: 'none', boxShadow: 'none' } } }">
               <template #header>
                 <div class="flex items-center justify-between">
                   <div class="flex items-center gap-3">
@@ -176,6 +176,20 @@
     </template>
   </Dialog>
 </template>
+
+<style scoped>
+/* Remove separators specifically for the right student details table */
+:deep(.student-details-table tbody > tr > td),
+:deep(.student-details-table .p-datatable-tbody > tr > td) {
+  border-bottom: 0 !important;
+  box-shadow: none !important;
+}
+:deep(.student-details-table tbody > tr),
+:deep(.student-details-table .p-datatable-tbody > tr) {
+  border-bottom: 0 !important;
+  box-shadow: none !important;
+}
+</style>
 
 <script setup lang="ts">
 import { computed, ref } from 'vue'
