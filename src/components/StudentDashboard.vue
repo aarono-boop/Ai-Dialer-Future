@@ -42,7 +42,7 @@
       <div class="flex gap-4">
         <div class="w-2/3">
           <div class="bg-gray-800/40 border border-gray-700 rounded-xl p-4">
-            <DataTable :value="students" scrollable scrollHeight="730px" :tableStyle="{ tableLayout: 'fixed' }" size="large" :pt="{ header: { style: { border: 'none', borderBottom: 'none' } }, headerRow: { class: 'h-12' }, headerCell: { style: { border: 'none' } }, bodyRow: { class: 'h-14' } }">
+            <DataTable :value="students" scrollable scrollHeight="730px" :tableStyle="{ tableLayout: 'fixed' }" size="large" :pt="{ header: { style: { border: 'none', borderBottom: 'none', background: 'var(--p-surface-800)' } }, headerRow: { class: 'h-12', style: { background: 'var(--p-surface-800)' } }, headerCell: { style: { border: 'none', background: 'var(--p-surface-800)' } }, bodyRow: { class: 'h-14' } }">
               <template #header>
                 <div class="flex items-center justify-between">
                   <span class="font-semibold" style="color: var(--p-surface-0)">Top 20 Students</span>
