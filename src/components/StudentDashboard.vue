@@ -384,6 +384,52 @@ const coachResourcesUrl = computed<string | null>(() => {
 })
 const contactCoach = () => { showContactConfirm.value = true }
 
+// Marcus AI insights based on rank, call activity, and cohort
+const cohortAverages = computed(() => {
+  const total = students.value.reduce((acc, s) => {
+    acc.calls += s.callVolume
+    acc.appointments += s.appointments
+    return acc
+  }, { calls: 0, appointments: 0 })
+  const n = Math.max(1, students.value.length)
+  return {
+    calls: Math.round(total.calls / n),
+    apptPer100: Math.round((total.appointments / Math.max(1, total.calls)) * 1000) / 10
+  }
+})
+
+const insights = computed<string[]>(() => {
+  const s = currentStudent.value
+  const out: string[] = []
+  const callsGoal = Math.max(0, Number(goalCalls.value) || 0)
+  const callsPctOfGoal = callsGoal > 0 ? Math.round((s.callVolume / callsGoal) * 100) : null
+  const apptPer100 = Math.round((s.appointments / Math.max(1, s.callVolume)) * 1000) / 10
+
+  out.push(`Rank ${s.rank}: Positioned based on recent performance across calls and appointments versus your cohort.`)
+
+  if (callsPctOfGoal === null) {
+    out.push(`Calls: ${s.callVolume} made in the current period.`)
+  } else {
+    out.push(`Calls: ${s.callVolume} (${callsPctOfGoal}% of your ${goalInterval.value} goal of ${callsGoal}).`)
+  }
+
+  const cohort = cohortAverages.value
+  if (s.callVolume >= cohort.calls) {
+    out.push(`Your call volume is above cohort average (${s.callVolume} vs ${cohort.calls}).`)
+  } else {
+    out.push(`Your call volume is below cohort average (${s.callVolume} vs ${cohort.calls}).`)
+  }
+
+  if (apptPer100 >= cohort.apptPer100) {
+    out.push(`Appointment efficiency is strong at ${apptPer100}% per 100 calls (cohort avg ${cohort.apptPer100}%).`)
+  } else {
+    out.push(`Appointment efficiency is ${apptPer100}% per 100 calls (cohort avg ${cohort.apptPer100}%). Consider improving conversion.`)
+  }
+
+  out.push(`Marcus AI recommends consistent ${goalInterval.value === 'day' ? 'daily' : goalInterval.value === 'week' ? 'weekly' : 'monthly'} calling blocks to lift rank by increasing calls while maintaining quality conversations.`)
+  return out
+})
+
 const sendMessage = () => {
   if (!contactMessage.value.trim()) return
   showContactConfirm.value = true
