@@ -151,16 +151,51 @@
     modal
     header="Dashboard Settings"
     :breakpoints="{ '960px': '95vw' }"
-    :style="{ width: '28rem' }"
+    :style="{ width: '34rem' }"
     @update:visible="(v: boolean) => showSettingsDialog = v"
   >
-    <div class="space-y-4">
+    <div class="space-y-5">
+      <!-- Privacy -->
       <div class="flex items-center justify-between">
         <div class="w-4/5">
           <div class="font-medium">Show my information</div>
           <div class="text-sm text-gray-400">When off, your name and avatar will be hidden to remain anonymous.</div>
         </div>
         <ToggleSwitch v-model="optInIdentity" class="ai-coach-toggle" />
+      </div>
+
+      <Divider />
+
+      <!-- Goals -->
+      <div class="space-y-3">
+        <div class="font-medium">Goals</div>
+        <div class="text-sm text-gray-400">Set your targets to track progress on your dashboard.</div>
+        <div class="grid grid-cols-2 gap-3">
+          <div class="space-y-2">
+            <label for="goal-calls" class="text-sm">Calls</label>
+            <InputNumber
+              inputId="goal-calls"
+              v-model="goalCalls"
+              :min="0"
+              :max="100000"
+              showButtons
+              buttonLayout="horizontal"
+              :pt="{ input: { style: { background: 'var(--p-surface-900)', border: '1px solid var(--p-surface-600)', width: '100%' } } }"
+            />
+          </div>
+          <div class="space-y-2">
+            <label for="goal-appointments" class="text-sm">Set Appointments</label>
+            <InputNumber
+              inputId="goal-appointments"
+              v-model="goalAppointments"
+              :min="0"
+              :max="100000"
+              showButtons
+              buttonLayout="horizontal"
+              :pt="{ input: { style: { background: 'var(--p-surface-900)', border: '1px solid var(--p-surface-600)', width: '100%' } } }"
+            />
+          </div>
+        </div>
       </div>
     </div>
     <template #footer>
@@ -194,7 +229,7 @@
 </style>
 
 <script setup lang="ts">
-import { computed, ref } from 'vue'
+import { computed, ref, watch } from 'vue'
 import Dropdown from 'primevue/dropdown'
 import Button from 'primevue/button'
 import DataTable from 'primevue/datatable'
@@ -206,6 +241,8 @@ import ToggleSwitch from 'primevue/toggleswitch'
 import Card from 'primevue/card'
 import InputText from 'primevue/inputtext'
 import Textarea from 'primevue/textarea'
+import InputNumber from 'primevue/inputnumber'
+import Divider from 'primevue/divider'
 import { useCoaches } from '../composables/useCoaches'
 
 const props = defineProps<{ coachName: string | null }>()
@@ -236,15 +273,22 @@ const selectedRange = ref('30d')
 const showSettingsDialog = ref(false)
 const optInIdentity = ref(true)
 
+// Goals (persist per user locally)
+const goalCalls = ref<number>(Number(localStorage.getItem('student_goal_calls') || 500))
+const goalAppointments = ref<number>(Number(localStorage.getItem('student_goal_appointments') || 30))
+
+watch(goalCalls, v => localStorage.setItem('student_goal_calls', String(v)))
+watch(goalAppointments, v => localStorage.setItem('student_goal_appointments', String(v)))
+
 const currentStudent = computed(() => students.value[0] ?? { name: 'Student' } as StudentRow)
 
 const userSubscription = computed<SubscriptionLevel>(() => currentStudent.value?.subscription ?? 'Standard')
 
 const studentSummary = computed(() => ([
-  { label: 'Calls', value: '420/500' },
-  { label: 'Answer Rate', value: '32.5%' },
-  { label: 'Appointments', value: 21 },
-  { label: 'Follow-ups', value: 12 },
+  { label: 'Calls', value: `${currentStudent.value.callVolume}/${goalCalls.value}` },
+  { label: 'Answer Rate', value: `${(currentStudent.value.answerRate * 100).toFixed(1)}%` },
+  { label: 'Appointments', value: `${currentStudent.value.appointments}/${goalAppointments.value}` },
+  { label: 'Follow-ups', value: currentStudent.value.followUps },
   { label: 'Opt-In Identity', value: optInIdentity.value ? 'Enabled' : 'Anonymous' },
   { label: 'Connect CRM', value: 'Not Connected' },
   { label: 'Next Session', value: 'Tomorrow 10:00 AM' },
