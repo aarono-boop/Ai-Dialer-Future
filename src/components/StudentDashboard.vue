@@ -82,7 +82,7 @@
                   <Avatar :image="getAvatarUrl(data.name)" shape="circle" style="width: 32px; height: 32px" :class="data.anonymous ? 'blur-sm' : ''" />
                 </template>
               </Column>
-              <Column header="Student Name" headerClass="py-6 px-4" bodyClass="py-6 px-4">
+              <Column header="Student" headerClass="py-6 px-4" bodyClass="py-6 px-4">
                 <template #body="{ data }">
                   <span :class="data.anonymous ? 'blur-sm select-none' : ''">{{ data.name }}</span>
                 </template>
