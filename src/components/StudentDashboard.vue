@@ -36,25 +36,25 @@
           />
           <Button icon="pi pi-cog" severity="secondary" text rounded aria-label="Dashboard settings" @click="showSettingsDialog = true" />
         </div>
-        <div class="mt-2 flex flex-wrap items-center justify-between gap-2">
-          <div class="flex flex-wrap items-center gap-4 text-xs">
-            <span>
-              <a v-if="coach?.videoId" :href="`https://www.youtube.com/watch?v=${coach.videoId}`" target="_blank" class="text-blue-300 hover:underline">Coaching philosophy</a>
-              <span v-else class="text-gray-400">Coaching philosophy</span>
-            </span>
-            <span>
-              <a v-if="coach?.websiteUrl" :href="coach.websiteUrl" target="_blank" class="text-blue-300 hover:underline">Website</a>
-              <span v-else class="text-gray-400">Website</span>
-            </span>
-            <span>
-              <a v-if="coachResourcesUrl" :href="coachResourcesUrl" target="_blank" class="text-blue-300 hover:underline">Resources</a>
-              <span v-else class="text-gray-400">Resources</span>
-            </span>
-          </div>
-          <div class="flex items-center gap-2">
-            <Button icon="pi pi-envelope" label="Contact" severity="secondary" size="small" @click="contactCoach" />
-            <Button icon="pi pi-calendar" label="Set Appointment" severity="secondary" size="small" @click="requestAppointment" />
-          </div>
+        <div class="mt-2 flex flex-wrap items-center gap-4 text-xs">
+          <span>
+            <a href="#" @click.prevent="contactCoach" class="text-blue-300 hover:underline">Contact</a>
+          </span>
+          <span>
+            <a href="#" @click.prevent="requestAppointment" class="text-blue-300 hover:underline">Set Appointment</a>
+          </span>
+          <span>
+            <a v-if="coach?.videoId" :href="`https://www.youtube.com/watch?v=${coach.videoId}`" target="_blank" class="text-blue-300 hover:underline">Coaching philosophy</a>
+            <span v-else class="text-gray-400">Coaching philosophy</span>
+          </span>
+          <span>
+            <a v-if="coach?.websiteUrl" :href="coach.websiteUrl" target="_blank" class="text-blue-300 hover:underline">Website</a>
+            <span v-else class="text-gray-400">Website</span>
+          </span>
+          <span>
+            <a v-if="coachResourcesUrl" :href="coachResourcesUrl" target="_blank" class="text-blue-300 hover:underline">Resources</a>
+            <span v-else class="text-gray-400">Resources</span>
+          </span>
         </div>
       </div>
 
