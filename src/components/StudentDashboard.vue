@@ -70,45 +70,45 @@
       <div class="flex gap-4">
         <div class="w-2/3">
           <div class="bg-gray-800/40 border border-gray-700 rounded-xl p-0">
-            <DataTable :value="students" scrollable scrollHeight="730px" :tableStyle="{ tableLayout: 'fixed' }" size="large">
+            <DataTable :value="students" scrollable scrollHeight="730px" :tableStyle="{ tableLayout: 'fixed' }" size="large" sortMode="single" :sortField="'callVolume'" :sortOrder="-1">
               <template #header>
                 <div class="flex items-center justify-between">
                   <span class="font-semibold" style="color: var(--p-surface-0)">Top 20 Students</span>
                 </div>
               </template>
-              <Column field="rank" header="#" style="width: 60px" headerClass="py-6 px-4" :headerStyle="{ paddingLeft: '16px' }" bodyClass="py-6 px-4" :bodyStyle="{ paddingLeft: '16px' }" />
+              <Column field="rank" header="#" style="width: 60px" headerClass="py-6 px-4" :headerStyle="{ paddingLeft: '16px' }" bodyClass="py-6 px-4" :bodyStyle="{ paddingLeft: '16px' }" sortable />
               <Column header="Avatar" headerClass="py-6 px-4" bodyClass="py-6 px-4">
                 <template #body="{ data }">
                   <Avatar :image="getAvatarUrl(data.name)" shape="circle" style="width: 32px; height: 32px" :class="data.anonymous ? 'blur-sm' : ''" />
                 </template>
               </Column>
-              <Column header="Student" headerClass="py-6 px-4" bodyClass="py-6 px-4">
+              <Column field="name" header="Student" headerClass="py-6 px-4" bodyClass="py-6 px-4" sortable>
                 <template #body="{ data }">
                   <span :class="data.anonymous ? 'blur-sm select-none' : ''">{{ data.name }}</span>
                 </template>
               </Column>
-              <Column header="Subscription" headerClass="py-6 px-4" bodyClass="py-6 px-4">
+              <Column field="subscription" header="Subscription" headerClass="py-6 px-4" bodyClass="py-6 px-4" sortable>
                 <template #body="{ data }">
                   <Badge :value="data.subscription" :severity="subscriptionSeverity(data.subscription)" />
                 </template>
               </Column>
-              <Column field="callVolume" headerClass="py-6 px-4" bodyClass="py-6 px-4" bodyStyle="text-align:right">
+              <Column field="callVolume" headerClass="py-6 px-4" bodyClass="py-6 px-4" bodyStyle="text-align:right" sortable>
                 <template #header>
                   <div class="ml-auto text-right">Calls</div>
                 </template>
               </Column>
-              <Column headerClass="py-6 px-4" bodyClass="py-6 px-4" bodyStyle="text-align:right">
+              <Column field="answerRate" headerClass="py-6 px-4" bodyClass="py-6 px-4" bodyStyle="text-align:right" sortable>
                 <template #header>
                   <div class="ml-auto text-right">Answer Rate</div>
                 </template>
                 <template #body="{ data }">{{ (data.answerRate * 100).toFixed(1) }}%</template>
               </Column>
-              <Column field="appointments" headerClass="py-6 px-4" bodyClass="py-6 px-4" bodyStyle="text-align:right">
+              <Column field="appointments" headerClass="py-6 px-4" bodyClass="py-6 px-4" bodyStyle="text-align:right" sortable>
                 <template #header>
                   <div class="ml-auto text-right">Appointments</div>
                 </template>
               </Column>
-              <Column field="followUps" headerClass="py-6 px-4" bodyClass="py-6 px-4" :bodyStyle="{ textAlign: 'right', paddingRight: '16px' }">
+              <Column field="followUps" headerClass="py-6 px-4" bodyClass="py-6 px-4" :bodyStyle="{ textAlign: 'right', paddingRight: '16px' }" sortable>
                 <template #header>
                   <div class="ml-auto text-right">Follow-ups</div>
                 </template>
