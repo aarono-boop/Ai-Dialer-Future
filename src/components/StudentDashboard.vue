@@ -45,7 +45,7 @@
             variant="filled"
             appendTo="body"
             :pt="{
-              root: { style: { background: 'var(--p-surface-800)', border: '1px solid rgba(255,255,255,0.12)', borderRadius: '6px', padding: '0.5rem' } },
+              root: { style: { background: 'var(--p-surface-800)', border: '1px solid rgba(255,255,255,0.12)', borderRadius: '6px', padding: '0.5rem', marginLeft: '15px' } },
               panel: { class: 'mic-dropdown-panel', style: { background: 'var(--p-surface-800)', border: '1px solid rgba(255,255,255,0.12)' } },
               overlay: { class: 'mic-dropdown-panel', style: { background: 'var(--p-surface-800)', border: '1px solid rgba(255,255,255,0.12)' } },
               content: { class: 'mic-dropdown-content', style: { background: 'var(--p-surface-800)', padding: '0.25rem' } },
@@ -53,7 +53,7 @@
               items: { class: 'mic-dropdown-list', style: { background: 'var(--p-surface-800)' } },
               item: { class: 'mic-dropdown-item hover:bg-white/10', style: { padding: '0.5rem 0.75rem' } }
             }"
-          />
+          />」} }```}  !***  Invalid Tool Input - The JSON object cannot be parsed due to invalid characters or incorrect formatting. Please ensure the JSON is correctly formatted.  !***  I'll correct it and try again.  !***  ```json
           <Button icon="pi pi-cog" severity="secondary" text rounded aria-label="Dashboard settings" @click="showSettingsDialog = true" />
         </div>
       </div>
