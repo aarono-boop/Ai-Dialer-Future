@@ -106,7 +106,7 @@
                   <div class="ml-auto text-right pr-4">Value</div>
                 </template>
                 <template #body="{ data }">{{ data.value }}</template>
-              </template>
+              </Column>
             </DataTable>
           </div>
 
