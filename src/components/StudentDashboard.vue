@@ -169,7 +169,22 @@
       <div class="space-y-3">
         <div class="font-medium">Goals</div>
         <div class="text-sm text-gray-400">Set your targets to track progress on your dashboard.</div>
-        <div class="grid grid-cols-2 gap-3">
+
+        <!-- Interval -->
+        <div class="space-y-2">
+          <label for="goal-interval" class="text-sm">Interval</label>
+          <Dropdown
+            inputId="goal-interval"
+            v-model="goalInterval"
+            :options="intervalOptions"
+            optionLabel="label"
+            optionValue="value"
+            class="w-full"
+          />
+        </div>
+
+        <!-- Stacked goals -->
+        <div class="space-y-3">
           <div class="space-y-2">
             <label for="goal-calls" class="text-sm">Calls</label>
             <InputNumber
@@ -280,8 +295,17 @@ const optInIdentity = ref(true)
 const goalCalls = ref<number>(Number(localStorage.getItem('student_goal_calls') || 500))
 const goalAppointments = ref<number>(Number(localStorage.getItem('student_goal_appointments') || 30))
 
+// Interval (day/week/month)
+const goalInterval = ref<'day' | 'week' | 'month'>((localStorage.getItem('student_goal_interval') as 'day'|'week'|'month') || 'week')
+const intervalOptions = [
+  { label: 'Day', value: 'day' },
+  { label: 'Week', value: 'week' },
+  { label: 'Month', value: 'month' }
+]
+
 watch(goalCalls, v => localStorage.setItem('student_goal_calls', String(v)))
 watch(goalAppointments, v => localStorage.setItem('student_goal_appointments', String(v)))
+watch(goalInterval, v => localStorage.setItem('student_goal_interval', v))
 
 const currentStudent = computed(() => students.value[0] ?? { name: 'Student' } as StudentRow)
 
