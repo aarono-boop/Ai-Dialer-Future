@@ -116,9 +116,9 @@
             </div>
           </template>
           <template #content>
-            <DataTable :value="leaderboard" size="large" class="text-sm" :pt="{ headerRow: { class: 'h-12' }, bodyRow: { class: 'h-14' } }">
-              <Column field="rank" header="#" style="width: 50px" headerClass="py-6 px-5" bodyClass="py-6 px-5" />
-              <Column header="Student" headerClass="py-6 px-5" bodyClass="py-6 px-5">
+            <DataTable :value="leaderboard" size="large" >
+              <Column field="rank" header="#" style="width: 50px" />
+              <Column header="Student">
                 <template #body="{ data }">
                   <div class="flex items-center gap-2">
                     <Avatar :image="getAvatarUrl(data.name)" shape="circle" style="width: 28px; height: 28px" />
@@ -126,17 +126,17 @@
                   </div>
                 </template>
               </Column>
-              <Column field="calls" headerClass="py-6 px-5" bodyClass="py-6 px-5" bodyStyle="text-align:right">
+              <Column field="calls" bodyStyle="text-align:right">
                 <template #header>
                   <div class="w-full text-right">Calls</div>
                 </template>
               </Column>
-              <Column field="conversions" headerClass="py-6 px-5" bodyClass="py-6 px-5" bodyStyle="text-align:right">
+              <Column field="conversions" bodyStyle="text-align:right">
                 <template #header>
                   <div class="w-full text-right">Appointments Set</div>
                 </template>
               </Column>
-              <Column headerClass="py-6 px-5" bodyClass="py-6 px-5" bodyStyle="text-align:right">
+              <Column bodyStyle="text-align:right">
                 <template #header>
                   <div class="w-full text-right">Conversion %</div>
                 </template>
