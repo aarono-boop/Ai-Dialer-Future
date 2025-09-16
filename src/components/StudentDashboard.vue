@@ -367,7 +367,7 @@ watch(goalCalls, v => localStorage.setItem('student_goal_calls', String(v)))
 watch(goalAppointments, v => localStorage.setItem('student_goal_appointments', String(v)))
 watch(goalInterval, v => localStorage.setItem('student_goal_interval', v))
 
-const currentStudent = computed(() => students.value[0] ?? { name: 'Student' } as StudentRow)
+const currentStudent = computed(() => students.value.find(s => s.name === 'Liam Smith') ?? students.value.find(s => s.rank === 3) ?? students.value[0] ?? { name: 'Student' } as StudentRow)
 
 const userSubscription = computed<SubscriptionLevel>(() => currentStudent.value?.subscription ?? 'Standard')
 
