@@ -12,7 +12,15 @@
             <div class="flex items-center gap-2">
               <h1 class="text-xl font-bold truncate">{{ headerTitle }}</h1>
             </div>
-            <p class="text-gray-400 text-xs">Students: 4,357</p>
+            <p class="text-gray-400 text-xs flex items-center gap-3 flex-wrap">
+              <span>Students: 4,357</span>
+              <span class="hidden sm:inline">•</span>
+              <span>Calls: {{ headerStats.calls.toLocaleString() }}</span>
+              <span class="hidden sm:inline">•</span>
+              <span>Appointments: {{ headerStats.appointments.toLocaleString() }}</span>
+              <span class="hidden sm:inline">•</span>
+              <span>Avg Answer Rate: {{ headerStats.avgAnswerRate.toFixed(1) }}%</span>
+            </p>
           </div>
         </div>
         <div class="flex items-center gap-2 ml-auto">
@@ -295,6 +303,15 @@ const displayName = computed(() => {
     .join(' ')
 })
 const headerTitle = computed(() => displayName.value ? `${displayName.value}'s Student Dashboard` : 'Student Dashboard')
+
+// Header aggregate metrics
+const headerStats = computed(() => {
+  const calls = students.value.reduce((a, s) => a + s.callVolume, 0)
+  const appointments = students.value.reduce((a, s) => a + s.appointments, 0)
+  const n = Math.max(1, students.value.length)
+  const avgAnswerRate = students.value.reduce((a, s) => a + s.answerRate, 0) / n * 100
+  return { calls, appointments, avgAnswerRate }
+})
 
 const { coachList } = useCoaches()
 const coach = computed(() => props.coachName ? coachList.value.find(c => c.name === props.coachName) || null : null)
