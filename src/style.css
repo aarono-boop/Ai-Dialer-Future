@@ -236,7 +236,7 @@ div[data-pc-name="dialog"] .p-dialog-footer .p-button:active {
 .p-datatable .p-datatable-thead > tr > th,
 div[data-pc-name="datatable"] .p-datatable-thead > tr > th,
 div[data-pc-name="datatable"] [data-pc-section="headercell"] {
-  font-size: 1rem !important; /* 16px */
+  font-size: 0.875rem !important; /* 16px */
 }
 
 .p-datatable .p-datatable-tbody > tr > td,
