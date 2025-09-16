@@ -410,9 +410,6 @@ const sendMessage = () => {
   contactSubject.value = ''
   contactMessage.value = ''
 }
-const requestAppointment = () => {
-  showContactConfirm.value = true
-}
 
 // Student table data
 type SubscriptionLevel = 'Premium' | 'Platinum' | 'Standard'
