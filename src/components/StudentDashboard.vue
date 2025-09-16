@@ -15,7 +15,27 @@
             <p class="text-gray-400 text-xs">Students: 4,357</p>
           </div>
         </div>
-        <div class="flex items-center gap-2">
+        <div class="flex items-center gap-2 ml-auto">
+          <Dropdown
+            v-model="selectedLink"
+            :options="linkOptions"
+            optionLabel="label"
+            placeholder="Links"
+            class="w-36 mic-like-dropdown"
+            variant="filled"
+            appendTo="body"
+            optionDisabled="disabled"
+            @change="handleLinkSelect"
+            :pt="{
+              root: { style: { background: 'var(--p-surface-800)', border: '1px solid rgba(255,255,255,0.12)', borderRadius: '6px', padding: '0.5rem' } },
+              panel: { class: 'mic-dropdown-panel', style: { background: 'var(--p-surface-800)', border: '1px solid rgba(255,255,255,0.12)' } },
+              overlay: { class: 'mic-dropdown-panel', style: { background: 'var(--p-surface-800)', border: '1px solid rgba(255,255,255,0.12)' } },
+              content: { class: 'mic-dropdown-content', style: { background: 'var(--p-surface-800)', padding: '0.25rem' } },
+              list: { class: 'mic-dropdown-list', style: { background: 'var(--p-surface-800)' } },
+              items: { class: 'mic-dropdown-list', style: { background: 'var(--p-surface-800)' } },
+              item: { class: 'mic-dropdown-item hover:bg-white/10', style: { padding: '0.5rem 0.75rem' } }
+            }"
+          />
           <Dropdown
             v-model="selectedRange"
             :options="ranges"
@@ -35,26 +55,6 @@
             }"
           />
           <Button icon="pi pi-cog" severity="secondary" text rounded aria-label="Dashboard settings" @click="showSettingsDialog = true" />
-        </div>
-        <div class="mt-2 flex flex-wrap items-center gap-4 text-xs">
-          <span>
-            <a href="#" @click.prevent="contactCoach" class="text-blue-300 hover:underline">Contact</a>
-          </span>
-          <span>
-            <a href="#" @click.prevent="requestAppointment" class="text-blue-300 hover:underline">Set Appointment</a>
-          </span>
-          <span>
-            <a v-if="coach?.videoId" :href="`https://www.youtube.com/watch?v=${coach.videoId}`" target="_blank" class="text-blue-300 hover:underline">Coaching philosophy</a>
-            <span v-else class="text-gray-400">Coaching philosophy</span>
-          </span>
-          <span>
-            <a v-if="coach?.websiteUrl" :href="coach.websiteUrl" target="_blank" class="text-blue-300 hover:underline">Website</a>
-            <span v-else class="text-gray-400">Website</span>
-          </span>
-          <span>
-            <a v-if="coachResourcesUrl" :href="coachResourcesUrl" target="_blank" class="text-blue-300 hover:underline">Resources</a>
-            <span v-else class="text-gray-400">Resources</span>
-          </span>
         </div>
       </div>
 
@@ -309,6 +309,28 @@ const ranges = [
   { label: 'Year to date', value: 'ytd' }
 ]
 const selectedRange = ref('30d')
+
+// Links dropdown
+const selectedLink = ref<any>(null)
+const linkOptions = computed(() => [
+  { label: 'Contact', value: 'contact' },
+  { label: 'Set Appointment', value: 'appointment' },
+  { label: 'Coaching philosophy', value: 'philosophy', disabled: !coach.value?.videoId, url: coach.value?.videoId ? `https://www.youtube.com/watch?v=${coach.value.videoId}` : undefined },
+  { label: 'Website', value: 'website', disabled: !coach.value?.websiteUrl, url: coach.value?.websiteUrl },
+  { label: 'Resources', value: 'resources', disabled: !coachResourcesUrl.value, url: coachResourcesUrl.value || undefined }
+])
+const handleLinkSelect = () => {
+  const v = selectedLink.value?.value || selectedLink.value
+  if (!v) return
+  if (v === 'contact') contactCoach()
+  else if (v === 'appointment') requestAppointment()
+  else {
+    const opt = linkOptions.value.find(o => o.value === v)
+    if (opt && (opt as any).url) window.open((opt as any).url as string, '_blank')
+  }
+  selectedLink.value = null
+}
+
 const showSettingsDialog = ref(false)
 const optInIdentity = ref(true)
 
