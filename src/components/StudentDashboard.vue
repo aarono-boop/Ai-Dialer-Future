@@ -36,6 +36,28 @@
           />
           <Button icon="pi pi-cog" severity="secondary" text rounded aria-label="Dashboard settings" @click="showSettingsDialog = true" />
         </div>
+        <div class="mt-2 flex flex-wrap items-center justify-between gap-2">
+          <div class="flex flex-wrap items-center gap-4 text-xs">
+            <span>Coach: {{ coach?.displayName || 'Coach' }}</span>
+            <span>Students: {{ students.length }}</span>
+            <span>
+              <a v-if="coach?.videoId" :href="`https://www.youtube.com/watch?v=${coach.videoId}`" target="_blank" class="text-blue-300 hover:underline">Coaching philosophy</a>
+              <span v-else class="text-gray-400">Coaching philosophy</span>
+            </span>
+            <span>
+              <a v-if="coach?.websiteUrl" :href="coach.websiteUrl" target="_blank" class="text-blue-300 hover:underline">Website</a>
+              <span v-else class="text-gray-400">Website</span>
+            </span>
+            <span>
+              <a v-if="coachResourcesUrl" :href="coachResourcesUrl" target="_blank" class="text-blue-300 hover:underline">Resources</a>
+              <span v-else class="text-gray-400">Resources</span>
+            </span>
+          </div>
+          <div class="flex items-center gap-2">
+            <Button icon="pi pi-envelope" label="Contact" severity="secondary" size="small" @click="contactCoach" />
+            <Button icon="pi pi-calendar" label="Set Appointment" severity="secondary" size="small" @click="requestAppointment" />
+          </div>
+        </div>
       </div>
 
       <!-- Two-Column Layout: 2/3 Students table, 1/3 Student area -->
@@ -110,55 +132,6 @@
             </DataTable>
           </div>
 
-          <!-- Contact Coach Area -->
-          <div class="mt-4 bg-gray-800/40 border border-gray-700 rounded-xl p-0 pb-4">
-            <Card :pt="{ root: { style: { background: 'transparent', border: 'none', borderRadius: '0' } }, body: { style: { padding: '0' } } }">
-              <template #title>
-                <div class="flex items-center justify-between" :style="{ background: 'var(--p-surface-800)', padding: '10px 16px', borderRadius: '12px 12px 0 0' }">
-                  <div class="flex items-center gap-2">
-                    <img v-if="coach?.avatarUrl" :src="coach.avatarUrl" :alt="coach.displayName" class="w-6 h-6 rounded-full object-cover" />
-                    <div v-else class="w-6 h-6 rounded-full bg-gradient-to-br from-blue-400 to-purple-500 flex items-center justify-center text-white text-xs font-semibold">
-                      {{ coachInitials }}
-                    </div>
-                    <span class="font-semibold" style="color: var(--p-surface-0)">{{ coach?.displayName || 'Coach' }} Info</span>
-                  </div>
-                </div>
-              </template>
-              <template #content>
-                <div class="space-y-3 px-4 py-3">
-                  <div class="grid grid-cols-1 gap-2">
-                    <div class="flex items-center justify-between">
-                      <span class="text-sm text-gray-300">Coach Name</span>
-                      <span class="text-sm" style="color: var(--p-surface-0)">{{ coach?.displayName || 'Coach' }}</span>
-                    </div>
-                    <div class="flex items-center justify-between">
-                      <span class="text-sm text-gray-300">Number of students</span>
-                      <span class="text-sm" style="color: var(--p-surface-0)">{{ students.length }}</span>
-                    </div>
-                    <div class="flex items-center justify-between">
-                      <span class="text-sm text-gray-300">Coaching philosophy</span>
-                      <a v-if="coach?.videoId" :href="`https://www.youtube.com/watch?v=${coach.videoId}`" target="_blank" class="text-sm text-blue-300 hover:underline">View</a>
-                      <span v-else class="text-sm text-gray-400">Not provided</span>
-                    </div>
-                    <div class="flex items-center justify-between">
-                      <span class="text-sm text-gray-300">Website</span>
-                      <a v-if="coach?.websiteUrl" :href="coach.websiteUrl" target="_blank" class="text-sm text-blue-300 hover:underline">Visit</a>
-                      <span v-else class="text-sm text-gray-400">Not provided</span>
-                    </div>
-                    <div class="flex items-center justify-between">
-                      <span class="text-sm text-gray-300">Resources</span>
-                      <a v-if="coachResourcesUrl" :href="coachResourcesUrl" target="_blank" class="text-sm text-blue-300 hover:underline">Open</a>
-                      <span v-else class="text-sm text-gray-400">Not provided</span>
-                    </div>
-                  </div>
-                  <div class="flex items-center justify-center gap-2 pt-2">
-                    <Button icon="pi pi-envelope" label="Contact" severity="secondary" size="small" @click="contactCoach" />
-                    <Button icon="pi pi-calendar" label="Set Appointment" severity="secondary" size="small" @click="requestAppointment" />
-                  </div>
-                </div>
-              </template>
-            </Card>
-          </div>
 
           <!-- Insights -->
           <div class="mt-4 bg-gray-800/40 border border-gray-700 rounded-xl p-0">
@@ -383,6 +356,7 @@ const coachResourcesUrl = computed<string | null>(() => {
   try { return new URL('/resources', url).toString() } catch { return null }
 })
 const contactCoach = () => { showContactConfirm.value = true }
+const requestAppointment = () => { showContactConfirm.value = true }
 
 // Marcus AI insights based on rank, call activity, and cohort
 const cohortAverages = computed(() => {
