@@ -70,13 +70,17 @@
       <div class="flex gap-4">
         <div class="w-2/3">
           <div class="bg-gray-800/40 border border-gray-700 rounded-xl p-0">
-            <DataTable :value="students" scrollable scrollHeight="730px" :tableStyle="{ tableLayout: 'fixed' }" size="large" sortMode="single" :sortField="sortField" :sortOrder="sortOrder" @sort="onSort">
+            <DataTable :value="sortedStudents" scrollable scrollHeight="730px" :tableStyle="{ tableLayout: 'fixed' }" size="large" sortMode="single" :sortField="sortField" :sortOrder="sortOrder" @sort="onSort">
               <template #header>
                 <div class="flex items-center justify-between">
                   <span class="font-semibold" style="color: var(--p-surface-0)">Top 20 Students</span>
                 </div>
               </template>
-              <Column field="rank" header="#" style="width: 60px" headerClass="py-6 px-4" :headerStyle="{ paddingLeft: '16px' }" bodyClass="py-6 px-4" :bodyStyle="{ paddingLeft: '16px' }" sortable />
+              <Column header="#" style="width: 60px" headerClass="py-6 px-4" :headerStyle="{ paddingLeft: '16px' }" bodyClass="py-6 px-4" :bodyStyle="{ paddingLeft: '16px' }">
+  <template #body="{ data }">
+    {{ sortedStudents.findIndex(s => s === data) + 1 }}
+  </template>
+</Column>
               <Column header="Avatar" headerClass="py-6 px-4" bodyClass="py-6 px-4">
                 <template #body="{ data }">
                   <Avatar :image="getAvatarUrl(data.name)" shape="circle" style="width: 32px; height: 32px" :class="data.anonymous ? 'blur-sm' : ''" />
