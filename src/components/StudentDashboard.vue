@@ -146,9 +146,9 @@
                 <div class="flex items-center justify-between" :style="{ background: 'var(--p-surface-800)', padding: '10px 16px', borderRadius: '12px 12px 0 0' }">
                   <div class="flex items-center gap-2">
                     <i class="pi pi-bolt text-yellow-300" aria-hidden="true"></i>
-                    <span class="font-semibold" style="color: var(--p-surface-0)">Insights</span>
+                    <span class="font-semibold" style="color: var(--p-surface-0)">Your Insights</span>
                   </div>
-                  <span class="text-xs text-gray-400">Marcus AI</span>
+                  <span class="text-xs text-gray-400">Powered by Marcus AI</span>
                 </div>
               </template>
               <template #content>
