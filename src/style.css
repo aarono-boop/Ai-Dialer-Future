@@ -255,3 +255,16 @@ div[data-pc-name="datatable"] [data-pc-section="headercell"][aria-sort="descendi
   background: transparent !important;
   background-color: transparent !important;
 }
+
+/* Show sort icon only on the active (sorted) column */
+/* PrimeVue v3 */
+.p-datatable .p-datatable-thead > tr > th .p-sortable-column-icon { display: none !important; }
+.p-datatable .p-datatable-thead > tr > th.p-highlight .p-sortable-column-icon { display: inline-flex !important; }
+.p-datatable .p-datatable-thead > tr > th[aria-sort="ascending"] .p-sortable-column-icon,
+.p-datatable .p-datatable-thead > tr > th[aria-sort="descending"] .p-sortable-column-icon { display: inline-flex !important; }
+
+/* PrimeVue v4 */
+div[data-pc-name="datatable"] [data-pc-section="headercell"] [data-pc-section="sorticon"] { display: none !important; }
+div[data-pc-name="datatable"] [data-pc-section="headercell"][data-p-highlight="true"] [data-pc-section="sorticon"],
+div[data-pc-name="datatable"] [data-pc-section="headercell"][aria-sort="ascending"] [data-pc-section="sorticon"],
+div[data-pc-name="datatable"] [data-pc-section="headercell"][aria-sort="descending"] [data-pc-section="sorticon"] { display: inline-flex !important; }
