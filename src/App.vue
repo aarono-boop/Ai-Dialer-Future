@@ -1,6 +1,6 @@
 <template>
   <!-- Test change for PR functionality -->
-  <div class="min-h-screen text-white relative overflow-x-hidden dark" :class="showDialer ? 'dialer-active' : ''">
+  <div class="min-h-screen text-white relative overflow-x-hidden dark" :class="[{ 'bg-app-pattern': !(showCoachDashboard || showStudentDashboard), 'bg-gray-900': (showCoachDashboard || showStudentDashboard) }, showDialer ? 'dialer-active' : '']">
     
     <!-- Sidebar Navigation -->
     <Sidebar
