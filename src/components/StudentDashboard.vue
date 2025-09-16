@@ -106,7 +106,7 @@
                   <div class="ml-auto text-right pr-4">Value</div>
                 </template>
                 <template #body="{ data }">{{ data.value }}</template>
-              </Column>
+              </template>
             </DataTable>
           </div>
 
@@ -209,6 +209,7 @@ import Textarea from 'primevue/textarea'
 import { useCoaches } from '../composables/useCoaches'
 
 const props = defineProps<{ coachName: string | null }>()
+const emit = defineEmits<{ (e: 'back-to-app'): void }>()
 
 const displayName = computed(() => {
   if (!props.coachName) return null
@@ -328,5 +329,4 @@ const subscriptionSeverity = (level: SubscriptionLevel) => {
     default: return 'secondary'
   }
 }
-
 </script>

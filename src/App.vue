@@ -704,7 +704,7 @@
     <!-- Student Dashboard Page (blank for now) -->
     <div v-if="showStudentDashboard" class="ml-16 flex flex-col min-h-screen">
       <div class="flex-1">
-        <StudentDashboard :coachName="studentCoachName" />
+        <StudentDashboard :coachName="studentCoachName" @back-to-app="closeStudentDashboard" />
       </div>
     </div>
 
@@ -2881,6 +2881,10 @@ const openStudentDashboard = (): void => {
   showStudentDashboard.value = true
   studentCoachName.value = currentCoach.value?.name || null
   currentPage.value = 'main'
+}
+
+const closeStudentDashboard = (): void => {
+  showStudentDashboard.value = false
 }
 
 const openUserDashboard = (): void => {
