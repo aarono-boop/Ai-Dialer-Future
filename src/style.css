@@ -228,7 +228,7 @@ div[data-pc-name="dialog"] .p-dialog-footer .p-button:active {
   background-image:
     radial-gradient(ellipse at center, transparent 0%, color-mix(in oklab, var(--p-surface-900) 85%, transparent) 80%),
     radial-gradient(circle at 1px 1px, color-mix(in oklab, var(--p-surface-0) 15%, transparent) 1px, transparent 1px);
-  background-size: 100% 100%, 20px 20px;
+  background-size: 100% 100%, 20px 20%;
   background-attachment: fixed;
 }
 
@@ -243,4 +243,15 @@ div[data-pc-name="datatable"] [data-pc-section="headercell"] {
 div[data-pc-name="datatable"] .p-datatable-tbody > tr > td,
 div[data-pc-name="datatable"] [data-pc-section="bodycell"] {
   font-size: 0.875rem !important; /* 14px */
+}
+
+/* Remove background color from sorted column header (PrimeVue v3/v4 selectors) */
+.p-datatable .p-datatable-thead > tr > th.p-sortable-column.p-highlight,
+.p-datatable .p-datatable-thead > tr > th[aria-sort="ascending"],
+.p-datatable .p-datatable-thead > tr > th[aria-sort="descending"],
+div[data-pc-name="datatable"] [data-pc-section="headercell"][data-p-highlight="true"],
+div[data-pc-name="datatable"] [data-pc-section="headercell"][aria-sort="ascending"],
+div[data-pc-name="datatable"] [data-pc-section="headercell"][aria-sort="descending"] {
+  background: transparent !important;
+  background-color: transparent !important;
 }
