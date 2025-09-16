@@ -70,7 +70,7 @@
       <div class="flex gap-4">
         <div class="w-2/3">
           <div class="bg-gray-800/40 border border-gray-700 rounded-xl p-0">
-            <DataTable :value="students" scrollable scrollHeight="730px" :tableStyle="{ tableLayout: 'fixed' }" size="large" sortMode="single" :sortField="'callVolume'" :sortOrder="-1">
+            <DataTable :value="students" scrollable scrollHeight="730px" :tableStyle="{ tableLayout: 'fixed' }" size="large" sortMode="single" :sortField="sortField" :sortOrder="sortOrder" @sort="onSort">
               <template #header>
                 <div class="flex items-center justify-between">
                   <span class="font-semibold" style="color: var(--p-surface-0)">Top 20 Students</span>
@@ -371,8 +371,32 @@ const currentStudent = computed(() => students.value.find(s => s.name === 'Liam 
 
 const userSubscription = computed<SubscriptionLevel>(() => currentStudent.value?.subscription ?? 'Standard')
 
+const sortField = ref<keyof StudentRow>('callVolume')
+const sortOrder = ref<number>(-1)
+const onSort = (e: any) => { sortField.value = e.sortField as keyof StudentRow; sortOrder.value = e.sortOrder as number }
+
+const sortedStudents = computed(() => {
+  const arr = [...students.value]
+  const dir = sortOrder.value >= 0 ? 1 : -1
+  const field = sortField.value
+  const cmp = (a: any, b: any) => {
+    if (a == null && b == null) return 0
+    if (a == null) return -1
+    if (b == null) return 1
+    if (typeof a === 'string' && typeof b === 'string') return a.localeCompare(b)
+    return (a as number) - (b as number)
+  }
+  arr.sort((s1, s2) => dir * cmp((s1 as any)[field], (s2 as any)[field]))
+  return arr
+})
+
+const currentRank = computed(() => {
+  const idx = sortedStudents.value.findIndex(s => s === currentStudent.value)
+  return idx >= 0 ? idx + 1 : null
+})
+
 const studentSummary = computed(() => ([
-  { label: 'Rank', value: currentStudent.value.rank },
+  { label: 'Rank', value: currentRank.value },
   { label: 'Calls', value: `${currentStudent.value.callVolume}/${goalCalls.value}` },
   { label: 'Answer Rate', value: `${(currentStudent.value.answerRate * 100).toFixed(1)}%` },
   { label: 'Appointments', value: `${currentStudent.value.appointments}/${goalAppointments.value}` },
