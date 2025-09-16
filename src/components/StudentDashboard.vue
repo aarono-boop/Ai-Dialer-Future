@@ -164,7 +164,6 @@
         <ToggleSwitch v-model="optInIdentity" class="ai-coach-toggle" />
       </div>
 
-      <Divider class="thin-divider" :pt="{ root: { style: { margin: '6px 0' } } }" />
 
       <!-- Goals -->
       <div class="space-y-3">
@@ -247,7 +246,6 @@ import Card from 'primevue/card'
 import InputText from 'primevue/inputtext'
 import Textarea from 'primevue/textarea'
 import InputNumber from 'primevue/inputnumber'
-import Divider from 'primevue/divider'
 import { useCoaches } from '../composables/useCoaches'
 
 const props = defineProps<{ coachName: string | null }>()
