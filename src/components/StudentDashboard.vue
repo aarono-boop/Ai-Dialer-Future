@@ -53,7 +53,7 @@
               items: { class: 'mic-dropdown-list', style: { background: 'var(--p-surface-800)' } },
               item: { class: 'mic-dropdown-item hover:bg-white/10', style: { padding: '0.5rem 0.75rem' } }
             }"
-          />」} }```}  !***  Invalid Tool Input - The JSON object cannot be parsed due to invalid characters or incorrect formatting. Please ensure the JSON is correctly formatted.  !***  I'll correct it and try again.  !***  ```json
+          />
           <Button icon="pi pi-cog" severity="secondary" text rounded aria-label="Dashboard settings" @click="showSettingsDialog = true" />
         </div>
       </div>
