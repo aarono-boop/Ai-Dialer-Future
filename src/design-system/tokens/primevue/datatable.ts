@@ -31,7 +31,7 @@ export default {
     sm: { padding: '0.375rem 0.5rem' },
     lg: { padding: '1rem 1.25rem' }
   },
-  columnTitle: { fontWeight: '600' },
+  columnTitle: { fontWeight: '600', fontSize: '1rem' },
   row: {
     background: '{content.background}',
     hoverBackground: '{content.hover.background}',
@@ -49,6 +49,7 @@ export default {
   },
   bodyCell: {
     borderColor: '{datatable.border.color}',
+    fontSize: '0.875rem',
     padding: '0.75rem 1rem',
     sm: { padding: '0.375rem 0.5rem' },
     lg: { padding: '1rem 1.25rem' }
