@@ -179,7 +179,18 @@
             :options="intervalOptions"
             optionLabel="label"
             optionValue="value"
-            class="w-full"
+            class="w-full mic-like-dropdown"
+            variant="filled"
+            appendTo="body"
+            :pt="{
+              root: { style: { background: 'var(--p-surface-800)', border: '1px solid rgba(255,255,255,0.15)', borderRadius: '4px', padding: '5px' } },
+              panel: { class: 'mic-dropdown-panel', style: { background: 'var(--p-surface-800)', border: '1px solid rgba(255,255,255,0.15)', borderRadius: '4px' } },
+              overlay: { class: 'mic-dropdown-panel', style: { background: 'var(--p-surface-800)', border: '1px solid rgba(255,255,255,0.15)', borderRadius: '4px' } },
+              content: { class: 'mic-dropdown-content', style: { background: 'var(--p-surface-800)', padding: '5px' } },
+              list: { class: 'mic-dropdown-list', style: { background: 'var(--p-surface-800)' } },
+              items: { class: 'mic-dropdown-list', style: { background: 'var(--p-surface-800)' } },
+              item: { class: 'mic-dropdown-item hover:bg-white/10', style: { padding: '5px' } }
+            }"
           />
         </div>
 
