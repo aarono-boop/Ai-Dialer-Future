@@ -78,7 +78,7 @@
               </template>
               <Column header="#" style="width: 60px" headerClass="py-6 px-4" :headerStyle="{ paddingLeft: '16px' }" bodyClass="py-6 px-4" :bodyStyle="{ paddingLeft: '16px' }">
   <template #body="{ data }">
-    {{ sortedStudents.findIndex(s => s === data) + 1 }}
+    {{ (sortOrder >= 0) ? (sortedStudents.length - sortedStudents.findIndex(s => s === data)) : (sortedStudents.findIndex(s => s === data) + 1) }}
   </template>
 </Column>
               <Column header="Avatar" headerClass="py-6 px-4" bodyClass="py-6 px-4">
