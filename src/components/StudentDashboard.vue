@@ -164,7 +164,7 @@
         <ToggleSwitch v-model="optInIdentity" class="ai-coach-toggle" />
       </div>
 
-      <Divider />
+      <Divider class="thin-divider" :pt="{ root: { style: { margin: '6px 0' } } }" />
 
       <!-- Goals -->
       <div class="space-y-3">
@@ -178,8 +178,6 @@
               v-model="goalCalls"
               :min="0"
               :max="100000"
-              showButtons
-              buttonLayout="horizontal"
               :pt="{ input: { style: { background: 'var(--p-surface-900)', border: '1px solid var(--p-surface-600)', width: '100%' } } }"
             />
           </div>
@@ -190,8 +188,6 @@
               v-model="goalAppointments"
               :min="0"
               :max="100000"
-              showButtons
-              buttonLayout="horizontal"
               :pt="{ input: { style: { background: 'var(--p-surface-900)', border: '1px solid var(--p-surface-600)', width: '100%' } } }"
             />
           </div>
@@ -226,6 +222,15 @@
   border-bottom: 0 !important;
   box-shadow: none !important;
 }
+.thin-divider{}
+:deep(.thin-divider.p-divider-horizontal) { margin: 6px 0 !important; }
+:deep(.thin-divider.p-divider-horizontal):before,
+:deep(.thin-divider.p-divider-horizontal):after { height: 1px !important; background: var(--p-surface-700) !important; }
+
+/* Hide native number input spinners if present */
+:deep(.p-inputnumber input[type="number"]) { -moz-appearance: textfield; }
+:deep(.p-inputnumber input::-webkit-outer-spin-button),
+:deep(.p-inputnumber input::-webkit-inner-spin-button) { -webkit-appearance: none; margin: 0; }
 </style>
 
 <script setup lang="ts">
