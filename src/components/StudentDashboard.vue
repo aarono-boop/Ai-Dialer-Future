@@ -151,8 +151,8 @@
                       <span v-else class="text-sm text-gray-400">Not provided</span>
                     </div>
                   </div>
-                  <div class="flex items-center justify-end gap-2 pt-2">
-                    <Button icon="pi pi-envelope" label="Contact" size="small" @click="contactCoach" />
+                  <div class="flex items-center justify-center gap-2 pt-2">
+                    <Button icon="pi pi-envelope" label="Contact" severity="secondary" size="small" @click="contactCoach" />
                     <Button icon="pi pi-calendar" label="Set Appointment" severity="secondary" size="small" @click="requestAppointment" />
                   </div>
                 </div>
