@@ -159,6 +159,28 @@
               </template>
             </Card>
           </div>
+
+          <!-- Insights -->
+          <div class="mt-4 bg-gray-800/40 border border-gray-700 rounded-xl p-0">
+            <Card :pt="{ root: { style: { background: 'transparent', border: 'none', borderRadius: '0' } }, body: { style: { padding: '0' } } }">
+              <template #title>
+                <div class="flex items-center justify-between" :style="{ background: 'var(--p-surface-800)', padding: '10px 16px', borderRadius: '12px 12px 0 0' }">
+                  <div class="flex items-center gap-2">
+                    <i class="pi pi-bolt text-yellow-300" aria-hidden="true"></i>
+                    <span class="font-semibold" style="color: var(--p-surface-0)">Insights</span>
+                  </div>
+                  <span class="text-xs text-gray-400">Marcus AI</span>
+                </div>
+              </template>
+              <template #content>
+                <div class="px-4 py-3">
+                  <ul class="list-disc list-inside space-y-2 text-sm">
+                    <li v-for="(it, idx) in insights" :key="idx">{{ it }}</li>
+                  </ul>
+                </div>
+              </template>
+            </Card>
+          </div>
         </div>
       </div>
     </div>
