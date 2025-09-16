@@ -120,23 +120,40 @@
                     <div v-else class="w-6 h-6 rounded-full bg-gradient-to-br from-blue-400 to-purple-500 flex items-center justify-center text-white text-xs font-semibold">
                       {{ coachInitials }}
                     </div>
-                    <span class="font-semibold" style="color: var(--p-surface-0)">Contact Your Coach</span>
+                    <span class="font-semibold" style="color: var(--p-surface-0)">{{ coach?.displayName || 'Coach' }} Info</span>
                   </div>
                 </div>
               </template>
               <template #content>
-                <div class="space-y-3">
-                  <div class="space-y-1 px-4">
-                    <label class="text-sm text-gray-300 mt-4">Subject</label>
-                    <InputText v-model="contactSubject" class="w-full" :pt="{ root: { style: { background: 'var(--p-surface-900)', border: '1px solid var(--p-surface-600)' } } }" />
+                <div class="space-y-3 px-4 py-3">
+                  <div class="grid grid-cols-1 gap-2">
+                    <div class="flex items-center justify-between">
+                      <span class="text-sm text-gray-300">Coach Name</span>
+                      <span class="text-sm" style="color: var(--p-surface-0)">{{ coach?.displayName || 'Coach' }}</span>
+                    </div>
+                    <div class="flex items-center justify-between">
+                      <span class="text-sm text-gray-300">Number of students</span>
+                      <span class="text-sm" style="color: var(--p-surface-0)">{{ students.length }}</span>
+                    </div>
+                    <div class="flex items-center justify-between">
+                      <span class="text-sm text-gray-300">Coaching philosophy</span>
+                      <a v-if="coach?.videoId" :href="`https://www.youtube.com/watch?v=${coach.videoId}`" target="_blank" class="text-sm text-blue-300 hover:underline">View</a>
+                      <span v-else class="text-sm text-gray-400">Not provided</span>
+                    </div>
+                    <div class="flex items-center justify-between">
+                      <span class="text-sm text-gray-300">Website</span>
+                      <a v-if="coach?.websiteUrl" :href="coach.websiteUrl" target="_blank" class="text-sm text-blue-300 hover:underline">Visit</a>
+                      <span v-else class="text-sm text-gray-400">Not provided</span>
+                    </div>
+                    <div class="flex items-center justify-between">
+                      <span class="text-sm text-gray-300">Resources</span>
+                      <a v-if="coachResourcesUrl" :href="coachResourcesUrl" target="_blank" class="text-sm text-blue-300 hover:underline">Open</a>
+                      <span v-else class="text-sm text-gray-400">Not provided</span>
+                    </div>
                   </div>
-                  <div class="space-y-1 px-4">
-                    <label class="text-sm text-gray-300">Message</label>
-                    <Textarea v-model="contactMessage" rows="4" autoResize class="w-full" :pt="{ root: { style: { background: 'var(--p-surface-900)', border: '1px solid var(--p-surface-600)' } } }" />
-                  </div>
-                  <div class="flex items-center justify-end gap-2 pt-1 mb-4 pr-4">
-                    <Button icon="pi pi-calendar" label="Request Appointment" severity="secondary" size="small" @click="requestAppointment" />
-                    <Button icon="pi pi-send" label="Send" :disabled="!contactMessage?.trim()" size="small" @click="sendMessage" />
+                  <div class="flex items-center justify-end gap-2 pt-2">
+                    <Button icon="pi pi-envelope" label="Contact" size="small" @click="contactCoach" />
+                    <Button icon="pi pi-calendar" label="Set Appointment" severity="secondary" size="small" @click="requestAppointment" />
                   </div>
                 </div>
               </template>
@@ -337,6 +354,12 @@ const studentSummary = computed(() => ([
 const contactSubject = ref('')
 const contactMessage = ref('')
 const showContactConfirm = ref(false)
+const coachResourcesUrl = computed<string | null>(() => {
+  const url = coach.value?.websiteUrl
+  if (!url) return null
+  try { return new URL('/resources', url).toString() } catch { return null }
+})
+const contactCoach = () => { showContactConfirm.value = true }
 
 const sendMessage = () => {
   if (!contactMessage.value.trim()) return
