@@ -340,6 +340,7 @@ const currentStudent = computed(() => students.value[0] ?? { name: 'Student' } a
 const userSubscription = computed<SubscriptionLevel>(() => currentStudent.value?.subscription ?? 'Standard')
 
 const studentSummary = computed(() => ([
+  { label: 'Rank', value: currentStudent.value.rank },
   { label: 'Calls', value: `${currentStudent.value.callVolume}/${goalCalls.value}` },
   { label: 'Answer Rate', value: `${(currentStudent.value.answerRate * 100).toFixed(1)}%` },
   { label: 'Appointments', value: `${currentStudent.value.appointments}/${goalAppointments.value}` },
