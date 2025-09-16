@@ -12,7 +12,7 @@
             <div class="flex items-center gap-2">
               <h1 class="text-xl font-bold truncate">{{ headerTitle }}</h1>
             </div>
-            <p class="text-gray-400 text-xs">Student Performance Overview</p>
+            <p class="text-gray-400 text-xs">Students: 4,357</p>
           </div>
         </div>
         <div class="flex items-center gap-2">
@@ -38,8 +38,6 @@
         </div>
         <div class="mt-2 flex flex-wrap items-center justify-between gap-2">
           <div class="flex flex-wrap items-center gap-4 text-xs">
-            <span>Coach: {{ coach?.displayName || 'Coach' }}</span>
-            <span>Students: {{ students.length }}</span>
             <span>
               <a v-if="coach?.videoId" :href="`https://www.youtube.com/watch?v=${coach.videoId}`" target="_blank" class="text-blue-300 hover:underline">Coaching philosophy</a>
               <span v-else class="text-gray-400">Coaching philosophy</span>
