@@ -231,3 +231,16 @@ div[data-pc-name="dialog"] .p-dialog-footer .p-button:active {
   background-size: 100% 100%, 20px 20px;
   background-attachment: fixed;
 }
+
+/* PrimeVue DataTable typography overrides (global, outside tokens) */
+.p-datatable .p-datatable-thead > tr > th,
+div[data-pc-name="datatable"] .p-datatable-thead > tr > th,
+div[data-pc-name="datatable"] [data-pc-section="headercell"] {
+  font-size: 1rem !important; /* 16px */
+}
+
+.p-datatable .p-datatable-tbody > tr > td,
+div[data-pc-name="datatable"] .p-datatable-tbody > tr > td,
+div[data-pc-name="datatable"] [data-pc-section="bodycell"] {
+  font-size: 0.875rem !important; /* 14px */
+}
