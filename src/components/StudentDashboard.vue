@@ -110,7 +110,7 @@
               </Column>
               <Column field="followUps" headerClass="py-6 px-4" bodyClass="py-6 px-4" :bodyStyle="{ textAlign: 'right', paddingRight: '16px' }">
                 <template #header>
-                  <div class="ml-auto text-right pr-4">Follow-ups</div>
+                  <div class="ml-auto text-right">Follow-ups</div>
                 </template>
               </Column>
             </DataTable>
