@@ -17,6 +17,7 @@
           </div>
         </div>
         <div class="flex items-center gap-2">
+          <InputText v-model="studentSearch" placeholder="Search Student" aria-label="Search Student" class="w-56" />
           <Dropdown
             v-model="selectedRange"
             :options="ranges"
@@ -126,7 +127,7 @@
             <Button icon="pi pi-share-alt" label="Share" size="small" text @click="openShare" />
           </div>
           <div class="bg-gray-700 border border-gray-700 rounded-xl p-0 overflow-hidden">
-            <DataTable :value="leaderboard" size="large" >
+            <DataTable :value="filteredLeaderboard" size="large" >
               <Column field="rank" header="#" style="width: 50px" />
               <Column header="Avatar">
                 <template #body="{ data }">
@@ -228,6 +229,7 @@ import Checkbox from 'primevue/checkbox'
 import Textarea from 'primevue/textarea'
 import Avatar from 'primevue/avatar'
 import Badge from 'primevue/badge'
+import InputText from 'primevue/inputtext'
 import { useCoaches } from '../composables/useCoaches'
 
 const props = defineProps<{ coachName?: string | null }>()
@@ -273,6 +275,7 @@ const ranges = [
 ]
 const selectedRange = ref('30d')
 const selectedRangeLabel = computed(() => ranges.find(r => r.value === selectedRange.value)?.label || '')
+const studentSearch = ref('')
 
 // Deterministic seed from coach name
 const seed = computed(() => {
@@ -466,6 +469,12 @@ const leaderboard = computed(() => baseLeaderboard.value.map((s, i) => {
     followUps
   }
 }))
+
+const filteredLeaderboard = computed(() => {
+  const q = studentSearch.value.trim().toLowerCase()
+  if (!q) return leaderboard.value
+  return leaderboard.value.filter(s => s.name.toLowerCase().includes(q))
+})
 
 const studentsNeedingAttention = computed(() => {
   const reasons = ['Low Answer Rate: 22%','Declining Call Volume: -15%','Poor Conversion: 1.2%','Not Logging In: 5 days ago']
