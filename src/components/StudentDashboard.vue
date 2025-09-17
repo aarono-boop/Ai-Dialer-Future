@@ -119,17 +119,15 @@
           </div>
         </div>
         <div class="w-1/3">
+          <div class="flex items-center justify-between mb-2 px-1">
+            <div class="flex items-center gap-3">
+              <Avatar :image="getAvatarUrl(currentStudent.name)" shape="circle" style="width: 28px; height: 28px" :class="!optInIdentity ? 'blur-sm' : ''" />
+              <div class="font-semibold" style="color: var(--p-surface-0)">{{ optInIdentity ? currentStudent.name : 'Anonymous' }}</div>
+            </div>
+            <Badge :value="userSubscription" :severity="subscriptionSeverity(userSubscription)" />
+          </div>
           <div class="bg-gray-800/40 border border-gray-700 rounded-xl p-0 overflow-hidden">
             <DataTable :value="studentSummary" class="student-details-table" scrollable scrollHeight="730px" :tableStyle="{ tableLayout: 'fixed' }" size="large">
-              <template #header>
-                <div class="flex items-center justify-between">
-                  <div class="flex items-center gap-3">
-                    <Avatar :image="getAvatarUrl(currentStudent.name)" shape="circle" style="width: 28px; height: 28px" :class="!optInIdentity ? 'blur-sm' : ''" />
-                    <div class="font-semibold" style="color: var(--p-surface-0)">{{ optInIdentity ? currentStudent.name : 'Anonymous' }}</div>
-                  </div>
-                  <Badge :value="userSubscription" :severity="subscriptionSeverity(userSubscription)" />
-                </div>
-              </template>
               <Column field="label" header="Metric" headerClass="py-6 px-4" :headerStyle="{ paddingLeft: '16px' }" bodyClass="py-6 px-4" :bodyStyle="{ paddingLeft: '16px' }" />
               <Column headerClass="py-6" bodyClass="py-6 px-4" :bodyStyle="{ textAlign: 'right', paddingRight: '16px' }">
                 <template #header>
@@ -142,25 +140,25 @@
 
 
           <!-- Insights -->
-          <div class="mt-4 bg-gray-800/40 border border-gray-700 rounded-xl p-0">
-            <Card :pt="{ root: { style: { background: 'transparent', border: 'none', borderRadius: '0' } }, body: { style: { padding: '0' } } }">
-              <template #title>
-                <div class="flex items-center justify-between" :style="{ background: 'var(--p-surface-800)', padding: '10px 16px', borderRadius: '12px 12px 0 0' }">
-                  <div class="flex items-center gap-2">
-                    <i class="pi pi-bolt text-yellow-300" aria-hidden="true"></i>
-                    <span class="font-semibold" style="color: var(--p-surface-0)">Your Insights</span>
+          <div class="mt-4">
+            <div class="flex items-center justify-between mb-2 px-1">
+              <div class="flex items-center gap-2">
+                <i class="pi pi-bolt text-yellow-300" aria-hidden="true"></i>
+                <span class="font-semibold" style="color: var(--p-surface-0)">Your Insights</span>
+              </div>
+              <span class="text-xs text-gray-400">Powered by Marcus AI</span>
+            </div>
+            <div class="bg-gray-800/40 border border-gray-700 rounded-xl p-0 overflow-hidden">
+              <Card :pt="{ root: { style: { background: 'transparent', border: 'none', borderRadius: '0' } }, body: { style: { padding: '0' } } }">
+                <template #content>
+                  <div class="px-4 py-3">
+                    <ul class="list-disc list-inside space-y-2 text-sm">
+                      <li v-for="(it, idx) in insights" :key="idx">{{ it }}</li>
+                    </ul>
                   </div>
-                  <span class="text-xs text-gray-400">Powered by Marcus AI</span>
-                </div>
-              </template>
-              <template #content>
-                <div class="px-4 py-3">
-                  <ul class="list-disc list-inside space-y-2 text-sm">
-                    <li v-for="(it, idx) in insights" :key="idx">{{ it }}</li>
-                  </ul>
-                </div>
-              </template>
-            </Card>
+                </template>
+              </Card>
+            </div>
           </div>
         </div>
       </div>
