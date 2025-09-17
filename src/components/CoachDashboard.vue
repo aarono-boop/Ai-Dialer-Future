@@ -70,7 +70,7 @@
               <div class="w-9 h-9 bg-gray-700 rounded-lg flex items-center justify-center"><i class="pi pi-user-plus text-emerald-300"></i></div>
               <div>
                 <p class="text-gray-400 text-xs">New Students<span v-if="selectedRangeLabel"> ({{ selectedRangeLabel }})</span></p>
-                <p class="text-2xl font-bold">{{ newStudents }}</p>
+                <p class="text-2xl font-bold">{{ newStudents.toLocaleString() }}</p>
               </div>
             </div>
           </template>
