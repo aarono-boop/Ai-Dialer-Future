@@ -2,17 +2,17 @@ export const AI_RESPONSES = {
   // General responses
   DEFAULT: 'I can help you find specific contacts, start calling sessions, or analyze your data. What would you like to do?',
   
-  // ARKON Information
+  // AI Dialer Information
   ABOUT_ARKON: [
-    '<i class="pi pi-rocket"></i> ARKON is PhoneBurner\'s revolutionary AI-powered dialer!',
+    '<i class="pi pi-rocket"></i> AI Dialer is PhoneBurner\'s revolutionary AI-powered dialer!',
     'It uses advanced algorithms to predict the best times to call prospects, automatically prioritizes your contact list, and helps you connect with more people in less time.',
     'Key features include smart scheduling, real-time connect predictions, and personalized calling strategies.',
-    'What specific aspect of ARKON would you like to know more about?'
+    'What specific aspect of AI Dialer would you like to know more about?'
   ],
 
   // Calling assistance
   GET_CONNECTED: [
-    '<i class="pi pi-chart-line"></i> Great question! Here are ARKON\'s proven strategies to boost your connect rates:',
+    '<i class="pi pi-chart-line"></i> Great question! Here are AI Dialer\'s proven strategies to boost your connect rates:',
     '• <strong>Smart Timing:</strong> Calls prospects when they\'re most likely to answer',
     '• <strong>Local Presence:</strong> Uses local numbers to increase pickup rates',
     '• <strong>Voicemail Drop:</strong> Leaves personalized messages when they don\'t answer',
@@ -22,7 +22,7 @@ export const AI_RESPONSES = {
 
   // Demo requests
   DEMO_REQUEST: [
-    '<i class="pi pi-star"></i> I\'d love to show you ARKON in action!',
+    '<i class="pi pi-star"></i> I\'d love to show you AI Dialer in action!',
     'Let me set up a personalized demo where you can see:',
     '• Live contact scoring and prioritization',
     '• Real-time dialing with connect predictions',
@@ -53,7 +53,7 @@ export const AI_RESPONSES = {
   // Reminders
   REMINDERS: [
     '<i class="pi pi-clock"></i> I\'ll help you set up smart reminders!',
-    'ARKON can remind you to:',
+    'AI Dialer can remind you to:',
     '• Follow up with specific prospects at optimal times',
     '• Call back prospects who didn\'t answer',
     '• Review and update your call notes',
@@ -64,7 +64,7 @@ export const AI_RESPONSES = {
   // Practice
   PRACTICE: [
     '<i class="pi pi-users"></i> Great idea! Call practice makes perfect.',
-    'ARKON\'s practice mode can help you:',
+    'AI Dialer\'s practice mode can help you:',
     '• Rehearse your opening pitch with AI feedback',
     '• Practice handling common objections',
     '• Test different conversation flows',
@@ -87,7 +87,7 @@ export const AI_RESPONSES = {
     '<i class="pi pi-heart"></i> Why did the salesperson bring a ladder to work?',
     'Because they heard the job was about making <strong>high-level</strong> connections!',
     '',
-    '<i class="pi pi-chart-line"></i> Speaking of connections, did you know ARKON users make 3x more meaningful connections than traditional dialers?',
+    '<i class="pi pi-chart-line"></i> Speaking of connections, did you know AI Dialer users make 3x more meaningful connections than traditional dialers?',
     'Ready to elevate your calling game?'
   ],
 
