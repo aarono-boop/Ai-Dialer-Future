@@ -69,13 +69,11 @@
       <!-- Two-Column Layout: 2/3 Students table, 1/3 Student area -->
       <div class="flex gap-4">
         <div class="w-2/3">
+          <div class="flex items-center justify-between mb-2 px-1">
+            <span class="font-semibold" style="color: var(--p-surface-0)">Top 20 Students</span>
+          </div>
           <div class="bg-gray-800/40 border border-gray-700 rounded-xl p-0 overflow-hidden">
             <DataTable :value="sortedStudents" scrollable scrollHeight="730px" :tableStyle="{ tableLayout: 'fixed' }" size="large" sortMode="single" :sortField="sortField" :sortOrder="sortOrder" @sort="onSort">
-              <template #header>
-                <div class="flex items-center justify-between">
-                  <span class="font-semibold" style="color: var(--p-surface-0)">Top 20 Students</span>
-                </div>
-              </template>
               <Column header="#" style="width: 60px" headerClass="py-6 px-4" :headerStyle="{ paddingLeft: '16px' }" bodyClass="py-6 px-4" :bodyStyle="{ paddingLeft: '16px' }">
   <template #body="{ data }">
     {{ descSortedStudents.findIndex(s => s === data) + 1 }}
