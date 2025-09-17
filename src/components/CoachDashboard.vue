@@ -331,32 +331,68 @@ const revenueSeries = computed(() => {
   const total = monthlyEarnings.value
   if (n <= 0 || total <= 0) return []
   const isMonthly = selectedRange.value === 'ytd'
+
+  // Build an upward-biased weight curve with limited dips
+  const rampGain = isMonthly ? 1.0 : (selectedRange.value === '90d' ? 1.6 : 1.2)
+  const noiseAmp = isMonthly ? 0.06 : 0.10
   const weights: number[] = []
   for (let i = 0; i < n; i++) {
+    const t = n > 1 ? i / (n - 1) : 1
+    const base = 1 + rampGain * t
+    const noiseUnit = ((((seed.value + i * 17) % 101) - 50) / 50) // -1..1 deterministic
     const seasonal = isMonthly
-      ? 1 + 0.25 * Math.sin((i + (seed.value % 3)) * Math.PI / 3)
-      : 1 + 0.15 * Math.sin((i + (seed.value % 5)) * Math.PI / 7)
-    const noise = isMonthly
-      ? (((seed.value + i * 7) % 7) - 3) / 100
-      : (((seed.value + i * 13) % 9) - 4) / 100
-    const base = Math.max(0.05, seasonal + noise)
-    weights.push(base)
+      ? 0.15 * Math.sin((i + (seed.value % 3)) * Math.PI / 3)
+      : 0.10 * Math.sin((i + (seed.value % 5)) * Math.PI / 7)
+    const w = Math.max(0.05, base * (1 + noiseAmp * noiseUnit) * (1 + seasonal))
+    weights.push(w)
   }
-  const sumW = weights.reduce((a, b) => a + b, 0)
-  let series = weights.map(w => Math.max(0, Math.round(w * (total / Math.max(1e-6, sumW)))))
-  let diff = total - series.reduce((a, b) => a + b, 0)
-  if (diff !== 0) {
-    const step = diff > 0 ? 1 : -1
-    let idx = 0
-    while (diff !== 0 && idx < n * 2) {
-      const j = idx % n
-      series[j] = Math.max(0, series[j] + step)
-      diff -= step
-      idx++
+
+  // Enforce mostly increasing series with a few controlled dips
+  const allowedDips = Math.max(1, Math.floor(n * 0.08))
+  const maxDrop = 0.07 // at most 7% drop when a dip is allowed
+  const minIncrease = 0.005 // ensure tiny growth when dips not allowed
+  let dipsUsed = 0
+  for (let i = 1; i < n; i++) {
+    if (weights[i] < weights[i - 1]) {
+      if (dipsUsed < allowedDips) {
+        // Allow a small dip, capped by maxDrop
+        weights[i] = Math.max(weights[i], weights[i - 1] * (1 - maxDrop))
+        dipsUsed++
+      } else {
+        // Force an increase
+        weights[i] = Math.max(weights[i], weights[i - 1] * (1 + minIncrease))
+      }
     }
   }
+
+  // Normalize to the requested total and round to integers
+  const sumW = weights.reduce((a, b) => a + b, 0)
+  let series = weights.map(w => Math.max(0, Math.round(w * (total / Math.max(1e-6, sumW)))))
+
+  // Adjust rounding diff while preserving the upward bias
+  let diff = total - series.reduce((a, b) => a + b, 0)
+  let guard = n * 5
+  while (diff !== 0 && guard-- > 0) {
+    if (diff > 0) {
+      // Add to the tail to keep it increasing
+      series[n - 1] += 1
+      diff--
+    } else {
+      // Subtract from the tail if it does not break monotonicity
+      let j = n - 1
+      while (j > 0 && (series[j] - 1) < series[j - 1]) j--
+      if (series[j] > 0) {
+        series[j] -= 1
+        diff++
+      } else {
+        break
+      }
+    }
+  }
+
   return series
 })
+}
 
 const revenueChartData = computed(() => ({
   labels: revenueLabels.value,
