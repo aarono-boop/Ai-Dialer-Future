@@ -386,11 +386,11 @@ const revenueChartOptions = { maintainAspectRatio: false,
   }
 }
 
-const leaderboard = computed(() => Array.from({length: 8}, (_, i) => {
+const baseLeaderboard = computed(() => Array.from({length: 8}, (_, i) => {
   const name = ['Alex Riley','Samantha Chen','Marcus Bell','Jessica Vazquez','Noah Green','Emma Brooks','Liam Carter','Mia Patel'][i]
   const calls = 900 + ((seed.value + i) % 600)
   const appointments = 60 + ((seed.value + i) % 80)
-  const answerRate = appointments / Math.max(1, calls)
+  const answerRate = Math.min(0.95, Math.max(0.05, appointments / Math.max(1, calls)))
   const followUps = 10 + ((seed.value + i) % 20)
   const subs = ['Standard','Premium','Platinum'][(seed.value + i) % 3] as 'Standard' | 'Premium' | 'Platinum'
   return {
@@ -399,6 +399,23 @@ const leaderboard = computed(() => Array.from({length: 8}, (_, i) => {
     subscription: subs,
     calls,
     answerRate,
+    appointments,
+    followUps
+  }
+}))
+
+const leaderboard = computed(() => baseLeaderboard.value.map((s, i) => {
+  const jitterSeed = (selectedRange.value === '90d' ? 17 : selectedRange.value === 'ytd' ? 29 : 11)
+  const jitter = 1 + ((((seed.value + i * 13 + jitterSeed) % 7) - 3) / 100) // ±3%
+  const calls = Math.max(1, Math.round(s.calls * rangeFactor.value * jitter))
+  const appointments = Math.round(calls * s.answerRate)
+  const followUps = Math.round(Math.max(5, appointments * 0.25))
+  return {
+    rank: s.rank,
+    name: s.name,
+    subscription: s.subscription,
+    calls,
+    answerRate: appointments / Math.max(1, calls),
     appointments,
     followUps
   }
