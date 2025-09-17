@@ -46,7 +46,7 @@
             <div class="flex items-center gap-3">
               <div class="w-9 h-9 bg-gray-700 rounded-lg flex items-center justify-center"><i class="pi pi-wallet text-blue-300"></i></div>
               <div>
-                <p class="text-gray-400 text-xs">Monthly Earnings</p>
+                <p class="text-gray-400 text-xs">Monthly Earnings<span v-if="selectedRangeLabel"> ({{ selectedRangeLabel }})</span></p>
                 <p class="text-2xl font-bold">{{ currency(monthlyEarnings) }}</p>
               </div>
             </div>
@@ -58,7 +58,7 @@
             <div class="flex items-center gap-3">
               <div class="w-9 h-9 bg-gray-700 rounded-lg flex items-center justify-center"><i class="pi pi-calendar text-cyan-300"></i></div>
               <div>
-                <p class="text-gray-400 text-xs">Appointments Set (Mo.)</p>
+                <p class="text-gray-400 text-xs">Appointments Set<span v-if="selectedRangeLabel"> ({{ selectedRangeLabel }})</span></p>
                 <p class="text-2xl font-bold">{{ appointments.toLocaleString() }}</p>
               </div>
             </div>
@@ -69,7 +69,7 @@
             <div class="flex items-center gap-3">
               <div class="w-9 h-9 bg-gray-700 rounded-lg flex items-center justify-center"><i class="pi pi-user-plus text-emerald-300"></i></div>
               <div>
-                <p class="text-gray-400 text-xs">New Students (Mo.)</p>
+                <p class="text-gray-400 text-xs">New Students<span v-if="selectedRangeLabel"> ({{ selectedRangeLabel }})</span></p>
                 <p class="text-2xl font-bold">{{ newStudents }}</p>
               </div>
             </div>
@@ -272,6 +272,7 @@ const ranges = [
   { label: 'Year to date', value: 'ytd' }
 ]
 const selectedRange = ref('30d')
+const selectedRangeLabel = computed(() => ranges.find(r => r.value === selectedRange.value)?.label || '')
 
 // Deterministic seed from coach name
 const seed = computed(() => {
