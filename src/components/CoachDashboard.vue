@@ -323,7 +323,20 @@ const revenueChartData = computed(() => ({
 const revenueChartOptions = { maintainAspectRatio: false,
   responsive: true,
   interaction: { mode: 'index', intersect: false, axis: 'x' },
-  plugins: { legend: { display: false }, tooltip: { intersect: false } },
+  plugins: {
+    legend: { display: false },
+    tooltip: {
+      intersect: false,
+      displayColors: false,
+      callbacks: {
+        label: (context: any) => {
+          const label = (context.dataset && context.dataset.label) ? context.dataset.label : 'Revenue'
+          const v = typeof context.parsed?.y === 'number' ? context.parsed.y : Number(context.formattedValue || 0)
+          return `${label}: $${Number(v).toLocaleString()}`
+        }
+      }
+    }
+  },
   elements: { point: { hitRadius: 20, hoverRadius: 6 } },
   scales: {
     x: { ticks: { color: '#9CA3AF' }, grid: { display: false } },
