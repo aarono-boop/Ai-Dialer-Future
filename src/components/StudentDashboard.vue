@@ -266,6 +266,17 @@
   box-shadow: none !important;
 }
 .thin-divider{}
+/* Add separators for the right student details table to match Top 20 table */
+::deep(.student-details-table .p-datatable-tbody > tr > td),
+::deep(.student-details-table tbody > tr > td) {
+  border-bottom: 1px solid var(--p-content-border-color, rgba(255,255,255,0.12)) !important;
+  box-shadow: none !important;
+}
+::deep(.student-details-table .p-datatable-tbody > tr:last-child > td),
+::deep(.student-details-table tbody > tr:last-child > td) {
+  border-bottom: 0 !important;
+  box-shadow: none !important;
+}
 :deep(.thin-divider.p-divider-horizontal) { margin: 6px 0 !important; }
 :deep(.thin-divider.p-divider-horizontal):before,
 :deep(.thin-divider.p-divider-horizontal):after { height: 1px !important; background: var(--p-surface-700) !important; }
