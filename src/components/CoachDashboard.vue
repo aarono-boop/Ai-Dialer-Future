@@ -176,7 +176,7 @@
                     <p class="text-xs text-red-300 truncate">{{ s.reason }}</p>
                   </div>
                 </div>
-                <Button label="Intervene" size="small" text severity="danger" @click="noop" />
+                <Button label="Intervene" size="small" severity="secondary" class="w-28" @click="noop" />
               </div>
             </div>
           </div>
