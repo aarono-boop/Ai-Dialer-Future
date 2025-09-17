@@ -369,7 +369,7 @@
             placeholder="Leave empty to use default message format"
           />
           <small class="text-gray-400">
-            Default: "Welcome to ARKON! I'm your AI calling assistant, enhanced with [Coach Name]'s proven methodologies."
+            Default: "Welcome to AI Dialer! I'm your AI calling assistant, enhanced with [Coach Name]'s proven methodologies."
           </small>
           <div v-if="editCustomMessage" class="mt-2 border border-gray-600 rounded-lg p-3">
             <label class="text-sm font-semibold text-gray-300">Preview:</label>

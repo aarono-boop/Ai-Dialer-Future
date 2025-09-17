@@ -115,7 +115,7 @@
               placeholder="Leave empty to use default message format"
             />
             <small class="text-gray-400">
-              Default: "Welcome to ARKON! I'm your AI calling assistant, enhanced with [Coach Name]'s proven methodologies."
+              Default: "Welcome to AI Dialer! I'm your AI calling assistant, enhanced with [Coach Name]'s proven methodologies."
             </small>
           </div>
 
@@ -282,7 +282,7 @@ const previewMessage = computed(() => {
   if (!formData.value.displayName) return ''
 
   return formData.value.customMessage ||
-    `Welcome to <strong>ARKON</strong>! I'm your AI calling assistant, enhanced with <strong>${formData.value.displayName}'s</strong> proven methodologies.`
+    `Welcome to <strong>AI Dialer</strong>! I'm your AI calling assistant, enhanced with <strong>${formData.value.displayName}'s</strong> proven methodologies.`
 })
 
 // Utility functions

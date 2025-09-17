@@ -13,12 +13,12 @@
 
         <!-- Order Details -->
         <div class="space-y-6">
-          <h2 class="text-lg font-semibold text-gray-800 mb-4">Purchase ARKON Pro</h2>
+          <h2 class="text-lg font-semibold text-gray-800 mb-4">Purchase AI Dialer Pro</h2>
           
           <!-- Line Item -->
           <div class="flex justify-between items-center py-3 border-b border-gray-200">
             <div class="flex-1">
-              <div class="text-gray-800 font-medium">ARKON Pro</div>
+              <div class="text-gray-800 font-medium">AI Dialer Pro</div>
             </div>
             <div class="text-center w-12">
               <span class="text-gray-600">1</span>

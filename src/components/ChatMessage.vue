@@ -2,11 +2,11 @@
   <div 
     :class="['flex items-start mb-4', message.type === 'user' ? 'justify-end' : 'justify-start']"
     role="group"
-    :aria-label="`${message.type === 'user' ? 'User' : 'ARKON AI'} message`"
+    :aria-label="`${message.type === 'user' ? 'User' : 'AI Dialer AI'} message`"
   >
     <div v-if="message.type === 'ai'" class="flex gap-[10px] items-start w-full">
       <div class="flex items-start justify-center flex-shrink-0 pt-1" role="img" :aria-label="getAvatarLabel()">
-        <!-- Dynamic Coach Avatar when coach is set and not an ARKON AI system message -->
+        <!-- Dynamic Coach Avatar when coach is set and not an AI Dialer AI system message -->
         <template v-if="shouldUseCoachAvatar() && currentCoach">
           <img
             v-if="currentCoach.avatarUrl"
@@ -23,7 +23,7 @@
             {{ getCoachInitials(currentCoach.displayName) }}
           </div>
         </template>
-        <!-- Default ARKON AI Avatar -->
+        <!-- Default AI Dialer AI Avatar -->
         <div
           v-else
           class="ai-avatar-gradient"
@@ -243,7 +243,7 @@ const getAvatarLabel = (): string => {
   if (shouldUseCoachAvatar() && currentCoach.value) {
     return `${currentCoach.value.displayName} avatar`
   }
-  return 'ARKON AI avatar'
+  return 'AI Dialer AI avatar'
 }
 
 // Process message content to extract video information
@@ -380,7 +380,7 @@ onUnmounted(() => {
 
 // Method to determine if coach avatar should be used
 const shouldUseCoachAvatar = (): boolean => {
-  // Always use ARKON avatar if AI coaching is disabled
+  // Always use AI Dialer avatar if AI coaching is disabled
   if (props.aiCoachEnabled === false) {
     return false
   }
@@ -390,11 +390,11 @@ const shouldUseCoachAvatar = (): boolean => {
     return false
   }
 
-  // Check if this is an ARKON AI system message that should always use ARKON avatar
+  // Check if this is an AI Dialer AI system message that should always use AI Dialer avatar
   const messageText = props.message.content.join(' ')
   const isArkonSystemMessage =
-    messageText.includes('Welcome to ARKON') ||
-    messageText.includes('ARKON AI') ||
+    messageText.includes('Welcome to AI Dialer') ||
+    messageText.includes('AI Dialer AI') ||
     messageText.includes('Drop your contact file here') ||
     messageText.includes('Drag and drop your contact file') ||
     messageText.includes('Dialer activated') ||
@@ -421,7 +421,7 @@ const shouldUseCoachAvatar = (): boolean => {
     messageText.includes('Connecting you to your first contact') ||
     messageText.includes('Resuming call queue')
 
-  // Use ARKON avatar for system messages, coach avatar for coaching content
+  // Use AI Dialer avatar for system messages, coach avatar for coaching content
   return !isArkonSystemMessage
 }
 

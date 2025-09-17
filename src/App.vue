@@ -893,7 +893,7 @@ const returnToCoachesSelection = (): void => {
     {
       type: 'ai',
       content: [
-        'Welcome to ARKON by PhoneBurner.<br><br>I\'m here to help you call with confidence and close more deals.<br><br>Choose your sales coach first - everything from your scripts to follow-up strategies will be tailored to their winning approach.'
+        'Welcome to AI Dialer by PhoneBurner.<br><br>I\'m here to help you call with confidence and close more deals.<br><br>Choose your sales coach first - everything from your scripts to follow-up strategies will be tailored to their winning approach.'
       ],
       typing: false
     }
@@ -1505,7 +1505,7 @@ const lastAIContains = (substr: string): boolean => {
 const updateWelcomeMessageTyping = (): void => {
   if (messages.value.length > 0 && messages.value[0].type === 'ai') {
     const welcomeMessage = messages.value[0]
-    if (welcomeMessage.content[0].includes('Welcome to <strong>ARKON</strong>') || welcomeMessage.content[0].includes('Drop your contact file here')) {
+    if (welcomeMessage.content[0].includes('Welcome to <strong>AI Dialer</strong>') || welcomeMessage.content[0].includes('Drop your contact file here')) {
       // Update typing property based on current user status
       welcomeMessage.typing = !isSignedIn.value && !isReturningUser.value
     }
@@ -1784,9 +1784,9 @@ const announceToScreenReader = (message: string) => {
   }
 }
 
-// Redirect focus from tab trap to ARKON logo
+// Redirect focus from tab trap to AI Dialer logo
 const redirectToArkonLogo = () => {
-  const arkonLogo = document.querySelector('button[aria-label="Return to ARKON home page"]') as HTMLElement
+  const arkonLogo = document.querySelector('button[aria-label="Return to AI Dialer home page"]') as HTMLElement
   if (arkonLogo) {
     arkonLogo.focus()
   }
@@ -2163,14 +2163,14 @@ const sendMessage = (message: string): void => {
 
     if (lowerMessage.includes('anything about arkon')) {
       addAIMessage([
-        '<i class="pi pi-rocket"></i> ARKON is PhoneBurner\'s revolutionary AI-powered dialer!',
+        '<i class="pi pi-rocket"></i> AI Dialer is PhoneBurner\'s revolutionary AI-powered dialer!',
         'It uses advanced algorithms to predict the best times to call prospects, automatically prioritizes your contact list, and helps you connect with more people in less time.',
         'Key features include smart scheduling, real-time connect predictions, and personalized calling strategies.',
-        'What specific aspect of ARKON would you like to know more about?'
+        'What specific aspect of AI Dialer would you like to know more about?'
       ])
     } else if (lowerMessage.includes('connected to more calls') || lowerMessage.includes('get connected')) {
       addAIMessage([
-        '<i class="pi pi-chart-line"></i> Great question! Here are ARKON\'s proven strategies to boost your connect rates:',
+        '<i class="pi pi-chart-line"></i> Great question! Here are AI Dialer\'s proven strategies to boost your connect rates:',
         '��� <strong>Smart Timing:</strong> Calls prospects when they\'re most likely to answer',
         '• <strong>Local Presence:</strong> Uses local numbers to increase pickup rates',
         '• <strong>Voicemail Drop:</strong> Leaves personalized messages when they don\'t answer',
@@ -2179,7 +2179,7 @@ const sendMessage = (message: string): void => {
       ])
     } else if (lowerMessage.includes('setup a demo') || lowerMessage.includes('demo')) {
       addAIMessage([
-        '<i class="pi pi-star"></i> I\'d love to show you ARKON in action!',
+        '<i class="pi pi-star"></i> I\'d love to show you AI Dialer in action!',
         'Let me set up a personalized demo where you can see:',
         '• Live contact scoring and prioritization',
         '• Real-time dialing with connect predictions',
@@ -2207,7 +2207,7 @@ const sendMessage = (message: string): void => {
     } else if (lowerMessage.includes('set a reminder') || lowerMessage.includes('reminder')) {
       addAIMessage([
         '<i class="pi pi-clock"></i> I\'ll help you set up smart reminders!',
-        'ARKON can remind you to:',
+        'AI Dialer can remind you to:',
         '• Follow up with specific prospects at optimal times',
         '• Call back prospects who didn\'t answer',
         '• Review and update your call notes',
@@ -2217,7 +2217,7 @@ const sendMessage = (message: string): void => {
     } else if (lowerMessage.includes('practice a call') || lowerMessage.includes('practice')) {
       addAIMessage([
         '<i class="pi pi-users"></i> Great idea! Call practice makes perfect.',
-        'ARKON\'s practice mode can help you:',
+        'AI Dialer\'s practice mode can help you:',
         '• Rehearse your opening pitch with AI feedback',
         '• Practice handling common objections',
         '��� Test different conversation flows',
@@ -2238,7 +2238,7 @@ const sendMessage = (message: string): void => {
         '<i class="pi pi-heart"></i> Why did the salesperson bring a ladder to work?',
         'Because they heard the job was about making <strong>high-level</strong> connections!',
         '',
-        'Speaking of connections, did you know ARKON users make 3x more meaningful connections than traditional dialers?',
+        'Speaking of connections, did you know AI Dialer users make 3x more meaningful connections than traditional dialers?',
         'Ready to elevate your calling game?'
       ])
     } else if (lowerMessage.includes('jenn')) {
@@ -2592,7 +2592,7 @@ const getPlaceholderText = (): string => {
   } else if (waitingForNotesInput.value && showDialer.value && !showContinueQueueButton.value) {
     return 'Enter notes...'
   } else {
-    return 'Reply to ARKON...' // Static text everywhere else
+    return 'Reply to AI Dialer...' // Static text everywhere else
   }
 }
 
@@ -3086,7 +3086,7 @@ onMounted(() => {
   if (messages.value.length > 0 && messages.value[0].type === 'ai') {
     if (showCoachCarousel.value) {
       messages.value[0].content = [
-        'Welcome to ARKON by PhoneBurner.<br><br>I\'m here to help you call with confidence and close more deals.<br><br>Choose your sales coach first - everything from your scripts to follow-up strategies will be tailored to their winning approach.'
+        'Welcome to AI Dialer by PhoneBurner.<br><br>I\'m here to help you call with confidence and close more deals.<br><br>Choose your sales coach first - everything from your scripts to follow-up strategies will be tailored to their winning approach.'
       ]
     } else {
       messages.value[0].content = [getCoachWelcomeMessage.value]
@@ -3648,7 +3648,7 @@ const handleTermsCancel = () => {
   showActionButtons.value = false
   // Clear messages and show welcome message
   messages.value = []
-  addAIMessage('���� Welcome to ARKON! I\'m your AI calling assistant. I\'ll help you connect with more prospects and close more deals. What would you like to accomplish today?')
+  addAIMessage('���� Welcome to AI Dialer! I\'m your AI calling assistant. I\'ll help you connect with more prospects and close more deals. What would you like to accomplish today?')
 
   // Set focus context for header
   nextTick(() => {
@@ -3726,7 +3726,7 @@ const handleUpgradeSelected = () => {
   closePricingPage()
   isSignedIn.value = true
   showActionButtons.value = true
-  addAIMessage('�� Welcome to ARKON! Your account has been created successfully. Let\'s start your first smart calling session! What are you trying to accomplish?')
+  addAIMessage('�� Welcome to AI Dialer! Your account has been created successfully. Let\'s start your first smart calling session! What are you trying to accomplish?')
 
   // Ensure scroll happens after action buttons are rendered
   setTimeout(() => {
@@ -3744,7 +3744,7 @@ const handleAccountCreated = (accountData: any) => {
   isSignedIn.value = true
   showActionButtons.value = true
   updateWelcomeMessageTyping() // Update typing status for welcome message
-  addAIMessage('���� Welcome to ARKON! Your account has been created successfully. Let\'s start your first smart calling session! What are you trying to accomplish?')
+  addAIMessage('���� Welcome to AI Dialer! Your account has been created successfully. Let\'s start your first smart calling session! What are you trying to accomplish?')
 
   // Ensure scroll happens after action buttons are rendered
   setTimeout(() => {
@@ -3764,7 +3764,7 @@ const handleGoogleSignupFromAccount = () => {
     isSignedIn.value = true
     showActionButtons.value = true
     updateWelcomeMessageTyping() // Update typing status for welcome message
-    addAIMessage('����� Welcome to ARKON! Your account has been created successfully. Let\'s start your first smart calling session! What are you trying to accomplish?')
+    addAIMessage('������� Welcome to AI Dialer! Your account has been created successfully. Let\'s start your first smart calling session! What are you trying to accomplish?')
 
     // Ensure scroll happens after action buttons are rendered
   setTimeout(() => {

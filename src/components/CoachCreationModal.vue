@@ -88,7 +88,7 @@
           placeholder="Leave empty to use default message format"
         />
         <small class="text-gray-400">
-          Default: "Welcome to ARKON! I'm your AI calling assistant, enhanced with [Coach Name]'s proven methodologies."
+          Default: "Welcome to AI Dialer! I'm your AI calling assistant, enhanced with [Coach Name]'s proven methodologies."
         </small>
       </div>
 
@@ -191,7 +191,7 @@ const previewMessage = computed(() => {
   if (!formData.value.displayName) return ''
   
   let message = formData.value.customMessage || 
-    `Welcome to <strong>ARKON</strong>! I'm your AI calling assistant, enhanced with <strong>${formData.value.displayName}'s</strong> proven methodologies.`
+    `Welcome to <strong>AI Dialer</strong>! I'm your AI calling assistant, enhanced with <strong>${formData.value.displayName}'s</strong> proven methodologies.`
   
   if (extractedVideoId.value) {
     message += `<br><br><div style="padding: 8px; background: #374151; border-radius: 4px; color: #9ca3af; font-size: 12px;">📹 Video will be embedded here</div>`

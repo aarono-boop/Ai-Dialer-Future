@@ -66,7 +66,7 @@ export const useCoaches = () => {
       avatarUrl,
       websiteUrl: coachData.websiteUrl || undefined,
       highlights: coachData.highlights && coachData.highlights.length ? coachData.highlights.slice(0, 2) : undefined,
-      welcomeMessage: coachData.customMessage || `Welcome to <strong>ARKON</strong>! I'm your AI calling assistant, enhanced with <strong>${coachData.displayName}'s</strong> proven methodologies.`,
+      welcomeMessage: coachData.customMessage || `Welcome to <strong>AI Dialer</strong>! I'm your AI calling assistant, enhanced with <strong>${coachData.displayName}'s</strong> proven methodologies.`,
       isActive: true,
       createdBy: 'user',
       createdAt: new Date().toISOString()
