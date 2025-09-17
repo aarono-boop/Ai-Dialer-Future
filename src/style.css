@@ -228,7 +228,7 @@ div[data-pc-name="dialog"] .p-dialog-footer .p-button:active {
   background-image:
     radial-gradient(ellipse at center, transparent 0%, color-mix(in oklab, var(--p-surface-900) 85%, transparent) 80%),
     radial-gradient(circle at 1px 1px, color-mix(in oklab, var(--p-surface-0) 15%, transparent) 1px, transparent 1px);
-  background-size: 100% 100%, 20px 20%;
+  background-size: 100% 100%, 20px 20px;
   background-attachment: fixed;
 }
 
