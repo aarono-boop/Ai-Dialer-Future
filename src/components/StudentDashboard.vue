@@ -134,8 +134,13 @@
                   <div class="ml-auto text-right pr-4">Value</div>
                 </template>
                 <template #body="{ data }">
-                  <span v-if="data.label !== 'Connect CRM'">{{ data.value }}</span>
-                  <a v-else href="#" class="text-link" style="text-decoration: none;">{{ data.value }}</a>
+                  <template v-if="data.label === 'Connect CRM'">
+                    <a href="#" class="text-link" style="text-decoration: none;">{{ data.value }}</a>
+                  </template>
+                  <template v-else-if="data.label === 'Opt-In Identity' && data.value === 'Enabled'">
+                    <a href="#" class="text-link" style="text-decoration: none;" @click.prevent="showSettingsDialog = true">Enabled</a>
+                  </template>
+                  <span v-else>{{ data.value }}</span>
                 </template>
               </Column>
             </DataTable>
