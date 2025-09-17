@@ -127,7 +127,7 @@
             <Badge :value="userSubscription" :severity="subscriptionSeverity(userSubscription)" />
           </div>
           <div class="bg-gray-800/40 border border-gray-700 rounded-xl p-0 overflow-hidden">
-            <DataTable :value="studentSummary" class="student-details-table" scrollable scrollHeight="730px" :tableStyle="{ tableLayout: 'fixed' }" size="large">
+            <DataTable :value="studentSummary" scrollable scrollHeight="730px" :tableStyle="{ tableLayout: 'fixed' }" size="large">
               <Column field="label" header="Metric" headerClass="py-6 px-4" :headerStyle="{ paddingLeft: '16px' }" bodyClass="py-6 px-4" :bodyStyle="{ paddingLeft: '16px' }" />
               <Column headerClass="py-6" bodyClass="py-6 px-4" :bodyStyle="{ textAlign: 'right', paddingRight: '16px' }">
                 <template #header>
