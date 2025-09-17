@@ -69,7 +69,7 @@
       <!-- Two-Column Layout: 2/3 Students table, 1/3 Student area -->
       <div class="flex gap-4">
         <div class="w-2/3">
-          <div class="bg-gray-800/40 border border-gray-700 rounded-xl p-0">
+          <div class="bg-gray-800/40 border border-gray-700 rounded-xl p-0 overflow-hidden">
             <DataTable :value="sortedStudents" scrollable scrollHeight="730px" :tableStyle="{ tableLayout: 'fixed' }" size="large" sortMode="single" :sortField="sortField" :sortOrder="sortOrder" @sort="onSort">
               <template #header>
                 <div class="flex items-center justify-between">
@@ -121,7 +121,7 @@
           </div>
         </div>
         <div class="w-1/3">
-          <div class="bg-gray-800/40 border border-gray-700 rounded-xl p-0">
+          <div class="bg-gray-800/40 border border-gray-700 rounded-xl p-0 overflow-hidden">
             <DataTable :value="studentSummary" class="student-details-table" scrollable scrollHeight="730px" :tableStyle="{ tableLayout: 'fixed' }" size="large">
               <template #header>
                 <div class="flex items-center justify-between">
