@@ -180,14 +180,6 @@
                       aria-label="Test"
                     />
                     <Button
-                      icon="pi pi-copy"
-                      size="small"
-                      severity="secondary"
-                      v-tooltip.top="'Copy URL'"
-                      @click.stop="onCopyClick(coach)"
-                      aria-label="Copy URL"
-                    />
-                    <Button
                       v-if="coach.createdBy !== 'system'"
                       icon="pi pi-pencil"
                       size="small"
@@ -220,7 +212,6 @@
                       v-tooltip.top="'Delete'"
                       @click.stop="confirmDelete(coach)"
                     />
-                    <Message v-if="copiedCoachId === coach.id" severity="success" class="text-xs px-2 py-1">Copied</Message>
                   </div>
                 </div>
               </div>
@@ -441,7 +432,6 @@ import Dialog from 'primevue/dialog'
 import Textarea from 'primevue/textarea'
 import InputText from 'primevue/inputtext'
 import ConfirmDialog from 'primevue/confirmdialog'
-import Message from 'primevue/message'
 import { useConfirm } from 'primevue/useconfirm'
 import type { Coach, CoachCreateData } from '../types/coach'
 import { useCoaches } from '../composables/useCoaches'
@@ -534,35 +524,10 @@ const openStudentDashboard = (coach: Coach) => {
   window.open(url.toString(), '_blank')
 }
 
-const copyCoachUrl = async (coach: Coach) => {
-  const url = generateCoachUrl(coach.name)
-  await copyToClipboard(url)
-}
 
 
-const copyToClipboard = async (text: string) => {
-  try {
-    await navigator.clipboard.writeText(text)
-  } catch (error) {
-    // Fallback for older browsers
-    const textArea = document.createElement('textarea')
-    textArea.value = text
-    document.body.appendChild(textArea)
-    textArea.select()
-    document.execCommand('copy')
-    document.body.removeChild(textArea)
-  }
-}
 
-const copiedCoachId = ref<string | number | null>(null)
 
-const onCopyClick = async (coach: Coach) => {
-  await copyCoachUrl(coach)
-  copiedCoachId.value = coach.id
-  setTimeout(() => {
-    if (copiedCoachId.value === coach.id) copiedCoachId.value = null
-  }, 1200)
-}
 
 const confirmDelete = (coach: Coach) => {
   confirm.require({
