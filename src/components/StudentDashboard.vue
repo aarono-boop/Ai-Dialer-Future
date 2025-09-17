@@ -101,7 +101,7 @@
               </Column>
               <Column field="answerRate" headerClass="py-6 px-4" bodyClass="py-6 px-4" bodyStyle="text-align:right" sortable>
                 <template #header>
-                  <div class="ml-auto text-right">Answer Rate</div>
+                  <div class="ml-auto text-right whitespace-nowrap">Answer Rate</div>
                 </template>
                 <template #body="{ data }">{{ (data.answerRate * 100).toFixed(1) }}%</template>
               </Column>
