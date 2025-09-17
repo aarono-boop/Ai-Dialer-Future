@@ -59,7 +59,7 @@
               <div class="w-9 h-9 bg-gray-700 rounded-lg flex items-center justify-center"><i class="pi pi-calendar text-cyan-300"></i></div>
               <div>
                 <p class="text-gray-400 text-xs">Appointments Set (Mo.)</p>
-                <p class="text-2xl font-bold">{{ appointments }}</p>
+                <p class="text-2xl font-bold">{{ appointments.toLocaleString() }}</p>
               </div>
             </div>
           </template>
@@ -82,7 +82,7 @@
               <div class="w-9 h-9 bg-gray-700 rounded-lg flex items-center justify-center"><i class="pi pi-user text-teal-300"></i></div>
               <div>
                 <p class="text-gray-400 text-xs">Total Students</p>
-                <p class="text-2xl font-bold">{{ activeStudents }}</p>
+                <p class="text-2xl font-bold">{{ activeStudents.toLocaleString() }}</p>
               </div>
             </div>
           </template>
