@@ -103,15 +103,15 @@
             <div class="space-y-3">
               <div class="flex items-center justify-between bg-gray-700 rounded p-3">
                 <div class="flex items-center gap-2"><i class="pi pi-calendar text-blue-300"></i><span>Schedule Group Session</span></div>
-                <Button label="Schedule" icon="pi pi-arrow-right" size="small" @click="noop" />
+                <Button label="Schedule" icon="pi pi-arrow-right" size="small" severity="secondary" class="w-28" @click="noop" />
               </div>
               <div class="flex items-center justify-between bg-gray-700 rounded p-3">
                 <div class="flex items-center gap-2"><i class="pi pi-video text-purple-300"></i><span>Send Video Message to All</span></div>
-                <Button label="Send" icon="pi pi-send" size="small" @click="noop" />
+                <Button label="Send" icon="pi pi-send" size="small" severity="secondary" class="w-28" @click="noop" />
               </div>
               <div class="flex items-center justify-between bg-gray-700 rounded p-3">
                 <div class="flex items-center gap-2"><i class="pi pi-file-edit text-green-300"></i><span>Update Coaching Scripts</span></div>
-                <Button label="Update" icon="pi pi-pencil" size="small" @click="noop" />
+                <Button label="Update" icon="pi pi-pencil" size="small" severity="secondary" class="w-28" @click="noop" />
               </div>
             </div>
           </div>
