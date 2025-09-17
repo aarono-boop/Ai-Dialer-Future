@@ -90,7 +90,7 @@
       </div>
 
       <!-- Revenue Trend and Attention -->
-      <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-y-4 gap-x-4 lg:gap-x-[36px]">
         <div class="lg:col-span-2 space-y-2">
           <div class="flex items-center gap-2 px-1"><i class="pi pi-chart-line"></i><span>Revenue Trends (6 Months)</span></div>
           <div class="bg-gray-700 border border-gray-700 rounded-xl p-3 h-64">
@@ -119,7 +119,7 @@
       </div>
 
       <!-- Leaderboard and Actions -->
-      <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-y-4 gap-x-4 lg:gap-x-[36px]">
         <div class="lg:col-span-2 space-y-2">
           <div class="flex items-center justify-between px-1">
             <div class="flex items-center gap-2"><i class="pi pi-trophy"></i><span>Student Performance Leaderboard</span></div>
