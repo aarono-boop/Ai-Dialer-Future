@@ -67,7 +67,7 @@
       </div>
 
       <!-- Two-Column Layout: 2/3 Students table, 1/3 Student area -->
-      <div class="flex gap-4">
+      <div class="flex gap-4 lg:gap-[36px]">
         <div class="w-2/3">
           <div class="flex items-center justify-between mb-2 px-1">
             <span class="font-semibold" style="color: var(--p-surface-0)">Top 20 Students</span>
