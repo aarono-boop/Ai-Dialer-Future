@@ -17,7 +17,24 @@
           </div>
         </div>
         <div class="flex items-center gap-2">
-          <Dropdown v-model="selectedRange" :options="ranges" optionLabel="label" optionValue="value" class="w-40" />
+          <Dropdown
+            v-model="selectedRange"
+            :options="ranges"
+            optionLabel="label"
+            optionValue="value"
+            class="w-40 mic-like-dropdown"
+            variant="filled"
+            appendTo="body"
+            :pt="{
+              root: { style: { background: 'var(--p-surface-800)', border: '1px solid rgba(255,255,255,0.12)', borderRadius: '6px', padding: '0.5rem' } },
+              panel: { class: 'mic-dropdown-panel', style: { background: 'var(--p-surface-800)', border: '1px solid rgba(255,255,255,0.12)' } },
+              overlay: { class: 'mic-dropdown-panel', style: { background: 'var(--p-surface-800)', border: '1px solid rgba(255,255,255,0.12)' } },
+              content: { class: 'mic-dropdown-content', style: { background: 'var(--p-surface-800)', padding: '0.25rem' } },
+              list: { class: 'mic-dropdown-list', style: { background: 'var(--p-surface-800)' } },
+              items: { class: 'mic-dropdown-list', style: { background: 'var(--p-surface-800)' } },
+              item: { class: 'mic-dropdown-item hover:bg-white/10', style: { padding: '0.5rem 0.75rem' } }
+            }"
+          />
           <Button label="Export" icon="pi pi-download" severity="secondary" size="small" @click="exportReport" />
           <Button label="Back to App" icon="pi pi-arrow-left" severity="secondary" size="small" text @click="goBack" />
         </div>
