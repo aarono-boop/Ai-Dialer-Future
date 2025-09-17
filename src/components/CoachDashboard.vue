@@ -163,7 +163,7 @@
             </DataTable>
           </div>
         </div>
-        <div class="space-y-2">
+        <div class="mt-5 space-y-2">
           <div class="flex items-center gap-2 px-1"><i class="pi pi-bell"></i><span>Students Requiring Attention</span></div>
           <div class="bg-gray-700 border border-gray-700 rounded-xl p-3">
             <div class="space-y-3">
