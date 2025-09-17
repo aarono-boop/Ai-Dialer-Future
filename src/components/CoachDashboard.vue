@@ -286,10 +286,27 @@ const rand = (min:number, max:number, m:number=997) => {
   return Math.round(min + (max - min) * r)
 }
 
-const monthlyEarnings = computed(() => rand(82000, 138000, 941))
-const appointments = computed(() => rand(3200, 8200, 877))
+const baseMonthlyEarnings = computed(() => rand(82000, 138000, 941))
+const baseAppointments = computed(() => rand(3200, 8200, 877))
 const activeStudents = computed(() => rand(1200, 4200, 883))
-const newStudents = computed(() => Math.max(100, Math.round(activeStudents.value * 0.08)))
+const baseNewStudents = computed(() => Math.max(100, Math.round(activeStudents.value * 0.08)))
+
+const daysSinceJan1 = computed(() => {
+  const start = new Date(new Date().getFullYear(), 0, 1).getTime()
+  const now = Date.now()
+  return Math.max(1, Math.round((now - start) / 86400000))
+})
+const rangeFactor = computed(() => {
+  switch (selectedRange.value) {
+    case '90d': return 3
+    case 'ytd': return Math.max(1, Math.round(daysSinceJan1.value / 30))
+    default: return 1 // '30d'
+  }
+})
+
+const monthlyEarnings = computed(() => Math.round(baseMonthlyEarnings.value * rangeFactor.value))
+const appointments = computed(() => Math.round(baseAppointments.value * rangeFactor.value))
+const newStudents = computed(() => Math.round(baseNewStudents.value * rangeFactor.value))
 
 // Revenue trend (6 months)
 const months = computed(() => Array.from({ length: 6 }, (_, i) => new Date(new Date().setMonth(new Date().getMonth() - (5 - i))).toLocaleString(undefined, { month: 'short' })))
