@@ -243,6 +243,7 @@ div[data-pc-name="datatable"] [data-pc-section="headercell"] {
 div[data-pc-name="datatable"] .p-datatable-tbody > tr > td,
 div[data-pc-name="datatable"] [data-pc-section="bodycell"] {
   font-size: 0.875rem !important; /* 14px */
+  font-weight: 400 !important; /* normal weight for less bold body text */
 }
 
 /* Remove background color from sorted column header (PrimeVue v3/v4 selectors) */
