@@ -292,7 +292,19 @@ const newStudents = computed(() => Math.max(100, Math.round(activeStudents.value
 
 // Revenue trend (6 months)
 const months = computed(() => Array.from({ length: 6 }, (_, i) => new Date(new Date().setMonth(new Date().getMonth() - (5 - i))).toLocaleString(undefined, { month: 'short' })))
-const revenueSeries = computed(() => months.value.map((_, i) => 60000 + i * 8000 + ((seed.value % 5) * 1500)))
+const revenueSeries = computed(() => {
+  const n = months.value.length
+  let value = 55000 + (seed.value % 8000)
+  const out: number[] = []
+  for (let i = 0; i < n; i++) {
+    const seasonal = Math.round(3000 * Math.sin((i + (seed.value % 3)) * Math.PI / 3))
+    const noise = ((seed.value * (i + 11)) % 1200) - 600 // -600..599
+    const trend = 2500 + ((seed.value + i) % 2000) // 2500..4499
+    value = Math.max(30000, value + trend + seasonal + noise)
+    out.push(value)
+  }
+  return out
+})
 const revenueChartData = computed(() => ({
   labels: months.value,
   datasets: [
@@ -302,8 +314,9 @@ const revenueChartData = computed(() => ({
       borderColor: '#60a5fa',
       backgroundColor: 'rgba(96,165,250,0.2)',
       fill: true,
-      tension: 0.35,
-      pointRadius: 0
+      cubicInterpolationMode: 'monotone',
+      tension: 0.4,
+      pointRadius: 2
     }
   ]
 }))
