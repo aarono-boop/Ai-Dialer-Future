@@ -78,7 +78,7 @@
               </template>
               <Column header="#" style="width: 60px" headerClass="py-6 px-4" :headerStyle="{ paddingLeft: '16px' }" bodyClass="py-6 px-4" :bodyStyle="{ paddingLeft: '16px' }">
   <template #body="{ data }">
-    {{ (sortOrder >= 0) ? (sortedStudents.length - sortedStudents.findIndex(s => s === data)) : (sortedStudents.findIndex(s => s === data) + 1) }}
+    {{ descSortedStudents.findIndex(s => s === data) + 1 }}
   </template>
 </Column>
               <Column header="Avatar" headerClass="py-6 px-4" bodyClass="py-6 px-4">
@@ -394,8 +394,24 @@ const sortedStudents = computed(() => {
   return arr
 })
 
+// Always-descending order used to compute ranks regardless of visible sort direction
+const descSortedStudents = computed(() => {
+  const arr = [...students.value]
+  const field = sortField.value
+  const cmp = (a: any, b: any) => {
+    if (a == null && b == null) return 0
+    if (a == null) return -1
+    if (b == null) return 1
+    if (typeof a === 'string' && typeof b === 'string') return a.localeCompare(b)
+    return (a as number) - (b as number)
+  }
+  // dir = -1 for descending (highest to lowest)
+  arr.sort((s1, s2) => -1 * cmp((s1 as any)[field], (s2 as any)[field]))
+  return arr
+})
+
 const currentRank = computed(() => {
-  const idx = sortedStudents.value.findIndex(s => s === currentStudent.value)
+  const idx = descSortedStudents.value.findIndex(s => s === currentStudent.value)
   return idx >= 0 ? idx + 1 : null
 })
 
