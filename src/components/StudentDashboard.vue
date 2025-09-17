@@ -609,12 +609,47 @@ const sparkOptions = {
   plugins: {
     legend: { display: false },
     tooltip: {
-      enabled: true,
-      displayColors: false,
-      yAlign: 'bottom',
-      xAlign: 'center',
-      caretPadding: 6,
-      caretSize: 4,
+      enabled: false, // use external HTML tooltip so the sparkline remains visible
+      external: (ctx: any) => {
+        const { chart, tooltip } = ctx
+        const parent = chart.canvas.parentNode as HTMLElement
+        if (parent) parent.style.position = 'relative'
+        let el = parent?.querySelector('.spark-tooltip') as HTMLDivElement | null
+        if (!el) {
+          el = document.createElement('div')
+          el.className = 'spark-tooltip'
+          Object.assign(el.style, {
+            position: 'absolute',
+            top: '0px', left: '0px',
+            transform: 'translateX(-50%)',
+            background: 'rgba(0,0,0,0.85)',
+            color: '#fff',
+            padding: '2px 6px',
+            borderRadius: '6px',
+            fontSize: '11px',
+            lineHeight: '14px',
+            whiteSpace: 'nowrap',
+            border: '1px solid rgba(255,255,255,0.2)',
+            pointerEvents: 'none',
+            zIndex: '10'
+          } as CSSStyleDeclaration)
+          parent?.appendChild(el)
+        }
+        if (!tooltip || tooltip.opacity === 0) {
+          if (el) el.style.opacity = '0'
+          return
+        }
+        const title = (tooltip.title && tooltip.title[0]) || ''
+        const bodyLine = (tooltip.body && tooltip.body[0] && tooltip.body[0].lines[0]) || ''
+        // We previously encoded everything in title; fall back to body if present
+        el.textContent = bodyLine || title
+        el.style.opacity = '1'
+        const x = chart.canvas.offsetLeft + (tooltip.caretX || 0)
+        const y = chart.canvas.offsetTop - 8
+        el.style.left = x + 'px'
+        // place above the canvas
+        el.style.top = (chart.canvas.offsetTop - (el.offsetHeight || 18) - 6) + 'px'
+      },
       callbacks: {
         title: (items: any[]) => {
           const it = items?.[0]
