@@ -611,6 +611,10 @@ const sparkOptions = {
     tooltip: {
       enabled: true,
       displayColors: false,
+      yAlign: 'bottom',
+      xAlign: 'center',
+      caretPadding: 6,
+      caretSize: 4,
       callbacks: {
         title: (items: any[]) => {
           const it = items?.[0]
