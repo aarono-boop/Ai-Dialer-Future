@@ -605,18 +605,51 @@ const hash = (s: string): number => {
 const sparkOptions = {
   responsive: true,
   maintainAspectRatio: false,
-  plugins: { legend: { display: false }, tooltip: { enabled: false } },
-  elements: { point: { radius: 0 }, line: { tension: 0.35 } },
+  interaction: { mode: 'index' as const, intersect: false },
+  plugins: {
+    legend: { display: false },
+    tooltip: {
+      enabled: true,
+      displayColors: false,
+      callbacks: {
+        title: (items: any[]) => items?.[0]?.label || '',
+        label: (ctx: any) => {
+          const v = typeof ctx.parsed?.y === 'number' ? ctx.parsed.y : Number(ctx.formattedValue || 0)
+          const m = ctx.dataset?.label
+          if (m === 'answer') return `Answer Rate: ${Number(v).toFixed(1)}%`
+          const name = m === 'calls' ? 'Calls' : m === 'appointments' ? 'Appointments' : m === 'followUps' ? 'Follow-ups' : 'Value'
+          return `${name}: ${Math.round(v).toLocaleString()}`
+        }
+      }
+    }
+  },
+  elements: { point: { radius: 0, hitRadius: 6 }, line: { tension: 0.35 } },
   scales: { x: { display: false }, y: { display: false } }
 }
 const sparkData = (row: StudentRow, metric: 'calls' | 'answer' | 'appointments' | 'followUps') => {
   const seed = hash(row.name + '|' + metric)
-  const n = 16
+  const range = selectedRange.value
+  // Build period-aware labels
+  let labels: string[] = []
+  if (range === 'ytd') {
+    const now = new Date()
+    const monthsCount = now.getMonth() + 1
+    labels = Array.from({ length: monthsCount }, (_, i) => new Date(now.getFullYear(), i, 1).toLocaleString(undefined, { month: 'short' }))
+  } else {
+    const days = range === '90d' ? 90 : 30
+    for (let i = days - 1; i >= 0; i--) {
+      const d = new Date()
+      d.setDate(d.getDate() - i)
+      labels.push(d.toLocaleString(undefined, { month: 'short', day: 'numeric' }))
+    }
+  }
+
+  const n = labels.length
   const baseVal = (() => {
     switch (metric) {
-      case 'calls': return Math.max(10, Math.round(row.callVolume / 20))
-      case 'appointments': return Math.max(2, Math.round(row.appointments / 4))
-      case 'followUps': return Math.max(1, Math.round(row.followUps / 3))
+      case 'calls': return Math.max(10, Math.round(row.callVolume / (range === '90d' ? 6 : 3)))
+      case 'appointments': return Math.max(2, Math.round(row.appointments / (range === '90d' ? 6 : 3)))
+      case 'followUps': return Math.max(1, Math.round(row.followUps / (range === '90d' ? 5 : 2)))
       case 'answer': return Math.max(20, Math.round(row.answerRate * 100))
     }
   })()
@@ -624,23 +657,23 @@ const sparkData = (row: StudentRow, metric: 'calls' | 'answer' | 'appointments' 
   let v = baseVal
   let dips = 0
   for (let i = 0; i < n; i++) {
-    const upBias = 1 + ((seed + i * 7) % 3) / 20 // 0..0.1
-    const jitter = (((seed + i * 13) % 9) - 4) / 100 // -0.04..0.04
+    const upBias = 1 + ((seed + i * 7) % 3) / (range === 'ytd' ? 18 : 20)
+    const jitter = (((seed + i * 13) % 9) - 4) / 100
     let next = v * upBias * (1 + jitter)
-    if (((seed + i) % 19) === 0 && dips < 2) { // occasional small dip
+    if (((seed + i) % 23) === 0 && dips < (range === 'ytd' ? 1 : 2)) {
       next = v * 0.95
       dips++
     }
     v = Math.max(0, next)
     values.push(Number(v.toFixed(2)))
   }
-  // Normalize ranges for percent-type metric
   if (metric === 'answer') {
     for (let i = 0; i < values.length; i++) values[i] = Math.min(100, Math.max(10, values[i]))
   }
   return {
-    labels: Array.from({ length: n }, (_, i) => String(i + 1)),
+    labels,
     datasets: [{
+      label: metric,
       data: values,
       borderColor: '#86efac',
       backgroundColor: 'rgba(134,239,172,0.15)',
