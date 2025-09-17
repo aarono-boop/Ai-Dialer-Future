@@ -4,7 +4,7 @@
     <main class="max-w-4xl mx-auto px-6 py-16">
       <!-- Hero Section -->
       <section class="text-center mb-16">
-        <h1 class="text-5xl font-bold text-white mb-6">About ARKON</h1>
+        <h1 class="text-5xl font-bold text-white mb-6">About ARMOR® AI Dialer</h1>
         <h2 class="text-2xl text-slate-300 leading-relaxed">
           Stop Fighting Your Dialer. Start Connecting with ARKON.
         </h2>
