@@ -140,7 +140,7 @@
 
 
           <!-- Insights -->
-          <div class="mt-4">
+          <div class="mt-8">
             <div class="flex items-center justify-between mb-2 px-1">
               <div class="flex items-center gap-2">
                 <i class="pi pi-bolt text-yellow-300" aria-hidden="true"></i>
