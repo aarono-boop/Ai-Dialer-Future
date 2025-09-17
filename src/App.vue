@@ -733,7 +733,7 @@
     </div>
 
     <!-- Coach Management Interface -->
-    <CoachManagement v-if="managementMode === 'admin' && currentPage === 'main' && !showCoachDashboard" />
+    <CoachManagement v-if="managementMode === 'admin' && currentPage === 'main' && !showCoachDashboard && !showStudentDashboard" />
 
     <!-- Coach Creation Page for create-coach URL -->
     <CoachCreationPage
