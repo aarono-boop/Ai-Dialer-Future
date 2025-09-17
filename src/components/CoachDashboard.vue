@@ -392,7 +392,6 @@ const revenueSeries = computed(() => {
 
   return series
 })
-}
 
 const revenueChartData = computed(() => ({
   labels: revenueLabels.value,
