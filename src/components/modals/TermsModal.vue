@@ -9,7 +9,7 @@
   >
     <!-- Dialog Content -->
     <p>
-      To create your ARKON account, please review our terms and conditions.
+      To create your AI Dialer account, please review our terms and conditions.
     </p>
 
     <div style="background: var(--p-surface-800); border: 1px solid var(--p-surface-600); border-radius: 0.5rem; padding: 1rem; margin: 1.5rem 0; color: var(--p-text-muted-color); font-size: 0.875rem; line-height: 1.625;">
