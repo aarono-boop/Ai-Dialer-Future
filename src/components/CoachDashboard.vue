@@ -93,13 +93,13 @@
       <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
         <div class="lg:col-span-2 space-y-2">
           <div class="flex items-center gap-2 px-1"><i class="pi pi-chart-line"></i><span>Revenue Trends (6 Months)</span></div>
-          <div class="bg-gray-800/40 border border-gray-700 rounded-xl p-3">
-            <Chart type="line" :data="revenueChartData" :options="revenueChartOptions" class="w-full" style="width: 100%; height: 16rem;" />
+          <div class="bg-gray-800/40 border border-gray-700 rounded-xl p-3 h-64">
+            <Chart type="line" :data="revenueChartData" :options="revenueChartOptions" class="w-full" style="width: 100%; height: 100%;" />
           </div>
         </div>
         <div class="space-y-2">
           <div class="flex items-center gap-2 px-1"><i class="pi pi-clipboard"></i><span>Coaching Actions</span></div>
-          <div class="bg-gray-800/40 border border-gray-700 rounded-xl p-3 h-64 overflow-auto">
+          <div class="bg-gray-800/40 border border-gray-700 rounded-xl p-3 h-64 overflow-y-auto">
             <div class="space-y-3">
               <div class="flex items-center justify-between bg-gray-700 rounded p-3">
                 <div class="flex items-center gap-2"><i class="pi pi-calendar text-blue-300"></i><span>Schedule Group Session</span></div>
@@ -361,7 +361,7 @@ const shareText = ref('')
 
 const buildShareText = () => {
   const selected = shareList.value.filter(s => s.selected).map(s => s.name)
-  const medals = ['����', '🥈', '��']
+  const medals = ['����', '🥈', '🥉']
   const lines = selected.map((n, i) => `${medals[i] || '🏅'} ${n}`)
   return [
     'Incredible performance from my students this week! 🚀 Shoutout to our top performers on the leaderboard:',
