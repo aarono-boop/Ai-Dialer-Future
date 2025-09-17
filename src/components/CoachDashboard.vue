@@ -36,7 +36,6 @@
             }"
           />
           <Button label="Export" icon="pi pi-download" severity="secondary" size="small" @click="exportReport" />
-          <Button label="Back to App" icon="pi pi-arrow-left" severity="secondary" size="small" text @click="goBack" />
         </div>
       </div>
 
