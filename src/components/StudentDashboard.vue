@@ -436,9 +436,9 @@ const currentRank = computed(() => {
 
 const studentSummary = computed(() => ([
   { label: 'Rank', value: currentRank.value },
-  { label: 'Calls', value: `${currentStudent.value.callVolume}/${goalCalls.value}` },
+  { label: 'Calls', value: `${currentStudent.value.callVolume} / ${goalCalls.value}` },
   { label: 'Answer Rate', value: `${(currentStudent.value.answerRate * 100).toFixed(1)}%` },
-  { label: 'Appointments', value: `${currentStudent.value.appointments}/${goalAppointments.value}` },
+  { label: 'Appointments', value: `${currentStudent.value.appointments} / ${goalAppointments.value}` },
   { label: 'Follow-ups', value: currentStudent.value.followUps },
   { label: 'Opt-In Identity', value: optInIdentity.value ? 'Enabled' : 'Anonymous' },
   { label: 'Connect CRM', value: 'Not Connected' },
