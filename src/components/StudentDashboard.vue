@@ -243,6 +243,7 @@
     <template #footer>
       <div class="flex items-center justify-end gap-2 w-full">
         <Button label="Close" severity="secondary" @click="showSettingsDialog = false" />
+        <Button label="Save" icon="pi pi-check" severity="primary" @click="showSettingsDialog = false" aria-label="Save settings" />
       </div>
     </template>
   </Dialog>
