@@ -135,7 +135,7 @@
                 </template>
                 <template #body="{ data }">
                   <span v-if="data.label !== 'Connect CRM'">{{ data.value }}</span>
-                  <a v-else href="#" class="text-link">{{ data.value }}</a>
+                  <a v-else href="#" class="text-link" style="text-decoration: none;">{{ data.value }}</a>
                 </template>
               </Column>
             </DataTable>
