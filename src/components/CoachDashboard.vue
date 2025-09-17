@@ -146,7 +146,7 @@
               </Column>
               <Column field="answerRate" bodyStyle="text-align:right">
                 <template #header>
-                  <div class="w-full text-right">Answer Rate</div>
+                  <div class="w-full text-right whitespace-nowrap">Answer Rate</div>
                 </template>
                 <template #body="{ data }">{{ (data.answerRate * 100).toFixed(1) }}%</template>
               </Column>
