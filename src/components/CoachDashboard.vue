@@ -93,13 +93,13 @@
       <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
         <div class="lg:col-span-2 space-y-2">
           <div class="flex items-center gap-2 px-1"><i class="pi pi-chart-line"></i><span>Revenue Trends (6 Months)</span></div>
-          <div class="bg-gray-800/40 border border-gray-700 rounded-xl p-3 h-64">
+          <div class="bg-gray-700 border border-gray-700 rounded-xl p-3 h-64">
             <Chart type="line" :data="revenueChartData" :options="revenueChartOptions" class="w-full" style="width: 100%; height: 100%;" />
           </div>
         </div>
         <div class="space-y-2">
           <div class="flex items-center gap-2 px-1"><i class="pi pi-clipboard"></i><span>Coaching Actions</span></div>
-          <div class="bg-gray-800/40 border border-gray-700 rounded-xl p-3 h-64 overflow-y-auto">
+          <div class="bg-gray-700 border border-gray-700 rounded-xl p-3 h-64 overflow-y-auto">
             <div class="space-y-3">
               <div class="flex items-center justify-between bg-gray-700 rounded p-3">
                 <div class="flex items-center gap-2"><i class="pi pi-calendar text-blue-300"></i><span>Schedule Group Session</span></div>
@@ -125,7 +125,7 @@
             <div class="flex items-center gap-2"><i class="pi pi-trophy"></i><span>Student Performance Leaderboard</span></div>
             <Button icon="pi pi-share-alt" label="Share" size="small" text @click="openShare" />
           </div>
-          <div class="bg-gray-800/40 border border-gray-700 rounded-xl p-0 overflow-hidden">
+          <div class="bg-gray-700 border border-gray-700 rounded-xl p-0 overflow-hidden">
             <DataTable :value="leaderboard" size="large" >
               <Column field="rank" header="#" style="width: 50px" />
               <Column header="Avatar">
@@ -165,7 +165,7 @@
         </div>
         <div class="space-y-2">
           <div class="flex items-center gap-2 px-1"><i class="pi pi-bell"></i><span>Students Requiring Attention</span></div>
-          <div class="bg-gray-800/40 border border-gray-700 rounded-xl p-3">
+          <div class="bg-gray-700 border border-gray-700 rounded-xl p-3">
             <div class="space-y-3">
               <div v-for="s in studentsNeedingAttention" :key="s.name" class="flex items-center justify-between bg-gray-700/60 rounded px-3 py-2">
                 <div class="flex items-center gap-2 min-w-0">
