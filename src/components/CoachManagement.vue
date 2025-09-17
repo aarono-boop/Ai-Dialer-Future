@@ -205,6 +205,14 @@
                       aria-label="Open dashboard"
                     />
                     <Button
+                      icon="pi pi-users"
+                      size="small"
+                      severity="success"
+                      v-tooltip.top="'Student Dashboard'"
+                      @click.stop="openStudentDashboard(coach)"
+                      aria-label="Open student dashboard"
+                    />
+                    <Button
                       v-if="managementMode === 'admin' && coach.createdBy !== 'system'"
                       icon="pi pi-trash"
                       size="small"
@@ -517,6 +525,12 @@ const testCoach = (coach: Coach) => {
 const openDashboard = (coach: Coach) => {
   const url = new URL(window.location.href)
   url.searchParams.set('coach-dashboard', coach.name)
+  window.open(url.toString(), '_blank')
+}
+
+const openStudentDashboard = (coach: Coach) => {
+  const url = new URL(window.location.href)
+  url.searchParams.set('student-dashboard', coach.name)
   window.open(url.toString(), '_blank')
 }
 

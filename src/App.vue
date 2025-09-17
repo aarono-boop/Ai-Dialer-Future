@@ -3047,6 +3047,7 @@ onMounted(() => {
   const createCoach = urlParams.get('create-coach')
   const coachAdmin = urlParams.get('coach-admin')
   const coachDashboard = urlParams.get('coach-dashboard')
+  const studentDashboard = urlParams.get('student-dashboard')
 
   // Set coach if specified
   if (coach === 'all') {
@@ -3063,6 +3064,13 @@ onMounted(() => {
     showCoachDashboard.value = true
     dashboardCoachName.value = coachDashboard
     setCurrentCoach(coachDashboard)
+  }
+
+  // Show student dashboard if requested
+  if (studentDashboard) {
+    showStudentDashboard.value = true
+    studentCoachName.value = studentDashboard
+    setCurrentCoach(studentDashboard)
   }
 
   // Set management mode based on URL parameters
