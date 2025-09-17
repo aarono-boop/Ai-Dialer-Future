@@ -98,21 +98,44 @@
                 <template #header>
                   <div class="ml-auto text-right">Calls</div>
                 </template>
+                <template #body="{ data }">
+                  <div class="flex flex-col items-end gap-1">
+                    <span>{{ data.callVolume.toLocaleString() }}</span>
+                    <Chart v-if="data.name === 'Liam Smith'" type="line" :data="sparkData(data, 'calls')" :options="sparkOptions" style="width: 120px; height: 24px" />
+                  </div>
+                </template>
               </Column>
               <Column field="answerRate" headerClass="py-6 px-4" bodyClass="py-6 px-4" bodyStyle="text-align:right" sortable>
                 <template #header>
                   <div class="ml-auto text-right whitespace-nowrap">Answer Rate</div>
                 </template>
-                <template #body="{ data }">{{ (data.answerRate * 100).toFixed(1) }}%</template>
+                <template #body="{ data }">
+                  <div class="flex flex-col items-end gap-1">
+                    <span>{{ (data.answerRate * 100).toFixed(1) }}%</span>
+                    <Chart v-if="data.name === 'Liam Smith'" type="line" :data="sparkData(data, 'answer')" :options="sparkOptions" style="width: 120px; height: 24px" />
+                  </div>
+                </template>
               </Column>
               <Column field="appointments" headerClass="py-6 px-4" bodyClass="py-6 px-4" bodyStyle="text-align:right" sortable>
                 <template #header>
                   <div class="ml-auto text-right">Appointments</div>
                 </template>
+                <template #body="{ data }">
+                  <div class="flex flex-col items-end gap-1">
+                    <span>{{ data.appointments.toLocaleString() }}</span>
+                    <Chart v-if="data.name === 'Liam Smith'" type="line" :data="sparkData(data, 'appointments')" :options="sparkOptions" style="width: 120px; height: 24px" />
+                  </div>
+                </template>
               </Column>
               <Column field="followUps" headerClass="py-6 px-4" bodyClass="py-6 px-4" :bodyStyle="{ textAlign: 'right', paddingRight: '16px' }" sortable>
                 <template #header>
                   <div class="ml-auto text-right">Follow-ups</div>
+                </template>
+                <template #body="{ data }">
+                  <div class="flex flex-col items-end gap-1">
+                    <span>{{ data.followUps.toLocaleString() }}</span>
+                    <Chart v-if="data.name === 'Liam Smith'" type="line" :data="sparkData(data, 'followUps')" :options="sparkOptions" style="width: 120px; height: 24px" />
+                  </div>
                 </template>
               </Column>
             </DataTable>
@@ -310,6 +333,7 @@ import Card from 'primevue/card'
 import InputText from 'primevue/inputtext'
 import Textarea from 'primevue/textarea'
 import InputNumber from 'primevue/inputnumber'
+import Chart from 'primevue/chart'
 import { useCoaches } from '../composables/useCoaches'
 
 const props = defineProps<{ coachName: string | null }>()
@@ -577,6 +601,59 @@ const subscriptionSeverity = (level: SubscriptionLevel) => {
     case 'Platinum': return 'info'
     case 'Premium': return 'success'
     default: return 'secondary'
+  }
+}
+
+// Sparkline helpers for Liam
+const hash = (s: string): number => {
+  let h = 0
+  for (let i = 0; i < s.length; i++) h = Math.imul(31, h) + s.charCodeAt(i) | 0
+  return Math.abs(h)
+}
+const sparkOptions = {
+  responsive: true,
+  maintainAspectRatio: false,
+  plugins: { legend: { display: false }, tooltip: { enabled: false } },
+  elements: { point: { radius: 0 }, line: { tension: 0.35 } },
+  scales: { x: { display: false }, y: { display: false } }
+}
+const sparkData = (row: StudentRow, metric: 'calls' | 'answer' | 'appointments' | 'followUps') => {
+  const seed = hash(row.name + '|' + metric)
+  const n = 16
+  const baseVal = (() => {
+    switch (metric) {
+      case 'calls': return Math.max(10, Math.round(row.callVolume / 20))
+      case 'appointments': return Math.max(2, Math.round(row.appointments / 4))
+      case 'followUps': return Math.max(1, Math.round(row.followUps / 3))
+      case 'answer': return Math.max(20, Math.round(row.answerRate * 100))
+    }
+  })()
+  const values: number[] = []
+  let v = baseVal
+  let dips = 0
+  for (let i = 0; i < n; i++) {
+    const upBias = 1 + ((seed + i * 7) % 3) / 20 // 0..0.1
+    const jitter = (((seed + i * 13) % 9) - 4) / 100 // -0.04..0.04
+    let next = v * upBias * (1 + jitter)
+    if (((seed + i) % 19) === 0 && dips < 2) { // occasional small dip
+      next = v * 0.95
+      dips++
+    }
+    v = Math.max(0, next)
+    values.push(Number(v.toFixed(2)))
+  }
+  // Normalize ranges for percent-type metric
+  if (metric === 'answer') {
+    for (let i = 0; i < values.length; i++) values[i] = Math.min(100, Math.max(10, values[i]))
+  }
+  return {
+    labels: Array.from({ length: n }, (_, i) => String(i + 1)),
+    datasets: [{
+      data: values,
+      borderColor: '#86efac',
+      backgroundColor: 'rgba(134,239,172,0.15)',
+      fill: true
+    }]
   }
 }
 </script>
