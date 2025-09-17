@@ -328,23 +328,34 @@ const revenueLabels = computed(() => {
 
 const revenueSeries = computed(() => {
   const n = revenueLabels.value.length
-  let value = 55000 + (seed.value % 8000)
-  const out: number[] = []
+  const total = monthlyEarnings.value
+  if (n <= 0 || total <= 0) return []
   const isMonthly = selectedRange.value === 'ytd'
+  const weights: number[] = []
   for (let i = 0; i < n; i++) {
     const seasonal = isMonthly
-      ? Math.round(3000 * Math.sin((i + (seed.value % 3)) * Math.PI / 3))
-      : Math.round(250 * Math.sin((i + (seed.value % 5)) * Math.PI / 7))
+      ? 1 + 0.25 * Math.sin((i + (seed.value % 3)) * Math.PI / 3)
+      : 1 + 0.15 * Math.sin((i + (seed.value % 5)) * Math.PI / 7)
     const noise = isMonthly
-      ? (((seed.value * (i + 11)) % 1200) - 600)
-      : (((seed.value * (i + 17)) % 120) - 60)
-    const trend = isMonthly
-      ? (2500 + ((seed.value + i) % 2000))
-      : (120 + ((seed.value + i) % 60))
-    value = Math.max(5000, value + trend + seasonal + noise)
-    out.push(value)
+      ? (((seed.value + i * 7) % 7) - 3) / 100
+      : (((seed.value + i * 13) % 9) - 4) / 100
+    const base = Math.max(0.05, seasonal + noise)
+    weights.push(base)
   }
-  return out
+  const sumW = weights.reduce((a, b) => a + b, 0)
+  let series = weights.map(w => Math.max(0, Math.round(w * (total / Math.max(1e-6, sumW)))))
+  let diff = total - series.reduce((a, b) => a + b, 0)
+  if (diff !== 0) {
+    const step = diff > 0 ? 1 : -1
+    let idx = 0
+    while (diff !== 0 && idx < n * 2) {
+      const j = idx % n
+      series[j] = Math.max(0, series[j] + step)
+      diff -= step
+      idx++
+    }
+  }
+  return series
 })
 
 const revenueChartData = computed(() => ({
