@@ -257,12 +257,12 @@
 /* Remove separators specifically for the right student details table */
 :deep(.student-details-table tbody > tr > td),
 :deep(.student-details-table .p-datatable-tbody > tr > td) {
-  border-bottom: 0 !important;
+  border-bottom: 1px solid var(--p-surface-600) !important;
   box-shadow: none !important;
 }
 :deep(.student-details-table tbody > tr),
 :deep(.student-details-table .p-datatable-tbody > tr) {
-  border-bottom: 0 !important;
+  border-bottom: 1px solid var(--p-surface-600) !important;
   box-shadow: none !important;
 }
 .thin-divider{}
@@ -274,7 +274,7 @@
 }
 ::deep(.student-details-table .p-datatable-tbody > tr:last-child > td),
 ::deep(.student-details-table tbody > tr:last-child > td) {
-  border-bottom: 0 !important;
+  border-bottom: 1px solid var(--p-surface-600) !important;
   box-shadow: none !important;
 }
 :deep(.thin-divider.p-divider-horizontal) { margin: 6px 0 !important; }
