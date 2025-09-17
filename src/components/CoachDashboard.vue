@@ -124,16 +124,13 @@
 
       <!-- Leaderboard and Actions -->
       <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
-        <Card class="bg-gray-800 border-gray-700 lg:col-span-2">
-          <template #title>
-            <div class="flex items-center justify-between">
-              <div class="flex items-center gap-2"><i class="pi pi-trophy"></i><span>Student Performance Leaderboard</span></div>
-              <Button icon="pi pi-share-alt" label="Share" size="small" text @click="openShare" />
-            </div>
-          </template>
-          <template #content>
-            <div class="bg-gray-800/40 border border-gray-700 rounded-xl p-0 overflow-hidden">
-              <DataTable :value="leaderboard" size="large" >
+        <div class="lg:col-span-2 space-y-2">
+          <div class="flex items-center justify-between px-1">
+            <div class="flex items-center gap-2"><i class="pi pi-trophy"></i><span>Student Performance Leaderboard</span></div>
+            <Button icon="pi pi-share-alt" label="Share" size="small" text @click="openShare" />
+          </div>
+          <div class="bg-gray-800/40 border border-gray-700 rounded-xl p-0 overflow-hidden">
+            <DataTable :value="leaderboard" size="large" >
               <Column field="rank" header="#" style="width: 50px" />
               <Column header="Avatar">
                 <template #body="{ data }">
@@ -168,14 +165,11 @@
                 </template>
               </Column>
             </DataTable>
-            </div>
-          </template>
-        </Card>
-        <Card class="bg-gray-800 border-gray-700">
-          <template #title>
-            <div class="flex items-center gap-2"><i class="pi pi-bell"></i><span>Students Requiring Attention</span></div>
-          </template>
-          <template #content>
+          </div>
+        </div>
+        <div class="space-y-2">
+          <div class="flex items-center gap-2 px-1"><i class="pi pi-bell"></i><span>Students Requiring Attention</span></div>
+          <div class="bg-gray-800/40 border border-gray-700 rounded-xl p-3">
             <div class="space-y-3">
               <div v-for="s in studentsNeedingAttention" :key="s.name" class="flex items-center justify-between bg-gray-700/60 rounded px-3 py-2">
                 <div class="flex items-center gap-2 min-w-0">
@@ -189,8 +183,8 @@
                 <Button label="Intervene" size="small" text severity="danger" @click="noop" />
               </div>
             </div>
-          </template>
-        </Card>
+          </div>
+        </div>
       </div>
 
       <!-- Share Top Performers Modal -->
