@@ -614,15 +614,15 @@ const sparkOptions = {
       callbacks: {
         title: (items: any[]) => {
           const it = items?.[0]
-          const m = it?.dataset?.label
-          const name = m === 'calls' ? 'Calls' : m === 'appointments' ? 'Appointments' : m === 'followUps' ? 'Follow-ups' : m === 'answer' ? 'Answer Rate' : 'Value'
-          return `${name} — ${it?.label || ''}`
+          return it?.label || ''
         },
         label: (ctx: any) => {
           const v = typeof ctx.parsed?.y === 'number' ? ctx.parsed.y : Number(ctx.formattedValue || 0)
           const m = ctx.dataset?.label
-          if (m === 'answer') return `Value: ${Number(v).toFixed(1)}%`
-          return `Value: ${Math.round(v).toLocaleString()}`
+          if (m === 'answer') return `${Number(v).toFixed(1)}%`
+          const unit = m === 'calls' ? 'calls' : m === 'appointments' ? 'appointments' : m === 'followUps' ? 'follow-ups' : ''
+          const num = Math.round(v).toLocaleString()
+          return unit ? `${num} ${unit}` : num
         }
       }
     }
