@@ -133,7 +133,10 @@
                 <template #header>
                   <div class="ml-auto text-right pr-4">Value</div>
                 </template>
-                <template #body="{ data }">{{ data.value }}</template>
+                <template #body="{ data }">
+                  <span v-if="data.label !== 'Connect CRM'">{{ data.value }}</span>
+                  <a v-else href="#" class="text-link">{{ data.value }}</a>
+                </template>
               </Column>
             </DataTable>
           </div>
