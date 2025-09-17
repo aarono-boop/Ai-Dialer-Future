@@ -124,7 +124,7 @@
               <Avatar :image="getAvatarUrl(currentStudent.name)" shape="circle" style="width: 28px; height: 28px" :class="!optInIdentity ? 'blur-sm' : ''" />
               <div class="font-semibold" style="color: var(--p-surface-0)">{{ optInIdentity ? currentStudent.name : 'Anonymous' }}</div>
             </div>
-            <a href="#" class="text-link text-sm">{{ userSubscription }} Tier</a>
+            <a href="#" class="text-link text-sm" style="text-decoration: none;">{{ userSubscription }} Tier</a>
           </div>
           <div class="bg-gray-800/40 border border-gray-700 rounded-xl p-0 overflow-hidden">
             <DataTable :value="studentSummary" scrollable scrollHeight="730px" :tableStyle="{ tableLayout: 'fixed' }" size="large">
