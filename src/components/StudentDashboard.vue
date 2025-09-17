@@ -656,7 +656,7 @@ const sparkOptions = {
           if (!it) return ''
           const v = typeof it.parsed?.y === 'number' ? it.parsed.y : Number(it.formattedValue || 0)
           const m = it.dataset?.label
-          const num = m === 'answer' ? `${Number(v).toFixed(1)}%` : `${Math.round(v).toLocaleString()}${m === 'calls' ? ' calls' : m === 'appointments' ? ' appointments' : m === 'followUps' ? ' follow-ups' : ''}`
+          const num = m === 'answer' ? `${Number(v).toFixed(1)}%` : `${Math.round(v).toLocaleString()}`
           const date = it.label || ''
           return `${date} — ${num}`
         },
