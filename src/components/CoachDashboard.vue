@@ -92,7 +92,7 @@
       <!-- Revenue Trend and Attention -->
       <div class="grid grid-cols-1 lg:grid-cols-3 gap-y-4 gap-x-4 lg:gap-x-[36px]">
         <div class="lg:col-span-2 space-y-2">
-          <div class="flex items-center gap-2 px-1"><i class="pi pi-chart-line"></i><span>Revenue Trends (6 Months)</span></div>
+          <div class="flex items-center gap-2 px-1"><i class="pi pi-chart-line"></i><span>Revenue Trends<span v-if="selectedRangeLabel"> ({{ selectedRangeLabel }})</span></span></div>
           <div class="bg-gray-700 border border-gray-700 rounded-xl p-3 h-64">
             <Chart type="line" :data="revenueChartData" :options="revenueChartOptions" class="w-full" style="width: 100%; height: 100%;" />
           </div>
@@ -308,23 +308,47 @@ const monthlyEarnings = computed(() => Math.round(baseMonthlyEarnings.value * ra
 const appointments = computed(() => Math.round(baseAppointments.value * rangeFactor.value))
 const newStudents = computed(() => Math.round(baseNewStudents.value * rangeFactor.value))
 
-// Revenue trend (6 months)
-const months = computed(() => Array.from({ length: 6 }, (_, i) => new Date(new Date().setMonth(new Date().getMonth() - (5 - i))).toLocaleString(undefined, { month: 'short' })))
+// Revenue trend reflects selected time range
+const revenueLabels = computed(() => {
+  const range = selectedRange.value
+  if (range === 'ytd') {
+    const now = new Date()
+    const monthsCount = now.getMonth() + 1 // Jan=0
+    return Array.from({ length: monthsCount }, (_, i) => new Date(now.getFullYear(), i, 1).toLocaleString(undefined, { month: 'short' }))
+  }
+  const days = range === '90d' ? 90 : 30
+  const labels: string[] = []
+  for (let i = days - 1; i >= 0; i--) {
+    const d = new Date()
+    d.setDate(d.getDate() - i)
+    labels.push(d.toLocaleString(undefined, { month: 'short', day: 'numeric' }))
+  }
+  return labels
+})
+
 const revenueSeries = computed(() => {
-  const n = months.value.length
+  const n = revenueLabels.value.length
   let value = 55000 + (seed.value % 8000)
   const out: number[] = []
+  const isMonthly = selectedRange.value === 'ytd'
   for (let i = 0; i < n; i++) {
-    const seasonal = Math.round(3000 * Math.sin((i + (seed.value % 3)) * Math.PI / 3))
-    const noise = ((seed.value * (i + 11)) % 1200) - 600 // -600..599
-    const trend = 2500 + ((seed.value + i) % 2000) // 2500..4499
-    value = Math.max(30000, value + trend + seasonal + noise)
+    const seasonal = isMonthly
+      ? Math.round(3000 * Math.sin((i + (seed.value % 3)) * Math.PI / 3))
+      : Math.round(250 * Math.sin((i + (seed.value % 5)) * Math.PI / 7))
+    const noise = isMonthly
+      ? (((seed.value * (i + 11)) % 1200) - 600)
+      : (((seed.value * (i + 17)) % 120) - 60)
+    const trend = isMonthly
+      ? (2500 + ((seed.value + i) % 2000))
+      : (120 + ((seed.value + i) % 60))
+    value = Math.max(5000, value + trend + seasonal + noise)
     out.push(value)
   }
   return out
 })
+
 const revenueChartData = computed(() => ({
-  labels: months.value,
+  labels: revenueLabels.value,
   datasets: [
     {
       label: 'Revenue',
