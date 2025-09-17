@@ -91,14 +91,12 @@
 
       <!-- Revenue Trend and Attention -->
       <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
-        <Card class="bg-gray-800 border-gray-700 lg:col-span-2">
-          <template #title>
-            <div class="flex items-center gap-2"><i class="pi pi-chart-line"></i><span>Revenue Trends (6 Months)</span></div>
-          </template>
-          <template #content>
+        <div class="lg:col-span-2 space-y-2">
+          <div class="flex items-center gap-2 px-1"><i class="pi pi-chart-line"></i><span>Revenue Trends (6 Months)</span></div>
+          <div class="bg-gray-800/40 border border-gray-700 rounded-xl p-3">
             <Chart type="line" :data="revenueChartData" :options="revenueChartOptions" class="w-full" style="width: 100%; height: 16rem;" />
-          </template>
-        </Card>
+          </div>
+        </div>
         <Card class="bg-gray-800 border-gray-700">
           <template #title>
             <div class="flex items-center gap-2"><i class="pi pi-clipboard"></i><span>Coaching Actions</span></div>
