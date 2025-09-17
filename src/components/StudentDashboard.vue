@@ -98,45 +98,25 @@
                 <template #header>
                   <div class="ml-auto text-right">Calls</div>
                 </template>
-                <template #body="{ data }">
-                  <div class="flex flex-col items-end gap-1">
-                    <span>{{ data.callVolume.toLocaleString() }}</span>
-                    <Chart v-if="data.name === 'Liam Smith'" type="line" :data="sparkData(data, 'calls')" :options="sparkOptions" style="width: 120px; height: 24px" />
-                  </div>
-                </template>
+                <template #body="{ data }">{{ data.callVolume.toLocaleString() }}</template>
               </Column>
               <Column field="answerRate" headerClass="py-6 px-4" bodyClass="py-6 px-4" bodyStyle="text-align:right" sortable>
                 <template #header>
                   <div class="ml-auto text-right whitespace-nowrap">Answer Rate</div>
                 </template>
-                <template #body="{ data }">
-                  <div class="flex flex-col items-end gap-1">
-                    <span>{{ (data.answerRate * 100).toFixed(1) }}%</span>
-                    <Chart v-if="data.name === 'Liam Smith'" type="line" :data="sparkData(data, 'answer')" :options="sparkOptions" style="width: 120px; height: 24px" />
-                  </div>
-                </template>
+                <template #body="{ data }">{{ (data.answerRate * 100).toFixed(1) }}%</template>
               </Column>
               <Column field="appointments" headerClass="py-6 px-4" bodyClass="py-6 px-4" bodyStyle="text-align:right" sortable>
                 <template #header>
                   <div class="ml-auto text-right">Appointments</div>
                 </template>
-                <template #body="{ data }">
-                  <div class="flex flex-col items-end gap-1">
-                    <span>{{ data.appointments.toLocaleString() }}</span>
-                    <Chart v-if="data.name === 'Liam Smith'" type="line" :data="sparkData(data, 'appointments')" :options="sparkOptions" style="width: 120px; height: 24px" />
-                  </div>
-                </template>
+                <template #body="{ data }">{{ data.appointments.toLocaleString() }}</template>
               </Column>
               <Column field="followUps" headerClass="py-6 px-4" bodyClass="py-6 px-4" :bodyStyle="{ textAlign: 'right', paddingRight: '16px' }" sortable>
                 <template #header>
                   <div class="ml-auto text-right">Follow-ups</div>
                 </template>
-                <template #body="{ data }">
-                  <div class="flex flex-col items-end gap-1">
-                    <span>{{ data.followUps.toLocaleString() }}</span>
-                    <Chart v-if="data.name === 'Liam Smith'" type="line" :data="sparkData(data, 'followUps')" :options="sparkOptions" style="width: 120px; height: 24px" />
-                  </div>
-                </template>
+                <template #body="{ data }">{{ data.followUps.toLocaleString() }}</template>
               </Column>
             </DataTable>
           </div>
@@ -150,9 +130,9 @@
             <a href="#" class="text-link text-sm" style="text-decoration: none;">{{ userSubscription }} Tier</a>
           </div>
           <div class="bg-gray-800/40 border border-gray-700 rounded-xl p-0 overflow-hidden">
-            <DataTable :value="studentSummary" scrollable scrollHeight="730px" :tableStyle="{ tableLayout: 'fixed' }" size="large">
+            <DataTable :value="studentSummary" scrollable scrollHeight="730px" :tableStyle="{ tableLayout: 'fixed' }" size="large" class="student-details-table">
               <Column field="label" header="Metric" headerClass="py-6 px-4" :headerStyle="{ paddingLeft: '16px' }" bodyClass="py-6 px-4" :bodyStyle="{ paddingLeft: '16px' }" />
-              <Column headerClass="py-6" bodyClass="py-6 px-4" :bodyStyle="{ textAlign: 'right', paddingRight: '16px' }">
+              <Column headerClass="py-6" bodyClass="py-6 px-4" :bodyStyle="{ textAlign: 'right' }">
                 <template #header>
                   <div class="ml-auto text-right pr-4">Value</div>
                 </template>
@@ -164,6 +144,18 @@
                     <a href="#" class="text-link" style="text-decoration: none;" @click.prevent="showSettingsDialog = true">Enabled</a>
                   </template>
                   <span v-else>{{ data.value }}</span>
+                </template>
+              </Column>
+              <Column headerClass="py-6 px-2" bodyClass="py-6 px-2" :bodyStyle="{ textAlign: 'right', paddingRight: '16px' }">
+                <template #header>
+                  <div class="ml-auto text-right">Trend</div>
+                </template>
+                <template #body="{ data }">
+                  <Chart v-if="data.label === 'Calls'" type="line" :data="sparkData(currentStudent, 'calls')" :options="sparkOptions" style="width: 120px; height: 28px" />
+                  <Chart v-else-if="data.label === 'Answer Rate'" type="line" :data="sparkData(currentStudent, 'answer')" :options="sparkOptions" style="width: 120px; height: 28px" />
+                  <Chart v-else-if="data.label === 'Appointments'" type="line" :data="sparkData(currentStudent, 'appointments')" :options="sparkOptions" style="width: 120px; height: 28px" />
+                  <Chart v-else-if="data.label === 'Follow-ups'" type="line" :data="sparkData(currentStudent, 'followUps')" :options="sparkOptions" style="width: 120px; height: 28px" />
+                  <span v-else class="text-gray-500">—</span>
                 </template>
               </Column>
             </DataTable>
