@@ -132,7 +132,8 @@
             </div>
           </template>
           <template #content>
-            <DataTable :value="leaderboard" size="large" >
+            <div class="bg-gray-800/40 border border-gray-700 rounded-xl p-0 overflow-hidden">
+              <DataTable :value="leaderboard" size="large" >
               <Column field="rank" header="#" style="width: 50px" />
               <Column header="Avatar">
                 <template #body="{ data }">
@@ -167,6 +168,7 @@
                 </template>
               </Column>
             </DataTable>
+            </div>
           </template>
         </Card>
         <Card class="bg-gray-800 border-gray-700">
