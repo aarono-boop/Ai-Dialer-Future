@@ -612,13 +612,17 @@ const sparkOptions = {
       enabled: true,
       displayColors: false,
       callbacks: {
-        title: (items: any[]) => items?.[0]?.label || '',
+        title: (items: any[]) => {
+          const it = items?.[0]
+          const m = it?.dataset?.label
+          const name = m === 'calls' ? 'Calls' : m === 'appointments' ? 'Appointments' : m === 'followUps' ? 'Follow-ups' : m === 'answer' ? 'Answer Rate' : 'Value'
+          return `${name} — ${it?.label || ''}`
+        },
         label: (ctx: any) => {
           const v = typeof ctx.parsed?.y === 'number' ? ctx.parsed.y : Number(ctx.formattedValue || 0)
           const m = ctx.dataset?.label
-          if (m === 'answer') return `Answer Rate: ${Number(v).toFixed(1)}%`
-          const name = m === 'calls' ? 'Calls' : m === 'appointments' ? 'Appointments' : m === 'followUps' ? 'Follow-ups' : 'Value'
-          return `${name}: ${Math.round(v).toLocaleString()}`
+          if (m === 'answer') return `Value: ${Number(v).toFixed(1)}%`
+          return `Value: ${Math.round(v).toLocaleString()}`
         }
       }
     }
