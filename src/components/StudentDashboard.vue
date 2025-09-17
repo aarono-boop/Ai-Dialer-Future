@@ -151,7 +151,7 @@
             <div class="bg-gray-800/40 border border-gray-700 rounded-xl p-0 overflow-hidden">
               <Card :pt="{ root: { style: { background: 'transparent', border: 'none', borderRadius: '0' } }, body: { style: { padding: '0' } } }">
                 <template #content>
-                  <div class="px-4 py-3">
+                  <div class="px-4 py-3 font-thin">
                     <ul class="list-disc list-inside space-y-2 text-sm">
                       <li v-for="(it, idx) in insights" :key="idx">{{ it }}</li>
                     </ul>
