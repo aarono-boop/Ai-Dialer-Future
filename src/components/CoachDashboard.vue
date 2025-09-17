@@ -118,12 +118,15 @@
           <template #content>
             <DataTable :value="leaderboard" size="large" >
               <Column field="rank" header="#" style="width: 50px" />
-              <Column header="Student">
+              <Column header="Avatar">
                 <template #body="{ data }">
-                  <div class="flex items-center gap-2">
-                    <Avatar :image="getAvatarUrl(data.name)" shape="circle" style="width: 28px; height: 28px" />
-                    <span>{{ data.name }}</span>
-                  </div>
+                  <Avatar :image="getAvatarUrl(data.name)" shape="circle" style="width: 28px; height: 28px" />
+                </template>
+              </Column>
+              <Column field="name" header="Student" />
+              <Column field="subscription" header="Subscription">
+                <template #body="{ data }">
+                  <Badge :value="data.subscription" :severity="subscriptionSeverity(data.subscription)" />
                 </template>
               </Column>
               <Column field="calls" bodyStyle="text-align:right">
@@ -131,16 +134,21 @@
                   <div class="w-full text-right">Calls</div>
                 </template>
               </Column>
-              <Column field="conversions" bodyStyle="text-align:right">
+              <Column field="answerRate" bodyStyle="text-align:right">
                 <template #header>
-                  <div class="w-full text-right">Appointments Set</div>
+                  <div class="w-full text-right">Answer Rate</div>
+                </template>
+                <template #body="{ data }">{{ (data.answerRate * 100).toFixed(1) }}%</template>
+              </Column>
+              <Column field="appointments" bodyStyle="text-align:right">
+                <template #header>
+                  <div class="w-full text-right">Appointments</div>
                 </template>
               </Column>
-              <Column bodyStyle="text-align:right">
+              <Column field="followUps" bodyStyle="text-align:right">
                 <template #header>
-                  <div class="w-full text-right">Conversion %</div>
+                  <div class="w-full text-right">Follow-ups</div>
                 </template>
-                <template #body="{ data }">{{ (data.conversions / Math.max(1, data.calls) * 100).toFixed(1) }}%</template>
               </Column>
             </DataTable>
           </template>
@@ -211,6 +219,7 @@ import Dialog from 'primevue/dialog'
 import Checkbox from 'primevue/checkbox'
 import Textarea from 'primevue/textarea'
 import Avatar from 'primevue/avatar'
+import Badge from 'primevue/badge'
 import { useCoaches } from '../composables/useCoaches'
 
 const props = defineProps<{ coachName?: string | null }>()
@@ -299,13 +308,23 @@ const revenueChartOptions = { maintainAspectRatio: false,
   }
 }
 
-const leaderboard = computed(() => Array.from({length: 8}, (_, i) => ({
-  rank: i + 1,
-  name: ['Alex Riley','Samantha Chen','Marcus Bell','Jessica Vazquez','Noah Green','Emma Brooks','Liam Carter','Mia Patel'][i],
-  calls: 900 + ((seed.value + i) % 600),
-  conversions: 60 + ((seed.value + i) % 80),
-  score: 50 + ((seed.value + i) % 50)
-})))
+const leaderboard = computed(() => Array.from({length: 8}, (_, i) => {
+  const name = ['Alex Riley','Samantha Chen','Marcus Bell','Jessica Vazquez','Noah Green','Emma Brooks','Liam Carter','Mia Patel'][i]
+  const calls = 900 + ((seed.value + i) % 600)
+  const appointments = 60 + ((seed.value + i) % 80)
+  const answerRate = appointments / Math.max(1, calls)
+  const followUps = 10 + ((seed.value + i) % 20)
+  const subs = ['Standard','Premium','Platinum'][(seed.value + i) % 3] as 'Standard' | 'Premium' | 'Platinum'
+  return {
+    rank: i + 1,
+    name,
+    subscription: subs,
+    calls,
+    answerRate,
+    appointments,
+    followUps
+  }
+}))
 
 const studentsNeedingAttention = computed(() => {
   const reasons = ['Low Answer Rate: 22%','Declining Call Volume: -15%','Poor Conversion: 1.2%','Not Logging In: 5 days ago']
@@ -358,4 +377,12 @@ const copyShareText = async () => {
 }
 
 const noop = () => {}
+
+const subscriptionSeverity = (level: 'Standard' | 'Premium' | 'Platinum') => {
+  switch (level) {
+    case 'Platinum': return 'info'
+    case 'Premium': return 'success'
+    default: return 'secondary'
+  }
+}
 </script>
