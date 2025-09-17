@@ -377,7 +377,15 @@ const userSubscription = computed<SubscriptionLevel>(() => currentStudent.value?
 
 const sortField = ref<keyof StudentRow>('callVolume')
 const sortOrder = ref<number>(-1)
-const onSort = (e: any) => { sortField.value = e.sortField as keyof StudentRow; sortOrder.value = e.sortOrder as number }
+const onSort = (e: any) => {
+  const newField = e.sortField as keyof StudentRow
+  if (newField !== sortField.value) {
+    sortField.value = newField
+    sortOrder.value = -1 // always start highest -> lowest on new column
+  } else {
+    sortOrder.value = e.sortOrder as number
+  }
+}
 
 const sortedStudents = computed(() => {
   const arr = [...students.value]
