@@ -322,7 +322,9 @@ const revenueChartData = computed(() => ({
 }))
 const revenueChartOptions = { maintainAspectRatio: false,
   responsive: true,
-  plugins: { legend: { display: false } },
+  interaction: { mode: 'index', intersect: false, axis: 'x' },
+  plugins: { legend: { display: false }, tooltip: { intersect: false } },
+  elements: { point: { hitRadius: 20, hoverRadius: 6 } },
   scales: {
     x: { ticks: { color: '#9CA3AF' }, grid: { display: false } },
     y: { ticks: { color: '#9CA3AF' }, grid: { color: 'rgba(255,255,255,0.05)' } }
