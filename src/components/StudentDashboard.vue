@@ -614,16 +614,14 @@ const sparkOptions = {
       callbacks: {
         title: (items: any[]) => {
           const it = items?.[0]
-          return it?.label || ''
+          if (!it) return ''
+          const v = typeof it.parsed?.y === 'number' ? it.parsed.y : Number(it.formattedValue || 0)
+          const m = it.dataset?.label
+          const num = m === 'answer' ? `${Number(v).toFixed(1)}%` : `${Math.round(v).toLocaleString()}${m === 'calls' ? ' calls' : m === 'appointments' ? ' appointments' : m === 'followUps' ? ' follow-ups' : ''}`
+          const date = it.label || ''
+          return `${date} — ${num}`
         },
-        label: (ctx: any) => {
-          const v = typeof ctx.parsed?.y === 'number' ? ctx.parsed.y : Number(ctx.formattedValue || 0)
-          const m = ctx.dataset?.label
-          if (m === 'answer') return `${Number(v).toFixed(1)}%`
-          const unit = m === 'calls' ? 'calls' : m === 'appointments' ? 'appointments' : m === 'followUps' ? 'follow-ups' : ''
-          const num = Math.round(v).toLocaleString()
-          return unit ? `${num} ${unit}` : num
-        }
+        label: () => ''
       }
     }
   },
