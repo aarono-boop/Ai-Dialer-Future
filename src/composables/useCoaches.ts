@@ -22,7 +22,7 @@ export const useCoaches = () => {
 
   const welcomeMessage = computed((): string => {
     if (!currentCoach.value) {
-      return 'Welcome to the ARMOR® AI Dialer, your AI calling assistant.<br><br>I’ll show you exactly who’s most likely to pick up right now. Lets get some contacts loaded!'
+      return 'Welcome to the ARMOR® AI Dialer, your AI calling assistant.<br>I’ll show you exactly who’s most likely to pick up right now. Lets get some contacts loaded!'
     }
     return generateCoachWelcomeMessage(currentCoach.value)
   })
