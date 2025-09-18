@@ -162,9 +162,10 @@
                 <Button label="Connect your CRM" icon="pi pi-database" severity="primary" class="w-full" @click="selectedInteraction = 'crm'" />
               </div>
               <div v-else>
-                <div v-if="selectedInteraction === 'upload'" class="w-full relative">
-                  <Button text severity="secondary" icon="pi pi-times" aria-label="Close selection" class="absolute top-2 right-2" @click="selectedInteraction = null" />
+                <div v-if="selectedInteraction === 'upload'" class="w-full">
                   <FileUpload
+                    closable
+                    @close="selectedInteraction = null"
                     height="calc(8.6667rem - 20px)"
                     :no-top-margin="true"
                     @trigger-upload="simulateFileUpload"
