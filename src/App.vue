@@ -152,7 +152,7 @@
           </Dialog>
 
           <!-- Interaction Panel: File Upload & CRM Connect -->
-          <div v-if="!showCoachCarousel && !showDialer && ((welcomeTypingComplete && !isSignedIn) || (isSignedIn && showFileUploadForReturningUser))" class="mt-2 pt-5 flex justify-center">
+          <div v-if="!showCoachCarousel && !showDialer && !hasUploadedFile && !crmConnected && ((welcomeTypingComplete && !isSignedIn) || (isSignedIn && showFileUploadForReturningUser))" class="mt-2 pt-5 flex justify-center">
             <div class="w-[70%]">
               <div v-if="!selectedInteraction" class="grid grid-cols-2 gap-3">
                 <Button label="Upload contacts" icon="pi pi-upload" severity="secondary" class="w-full" @click="selectedInteraction = 'upload'" />
@@ -954,6 +954,7 @@ const isPracticeMode = ref<boolean>(false)
 // CRM sign-in modal state
 const showCrmModal = ref(false)
 const selectedCrmName = ref('HubSpot')
+const crmConnected = ref<boolean>(false)
 const crmEmail = ref('')
 const crmPassword = ref('')
 const openCrmModal = (name: string) => {
@@ -962,6 +963,7 @@ const openCrmModal = (name: string) => {
 }
 const connectCrm = () => {
   showCrmModal.value = false
+  crmConnected.value = true
   if (isSignedIn.value) {
     addAIMessageWithTyping(`You're now connected to <strong>${selectedCrmName.value}</strong>. We'll start analyzing your data.`)
     scrollToBottom()
