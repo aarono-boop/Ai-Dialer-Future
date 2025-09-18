@@ -154,9 +154,9 @@
           <!-- Interaction Panel: File Upload & CRM Connect -->
           <div v-if="!showCoachCarousel && !showDialer && ((welcomeTypingComplete && !isSignedIn) || (isSignedIn && showFileUploadForReturningUser))" class="mt-2 pt-5 flex justify-center">
             <div class="w-[70%]">
-              <div v-if="!selectedInteraction" class="flex gap-3 justify-center">
-                <Button label="Upload contacts" icon="pi pi-upload" severity="primary" @click="selectedInteraction = 'upload'" />
-                <Button label="Connect your CRM" icon="pi pi-database" severity="secondary" @click="selectedInteraction = 'crm'" />
+              <div v-if="!selectedInteraction" class="grid grid-cols-2 gap-3">
+                <Button label="Upload contacts" icon="pi pi-upload" severity="secondary" class="w-full" @click="selectedInteraction = 'upload'" />
+                <Button label="Connect your CRM" icon="pi pi-database" severity="primary" class="w-full" @click="selectedInteraction = 'crm'" />
               </div>
               <div v-else>
                 <div v-if="selectedInteraction === 'upload'" class="w-full">
