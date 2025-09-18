@@ -154,8 +154,12 @@
           <!-- Interaction Panel: File Upload & CRM Connect -->
           <div v-if="!showCoachCarousel && !showDialer && ((welcomeTypingComplete && !isSignedIn) || (isSignedIn && showFileUploadForReturningUser))" class="mt-2 pt-5 flex justify-center">
             <div class="w-[70%]">
-              <div class="flex flex-col gap-4 items-stretch">
-                <div class="w-full">
+              <div v-if="!selectedInteraction" class="flex gap-3 justify-center">
+                <Button label="Upload contacts" icon="pi pi-upload" severity="primary" @click="selectedInteraction = 'upload'" />
+                <Button label="Connect your CRM" icon="pi pi-database" severity="secondary" @click="selectedInteraction = 'crm'" />
+              </div>
+              <div v-else>
+                <div v-if="selectedInteraction === 'upload'" class="w-full">
                   <FileUpload
                     height="calc(8.6667rem - 20px)"
                     :no-top-margin="true"
@@ -164,76 +168,78 @@
                     @file-dropped="simulateFileUpload"
                   />
                 </div>
-                <div class="flex items-center justify-center my-1">
-                  <span class="text-sm" style="color: var(--p-surface-200);">OR</span>
+                <div v-else class="w-full">
+                  <Card class="w-full" :pt="{ root: { style: { background: 'var(--p-surface-800)', border: '1px solid var(--p-surface-600)', borderRadius: '8px', height: 'calc(13rem - 20px)', display: 'flex', flexDirection: 'column' } }, body: { style: { flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' } } }">
+                    <template #title>
+                      <div style="padding-bottom: 10px;">Connect your CRM</div>
+                    </template>
+                    <template #content>
+                      <div class="grid grid-cols-4 w-full h-full items-center justify-items-center" style="column-gap: 18px; row-gap: 6px;">
+                        <Button
+                          v-for="n in 8"
+                          :key="n"
+                          text
+                          class="p-0"
+                          :pt="{ root: { style: { background: 'transparent', border: 'none', padding: 0 } } }"
+                          :aria-label="n === 1 ? 'Connect Follow Up Boss' : n === 2 ? 'Connect HubSpot' : n === 3 ? 'Connect Insightly' : n === 4 ? 'Connect Pipedrive' : n === 5 ? 'Connect Salesforce' : n === 6 ? 'Connect SugarCRM' : n === 7 ? 'Connect Zendesk' : 'Connect Zoho'"
+                          @click="n === 1 ? openCrmModal('Follow Up Boss') : n === 2 ? openCrmModal('HubSpot') : n === 3 ? openCrmModal('Insightly') : n === 4 ? openCrmModal('Pipedrive') : n === 5 ? openCrmModal('Salesforce') : n === 6 ? openCrmModal('SugarCRM') : n === 7 ? openCrmModal('Zendesk') : openCrmModal('Zoho')"
+                        >
+                          <img
+                            v-if="n === 1"
+                            src="https://cdn.builder.io/api/v1/image/assets%2F5aeb07ce25f84dbc869290880d07b71e%2Fe999ed7796124b4ba95e483edf6cc182?format=webp&width=800"
+                            alt="Follow Up Boss logo"
+                            style="height: 28px; width: auto; display: block; object-fit: contain;"
+                          />
+                          <img
+                            v-else-if="n === 2"
+                            src="https://cdn.builder.io/api/v1/image/assets%2F5aeb07ce25f84dbc869290880d07b71e%2Fe1e0d2b2dedf4f5c99650544aa5db11f?format=webp&width=800"
+                            alt="HubSpot logo"
+                            style="height: 28px; width: auto; display: block; object-fit: contain;"
+                          />
+                          <img
+                            v-else-if="n === 3"
+                            src="https://cdn.builder.io/api/v1/image/assets%2F5aeb07ce25f84dbc869290880d07b71e%2F12a89d7381b9422bb8e5b31e99815f59?format=webp&width=800"
+                            alt="Insightly logo"
+                            style="height: 33px; width: auto; display: block; object-fit: contain;"
+                          />
+                          <img
+                            v-else-if="n === 4"
+                            src="https://commons.wikimedia.org/wiki/Special:FilePath/Pipedrive_logo.svg"
+                            alt="Pipedrive logo"
+                            style="height: 56px; width: auto; display: block; object-fit: contain; filter: brightness(0) invert(1);"
+                          />
+                          <img
+                            v-else-if="n === 5"
+                            src="https://cdn.builder.io/api/v1/image/assets%2F5aeb07ce25f84dbc869290880d07b71e%2F3019387748a04b48af354bc9f50e69b2?format=webp&width=800"
+                            alt="Salesforce logo"
+                            style="height: 56px; width: auto; display: block; object-fit: contain;"
+                          />
+                          <img
+                            v-else-if="n === 6"
+                            src="https://cdn.builder.io/api/v1/image/assets%2F5aeb07ce25f84dbc869290880d07b71e%2Fc76e447676844822add4c32826ad616f?format=webp&width=800"
+                            alt="SugarCRM logo"
+                            style="height: 28px; width: auto; display: block; object-fit: contain;"
+                          />
+                          <img
+                            v-else-if="n === 7"
+                            src="https://cdn.builder.io/api/v1/image/assets%2F5aeb07ce25f84dbc869290880d07b71e%2Ffeb76e03801644de813c9e6913bb9fc7?format=webp&width=800"
+                            alt="Zendesk logo"
+                            style="height: 28px; width: auto; display: block; object-fit: contain;"
+                          />
+                          <img
+                            v-else
+                            src="https://cdn.builder.io/api/v1/image/assets%2F5aeb07ce25f84dbc869290880d07b71e%2F711ac6df51024c5c9eabc4321b5595a1?format=webp&width=800"
+                            alt="Zoho logo"
+                            style="height: calc(28px * 4 / 3); width: auto; display: block; object-fit: contain; background: transparent;"
+                          />
+                        </Button>
+                      </div>
+                    </template>
+                  </Card>
                 </div>
-                <Card class="w-full" :pt="{ root: { style: { background: 'var(--p-surface-800)', border: '1px solid var(--p-surface-600)', borderRadius: '8px', height: 'calc(13rem - 20px)', display: 'flex', flexDirection: 'column' } }, body: { style: { flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' } } }">
-                  <template #title>
-                    <div style="padding-bottom: 10px;">Connect your CRM</div>
-                  </template>
-                  <template #content>
-                    <div class="grid grid-cols-4 w-full h-full items-center justify-items-center" style="column-gap: 18px; row-gap: 6px;">
-                      <Button
-                        v-for="n in 8"
-                        :key="n"
-                        text
-                        class="p-0"
-                        :pt="{ root: { style: { background: 'transparent', border: 'none', padding: 0 } } }"
-                        :aria-label="n === 1 ? 'Connect Follow Up Boss' : n === 2 ? 'Connect HubSpot' : n === 3 ? 'Connect Insightly' : n === 4 ? 'Connect Pipedrive' : n === 5 ? 'Connect Salesforce' : n === 6 ? 'Connect SugarCRM' : n === 7 ? 'Connect Zendesk' : 'Connect Zoho'"
-                        @click="n === 1 ? openCrmModal('Follow Up Boss') : n === 2 ? openCrmModal('HubSpot') : n === 3 ? openCrmModal('Insightly') : n === 4 ? openCrmModal('Pipedrive') : n === 5 ? openCrmModal('Salesforce') : n === 6 ? openCrmModal('SugarCRM') : n === 7 ? openCrmModal('Zendesk') : openCrmModal('Zoho')"
-                      >
-                        <img
-                          v-if="n === 1"
-                          src="https://cdn.builder.io/api/v1/image/assets%2F5aeb07ce25f84dbc869290880d07b71e%2Fe999ed7796124b4ba95e483edf6cc182?format=webp&width=800"
-                          alt="Follow Up Boss logo"
-                          style="height: 28px; width: auto; display: block; object-fit: contain;"
-                        />
-                        <img
-                          v-else-if="n === 2"
-                          src="https://cdn.builder.io/api/v1/image/assets%2F5aeb07ce25f84dbc869290880d07b71e%2Fe1e0d2b2dedf4f5c99650544aa5db11f?format=webp&width=800"
-                          alt="HubSpot logo"
-                          style="height: 28px; width: auto; display: block; object-fit: contain;"
-                        />
-                        <img
-                          v-else-if="n === 3"
-                          src="https://cdn.builder.io/api/v1/image/assets%2F5aeb07ce25f84dbc869290880d07b71e%2F12a89d7381b9422bb8e5b31e99815f59?format=webp&width=800"
-                          alt="Insightly logo"
-                          style="height: 33px; width: auto; display: block; object-fit: contain;"
-                        />
-                        <img
-                          v-else-if="n === 4"
-                          src="https://commons.wikimedia.org/wiki/Special:FilePath/Pipedrive_logo.svg"
-                          alt="Pipedrive logo"
-                          style="height: 56px; width: auto; display: block; object-fit: contain; filter: brightness(0) invert(1);"
-                        />
-                        <img
-                          v-else-if="n === 5"
-                          src="https://cdn.builder.io/api/v1/image/assets%2F5aeb07ce25f84dbc869290880d07b71e%2F3019387748a04b48af354bc9f50e69b2?format=webp&width=800"
-                          alt="Salesforce logo"
-                          style="height: 56px; width: auto; display: block; object-fit: contain;"
-                        />
-                        <img
-                          v-else-if="n === 6"
-                          src="https://cdn.builder.io/api/v1/image/assets%2F5aeb07ce25f84dbc869290880d07b71e%2Fc76e447676844822add4c32826ad616f?format=webp&width=800"
-                          alt="SugarCRM logo"
-                          style="height: 28px; width: auto; display: block; object-fit: contain;"
-                        />
-                        <img
-                          v-else-if="n === 7"
-                          src="https://cdn.builder.io/api/v1/image/assets%2F5aeb07ce25f84dbc869290880d07b71e%2Ffeb76e03801644de813c9e6913bb9fc7?format=webp&width=800"
-                          alt="Zendesk logo"
-                          style="height: 28px; width: auto; display: block; object-fit: contain;"
-                        />
-                        <img
-                          v-else
-                          src="https://cdn.builder.io/api/v1/image/assets%2F5aeb07ce25f84dbc869290880d07b71e%2F711ac6df51024c5c9eabc4321b5595a1?format=webp&width=800"
-                          alt="Zoho logo"
-                          style="height: calc(28px * 4 / 3); width: auto; display: block; object-fit: contain; background: transparent;"
-                        />
-                      </Button>
-                    </div>
-                  </template>
-                </Card>
+                <div class="mt-2 flex justify-end">
+                  <Button text severity="secondary" label="Change selection" @click="selectedInteraction = null" />
+                </div>
               </div>
             </div>
           </div>
@@ -1120,6 +1126,7 @@ const showYesterdayNoAnswerCta = ref<boolean>(false)
 const showTodayFollowupsCta = ref<boolean>(false)
 const showHighAttemptsCta = ref<boolean>(false)
 const showEmailDraftsCta = ref<boolean>(false)
+const selectedInteraction = ref<'upload' | 'crm' | null>(null)
 const emailTemplates = ref<Array<{ label: string; value: string }>>([
   { label: 'Polite Check-in', value: 'Polite Check-in' },
   { label: 'We Missed You', value: 'We Missed You' },
