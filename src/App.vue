@@ -125,7 +125,7 @@
               </template>
             </div>
 
-            <!-- File Upload for Returning Users - now embedded in chat message instead -->
+            <!-- Interaction content (file upload/CRM) moved to panel above chat input -->
 
 
           </div>
