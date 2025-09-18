@@ -2693,7 +2693,7 @@ const getPlaceholderText = (): string => {
   } else if (waitingForNotesInput.value && showDialer.value && !showContinueQueueButton.value) {
     return 'Enter notes...'
   } else {
-    return 'Reply to AI Dialer...' // Static text everywhere else
+    return 'Reply to Marcus...' // Static text everywhere else
   }
 }
 
