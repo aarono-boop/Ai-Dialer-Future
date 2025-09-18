@@ -50,8 +50,11 @@
                         </div>
                         <Card class="w-full" :pt="{ root: { style: { background: 'var(--p-surface-800)', border: '1px solid var(--p-surface-600)', borderRadius: '8px', height: 'calc(13rem - 20px)', display: 'flex', flexDirection: 'column', order: 1 } }, body: { style: { flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' } } }">
                           <template #title>
-                            <div style="padding-bottom: 10px;">Connect your CRM</div>
-                          </template>
+                      <div class="flex items-center justify-between" style="padding-bottom: 10px;">
+                        <span>Connect your CRM</span>
+                        <Button text severity="secondary" icon="pi pi-times" aria-label="Close selection" @click="selectedInteraction = null" />
+                      </div>
+                    </template>
                           <template #content>
                             <div class="grid grid-cols-4 w-full h-full items-center justify-items-center" style="column-gap: 18px; row-gap: 6px;">
                               <Button
@@ -159,7 +162,8 @@
                 <Button label="Connect your CRM" icon="pi pi-database" severity="primary" class="w-full" @click="selectedInteraction = 'crm'" />
               </div>
               <div v-else>
-                <div v-if="selectedInteraction === 'upload'" class="w-full">
+                <div v-if="selectedInteraction === 'upload'" class="w-full relative">
+                  <Button text severity="secondary" icon="pi pi-times" aria-label="Close selection" class="absolute top-2 right-2" @click="selectedInteraction = null" />
                   <FileUpload
                     height="calc(8.6667rem - 20px)"
                     :no-top-margin="true"
@@ -171,7 +175,10 @@
                 <div v-else class="w-full">
                   <Card class="w-full" :pt="{ root: { style: { background: 'var(--p-surface-800)', border: '1px solid var(--p-surface-600)', borderRadius: '8px', height: 'calc(13rem - 20px)', display: 'flex', flexDirection: 'column' } }, body: { style: { flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' } } }">
                     <template #title>
-                      <div style="padding-bottom: 10px;">Connect your CRM</div>
+                      <div class="flex items-center justify-between" style="padding-bottom: 10px;">
+                        <span>Connect your CRM</span>
+                        <Button text severity="secondary" icon="pi pi-times" aria-label="Close selection" @click="selectedInteraction = null" />
+                      </div>
                     </template>
                     <template #content>
                       <div class="grid grid-cols-4 w-full h-full items-center justify-items-center" style="column-gap: 18px; row-gap: 6px;">
@@ -236,9 +243,6 @@
                       </div>
                     </template>
                   </Card>
-                </div>
-                <div class="mt-2 flex justify-end">
-                  <Button text severity="secondary" label="Change selection" @click="selectedInteraction = null" />
                 </div>
               </div>
             </div>
