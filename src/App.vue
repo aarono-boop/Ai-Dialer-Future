@@ -1109,8 +1109,6 @@ const showRegularConnectedMessages = (contact: any): void => {
   // Wait 3 seconds then show objection handling (only if AI Coach is still enabled)
   setTimeout(() => {
     if (aiCoachEnabled.value) {
-      addAIMessageWithTyping(AI_RESPONSES.OBJECTION_RESPONSE)
-      scrollToBottom()
       const objectionLine = "I'm already working with another agent."
       openTeleprompt(objectionLine, contact.name)
     }
