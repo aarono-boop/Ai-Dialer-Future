@@ -872,12 +872,13 @@
     />
 
     <!-- Pricing Page -->
-    <PricingPage
-      v-if="showPricingPage"
-      @upgrade-selected="handleUpgradeSelected"
-      @show-payment="showPaymentFromPricing"
-      @close="closePricingPage"
-    />
+    <div v-if="currentPage === 'pricing'" class="ml-16">
+      <PricingPage
+        @upgrade-selected="handleUpgradeSelected"
+        @show-payment="showPaymentFromPricing"
+        @close="closePricingPage"
+      />
+    </div>
 
     <!-- Payment Page -->
     <PaymentPage
@@ -1119,7 +1120,6 @@ const hasUploadedFile = ref<boolean>(false)
 const showSignupButtons = ref<boolean>(false)
 const showTermsModal = ref<boolean>(false)
 const showAccountCreation = ref<boolean>(false)
-const showPricingPage = ref<boolean>(false)
 const showPaymentPage = ref<boolean>(false)
 const showMicSpeakerCheck = ref<boolean>(false)
 const audioCheckPassed = ref<boolean>(false)
@@ -3761,8 +3761,8 @@ const handleTermsCancel = () => {
 
 const handleTermsAgree = () => {
   closeTermsModal()
-  // Show pricing page after terms agreement
-  showPricingPage.value = true
+  // Navigate to dedicated pricing page
+  currentPage.value = 'pricing'
   // Ensure pricing page is brought into view and focused
   nextTick(() => {
     const pricingEl = document.getElementById('pricing-page')
@@ -3776,23 +3776,20 @@ const handleTermsAgree = () => {
 
 // Pricing Page Methods
 const closePricingPage = () => {
-  showPricingPage.value = false
+  currentPage.value = 'main'
 }
 
 const showPaymentFromPricing = () => {
-  showPricingPage.value = false
   showPaymentPage.value = true
 }
 
 const closePaymentPage = () => {
   showPaymentPage.value = false
-  showPricingPage.value = true
 }
 
 const handlePurchaseCompleted = () => {
   // Close payment page and complete signup flow
   showPaymentPage.value = false
-  showPricingPage.value = false
   currentPage.value = 'main'
   isSignedIn.value = true
   isReturningUser.value = false // This is a new user
