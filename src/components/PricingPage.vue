@@ -1,5 +1,5 @@
 <template>
-  <div id="pricing-page" class="ml-16 min-h-screen bg-slate-900 text-white overflow-y-auto pricing-page-background">
+  <div id="pricing-page" class="min-h-screen bg-slate-900 text-white overflow-y-auto pricing-page-background">
 
     <!-- Main Content -->
     <main class="flex flex-col items-center px-6 py-16 max-w-4xl mx-auto">
