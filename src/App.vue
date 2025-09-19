@@ -644,6 +644,14 @@
             </div>
           </Dialog>
 
+          <TelepromptModal
+            :visible="showTeleprompt"
+            :objection="telepromptObjection"
+            v-model:script="telepromptScript"
+            @close="showTeleprompt = false"
+            @apply="applyTeleprompt"
+          />
+
           </div>
         </div>
 
@@ -941,6 +949,7 @@ import CoachCarousel from './components/CoachCarousel.vue'
 import CoachDashboard from './components/CoachDashboard.vue'
 import StudentDashboard from './components/StudentDashboard.vue'
 import MicSpeakerCheck from './components/modals/MicSpeakerCheck.vue'
+import TelepromptModal from './components/modals/TelepromptModal.vue'
 
 // PrimeVue Components (adding Button)
 import Button from 'primevue/button'
@@ -1102,6 +1111,8 @@ const showRegularConnectedMessages = (contact: any): void => {
     if (aiCoachEnabled.value) {
       addAIMessageWithTyping(AI_RESPONSES.OBJECTION_RESPONSE)
       scrollToBottom()
+      const objectionLine = "I'm already working with another agent."
+      openTeleprompt(objectionLine, contact.name)
     }
   }, 3000)
 }
@@ -1185,6 +1196,35 @@ const showLoadNewFileButton = ref<boolean>(false)
 
 // Prompt Library state
 const showPromptLibrary = ref<boolean>(false)
+
+// Teleprompter state for objection handling
+const showTeleprompt = ref<boolean>(false)
+const telepromptObjection = ref<string>('')
+const telepromptScript = ref<string>('')
+
+const buildRecommendedResponse = (objection: string, contactName: string, coachId: string): string => {
+  const coachTone = coachId === 'jordan-stupar'
+    ? 'confident and concise'
+    : 'consultative and direct'
+  return [
+    `Hey ${contactName}, totally get that. A lot of our best clients started while working with someone else.`,
+    `Quick question—what’s one thing you wish they did better?` ,
+    '',
+    'I can keep this simple: if I can improve that one area without disrupting what’s already working, would you be open to a quick side-by-side comparison? It’ll take 2 minutes.',
+    '',
+    `If it’s not clearly better, we won’t move forward. Sound fair? (delivered in a ${coachTone} tone)`
+  ].join('\n')
+}
+
+const openTeleprompt = (objection: string, contactName: string) => {
+  telepromptObjection.value = objection
+  telepromptScript.value = buildRecommendedResponse(objection, contactName, coachParameter.value)
+  showTeleprompt.value = true
+}
+
+const applyTeleprompt = () => {
+  showTeleprompt.value = false
+}
 const favoritePrompts = ref<string[]>([])
 const isFavorite = (p: string): boolean => favoritePrompts.value.includes(p)
 const toggleFavorite = (p: string): void => {
