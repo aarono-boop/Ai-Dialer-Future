@@ -12,7 +12,7 @@
         @click="$emit('go-home')"
         text
         class="flex items-center gap-3 p-0"
-        aria-label="Return to ARKON home page"
+        aria-label="Return to AI Dialer home page"
         tabindex="1"
       >
         <svg
@@ -37,10 +37,10 @@
           :class="isV7 ? '' : 'bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent'"
           :style="isV7 ? { color: 'var(--p-primary-color)' } : {}"
           aria-hidden="true"
-        >ARKON</span>
+        >AI Dialer</span>
       </Button>
       
-      <div class="text-gray-400 font-light italic" aria-label="ARKON tagline">
+      <div class="text-gray-400 font-light italic" aria-label="AI Dialer tagline">
         Your AI assisted dialer
       </div>
       
@@ -211,8 +211,8 @@ button:focus-visible {
   outline-offset: 2px !important;
 }
 
-/* ARKON logo button styling */
-button[aria-label="Return to ARKON home page"]:focus-visible {
+/* AI Dialer logo button styling */
+button[aria-label="Return to AI Dialer home page"]:focus-visible {
   outline: 2px solid #60a5fa !important;
   outline-offset: 2px !important;
   border-radius: 4px !important;

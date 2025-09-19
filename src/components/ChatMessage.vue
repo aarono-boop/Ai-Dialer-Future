@@ -2,11 +2,11 @@
   <div 
     :class="['flex items-start mb-4', message.type === 'user' ? 'justify-end' : 'justify-start']"
     role="group"
-    :aria-label="`${message.type === 'user' ? 'User' : 'ARKON AI'} message`"
+    :aria-label="`${message.type === 'user' ? 'User' : 'AI Dialer AI'} message`"
   >
     <div v-if="message.type === 'ai'" class="flex gap-[10px] items-start w-full">
       <div class="flex items-start justify-center flex-shrink-0 pt-1" role="img" :aria-label="getAvatarLabel()">
-        <!-- Dynamic Coach Avatar when coach is set and not an ARKON AI system message -->
+        <!-- Dynamic Coach Avatar when coach is set and not an AI Dialer AI system message -->
         <template v-if="shouldUseCoachAvatar() && currentCoach">
           <img
             v-if="currentCoach.avatarUrl"
@@ -23,13 +23,15 @@
             {{ getCoachInitials(currentCoach.displayName) }}
           </div>
         </template>
-        <!-- Default ARKON AI Avatar -->
-        <div
+        <!-- Default AI Dialer AI Avatar -->
+        <Avatar
           v-else
-          class="ai-avatar-gradient"
+          icon="pi pi-sparkles"
+          shape="circle"
+          size="normal"
+          :style="{ width: '26px', height: '26px', backgroundColor: 'var(--p-primary-color)', color: 'white' }"
           aria-hidden="true"
-          :style="aiAvatarStyle"
-        ></div>
+        />
       </div>
       <div :class="getMessageWidth()" class="flex flex-col">
         <div
@@ -135,6 +137,7 @@ import { useCoaches } from '../composables/useCoaches'
 import Button from 'primevue/button'
 import Dialog from 'primevue/dialog'
 import Textarea from 'primevue/textarea'
+import Avatar from 'primevue/avatar'
 
 // Types
 interface Message {
@@ -243,7 +246,7 @@ const getAvatarLabel = (): string => {
   if (shouldUseCoachAvatar() && currentCoach.value) {
     return `${currentCoach.value.displayName} avatar`
   }
-  return 'ARKON AI avatar'
+  return 'AI Dialer AI avatar'
 }
 
 // Process message content to extract video information
@@ -357,15 +360,6 @@ const stopTypingAnimation = (): void => {
   isTyping.value = false
 }
 
-const isV7 = computed(() => new URLSearchParams(window.location.search).get('v7') === 'true')
-
-const aiAvatarStyle = computed(() => ({
-  width: '26px',
-  height: '26px',
-  background: isV7.value ? 'var(--p-primary-color)' : 'linear-gradient(135deg, #60a5fa 0%, #7b68ee 100%)',
-  mask: "url('https://cdn.builder.io/api/v1/image/assets%2F5aeb07ce25f84dbc869290880d07b71e%2F2b49ccc7e5f74919a9a706fa2916dd90?format=webp&width=800') center/contain no-repeat",
-  WebkitMask: "url('https://cdn.builder.io/api/v1/image/assets%2F5aeb07ce25f84dbc869290880d07b71e%2F2b49ccc7e5f74919a9a706fa2916dd90?format=webp&width=800') center/contain no-repeat"
-}))
 
 // Lifecycle
 onMounted(() => {
@@ -380,7 +374,7 @@ onUnmounted(() => {
 
 // Method to determine if coach avatar should be used
 const shouldUseCoachAvatar = (): boolean => {
-  // Always use ARKON avatar if AI coaching is disabled
+  // Always use AI Dialer avatar if AI coaching is disabled
   if (props.aiCoachEnabled === false) {
     return false
   }
@@ -390,11 +384,11 @@ const shouldUseCoachAvatar = (): boolean => {
     return false
   }
 
-  // Check if this is an ARKON AI system message that should always use ARKON avatar
+  // Check if this is an AI Dialer AI system message that should always use AI Dialer avatar
   const messageText = props.message.content.join(' ')
   const isArkonSystemMessage =
-    messageText.includes('Welcome to ARKON') ||
-    messageText.includes('ARKON AI') ||
+    messageText.includes('Welcome to AI Dialer') ||
+    messageText.includes('AI Dialer AI') ||
     messageText.includes('Drop your contact file here') ||
     messageText.includes('Drag and drop your contact file') ||
     messageText.includes('Dialer activated') ||
@@ -421,7 +415,7 @@ const shouldUseCoachAvatar = (): boolean => {
     messageText.includes('Connecting you to your first contact') ||
     messageText.includes('Resuming call queue')
 
-  // Use ARKON avatar for system messages, coach avatar for coaching content
+  // Use AI Dialer avatar for system messages, coach avatar for coaching content
   return !isArkonSystemMessage
 }
 

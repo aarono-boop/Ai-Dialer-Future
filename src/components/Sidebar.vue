@@ -12,7 +12,7 @@
     <button
       class="flex items-center justify-center p-2 hover:bg-gray-800 rounded-lg transition-colors cursor-pointer bg-transparent border-none"
       @click="handleHomeClick"
-      aria-label="Return to ARKON home page"
+      aria-label="Return to AI Dialer home page"
       type="button"
       tabindex="1"
       v-tooltip.right="'Home'"

@@ -17,9 +17,26 @@
           </div>
         </div>
         <div class="flex items-center gap-2">
-          <Dropdown v-model="selectedRange" :options="ranges" optionLabel="label" optionValue="value" class="w-40" />
+          <InputText v-model="studentSearch" placeholder="Search Student" aria-label="Search Student" class="w-56" />
+          <Dropdown
+            v-model="selectedRange"
+            :options="ranges"
+            optionLabel="label"
+            optionValue="value"
+            class="w-40 mic-like-dropdown"
+            variant="filled"
+            appendTo="body"
+            :pt="{
+              root: { style: { background: 'var(--p-surface-800)', border: '1px solid rgba(255,255,255,0.12)', borderRadius: '6px', padding: '0.5rem' } },
+              panel: { class: 'mic-dropdown-panel', style: { background: 'var(--p-surface-800)', border: '1px solid rgba(255,255,255,0.12)' } },
+              overlay: { class: 'mic-dropdown-panel', style: { background: 'var(--p-surface-800)', border: '1px solid rgba(255,255,255,0.12)' } },
+              content: { class: 'mic-dropdown-content', style: { background: 'var(--p-surface-800)', padding: '0.25rem' } },
+              list: { class: 'mic-dropdown-list', style: { background: 'var(--p-surface-800)' } },
+              items: { class: 'mic-dropdown-list', style: { background: 'var(--p-surface-800)' } },
+              item: { class: 'mic-dropdown-item hover:bg-white/10', style: { padding: '0.5rem 0.75rem' } }
+            }"
+          />
           <Button label="Export" icon="pi pi-download" severity="secondary" size="small" @click="exportReport" />
-          <Button label="Back to App" icon="pi pi-arrow-left" severity="secondary" size="small" text @click="goBack" />
         </div>
       </div>
 
@@ -30,7 +47,7 @@
             <div class="flex items-center gap-3">
               <div class="w-9 h-9 bg-gray-700 rounded-lg flex items-center justify-center"><i class="pi pi-wallet text-blue-300"></i></div>
               <div>
-                <p class="text-gray-400 text-xs">Monthly Earnings</p>
+                <p class="text-gray-400 text-xs">Monthly Earnings<span v-if="selectedRangeLabel"> ({{ selectedRangeLabel }})</span></p>
                 <p class="text-2xl font-bold">{{ currency(monthlyEarnings) }}</p>
               </div>
             </div>
@@ -42,8 +59,8 @@
             <div class="flex items-center gap-3">
               <div class="w-9 h-9 bg-gray-700 rounded-lg flex items-center justify-center"><i class="pi pi-calendar text-cyan-300"></i></div>
               <div>
-                <p class="text-gray-400 text-xs">Appointments Set (Mo.)</p>
-                <p class="text-2xl font-bold">{{ appointments }}</p>
+                <p class="text-gray-400 text-xs">Appointments Set<span v-if="selectedRangeLabel"> ({{ selectedRangeLabel }})</span></p>
+                <p class="text-2xl font-bold">{{ appointments.toLocaleString() }}</p>
               </div>
             </div>
           </template>
@@ -53,8 +70,8 @@
             <div class="flex items-center gap-3">
               <div class="w-9 h-9 bg-gray-700 rounded-lg flex items-center justify-center"><i class="pi pi-user-plus text-emerald-300"></i></div>
               <div>
-                <p class="text-gray-400 text-xs">New Students (Mo.)</p>
-                <p class="text-2xl font-bold">{{ newStudents }}</p>
+                <p class="text-gray-400 text-xs">New Students<span v-if="selectedRangeLabel"> ({{ selectedRangeLabel }})</span></p>
+                <p class="text-2xl font-bold">{{ newStudents.toLocaleString() }}</p>
               </div>
             </div>
           </template>
@@ -66,7 +83,7 @@
               <div class="w-9 h-9 bg-gray-700 rounded-lg flex items-center justify-center"><i class="pi pi-user text-teal-300"></i></div>
               <div>
                 <p class="text-gray-400 text-xs">Total Students</p>
-                <p class="text-2xl font-bold">{{ activeStudents }}</p>
+                <p class="text-2xl font-bold">{{ activeStudents.toLocaleString() }}</p>
               </div>
             </div>
           </template>
@@ -74,82 +91,82 @@
       </div>
 
       <!-- Revenue Trend and Attention -->
-      <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
-        <Card class="bg-gray-800 border-gray-700 lg:col-span-2">
-          <template #title>
-            <div class="flex items-center gap-2"><i class="pi pi-chart-line"></i><span>Revenue Trends (6 Months)</span></div>
-          </template>
-          <template #content>
-            <Chart type="line" :data="revenueChartData" :options="revenueChartOptions" class="w-full" style="width: 100%; height: 16rem;" />
-          </template>
-        </Card>
-        <Card class="bg-gray-800 border-gray-700">
-          <template #title>
-            <div class="flex items-center gap-2"><i class="pi pi-clipboard"></i><span>Coaching Actions</span></div>
-          </template>
-          <template #content>
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-y-4 gap-x-4 lg:gap-x-[36px]">
+        <div class="lg:col-span-2 space-y-2">
+          <div class="flex items-center gap-2 px-1"><i class="pi pi-chart-line"></i><span>Revenue Trends<span v-if="selectedRangeLabel"> ({{ selectedRangeLabel }})</span></span></div>
+          <div class="bg-gray-700 border border-gray-700 rounded-xl p-3 h-64">
+            <Chart type="line" :data="revenueChartData" :options="revenueChartOptions" class="w-full" style="width: 100%; height: 100%;" />
+          </div>
+        </div>
+        <div class="space-y-2">
+          <div class="flex items-center gap-2 px-1"><i class="pi pi-clipboard"></i><span>Coaching Actions</span></div>
+          <div class="bg-gray-700 border border-gray-700 rounded-xl p-3 h-64 overflow-y-auto">
             <div class="space-y-3">
               <div class="flex items-center justify-between bg-gray-700 rounded p-3">
                 <div class="flex items-center gap-2"><i class="pi pi-calendar text-blue-300"></i><span>Schedule Group Session</span></div>
-                <Button label="Schedule" icon="pi pi-arrow-right" size="small" @click="noop" />
+                <Button label="Schedule" icon="pi pi-arrow-right" size="small" severity="secondary" class="w-28" @click="noop" />
               </div>
               <div class="flex items-center justify-between bg-gray-700 rounded p-3">
                 <div class="flex items-center gap-2"><i class="pi pi-video text-purple-300"></i><span>Send Video Message to All</span></div>
-                <Button label="Send" icon="pi pi-send" size="small" @click="noop" />
+                <Button label="Send" icon="pi pi-send" size="small" severity="secondary" class="w-28" @click="noop" />
               </div>
               <div class="flex items-center justify-between bg-gray-700 rounded p-3">
                 <div class="flex items-center gap-2"><i class="pi pi-file-edit text-green-300"></i><span>Update Coaching Scripts</span></div>
-                <Button label="Update" icon="pi pi-pencil" size="small" @click="noop" />
+                <Button label="Update" icon="pi pi-pencil" size="small" severity="secondary" class="w-28" @click="noop" />
               </div>
             </div>
-          </template>
-        </Card>
+          </div>
+        </div>
       </div>
 
       <!-- Leaderboard and Actions -->
-      <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
-        <Card class="bg-gray-800 border-gray-700 lg:col-span-2">
-          <template #title>
-            <div class="flex items-center justify-between">
-              <div class="flex items-center gap-2"><i class="pi pi-trophy"></i><span>Student Performance Leaderboard</span></div>
-              <Button icon="pi pi-share-alt" label="Share" size="small" text @click="openShare" />
-            </div>
-          </template>
-          <template #content>
-            <DataTable :value="leaderboard" size="large" class="text-sm" :pt="{ headerRow: { class: 'h-12' }, bodyRow: { class: 'h-14' } }">
-              <Column field="rank" header="#" style="width: 50px" headerClass="py-6 px-5" bodyClass="py-6 px-5" />
-              <Column header="Student" headerClass="py-6 px-5" bodyClass="py-6 px-5">
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-y-4 gap-x-4 lg:gap-x-[36px]">
+        <div class="lg:col-span-2 space-y-2">
+          <div class="flex items-center justify-between px-1">
+            <div class="flex items-center gap-2"><i class="pi pi-trophy"></i><span>Student Performance Leaderboard</span></div>
+            <Button icon="pi pi-share-alt" label="Share" size="small" text @click="openShare" />
+          </div>
+          <div class="bg-gray-700 border border-gray-700 rounded-xl p-0 overflow-hidden">
+            <DataTable :value="filteredLeaderboard" size="large" >
+              <Column field="rank" header="#" style="width: 50px" />
+              <Column header="Avatar">
                 <template #body="{ data }">
-                  <div class="flex items-center gap-2">
-                    <Avatar :image="getAvatarUrl(data.name)" shape="circle" style="width: 28px; height: 28px" />
-                    <span>{{ data.name }}</span>
-                  </div>
+                  <Avatar :image="getAvatarUrl(data.name)" shape="circle" style="width: 28px; height: 28px" />
                 </template>
               </Column>
-              <Column field="calls" headerClass="py-6 px-5" bodyClass="py-6 px-5" bodyStyle="text-align:right">
+              <Column field="name" header="Student" />
+              <Column field="subscription" header="Subscription">
+                <template #body="{ data }">
+                  <Badge :value="data.subscription" :severity="subscriptionSeverity(data.subscription)" />
+                </template>
+              </Column>
+              <Column field="calls" bodyStyle="text-align:right">
                 <template #header>
                   <div class="w-full text-right">Calls</div>
                 </template>
               </Column>
-              <Column field="conversions" headerClass="py-6 px-5" bodyClass="py-6 px-5" bodyStyle="text-align:right">
+              <Column field="answerRate" bodyStyle="text-align:right">
                 <template #header>
-                  <div class="w-full text-right">Appointments Set</div>
+                  <div class="w-full text-right whitespace-nowrap">Answer Rate</div>
+                </template>
+                <template #body="{ data }">{{ (data.answerRate * 100).toFixed(1) }}%</template>
+              </Column>
+              <Column field="appointments" bodyStyle="text-align:right">
+                <template #header>
+                  <div class="w-full text-right">Appointments</div>
                 </template>
               </Column>
-              <Column headerClass="py-6 px-5" bodyClass="py-6 px-5" bodyStyle="text-align:right">
+              <Column field="followUps" bodyStyle="text-align:right">
                 <template #header>
-                  <div class="w-full text-right">Conversion %</div>
+                  <div class="w-full text-right">Follow-ups</div>
                 </template>
-                <template #body="{ data }">{{ (data.conversions / Math.max(1, data.calls) * 100).toFixed(1) }}%</template>
               </Column>
             </DataTable>
-          </template>
-        </Card>
-        <Card class="bg-gray-800 border-gray-700">
-          <template #title>
-            <div class="flex items-center gap-2"><i class="pi pi-bell"></i><span>Students Requiring Attention</span></div>
-          </template>
-          <template #content>
+          </div>
+        </div>
+        <div class="mt-5 space-y-2">
+          <div class="flex items-center gap-2 px-1"><i class="pi pi-bell"></i><span>Students Requiring Attention</span></div>
+          <div class="bg-gray-700 border border-gray-700 rounded-xl p-3">
             <div class="space-y-3">
               <div v-for="s in studentsNeedingAttention" :key="s.name" class="flex items-center justify-between bg-gray-700/60 rounded px-3 py-2">
                 <div class="flex items-center gap-2 min-w-0">
@@ -160,11 +177,11 @@
                     <p class="text-xs text-red-300 truncate">{{ s.reason }}</p>
                   </div>
                 </div>
-                <Button label="Intervene" size="small" text severity="danger" @click="noop" />
+                <Button label="Intervene" size="small" severity="secondary" class="w-28" @click="noop" />
               </div>
             </div>
-          </template>
-        </Card>
+          </div>
+        </div>
       </div>
 
       <!-- Share Top Performers Modal -->
@@ -211,6 +228,8 @@ import Dialog from 'primevue/dialog'
 import Checkbox from 'primevue/checkbox'
 import Textarea from 'primevue/textarea'
 import Avatar from 'primevue/avatar'
+import Badge from 'primevue/badge'
+import InputText from 'primevue/inputtext'
 import { useCoaches } from '../composables/useCoaches'
 
 const props = defineProps<{ coachName?: string | null }>()
@@ -255,6 +274,8 @@ const ranges = [
   { label: 'Year to date', value: 'ytd' }
 ]
 const selectedRange = ref('30d')
+const selectedRangeLabel = computed(() => ranges.find(r => r.value === selectedRange.value)?.label || '')
+const studentSearch = ref('')
 
 // Deterministic seed from coach name
 const seed = computed(() => {
@@ -268,16 +289,115 @@ const rand = (min:number, max:number, m:number=997) => {
   return Math.round(min + (max - min) * r)
 }
 
-const monthlyEarnings = computed(() => rand(82000, 138000, 941))
-const appointments = computed(() => rand(3200, 8200, 877))
+const baseMonthlyEarnings = computed(() => rand(82000, 138000, 941))
+const baseAppointments = computed(() => rand(3200, 8200, 877))
 const activeStudents = computed(() => rand(1200, 4200, 883))
-const newStudents = computed(() => Math.max(100, Math.round(activeStudents.value * 0.08)))
+const baseNewStudents = computed(() => Math.max(100, Math.round(activeStudents.value * 0.08)))
 
-// Revenue trend (6 months)
-const months = computed(() => Array.from({ length: 6 }, (_, i) => new Date(new Date().setMonth(new Date().getMonth() - (5 - i))).toLocaleString(undefined, { month: 'short' })))
-const revenueSeries = computed(() => months.value.map((_, i) => 60000 + i * 8000 + ((seed.value % 5) * 1500)))
+const daysSinceJan1 = computed(() => {
+  const start = new Date(new Date().getFullYear(), 0, 1).getTime()
+  const now = Date.now()
+  return Math.max(1, Math.round((now - start) / 86400000))
+})
+const rangeFactor = computed(() => {
+  switch (selectedRange.value) {
+    case '90d': return 3
+    case 'ytd': return Math.max(1, Math.round(daysSinceJan1.value / 30))
+    default: return 1 // '30d'
+  }
+})
+
+const monthlyEarnings = computed(() => Math.round(baseMonthlyEarnings.value * rangeFactor.value))
+const appointments = computed(() => Math.round(baseAppointments.value * rangeFactor.value))
+const newStudents = computed(() => Math.round(baseNewStudents.value * rangeFactor.value))
+
+// Revenue trend reflects selected time range
+const revenueLabels = computed(() => {
+  const range = selectedRange.value
+  if (range === 'ytd') {
+    const now = new Date()
+    const monthsCount = now.getMonth() + 1 // Jan=0
+    return Array.from({ length: monthsCount }, (_, i) => new Date(now.getFullYear(), i, 1).toLocaleString(undefined, { month: 'short' }))
+  }
+  const days = range === '90d' ? 90 : 30
+  const labels: string[] = []
+  for (let i = days - 1; i >= 0; i--) {
+    const d = new Date()
+    d.setDate(d.getDate() - i)
+    labels.push(d.toLocaleString(undefined, { month: 'short', day: 'numeric' }))
+  }
+  return labels
+})
+
+const revenueSeries = computed(() => {
+  const n = revenueLabels.value.length
+  const total = monthlyEarnings.value
+  if (n <= 0 || total <= 0) return []
+  const isMonthly = selectedRange.value === 'ytd'
+
+  // Build an upward-biased weight curve with limited dips
+  const rampGain = isMonthly ? 1.0 : (selectedRange.value === '90d' ? 1.6 : 1.2)
+  const noiseAmp = isMonthly ? 0.06 : 0.10
+  const weights: number[] = []
+  for (let i = 0; i < n; i++) {
+    const t = n > 1 ? i / (n - 1) : 1
+    const base = 1 + rampGain * t
+    const noiseUnit = ((((seed.value + i * 17) % 101) - 50) / 50) // -1..1 deterministic
+    const seasonal = isMonthly
+      ? 0.15 * Math.sin((i + (seed.value % 3)) * Math.PI / 3)
+      : 0.10 * Math.sin((i + (seed.value % 5)) * Math.PI / 7)
+    const w = Math.max(0.05, base * (1 + noiseAmp * noiseUnit) * (1 + seasonal))
+    weights.push(w)
+  }
+
+  // Enforce mostly increasing series with a few controlled dips
+  const allowedDips = Math.max(1, Math.floor(n * 0.08))
+  const maxDrop = 0.07 // at most 7% drop when a dip is allowed
+  const minIncrease = 0.005 // ensure tiny growth when dips not allowed
+  let dipsUsed = 0
+  for (let i = 1; i < n; i++) {
+    if (weights[i] < weights[i - 1]) {
+      if (dipsUsed < allowedDips) {
+        // Allow a small dip, capped by maxDrop
+        weights[i] = Math.max(weights[i], weights[i - 1] * (1 - maxDrop))
+        dipsUsed++
+      } else {
+        // Force an increase
+        weights[i] = Math.max(weights[i], weights[i - 1] * (1 + minIncrease))
+      }
+    }
+  }
+
+  // Normalize to the requested total and round to integers
+  const sumW = weights.reduce((a, b) => a + b, 0)
+  let series = weights.map(w => Math.max(0, Math.round(w * (total / Math.max(1e-6, sumW)))))
+
+  // Adjust rounding diff while preserving the upward bias
+  let diff = total - series.reduce((a, b) => a + b, 0)
+  let guard = n * 5
+  while (diff !== 0 && guard-- > 0) {
+    if (diff > 0) {
+      // Add to the tail to keep it increasing
+      series[n - 1] += 1
+      diff--
+    } else {
+      // Subtract from the tail if it does not break monotonicity
+      let j = n - 1
+      while (j > 0 && (series[j] - 1) < series[j - 1]) j--
+      if (series[j] > 0) {
+        series[j] -= 1
+        diff++
+      } else {
+        break
+      }
+    }
+  }
+
+  return series
+})
+
 const revenueChartData = computed(() => ({
-  labels: months.value,
+  labels: revenueLabels.value,
   datasets: [
     {
       label: 'Revenue',
@@ -285,27 +405,76 @@ const revenueChartData = computed(() => ({
       borderColor: '#60a5fa',
       backgroundColor: 'rgba(96,165,250,0.2)',
       fill: true,
-      tension: 0.35,
-      pointRadius: 0
+      cubicInterpolationMode: 'monotone',
+      tension: 0.4,
+      pointRadius: 2
     }
   ]
 }))
 const revenueChartOptions = { maintainAspectRatio: false,
   responsive: true,
-  plugins: { legend: { display: false } },
+  interaction: { mode: 'index', intersect: false, axis: 'x' },
+  plugins: {
+    legend: { display: false },
+    tooltip: {
+      intersect: false,
+      displayColors: false,
+      callbacks: {
+        label: (context: any) => {
+          const label = (context.dataset && context.dataset.label) ? context.dataset.label : 'Revenue'
+          const v = typeof context.parsed?.y === 'number' ? context.parsed.y : Number(context.formattedValue || 0)
+          return `${label}: $${Number(v).toLocaleString()}`
+        }
+      }
+    }
+  },
+  elements: { point: { hitRadius: 20, hoverRadius: 6 } },
   scales: {
     x: { ticks: { color: '#9CA3AF' }, grid: { display: false } },
     y: { ticks: { color: '#9CA3AF' }, grid: { color: 'rgba(255,255,255,0.05)' } }
   }
 }
 
-const leaderboard = computed(() => Array.from({length: 8}, (_, i) => ({
-  rank: i + 1,
-  name: ['Alex Riley','Samantha Chen','Marcus Bell','Jessica Vazquez','Noah Green','Emma Brooks','Liam Carter','Mia Patel'][i],
-  calls: 900 + ((seed.value + i) % 600),
-  conversions: 60 + ((seed.value + i) % 80),
-  score: 50 + ((seed.value + i) % 50)
-})))
+const baseLeaderboard = computed(() => Array.from({length: 8}, (_, i) => {
+  const name = ['Alex Riley','Samantha Chen','Marcus Bell','Jessica Vazquez','Noah Green','Emma Brooks','Liam Carter','Mia Patel'][i]
+  const calls = 900 + ((seed.value + i) % 600)
+  const appointments = 60 + ((seed.value + i) % 80)
+  const answerRate = Math.min(0.95, Math.max(0.05, appointments / Math.max(1, calls)))
+  const followUps = 10 + ((seed.value + i) % 20)
+  const subs = ['Standard','Premium','Platinum'][(seed.value + i) % 3] as 'Standard' | 'Premium' | 'Platinum'
+  return {
+    rank: i + 1,
+    name,
+    subscription: subs,
+    calls,
+    answerRate,
+    appointments,
+    followUps
+  }
+}))
+
+const leaderboard = computed(() => baseLeaderboard.value.map((s, i) => {
+  const jitterSeed = (selectedRange.value === '90d' ? 17 : selectedRange.value === 'ytd' ? 29 : 11)
+  const jitter = 1 + ((((seed.value + i * 13 + jitterSeed) % 7) - 3) / 100) // ±3%
+  const calls = Math.max(1, Math.round(s.calls * rangeFactor.value * jitter))
+  const appointments = Math.round(calls * s.answerRate)
+  const followUps = Math.round(Math.max(5, appointments * 0.25))
+  return {
+    rank: s.rank,
+    name: s.name,
+    subscription: s.subscription,
+    calls,
+    answerRate: appointments / Math.max(1, calls),
+    appointments,
+    followUps
+  }
+}))
+
+const filteredLeaderboard = computed(() => {
+  const q = studentSearch.value.trim().toLowerCase()
+  if (!q) return leaderboard.value
+  return leaderboard.value.filter(s => s.name.toLowerCase().includes(q))
+})
 
 const studentsNeedingAttention = computed(() => {
   const reasons = ['Low Answer Rate: 22%','Declining Call Volume: -15%','Poor Conversion: 1.2%','Not Logging In: 5 days ago']
@@ -358,4 +527,12 @@ const copyShareText = async () => {
 }
 
 const noop = () => {}
+
+const subscriptionSeverity = (level: 'Standard' | 'Premium' | 'Platinum') => {
+  switch (level) {
+    case 'Platinum': return 'info'
+    case 'Premium': return 'success'
+    default: return 'secondary'
+  }
+}
 </script>

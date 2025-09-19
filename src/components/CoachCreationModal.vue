@@ -88,7 +88,7 @@
           placeholder="Leave empty to use default message format"
         />
         <small class="text-gray-400">
-          Default: "Welcome to ARKON! I'm your AI calling assistant, enhanced with [Coach Name]'s proven methodologies."
+          Default: "Welcome to AI Dialer! I'm your AI calling assistant, enhanced with [Coach Name]'s proven methodologies."
         </small>
       </div>
 
@@ -103,15 +103,13 @@
               :alt="formData.displayName"
               class="w-[26px] h-[26px] rounded-full object-cover"
             />
-            <div
+            <Avatar
               v-else
-              class="ai-avatar-gradient w-[26px] h-[26px]"
-              style="
-                background: linear-gradient(135deg, #60a5fa 0%, #7b68ee 100%);
-                mask: url('https://cdn.builder.io/api/v1/image/assets%2F5aeb07ce25f84dbc869290880d07b71e%2F2b49ccc7e5f74919a9a706fa2916dd90?format=webp&width=800') center/contain no-repeat;
-                -webkit-mask: url('https://cdn.builder.io/api/v1/image/assets%2F5aeb07ce25f84dbc869290880d07b71e%2F2b49ccc7e5f74919a9a706fa2916dd90?format=webp&width=800') center/contain no-repeat;
-              "
-            ></div>
+              icon="pi pi-sparkles"
+              shape="circle"
+              size="normal"
+              :style="{ width: '26px', height: '26px', backgroundColor: 'var(--p-primary-color)', color: 'white' }"
+            />
           </div>
           <div class="bg-gray-800/90 border border-white/20 rounded-lg p-3 text-sm">
             <div v-html="previewMessage"></div>
@@ -144,6 +142,7 @@ import Dialog from 'primevue/dialog'
 import InputText from 'primevue/inputtext'
 import Textarea from 'primevue/textarea'
 import Button from 'primevue/button'
+import Avatar from 'primevue/avatar'
 import type { CoachCreateData } from '../types/coach'
 import { generateCoachId, extractYouTubeVideoId } from '../config/coaches'
 
@@ -191,13 +190,13 @@ const previewMessage = computed(() => {
   if (!formData.value.displayName) return ''
   
   let message = formData.value.customMessage || 
-    `Welcome to <strong>ARKON</strong>! I'm your AI calling assistant, enhanced with <strong>${formData.value.displayName}'s</strong> proven methodologies.`
+    `Welcome to <strong>AI Dialer</strong>! I'm your AI calling assistant, enhanced with <strong>${formData.value.displayName}'s</strong> proven methodologies.`
   
   if (extractedVideoId.value) {
     message += `<br><br><div style="padding: 8px; background: #374151; border-radius: 4px; color: #9ca3af; font-size: 12px;">📹 Video will be embedded here</div>`
   }
   
-  message += `<br><br>Drop your contact file here or connect to your CRM and I'll show you exactly who's most likely to pick up right now using ${formData.value.displayName}'s approach.`
+  message += `<br>I’ll show you exactly who’s most likely to pick up right now. Lets get some contacts loaded!`
   
   return message
 })
