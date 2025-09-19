@@ -3763,6 +3763,15 @@ const handleTermsAgree = () => {
   closeTermsModal()
   // Show pricing page after terms agreement
   showPricingPage.value = true
+  // Ensure pricing page is brought into view and focused
+  nextTick(() => {
+    const pricingEl = document.getElementById('pricing-page')
+    if (pricingEl) {
+      pricingEl.scrollIntoView({ behavior: 'smooth', block: 'start' })
+      const upgradeBtn = pricingEl.querySelector('button.p-button') as HTMLElement | null
+      upgradeBtn?.focus()
+    }
+  })
 }
 
 // Pricing Page Methods
