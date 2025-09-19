@@ -1,5 +1,5 @@
 <template>
-  <div class="fixed inset-0 min-h-screen bg-slate-900 text-white z-50 overflow-y-auto pricing-page-background">
+  <div class="ml-16 min-h-screen bg-slate-900 text-white overflow-y-auto pricing-page-background">
     <!-- Header -->
     <header class="flex items-center justify-between px-6 py-4 border-b border-slate-700">
       <div class="flex items-center gap-3">
