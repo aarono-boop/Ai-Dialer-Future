@@ -31,16 +31,6 @@
             <i class="pi pi-book" style="color: var(--p-blue-400);"></i>
             <span class="font-medium">Recommended response</span>
           </div>
-          <div class="flex items-center gap-2">
-            <Button
-              size="small"
-              severity="secondary"
-              outlined
-              icon="pi pi-copy"
-              label="Copy"
-              @click="copyScript"
-            />
-          </div>
         </div>
         <div :style="{ background: 'var(--p-surface-800)', border: '1px solid var(--p-surface-600)', padding: '12px', borderRadius: '6px', minHeight: '10rem' }">
           <TelepromptScript
@@ -112,12 +102,6 @@ const handleAutoApply = () => {
     handleApply()
     autoCloseTimer = null
   }, 2000)
-}
-
-const copyScript = async () => {
-  try {
-    await navigator.clipboard.writeText(internalScript.value)
-  } catch {}
 }
 
 onUnmounted(() => {
