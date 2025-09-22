@@ -650,6 +650,7 @@
             v-model:script="telepromptScript"
             @close="showTeleprompt = false"
             @apply="applyTeleprompt"
+            @reject="rejectTeleprompt"
           />
 
           </div>
@@ -1234,6 +1235,11 @@ const openTeleprompt = (objection: string, contactName: string) => {
 const applyTeleprompt = () => {
   showTeleprompt.value = false
   addUserMessage('<i class="pi pi-check-circle"></i> Objection acknowledged.')
+}
+
+const rejectTeleprompt = () => {
+  showTeleprompt.value = false
+  addUserMessage('Prospect objection handling denied.')
 }
 const favoritePrompts = ref<string[]>([])
 const isFavorite = (p: string): boolean => favoritePrompts.value.includes(p)
