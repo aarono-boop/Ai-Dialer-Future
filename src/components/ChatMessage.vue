@@ -60,14 +60,6 @@
         <div v-if="!message.typing || !isTyping" class="ai-actions mt-1 flex items-center justify-end gap-0" role="group" aria-label="AI message actions">
           <Button
             text
-            icon="pi pi-copy"
-            aria-label="Copy message"
-            v-tooltip.bottom="'Copy message'"
-            @click="handleCopy"
-            :style="{ padding: '6px' }"
-          />
-          <Button
-            text
             icon="pi pi-thumbs-up"
             aria-label="Give positive feedback"
             v-tooltip.bottom="'Give positive feedback'"
