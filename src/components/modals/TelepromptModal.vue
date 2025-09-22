@@ -67,7 +67,6 @@
 import { ref, watch } from 'vue'
 import Dialog from 'primevue/dialog'
 import Button from 'primevue/button'
-import Textarea from 'primevue/textarea'
 import TelepromptScript from '../TelepromptScript.vue'
 
 const props = defineProps<{
