@@ -42,12 +42,15 @@
             />
           </div>
         </div>
-        <Textarea
-          v-model="internalScript"
-          rows="8"
-          class="w-full"
-          :pt="{ root: { style: { background: 'var(--p-surface-800)', border: '1px solid var(--p-surface-600)', color: 'var(--p-surface-0)', padding: '12px', fontSize: '0.95rem', lineHeight: '1.5' } } }"
-        />
+        <div :style="{ background: 'var(--p-surface-800)', border: '1px solid var(--p-surface-600)', padding: '12px', borderRadius: '6px', minHeight: '10rem' }">
+          <TelepromptScript
+            :text="internalScript"
+            :ms-per-word="200"
+            :pre-delay-ms="0"
+            :char-ms="5"
+            @complete="handleAutoApply"
+          />
+        </div>
       </div>
     </div>
 
