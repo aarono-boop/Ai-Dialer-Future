@@ -1,5 +1,5 @@
 <template>
-  <div 
+  <div
     :class="['flex items-start mb-4', message.type === 'user' ? 'justify-end' : 'justify-start']"
     role="group"
     :aria-label="`${message.type === 'user' ? 'User' : 'AI Dialer AI'} message`"
@@ -46,6 +46,13 @@
               :video-id="item.videoId"
               :autoplay="item.autoplay || false"
               title="Coach Introduction Video"
+            />
+            <TelepromptScript
+              v-else-if="item.type === 'teleprompt' && item.content"
+              :text="item.content"
+              :ms-per-word="200"
+              :pre-delay-ms="2000"
+              @complete="onTelepromptComplete"
             />
           </template>
           <slot name="additional-content"></slot>
@@ -110,7 +117,7 @@
         </Dialog>
       </div>
     </div>
-    
+
     <div v-else class="flex gap-4 items-start flex-row-reverse" data-message-type="user">
       <div
         class="w-[23px] h-[23px] rounded-full bg-gradient-to-br from-blue-400 to-purple-500 flex items-center justify-center flex-shrink-0"
@@ -133,6 +140,7 @@
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted, computed } from 'vue'
 import YouTubeVideo from './YouTubeVideo.vue'
+import TelepromptScript from './TelepromptScript.vue'
 import { useCoaches } from '../composables/useCoaches'
 import Button from 'primevue/button'
 import Dialog from 'primevue/dialog'
@@ -162,6 +170,7 @@ const emit = defineEmits<{
   aiFeedback: [{ vote: 'up' | 'down', message: Message }]
   aiPositiveFeedback: [{ message: Message, details: string }]
   aiNegativeFeedback: [{ message: Message, details: string }]
+  telepromptAnimationComplete: []
 }>()
 
 const selectedVote = ref<'up' | 'down' | null>(null)
@@ -216,7 +225,7 @@ const cancelPositiveFeedback = () => {
 }
 
 const submitNegativeFeedback = () => {
-  emit('aiNegativeFeedback', { message: props.message, details: negativeFeedbackText.value.trim() })
+  emit('aiNegativeFeedback', { message: Message, details: negativeFeedbackText.value.trim() })
   showNegativeModal.value = false
 }
 
@@ -252,10 +261,21 @@ const getAvatarLabel = (): string => {
 // Process message content to extract video information
 const processedContent = computed(() => {
   const content = props.message.typing ? typedContent.value : props.message.content
-  const processedLines: Array<{type: 'text' | 'video', content: string, videoId?: string, autoplay?: boolean}> = []
+  const processedLines: Array<{type: 'text' | 'video' | 'teleprompt', content: string, videoId?: string, autoplay?: boolean}> = []
 
   content.forEach(line => {
-    const videoMatch = line.match(/<div class="coach-video-container" data-video-id="([^"]+)" data-autoplay="([^"]+)"><\/div>/)
+    // Teleprompt script detection
+    const teleMatch = line.match(/<div class=\"teleprompt-script\">([\s\S]*?)<\/div>/)
+    if (teleMatch) {
+      const beforeTele = line.substring(0, line.indexOf(teleMatch[0]))
+      const afterTele = line.substring(line.indexOf(teleMatch[0]) + teleMatch[0].length)
+      if (beforeTele.trim()) processedLines.push({ type: 'text', content: beforeTele })
+      processedLines.push({ type: 'teleprompt', content: teleMatch[1] })
+      if (afterTele.trim()) processedLines.push({ type: 'text', content: afterTele })
+      return
+    }
+
+    const videoMatch = line.match(/<div class=\"coach-video-container\" data-video-id=\"([^\"]+)\" data-autoplay=\"([^\"]+)\"><\/div>/)
 
     if (videoMatch) {
       // Split the line into parts before and after the video
@@ -287,6 +307,10 @@ const processedContent = computed(() => {
 
   return processedLines
 })
+
+const onTelepromptComplete = () => {
+  emit('telepromptAnimationComplete')
+}
 
 // Start typing animation
 const startTypingAnimation = (): void => {
