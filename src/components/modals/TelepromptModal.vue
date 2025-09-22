@@ -69,6 +69,7 @@ const emit = defineEmits<{
   (e: 'update:script', value: string): void
   (e: 'close'): void
   (e: 'apply'): void
+  (e: 'reject'): void
 }>()
 
 const internalVisible = ref(props.visible)
@@ -81,6 +82,7 @@ watch(internalVisible, v => { if (!v) { if (autoCloseTimer) { clearTimeout(autoC
 watch(internalScript, v => emit('update:script', v))
 
 const handleClose = () => {
+  emit('reject')
   internalVisible.value = false
 }
 
