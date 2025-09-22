@@ -1233,7 +1233,7 @@ const openTeleprompt = (objection: string, contactName: string) => {
 
 const applyTeleprompt = () => {
   showTeleprompt.value = false
-  addUserMessage('<i class="pi pi-check-circle"></i> Acknowledged — using the objection response now.')
+  addUserMessage('<i class="pi pi-check-circle"></i> Objection acknowledged.')
 }
 const favoritePrompts = ref<string[]>([])
 const isFavorite = (p: string): boolean => favoritePrompts.value.includes(p)
