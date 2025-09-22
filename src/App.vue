@@ -1161,6 +1161,22 @@ const verificationStep = ref<string>('default') // 'default', 'enter-phone', 'en
 const enteredPhoneNumber = ref<string>('')
 const showVerificationButtons = ref<boolean>(false)
 const phoneVerified = ref<boolean>(false) // Track if phone has been verified in this session
+
+// Pending teleprompt opening once animation completes
+const pendingTelepromptContactName = ref<string | null>(null)
+
+const handleTelepromptAnimationComplete = () => {
+  if (!aiCoachEnabled.value) return
+  const name = pendingTelepromptContactName.value
+  pendingTelepromptContactName.value = null
+  if (!name) return
+  setTimeout(() => {
+    if (aiCoachEnabled.value) {
+      const objectionLine = "I'm already working with another agent."
+      openTeleprompt(objectionLine, name)
+    }
+  }, 2000)
+}
 const showStartDialingButton = ref<boolean>(false)
 const showCallerIdChoiceButtons = ref<boolean>(false)
 const showDialer = ref<boolean>(false)
