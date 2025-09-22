@@ -64,7 +64,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch } from 'vue'
+import { ref, watch, onUnmounted } from 'vue'
 import Dialog from 'primevue/dialog'
 import Button from 'primevue/button'
 import TelepromptScript from '../TelepromptScript.vue'
@@ -83,10 +83,11 @@ const emit = defineEmits<{
 
 const internalVisible = ref(props.visible)
 const internalScript = ref(props.script)
+let autoCloseTimer: ReturnType<typeof setTimeout> | null = null
 
 watch(() => props.visible, v => internalVisible.value = v)
 watch(() => props.script, v => internalScript.value = v)
-watch(internalVisible, v => { if (!v) emit('close') })
+watch(internalVisible, v => { if (!v) { if (autoCloseTimer) { clearTimeout(autoCloseTimer); autoCloseTimer = null } ; emit('close') } })
 watch(internalScript, v => emit('update:script', v))
 
 const handleClose = () => {
@@ -94,12 +95,23 @@ const handleClose = () => {
 }
 
 const handleApply = () => {
+  if (autoCloseTimer) {
+    clearTimeout(autoCloseTimer)
+    autoCloseTimer = null
+  }
   emit('apply')
   internalVisible.value = false
 }
 
 const handleAutoApply = () => {
-  handleApply()
+  if (autoCloseTimer) {
+    clearTimeout(autoCloseTimer)
+    autoCloseTimer = null
+  }
+  autoCloseTimer = setTimeout(() => {
+    handleApply()
+    autoCloseTimer = null
+  }, 2000)
 }
 
 const copyScript = async () => {
@@ -107,4 +119,11 @@ const copyScript = async () => {
     await navigator.clipboard.writeText(internalScript.value)
   } catch {}
 }
+
+onUnmounted(() => {
+  if (autoCloseTimer) {
+    clearTimeout(autoCloseTimer)
+    autoCloseTimer = null
+  }
+})
 </script>
