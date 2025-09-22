@@ -46,8 +46,8 @@
 
     <template #footer>
       <div class="flex items-center justify-end gap-2 w-full">
-        <Button label="Dismiss" severity="secondary" @click="handleClose" />
-        <Button label="Use Response" icon="pi pi-check" @click="handleApply" />
+        <Button label="Rejected" severity="secondary" @click="handleClose" />
+        <Button label="Resolved" icon="pi pi-check" @click="handleApply" />
       </div>
     </template>
   </Dialog>
