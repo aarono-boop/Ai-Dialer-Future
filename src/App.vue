@@ -1221,7 +1221,7 @@ const buildRecommendedResponse = (objection: string, contactName: string, coachI
     '',
     'I can keep this simple: if I can improve that one area without disrupting what’s already working, would you be open to a quick side-by-side comparison? It’ll take 2 minutes.',
     '',
-    `If it’s not clearly better, we won’t move forward. Sound fair? (delivered in a ${coachTone} tone)`
+    `If it’s not clearly better, we won’t move forward. Sound fair?`
   ].join('\n')
 }
 
