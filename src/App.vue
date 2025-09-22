@@ -1100,19 +1100,14 @@ const showRegularConnectedMessages = (contact: any): void => {
     'Great! You\'re connected!',
     '<br>',
     'Script:',
-    '<span style="color: #fbbf24; font-style: italic;">[The AI learns the nuances of this coach\'s approach to generate contextual scripts that reflect their unique sales philosophy, language patterns, and proven conversation starters tailored to this specific prospect.]</span>'
+    '<div class="teleprompt-script">[The AI learns the nuances of this coach\'s approach to generate contextual scripts that reflect their unique sales philosophy, language patterns, and proven conversation starters tailored to this specific prospect.]</div>'
   ]
 
   addAIMessageWithTyping(combinedMessage)
   scrollToBottom()
 
-  // Wait 3 seconds then show objection handling (only if AI Coach is still enabled)
-  setTimeout(() => {
-    if (aiCoachEnabled.value) {
-      const objectionLine = "I'm already working with another agent."
-      openTeleprompt(objectionLine, contact.name)
-    }
-  }, 3000)
+  // Prepare to open objection modal after teleprompt animation completes
+  pendingTelepromptContactName.value = contact.name
 }
 
 // Reactive data
