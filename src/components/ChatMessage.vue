@@ -225,7 +225,7 @@ const cancelPositiveFeedback = () => {
 }
 
 const submitNegativeFeedback = () => {
-  emit('aiNegativeFeedback', { message: Message, details: negativeFeedbackText.value.trim() })
+  emit('aiNegativeFeedback', { message: props.message, details: negativeFeedbackText.value.trim() })
   showNegativeModal.value = false
 }
 
