@@ -68,6 +68,7 @@ import { ref, watch } from 'vue'
 import Dialog from 'primevue/dialog'
 import Button from 'primevue/button'
 import Textarea from 'primevue/textarea'
+import TelepromptScript from '../TelepromptScript.vue'
 
 const props = defineProps<{
   visible: boolean
@@ -96,6 +97,10 @@ const handleClose = () => {
 const handleApply = () => {
   emit('apply')
   internalVisible.value = false
+}
+
+const handleAutoApply = () => {
+  handleApply()
 }
 
 const copyScript = async () => {
