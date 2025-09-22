@@ -338,6 +338,17 @@ const startTypingAnimation = (): void => {
 
     const currentLine = props.message.content[lineIndex]
 
+    // If this line is the teleprompt container, show it instantly (handled by TelepromptScript) to avoid duplicate white typing
+    if (currentLine.includes('<div class="teleprompt-script">')) {
+      typedContent.value[lineIndex] = currentLine
+      lineIndex++
+      charIndex = 0
+      if (props.onTypingProgress) {
+        props.onTypingProgress()
+      }
+      return
+    }
+
     // Check if this line contains contact table content - if so, display it instantly
     if (charIndex === 0 && isContactTableContent(currentLine)) {
       typedContent.value[lineIndex] = currentLine
