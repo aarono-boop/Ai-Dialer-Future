@@ -27,7 +27,7 @@
 
       <!-- Description Text -->
       <p class="text-center text-slate-400 text-sm mb-6 leading-relaxed">
-        Create your ARKON account quickly and securely with Google.
+        Create your AI Dialer account quickly and securely with Google.
         We'll get you started with your AI calling assistant in seconds.
       </p>
 

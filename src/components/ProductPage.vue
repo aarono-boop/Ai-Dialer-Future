@@ -4,9 +4,9 @@
     <main class="max-w-4xl mx-auto px-6 py-16">
       <!-- Hero Section -->
       <section class="text-center mb-16">
-        <h1 class="text-5xl font-bold text-white mb-6">About ARKON</h1>
+        <h1 class="text-5xl font-bold text-white mb-6">About ARMOR® Ai Dialer</h1>
         <h2 class="text-2xl text-slate-300 leading-relaxed">
-          Stop Fighting Your Dialer. Start Connecting with ARKON.
+          Stop Fighting Your Dialer. Start Connecting with Ai Dialer.
         </h2>
         <p class="text-lg text-slate-400 mt-6 leading-relaxed">
           If you're tired of wrestling with complicated calling software that slows you down instead of speeding you up, you're in the right place.
@@ -51,7 +51,7 @@
         <div class="space-y-6">
           <div class="bg-slate-800 border border-slate-600 rounded-lg p-6">
             <p class="text-blue-400 font-semibold mb-2">"I need to call my leads today"</p>
-            <p class="text-slate-300">→ ARKON instantly prioritizes your contacts, shows you exactly who to call first, and tells you why.</p>
+            <p class="text-slate-300">→ Ai Dialer instantly prioritizes your contacts, shows you exactly who to call first, and tells you why.</p>
           </div>
           <div class="bg-slate-800 border border-slate-600 rounded-lg p-6">
             <p class="text-blue-400 font-semibold mb-2">"How am I doing?"</p>
@@ -59,7 +59,7 @@
           </div>
           <div class="bg-slate-800 border border-slate-600 rounded-lg p-6">
             <p class="text-blue-400 font-semibold mb-2">"I'm not sure who to call next"</p>
-            <p class="text-slate-300">→ ARKON analyzes your results and guides you to the prospects most likely to convert.</p>
+            <p class="text-slate-300">→ Ai Dialer analyzes your results and guides you to the prospects most likely to convert.</p>
           </div>
         </div>
       </section>
@@ -67,7 +67,7 @@
       <!-- Benefits Section -->
       <section class="mb-16">
         <h3 class="text-3xl font-bold text-white mb-8">Your Success is Our Success</h3>
-        <p class="text-lg text-slate-300 mb-8 leading-relaxed">With ARKON, you'll:</p>
+        <p class="text-lg text-slate-300 mb-8 leading-relaxed">With Ai Dialer, you'll:</p>
         <ul class="space-y-4 text-lg text-slate-300">
           <li class="flex items-start gap-3">
             <span class="text-green-400 mt-1">•</span>
@@ -91,7 +91,7 @@
       <!-- Target Audience Section -->
       <section class="mb-16">
         <h3 class="text-3xl font-bold text-white mb-8">Built for Sales Professionals Who Want Results</h3>
-        <p class="text-lg text-slate-300 mb-8 leading-relaxed">ARKON is perfect if you:</p>
+        <p class="text-lg text-slate-300 mb-8 leading-relaxed">Ai Dialer is perfect if you:</p>
         <ul class="space-y-4 text-lg text-slate-300">
           <li class="flex items-start gap-3">
             <span class="text-blue-400 mt-1">•</span>
@@ -120,14 +120,14 @@
           The result? A calling assistant that actually assists—guiding every decision to help you connect with more prospects and close more deals.
         </p>
         <p class="text-xl text-slate-300 leading-relaxed">
-          Ready to see what calling with intelligence feels like? Let ARKON show you how much more you can accomplish when your tools work as hard as you do.
+          Ready to see what calling with intelligence feels like? Let Ai Dialer show you how much more you can accomplish when your tools work as hard as you do.
         </p>
       </section>
 
       <!-- CTA Section -->
       <section class="text-center">
         <Button
-          label="Get Started with ARKON"
+          label="Get Started with Ai Dialer"
           severity="primary"
           size="large"
           class="px-8 py-4 font-semibold text-lg"
@@ -146,12 +146,12 @@ import Button from 'primevue/button'
 // Define emits
 defineEmits(['go-to-app'])
 
-// Handle tab key to create circular navigation back to ARKON logo
+// Handle tab key to create circular navigation back to Ai Dialer logo
 const handleTabKey = (event: KeyboardEvent) => {
-  // If not holding Shift (forward tab), focus ARKON logo
+  // If not holding Shift (forward tab), focus Ai Dialer logo
   if (!event.shiftKey) {
     event.preventDefault()
-    // Find and focus the ARKON logo button (tabindex="1")
+    // Find and focus the Ai Dialer logo button (tabindex="1")
     const arkonLogo = document.querySelector('[tabindex="1"]') as HTMLElement
     if (arkonLogo) {
       arkonLogo.focus()

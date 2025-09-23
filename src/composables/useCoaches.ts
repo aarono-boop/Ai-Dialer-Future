@@ -22,7 +22,7 @@ export const useCoaches = () => {
 
   const welcomeMessage = computed((): string => {
     if (!currentCoach.value) {
-      return 'Welcome to the ARMOR® AI Dialer, your AI calling assistant.<br><br>I’ll show you exactly who’s most likely to pick up right now. Lets get some contacts loaded!'
+      return "Hey there! Welcome to ARMOR® Ai Dialer. I'm Marcus, your Ai calling assistant. <br><br>To get started, upload your contact file below or connect your CRM and I'll organize your contacts based on who is most likely to pick up."
     }
     return generateCoachWelcomeMessage(currentCoach.value)
   })
@@ -66,7 +66,7 @@ export const useCoaches = () => {
       avatarUrl,
       websiteUrl: coachData.websiteUrl || undefined,
       highlights: coachData.highlights && coachData.highlights.length ? coachData.highlights.slice(0, 2) : undefined,
-      welcomeMessage: coachData.customMessage || `Welcome to <strong>ARKON</strong>! I'm your AI calling assistant, enhanced with <strong>${coachData.displayName}'s</strong> proven methodologies.`,
+      welcomeMessage: coachData.customMessage || `Welcome to <strong>AI Dialer</strong>! I'm your AI calling assistant, enhanced with <strong>${coachData.displayName}'s</strong> proven methodologies.`,
       isActive: true,
       createdBy: 'user',
       createdAt: new Date().toISOString()

@@ -39,18 +39,29 @@
         @change="onFileInputChange"
         class="hidden"
       />
+      <!-- Optional close button in top-right -->
+      <Button
+        v-if="props.closable"
+        text
+        severity="secondary"
+        icon="pi pi-times"
+        aria-label="Close selection"
+        class="upload-close-btn"
+        @click.stop="emit('close')"
+      />
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue'
+import Button from 'primevue/button'
 
 // Props
-const props = defineProps<{ height?: string; noTopMargin?: boolean }>()
+const props = defineProps<{ height?: string; noTopMargin?: boolean; closable?: boolean }>()
 
 // Define emits
-const emit = defineEmits(['trigger-upload', 'file-selected', 'file-dropped'])
+const emit = defineEmits(['trigger-upload', 'file-selected', 'file-dropped', 'close'])
 
 // Template refs
 const fileInput = ref<HTMLInputElement | null>(null)
@@ -161,6 +172,13 @@ defineExpose({
   color: var(--p-surface-0);
   font-size: 0.875rem;
   margin: 0;
+}
+
+/* Close button positioning */
+.upload-close-btn {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
 }
 
 /* Ensure the hidden input doesn't interfere */

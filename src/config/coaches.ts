@@ -8,7 +8,7 @@ export const initialCoaches: Record<string, Coach> = {
     displayName: 'Jordan Stupar',
     videoId: 'sthXVPIC8K0',
     avatarUrl: 'https://cdn.builder.io/api/v1/image/assets%2F5aeb07ce25f84dbc869290880d07b71e%2F3bddb1110d0949139407eb0dc708c7ff?format=webp&width=800',
-    welcomeMessage: 'Welcome to <strong>ARKON</strong>! I\'m your AI calling assistant, trained with <strong>Jordan Stupar\'s</strong> proven sales methodologies.',
+    welcomeMessage: 'Welcome to <strong>AI Dialer</strong>! I\'m your AI calling assistant, trained with <strong>Jordan Stupar\'s</strong> proven sales methodologies.',
     isActive: true,
     createdBy: 'user',
     createdAt: new Date().toISOString()
@@ -31,7 +31,7 @@ export const generateCoachWelcomeMessage = (coach: Coach): string => {
   }
 
   // Add the call-to-action
-  message += `<br><br>Drop your contact file here or connect to your CRM and I'll show you exactly who's most likely to pick up right now using ${coach.displayName}'s approach.`
+  message += `<br>I’ll show you exactly who’s most likely to pick up right now. Lets get some contacts loaded!`
 
   return message
 }

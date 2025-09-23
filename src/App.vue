@@ -1,6 +1,6 @@
 <template>
   <!-- Test change for PR functionality -->
-  <div class="min-h-screen text-white relative overflow-x-hidden dark" :class="showDialer ? 'dialer-active' : ''">
+  <div class="min-h-screen text-white relative overflow-x-hidden dark" :class="[{ 'bg-app-pattern': !(showCoachDashboard || showStudentDashboard), 'bg-gray-900': (showCoachDashboard || showStudentDashboard) }, showDialer ? 'dialer-active' : '']">
     
     <!-- Sidebar Navigation -->
     <Sidebar
@@ -34,7 +34,7 @@
                     <div v-if="showEmailDraftsCta && message.type === 'ai' && message.content.some(c => c.includes('What email drafts would you like use?'))" class="mt-3">
                       <Listbox v-model="selectedEmailTemplate" :options="emailTemplates" optionLabel="label" optionValue="value" class="w-full email-drafts-listbox" :pt="{ root: { style: { width: '100%' } } }" />
                     </div>
-                    <div v-if="!showCoachCarousel && ((index === 0 && !isSignedIn && welcomeTypingComplete) || (isSignedIn && showFileUploadForReturningUser && isReadyToUploadMessage(message, index)))" class="mt-5">
+                    <div v-if="false" class="mt-5">
                       <div class="flex flex-col gap-4 items-stretch">
                         <div class="w-full" style="order: 3;">
                           <FileUpload
@@ -50,8 +50,11 @@
                         </div>
                         <Card class="w-full" :pt="{ root: { style: { background: 'var(--p-surface-800)', border: '1px solid var(--p-surface-600)', borderRadius: '8px', height: 'calc(13rem - 20px)', display: 'flex', flexDirection: 'column', order: 1 } }, body: { style: { flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' } } }">
                           <template #title>
-                            <div style="padding-bottom: 10px;">Connect your CRM</div>
-                          </template>
+                      <div class="flex items-center justify-between" style="padding-bottom: 10px;">
+                        <span>Connect your CRM</span>
+                        <Button text severity="secondary" icon="pi pi-times" aria-label="Close selection" @click="selectedInteraction = null" />
+                      </div>
+                    </template>
                           <template #content>
                             <div class="grid grid-cols-4 w-full h-full items-center justify-items-center" style="column-gap: 18px; row-gap: 6px;">
                               <Button
@@ -125,7 +128,7 @@
               </template>
             </div>
 
-            <!-- File Upload for Returning Users - now embedded in chat message instead -->
+            <!-- Interaction content (file upload/CRM) moved to panel above chat input -->
 
 
           </div>
@@ -150,6 +153,101 @@
               </div>
             </template>
           </Dialog>
+
+          <!-- Interaction Panel: File Upload & CRM Connect -->
+          <div v-if="!showCoachCarousel && !showDialer && !hasUploadedFile && !crmConnected && ((welcomeTypingComplete && !isSignedIn) || (isSignedIn && showFileUploadForReturningUser))" class="mt-2 pt-5 flex justify-center">
+            <div class="w-[70%]">
+              <div v-if="!selectedInteraction" class="grid grid-cols-2 gap-3">
+                <Button label="Upload contacts" icon="pi pi-upload" severity="secondary" class="w-full" @click="selectedInteraction = 'upload'" />
+                <Button label="Connect your CRM" icon="pi pi-database" severity="primary" class="w-full" @click="selectedInteraction = 'crm'" />
+              </div>
+              <div v-else>
+                <div v-if="selectedInteraction === 'upload'" class="w-full">
+                  <FileUpload
+                    closable
+                    @close="selectedInteraction = null"
+                    height="calc(8.6667rem - 20px)"
+                    :no-top-margin="true"
+                    @trigger-upload="simulateFileUpload"
+                    @file-selected="onFileSelect"
+                    @file-dropped="simulateFileUpload"
+                  />
+                </div>
+                <div v-else class="w-full">
+                  <Card class="w-full" :pt="{ root: { style: { background: 'var(--p-surface-800)', border: '1px solid var(--p-surface-600)', borderRadius: '8px', height: 'calc(13rem - 20px)', display: 'flex', flexDirection: 'column' } }, body: { style: { flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' } } }">
+                    <template #title>
+                      <div class="flex items-center justify-between" style="padding-bottom: 10px;">
+                        <span>Connect your CRM</span>
+                        <Button text severity="secondary" icon="pi pi-times" aria-label="Close selection" @click="selectedInteraction = null" />
+                      </div>
+                    </template>
+                    <template #content>
+                      <div class="grid grid-cols-4 w-full h-full items-center justify-items-center" style="column-gap: 18px; row-gap: 6px;">
+                        <Button
+                          v-for="n in 8"
+                          :key="n"
+                          text
+                          class="p-0"
+                          :pt="{ root: { style: { background: 'transparent', border: 'none', padding: 0 } } }"
+                          :aria-label="n === 1 ? 'Connect Follow Up Boss' : n === 2 ? 'Connect HubSpot' : n === 3 ? 'Connect Insightly' : n === 4 ? 'Connect Pipedrive' : n === 5 ? 'Connect Salesforce' : n === 6 ? 'Connect SugarCRM' : n === 7 ? 'Connect Zendesk' : 'Connect Zoho'"
+                          @click="n === 1 ? openCrmModal('Follow Up Boss') : n === 2 ? openCrmModal('HubSpot') : n === 3 ? openCrmModal('Insightly') : n === 4 ? openCrmModal('Pipedrive') : n === 5 ? openCrmModal('Salesforce') : n === 6 ? openCrmModal('SugarCRM') : n === 7 ? openCrmModal('Zendesk') : openCrmModal('Zoho')"
+                        >
+                          <img
+                            v-if="n === 1"
+                            src="https://cdn.builder.io/api/v1/image/assets%2F5aeb07ce25f84dbc869290880d07b71e%2Fe999ed7796124b4ba95e483edf6cc182?format=webp&width=800"
+                            alt="Follow Up Boss logo"
+                            style="height: 28px; width: auto; display: block; object-fit: contain;"
+                          />
+                          <img
+                            v-else-if="n === 2"
+                            src="https://cdn.builder.io/api/v1/image/assets%2F5aeb07ce25f84dbc869290880d07b71e%2Fe1e0d2b2dedf4f5c99650544aa5db11f?format=webp&width=800"
+                            alt="HubSpot logo"
+                            style="height: 28px; width: auto; display: block; object-fit: contain;"
+                          />
+                          <img
+                            v-else-if="n === 3"
+                            src="https://cdn.builder.io/api/v1/image/assets%2F5aeb07ce25f84dbc869290880d07b71e%2F12a89d7381b9422bb8e5b31e99815f59?format=webp&width=800"
+                            alt="Insightly logo"
+                            style="height: 33px; width: auto; display: block; object-fit: contain;"
+                          />
+                          <img
+                            v-else-if="n === 4"
+                            src="https://commons.wikimedia.org/wiki/Special:FilePath/Pipedrive_logo.svg"
+                            alt="Pipedrive logo"
+                            style="height: 56px; width: auto; display: block; object-fit: contain; filter: brightness(0) invert(1);"
+                          />
+                          <img
+                            v-else-if="n === 5"
+                            src="https://cdn.builder.io/api/v1/image/assets%2F5aeb07ce25f84dbc869290880d07b71e%2F3019387748a04b48af354bc9f50e69b2?format=webp&width=800"
+                            alt="Salesforce logo"
+                            style="height: 56px; width: auto; display: block; object-fit: contain;"
+                          />
+                          <img
+                            v-else-if="n === 6"
+                            src="https://cdn.builder.io/api/v1/image/assets%2F5aeb07ce25f84dbc869290880d07b71e%2Fc76e447676844822add4c32826ad616f?format=webp&width=800"
+                            alt="SugarCRM logo"
+                            style="height: 28px; width: auto; display: block; object-fit: contain;"
+                          />
+                          <img
+                            v-else-if="n === 7"
+                            src="https://cdn.builder.io/api/v1/image/assets%2F5aeb07ce25f84dbc869290880d07b71e%2Ffeb76e03801644de813c9e6913bb9fc7?format=webp&width=800"
+                            alt="Zendesk logo"
+                            style="height: 28px; width: auto; display: block; object-fit: contain;"
+                          />
+                          <img
+                            v-else
+                            src="https://cdn.builder.io/api/v1/image/assets%2F5aeb07ce25f84dbc869290880d07b71e%2F711ac6df51024c5c9eabc4321b5595a1?format=webp&width=800"
+                            alt="Zoho logo"
+                            style="height: calc(28px * 4 / 3); width: auto; display: block; object-fit: contain; background: transparent;"
+                          />
+                        </Button>
+                      </div>
+                    </template>
+                  </Card>
+                </div>
+              </div>
+            </div>
+          </div>
 
           <!-- Action Buttons - positioned above chat input -->
           <div v-if="showActionButtons && !actionButtonsUsed" class="mt-2 pt-5 flex justify-center">
@@ -733,7 +831,7 @@
     </div>
 
     <!-- Coach Management Interface -->
-    <CoachManagement v-if="managementMode === 'admin' && currentPage === 'main' && !showCoachDashboard" />
+    <CoachManagement v-if="managementMode === 'admin' && currentPage === 'main' && !showCoachDashboard && !showStudentDashboard" />
 
     <!-- Coach Creation Page for create-coach URL -->
     <CoachCreationPage
@@ -774,12 +872,13 @@
     />
 
     <!-- Pricing Page -->
-    <PricingPage
-      v-if="showPricingPage"
-      @upgrade-selected="handleUpgradeSelected"
-      @show-payment="showPaymentFromPricing"
-      @close="closePricingPage"
-    />
+    <div v-if="currentPage === 'pricing'" class="ml-16">
+      <PricingPage
+        @upgrade-selected="handleUpgradeSelected"
+        @show-payment="showPaymentFromPricing"
+        @close="closePricingPage"
+      />
+    </div>
 
     <!-- Payment Page -->
     <PaymentPage
@@ -861,6 +960,7 @@ const isPracticeMode = ref<boolean>(false)
 // CRM sign-in modal state
 const showCrmModal = ref(false)
 const selectedCrmName = ref('HubSpot')
+const crmConnected = ref<boolean>(false)
 const crmEmail = ref('')
 const crmPassword = ref('')
 const openCrmModal = (name: string) => {
@@ -869,6 +969,7 @@ const openCrmModal = (name: string) => {
 }
 const connectCrm = () => {
   showCrmModal.value = false
+  crmConnected.value = true
   if (isSignedIn.value) {
     addAIMessageWithTyping(`You're now connected to <strong>${selectedCrmName.value}</strong>. We'll start analyzing your data.`)
     scrollToBottom()
@@ -893,7 +994,7 @@ const returnToCoachesSelection = (): void => {
     {
       type: 'ai',
       content: [
-        'Welcome to ARKON by PhoneBurner.<br><br>I\'m here to help you call with confidence and close more deals.<br><br>Choose your sales coach first - everything from your scripts to follow-up strategies will be tailored to their winning approach.'
+        'Welcome to AI Dialer by PhoneBurner.<br><br>I\'m here to help you call with confidence and close more deals.<br><br>Choose your sales coach first - everything from your scripts to follow-up strategies will be tailored to their winning approach.'
       ],
       typing: false
     }
@@ -1019,7 +1120,6 @@ const hasUploadedFile = ref<boolean>(false)
 const showSignupButtons = ref<boolean>(false)
 const showTermsModal = ref<boolean>(false)
 const showAccountCreation = ref<boolean>(false)
-const showPricingPage = ref<boolean>(false)
 const showPaymentPage = ref<boolean>(false)
 const showMicSpeakerCheck = ref<boolean>(false)
 const audioCheckPassed = ref<boolean>(false)
@@ -1033,6 +1133,7 @@ const showYesterdayNoAnswerCta = ref<boolean>(false)
 const showTodayFollowupsCta = ref<boolean>(false)
 const showHighAttemptsCta = ref<boolean>(false)
 const showEmailDraftsCta = ref<boolean>(false)
+const selectedInteraction = ref<'upload' | 'crm' | null>(null)
 const emailTemplates = ref<Array<{ label: string; value: string }>>([
   { label: 'Polite Check-in', value: 'Polite Check-in' },
   { label: 'We Missed You', value: 'We Missed You' },
@@ -1505,7 +1606,7 @@ const lastAIContains = (substr: string): boolean => {
 const updateWelcomeMessageTyping = (): void => {
   if (messages.value.length > 0 && messages.value[0].type === 'ai') {
     const welcomeMessage = messages.value[0]
-    if (welcomeMessage.content[0].includes('Welcome to <strong>ARKON</strong>') || welcomeMessage.content[0].includes('Drop your contact file here')) {
+    if (welcomeMessage.content[0].includes('Welcome to <strong>AI Dialer</strong>') || welcomeMessage.content[0].includes('Drop your contact file here')) {
       // Update typing property based on current user status
       welcomeMessage.typing = !isSignedIn.value && !isReturningUser.value
     }
@@ -1784,9 +1885,9 @@ const announceToScreenReader = (message: string) => {
   }
 }
 
-// Redirect focus from tab trap to ARKON logo
+// Redirect focus from tab trap to AI Dialer logo
 const redirectToArkonLogo = () => {
-  const arkonLogo = document.querySelector('button[aria-label="Return to ARKON home page"]') as HTMLElement
+  const arkonLogo = document.querySelector('button[aria-label="Return to AI Dialer home page"]') as HTMLElement
   if (arkonLogo) {
     arkonLogo.focus()
   }
@@ -1802,7 +1903,7 @@ const handleGoogleSignin = (): void => {
   // Remove initial long welcome bubble when returning
   messages.value = []
   // Show brief prior welcome bubble, then welcome-back bubble
-  addAIMessage('Welcome to the ARMOR® AI Dialer, your AI calling assistant.')
+  addAIMessage("Hey there! Welcome to ARMOR® Ai Dialer. I'm Marcus, your Ai calling assistant. <br><br>To get started, upload your contact file below or connect your CRM and I'll organize your contacts based on who is most likely to pick up.")
   addAIMessageWithTyping("Welcome back! You're signed in with Google.<br><br>What would you like to do?")
   // Do not prompt for upload; assume user already connected/uploaded previously
   showFileUploadForReturningUser.value = false
@@ -1832,7 +1933,7 @@ const handleLoginSuccess = (userData: any): void => {
   messages.value = []
 
   // Show brief prior welcome bubble, then welcome-back bubble
-  addAIMessage('Welcome to the ARMOR® AI Dialer, your AI calling assistant.')
+  addAIMessage("Hey there! Welcome to ARMOR® Ai Dialer. I'm Marcus, your Ai calling assistant. <br><br>To get started, upload your contact file below or connect your CRM and I'll organize your contacts based on who is most likely to pick up.")
   addAIMessage(`Welcome back, ${userData.name}!`)
   // Returning user: do not show upload prompt
   showFileUploadForReturningUser.value = false
@@ -2163,14 +2264,14 @@ const sendMessage = (message: string): void => {
 
     if (lowerMessage.includes('anything about arkon')) {
       addAIMessage([
-        '<i class="pi pi-rocket"></i> ARKON is PhoneBurner\'s revolutionary AI-powered dialer!',
+        '<i class="pi pi-rocket"></i> AI Dialer is PhoneBurner\'s revolutionary AI-powered dialer!',
         'It uses advanced algorithms to predict the best times to call prospects, automatically prioritizes your contact list, and helps you connect with more people in less time.',
         'Key features include smart scheduling, real-time connect predictions, and personalized calling strategies.',
-        'What specific aspect of ARKON would you like to know more about?'
+        'What specific aspect of AI Dialer would you like to know more about?'
       ])
     } else if (lowerMessage.includes('connected to more calls') || lowerMessage.includes('get connected')) {
       addAIMessage([
-        '<i class="pi pi-chart-line"></i> Great question! Here are ARKON\'s proven strategies to boost your connect rates:',
+        '<i class="pi pi-chart-line"></i> Great question! Here are AI Dialer\'s proven strategies to boost your connect rates:',
         '��� <strong>Smart Timing:</strong> Calls prospects when they\'re most likely to answer',
         '• <strong>Local Presence:</strong> Uses local numbers to increase pickup rates',
         '• <strong>Voicemail Drop:</strong> Leaves personalized messages when they don\'t answer',
@@ -2179,7 +2280,7 @@ const sendMessage = (message: string): void => {
       ])
     } else if (lowerMessage.includes('setup a demo') || lowerMessage.includes('demo')) {
       addAIMessage([
-        '<i class="pi pi-star"></i> I\'d love to show you ARKON in action!',
+        '<i class="pi pi-star"></i> I\'d love to show you AI Dialer in action!',
         'Let me set up a personalized demo where you can see:',
         '• Live contact scoring and prioritization',
         '• Real-time dialing with connect predictions',
@@ -2207,7 +2308,7 @@ const sendMessage = (message: string): void => {
     } else if (lowerMessage.includes('set a reminder') || lowerMessage.includes('reminder')) {
       addAIMessage([
         '<i class="pi pi-clock"></i> I\'ll help you set up smart reminders!',
-        'ARKON can remind you to:',
+        'AI Dialer can remind you to:',
         '• Follow up with specific prospects at optimal times',
         '• Call back prospects who didn\'t answer',
         '• Review and update your call notes',
@@ -2217,7 +2318,7 @@ const sendMessage = (message: string): void => {
     } else if (lowerMessage.includes('practice a call') || lowerMessage.includes('practice')) {
       addAIMessage([
         '<i class="pi pi-users"></i> Great idea! Call practice makes perfect.',
-        'ARKON\'s practice mode can help you:',
+        'AI Dialer\'s practice mode can help you:',
         '• Rehearse your opening pitch with AI feedback',
         '• Practice handling common objections',
         '��� Test different conversation flows',
@@ -2238,7 +2339,7 @@ const sendMessage = (message: string): void => {
         '<i class="pi pi-heart"></i> Why did the salesperson bring a ladder to work?',
         'Because they heard the job was about making <strong>high-level</strong> connections!',
         '',
-        'Speaking of connections, did you know ARKON users make 3x more meaningful connections than traditional dialers?',
+        'Speaking of connections, did you know AI Dialer users make 3x more meaningful connections than traditional dialers?',
         'Ready to elevate your calling game?'
       ])
     } else if (lowerMessage.includes('jenn')) {
@@ -2592,7 +2693,7 @@ const getPlaceholderText = (): string => {
   } else if (waitingForNotesInput.value && showDialer.value && !showContinueQueueButton.value) {
     return 'Enter notes...'
   } else {
-    return 'Reply to ARKON...' // Static text everywhere else
+    return 'Reply to Marcus...' // Static text everywhere else
   }
 }
 
@@ -3047,6 +3148,7 @@ onMounted(() => {
   const createCoach = urlParams.get('create-coach')
   const coachAdmin = urlParams.get('coach-admin')
   const coachDashboard = urlParams.get('coach-dashboard')
+  const studentDashboard = urlParams.get('student-dashboard')
 
   // Set coach if specified
   if (coach === 'all') {
@@ -3065,6 +3167,13 @@ onMounted(() => {
     setCurrentCoach(coachDashboard)
   }
 
+  // Show student dashboard if requested
+  if (studentDashboard) {
+    showStudentDashboard.value = true
+    studentCoachName.value = studentDashboard
+    setCurrentCoach(studentDashboard)
+  }
+
   // Set management mode based on URL parameters
   if (createCoach === 'true') {
     setManagementMode('create')
@@ -3078,7 +3187,7 @@ onMounted(() => {
   if (messages.value.length > 0 && messages.value[0].type === 'ai') {
     if (showCoachCarousel.value) {
       messages.value[0].content = [
-        'Welcome to ARKON by PhoneBurner.<br><br>I\'m here to help you call with confidence and close more deals.<br><br>Choose your sales coach first - everything from your scripts to follow-up strategies will be tailored to their winning approach.'
+        'Welcome to AI Dialer by PhoneBurner.<br><br>I\'m here to help you call with confidence and close more deals.<br><br>Choose your sales coach first - everything from your scripts to follow-up strategies will be tailored to their winning approach.'
       ]
     } else {
       messages.value[0].content = [getCoachWelcomeMessage.value]
@@ -3640,7 +3749,7 @@ const handleTermsCancel = () => {
   showActionButtons.value = false
   // Clear messages and show welcome message
   messages.value = []
-  addAIMessage('���� Welcome to ARKON! I\'m your AI calling assistant. I\'ll help you connect with more prospects and close more deals. What would you like to accomplish today?')
+  addAIMessage('���� Welcome to AI Dialer! I\'m your AI calling assistant. I\'ll help you connect with more prospects and close more deals. What would you like to accomplish today?')
 
   // Set focus context for header
   nextTick(() => {
@@ -3652,29 +3761,35 @@ const handleTermsCancel = () => {
 
 const handleTermsAgree = () => {
   closeTermsModal()
-  // Show pricing page after terms agreement
-  showPricingPage.value = true
+  // Navigate to dedicated pricing page
+  currentPage.value = 'pricing'
+  // Ensure pricing page is brought into view and focused
+  nextTick(() => {
+    const pricingEl = document.getElementById('pricing-page')
+    if (pricingEl) {
+      pricingEl.scrollIntoView({ behavior: 'smooth', block: 'start' })
+      const upgradeBtn = pricingEl.querySelector('button.p-button') as HTMLElement | null
+      upgradeBtn?.focus()
+    }
+  })
 }
 
 // Pricing Page Methods
 const closePricingPage = () => {
-  showPricingPage.value = false
+  currentPage.value = 'main'
 }
 
 const showPaymentFromPricing = () => {
-  showPricingPage.value = false
   showPaymentPage.value = true
 }
 
 const closePaymentPage = () => {
   showPaymentPage.value = false
-  showPricingPage.value = true
 }
 
 const handlePurchaseCompleted = () => {
   // Close payment page and complete signup flow
   showPaymentPage.value = false
-  showPricingPage.value = false
   currentPage.value = 'main'
   isSignedIn.value = true
   isReturningUser.value = false // This is a new user
@@ -3718,7 +3833,7 @@ const handleUpgradeSelected = () => {
   closePricingPage()
   isSignedIn.value = true
   showActionButtons.value = true
-  addAIMessage('�� Welcome to ARKON! Your account has been created successfully. Let\'s start your first smart calling session! What are you trying to accomplish?')
+  addAIMessage('�� Welcome to AI Dialer! Your account has been created successfully. Let\'s start your first smart calling session! What are you trying to accomplish?')
 
   // Ensure scroll happens after action buttons are rendered
   setTimeout(() => {
@@ -3736,7 +3851,7 @@ const handleAccountCreated = (accountData: any) => {
   isSignedIn.value = true
   showActionButtons.value = true
   updateWelcomeMessageTyping() // Update typing status for welcome message
-  addAIMessage('���� Welcome to ARKON! Your account has been created successfully. Let\'s start your first smart calling session! What are you trying to accomplish?')
+  addAIMessage('���� Welcome to AI Dialer! Your account has been created successfully. Let\'s start your first smart calling session! What are you trying to accomplish?')
 
   // Ensure scroll happens after action buttons are rendered
   setTimeout(() => {
@@ -3756,7 +3871,7 @@ const handleGoogleSignupFromAccount = () => {
     isSignedIn.value = true
     showActionButtons.value = true
     updateWelcomeMessageTyping() // Update typing status for welcome message
-    addAIMessage('����� Welcome to ARKON! Your account has been created successfully. Let\'s start your first smart calling session! What are you trying to accomplish?')
+    addAIMessage('������� Welcome to AI Dialer! Your account has been created successfully. Let\'s start your first smart calling session! What are you trying to accomplish?')
 
     // Ensure scroll happens after action buttons are rendered
   setTimeout(() => {

@@ -68,7 +68,7 @@ export const customTheme = definePreset(Aura, {
         borderRadius: '6px',
         paddingX: '0.75rem',
         paddingY: '0.5rem',
-        fontSize: '1rem',
+        fontSize: '.875rem',
         transition: 'all 0.5s ease-in-out'
       },
       icon: {

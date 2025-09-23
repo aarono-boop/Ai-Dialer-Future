@@ -6,6 +6,7 @@ import inputtext from './inputtext'
 import toggleswitch from './toggleswitch'
 import tooltip from './tooltip'
 import dropdown from './dropdown'
+import datatable from './datatable'
 
 // Vulcan7 brand preset: primary color #f3841c with an orange-based scale
 export const vulcan7Theme = definePreset(base, {
@@ -30,7 +31,8 @@ export const vulcan7Theme = definePreset(base, {
     inputtext,
     toggleswitch,
     tooltip,
-    dropdown
+    dropdown,
+    datatable
   }
 })
 

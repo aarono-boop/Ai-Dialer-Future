@@ -40,12 +40,12 @@ import Button from 'primevue/button'
 // Define emits
 const emit = defineEmits(['google-signin', 'show-signup'])
 
-// Handle tab key to create circular navigation back to ARKON logo
+// Handle tab key to create circular navigation back to AI Dialer logo
 const handleTabKey = (event: KeyboardEvent) => {
-  // If not holding Shift (forward tab), focus ARKON logo
+  // If not holding Shift (forward tab), focus AI Dialer logo
   if (!event.shiftKey) {
     event.preventDefault()
-    // Find and focus the ARKON logo button (tabindex="1")
+    // Find and focus the AI Dialer logo button (tabindex="1")
     const arkonLogo = document.querySelector('[tabindex="1"]') as HTMLElement
     if (arkonLogo) {
       arkonLogo.focus()
