@@ -61,7 +61,7 @@
     <Dialog v-model:visible="detailOpen" modal :style="{ width: '72rem', maxWidth: '95vw' }" :breakpoints="{ '960px': '95vw' }" :header="detailHeader">
       <div class="flex gap-4 items-stretch">
         <!-- Left: Tabs -->
-        <div class="flex-1 min-w-0">
+        <div class="flex-1 min-w-0" ref="leftPaneRef">
           <TabView>
             <TabPanel header="Overview">
               <div class="space-y-3">
@@ -145,7 +145,7 @@
         </div>
 
         <!-- Right: Assistant Pane -->
-        <div class="w-80 shrink-0 flex h-full">
+        <div class="w-80 shrink-0 flex h-full" ref="assistantPaneRef">
           <Card :pt="assistantPt" class="h-full flex flex-col w-full">
             <template #title>
               <div class="flex items-center justify-between">
@@ -180,7 +180,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+import { ref, computed, nextTick, onMounted, onBeforeUnmount, watch } from 'vue'
 import Button from 'primevue/button'
 import Card from 'primevue/card'
 import Badge from 'primevue/badge'
@@ -196,6 +196,8 @@ import { seedModules, computeStatus, type ModuleState, applyActions, type Status
 
 const modules = ref<ModuleState[]>(seedModules())
 const detailOpen = ref(false)
+const leftPaneRef = ref<HTMLElement | null>(null)
+const assistantPaneRef = ref<HTMLElement | null>(null)
 const selected = ref<ModuleState | null>(null)
 const statusFilter = ref<'all' | Status>('all')
 const sortBy = ref<'impact' | 'lastUpdated'>('impact')
@@ -367,6 +369,7 @@ function openDetail(m: ModuleState) {
   selected.value = JSON.parse(JSON.stringify(m))
   proposedActions.value = generateRecommendations(m)
   detailOpen.value = true
+  nextTick(() => syncAssistantHeight())
   assistantMessages.value = [
     `Diagnosed current state for ${m.name}.`,
     'I generated recommended actions with expected impact. Select what you want me to do and click Approve.',
@@ -461,4 +464,14 @@ const cardPt = {
 const assistantPt = {
   root: { style: { background: 'var(--p-surface-800)', border: '1px solid var(--p-surface-600)', borderRadius: '12px', height: '100%', display: 'flex', flexDirection: 'column' } },
 }
+
+function syncAssistantHeight() {
+  if (!detailOpen.value) return
+  const h = leftPaneRef.value?.offsetHeight || 0
+  if (assistantPaneRef.value) assistantPaneRef.value.style.height = h ? `${h}px` : ''
+}
+
+onMounted(() => window.addEventListener('resize', syncAssistantHeight))
+onBeforeUnmount(() => window.removeEventListener('resize', syncAssistantHeight))
+watch(detailOpen, (v) => { if (v) nextTick(() => syncAssistantHeight()) })
 </script>
