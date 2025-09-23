@@ -20,7 +20,7 @@
       </div>
 
       <!-- Cards Grid -->
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+      <div class="grid" :style="gridStyle">
         <Card v-for="m in filteredModules" :key="m.key" class="h-full" :pt="cardPt">
           <template #title>
             <div class="flex items-center justify-between gap-2">
