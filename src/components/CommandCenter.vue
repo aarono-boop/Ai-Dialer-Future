@@ -96,19 +96,13 @@
                   <div class="text-sm text-gray-300 font-medium">Proposed Actions</div>
                   <div class="bg-gray-800/70 border border-gray-700 rounded-lg p-3">
                     <div class="flex flex-col gap-2">
-                      <div v-for="(r, idx) in proposedActions" :key="idx" class="flex items-start justify-between">
-                        <div class="flex items-start gap-2">
-                          <Checkbox v-model="r.approved" :binary="true" :inputId="'rec-'+idx" />
-                          <label :for="'rec-'+idx" class="text-sm">
-                            <div class="font-medium">{{ r.title }}</div>
-                            <div class="text-gray-400">Impact: {{ r.impact }} • Risk: {{ r.risk }} • Time: {{ r.time }}</div>
-                          </label>
-                        </div>
-                        <Button text severity="secondary" icon="pi pi-eye" aria-label="View diff" @click="showDiff(r)" />
+                      <div v-for="(r, idx) in proposedActions" :key="idx" class="flex items-center gap-2">
+                        <Checkbox v-model="r.approved" :binary="true" :inputId="'rec-'+idx" />
+                        <label :for="'rec-'+idx" class="text-sm font-medium tracking-wide">{{ r.title }}</label>
                       </div>
                     </div>
                     <div class="flex items-center justify-end gap-2 mt-3">
-                      <Button label="Decline All" severity="secondary" @click="declineAll" />
+                      <Button label="Cancel" severity="secondary" @click="onCancelProposals" />
                       <Button label="Approve Selected" icon="pi pi-check" @click="approveSelected" :disabled="!approvedCount" />
                     </div>
                   </div>
@@ -290,71 +284,13 @@ function toRelative(ts: string) {
 const detailHeader = computed(() => selected.value ? selected.value.name : 'Module Details')
 
 // Proposed actions per module
-interface ProposedAction { title: string; impact: 'low' | 'medium' | 'high'; risk: 'low' | 'medium'; time: 'instant' | '5 min' | '15 min'; approved: boolean; diff?: { field: string; before: any; after: any } }
+interface ProposedAction { title: string; approved: boolean }
 const proposedActions = ref<ProposedAction[]>([])
 
 function generateRecommendations(m: ModuleState): ProposedAction[] {
-  switch (m.key) {
-    case 'armorStrategy':
-      return [
-        { title: 'Enable STIR/SHAKEN', impact: 'high', risk: 'low', time: '5 min', approved: true, diff: { field: 'stirShaken', before: m.signals.stirShaken, after: true } },
-        { title: 'Rotate flagged numbers', impact: 'high', risk: 'low', time: '15 min', approved: true, diff: { field: 'spamLabelIncidence', before: `${Math.round((m.signals.spamLabelIncidence||0)*100)}%`, after: `${Math.max(0, Math.round(((m.signals.spamLabelIncidence||0)-0.08)*100))}%` } },
-        { title: 'Improve reputation blend', impact: 'medium', risk: 'low', time: '5 min', approved: false, diff: { field: 'reputation', before: m.signals.reputation, after: Math.min(100, (m.signals.reputation||0)+15) } },
-      ]
-    case 'emailSetup':
-      return [
-        { title: 'Validate SPF', impact: 'high', risk: 'low', time: 'instant', approved: true, diff: { field: 'spf', before: m.signals.spf, after: true } },
-        { title: 'Validate DKIM', impact: 'high', risk: 'low', time: 'instant', approved: true, diff: { field: 'dkim', before: m.signals.dkim, after: true } },
-        { title: 'Enable DMARC (p=quarantine)', impact: 'high', risk: 'low', time: '5 min', approved: true, diff: { field: 'dmarc', before: m.signals.dmarc, after: true } },
-        { title: 'Complete warmup', impact: 'medium', risk: 'low', time: '15 min', approved: false, diff: { field: 'warmupComplete', before: m.signals.warmupComplete, after: true } },
-      ]
-    case 'integrations':
-      return [
-        { title: 'Fix field mappings', impact: 'high', risk: 'low', time: '5 min', approved: true },
-        { title: 'Force sync', impact: 'medium', risk: 'low', time: 'instant', approved: false },
-      ]
-    case 'voicemailDrops':
-      return [
-        { title: 'Approve template', impact: 'high', risk: 'low', time: 'instant', approved: true },
-        { title: 'Document consent', impact: 'high', risk: 'low', time: 'instant', approved: true },
-      ]
-    case 'numberManagement':
-      return [
-        { title: 'Increase pool size', impact: 'medium', risk: 'low', time: '5 min', approved: true },
-        { title: 'Enable local presence', impact: 'high', risk: 'low', time: 'instant', approved: true },
-      ]
-    case 'cadences':
-      return [
-        { title: 'Activate sequences', impact: 'high', risk: 'low', time: 'instant', approved: true },
-        { title: 'Refresh stale sequences', impact: 'medium', risk: 'low', time: '5 min', approved: true },
-      ]
-    case 'callScripts':
-      return [
-        { title: 'Approve scripts', impact: 'high', risk: 'low', time: 'instant', approved: true },
-        { title: 'Update outdated scripts', impact: 'medium', risk: 'low', time: '15 min', approved: false },
-      ]
-    case 'compliance':
-      return [
-        { title: 'Enable TCPA guardrails', impact: 'high', risk: 'low', time: 'instant', approved: true },
-        { title: 'Acknowledge policy', impact: 'medium', risk: 'low', time: 'instant', approved: true },
-      ]
-    case 'billing':
-      return [
-        { title: 'Add payment method', impact: 'high', risk: 'low', time: '5 min', approved: true },
-      ]
-    case 'sms':
-      return [
-        { title: 'Register 10DLC', impact: 'high', risk: 'low', time: '15 min', approved: true },
-        { title: 'Add opt-in policy', impact: 'high', risk: 'low', time: 'instant', approved: true },
-      ]
-    case 'businessVerification':
-      return [
-        { title: 'Submit documents', impact: 'high', risk: 'low', time: '5 min', approved: true },
-        { title: 'Verify business', impact: 'high', risk: 'low', time: '15 min', approved: false },
-      ]
-    default:
-      return []
-  }
+  // Display 5 phone numbers with checkboxes checked by default
+  const nums = ['(555) 201-8834', '(555) 414-2299', '(555) 730-6412', '(555) 902-1776', '(555) 318-4501']
+  return nums.map(n => ({ title: n, approved: true }))
 }
 
 function openDetail(m: ModuleState) {
@@ -391,8 +327,8 @@ function approveSelected() {
   assistantMessages.value.push('Done. I verified results and updated your status. Want to take the next step?')
 }
 
-function declineAll() {
-  proposedActions.value.forEach(a => a.approved = false)
+function onCancelProposals() {
+  detailOpen.value = false
 }
 
 function showDiff(r: ProposedAction) {
