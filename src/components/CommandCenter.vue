@@ -93,9 +93,8 @@
 
                 <!-- Recommendations (merged) -->
                 <div class="space-y-4">
-                  <div class="text-sm text-gray-300">AI proposes a plan. Review, approve, and I’ll execute. Every step is logged and reversible when possible.</div>
+                  <div class="text-sm text-gray-300 font-medium">Proposed Actions</div>
                   <div class="bg-gray-800/70 border border-gray-700 rounded-lg p-3">
-                    <div class="text-sm font-medium mb-2">Proposed actions</div>
                     <div class="flex flex-col gap-2">
                       <div v-for="(r, idx) in proposedActions" :key="idx" class="flex items-start justify-between">
                         <div class="flex items-start gap-2">
