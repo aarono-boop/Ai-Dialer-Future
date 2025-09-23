@@ -204,7 +204,7 @@ export function seedModules(now = new Date()): ModuleState[] {
       category: 'Configuration',
       icon: 'pi pi-sitemap',
       lastUpdated: ts,
-      signals: { authOk: true, mappingComplete: false, lastSyncAt: ts },
+      signals: { authOk: true, mappingComplete: true, lastSyncAt: ts },
       kpis: [
         { label: 'Last Sync', value: 'Just now' },
       ],
@@ -230,9 +230,9 @@ export function seedModules(now = new Date()): ModuleState[] {
       category: 'Configuration',
       icon: 'pi pi-hashtag',
       lastUpdated: ts,
-      signals: { poolSize: 3, localPresence: true, activeNumbers: 2 },
+      signals: { poolSize: 6, localPresence: true, activeNumbers: 6 },
       kpis: [
-        { label: 'Pool', value: 3 },
+        { label: 'Pool', value: 6 },
         { label: 'Local Presence', value: 'On' },
       ],
       status: 'yellow',
@@ -258,9 +258,9 @@ export function seedModules(now = new Date()): ModuleState[] {
       category: 'Productivity',
       icon: 'pi pi-microphone',
       lastUpdated: ts,
-      signals: { approved: 0, outdated: 0 },
+      signals: { approved: 2, outdated: 0 },
       kpis: [
-        { label: 'Approved', value: 0 },
+        { label: 'Approved', value: 2 },
       ],
       status: 'red',
       statusReason: 'No approved scripts'
@@ -284,9 +284,9 @@ export function seedModules(now = new Date()): ModuleState[] {
       category: 'Analytics',
       icon: 'pi pi-chart-line',
       lastUpdated: ts,
-      signals: { goalsSet: false, pickup: 0.14 },
+      signals: { goalsSet: true, pickup: 0.18 },
       kpis: [
-        { label: 'Pickup', value: '14%' },
+        { label: 'Pickup', value: '18%' },
       ],
       status: 'yellow',
       statusReason: 'Goals not set'
@@ -310,9 +310,9 @@ export function seedModules(now = new Date()): ModuleState[] {
       category: 'Deliverability',
       icon: 'pi pi-send',
       lastUpdated: ts,
-      signals: { registered: false, optInPolicy: false, deliverability: 0.88 },
+      signals: { registered: true, optInPolicy: true, deliverability: 0.92 },
       kpis: [
-        { label: 'Deliverability', value: '88%' },
+        { label: 'Deliverability', value: '92%' },
       ],
       status: 'red',
       statusReason: '10DLC registration missing'
