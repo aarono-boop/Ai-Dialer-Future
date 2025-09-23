@@ -65,7 +65,7 @@ export function computeStatus(key: string, signals: Record<string, any>): { stat
       const stirShaken = !!signals.stirShaken
       const spamIncidence = Number(signals.spamLabelIncidence ?? 0) // 0..1
       const reputation = Number(signals.reputation ?? 0) // 0..100
-      if (!stirShaken || spamIncidence >= THRESHOLDS.armor.spamLabelIncidenceRed) return { status: 'red', reason: !stirShaken ? 'STIR/SHAKEN not configured' : 'High spam label incidence' }
+      if (!stirShaken || spamIncidence >= THRESHOLDS.armor.spamLabelIncidenceRed) return { status: 'red', reason: !stirShaken ? 'ARMOR not activated' : 'High spam label incidence' }
       if (spamIncidence >= THRESHOLDS.armor.spamLabelIncidenceYellow || reputation < THRESHOLDS.armor.reputationTarget) return { status: 'yellow', reason: spamIncidence >= THRESHOLDS.armor.spamLabelIncidenceYellow ? 'Some numbers flagged as spam' : 'Reputation below target' }
       return { status: 'green', reason: 'All numbers pass checks and reputation on target' }
     }
@@ -179,8 +179,7 @@ export function seedModules(now = new Date()): ModuleState[] {
       lastUpdated: ts,
       signals: { stirShaken: false, spamLabelIncidence: 0.12, reputation: 62 },
       kpis: [
-        { label: 'Spam Labels', value: '12%' },
-        { label: 'Reputation', value: 62 }
+        { label: "Phone #'s Protected", value: '0/5' }
       ],
       status: 'red',
       statusReason: 'STIR/SHAKEN not configured'
