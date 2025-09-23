@@ -148,6 +148,10 @@
               <div class="text-sm text-gray-300 space-y-2 flex-1">
                 <div v-for="(m, i) in assistantMessages" :key="i">{{ m }}</div>
               </div>
+              <form class="flex items-center gap-2 mt-3" @submit.prevent="sendAssistantMessage">
+                <InputText v-model="assistantInput" class="flex-1" placeholder="Type a message" aria-label="Message to assistant" />
+                <Button type="submit" label="Send" icon="pi pi-send" :disabled="!assistantInput.trim()" />
+              </form>
             </template>
           </Card>
         </div>
@@ -197,6 +201,13 @@ const history = ref<{ ts: string; actor: string; action: string; details: string
 const assistantMessages = ref<string[]>([
   'I’ll analyze your setup and propose safe, high‑impact steps. You approve, I execute.',
 ])
+const assistantInput = ref('')
+function sendAssistantMessage() {
+  const msg = assistantInput.value.trim()
+  if (!msg) return
+  assistantMessages.value.push(msg)
+  assistantInput.value = ''
+}
 
 const statusOptions = [
   { label: 'All statuses', value: 'all' },
