@@ -285,6 +285,7 @@ function primaryCta(s: Status) {
 function primaryIcon(s: Status) {
   return s === 'green' ? 'pi pi-eye' : s === 'yellow' ? 'pi pi-cog' : 'pi pi-exclamation-triangle'
 }
+const firstKpi = (m: ModuleState) => (m.kpis && m.kpis.length ? m.kpis[0] : null)
 const dateTimeFmt = new Intl.DateTimeFormat(undefined, { year: 'numeric', month: 'short', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit' })
 function toRelative(ts: string) {
   const d = new Date(ts)
