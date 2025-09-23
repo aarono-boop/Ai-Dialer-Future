@@ -13,7 +13,12 @@
           <span class="text-sm text-gray-400">Updated {{ lastUpdatedAbsolute }}</span>
         </div>
         <div class="flex items-center gap-2">
-          <SelectButton v-model="statusFilter" :options="statusOptions" optionLabel="label" optionValue="value" aria-label="Status filter" :allowEmpty="false" />
+          <div class="inline-flex items-center gap-px" role="group" aria-label="Status filter">
+            <Button size="small" :outlined="statusFilter !== 'all'" :severity="statusFilter === 'all' ? 'primary' : 'secondary'" label="All" @click="statusFilter = 'all'" :aria-pressed="statusFilter === 'all'" />
+            <Button size="small" :outlined="statusFilter !== 'green'" :severity="statusFilter === 'green' ? 'success' : 'secondary'" label="Healthy" @click="statusFilter = 'green'" :aria-pressed="statusFilter === 'green'" />
+            <Button size="small" :outlined="statusFilter !== 'yellow'" :severity="statusFilter === 'yellow' ? 'warning' : 'secondary'" label="Needs Attention" @click="statusFilter = 'yellow'" :aria-pressed="statusFilter === 'yellow'" />
+            <Button size="small" :outlined="statusFilter !== 'red'" :severity="statusFilter === 'red' ? 'danger' : 'secondary'" label="Action Required" @click="statusFilter = 'red'" :aria-pressed="statusFilter === 'red'" />
+          </div>
           <Dropdown v-model="sortBy" :options="sortOptions" optionLabel="label" optionValue="value" placeholder="Sort by" class="w-44" />
           <Button icon="pi pi-refresh" text severity="secondary" @click="refresh" aria-label="Refresh" />
         </div>
@@ -205,7 +210,6 @@ import Button from 'primevue/button'
 import Card from 'primevue/card'
 import Badge from 'primevue/badge'
 import Dropdown from 'primevue/dropdown'
-import SelectButton from 'primevue/selectbutton'
 import Dialog from 'primevue/dialog'
 import TabView from 'primevue/tabview'
 import TabPanel from 'primevue/tabpanel'
