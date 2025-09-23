@@ -6,11 +6,6 @@
         <div class="flex items-center gap-3 min-w-0">
           <i class="pi pi-th-large text-blue-400" aria-hidden="true"></i>
           <h2 class="text-xl font-semibold truncate">Command Center</h2>
-          <Badge :severity="summarySeverity" class="ml-2" :pt="{ root: { style: { padding: '0.125rem 0.375rem' } } }" v-tooltip.bottom="summaryTooltip">
-            <i class="pi pi-dashboard" aria-hidden="true"></i>
-            <span class="sr-only">{{ summaryLabel }}</span>
-          </Badge>
-          <span class="text-sm text-gray-400">Updated {{ lastUpdatedAbsolute }}</span>
         </div>
         <div class="flex items-center gap-2">
           <div class="flex items-center gap-3" role="group" aria-label="Status filter">
