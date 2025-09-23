@@ -106,10 +106,10 @@
                         <label :for="'rec-'+idx" class="text-sm font-medium tracking-wide">{{ r.title }}</label>
                       </div>
                     </div>
-                    <div class="flex items-center justify-end gap-2 mt-3">
-                      <Button label="Cancel" severity="secondary" @click="onCancelProposals" />
-                      <Button label="Approve Selected" icon="pi pi-check" @click="approveSelected" :disabled="!approvedCount" />
-                    </div>
+                  </div>
+                  <div class="flex items-center justify-end gap-2 mt-3">
+                    <Button label="Cancel" severity="secondary" @click="onCancelProposals" />
+                    <Button label="Approve Selected" icon="pi pi-check" @click="approveSelected" :disabled="!approvedCount" />
                   </div>
 
                   <div v-if="executionLog.length" class="bg-gray-800/70 border border-gray-700 rounded-lg p-3">
