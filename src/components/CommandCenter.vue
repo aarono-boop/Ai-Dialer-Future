@@ -6,7 +6,10 @@
         <div class="flex items-center gap-3 min-w-0">
           <i class="pi pi-th-large text-blue-400" aria-hidden="true"></i>
           <h2 class="text-xl font-semibold truncate">Command Center</h2>
-          <Badge :value="summaryLabel" :severity="summarySeverity" class="ml-2" />
+          <Badge :severity="summarySeverity" class="ml-2" :pt="{ root: { style: { padding: '0.125rem 0.375rem' } } }">
+            <i class="pi pi-dashboard" aria-hidden="true"></i>
+            <span class="sr-only">{{ summaryLabel }}</span>
+          </Badge>
           <span class="text-sm text-gray-400">Updated {{ lastUpdatedRelative }}</span>
         </div>
         <div class="flex items-center gap-2">
@@ -26,7 +29,10 @@
                 <span class="font-medium truncate">{{ m.name }}</span>
               </div>
               <div class="flex items-center gap-2">
-                <Badge :value="statusText(m.status)" :severity="statusSeverity(m.status)" />
+                <Badge :severity="statusSeverity(m.status)" :pt="{ root: { style: { padding: '0.125rem 0.375rem' } } }">
+                  <i :class="statusIcon(m.status)" aria-hidden="true"></i>
+                  <span class="sr-only">{{ statusText(m.status) }}</span>
+                </Badge>
               </div>
             </div>
           </template>
@@ -59,7 +65,10 @@
             <TabPanel header="Overview">
               <div class="space-y-3">
                 <div class="flex items-center gap-2">
-                  <Badge :value="statusText(selected?.status)" :severity="statusSeverity(selected?.status)" />
+                  <Badge :severity="statusSeverity(selected?.status)" :pt="{ root: { style: { padding: '0.125rem 0.375rem' } } }">
+                    <i :class="statusIcon(selected?.status)" aria-hidden="true"></i>
+                    <span class="sr-only">{{ statusText(selected?.status) }}</span>
+                  </Badge>
                   <span class="text-sm text-gray-400">{{ selected?.statusReason }}</span>
                 </div>
                 <div class="grid grid-cols-2 md:grid-cols-3 gap-2">
@@ -237,6 +246,10 @@ function statusText(s?: Status) {
 function statusSeverity(s?: Status) {
   if (!s) return 'secondary'
   return s === 'green' ? 'success' : s === 'yellow' ? 'warning' : 'danger'
+}
+function statusIcon(s?: Status) {
+  if (!s) return 'pi pi-circle'
+  return s === 'green' ? 'pi pi-check-circle' : s === 'yellow' ? 'pi pi-exclamation-circle' : 'pi pi-exclamation-triangle'
 }
 function primaryCta(s: Status) {
   return s === 'green' ? 'Review' : s === 'yellow' ? 'Optimize' : 'Fix'
