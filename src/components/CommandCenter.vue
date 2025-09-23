@@ -65,7 +65,7 @@
           <TabView class="cc-tabs" :pt="{ inkbar: { style: { display: 'none' } } }">
             <TabPanel header="Overview">
               <div class="space-y-4">
-                <div class="flex items-center gap-2">
+                <div class="flex items-center gap-2" style="margin-top: 20px;">
                   <Badge :severity="statusSeverity(selected?.status)" :pt="getBadgePt(selected?.status)" v-tooltip.top="tooltipForStatus(selected?.status)">
                     <i :class="statusIcon(selected?.status)" aria-hidden="true"></i>
                     <span class="sr-only">{{ statusText(selected?.status) }}</span>
@@ -74,10 +74,12 @@
                 </div>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-3 items-stretch">
                   <div>
-                    <div class="grid grid-cols-2 gap-2">
-                      <div v-for="k in selected?.kpis || []" :key="k.label" class="bg-gray-800/70 border border-gray-700 rounded-lg p-3 h-full">
-                        <div class="text-xs text-gray-400">{{ k.label }}</div>
-                        <div class="text-base">{{ k.value }}</div>
+                    <div class="flex flex-wrap gap-2">
+                      <div v-for="k in selected?.kpis || []" :key="k.label" class="w-1/2">
+                        <div class="text-xs text-gray-400 mb-1 px-3">{{ k.label }}</div>
+                        <div class="bg-gray-800/70 border border-gray-700 rounded-lg p-3">
+                          <div class="text-base">{{ k.value }}</div>
+                        </div>
                       </div>
                     </div>
                   </div>
