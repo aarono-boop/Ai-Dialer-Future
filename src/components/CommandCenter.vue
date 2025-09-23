@@ -126,21 +126,6 @@
                 <Column field="details" header="Details"></Column>
               </DataTable>
             </TabPanel>
-            <TabPanel header="Settings">
-              <div class="space-y-3">
-                <div class="text-sm text-gray-300">Editable fields with guardrails. Some changes may require admin approval.</div>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
-                  <div v-for="(v, key) in selected?.signals || {}" :key="key" class="bg-gray-800/70 border border-gray-700 rounded-lg p-3">
-                    <div class="text-xs text-gray-400 mb-1">{{ key }}</div>
-                    <InputText v-if="isEditable(key, v)" v-model="(selected as any).signals[key]" class="w-full" />
-                    <div v-else class="text-sm">{{ displaySignal(v) }}</div>
-                  </div>
-                </div>
-                <div class="flex items-center justify-end gap-2">
-                  <Button label="Save" icon="pi pi-check" @click="saveSettings" />
-                </div>
-              </div>
-            </TabPanel>
           </TabView>
         </div>
 
