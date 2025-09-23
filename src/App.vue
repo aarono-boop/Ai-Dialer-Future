@@ -155,6 +155,30 @@
             </template>
           </Dialog>
 
+          <!-- Command Center Proposed Actions (from Fix/Update/Review) -->
+          <div v-if="showCcProposals" class="mt-2 pt-5 flex justify-center">
+            <div class="w-[70%]">
+              <div class="text-sm text-gray-300 font-medium">Proposed Actions</div>
+              <div class="text-xs text-gray-400 mt-1">Activate the following phone numbers with ARMOR.</div>
+              <div class="bg-gray-800/70 border border-gray-700 rounded-lg p-3">
+                <div class="flex items-center gap-2 mb-2">
+                  <Checkbox v-model="ccAllSelected" :binary="true" inputId="cc-select-all" :disabled="!ccProposed.length" />
+                  <label for="cc-select-all" class="text-sm font-medium tracking-wide">Select all</label>
+                </div>
+                <div class="flex flex-col gap-2">
+                  <div v-for="(r, idx) in ccProposed" :key="idx" class="flex items-center gap-2">
+                    <Checkbox v-model="r.approved" :binary="true" :inputId="'cc-'+idx" />
+                    <label :for="'cc-'+idx" class="text-sm font-medium tracking-wide">{{ r.title }}</label>
+                  </div>
+                </div>
+              </div>
+              <div class="flex items-center justify-end gap-2 mt-3">
+                <Button label="Cancel" severity="secondary" @click="cancelCcProposals" />
+                <Button label="Approve Selected" icon="pi pi-check" @click="approveCcSelected" :disabled="!ccApprovedCount" />
+              </div>
+            </div>
+          </div>
+
           <!-- Interaction Panel: File Upload & CRM Connect -->
           <div v-if="!showCoachCarousel && !showDialer && !hasUploadedFile && !crmConnected && ((welcomeTypingComplete && !isSignedIn) || (isSignedIn && showFileUploadForReturningUser))" class="mt-2 pt-5 flex justify-center">
             <div class="w-[70%]">
@@ -810,7 +834,7 @@
     <!-- Command Center Page -->
     <div v-if="showCommandCenter" class="ml-16 flex flex-col min-h-screen">
       <div class="flex-1">
-        <CommandCenter />
+        <CommandCenter @redirect-to-chat="handleCommandCenterRedirect" />
       </div>
     </div>
 
@@ -958,6 +982,7 @@ import Dialog from 'primevue/dialog'
 import InputText from 'primevue/inputtext'
 import Password from 'primevue/password'
 import Listbox from 'primevue/listbox'
+import Checkbox from 'primevue/checkbox'
 
 // PrimeVue Components
 
@@ -1152,6 +1177,38 @@ const emailTemplates = ref<Array<{ label: string; value: string }>>([
   { label: 'Last Attempt Before Pause', value: 'Last Attempt Before Pause' }
 ])
 const selectedEmailTemplate = ref<string | null>(emailTemplates.value[0].value)
+
+// Command Center -> Chat proposal state
+interface CCProposed { title: string; approved: boolean }
+const showCcProposals = ref(false)
+const ccProposed = ref<CCProposed[]>([])
+const ccApprovedCount = computed(() => ccProposed.value.filter(a => a.approved).length)
+const ccAllSelected = computed({
+  get: () => ccProposed.value.length > 0 && ccProposed.value.every(a => a.approved),
+  set: (val: boolean) => { ccProposed.value = ccProposed.value.map(a => ({ ...a, approved: !!val })) }
+})
+function handleCommandCenterRedirect(payload: { module: any, proposed: CCProposed[] }) {
+  // Switch to main chat
+  showCommandCenter.value = false
+  currentPage.value = 'main'
+  // Set proposals
+  ccProposed.value = payload?.proposed?.map(p => ({ ...p })) || []
+  showCcProposals.value = true
+  // Announce in chat
+  addAIMessageWithTyping(`Let\'s resolve <strong>${payload?.module?.name || 'this item'}</strong> together here. Review the proposed actions below and approve when ready.`)
+  scrollToBottom()
+}
+function approveCcSelected() {
+  const cnt = ccApprovedCount.value
+  showCcProposals.value = false
+  addAIMessage(`Approved ${cnt} action${cnt === 1 ? '' : 's'}. I\'ll take care of them now.`)
+  scrollToBottom()
+}
+function cancelCcProposals() {
+  showCcProposals.value = false
+  addAIMessage('Okay, no changes applied. You can open the Command Center anytime to review again.')
+  scrollToBottom()
+}
 const showFileUploadForReturningUser = ref<boolean>(false)
 const welcomeTypingComplete = ref<boolean>(false)
 const congratulationsTypingComplete = ref<boolean>(false)
