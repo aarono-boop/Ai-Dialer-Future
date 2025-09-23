@@ -73,17 +73,17 @@
                   <span class="text-sm text-gray-400">{{ selected?.statusReason }}</span>
                 </div>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-3 items-stretch">
-                  <div>
-                    <div class="flex flex-wrap gap-2">
-                      <div v-for="k in selected?.kpis || []" :key="k.label" :class="(selected?.kpis?.length || 0) <= 1 ? 'w-full' : 'w-1/2'">
+                  <div class="h-full flex flex-col">
+                    <div class="flex flex-wrap gap-2 items-stretch h-full">
+                      <div v-for="k in selected?.kpis || []" :key="k.label" :class="(selected?.kpis?.length || 0) <= 1 ? 'w-full h-full flex flex-col' : 'w-1/2 flex flex-col'">
                         <div class="text-xs text-gray-400 mb-1 px-3">{{ k.label }}</div>
-                        <div class="bg-gray-800/70 border border-gray-700 rounded-lg p-3">
+                        <div class="bg-gray-800/70 border border-gray-700 rounded-lg p-3 h-full">
                           <div class="text-base">{{ k.value }}</div>
                         </div>
                       </div>
                     </div>
                   </div>
-                  <div>
+                  <div class="flex flex-col h-full">
                     <div class="text-xs text-gray-400 mb-1 px-3">Status rationale</div>
                     <div class="bg-gray-800/70 border border-gray-700 rounded-lg p-3 h-full">
                       <div class="text-sm text-gray-300">{{ selected?.statusReason }}</div>
