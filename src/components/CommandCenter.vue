@@ -59,7 +59,7 @@
 
     <!-- Detail Drawer -->
     <Dialog v-model:visible="detailOpen" modal :style="{ width: '72rem', maxWidth: '95vw' }" :breakpoints="{ '960px': '95vw' }" :header="detailHeader">
-      <div class="flex gap-4">
+      <div class="flex gap-4 items-stretch">
         <!-- Left: Tabs -->
         <div class="flex-1 min-w-0">
           <TabView>
@@ -145,8 +145,8 @@
         </div>
 
         <!-- Right: Assistant Pane -->
-        <div class="w-80 shrink-0">
-          <Card :pt="assistantPt">
+        <div class="w-80 shrink-0 flex h-full">
+          <Card :pt="assistantPt" class="h-full flex flex-col w-full">
             <template #title>
               <div class="flex items-center justify-between">
                 <span>AI Assistant</span>
@@ -154,7 +154,7 @@
               </div>
             </template>
             <template #content>
-              <div class="text-sm text-gray-300 space-y-2">
+              <div class="text-sm text-gray-300 space-y-2 flex-1">
                 <div v-for="(m, i) in assistantMessages" :key="i">{{ m }}</div>
               </div>
             </template>
@@ -459,6 +459,6 @@ const cardPt = {
   root: { style: { background: 'var(--p-surface-800)', border: '1px solid var(--p-surface-600)', borderRadius: '12px', padding: '10px 20px' } },
 }
 const assistantPt = {
-  root: { style: { background: 'var(--p-surface-800)', border: '1px solid var(--p-surface-600)', borderRadius: '12px' } },
+  root: { style: { background: 'var(--p-surface-800)', border: '1px solid var(--p-surface-600)', borderRadius: '12px', height: '100%', display: 'flex', flexDirection: 'column' } },
 }
 </script>
