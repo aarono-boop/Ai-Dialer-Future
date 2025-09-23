@@ -47,8 +47,8 @@
             <div class="flex items-center justify-between text-xs text-gray-400">
               <span class="inline-flex items-center gap-1"><i class="pi pi-clock" /> Last updated {{ toRelative(m.lastUpdated) }}</span>
               <div class="flex items-center gap-2">
-                <Button size="small" :label="primaryCta(m.status)" :icon="primaryIcon(m.status)" @click="openDetail(m)" />
-                <Button size="small" label="Details" severity="secondary" text @click="openDetail(m)" />
+                <Button size="small" label="Details" icon="pi pi-eye" @click="openDetail(m)" />
+                <Button size="small" :label="primaryCta(m.status)" :icon="primaryIcon(m.status)" severity="secondary" @click="openDetail(m)" />
               </div>
             </div>
           </template>
