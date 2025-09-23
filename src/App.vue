@@ -16,7 +16,7 @@
     />
 
     <!-- Main App Content -->
-    <main v-if="currentPage === 'main' && !managementMode && !showCoachDashboard && !showStudentDashboard" class="ml-16 flex-1 flex items-start justify-center p-8 relative z-[5]" :style="(showDialer || showCoachInfoPanel) ? 'margin-right: 33.333333%' : ''">
+    <main v-if="currentPage === 'main' && !managementMode && !showCoachDashboard && !showStudentDashboard && !showCommandCenter" class="ml-16 flex-1 flex items-start justify-center p-8 relative z-[5]" :style="(showDialer || showCoachInfoPanel) ? 'margin-right: 33.333333%' : ''">
       <div class="flex gap-6 w-full max-w-[1400px] h-[80vh] mt-2.5">
         <!-- Chat Container -->
         <div class="w-full max-w-6xl mx-auto rounded-xl px-5">
@@ -1034,7 +1034,7 @@ const getDynamicCoachingFeedback = (): string => {
     'That was textbook rapport building! Your energy is infectious. Next call, try to qualify their budget earlier in the conversation.',
     'Really strong finish! You didn\'t give up when they hesitated. For your next call, lead with a stronger hook to grab their attention faster.',
     'I can tell you\'re finding your rhythm! Your questioning technique is improving with each call. Next one, focus on getting them to commit to a specific time.',
-    'Excellent persistence! You turned a \'no\' into a \'maybe\'—that\'s skill. Keep that same energy but try to get more specific about their timeline.',
+    'Excellent persistence! You turned a \'no\' into a \'maybe\'���that\'s skill. Keep that same energy but try to get more specific about their timeline.',
     'That call showed real growth! Your objection handling is getting smoother. Next call, trust your instincts and go for the close sooner.'
   ]
 
@@ -2998,6 +2998,8 @@ const openStudentDashboard = (): void => {
 const openCommandCenter = (): void => {
   showCoachDashboard.value = false
   showStudentDashboard.value = false
+  showCoachInfoPanel.value = false
+  showDialer.value = false
   showCommandCenter.value = true
   currentPage.value = 'main'
 }
