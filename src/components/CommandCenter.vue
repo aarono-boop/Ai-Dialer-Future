@@ -61,7 +61,7 @@
     <Dialog v-model:visible="detailOpen" modal :style="{ width: '72rem', maxWidth: '95vw' }" :breakpoints="{ '960px': '95vw' }" :header="detailHeader">
       <div class="flex gap-4 items-stretch">
         <!-- Left: Tabs -->
-        <div class="flex-1 min-w-0" ref="leftPaneRef">
+        <div class="basis-2/3 min-w-0" ref="leftPaneRef">
           <TabView class="cc-tabs" :pt="{ inkbar: { style: { display: 'none' } } }">
             <TabPanel header="Overview">
               <div class="space-y-4">
@@ -136,7 +136,7 @@
         </div>
 
         <!-- Right: Assistant Pane -->
-        <div class="w-80 shrink-0 flex h-full" ref="assistantPaneRef">
+        <div class="basis-1/3 shrink-0 flex h-full" ref="assistantPaneRef">
           <Card :pt="assistantPt" class="h-full flex flex-col w-full">
             <template #title>
               <div class="flex items-center justify-between">
