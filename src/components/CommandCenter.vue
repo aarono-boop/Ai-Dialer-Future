@@ -13,11 +13,10 @@
           <span class="text-sm text-gray-400">Updated {{ lastUpdatedAbsolute }}</span>
         </div>
         <div class="flex items-center gap-2">
-          <div class="inline-flex items-center gap-px" role="group" aria-label="Status filter">
-            <Button size="small" :outlined="statusFilter !== 'all'" :severity="statusFilter === 'all' ? 'primary' : 'secondary'" label="All" @click="statusFilter = 'all'" :aria-pressed="statusFilter === 'all'" />
-            <Button size="small" :outlined="statusFilter !== 'green'" :severity="statusFilter === 'green' ? 'success' : 'secondary'" label="Healthy" @click="statusFilter = 'green'" :aria-pressed="statusFilter === 'green'" />
-            <Button size="small" :outlined="statusFilter !== 'yellow'" :severity="statusFilter === 'yellow' ? 'warning' : 'secondary'" label="Needs Attention" @click="statusFilter = 'yellow'" :aria-pressed="statusFilter === 'yellow'" />
-            <Button size="small" :outlined="statusFilter !== 'red'" :severity="statusFilter === 'red' ? 'danger' : 'secondary'" label="Action Required" @click="statusFilter = 'red'" :aria-pressed="statusFilter === 'red'" />
+          <div class="flex items-center gap-3" role="group" aria-label="Status filter">
+            <Button size="small" :outlined="!selectedStatuses.includes('green')" severity="success" label="Healthy" @click="toggleStatus('green')" :aria-pressed="selectedStatuses.includes('green')" />
+            <Button size="small" :outlined="!selectedStatuses.includes('yellow')" severity="warning" label="Needs Attention" @click="toggleStatus('yellow')" :aria-pressed="selectedStatuses.includes('yellow')" />
+            <Button size="small" :outlined="!selectedStatuses.includes('red')" severity="danger" label="Action Required" @click="toggleStatus('red')" :aria-pressed="selectedStatuses.includes('red')" />
           </div>
           <Dropdown v-model="sortBy" :options="sortOptions" optionLabel="label" optionValue="value" placeholder="Sort by" class="w-44" />
           <Button icon="pi pi-refresh" text severity="secondary" @click="refresh" aria-label="Refresh" />
@@ -225,7 +224,7 @@ const detailOpen = ref(false)
 const leftPaneRef = ref<HTMLElement | null>(null)
 const assistantPaneRef = ref<HTMLElement | null>(null)
 const selected = ref<ModuleState | null>(null)
-const statusFilter = ref<'all' | Status>('all')
+const selectedStatuses = ref<Status[]>(['green', 'yellow', 'red'])
 const sortBy = ref<'impact' | 'lastUpdated'>('impact')
 const executionLog = ref<{ message: string; actions: string[] }[]>([])
 const history = ref<{ ts: string; actor: string; action: string; details: string }[]>([])
@@ -256,19 +255,21 @@ function onPromptSelect(prompt: string) {
   }
 }
 
-const statusOptions = [
-  { label: 'All statuses', value: 'all' },
-  { label: 'Healthy (Green)', value: 'green' },
-  { label: 'Needs Attention (Yellow)', value: 'yellow' },
-  { label: 'Action Required (Red)', value: 'red' },
-]
+// Status multi-select toggler
+function toggleStatus(s: Status) {
+  const arr = selectedStatuses.value
+  const i = arr.indexOf(s)
+  if (i >= 0) arr.splice(i, 1)
+  else arr.push(s)
+  selectedStatuses.value = [...arr]
+}
 const sortOptions = [
   { label: 'By Impact', value: 'impact' },
   { label: 'By Last Updated', value: 'lastUpdated' },
 ]
 
 const filteredModules = computed(() => {
-  const list = modules.value.filter(m => statusFilter.value === 'all' ? true : m.status === statusFilter.value)
+  const list = modules.value.filter(m => selectedStatuses.value.includes(m.status))
   if (sortBy.value === 'lastUpdated') {
     return list.sort((a, b) => new Date(b.lastUpdated).getTime() - new Date(a.lastUpdated).getTime())
   }
