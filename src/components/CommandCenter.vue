@@ -1,6 +1,6 @@
 <template>
-  <div class="min-h-screen bg-gray-900 text-white p-6" role="region" aria-label="Command Center">
-    <div class="max-w-7xl mx-auto space-y-6">
+  <div class="min-h-screen overflow-hidden bg-gray-900 text-white p-6" role="region" aria-label="Command Center">
+    <div class="max-w-7xl mx-auto space-y-4">
       <!-- Header / Filters -->
       <div class="flex items-center justify-between bg-gray-800/60 border border-gray-700 rounded-xl px-4 py-3">
         <div class="flex items-center gap-3 min-w-0">
