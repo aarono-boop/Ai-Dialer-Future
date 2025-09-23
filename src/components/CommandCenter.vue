@@ -94,6 +94,7 @@
                 <!-- Recommendations (merged) -->
                 <div class="space-y-4">
                   <div class="text-sm text-gray-300 font-medium">Proposed Actions</div>
+                  <div class="text-xs text-gray-400 mt-1">Activate the following phone numbers with ARMOR.</div>
                   <div class="bg-gray-800/70 border border-gray-700 rounded-lg p-3">
                     <div class="flex flex-col gap-2">
                       <div v-for="(r, idx) in proposedActions" :key="idx" class="flex items-center gap-2">
