@@ -145,7 +145,7 @@
               </div>
             </template>
             <template #content>
-              <div class="text-sm text-gray-300 space-y-2 flex-1">
+              <div class="text-sm text-gray-300 space-y-2 flex-1 min-h-0 overflow-auto pr-1">
                 <div v-for="(m, i) in assistantMessages" :key="i">{{ m }}</div>
               </div>
               <div class="assistant-chat mt-3">
@@ -429,6 +429,8 @@ const cardPt = {
 }
 const assistantPt = {
   root: { style: { background: 'var(--p-surface-800)', border: '1px solid var(--p-surface-600)', borderRadius: '12px', height: '100%', display: 'flex', flexDirection: 'column', paddingLeft: '20px', paddingRight: '20px' } },
+  body: { style: { display: 'flex', flexDirection: 'column', height: '100%' } },
+  content: { style: { display: 'flex', flexDirection: 'column', height: '100%', minHeight: 0 } }
 }
 
 function syncAssistantHeight() {
