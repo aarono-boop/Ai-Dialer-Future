@@ -172,7 +172,9 @@
                     class="w-10 h-10 flex items-center justify-center text-white transition-colors duration-200 hover:opacity-80"
                     aria-label="Open prompt library"
                     v-tooltip.top="'Open prompt library'"
+                    @click="togglePromptMenu"
                   />
+                  <Menu ref="promptMenuRef" :model="promptMenuItems" popup />
                 </form>
               </div>
             </template>
@@ -210,6 +212,7 @@ import DataTable from 'primevue/datatable'
 import Column from 'primevue/column'
 import Checkbox from 'primevue/checkbox'
 import InputText from 'primevue/inputtext'
+import Menu from 'primevue/menu'
 import { seedModules, computeStatus, type ModuleState, applyActions, type Status } from '../utils/commandCenter'
 
 const modules = ref<ModuleState[]>(seedModules())
@@ -230,6 +233,22 @@ function sendAssistantMessage() {
   if (!msg) return
   assistantMessages.value.push(msg)
   assistantInput.value = ''
+}
+
+const promptMenuRef = ref()
+const promptMenuItems = [
+  { label: 'What is ARMOR?', icon: 'pi pi-question-circle', command: () => onPromptSelect('What is ARMOR?') },
+  { label: 'How much does ARMOR cost?', icon: 'pi pi-wallet', command: () => onPromptSelect('How much does ARMOR cost?') },
+  { label: 'How can you guarantee that my numbers will not be flagged?', icon: 'pi pi-shield', command: () => onPromptSelect('How can you guarantee that my numbers will not be flagged?') }
+]
+function togglePromptMenu(event: MouseEvent) {
+  promptMenuRef.value?.toggle(event)
+}
+function onPromptSelect(prompt: string) {
+  assistantMessages.value.push(prompt)
+  if (prompt === 'What is ARMOR?') {
+    assistantMessages.value.push('ARMOR® is the only done-for-you solution that monitors, protects, and remediates call reputation at scale—powered by patented AI technology and a team of world-class experts—so more calls get answered and revenue grows.')
+  }
 }
 
 const statusOptions = [
