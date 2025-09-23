@@ -437,7 +437,7 @@ const diffOpen = ref(false)
 const diffData = ref<{ field: string; before: any; after: any } | null>(null)
 
 const cardPt = {
-  root: { style: { background: 'var(--p-surface-800)', border: '1px solid var(--p-surface-600)', borderRadius: '12px', padding: '10px' } },
+  root: { style: { background: 'var(--p-surface-800)', border: '1px solid var(--p-surface-600)', borderRadius: '12px', padding: '10px 20px' } },
 }
 const assistantPt = {
   root: { style: { background: 'var(--p-surface-800)', border: '1px solid var(--p-surface-600)', borderRadius: '12px' } },
