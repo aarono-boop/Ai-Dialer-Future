@@ -39,7 +39,7 @@
           <template #content>
             <Button link severity="secondary" size="small" class="mb-2 text-left" :label="m.statusReason" icon="pi pi-eye" :pt="{ root: { style: { padding: '0', paddingLeft: '0', color: 'var(--p-surface-200)' } } }" @click="openDetail(m)" />
             <div class="flex items-stretch justify-between mb-2 gap-3">
-              <div v-if="firstKpi(m)" class="w-1/2 flex flex-col">
+              <div v-if="firstKpi(m)" class="w-1/2 flex flex-col justify-between">
                 <div class="text-xs text-gray-400 mb-1 px-2">{{ firstKpi(m)?.label }}</div>
                 <div class="bg-gray-800/70 border border-gray-700 rounded-lg p-2">
                   <div class="text-base">{{ firstKpi(m)?.value }}</div>
@@ -252,7 +252,7 @@ const summaryLabel = computed(() => {
   const reds = modules.value.filter(m => m.status === 'red').length
   const yellows = modules.value.filter(m => m.status === 'yellow').length
   const greens = modules.value.filter(m => m.status === 'green').length
-  return `${greens} Healthy • ${yellows} Needs Attention • ${reds} Action Required`
+  return `${greens} Healthy • ${yellows} Needs Attention ��� ${reds} Action Required`
 })
 
 function statusText(s?: Status) {
