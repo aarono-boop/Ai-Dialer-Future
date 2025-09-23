@@ -200,6 +200,7 @@
 
 <script setup lang="ts">
 import { ref, computed, nextTick, onMounted, onBeforeUnmount, watch } from 'vue'
+const emit = defineEmits<{ (e: 'redirect-to-chat', payload: { module: ModuleState, proposed: { title: string; approved: boolean }[] }): void }>()
 import Button from 'primevue/button'
 import Card from 'primevue/card'
 import Badge from 'primevue/badge'
@@ -371,12 +372,9 @@ function generateRecommendations(m: ModuleState): ProposedAction[] {
 function openDetail(m: ModuleState) {
   selected.value = JSON.parse(JSON.stringify(m))
   proposedActions.value = generateRecommendations(m)
-  detailOpen.value = true
-  nextTick(() => syncAssistantHeight())
-  assistantMessages.value = [
-    `Diagnosed current state for ${m.name}.`,
-    'I generated recommended actions with expected impact. Select what you want me to do and click Approve.',
-  ]
+  // Instead of opening modal, redirect to chat with proposed actions
+  emit('redirect-to-chat', { module: selected.value!, proposed: proposedActions.value })
+  detailOpen.value = false
 }
 
 function refresh() {
