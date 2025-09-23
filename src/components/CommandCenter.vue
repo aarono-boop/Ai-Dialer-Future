@@ -83,9 +83,11 @@
                       </div>
                     </div>
                   </div>
-                  <div class="bg-gray-800/70 border border-gray-700 rounded-lg p-3 h-full">
-                    <div class="text-sm font-medium mb-2">Status rationale</div>
-                    <div class="text-sm text-gray-300">{{ selected?.statusReason }}</div>
+                  <div>
+                    <div class="text-xs text-gray-400 mb-1 px-3">Status rationale</div>
+                    <div class="bg-gray-800/70 border border-gray-700 rounded-lg p-3 h-full">
+                      <div class="text-sm text-gray-300">{{ selected?.statusReason }}</div>
+                    </div>
                   </div>
                 </div>
 
