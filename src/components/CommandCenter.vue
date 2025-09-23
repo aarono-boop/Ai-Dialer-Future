@@ -64,7 +64,7 @@
         <div class="flex-1 min-w-0" ref="leftPaneRef">
           <TabView>
             <TabPanel header="Overview">
-              <div class="space-y-3">
+              <div class="space-y-4">
                 <div class="flex items-center gap-2">
                   <Badge :severity="statusSeverity(selected?.status)" :pt="getBadgePt(selected?.status)" v-tooltip.top="tooltipForStatus(selected?.status)">
                     <i :class="statusIcon(selected?.status)" aria-hidden="true"></i>
@@ -82,37 +82,37 @@
                   <div class="text-sm font-medium mb-2">Status rationale</div>
                   <div class="text-sm text-gray-300">{{ selected?.statusReason }}</div>
                 </div>
-              </div>
-            </TabPanel>
-            <TabPanel header="Recommendations">
-              <div class="space-y-4">
-                <div class="text-sm text-gray-300">AI proposes a plan. Review, approve, and I’ll execute. Every step is logged and reversible when possible.</div>
-                <div class="bg-gray-800/70 border border-gray-700 rounded-lg p-3">
-                  <div class="text-sm font-medium mb-2">Proposed actions</div>
-                  <div class="flex flex-col gap-2">
-                    <div v-for="(r, idx) in proposedActions" :key="idx" class="flex items-start justify-between">
-                      <div class="flex items-start gap-2">
-                        <Checkbox v-model="r.approved" :binary="true" :inputId="'rec-'+idx" />
-                        <label :for="'rec-'+idx" class="text-sm">
-                          <div class="font-medium">{{ r.title }}</div>
-                          <div class="text-gray-400">Impact: {{ r.impact }} • Risk: {{ r.risk }} • Time: {{ r.time }}</div>
-                        </label>
+
+                <!-- Recommendations (merged) -->
+                <div class="space-y-4">
+                  <div class="text-sm text-gray-300">AI proposes a plan. Review, approve, and I’ll execute. Every step is logged and reversible when possible.</div>
+                  <div class="bg-gray-800/70 border border-gray-700 rounded-lg p-3">
+                    <div class="text-sm font-medium mb-2">Proposed actions</div>
+                    <div class="flex flex-col gap-2">
+                      <div v-for="(r, idx) in proposedActions" :key="idx" class="flex items-start justify-between">
+                        <div class="flex items-start gap-2">
+                          <Checkbox v-model="r.approved" :binary="true" :inputId="'rec-'+idx" />
+                          <label :for="'rec-'+idx" class="text-sm">
+                            <div class="font-medium">{{ r.title }}</div>
+                            <div class="text-gray-400">Impact: {{ r.impact }} • Risk: {{ r.risk }} • Time: {{ r.time }}</div>
+                          </label>
+                        </div>
+                        <Button text severity="secondary" icon="pi pi-eye" aria-label="View diff" @click="showDiff(r)" />
                       </div>
-                      <Button text severity="secondary" icon="pi pi-eye" aria-label="View diff" @click="showDiff(r)" />
+                    </div>
+                    <div class="flex items-center justify-end gap-2 mt-3">
+                      <Button label="Decline All" severity="secondary" @click="declineAll" />
+                      <Button label="Approve Selected" icon="pi pi-check" @click="approveSelected" :disabled="!approvedCount" />
                     </div>
                   </div>
-                  <div class="flex items-center justify-end gap-2 mt-3">
-                    <Button label="Decline All" severity="secondary" @click="declineAll" />
-                    <Button label="Approve Selected" icon="pi pi-check" @click="approveSelected" :disabled="!approvedCount" />
-                  </div>
-                </div>
 
-                <div v-if="executionLog.length" class="bg-gray-800/70 border border-gray-700 rounded-lg p-3">
-                  <div class="text-sm font-medium mb-2">Execution log</div>
-                  <div class="flex flex-col gap-2 text-sm">
-                    <div v-for="(e, i) in executionLog" :key="i" class="flex items-center justify-between">
-                      <span><i class="pi pi-check-circle text-green-400 mr-2" />{{ e.message }}</span>
-                      <Button text size="small" label="Undo" icon="pi pi-undo" @click="undoAction(i)" />
+                  <div v-if="executionLog.length" class="bg-gray-800/70 border border-gray-700 rounded-lg p-3">
+                    <div class="text-sm font-medium mb-2">Execution log</div>
+                    <div class="flex flex-col gap-2 text-sm">
+                      <div v-for="(e, i) in executionLog" :key="i" class="flex items-center justify-between">
+                        <span><i class="pi pi-check-circle text-green-400 mr-2" />{{ e.message }}</span>
+                        <Button text size="small" label="Undo" icon="pi pi-undo" @click="undoAction(i)" />
+                      </div>
                     </div>
                   </div>
                 </div>
