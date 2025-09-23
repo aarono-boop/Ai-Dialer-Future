@@ -6,7 +6,7 @@
         <div class="flex items-center gap-3 min-w-0">
           <i class="pi pi-th-large text-blue-400" aria-hidden="true"></i>
           <h2 class="text-xl font-semibold truncate">Command Center</h2>
-          <Tag :value="summaryLabel" :severity="summarySeverity" rounded class="ml-2" />
+          <Badge :value="summaryLabel" :severity="summarySeverity" class="ml-2" />
           <span class="text-sm text-gray-400">Updated {{ lastUpdatedRelative }}</span>
         </div>
         <div class="flex items-center gap-2">
@@ -26,7 +26,7 @@
                 <span class="font-medium truncate">{{ m.name }}</span>
               </div>
               <div class="flex items-center gap-2">
-                <Tag :value="statusText(m.status)" :severity="statusSeverity(m.status)" rounded />
+                <Badge :value="statusText(m.status)" :severity="statusSeverity(m.status)" />
               </div>
             </div>
           </template>
@@ -59,7 +59,7 @@
             <TabPanel header="Overview">
               <div class="space-y-3">
                 <div class="flex items-center gap-2">
-                  <Tag :value="statusText(selected?.status)" :severity="statusSeverity(selected?.status)" rounded />
+                  <Badge :value="statusText(selected?.status)" :severity="statusSeverity(selected?.status)" />
                   <span class="text-sm text-gray-400">{{ selected?.statusReason }}</span>
                 </div>
                 <div class="grid grid-cols-2 md:grid-cols-3 gap-2">
@@ -173,7 +173,7 @@
 import { ref, computed } from 'vue'
 import Button from 'primevue/button'
 import Card from 'primevue/card'
-import Tag from 'primevue/tag'
+import Badge from 'primevue/badge'
 import Dropdown from 'primevue/dropdown'
 import Dialog from 'primevue/dialog'
 import TabView from 'primevue/tabview'
