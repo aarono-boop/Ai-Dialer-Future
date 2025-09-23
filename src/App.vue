@@ -158,8 +158,6 @@
           <!-- Command Center Proposed Actions (from Fix/Update/Review) -->
           <div v-if="showCcProposals" class="mt-2 pt-5 flex justify-center">
             <div class="w-[70%]">
-              <div class="text-sm text-gray-300 font-medium">Proposed Actions</div>
-              <div class="text-xs text-gray-400 mt-1">Activate the following phone numbers with ARMOR.</div>
               <div class="bg-gray-800/70 border border-gray-700 rounded-lg p-3">
                 <div class="flex items-center gap-2 mb-2">
                   <Checkbox v-model="ccAllSelected" :binary="true" inputId="cc-select-all" :disabled="!ccProposed.length" />
@@ -1195,7 +1193,11 @@ function handleCommandCenterRedirect(payload: { module: any, proposed: CCPropose
   ccProposed.value = payload?.proposed?.map(p => ({ ...p })) || []
   showCcProposals.value = true
   // Announce in chat
-  addAIMessageWithTyping(`Let\'s resolve <strong>${payload?.module?.name || 'this item'}</strong> together here. Review the proposed actions below and approve when ready.`)
+  const isArmor = (payload?.module?.key === 'armorStrategy') || /armor/i.test(payload?.module?.name || '')
+  const msg = isArmor
+    ? "Let's resolve Armor Strategy together.<br><br>Proposed action is to activate the following phone numbers with ARMOR to protect your calls from being blocked &amp; mislabeled as spam."
+    : `Let's resolve <strong>${payload?.module?.name || 'this item'}</strong> together. Review the proposed actions below and approve when ready.`
+  addAIMessageWithTyping(msg)
   scrollToBottom()
 }
 function approveCcSelected() {
