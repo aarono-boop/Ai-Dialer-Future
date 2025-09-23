@@ -96,6 +96,10 @@
                   <div class="text-sm text-gray-300 font-medium">Proposed Actions</div>
                   <div class="text-xs text-gray-400 mt-1">Activate the following phone numbers with ARMOR.</div>
                   <div class="bg-gray-800/70 border border-gray-700 rounded-lg p-3">
+                    <div class="flex items-center gap-2 mb-2">
+                      <Checkbox v-model="allSelected" :binary="true" inputId="select-all" :disabled="!proposedActions.length" />
+                      <label for="select-all" class="text-sm font-medium tracking-wide">Select all</label>
+                    </div>
                     <div class="flex flex-col gap-2">
                       <div v-for="(r, idx) in proposedActions" :key="idx" class="flex items-center gap-2">
                         <Checkbox v-model="r.approved" :binary="true" :inputId="'rec-'+idx" />
@@ -310,6 +314,13 @@ function refresh() {
 }
 
 const approvedCount = computed(() => proposedActions.value.filter(a => a.approved).length)
+
+const allSelected = computed({
+  get: () => proposedActions.value.length > 0 && proposedActions.value.every(a => a.approved),
+  set: (val: boolean) => {
+    proposedActions.value = proposedActions.value.map(a => ({ ...a, approved: !!val }))
+  }
+})
 
 function approveSelected() {
   if (!selected.value) return
