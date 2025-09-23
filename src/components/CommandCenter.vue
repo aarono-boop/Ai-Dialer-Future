@@ -36,7 +36,7 @@
             </div>
           </template>
           <template #content>
-            <div v-if="m.key === 'armorStrategy'" class="mb-2 text-left text-sm font-normal" :style="{ color: 'var(--p-surface-200)' }">
+            <div v-if="m.key === 'armorStrategy'" class="mb-2 text-left text-sm font-normal py-[10px]" :style="{ color: 'var(--p-surface-200)' }">
               ARMOR is not activated on your account and you're calling without registration and remediation.
             </div>
             <Button v-else link severity="secondary" size="small" class="mb-2 text-left font-normal" :label="m.statusReason" :pt="{ root: { style: { padding: '0', paddingLeft: '0', color: 'var(--p-surface-200)' } } }" @click="openDetail(m)" />
