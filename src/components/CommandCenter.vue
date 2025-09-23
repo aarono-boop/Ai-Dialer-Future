@@ -37,14 +37,13 @@
             </div>
           </template>
           <template #content>
-            <div class="text-sm text-gray-300 mb-2">{{ m.statusReason }}</div>
+            <Button link severity="secondary" size="small" class="p-0 mb-2 text-left" :label="m.statusReason" icon="pi pi-eye" @click="openDetail(m)" />
             <div class="flex items-center justify-between mb-2 gap-3">
               <div v-if="firstKpi(m)" class="bg-gray-800/70 border border-gray-700 rounded-lg p-2 flex-1">
                 <div class="text-xs text-gray-400">{{ firstKpi(m)?.label }}</div>
                 <div class="text-base">{{ firstKpi(m)?.value }}</div>
               </div>
               <div class="flex items-center gap-2 shrink-0">
-                <Button size="small" label="Details" icon="pi pi-eye" severity="secondary" text @click="openDetail(m)" />
                 <Button size="small" :label="primaryCta(m.status)" :icon="primaryIcon(m.status)" severity="secondary" @click="openDetail(m)" />
               </div>
             </div>
