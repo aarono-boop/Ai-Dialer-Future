@@ -7,6 +7,7 @@ import tooltipTokens from './tooltip'
 import dropdownTokens from './dropdown'
 import badgeTokens from './badge'
 import tagTokens from './tag'
+import checkboxTokens from './checkbox'
 
 export { default as base } from './base'
 export { default as button } from './button'
@@ -17,6 +18,7 @@ export { default as tooltip } from './tooltip'
 export { default as dropdown } from './dropdown'
 export { default as badge } from './badge'
 export { default as tag } from './tag'
+export { default as checkbox } from './checkbox'
 export { default as theme, customTheme } from './theme'
 export { default as vulcan7Theme } from './vulcan7'
 
@@ -29,5 +31,6 @@ export const tokens = {
     tooltip: tooltipTokens,
     dropdown: dropdownTokens,
     badge: badgeTokens,
-    tag: tagTokens
+    tag: tagTokens,
+    checkbox: checkboxTokens
 }
