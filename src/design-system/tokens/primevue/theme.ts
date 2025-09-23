@@ -9,6 +9,7 @@ import dropdown from './dropdown'
 import datatable from './datatable'
 import badge from './badge'
 import tag from './tag'
+import checkbox from './checkbox'
 
 export const customTheme = definePreset(base, {
     components: {
@@ -20,7 +21,8 @@ export const customTheme = definePreset(base, {
         dropdown,
         datatable,
         badge,
-        tag
+        tag,
+        checkbox
     }
 })
 
