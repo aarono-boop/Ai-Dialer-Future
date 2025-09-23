@@ -10,7 +10,7 @@
             <i class="pi pi-dashboard" aria-hidden="true"></i>
             <span class="sr-only">{{ summaryLabel }}</span>
           </Badge>
-          <span class="text-sm text-gray-400">Updated {{ lastUpdatedRelative }}</span>
+          <span class="text-sm text-gray-400">Updated {{ lastUpdatedAbsolute }}</span>
         </div>
         <div class="flex items-center gap-2">
           <Dropdown v-model="statusFilter" :options="statusOptions" optionLabel="label" optionValue="value" placeholder="Filter by status" class="w-48" />
@@ -225,7 +225,12 @@ const filteredModules = computed(() => {
   return list.sort((a, b) => weight(b.status) - weight(a.status))
 })
 
-const lastUpdatedRelative = computed(() => 'just now')
+const lastUpdatedAbsolute = computed(() => {
+  const times = modules.value.map(m => new Date(m.lastUpdated).getTime()).filter(n => !isNaN(n))
+  if (!times.length) return ''
+  const latest = new Date(Math.max(...times))
+  return dateTimeFmt.format(latest)
+})
 
 // Dynamic columns to limit rows and avoid vertical scroll
 const targetRows = 3
@@ -280,8 +285,10 @@ function primaryCta(s: Status) {
 function primaryIcon(s: Status) {
   return s === 'green' ? 'pi pi-eye' : s === 'yellow' ? 'pi pi-cog' : 'pi pi-exclamation-triangle'
 }
+const dateTimeFmt = new Intl.DateTimeFormat(undefined, { year: 'numeric', month: 'short', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit' })
 function toRelative(ts: string) {
-  return 'just now'
+  const d = new Date(ts)
+  return isNaN(d.getTime()) ? ts : dateTimeFmt.format(d)
 }
 
 const detailHeader = computed(() => selected.value ? selected.value.name : 'Module Details')
