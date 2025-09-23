@@ -179,7 +179,7 @@ export function seedModules(now = new Date()): ModuleState[] {
       lastUpdated: ts,
       signals: { stirShaken: false, spamLabelIncidence: 0.12, reputation: 62 },
       kpis: [
-        { label: "Phone #'s Protected", value: '0/5' }
+        { label: "#'s Protected", value: '0/5' }
       ],
       status: 'red',
       statusReason: 'STIR/SHAKEN not configured'
