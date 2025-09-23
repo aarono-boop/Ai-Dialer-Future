@@ -177,6 +177,13 @@
             </div>
           </div>
 
+          <!-- Return to Command Center CTA -->
+          <div v-if="showReturnToCCButton" class="mt-2 pt-5 flex justify-center">
+            <div class="w-[70%] flex justify-center">
+              <Button label="Return to Command Center" icon="pi pi-th-large" class="w-1/2 px-6 py-3 font-semibold" @click="returnToCommandCenter" />
+            </div>
+          </div>
+
           <!-- Interaction Panel: File Upload & CRM Connect -->
           <div v-if="!showCoachCarousel && !showDialer && !hasUploadedFile && !crmConnected && ((welcomeTypingComplete && !isSignedIn) || (isSignedIn && showFileUploadForReturningUser))" class="mt-2 pt-5 flex justify-center">
             <div class="w-[70%]">
@@ -801,7 +808,7 @@
                   <h4 class="text-xl font-medium">Testimonials</h4>
                   <div class="text-xs text-gray-300 space-y-2">
                     <p>“Our connect rate and meetings doubled in 60 days.” — VP Sales, SaaS</p>
-                    <p>“The talk tracks are simple and deadly effective.���� — SDR Lead, Insurance</p>
+                    <p>“The talk tracks are simple and deadly effective.������ — SDR Lead, Insurance</p>
                   </div>
                 <div v-if="selectedCoachForInfo?.websiteUrl" class="sticky bottom-0 -mb-4 -mx-4 px-4 py-3 border-t border-gray-700 bg-gray-900/90 flex justify-center">
                   <a :href="selectedCoachForInfo.websiteUrl" target="_blank" rel="noopener" class="text-link text-sm inline-flex items-center gap-2 text-center"><i class="pi pi-external-link text-sm" aria-hidden="true"></i>Visit {{ selectedCoachForInfo?.displayName }}'s Website</a>
@@ -1185,6 +1192,7 @@ const ccAllSelected = computed({
   get: () => ccProposed.value.length > 0 && ccProposed.value.every(a => a.approved),
   set: (val: boolean) => { ccProposed.value = ccProposed.value.map(a => ({ ...a, approved: !!val })) }
 })
+const showReturnToCCButton = ref(false)
 function handleCommandCenterRedirect(payload: { module: any, proposed: CCProposed[] }) {
   // Switch to main chat
   showCommandCenter.value = false
@@ -1203,13 +1211,24 @@ function handleCommandCenterRedirect(payload: { module: any, proposed: CCPropose
 function approveCcSelected() {
   const cnt = ccApprovedCount.value
   showCcProposals.value = false
+  // User confirmation bubble
+  addUserMessage('Approve Selected')
+  // AI confirmation
   addAIMessage(`The ${cnt} selected number${cnt === 1 ? '' : 's'} are now updated and using ARMOR.`)
+  // Show CTA to return
+  showReturnToCCButton.value = true
   scrollToBottom()
 }
 function cancelCcProposals() {
   showCcProposals.value = false
+  addUserMessage('Cancel')
   addAIMessage('Okay, no changes applied. You can open the Command Center anytime to review again.')
   scrollToBottom()
+}
+function returnToCommandCenter() {
+  showReturnToCCButton.value = false
+  showCommandCenter.value = true
+  currentPage.value = 'main'
 }
 const showFileUploadForReturningUser = ref<boolean>(false)
 const welcomeTypingComplete = ref<boolean>(false)
