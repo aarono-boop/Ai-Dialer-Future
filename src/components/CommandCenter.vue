@@ -281,7 +281,7 @@ function getBadgePt(s?: Status) {
   return base
 }
 function primaryCta(s: Status) {
-  return s === 'green' ? 'Review' : s === 'yellow' ? 'Optimize' : 'Fix'
+  return s === 'green' ? 'Review' : s === 'yellow' ? 'Update' : 'Fix'
 }
 function primaryIcon(s: Status) {
   return s === 'green' ? 'pi pi-eye' : s === 'yellow' ? 'pi pi-cog' : 'pi pi-exclamation-triangle'
