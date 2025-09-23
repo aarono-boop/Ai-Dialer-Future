@@ -428,7 +428,7 @@ const cardPt = {
   root: { style: { background: 'var(--p-surface-800)', border: '1px solid var(--p-surface-600)', borderRadius: '12px', padding: '10px 20px' } },
 }
 const assistantPt = {
-  root: { style: { background: 'var(--p-surface-800)', border: '1px solid var(--p-surface-600)', borderRadius: '12px', height: '100%', display: 'flex', flexDirection: 'column', paddingLeft: '20px', paddingRight: '20px' } },
+  root: { style: { background: 'var(--p-surface-800)', border: '1px solid var(--p-surface-600)', borderRadius: '12px', height: '100%', display: 'flex', flexDirection: 'column', paddingLeft: '20px', paddingRight: '20px', paddingBottom: '20px' } },
   body: { style: { display: 'flex', flexDirection: 'column', height: '100%' } },
   content: { style: { display: 'flex', flexDirection: 'column', height: '100%', minHeight: 0 } }
 }
@@ -436,7 +436,8 @@ const assistantPt = {
 function syncAssistantHeight() {
   if (!detailOpen.value) return
   const h = leftPaneRef.value?.offsetHeight || 0
-  if (assistantPaneRef.value) assistantPaneRef.value.style.height = h ? `${h}px` : ''
+  const reduced = h > 20 ? h - 20 : h
+  if (assistantPaneRef.value) assistantPaneRef.value.style.height = h ? `${reduced}px` : ''
 }
 
 onMounted(() => window.addEventListener('resize', syncAssistantHeight))
