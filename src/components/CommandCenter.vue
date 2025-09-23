@@ -38,18 +38,18 @@
           </template>
           <template #content>
             <div class="text-sm text-gray-300 mb-2">{{ m.statusReason }}</div>
-            <div class="grid grid-cols-2 gap-2 mb-3">
-              <div v-for="k in m.kpis" :key="k.label" class="bg-gray-800/70 border border-gray-700 rounded-lg p-2">
-                <div class="text-xs text-gray-400">{{ k.label }}</div>
-                <div class="text-base">{{ k.value }}</div>
+            <div class="flex items-center justify-between mb-2 gap-3">
+              <div v-if="firstKpi(m)" class="bg-gray-800/70 border border-gray-700 rounded-lg p-2 flex-1">
+                <div class="text-xs text-gray-400">{{ firstKpi(m)?.label }}</div>
+                <div class="text-base">{{ firstKpi(m)?.value }}</div>
               </div>
-            </div>
-            <div class="flex items-center justify-between text-xs text-gray-400">
-              <span class="inline-flex items-center gap-1"><i class="pi pi-clock" /> Last updated {{ toRelative(m.lastUpdated) }}</span>
-              <div class="flex items-center gap-2">
+              <div class="flex items-center gap-2 shrink-0">
                 <Button size="small" label="Details" icon="pi pi-eye" severity="secondary" text @click="openDetail(m)" />
                 <Button size="small" :label="primaryCta(m.status)" :icon="primaryIcon(m.status)" severity="secondary" @click="openDetail(m)" />
               </div>
+            </div>
+            <div class="text-xs text-gray-400 inline-flex items-center gap-1">
+              <i class="pi pi-clock" /> Last updated {{ toRelative(m.lastUpdated) }}
             </div>
           </template>
         </Card>
