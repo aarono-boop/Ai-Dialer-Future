@@ -7,6 +7,8 @@ import toggleswitch from './toggleswitch'
 import tooltip from './tooltip'
 import dropdown from './dropdown'
 import datatable from './datatable'
+import badge from './badge'
+import tag from './tag'
 
 export const customTheme = definePreset(base, {
     components: {
@@ -16,7 +18,9 @@ export const customTheme = definePreset(base, {
         toggleswitch,
         tooltip,
         dropdown,
-        datatable
+        datatable,
+        badge,
+        tag
     }
 })
 
