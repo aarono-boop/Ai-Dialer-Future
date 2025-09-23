@@ -95,7 +95,7 @@
                 <div class="space-y-4">
                   <div class="text-sm text-gray-300 font-medium">Proposed Actions</div>
                   <div class="text-xs text-gray-400 mt-1">Activate the following phone numbers with ARMOR.</div>
-                  <div class="bg-gray-800/70 border border-gray-700 rounded-lg p-3">
+                  <div class="bg-gray-800/70 border border-gray-700 rounded-lg p-[22px]">
                     <div class="flex items-center gap-2 mb-2">
                       <Checkbox v-model="allSelected" :binary="true" inputId="select-all" :disabled="!proposedActions.length" />
                       <label for="select-all" class="text-sm font-medium tracking-wide">Select all</label>
