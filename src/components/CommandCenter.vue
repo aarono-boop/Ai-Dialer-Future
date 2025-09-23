@@ -9,9 +9,9 @@
         </div>
         <div class="flex items-center gap-2">
           <div class="flex items-center gap-3" role="group" aria-label="Status filter">
-            <Button size="small" :outlined="!selectedStatuses.includes('green')" severity="success" label="Healthy" @click="toggleStatus('green')" :aria-pressed="selectedStatuses.includes('green')" />
-            <Button size="small" :outlined="!selectedStatuses.includes('yellow')" severity="warning" label="Needs Attention" @click="toggleStatus('yellow')" :aria-pressed="selectedStatuses.includes('yellow')" />
-            <Button size="small" :outlined="!selectedStatuses.includes('red')" severity="danger" label="Action Required" @click="toggleStatus('red')" :aria-pressed="selectedStatuses.includes('red')" />
+            <Button size="small" :outlined="!selectedStatuses.includes('green')" severity="success" :label="`Healthy (${statusCounts.green})`" @click="toggleStatus('green')" :aria-pressed="selectedStatuses.includes('green')" />
+            <Button size="small" :outlined="!selectedStatuses.includes('yellow')" severity="warning" :label="`Needs Attention (${statusCounts.yellow})`" @click="toggleStatus('yellow')" :aria-pressed="selectedStatuses.includes('yellow')" />
+            <Button size="small" :outlined="!selectedStatuses.includes('red')" severity="danger" :label="`Action Required (${statusCounts.red})`" @click="toggleStatus('red')" :aria-pressed="selectedStatuses.includes('red')" />
           </div>
           <Dropdown v-model="sortBy" :options="sortOptions" optionLabel="label" optionValue="value" placeholder="By Impact" class="w-44" variant="filled" appendTo="body" :pt="impactDropdownPt" />
           <Button icon="pi pi-refresh" text severity="secondary" @click="refresh" aria-label="Refresh" />
@@ -301,6 +301,12 @@ const summaryLabel = computed(() => {
   const greens = modules.value.filter(m => m.status === 'green').length
   return `${greens} Healthy • ${yellows} Needs Attention • ${reds} Action Required`
 })
+
+const statusCounts = computed(() => ({
+  green: modules.value.filter(m => m.status === 'green').length,
+  yellow: modules.value.filter(m => m.status === 'yellow').length,
+  red: modules.value.filter(m => m.status === 'red').length
+}))
 
 function statusText(s?: Status) {
   if (!s) return 'Unknown'
