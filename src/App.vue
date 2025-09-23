@@ -12,6 +12,7 @@
       @show-product="showProductPage"
       @go-home="goToMainApp"
       @show-student-dashboard="openStudentDashboard"
+      @show-command-center="openCommandCenter"
     />
 
     <!-- Main App Content -->
@@ -806,6 +807,13 @@
       </div>
     </div>
 
+    <!-- Command Center Page -->
+    <div v-if="showCommandCenter" class="ml-16 flex flex-col min-h-screen">
+      <div class="flex-1">
+        <CommandCenter />
+      </div>
+    </div>
+
     <!-- Product Page -->
     <div v-if="currentPage === 'product'" class="ml-16">
       <ProductPage
@@ -841,7 +849,7 @@
     />
 
     <!-- Footer -->
-    <Footer v-if="currentPage === 'main' && !managementMode && !showStudentDashboard" :style="(showDialer || showCoachInfoPanel) ? 'margin-right: 33.333333%' : ''" :showDialer="showDialer" :queuePaused="queuePaused" @skip-to-dialer="skipToDialer" />
+    <Footer v-if="currentPage === 'main' && !managementMode && !showStudentDashboard && !showCommandCenter" :style="(showDialer || showCoachInfoPanel) ? 'margin-right: 33.333333%' : ''" :showDialer="showDialer" :queuePaused="queuePaused" @skip-to-dialer="skipToDialer" />
 
     <!-- Screen Reader Live Region for Announcements -->
     <div
@@ -940,6 +948,7 @@ import CoachCreationPage from './components/CoachCreationPage.vue'
 import CoachCarousel from './components/CoachCarousel.vue'
 import CoachDashboard from './components/CoachDashboard.vue'
 import StudentDashboard from './components/StudentDashboard.vue'
+import CommandCenter from './components/CommandCenter.vue'
 import MicSpeakerCheck from './components/modals/MicSpeakerCheck.vue'
 
 // PrimeVue Components (adding Button)
@@ -1112,6 +1121,7 @@ const showCoachDashboard = ref(false)
 const dashboardCoachName = ref<string | null>(null)
 const showStudentDashboard = ref(false)
 const studentCoachName = ref<string | null>(null)
+const showCommandCenter = ref(false)
 const chatInputRef = ref<any>(null)
 const chatMessages = ref<HTMLElement | null>(null)
 const screenReaderAnnouncements = ref<HTMLElement | null>(null)
@@ -2980,7 +2990,15 @@ const handleHold = (onHold: boolean): void => {
 const openStudentDashboard = (): void => {
   showCoachDashboard.value = false
   showStudentDashboard.value = true
+  showCommandCenter.value = false
   studentCoachName.value = currentCoach.value?.name || null
+  currentPage.value = 'main'
+}
+
+const openCommandCenter = (): void => {
+  showCoachDashboard.value = false
+  showStudentDashboard.value = false
+  showCommandCenter.value = true
   currentPage.value = 'main'
 }
 

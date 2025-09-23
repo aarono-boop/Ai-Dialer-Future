@@ -59,6 +59,22 @@
       <i class="pi pi-chart-bar text-xl"></i>
     </button>
 
+    <!-- Command Center link (signed in) -->
+    <button
+      v-if="isSignedIn"
+      :class="[
+        'flex items-center justify-center p-2 mt-2 rounded-lg transition-colors cursor-pointer border-none',
+        'bg-transparent text-gray-400 hover:bg-gray-800 hover:text-white'
+      ]"
+      @click="$emit('show-command-center')"
+      aria-label="Open Command Center"
+      type="button"
+      tabindex="3"
+      v-tooltip.right="'Command Center'"
+    >
+      <i class="pi pi-th-large text-xl"></i>
+    </button>
+
     <!-- Spacer to push user actions to bottom -->
     <div class="flex-1"></div>
 
@@ -133,7 +149,7 @@ const props = defineProps<{
 }>()
 
 // Define emits for parent component communication
-const emitSidebar = defineEmits(['login', 'logout', 'show-product', 'go-home', 'show-student-dashboard'])
+const emitSidebar = defineEmits(['login', 'logout', 'show-product', 'go-home', 'show-student-dashboard', 'show-command-center'])
 
 // Template refs
 const focusAnchor = ref<HTMLElement | null>(null)
