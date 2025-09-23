@@ -106,9 +106,9 @@
                       </div>
                     </div>
                   </div>
-                  <div class="flex items-center justify-end gap-2 mt-3">
-                    <Button label="Cancel" severity="secondary" @click="onCancelProposals" />
-                    <Button label="Approve Selected" icon="pi pi-check" @click="approveSelected" :disabled="!approvedCount" />
+                  <div class="grid grid-cols-2 gap-3 mt-3">
+                    <Button label="Cancel" severity="secondary" class="w-full" @click="onCancelProposals" />
+                    <Button label="Approve Selected" icon="pi pi-check" class="w-full" @click="approveSelected" :disabled="!approvedCount" />
                   </div>
 
                   <div v-if="executionLog.length" class="bg-gray-800/70 border border-gray-700 rounded-lg p-3">
