@@ -72,15 +72,19 @@
                   </Badge>
                   <span class="text-sm text-gray-400">{{ selected?.statusReason }}</span>
                 </div>
-                <div class="grid grid-cols-2 md:grid-cols-3 gap-2">
-                  <div v-for="k in selected?.kpis || []" :key="k.label" class="bg-gray-800/70 border border-gray-700 rounded-lg p-3">
-                    <div class="text-xs text-gray-400">{{ k.label }}</div>
-                    <div class="text-base">{{ k.value }}</div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-3 items-stretch">
+                  <div>
+                    <div class="grid grid-cols-2 gap-2">
+                      <div v-for="k in selected?.kpis || []" :key="k.label" class="bg-gray-800/70 border border-gray-700 rounded-lg p-3 h-full">
+                        <div class="text-xs text-gray-400">{{ k.label }}</div>
+                        <div class="text-base">{{ k.value }}</div>
+                      </div>
+                    </div>
                   </div>
-                </div>
-                <div class="bg-gray-800/70 border border-gray-700 rounded-lg p-3">
-                  <div class="text-sm font-medium mb-2">Status rationale</div>
-                  <div class="text-sm text-gray-300">{{ selected?.statusReason }}</div>
+                  <div class="bg-gray-800/70 border border-gray-700 rounded-lg p-3 h-full">
+                    <div class="text-sm font-medium mb-2">Status rationale</div>
+                    <div class="text-sm text-gray-300">{{ selected?.statusReason }}</div>
+                  </div>
                 </div>
 
                 <!-- Recommendations (merged) -->
