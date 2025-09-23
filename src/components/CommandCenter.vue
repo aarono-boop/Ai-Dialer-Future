@@ -18,7 +18,7 @@
             <Button size="small" :outlined="!selectedStatuses.includes('yellow')" severity="warning" label="Needs Attention" @click="toggleStatus('yellow')" :aria-pressed="selectedStatuses.includes('yellow')" />
             <Button size="small" :outlined="!selectedStatuses.includes('red')" severity="danger" label="Action Required" @click="toggleStatus('red')" :aria-pressed="selectedStatuses.includes('red')" />
           </div>
-          <Dropdown v-model="sortBy" :options="sortOptions" optionLabel="label" optionValue="value" placeholder="Sort by" class="w-44" />
+          <Dropdown v-model="sortBy" :options="sortOptions" optionLabel="label" optionValue="value" placeholder="By Impact" class="w-44" variant="filled" appendTo="body" :pt="impactDropdownPt" />
           <Button icon="pi pi-refresh" text severity="secondary" @click="refresh" aria-label="Refresh" />
         </div>
       </div>
@@ -324,6 +324,16 @@ function tooltipForStatus(s?: Status) {
   return s === 'green' ? 'Healthy: Fully configured and meeting targets' : s === 'yellow' ? 'Needs Attention: Partially configured or performance degraded' : 'Action Required: Blocking issues or compliance risks'
 }
 const summaryTooltip = computed(() => `Summary — ${summaryLabel.value}`)
+
+const impactDropdownPt = computed(() => ({
+  root: { style: { background: 'var(--p-surface-800)', border: '1px solid rgba(255,255,255,0.12)', borderRadius: '6px', padding: '0.5rem' } },
+  panel: { class: 'mic-dropdown-panel', style: { background: 'var(--p-surface-800)', border: '1px solid rgba(255,255,255,0.12)' } },
+  overlay: { class: 'mic-dropdown-panel', style: { background: 'var(--p-surface-800)', border: '1px solid rgba(255,255,255,0.12)' } },
+  content: { class: 'mic-dropdown-content', style: { background: 'var(--p-surface-800)', padding: '0.25rem' } },
+  list: { class: 'mic-dropdown-list', style: { background: 'var(--p-surface-800)' } },
+  item: { class: 'mic-dropdown-item hover:bg-white/10', style: { padding: '0.5rem 0.75rem' } }
+}))
+
 function getBadgePt(s?: Status) {
   const base = { root: { style: { padding: '0.125rem 0.375rem' } } } as any
   if (s === 'yellow') {
