@@ -460,3 +460,26 @@ onMounted(() => window.addEventListener('resize', syncAssistantHeight))
 onBeforeUnmount(() => window.removeEventListener('resize', syncAssistantHeight))
 watch(detailOpen, (v) => { if (v) nextTick(() => syncAssistantHeight()) })
 </script>
+
+<style scoped>
+/* Active tab underline (reuse Dialer pattern) */
+:deep(.p-tabview .p-tabview-nav),
+:deep(.p-tabview .p-tabview-tablist) {
+  border-bottom: none !important;
+}
+:deep(.p-tabview .p-tabview-ink-bar) {
+  display: none;
+}
+:deep(.p-tabview .p-tabview-tablist .p-tabview-tablist-item > a.p-tabview-tab-header),
+:deep(.p-tabview .p-tabview-nav .p-tabview-tablist-item > a.p-tabview-tab-header) {
+  border-bottom: 1px solid transparent !important;
+}
+:deep(.p-tabview .p-tabview-tablist .p-tabview-tablist-item[data-p-active="true"] > a.p-tabview-tab-header),
+:deep(.p-tabview .p-tabview-nav .p-tabview-tablist-item[data-p-active="true"] > a.p-tabview-tab-header) {
+  border-bottom-color: var(--p-blue-400) !important;
+}
+:deep(.p-tabview .p-tabview-tablist .p-tabview-tablist-item[data-p-active="true"] > a.p-tabview-tab-header .p-tabview-tab-title),
+:deep(.p-tabview .p-tabview-nav .p-tabview-tablist-item[data-p-active="true"] > a.p-tabview-tab-header .p-tabview-tab-title) {
+  color: var(--p-blue-400) !important;
+}
+</style>
