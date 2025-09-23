@@ -148,10 +148,25 @@
               <div class="text-sm text-gray-300 space-y-2 flex-1">
                 <div v-for="(m, i) in assistantMessages" :key="i">{{ m }}</div>
               </div>
-              <form class="flex items-center gap-2 mt-3" @submit.prevent="sendAssistantMessage">
-                <InputText v-model="assistantInput" class="flex-1" placeholder="Type a message" aria-label="Message to assistant" />
-                <Button type="submit" label="Send" icon="pi pi-send" :disabled="!assistantInput.trim()" />
-              </form>
+              <div class="assistant-chat mt-3">
+                <form class="flex items-center rounded-xl px-3 py-2 gap-2 chat-input-container" @submit.prevent="sendAssistantMessage">
+                  <InputText
+                    v-model="assistantInput"
+                    placeholder="Type your message..."
+                    class="flex-1 bg-transparent border-none text-white text-base px-4 py-3 placeholder-gray-300 focus:outline-none focus:ring-0"
+                    style="background-color: transparent !important; color: white !important;"
+                    aria-label="Message to assistant"
+                  />
+                  <Button
+                    type="submit"
+                    :disabled="!assistantInput.trim()"
+                    text
+                    icon="pi pi-send"
+                    class="w-10 h-10 flex items-center justify-center text-white transition-colors duration-200 hover:opacity-80 disabled:opacity-50"
+                    aria-label="Send message"
+                  />
+                </form>
+              </div>
             </template>
           </Card>
         </div>
@@ -447,5 +462,40 @@ watch(detailOpen, (v) => { if (v) nextTick(() => syncAssistantHeight()) })
 :deep(.cc-tabs .p-tabview-tablist .p-tabview-tablist-item[data-p-active="true"] > a.p-tabview-tab-header .p-tabview-tab-title),
 :deep(.cc-tabs .p-tabview-nav .p-tabview-tablist-item[data-p-active="true"] > a.p-tabview-tab-header .p-tabview-tab-title) {
   color: var(--p-blue-400) !important;
+}
+.assistant-chat .chat-input-container {
+  background-color: var(--p-surface-800);
+  border: 1px solid var(--p-surface-600);
+  transition: all 0.2s ease;
+}
+.assistant-chat .chat-input-container:hover {
+  border-color: var(--p-surface-500);
+}
+.assistant-chat .chat-input-container:focus-within {
+  outline: none;
+  border-color: var(--p-primary-color);
+  box-shadow: inset 0 0 0 1px var(--p-primary-color);
+}
+:deep(.assistant-chat .p-inputtext) {
+  background-color: transparent !important;
+  color: var(--p-surface-0) !important;
+  border: none !important;
+}
+:deep(.assistant-chat .p-inputtext:focus) {
+  outline: none !important;
+  box-shadow: none !important;
+  border: none !important;
+}
+:deep(.assistant-chat .p-inputtext::placeholder) {
+  color: var(--p-surface-300) !important;
+}
+:deep(.assistant-chat .p-button-text) {
+  color: var(--p-surface-0) !important;
+}
+:deep(.assistant-chat .p-button-text:hover:not(:disabled)) {
+  background-color: var(--p-surface-700) !important;
+}
+:deep(.assistant-chat .p-button-text:disabled) {
+  color: var(--p-surface-500) !important;
 }
 </style>
