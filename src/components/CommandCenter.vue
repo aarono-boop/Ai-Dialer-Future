@@ -226,6 +226,16 @@ const filteredModules = computed(() => {
 })
 
 const lastUpdatedRelative = computed(() => 'just now')
+
+// Dynamic columns to limit rows and avoid vertical scroll
+const targetRows = 3
+const minColWidth = 260
+const gridStyle = computed(() => {
+  const count = (filteredModules.value.length || modules.value.length)
+  const cols = Math.max(3, Math.ceil(count / targetRows))
+  return { gridTemplateColumns: `repeat(${cols}, minmax(${minColWidth}px, 1fr))`, gap: '12px' }
+})
+
 const summarySeverity = computed(() => {
   const reds = modules.value.filter(m => m.status === 'red').length
   if (reds > 0) return 'danger'
