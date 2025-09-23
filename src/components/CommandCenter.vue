@@ -37,7 +37,7 @@
             </div>
           </template>
           <template #content>
-            <Button link severity="secondary" size="small" class="p-0 mb-2 text-left" :label="m.statusReason" icon="pi pi-eye" @click="openDetail(m)" />
+            <Button link severity="secondary" size="small" class="mb-2 text-left" :label="m.statusReason" icon="pi pi-eye" :pt="{ root: { style: { padding: '0', paddingLeft: '0', color: 'var(--p-surface-200)' } } }" @click="openDetail(m)" />
             <div class="flex items-center justify-between mb-2 gap-3">
               <div v-if="firstKpi(m)" class="bg-gray-800/70 border border-gray-700 rounded-lg p-2 flex-1">
                 <div class="text-xs text-gray-400">{{ firstKpi(m)?.label }}</div>
