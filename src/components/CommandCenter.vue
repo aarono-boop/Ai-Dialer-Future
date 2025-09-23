@@ -62,7 +62,7 @@
       <div class="flex gap-4 items-stretch">
         <!-- Left: Tabs -->
         <div class="flex-1 min-w-0" ref="leftPaneRef">
-          <TabView>
+          <TabView class="cc-tabs" :pt="{ inkbar: { style: { display: 'none' } } }">
             <TabPanel header="Overview">
               <div class="space-y-4">
                 <div class="flex items-center gap-2">
