@@ -6,7 +6,7 @@
         <div class="flex items-center gap-3 min-w-0">
           <i class="pi pi-th-large text-blue-400" aria-hidden="true"></i>
           <h2 class="text-xl font-semibold truncate">Command Center</h2>
-          <Badge :severity="summarySeverity" class="ml-2" :pt="{ root: { style: { padding: '0.125rem 0.375rem' } } }">
+          <Badge :severity="summarySeverity" class="ml-2" :pt="{ root: { style: { padding: '0.125rem 0.375rem' } } }" v-tooltip.bottom="summaryTooltip">
             <i class="pi pi-dashboard" aria-hidden="true"></i>
             <span class="sr-only">{{ summaryLabel }}</span>
           </Badge>
@@ -29,7 +29,7 @@
                 <span class="font-medium truncate">{{ m.name }}</span>
               </div>
               <div class="flex items-center gap-2">
-                <Badge :severity="statusSeverity(m.status)" :pt="{ root: { style: { padding: '0.125rem 0.375rem' } } }">
+                <Badge :severity="statusSeverity(m.status)" :pt="getBadgePt(m.status)" v-tooltip.top="tooltipForStatus(m.status)">
                   <i :class="statusIcon(m.status)" aria-hidden="true"></i>
                   <span class="sr-only">{{ statusText(m.status) }}</span>
                 </Badge>
@@ -65,7 +65,7 @@
             <TabPanel header="Overview">
               <div class="space-y-3">
                 <div class="flex items-center gap-2">
-                  <Badge :severity="statusSeverity(selected?.status)" :pt="{ root: { style: { padding: '0.125rem 0.375rem' } } }">
+                  <Badge :severity="statusSeverity(selected?.status)" :pt="getBadgePt(selected?.status)" v-tooltip.top="tooltipForStatus(selected?.status)">
                     <i :class="statusIcon(selected?.status)" aria-hidden="true"></i>
                     <span class="sr-only">{{ statusText(selected?.status) }}</span>
                   </Badge>
@@ -250,6 +250,19 @@ function statusSeverity(s?: Status) {
 function statusIcon(s?: Status) {
   if (!s) return 'pi pi-circle'
   return s === 'green' ? 'pi pi-check-circle' : s === 'yellow' ? 'pi pi-exclamation-circle' : 'pi pi-exclamation-triangle'
+}
+function tooltipForStatus(s?: Status) {
+  if (!s) return 'Unknown status'
+  return s === 'green' ? 'Healthy: Fully configured and meeting targets' : s === 'yellow' ? 'Needs Attention: Partially configured or performance degraded' : 'Action Required: Blocking issues or compliance risks'
+}
+const summaryTooltip = computed(() => `Summary — ${summaryLabel.value}`)
+function getBadgePt(s?: Status) {
+  const base = { root: { style: { padding: '0.125rem 0.375rem' } } } as any
+  if (s === 'yellow') {
+    base.root.style.background = 'var(--p-orange-400)'
+    base.root.style.color = 'var(--p-orange-950)'
+  }
+  return base
 }
 function primaryCta(s: Status) {
   return s === 'green' ? 'Review' : s === 'yellow' ? 'Optimize' : 'Fix'
