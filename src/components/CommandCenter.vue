@@ -36,7 +36,10 @@
             </div>
           </template>
           <template #content>
-            <Button link severity="secondary" size="small" class="mb-2 text-left" :label="m.statusReason" icon="pi pi-eye" :pt="{ root: { style: { padding: '0', paddingLeft: '0', color: 'var(--p-surface-200)' } } }" @click="openDetail(m)" />
+            <div v-if="m.key === 'armorStrategy'" class="mb-2 text-left text-sm font-normal" :style="{ color: 'var(--p-surface-200)' }">
+              ARMOR is not activated on your account and you're calling without registration and remediation.
+            </div>
+            <Button v-else link severity="secondary" size="small" class="mb-2 text-left font-normal" :label="m.statusReason" :pt="{ root: { style: { padding: '0', paddingLeft: '0', color: 'var(--p-surface-200)' } } }" @click="openDetail(m)" />
             <div class="flex items-end justify-between mb-2 gap-3">
               <div v-if="firstKpi(m)" class="w-1/2 flex flex-col">
                 <div class="text-xs text-gray-400 mb-1 px-2">{{ firstKpi(m)?.label }}</div>
