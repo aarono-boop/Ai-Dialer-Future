@@ -165,6 +165,14 @@
                     class="w-10 h-10 flex items-center justify-center text-white transition-colors duration-200 hover:opacity-80 disabled:opacity-50"
                     aria-label="Send message"
                   />
+                  <Button
+                    type="button"
+                    text
+                    icon="pi pi-book"
+                    class="w-10 h-10 flex items-center justify-center text-white transition-colors duration-200 hover:opacity-80"
+                    aria-label="Open prompt library"
+                    v-tooltip.top="'Open prompt library'"
+                  />
                 </form>
               </div>
             </template>
