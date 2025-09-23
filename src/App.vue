@@ -172,9 +172,9 @@
                   </div>
                 </div>
               </div>
-              <div class="flex items-center justify-end gap-2 mt-3">
-                <Button label="Cancel" severity="secondary" @click="cancelCcProposals" />
-                <Button label="Approve Selected" icon="pi pi-check" @click="approveCcSelected" :disabled="!ccApprovedCount" />
+              <div class="grid grid-cols-2 gap-3 mt-3">
+                <Button label="Cancel" severity="secondary" class="w-full" @click="cancelCcProposals" />
+                <Button label="Approve Selected" icon="pi pi-check" class="w-full" @click="approveCcSelected" :disabled="!ccApprovedCount" />
               </div>
             </div>
           </div>
