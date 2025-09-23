@@ -1203,7 +1203,7 @@ function handleCommandCenterRedirect(payload: { module: any, proposed: CCPropose
 function approveCcSelected() {
   const cnt = ccApprovedCount.value
   showCcProposals.value = false
-  addAIMessage(`Approved ${cnt} action${cnt === 1 ? '' : 's'}. I\'ll take care of them now.`)
+  addAIMessage(`The ${cnt} selected number${cnt === 1 ? '' : 's'} are now updated and using ARMOR.`)
   scrollToBottom()
 }
 function cancelCcProposals() {
