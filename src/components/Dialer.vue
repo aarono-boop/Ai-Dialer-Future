@@ -337,7 +337,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, nextTick, computed } from 'vue'
+import { ref, nextTick, computed, watch, onUnmounted } from 'vue'
 import Button from 'primevue/button'
 import ToggleSwitch from 'primevue/toggleswitch'
 import { useCoaches } from '../composables/useCoaches'
@@ -381,6 +381,7 @@ const props = defineProps<{
   totalContacts: number
   coachParameter: string
   aiCoachEnabled: boolean
+  multiLine?: boolean
 }>()
 
 // Define emits
@@ -398,6 +399,46 @@ const keypadButtonRef = ref<any>(null)
 
 // Coach system integration
 const { currentCoach } = useCoaches()
+
+// Multi-line simulation state
+const lines = ref<Array<{ id: number; state: 'ringing' | 'connected'; duration: number }>>([
+  { id: 1, state: 'ringing', duration: 0 },
+  { id: 2, state: 'ringing', duration: 0 },
+  { id: 3, state: 'ringing', duration: 0 }
+])
+let lineTimers: Array<ReturnType<typeof setInterval> | null> = [null, null, null]
+let connectTimeouts: Array<ReturnType<typeof setTimeout> | null> = [null, null, null]
+
+const startMultiLineSimulation = () => {
+  // Reset
+  lines.value = [
+    { id: 1, state: 'ringing', duration: 0 },
+    { id: 2, state: 'ringing', duration: 0 },
+    { id: 3, state: 'ringing', duration: 0 }
+  ]
+
+  // Stagger connections: line 1 connects at 1s, line 2 at 2s, line 3 keeps ringing
+  connectTimeouts[0] = setTimeout(() => {
+    lines.value[0].state = 'connected'
+    lineTimers[0] = setInterval(() => { lines.value[0].duration++ }, 1000)
+  }, 1000)
+  connectTimeouts[1] = setTimeout(() => {
+    lines.value[1].state = 'connected'
+    lineTimers[1] = setInterval(() => { lines.value[1].duration++ }, 1000)
+  }, 2000)
+}
+
+const stopMultiLineSimulation = () => {
+  lineTimers.forEach((t, i) => { if (t) { clearInterval(t); lineTimers[i] = null } })
+  connectTimeouts.forEach((t, i) => { if (t) { clearTimeout(t); connectTimeouts[i] = null } })
+}
+
+watch(() => props.multiLine, (val) => {
+  if (val) startMultiLineSimulation()
+  else stopMultiLineSimulation()
+}, { immediate: true })
+
+onUnmounted(() => stopMultiLineSimulation())
 
 // Helper method for coach initials
 const getCoachInitials = (name: string): string => {
