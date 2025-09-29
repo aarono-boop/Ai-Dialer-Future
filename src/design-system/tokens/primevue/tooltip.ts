@@ -1,5 +1,3 @@
-import type { TooltipDesignTokens } from '@primeuix/themes/types/tooltip'
-
 export default {
   root: {
     background: '{overlay.popover.background}',
@@ -13,4 +11,4 @@ export default {
   arrow: {
     size: '6px'
   }
-} satisfies TooltipDesignTokens
+} as any
