@@ -14,13 +14,13 @@
             'border-red-400': line.state === 'disconnected'
           }"
         >
-          <div class="flex items-start gap-3">
+          <div class="flex items-center gap-3">
             <!-- Left thumbnail -->
             <div class="shrink-0">
               <Image :src="line.imageUrl" alt="Property preview" @error="onImageError(line)" :pt="{ image: { style: { width: '72px', height: '72px', objectFit: 'cover', borderRadius: '6px' } } }" />
             </div>
             <!-- Right content -->
-            <div class="flex-1">
+            <div class="flex-1 flex flex-col justify-center">
               <template v-if="line.state === 'ringing'">
                 <div class="flex items-center justify-start gap-2 text-green-400 text-left w-full pl-1.5">
                   <div class="font-medium">Calling ({{ line.name }})</div>
