@@ -2,36 +2,53 @@
   <div class="w-full h-full bg-gray-900 rounded-r-lg border border-gray-700 flex flex-col pt-4 pb-[10px] px-3">
     <!-- Call Status & Controls Card -->
     <div class="mx-[5px] mb-4 bg-gray-800 border border-gray-600 rounded-lg p-[14px]">
-      <!-- Call Status -->
-      <!-- Call Ended State -->
-      <div v-if="callState === 'ended'" class="bg-gray-900/50 border border-gray-600 rounded-lg p-3 text-center">
-        <div class="text-red-400 font-medium">Call Ended</div>
-        <div class="text-gray-300 text-sm">(312) 586-9748</div>
-      </div>
-
-      <!-- Ringing State -->
-      <div v-else-if="callState === 'ringing'" class="bg-gray-900/50 border border-gray-600 rounded-lg p-3 text-center">
-        <div class="flex items-center justify-center gap-2">
-          <div class="text-green-400 font-medium">Calling</div>
-          <div class="flex items-center">
-            <div class="animate-pulse w-2 h-2 bg-green-400 rounded-full mx-1"></div>
-            <div class="animate-pulse w-2 h-2 bg-green-400 rounded-full mx-1" style="animation-delay: 0.2s"></div>
-            <div class="animate-pulse w-2 h-2 bg-green-400 rounded-full mx-1" style="animation-delay: 0.4s"></div>
+      <!-- Multi-Line Status -->
+      <div v-if="multiLine" class="grid grid-cols-1 gap-2">
+        <div v-for="line in lines" :key="line.id" class="bg-gray-900/50 border border-gray-600 rounded-lg p-3 text-center">
+          <div class="flex items-center justify-center gap-2" v-if="line.state === 'ringing'">
+            <div class="text-green-400 font-medium">Calling (Line {{ line.id }})</div>
+            <div class="flex items-center">
+              <div class="animate-pulse w-2 h-2 bg-green-400 rounded-full mx-1"></div>
+              <div class="animate-pulse w-2 h-2 bg-green-400 rounded-full mx-1" style="animation-delay: 0.2s"></div>
+              <div class="animate-pulse w-2 h-2 bg-green-400 rounded-full mx-1" style="animation-delay: 0.4s"></div>
+            </div>
           </div>
+          <div class="text-green-400 font-medium" v-else>Live Call (Line {{ line.id }}): <span class="font-mono">{{ formatTime(line.duration) }}</span></div>
         </div>
-        <div class="text-gray-300 text-sm">{{ currentContact.phone }}</div>
       </div>
 
-      <!-- Connected State -->
-      <div v-else-if="callState === 'connected'" class="bg-green-900/50 border border-green-400 rounded-lg p-3 text-center animate-pulse" style="border-width: 1px;">
-        <div class="text-green-400 font-medium">Live Call: <span class="font-mono">{{ formatTime(callDuration) }}</span></div>
-        <div class="text-gray-300 text-sm">{{ currentContact.phone }}</div>
-      </div>
+      <!-- Single-Line Call Status -->
+      <div v-else>
+        <!-- Call Ended State -->
+        <div v-if="callState === 'ended'" class="bg-gray-900/50 border border-gray-600 rounded-lg p-3 text-center">
+          <div class="text-red-400 font-medium">Call Ended</div>
+          <div class="text-gray-300 text-sm">(312) 586-9748</div>
+        </div>
 
-      <!-- Idle State (initial state before any calls) -->
-      <div v-else-if="callState === 'idle'" class="bg-gray-900/50 border border-gray-600 rounded-lg p-3 text-center">
-        <div class="text-gray-400 font-medium">Ready to Dial</div>
-        <div class="text-gray-300 text-sm">{{ currentContact.phone }}</div>
+        <!-- Ringing State -->
+        <div v-else-if="callState === 'ringing'" class="bg-gray-900/50 border border-gray-600 rounded-lg p-3 text-center">
+          <div class="flex items-center justify-center gap-2">
+            <div class="text-green-400 font-medium">Calling</div>
+            <div class="flex items-center">
+              <div class="animate-pulse w-2 h-2 bg-green-400 rounded-full mx-1"></div>
+              <div class="animate-pulse w-2 h-2 bg-green-400 rounded-full mx-1" style="animation-delay: 0.2s"></div>
+              <div class="animate-pulse w-2 h-2 bg-green-400 rounded-full mx-1" style="animation-delay: 0.4s"></div>
+            </div>
+          </div>
+          <div class="text-gray-300 text-sm">{{ currentContact.phone }}</div>
+        </div>
+
+        <!-- Connected State -->
+        <div v-else-if="callState === 'connected'" class="bg-green-900/50 border border-green-400 rounded-lg p-3 text-center animate-pulse" style="border-width: 1px;">
+          <div class="text-green-400 font-medium">Live Call: <span class="font-mono">{{ formatTime(callDuration) }}</span></div>
+          <div class="text-gray-300 text-sm">{{ currentContact.phone }}</div>
+        </div>
+
+        <!-- Idle State (initial state before any calls) -->
+        <div v-else-if="callState === 'idle'" class="bg-gray-900/50 border border-gray-600 rounded-lg p-3 text-center">
+          <div class="text-gray-400 font-medium">Ready to Dial</div>
+          <div class="text-gray-300 text-sm">{{ currentContact.phone }}</div>
+        </div>
       </div>
 
       <!-- Header -->
