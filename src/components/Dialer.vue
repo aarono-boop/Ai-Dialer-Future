@@ -25,7 +25,7 @@
             </div>
           </template>
           <template v-else-if="line.state === 'disconnected'">
-            <div class="text-red-400 font-medium">Call Ended ({{ line.name }})</div>
+            <div class="text-red-400 font-medium">{{ line.endReason || `Call Ended (${line.name})` }}</div>
           </template>
           <template v-else>
             <div class="text-green-400 font-medium">Live Call ({{ line.name }}): <span class="font-mono">{{ formatTime(line.duration) }}</span></div>
@@ -433,7 +433,7 @@ const { currentCoach } = useCoaches()
 
 // Multi-line simulation state
 interface LineTag { label: string; severity?: 'success' | 'info' | 'warning' | 'danger' | 'secondary' | 'contrast' }
-interface LineState { id: number; name: string; state: 'ringing' | 'connected' | 'disconnected'; duration: number; tags: LineTag[] }
+interface LineState { id: number; name: string; state: 'ringing' | 'connected' | 'disconnected'; duration: number; tags: LineTag[]; endReason?: string }
 
 const generateRandomTags = (): LineTag[] => {
   const listingTypes: LineTag[] = [
@@ -484,9 +484,9 @@ const generateRandomTags = (): LineTag[] => {
 }
 
 const lines = ref<LineState[]>([
-  { id: 1, name: props.multiLineNames?.[0] || 'Sam Sample', state: 'ringing', duration: 0, tags: generateRandomTags() },
-  { id: 2, name: props.multiLineNames?.[1] || 'Jordan Lee', state: 'ringing', duration: 0, tags: generateRandomTags() },
-  { id: 3, name: props.multiLineNames?.[2] || 'Taylor Kim', state: 'ringing', duration: 0, tags: generateRandomTags() }
+  { id: 1, name: props.multiLineNames?.[0] || 'Sam Sample', state: 'ringing', duration: 0, tags: generateRandomTags(), endReason: undefined },
+  { id: 2, name: props.multiLineNames?.[1] || 'Jordan Lee', state: 'ringing', duration: 0, tags: generateRandomTags(), endReason: undefined },
+  { id: 3, name: props.multiLineNames?.[2] || 'Taylor Kim', state: 'ringing', duration: 0, tags: generateRandomTags(), endReason: undefined }
 ])
 let lineTimers: Array<ReturnType<typeof setInterval> | null> = [null, null, null]
 let transitionTimeout: ReturnType<typeof setTimeout> | null = null
@@ -494,9 +494,9 @@ let transitionTimeout: ReturnType<typeof setTimeout> | null = null
 const startMultiLineSimulation = () => {
   // Reset
   lines.value = [
-    { id: 1, name: props.multiLineNames?.[0] || 'Sam Sample', state: 'ringing', duration: 0, tags: generateRandomTags() },
-    { id: 2, name: props.multiLineNames?.[1] || 'Jordan Lee', state: 'ringing', duration: 0, tags: generateRandomTags() },
-    { id: 3, name: props.multiLineNames?.[2] || 'Taylor Kim', state: 'ringing', duration: 0, tags: generateRandomTags() }
+    { id: 1, name: props.multiLineNames?.[0] || 'Sam Sample', state: 'ringing', duration: 0, tags: generateRandomTags(), endReason: undefined },
+    { id: 2, name: props.multiLineNames?.[1] || 'Jordan Lee', state: 'ringing', duration: 0, tags: generateRandomTags(), endReason: undefined },
+    { id: 3, name: props.multiLineNames?.[2] || 'Taylor Kim', state: 'ringing', duration: 0, tags: generateRandomTags(), endReason: undefined }
   ]
 
   // After 2 seconds, connect line 1 and disconnect lines 2 and 3
@@ -504,7 +504,9 @@ const startMultiLineSimulation = () => {
     lines.value[0].state = 'connected'
     lines.value[0].duration = 0
     lines.value[1].state = 'disconnected'
+    lines.value[1].endReason = 'No Answer'
     lines.value[2].state = 'disconnected'
+    lines.value[2].endReason = 'Voicemail Left'
     emit('multi-line-connected', lines.value[0].name)
     lineTimers[0] = setInterval(() => { lines.value[0].duration++ }, 1000)
   }, 5000)
