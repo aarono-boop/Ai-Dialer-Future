@@ -25,10 +25,10 @@
             </div>
           </template>
           <template v-else-if="line.state === 'disconnected'">
-            <div class="text-red-400 font-medium">Call Ended (Line {{ line.id }})</div>
+            <div class="text-red-400 font-medium">Call Ended ({{ line.name }})</div>
           </template>
           <template v-else>
-            <div class="text-green-400 font-medium">Live Call (Line {{ line.id }}): <span class="font-mono">{{ formatTime(line.duration) }}</span></div>
+            <div class="text-green-400 font-medium">Live Call ({{ line.name }}): <span class="font-mono">{{ formatTime(line.duration) }}</span></div>
           </template>
         </div>
       </div>
