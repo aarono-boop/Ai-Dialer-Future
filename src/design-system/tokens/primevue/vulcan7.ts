@@ -8,7 +8,7 @@ import tooltip from './tooltip'
 import dropdown from './dropdown'
 
 // Vulcan7 brand preset: primary color #f3841c with an orange-based scale
-export const vulcan7Theme = definePreset(base, {
+export const vulcan7Theme = definePreset(base as any, {
   semantic: {
     primary: {
       50: '#fff5ec',
@@ -32,6 +32,6 @@ export const vulcan7Theme = definePreset(base, {
     tooltip,
     dropdown
   }
-})
+} as any)
 
 export default vulcan7Theme
