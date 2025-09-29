@@ -134,7 +134,7 @@
     </div>
 
     <!-- Contact Info -->
-    <div class="flex-1 mx-[5px] mb-4 bg-gray-800 border border-gray-600 rounded-lg p-[14px] overflow-y-auto">
+    <div v-if="showContactInfo" class="flex-1 mx-[5px] mb-4 bg-gray-800 border border-gray-600 rounded-lg p-[14px] overflow-y-auto">
       <div class="space-y-4">
         <!-- Contact Header -->
         <div>
