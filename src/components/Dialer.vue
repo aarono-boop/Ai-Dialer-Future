@@ -268,7 +268,7 @@
         </Button>
 
         <Button
-          @click="shouldCompleteQueue ? completeQueue() : nextContact()"
+          @click="handleNextActionClick"
           @keydown.tab="handleNextContactTab"
           tabindex="14"
           :disabled="shouldCompleteQueue ? !dispositionSet : (callState === 'ended' && !dispositionSet)"
@@ -398,10 +398,11 @@ const props = defineProps<{
   coachParameter: string
   aiCoachEnabled: boolean
   multiLine?: boolean
+  multiLineNames?: string[]
 }>()
 
 // Define emits
-const emit = defineEmits(['call-back', 'next-contact', 'hang-up', 'mute', 'hold', 'keypad', 'keypad-press', 'pause-queue', 'complete-queue', 'ai-coach-toggle', 'multi-line-connected'])
+const emit = defineEmits(['call-back', 'next-contact', 'hang-up', 'mute', 'hold', 'keypad', 'keypad-press', 'pause-queue', 'complete-queue', 'ai-coach-toggle', 'multi-line-connected', 'start-next-trio'])
 
 // Reactive data
 const isMuted = ref(false)
@@ -418,9 +419,9 @@ const { currentCoach } = useCoaches()
 
 // Multi-line simulation state
 const lines = ref<Array<{ id: number; name: string; state: 'ringing' | 'connected' | 'disconnected'; duration: number }>>([
-  { id: 1, name: 'Sam Sample', state: 'ringing', duration: 0 },
-  { id: 2, name: 'Jordan Lee', state: 'ringing', duration: 0 },
-  { id: 3, name: 'Taylor Kim', state: 'ringing', duration: 0 }
+  { id: 1, name: props.multiLineNames?.[0] || 'Sam Sample', state: 'ringing', duration: 0 },
+  { id: 2, name: props.multiLineNames?.[1] || 'Jordan Lee', state: 'ringing', duration: 0 },
+  { id: 3, name: props.multiLineNames?.[2] || 'Taylor Kim', state: 'ringing', duration: 0 }
 ])
 let lineTimers: Array<ReturnType<typeof setInterval> | null> = [null, null, null]
 let transitionTimeout: ReturnType<typeof setTimeout> | null = null
@@ -428,9 +429,9 @@ let transitionTimeout: ReturnType<typeof setTimeout> | null = null
 const startMultiLineSimulation = () => {
   // Reset
   lines.value = [
-    { id: 1, name: 'Sam Sample', state: 'ringing', duration: 0 },
-    { id: 2, name: 'Jordan Lee', state: 'ringing', duration: 0 },
-    { id: 3, name: 'Taylor Kim', state: 'ringing', duration: 0 }
+    { id: 1, name: props.multiLineNames?.[0] || 'Sam Sample', state: 'ringing', duration: 0 },
+    { id: 2, name: props.multiLineNames?.[1] || 'Jordan Lee', state: 'ringing', duration: 0 },
+    { id: 3, name: props.multiLineNames?.[2] || 'Taylor Kim', state: 'ringing', duration: 0 }
   ]
 
   // After 2 seconds, connect line 1 and disconnect lines 2 and 3
@@ -453,6 +454,10 @@ watch(() => props.multiLine, (val) => {
   if (val) startMultiLineSimulation()
   else stopMultiLineSimulation()
 }, { immediate: true })
+
+watch(() => props.multiLineNames, () => {
+  if (props.multiLine) startMultiLineSimulation()
+})
 
 onUnmounted(() => stopMultiLineSimulation())
 
@@ -822,6 +827,15 @@ const nextActionLabel = computed(() => {
   if (props.shouldCompleteQueue) return 'Queue Completed'
   return props.multiLine ? 'Call Next 3 Contacts' : `Next: ${props.nextContactName}`
 })
+
+const handleNextActionClick = () => {
+  if (props.multiLine) {
+    emit('start-next-trio')
+  } else {
+    if (props.shouldCompleteQueue) emit('complete-queue')
+    else emit('next-contact')
+  }
+}
 </script>
 
 <style scoped>
