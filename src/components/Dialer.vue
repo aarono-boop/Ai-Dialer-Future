@@ -445,14 +445,40 @@ const generateRandomTags = (): LineTag[] => {
   const priceBands = ['$325k', '$449k', '$585k', '$799k', '$1.2M']
   const sizes = ['1,120 sqft', '1,540 sqft', '2,280 sqft', '3,050 sqft']
   const dom = ['DOM 7', 'DOM 22', 'DOM 45', 'DOM 63']
+  const zips = ['ZIP 90028', 'ZIP 60606', 'ZIP 75201', 'ZIP 98101']
+  const years = ['Built 1978', 'Built 1992', 'Built 2005', 'Built 2016']
 
   const pick = <T,>(arr: T[]) => arr[Math.floor(Math.random() * arr.length)]
 
   const tags: LineTag[] = []
-  tags.push(pick(listingTypes))
-  tags.push({ label: pick(priceBands), severity: 'success' })
-  if (Math.random() > 0.5) tags.push({ label: pick(sizes), severity: 'secondary' })
-  if (Math.random() > 0.6) tags.push({ label: pick(dom), severity: 'contrast' })
+  const used = new Set<string>()
+
+  // Always include listing type and price
+  const lt = pick(listingTypes)
+  tags.push(lt)
+  used.add(lt.label)
+  const price = { label: pick(priceBands), severity: 'success' as const }
+  tags.push(price)
+  used.add(price.label)
+
+  // Pools for remaining metadata
+  const pools: LineTag[][] = [
+    sizes.map((s) => ({ label: s, severity: 'secondary' as const })),
+    dom.map((d) => ({ label: d, severity: 'contrast' as const })),
+    zips.map((z) => ({ label: z, severity: 'info' as const })),
+    years.map((y) => ({ label: y, severity: 'secondary' as const }))
+  ]
+
+  // Fill until exactly 4 tags
+  while (tags.length < 4) {
+    const pool = pick(pools)
+    const candidate = pick(pool)
+    if (!used.has(candidate.label)) {
+      tags.push(candidate)
+      used.add(candidate.label)
+    }
+  }
+
   return tags
 }
 
