@@ -16,7 +16,7 @@
         >
           <!-- Card menu for non-connected lines -->
           <div v-if="line.state === 'disconnected'" class="absolute top-1 right-1">
-            <Button size="small" text rounded severity="secondary" aria-label="Line actions" icon="pi pi-ellipsis-h" @click="menuRefs[line.id]?.toggle($event)" />
+            <Button size="small" text rounded severity="secondary" aria-label="Line actions" icon="pi pi-ellipsis-v" @click="menuRefs[line.id]?.toggle($event)" />
             <Menu :model="getMenuItems(line)" :popup="true" appendTo="body" :pt="menuPT" :ref="(el: any) => (menuRefs[line.id] = el)" />
           </div>
 
@@ -444,9 +444,9 @@ const showKeypadModal = ref(false)
 const menuRefs = ref<Record<number, any>>({})
 
 const getMenuItems = (line: LineState) => [
-  { label: 'Leave Note', icon: 'pi pi-comment', command: () => emit('line-menu-action', { lineId: line.id, action: 'leave-note' }) },
-  { label: 'Call Back Next', icon: 'pi pi-clock', command: () => emit('line-menu-action', { lineId: line.id, action: 'call-back-next' }) },
-  { label: 'Move to End of Queue', icon: 'pi pi-angle-double-right', command: () => emit('line-menu-action', { lineId: line.id, action: 'move-to-end' }) }
+  { label: 'Leave Note', command: () => emit('line-menu-action', { lineId: line.id, action: 'leave-note' }) },
+  { label: 'Call Back Next', command: () => emit('line-menu-action', { lineId: line.id, action: 'call-back-next' }) },
+  { label: 'Move to End of Queue', command: () => emit('line-menu-action', { lineId: line.id, action: 'move-to-end' }) }
 ]
 
 const menuPT = {
@@ -455,7 +455,7 @@ const menuPT = {
   list: { style: { padding: '0.25rem' } },
   item: { class: 'hover:bg-white/10', style: { borderRadius: '6px' } },
   itemContent: { style: { padding: '0.5rem 0.75rem' } },
-  itemLabel: { style: { fontSize: '0.875rem' } }
+  itemLabel: { style: { fontSize: '0.875rem', color: '#ffffff' } }
 }
 
 // Template refs for PrimeVue buttons
