@@ -7,13 +7,19 @@
         <div
           v-for="line in lines"
           :key="line.id"
-          class="bg-gray-900/50 rounded-lg p-3 text-center border"
+          class="bg-gray-900/50 rounded-lg p-3 text-center border relative"
           :class="{
             'border-gray-600': line.state === 'ringing',
             'border-green-400': line.state === 'connected',
             'border-red-400': line.state === 'disconnected'
           }"
         >
+          <!-- Card menu for non-connected lines -->
+          <div v-if="line.state === 'disconnected'" class="absolute top-1 right-1">
+            <Button size="small" text rounded severity="secondary" aria-label="Line actions" icon="pi pi-bars" @click="menuRefs[line.id]?.toggle($event)" />
+            <Menu :model="getMenuItems(line)" :popup="true" :ref="(el: any) => (menuRefs[line.id] = el)" />
+          </div>
+
           <div class="flex items-center gap-3">
             <!-- Left thumbnail -->
             <div class="shrink-0">
@@ -378,6 +384,7 @@ import Button from 'primevue/button'
 import ToggleSwitch from 'primevue/toggleswitch'
 import Tag from 'primevue/tag'
 import Image from 'primevue/image'
+import Menu from 'primevue/menu'
 import { useCoaches } from '../composables/useCoaches'
 import { fontSize as dsFontSize } from '../design-system/tokens/typography'
 
@@ -426,12 +433,21 @@ const props = defineProps<{
 }>()
 
 // Define emits
-const emit = defineEmits(['call-back', 'next-contact', 'hang-up', 'mute', 'hold', 'keypad', 'keypad-press', 'pause-queue', 'complete-queue', 'ai-coach-toggle', 'multi-line-connected', 'start-next-trio'])
+const emit = defineEmits(['call-back', 'next-contact', 'hang-up', 'mute', 'hold', 'keypad', 'keypad-press', 'pause-queue', 'complete-queue', 'ai-coach-toggle', 'multi-line-connected', 'start-next-trio', 'line-menu-action'])
 
 // Reactive data
 const isMuted = ref(false)
 const isOnHold = ref(false)
 const showKeypadModal = ref(false)
+
+// Menu refs per line
+const menuRefs = ref<Record<number, any>>({})
+
+const getMenuItems = (line: LineState) => [
+  { label: 'Leave Note', icon: 'pi pi-comment', command: () => emit('line-menu-action', { lineId: line.id, action: 'leave-note' }) },
+  { label: 'Call Back Next', icon: 'pi pi-clock', command: () => emit('line-menu-action', { lineId: line.id, action: 'call-back-next' }) },
+  { label: 'Move to End of Queue', icon: 'pi pi-angle-double-right', command: () => emit('line-menu-action', { lineId: line.id, action: 'move-to-end' }) }
+]
 
 // Template refs for PrimeVue buttons
 const muteButtonRef = ref<any>(null)
