@@ -116,7 +116,7 @@
                 </ChatMessage>
 
                 <!-- Call Separator -->
-                <CallSeparator v-else-if="message.type === 'separator'" :contactName="message.contactName || ''" />
+                <CallSeparator v-else-if="message.type === 'separator'" :contactName="message.contactName || ''" :overrideText="(message as any).overrideText || ''" />
               </template>
             </div>
 
