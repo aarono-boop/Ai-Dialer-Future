@@ -440,7 +440,7 @@ const startMultiLineSimulation = () => {
     lines.value[1].state = 'disconnected'
     lines.value[2].state = 'disconnected'
     lineTimers[0] = setInterval(() => { lines.value[0].duration++ }, 1000)
-  }, 2000)
+  }, 5000)
 }
 
 const stopMultiLineSimulation = () => {
