@@ -1759,7 +1759,7 @@ const sendMessage = (message: string): void => {
         '<i class="pi pi-star"></i> I\'d love to show you ARKON in action!',
         'Let me set up a personalized demo where you can see:',
         '• Live contact scoring and prioritization',
-        '�� Real-time dialing with connect predictions',
+        '��� Real-time dialing with connect predictions',
         '��� Smart call disposition and follow-up automation',
         'What\'s your preferred time? I can schedule something for today or tomorrow.'
       ])
@@ -2732,7 +2732,7 @@ const startMultiLineDialing = (): void => {
   currentContactIndex.value = 0
 
   messages.value = []
-  addAIMessage('Multi-Line dialing enabled. Simulating 3 concurrent calls...')
+  addAIMessage('Multi-Line dialing enabled.')
   addSeparatorMessage('3 Contacts', 'Multi-Line dialing enabled.')
 }
 
