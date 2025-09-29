@@ -300,6 +300,22 @@ export const createChatUtils = (
     })
   }
 
+  const updateLastSeparator = (overrideText: string, newContactName?: string): void => {
+    // Find the last separator message
+    for (let i = messages.value.length - 1; i >= 0; i--) {
+      const m = messages.value[i]
+      if (m && m.type === 'separator') {
+        if (newContactName) m.contactName = newContactName
+        ;(m as any).overrideText = overrideText
+        scrollToBottom()
+        return
+      }
+    }
+
+    // Fallback: if none exists, create one
+    addSeparatorMessage(newContactName || '3 Contacts', overrideText)
+  }
+
   return {
     scrollToBottom,
     scrollToBottomDuringTyping,
@@ -315,6 +331,7 @@ export const createChatUtils = (
     addSeparatorMessage,
     addAIMessageWithDelay,
     addAIMessageWithTyping,
-    addAIMessageWithTypingNoScroll
+    addAIMessageWithTypingNoScroll,
+    updateLastSeparator
   }
 }
