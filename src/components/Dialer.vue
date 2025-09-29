@@ -38,7 +38,7 @@
               :key="i"
               :value="t.label"
               :severity="t.severity"
-              :pt="{ root: { style: { fontSize: '10px', padding: '2px 6px', lineHeight: '1.1' } } }"
+              :pt="{ root: { style: { fontSize: tagFontSize, padding: '2px 6px', lineHeight: '1.15' } } }"
             />
           </div>
         </div>
@@ -369,6 +369,7 @@ import Button from 'primevue/button'
 import ToggleSwitch from 'primevue/toggleswitch'
 import Tag from 'primevue/tag'
 import { useCoaches } from '../composables/useCoaches'
+import { fontSize as dsFontSize } from '../design-system/tokens/typography'
 
 // Connect Score tooltip content
 const connectScoreTooltip = `Connect Score is a premium add-on feature that uses real-world signals to help users prioritize high-value contacts and skip low-quality leads. It scores each phone number as High, Medium, or Low based on:
@@ -551,6 +552,8 @@ const dialQueueText = computed(() => {
   }
   return `Dial Queue ${props.currentContactIndex + 1} of 3`
 })
+
+const tagFontSize = dsFontSize.xs[0]
 
 const progressWidth = computed(() => {
   if (props.multiLine) {
