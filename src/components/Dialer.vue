@@ -401,7 +401,7 @@ const props = defineProps<{
 }>()
 
 // Define emits
-const emit = defineEmits(['call-back', 'next-contact', 'hang-up', 'mute', 'hold', 'keypad', 'keypad-press', 'pause-queue', 'complete-queue', 'ai-coach-toggle'])
+const emit = defineEmits(['call-back', 'next-contact', 'hang-up', 'mute', 'hold', 'keypad', 'keypad-press', 'pause-queue', 'complete-queue', 'ai-coach-toggle', 'multi-line-connected'])
 
 // Reactive data
 const isMuted = ref(false)
@@ -439,6 +439,7 @@ const startMultiLineSimulation = () => {
     lines.value[0].duration = 0
     lines.value[1].state = 'disconnected'
     lines.value[2].state = 'disconnected'
+    emit('multi-line-connected', lines.value[0].name)
     lineTimers[0] = setInterval(() => { lines.value[0].duration++ }, 1000)
   }, 5000)
 }
