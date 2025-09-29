@@ -2169,6 +2169,22 @@ const handleCallBack = (): void => {
   simulateCall()
 }
 
+const handleStartNextTrio = (): void => {
+  // Build next trio starting with next contact (e.g., George Sample)
+  const nextIdx = Math.min(currentContactIndex.value + 1, contacts.length - 1)
+  const primary = contacts[nextIdx]?.name || 'Next Contact'
+  // Generate two fake names
+  const alternates = ['Avery Brooks', 'Casey Morgan']
+  multiLineNames.value = [primary, alternates[0], alternates[1]]
+
+  // Restart multi-line simulation
+  multiLineActive.value = false
+  nextTick(() => { multiLineActive.value = true })
+
+  // Reset state visuals
+  callState.value = 'idle'
+}
+
 const handleNextContact = (): void => {
   // Stop current timers
   if (callTimer) {
@@ -2699,8 +2715,12 @@ const startMultiLineDialing = (): void => {
   showPhoneVerificationButton.value = false
   showStartDialingButton.value = false
 
+  // First trio names
+  multiLineNames.value = ['Sam Sample', 'Jordan Lee', 'Taylor Kim']
+
   showDialer.value = true
-  multiLineActive.value = true
+  multiLineActive.value = false
+  nextTick(() => { multiLineActive.value = true })
 
   // Reset single-line call state; Dialer handles multi-line simulation
   callState.value = 'idle'
@@ -2774,9 +2794,13 @@ const handleAICoachToggle = (enabled: boolean): void => {
 }
 
 const handleMultiLineConnected = (contactName: string): void => {
+  // Align current contact with the connected line
+  const idx = contacts.findIndex(c => c.name === contactName)
+  if (idx >= 0) currentContactIndex.value = idx
+
   // Add green call separator and begin the same flow as single-line
   addSeparatorMessage(contactName)
-  showCallConnectedMessages(currentContact.value)
+  showCallConnectedMessages(contacts[currentContactIndex.value])
   scrollToBottom()
 }
 
