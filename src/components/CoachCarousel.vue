@@ -91,7 +91,7 @@ onUnmounted(() => {
   window.removeEventListener('resize', updateScrollButtons)
 })
 
-watch(() => coachList.length, () => setTimeout(updateScrollButtons, 0))
+watch(() => coachList.value.length, () => setTimeout(updateScrollButtons, 0))
 
 const openCoachInfo = (coach: Coach) => {
   emit('learn-more', coach)
