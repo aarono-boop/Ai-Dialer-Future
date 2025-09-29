@@ -135,13 +135,7 @@ import { useCoaches } from '../composables/useCoaches'
 import Button from 'primevue/button'
 import Dialog from 'primevue/dialog'
 import Textarea from 'primevue/textarea'
-
-// Types
-interface Message {
-  type: 'ai' | 'user'
-  content: string[]
-  typing?: boolean
-}
+import type { Message } from '../utils/chat'
 
 // Define props
 const props = defineProps<{
