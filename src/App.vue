@@ -407,6 +407,7 @@
             :aiCoachEnabled="aiCoachEnabled"
             :multiLine="multiLineActive"
             :multiLineNames="multiLineNames"
+            :multiLineSetIndex="multiLineSetIndex"
             @call-back="handleCallBack"
             @next-contact="handleNextContact"
             @hang-up="handleHangUp"
@@ -871,6 +872,7 @@ const showCallerIdChoiceButtons = ref<boolean>(false)
 const showDialer = ref<boolean>(false)
 const multiLineActive = ref<boolean>(false)
 const multiLineNames = ref<string[]>(['Sam Sample', 'Jordan Lee', 'Taylor Kim'])
+const multiLineSetIndex = ref<number>(1)
 const showCoachInfoPanel = ref<boolean>(false)
 const selectedCoachForInfo = ref<Coach | null>(null)
 const showDispositionButtons = ref<boolean>(false)
@@ -1778,7 +1780,7 @@ const sendMessage = (message: string): void => {
         'I can configure your session with:',
         '• <strong>Target audience:</strong> High-priority prospects, warm leads, or follow-ups',
         '• <strong>Call duration:</strong> 30 min, 1 hour, or 2-hour session',
-        '• <strong>Connect goals:</strong> Number of conversations you want to have',
+        '��� <strong>Connect goals:</strong> Number of conversations you want to have',
         'What type of prospects do you want to focus on for this session?'
       ])
     } else if (lowerMessage.includes('set a reminder') || lowerMessage.includes('reminder')) {
@@ -2182,6 +2184,9 @@ const handleStartNextTrio = (): void => {
   // Restart multi-line simulation
   multiLineActive.value = false
   nextTick(() => { multiLineActive.value = true })
+
+  // Advance the multi-line set index (max 3 for demo)
+  multiLineSetIndex.value = Math.min(multiLineSetIndex.value + 1, 3)
 
   // Reset state visuals
   callState.value = 'idle'
@@ -2730,6 +2735,7 @@ const startMultiLineDialing = (): void => {
   // Reset single-line call state; Dialer handles multi-line simulation
   callState.value = 'idle'
   currentContactIndex.value = 0
+  multiLineSetIndex.value = 1
 
   messages.value = []
   addAIMessage('Multi-Line dialing enabled.')
