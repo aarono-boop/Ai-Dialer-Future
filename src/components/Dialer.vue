@@ -15,7 +15,7 @@
           }"
         >
           <template v-if="line.state === 'ringing'">
-            <div class="flex items-center justify-center gap-2 text-gray-300">
+            <div class="flex items-center justify-start gap-2 text-gray-300 text-left w-full">
               <div class="font-medium">Calling ({{ line.name }})</div>
               <div class="flex items-center">
                 <div class="animate-pulse w-2 h-2 bg-green-400 rounded-full mx-1"></div>
@@ -443,7 +443,6 @@ const generateRandomTags = (): LineTag[] => {
     { label: 'Absentee Owner', severity: 'info' }
   ]
   const priceBands = ['$325k', '$449k', '$585k', '$799k', '$1.2M']
-  const bedBath = ['2bd/1ba', '3bd/2ba', '4bd/3ba', '5bd/4ba']
   const sizes = ['1,120 sqft', '1,540 sqft', '2,280 sqft', '3,050 sqft']
   const dom = ['DOM 7', 'DOM 22', 'DOM 45', 'DOM 63']
 
@@ -452,7 +451,6 @@ const generateRandomTags = (): LineTag[] => {
   const tags: LineTag[] = []
   tags.push(pick(listingTypes))
   tags.push({ label: pick(priceBands), severity: 'success' })
-  if (Math.random() > 0.3) tags.push({ label: pick(bedBath), severity: 'info' })
   if (Math.random() > 0.5) tags.push({ label: pick(sizes), severity: 'secondary' })
   if (Math.random() > 0.6) tags.push({ label: pick(dom), severity: 'contrast' })
   return tags
