@@ -405,6 +405,7 @@
             :totalContacts="contacts.length"
             :coachParameter="coachParameter"
             :aiCoachEnabled="aiCoachEnabled"
+            :multiLine="multiLineActive"
             @call-back="handleCallBack"
             @next-contact="handleNextContact"
             @hang-up="handleHangUp"
