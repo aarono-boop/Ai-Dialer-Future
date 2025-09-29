@@ -356,6 +356,7 @@
 import { ref, nextTick, computed, watch, onUnmounted } from 'vue'
 import Button from 'primevue/button'
 import ToggleSwitch from 'primevue/toggleswitch'
+import Tag from 'primevue/tag'
 import { useCoaches } from '../composables/useCoaches'
 
 // Connect Score tooltip content
@@ -365,7 +366,7 @@ const connectScoreTooltip = `Connect Score is a premium add-on feature that uses
 • Engagement history
 • Phone metadata
 
-This lets teams focus their efforts on numbers with the greatest chance of a live answer����improving connect rates, morale, and performance.`
+This lets teams focus their efforts on numbers with the greatest chance of a live answer���improving connect rates, morale, and performance.`
 
 // Define props
 const props = defineProps<{
