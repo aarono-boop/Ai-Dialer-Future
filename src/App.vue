@@ -2678,10 +2678,32 @@ const skipToDialer = (): void => {
       }, 1000)
 
       // Show AI message that call connected
-      // Show connection message first, then script with delay
-      showCallConnectedMessages(currentContact.value)
-    }, 3000)
-  }, 1500) // Brief delay to show the startup message
+    // Show connection message first, then script with delay
+    showCallConnectedMessages(currentContact.value)
+  }, 3000)
+}, 1500) // Brief delay to show the startup message
+}
+
+const startMultiLineDialing = (): void => {
+  currentPage.value = 'main'
+  isSignedIn.value = true
+  isReturningUser.value = true
+  hasUploadedFile.value = true
+  updateWelcomeMessageTyping()
+  showActionButtons.value = false
+  showContactPreviewButtons.value = false
+  showPhoneVerificationButton.value = false
+  showStartDialingButton.value = false
+
+  showDialer.value = true
+  multiLineActive.value = true
+
+  // Reset single-line call state; Dialer handles multi-line simulation
+  callState.value = 'idle'
+  currentContactIndex.value = 0
+
+  messages.value = []
+  addAIMessage('Multi-Line dialing enabled. Simulating 3 concurrent calls...')
 }
 
 const loadNewFile = (preserveQueueState: boolean = false): void => {
