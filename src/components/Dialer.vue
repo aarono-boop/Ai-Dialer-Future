@@ -500,9 +500,9 @@ const generateRandomTags = (): LineTag[] => {
 }
 
 const lines = ref<LineState[]>([
-  { id: 1, name: props.multiLineNames?.[0] || 'Sam Sample', state: 'ringing', duration: 0, tags: generateRandomTags(), endReason: undefined, imageUrl: getRandomHouseImage() },
-  { id: 2, name: props.multiLineNames?.[1] || 'Jordan Lee', state: 'ringing', duration: 0, tags: generateRandomTags(), endReason: undefined, imageUrl: getRandomHouseImage() },
-  { id: 3, name: props.multiLineNames?.[2] || 'Taylor Kim', state: 'ringing', duration: 0, tags: generateRandomTags(), endReason: undefined, imageUrl: getRandomHouseImage() }
+  { id: 1, name: props.multiLineNames?.[0] || 'Sam Sample', state: 'ringing', duration: 0, tags: generateRandomTags(), endReason: undefined, imageUrl: getRandomHouseImage(props.multiLineNames?.[0] || 'Sam Sample') },
+  { id: 2, name: props.multiLineNames?.[1] || 'Jordan Lee', state: 'ringing', duration: 0, tags: generateRandomTags(), endReason: undefined, imageUrl: getRandomHouseImage(props.multiLineNames?.[1] || 'Jordan Lee') },
+  { id: 3, name: props.multiLineNames?.[2] || 'Taylor Kim', state: 'ringing', duration: 0, tags: generateRandomTags(), endReason: undefined, imageUrl: getRandomHouseImage(props.multiLineNames?.[2] || 'Taylor Kim') }
 ])
 let lineTimers: Array<ReturnType<typeof setInterval> | null> = [null, null, null]
 let transitionTimeout: ReturnType<typeof setTimeout> | null = null
@@ -510,9 +510,9 @@ let transitionTimeout: ReturnType<typeof setTimeout> | null = null
 const startMultiLineSimulation = () => {
   // Reset
   lines.value = [
-    { id: 1, name: props.multiLineNames?.[0] || 'Sam Sample', state: 'ringing', duration: 0, tags: generateRandomTags(), endReason: undefined, imageUrl: getRandomHouseImage() },
-    { id: 2, name: props.multiLineNames?.[1] || 'Jordan Lee', state: 'ringing', duration: 0, tags: generateRandomTags(), endReason: undefined, imageUrl: getRandomHouseImage() },
-    { id: 3, name: props.multiLineNames?.[2] || 'Taylor Kim', state: 'ringing', duration: 0, tags: generateRandomTags(), endReason: undefined, imageUrl: getRandomHouseImage() }
+    { id: 1, name: props.multiLineNames?.[0] || 'Sam Sample', state: 'ringing', duration: 0, tags: generateRandomTags(), endReason: undefined, imageUrl: getRandomHouseImage(props.multiLineNames?.[0] || 'Sam Sample') },
+    { id: 2, name: props.multiLineNames?.[1] || 'Jordan Lee', state: 'ringing', duration: 0, tags: generateRandomTags(), endReason: undefined, imageUrl: getRandomHouseImage(props.multiLineNames?.[1] || 'Jordan Lee') },
+    { id: 3, name: props.multiLineNames?.[2] || 'Taylor Kim', state: 'ringing', duration: 0, tags: generateRandomTags(), endReason: undefined, imageUrl: getRandomHouseImage(props.multiLineNames?.[2] || 'Taylor Kim') }
   ]
 
   // After 2 seconds, connect line 1 and disconnect lines 2 and 3
