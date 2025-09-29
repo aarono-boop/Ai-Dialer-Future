@@ -16,6 +16,7 @@
       />
       <Button
         v-if="!showDialer && !queuePaused"
+        @click="$emit('multi-line')"
         severity="secondary"
         outlined
         size="small"
@@ -37,5 +38,5 @@ defineProps<{
 }>()
 
 // Define emits
-defineEmits(['skip-to-dialer'])
+defineEmits(['skip-to-dialer', 'multi-line'])
 </script>
