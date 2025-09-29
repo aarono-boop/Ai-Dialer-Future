@@ -15,7 +15,7 @@
           }"
         >
           <template v-if="line.state === 'ringing'">
-            <div class="flex items-center justify-start gap-2 text-gray-300 text-left w-full">
+            <div class="flex items-center justify-center gap-2 text-gray-300 text-center w-full">
               <div class="font-medium">Calling ({{ line.name }})</div>
               <div class="flex items-center">
                 <div class="animate-pulse w-2 h-2 bg-green-400 rounded-full mx-1"></div>
