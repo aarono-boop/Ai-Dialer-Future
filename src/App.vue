@@ -999,6 +999,8 @@ const isLastContact = computed(() => {
 
 // Check if current contact is George Sample (voicemail scenario)
 const isVoicemailScenario = computed(() => {
+  // In multi-line sessions, use regular dispositions even for George
+  if (multiLineActive.value) return false
   return currentContact.value && currentContact.value.name === 'George Sample'
 })
 
