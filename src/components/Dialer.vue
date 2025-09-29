@@ -14,37 +14,41 @@
             'border-red-400': line.state === 'disconnected'
           }"
         >
-          <template v-if="line.state === 'ringing'">
-            <div class="flex items-center justify-center gap-2 text-green-400 text-center w-full">
-              <div class="font-medium">Calling ({{ line.name }})</div>
-              <div class="flex items-center">
-                <div class="animate-pulse w-2 h-2 bg-green-400 rounded-full mx-1"></div>
-                <div class="animate-pulse w-2 h-2 bg-green-400 rounded-full mx-1" style="animation-delay: 0.2s"></div>
-                <div class="animate-pulse w-2 h-2 bg-green-400 rounded-full mx-1" style="animation-delay: 0.4s"></div>
+          <div class="flex items-start gap-3">
+            <!-- Left thumbnail -->
+            <div class="shrink-0">
+              <Image :src="line.imageUrl" alt="Property preview" :pt="{ image: { style: { width: '72px', height: '72px', objectFit: 'cover', borderRadius: '6px' } } }" />
+            </div>
+            <!-- Right content -->
+            <div class="flex-1">
+              <template v-if="line.state === 'ringing'">
+                <div class="flex items-center justify-start gap-2 text-green-400 text-left w-full">
+                  <div class="font-medium">Calling ({{ line.name }})</div>
+                  <div class="flex items-center">
+                    <div class="animate-pulse w-2 h-2 bg-green-400 rounded-full mx-1"></div>
+                    <div class="animate-pulse w-2 h-2 bg-green-400 rounded-full mx-1" style="animation-delay: 0.2s"></div>
+                    <div class="animate-pulse w-2 h-2 bg-green-400 rounded-full mx-1" style="animation-delay: 0.4s"></div>
+                  </div>
+                </div>
+              </template>
+              <template v-else-if="line.state === 'disconnected'">
+                <div class="text-red-400 font-medium text-left">{{ line.endReason ? (line.endReason + ' (' + line.name + ')') : ('Call Ended (' + line.name + ')') }}</div>
+              </template>
+              <template v-else>
+                <div class="text-green-400 font-medium text-left">Live Call ({{ line.name }}): <span class="font-mono">{{ formatTime(line.duration) }}</span></div>
+              </template>
+
+              <!-- Real estate context tags -->
+              <div class="mt-1 flex flex-wrap items-center justify-start text-left gap-1 w-full">
+                <Tag
+                  v-for="(t, i) in line.tags"
+                  :key="i"
+                  :value="t.label"
+                  :severity="t.severity"
+                  :pt="{ root: { style: { fontSize: tagFontSize, padding: '2px 6px', lineHeight: '1.15' } } }"
+                />
               </div>
             </div>
-          </template>
-          <template v-else-if="line.state === 'disconnected'">
-            <div class="text-red-400 font-medium">{{ line.endReason ? (line.endReason + ' (' + line.name + ')') : ('Call Ended (' + line.name + ')') }}</div>
-          </template>
-          <template v-else>
-            <div class="text-green-400 font-medium">Live Call ({{ line.name }}): <span class="font-mono">{{ formatTime(line.duration) }}</span></div>
-          </template>
-
-          <!-- House image -->
-          <div class="mt-2">
-            <Image :src="line.imageUrl" alt="Property preview" :pt="{ image: { style: { width: '100%', height: '96px', objectFit: 'cover', borderRadius: '8px' } } }" />
-          </div>
-
-          <!-- Real estate context tags -->
-          <div class="mt-1 flex flex-wrap items-center justify-center text-center gap-1 w-full">
-            <Tag
-              v-for="(t, i) in line.tags"
-              :key="i"
-              :value="t.label"
-              :severity="t.severity"
-              :pt="{ root: { style: { fontSize: tagFontSize, padding: '2px 6px', lineHeight: '1.15' } } }"
-            />
           </div>
         </div>
       </div>
