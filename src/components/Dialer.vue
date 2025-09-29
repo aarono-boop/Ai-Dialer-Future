@@ -276,7 +276,7 @@
           class="w-full flex items-center justify-center gap-2 py-3"
         >
           <i :class="shouldCompleteQueue ? 'pi pi-check' : 'pi pi-arrow-right'"></i>
-          {{ shouldCompleteQueue ? 'Queue Completed' : `Next: ${nextContactName}` }}
+          {{ nextActionLabel }}
         </Button>
       </div>
     </div>
@@ -816,6 +816,11 @@ const isActiveCall = computed(() => {
     return lines.value.some(l => l.state === 'connected')
   }
   return props.callState === 'connected'
+})
+
+const nextActionLabel = computed(() => {
+  if (props.shouldCompleteQueue) return 'Queue Completed'
+  return props.multiLine ? 'Call Next 3 Contacts' : `Next: ${props.nextContactName}`
 })
 </script>
 
