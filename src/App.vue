@@ -2770,6 +2770,13 @@ const handleAICoachToggle = (enabled: boolean): void => {
   aiCoachEnabled.value = enabled
 }
 
+const handleMultiLineConnected = (contactName: string): void => {
+  // Add green call separator and begin the same flow as single-line
+  addSeparatorMessage(contactName)
+  showCallConnectedMessages(currentContact.value)
+  scrollToBottom()
+}
+
 const handleDisposition = (disposition: string): void => {
   // Hide disposition buttons
   showDispositionButtons.value = false
