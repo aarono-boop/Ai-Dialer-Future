@@ -134,16 +134,16 @@
     </div>
 
     <!-- Contact Info -->
-    <div v-if="showContactInfo" class="flex-1 mx-[5px] mb-4 bg-gray-800 border border-gray-600 rounded-lg p-[14px] overflow-y-auto">
+    <div class="flex-1 mx-[5px] mb-4 bg-gray-800 border border-gray-600 rounded-lg p-[14px] overflow-y-auto">
       <div class="space-y-4">
         <!-- Contact Header -->
         <div>
-          <h3 class="text-white text-lg font-bold">{{ currentContact.name }}</h3>
-          <p class="text-white text-sm">{{ currentContact.title }} at {{ currentContact.company }}</p>
+          <h3 class="text-white text-lg font-bold">{{ showContactInfo ? currentContact.name : 'Contact' }}</h3>
+          <p v-if="showContactInfo" class="text-white text-sm">{{ currentContact.title }} at {{ currentContact.company }}</p>
         </div>
 
         <!-- Contact Details -->
-        <div class="text-sm">
+        <div v-if="showContactInfo" class="text-sm">
           <table style="width: 100%; border-collapse: collapse;">
             <tbody>
               <tr>
