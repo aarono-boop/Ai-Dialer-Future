@@ -4,16 +4,32 @@
     <div class="mx-[5px] mb-4 bg-gray-800 border border-gray-600 rounded-lg p-[14px]">
       <!-- Multi-Line Status -->
       <div v-if="multiLine" class="grid grid-cols-1 gap-2">
-        <div v-for="line in lines" :key="line.id" class="bg-gray-900/50 border border-gray-600 rounded-lg p-3 text-center">
-          <div class="flex items-center justify-center gap-2" v-if="line.state === 'ringing'">
-            <div class="text-green-400 font-medium">Calling (Line {{ line.id }})</div>
-            <div class="flex items-center">
-              <div class="animate-pulse w-2 h-2 bg-green-400 rounded-full mx-1"></div>
-              <div class="animate-pulse w-2 h-2 bg-green-400 rounded-full mx-1" style="animation-delay: 0.2s"></div>
-              <div class="animate-pulse w-2 h-2 bg-green-400 rounded-full mx-1" style="animation-delay: 0.4s"></div>
+        <div
+          v-for="line in lines"
+          :key="line.id"
+          class="bg-gray-900/50 rounded-lg p-3 text-center border"
+          :class="{
+            'border-gray-600': line.state === 'ringing',
+            'border-green-400': line.state === 'connected',
+            'border-red-400': line.state === 'disconnected'
+          }"
+        >
+          <template v-if="line.state === 'ringing'">
+            <div class="flex items-center justify-center gap-2 text-gray-300">
+              <div class="font-medium">Calling (Line {{ line.id }})</div>
+              <div class="flex items-center">
+                <div class="animate-pulse w-2 h-2 bg-green-400 rounded-full mx-1"></div>
+                <div class="animate-pulse w-2 h-2 bg-green-400 rounded-full mx-1" style="animation-delay: 0.2s"></div>
+                <div class="animate-pulse w-2 h-2 bg-green-400 rounded-full mx-1" style="animation-delay: 0.4s"></div>
+              </div>
             </div>
-          </div>
-          <div class="text-green-400 font-medium" v-else>Live Call (Line {{ line.id }}): <span class="font-mono">{{ formatTime(line.duration) }}</span></div>
+          </template>
+          <template v-else-if="line.state === 'disconnected'">
+            <div class="text-red-400 font-medium">Call Ended (Line {{ line.id }})</div>
+          </template>
+          <template v-else>
+            <div class="text-green-400 font-medium">Live Call (Line {{ line.id }}): <span class="font-mono">{{ formatTime(line.duration) }}</span></div>
+          </template>
         </div>
       </div>
 
@@ -401,13 +417,13 @@ const keypadButtonRef = ref<any>(null)
 const { currentCoach } = useCoaches()
 
 // Multi-line simulation state
-const lines = ref<Array<{ id: number; state: 'ringing' | 'connected'; duration: number }>>([
+const lines = ref<Array<{ id: number; state: 'ringing' | 'connected' | 'disconnected'; duration: number }>>([
   { id: 1, state: 'ringing', duration: 0 },
   { id: 2, state: 'ringing', duration: 0 },
   { id: 3, state: 'ringing', duration: 0 }
 ])
 let lineTimers: Array<ReturnType<typeof setInterval> | null> = [null, null, null]
-let connectTimeouts: Array<ReturnType<typeof setTimeout> | null> = [null, null, null]
+let transitionTimeout: ReturnType<typeof setTimeout> | null = null
 
 const startMultiLineSimulation = () => {
   // Reset
@@ -417,20 +433,19 @@ const startMultiLineSimulation = () => {
     { id: 3, state: 'ringing', duration: 0 }
   ]
 
-  // Stagger connections: line 1 connects at 1s, line 2 at 2s, line 3 keeps ringing
-  connectTimeouts[0] = setTimeout(() => {
+  // After 2 seconds, connect line 1 and disconnect lines 2 and 3
+  transitionTimeout = setTimeout(() => {
     lines.value[0].state = 'connected'
+    lines.value[0].duration = 0
+    lines.value[1].state = 'disconnected'
+    lines.value[2].state = 'disconnected'
     lineTimers[0] = setInterval(() => { lines.value[0].duration++ }, 1000)
-  }, 1000)
-  connectTimeouts[1] = setTimeout(() => {
-    lines.value[1].state = 'connected'
-    lineTimers[1] = setInterval(() => { lines.value[1].duration++ }, 1000)
   }, 2000)
 }
 
 const stopMultiLineSimulation = () => {
   lineTimers.forEach((t, i) => { if (t) { clearInterval(t); lineTimers[i] = null } })
-  connectTimeouts.forEach((t, i) => { if (t) { clearTimeout(t); connectTimeouts[i] = null } })
+  if (transitionTimeout) { clearTimeout(transitionTimeout); transitionTimeout = null }
 }
 
 watch(() => props.multiLine, (val) => {
