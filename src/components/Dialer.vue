@@ -207,7 +207,7 @@
             @click="toggleMute"
             @keydown="handleMuteKeydown"
             tabindex="9"
-            :disabled="callState === 'idle'"
+            :disabled="!isActiveCall"
             :severity="isMuted ? 'warn' : 'secondary'"
             class="flex flex-row items-center justify-center gap-1 py-3"
           >
@@ -219,7 +219,7 @@
             ref="keypadButtonRef"
             @click="showKeypad"
             tabindex="10"
-            :disabled="callState === 'idle'"
+            :disabled="!isActiveCall"
             severity="secondary"
             class="flex flex-row items-center justify-center gap-1 py-3"
           >
@@ -232,7 +232,7 @@
             @click="toggleHold"
             @keydown="handleHoldKeydown"
             tabindex="11"
-            :disabled="callState === 'idle'"
+            :disabled="!isActiveCall"
             :severity="isOnHold ? 'warn' : 'secondary'"
             class="flex flex-row items-center justify-center gap-1 py-3"
           >
@@ -246,7 +246,7 @@
           @click="hangUp"
           @keydown.tab="handleHangUpTab"
           tabindex="12"
-          :disabled="callState === 'idle'"
+          :disabled="!isActiveCall"
           severity="danger"
           class="w-full flex items-center justify-center gap-2 py-3"
         >
@@ -805,6 +805,13 @@ const handleHoldKeydown = (event: KeyboardEvent) => {
 }
 
 const showContactInfo = computed(() => {
+  if (props.multiLine) {
+    return lines.value.some(l => l.state === 'connected')
+  }
+  return props.callState === 'connected'
+})
+
+const isActiveCall = computed(() => {
   if (props.multiLine) {
     return lines.value.some(l => l.state === 'connected')
   }
