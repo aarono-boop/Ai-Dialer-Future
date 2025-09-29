@@ -5,6 +5,7 @@ export interface Message {
   type: 'ai' | 'user' | 'separator'
   content: string[]
   contactName?: string
+  overrideText?: string
   typing?: boolean
   preserveUserPosition?: boolean
 }
@@ -215,11 +216,12 @@ export const createChatUtils = (
     })
   }
 
-  const addSeparatorMessage = (contactName: string): void => {
+  const addSeparatorMessage = (contactName: string, overrideText?: string): void => {
     messages.value.push({
       type: 'separator',
       content: [],
-      contactName: contactName
+      contactName,
+      ...(overrideText ? { overrideText } : {})
     })
     scrollToBottom()
   }
