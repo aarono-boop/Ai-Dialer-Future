@@ -445,15 +445,10 @@ const { currentCoach } = useCoaches()
 interface LineTag { label: string; severity?: 'success' | 'info' | 'warning' | 'danger' | 'secondary' | 'contrast' }
 interface LineState { id: number; name: string; state: 'ringing' | 'connected' | 'disconnected'; duration: number; tags: LineTag[]; endReason?: string; imageUrl: string }
 
-const getRandomHouseImage = (): string => {
-  const images = [
-    'https://images.unsplash.com/photo-1560185008-b033106af5e4?q=80&w=1200&auto=format&fit=crop',
-    'https://images.unsplash.com/photo-1502005229762-cf1b2da7c52f?q=80&w=1200&auto=format&fit=crop',
-    'https://images.unsplash.com/photo-1599427303058-f04cbcf4756f?q=80&w=1200&auto=format&fit=crop',
-    'https://images.unsplash.com/photo-1570129477492-45c003edd2be?q=80&w=1200&auto=format&fit=crop',
-    'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?q=80&w=1200&auto=format&fit=crop'
-  ]
-  return images[Math.floor(Math.random() * images.length)]
+const getRandomHouseImage = (seed?: string): string => {
+  const s = seed || Math.random().toString(36).slice(2)
+  // Small, cacheable placeholder images that reliably load
+  return `https://picsum.photos/seed/${encodeURIComponent(s)}/144/144`
 }
 
 const generateRandomTags = (): LineTag[] => {
