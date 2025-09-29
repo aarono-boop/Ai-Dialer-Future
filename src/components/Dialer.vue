@@ -72,10 +72,10 @@
         <div class="bg-gray-700 rounded-full h-5 w-full relative flex items-center">
           <div
             class="h-5 rounded-full transition-all duration-300"
-            :style="{ width: `${((currentContactIndex + 1) / 3) * 100}%`, background: 'linear-gradient(to right, #60a5fa, #7b68ee)' }"
+            :style="{ width: progressWidth, background: 'linear-gradient(to right, #60a5fa, #7b68ee)' }"
           ></div>
           <div class="absolute inset-0 flex items-center justify-center text-white text-xs font-medium">
-            Dial Queue {{ currentContactIndex + 1 }} of 3
+            {{ dialQueueText }}
           </div>
         </div>
       </div>
@@ -365,7 +365,7 @@ const connectScoreTooltip = `Connect Score is a premium add-on feature that uses
 • Engagement history
 • Phone metadata
 
-This lets teams focus their efforts on numbers with the greatest chance of a live answer���improving connect rates, morale, and performance.`
+This lets teams focus their efforts on numbers with the greatest chance of a live answer����improving connect rates, morale, and performance.`
 
 // Define props
 const props = defineProps<{
@@ -478,6 +478,26 @@ const formatTime = (seconds: number): string => {
   const secs = seconds % 60
   return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`
 }
+
+const dialQueueText = computed(() => {
+  if (props.multiLine) {
+    const set = Math.min(Math.max(props.multiLineSetIndex ?? 1, 1), 3)
+    const numerator = Math.min(set * 3, 9)
+    const denominator = set === 1 ? 6 : 9
+    return `Dial Queue ${numerator} of ${denominator}`
+  }
+  return `Dial Queue ${props.currentContactIndex + 1} of 3`
+})
+
+const progressWidth = computed(() => {
+  if (props.multiLine) {
+    const set = Math.min(Math.max(props.multiLineSetIndex ?? 1, 1), 3)
+    const pct = (Math.min(set, 3) / 3) * 100
+    return `${pct}%`
+  }
+  const pct = ((props.currentContactIndex + 1) / 3) * 100
+  return `${pct}%`
+})
 
 const getConnectScoreColor = (score: string): string => {
   switch (score.toLowerCase()) {
