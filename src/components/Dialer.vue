@@ -31,6 +31,11 @@
             <div class="text-green-400 font-medium">Live Call ({{ line.name }}): <span class="font-mono">{{ formatTime(line.duration) }}</span></div>
           </template>
 
+          <!-- House image -->
+          <div class="mt-2">
+            <Image :src="line.imageUrl" alt="Property preview" :pt="{ image: { style: { width: '100%', height: '96px', objectFit: 'cover', borderRadius: '8px' } } }" />
+          </div>
+
           <!-- Real estate context tags -->
           <div class="mt-1 flex flex-wrap items-center justify-center text-center gap-1 w-full">
             <Tag
@@ -368,6 +373,7 @@ import { ref, nextTick, computed, watch, onUnmounted } from 'vue'
 import Button from 'primevue/button'
 import ToggleSwitch from 'primevue/toggleswitch'
 import Tag from 'primevue/tag'
+import Image from 'primevue/image'
 import { useCoaches } from '../composables/useCoaches'
 import { fontSize as dsFontSize } from '../design-system/tokens/typography'
 
@@ -433,7 +439,18 @@ const { currentCoach } = useCoaches()
 
 // Multi-line simulation state
 interface LineTag { label: string; severity?: 'success' | 'info' | 'warning' | 'danger' | 'secondary' | 'contrast' }
-interface LineState { id: number; name: string; state: 'ringing' | 'connected' | 'disconnected'; duration: number; tags: LineTag[]; endReason?: string }
+interface LineState { id: number; name: string; state: 'ringing' | 'connected' | 'disconnected'; duration: number; tags: LineTag[]; endReason?: string; imageUrl: string }
+
+const getRandomHouseImage = (): string => {
+  const images = [
+    'https://images.unsplash.com/photo-1560185008-b033106af5e4?q=80&w=1200&auto=format&fit=crop',
+    'https://images.unsplash.com/photo-1502005229762-cf1b2da7c52f?q=80&w=1200&auto=format&fit=crop',
+    'https://images.unsplash.com/photo-1599427303058-f04cbcf4756f?q=80&w=1200&auto=format&fit=crop',
+    'https://images.unsplash.com/photo-1570129477492-45c003edd2be?q=80&w=1200&auto=format&fit=crop',
+    'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?q=80&w=1200&auto=format&fit=crop'
+  ]
+  return images[Math.floor(Math.random() * images.length)]
+}
 
 const generateRandomTags = (): LineTag[] => {
   const listingTypes: LineTag[] = [
@@ -484,9 +501,9 @@ const generateRandomTags = (): LineTag[] => {
 }
 
 const lines = ref<LineState[]>([
-  { id: 1, name: props.multiLineNames?.[0] || 'Sam Sample', state: 'ringing', duration: 0, tags: generateRandomTags(), endReason: undefined },
-  { id: 2, name: props.multiLineNames?.[1] || 'Jordan Lee', state: 'ringing', duration: 0, tags: generateRandomTags(), endReason: undefined },
-  { id: 3, name: props.multiLineNames?.[2] || 'Taylor Kim', state: 'ringing', duration: 0, tags: generateRandomTags(), endReason: undefined }
+  { id: 1, name: props.multiLineNames?.[0] || 'Sam Sample', state: 'ringing', duration: 0, tags: generateRandomTags(), endReason: undefined, imageUrl: getRandomHouseImage() },
+  { id: 2, name: props.multiLineNames?.[1] || 'Jordan Lee', state: 'ringing', duration: 0, tags: generateRandomTags(), endReason: undefined, imageUrl: getRandomHouseImage() },
+  { id: 3, name: props.multiLineNames?.[2] || 'Taylor Kim', state: 'ringing', duration: 0, tags: generateRandomTags(), endReason: undefined, imageUrl: getRandomHouseImage() }
 ])
 let lineTimers: Array<ReturnType<typeof setInterval> | null> = [null, null, null]
 let transitionTimeout: ReturnType<typeof setTimeout> | null = null
@@ -494,9 +511,9 @@ let transitionTimeout: ReturnType<typeof setTimeout> | null = null
 const startMultiLineSimulation = () => {
   // Reset
   lines.value = [
-    { id: 1, name: props.multiLineNames?.[0] || 'Sam Sample', state: 'ringing', duration: 0, tags: generateRandomTags(), endReason: undefined },
-    { id: 2, name: props.multiLineNames?.[1] || 'Jordan Lee', state: 'ringing', duration: 0, tags: generateRandomTags(), endReason: undefined },
-    { id: 3, name: props.multiLineNames?.[2] || 'Taylor Kim', state: 'ringing', duration: 0, tags: generateRandomTags(), endReason: undefined }
+    { id: 1, name: props.multiLineNames?.[0] || 'Sam Sample', state: 'ringing', duration: 0, tags: generateRandomTags(), endReason: undefined, imageUrl: getRandomHouseImage() },
+    { id: 2, name: props.multiLineNames?.[1] || 'Jordan Lee', state: 'ringing', duration: 0, tags: generateRandomTags(), endReason: undefined, imageUrl: getRandomHouseImage() },
+    { id: 3, name: props.multiLineNames?.[2] || 'Taylor Kim', state: 'ringing', duration: 0, tags: generateRandomTags(), endReason: undefined, imageUrl: getRandomHouseImage() }
   ]
 
   // After 2 seconds, connect line 1 and disconnect lines 2 and 3
