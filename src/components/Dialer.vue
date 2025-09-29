@@ -25,7 +25,7 @@
             </div>
           </template>
           <template v-else-if="line.state === 'disconnected'">
-            <div class="text-red-400 font-medium">{{ line.endReason || `Call Ended (${line.name})` }}</div>
+            <div class="text-red-400 font-medium">{{ line.endReason ? (line.endReason + ' (' + line.name + ')') : ('Call Ended (' + line.name + ')') }}</div>
           </template>
           <template v-else>
             <div class="text-green-400 font-medium">Live Call ({{ line.name }}): <span class="font-mono">{{ formatTime(line.duration) }}</span></div>
