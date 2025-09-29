@@ -829,11 +829,16 @@ const nextActionLabel = computed(() => {
 })
 
 const handleNextActionClick = () => {
+  // If queue is complete, finalize regardless of mode
+  if (props.shouldCompleteQueue) {
+    emit('complete-queue')
+    return
+  }
+  // Otherwise proceed to next step depending on mode
   if (props.multiLine) {
     emit('start-next-trio')
   } else {
-    if (props.shouldCompleteQueue) emit('complete-queue')
-    else emit('next-contact')
+    emit('next-contact')
   }
 }
 </script>
