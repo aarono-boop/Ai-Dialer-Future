@@ -2223,7 +2223,7 @@ const handleNextContact = (): void => {
       }, 1000)
     }, 1500)
   } else {
-    addAIMessage('📋 All contacts have been processed. Dialing session complete!')
+    addAIMessage('�� All contacts have been processed. Dialing session complete!')
     showDialer.value = false
     scrollToBottom()
 
@@ -2804,8 +2804,8 @@ const handleMultiLineConnected = (contactName: string): void => {
   const idx = contacts.findIndex(c => c.name === contactName)
   if (idx >= 0) currentContactIndex.value = idx
 
-  // Add green call separator and begin the same flow as single-line
-  addSeparatorMessage(contactName, `${contactName} Connected`)
+  // Update the existing "Calling 3 Contacts" divider text to show connected contact
+  updateLastSeparator(`${contactName} Connected`, contactName)
   showCallConnectedMessages(contacts[currentContactIndex.value])
   scrollToBottom()
 }
