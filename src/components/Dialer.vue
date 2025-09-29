@@ -16,8 +16,8 @@
         >
           <!-- Card menu for non-connected lines -->
           <div v-if="line.state === 'disconnected'" class="absolute top-1 right-1">
-            <Button size="small" text rounded severity="secondary" aria-label="Line actions" icon="pi pi-bars" @click="menuRefs[line.id]?.toggle($event)" />
-            <Menu :model="getMenuItems(line)" :popup="true" :ref="(el: any) => (menuRefs[line.id] = el)" />
+            <Button size="small" text rounded severity="secondary" aria-label="Line actions" icon="pi pi-ellipsis-h" @click="menuRefs[line.id]?.toggle($event)" />
+            <Menu :model="getMenuItems(line)" :popup="true" appendTo="body" :pt="menuPT" :ref="(el: any) => (menuRefs[line.id] = el)" />
           </div>
 
           <div class="flex items-center gap-3">
