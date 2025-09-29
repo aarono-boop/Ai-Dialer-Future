@@ -16,7 +16,7 @@
         >
           <template v-if="line.state === 'ringing'">
             <div class="flex items-center justify-center gap-2 text-gray-300">
-              <div class="font-medium">Calling (Name)</div>
+              <div class="font-medium">Calling (Jordan Lee)</div>
               <div class="flex items-center">
                 <div class="animate-pulse w-2 h-2 bg-green-400 rounded-full mx-1"></div>
                 <div class="animate-pulse w-2 h-2 bg-green-400 rounded-full mx-1" style="animation-delay: 0.2s"></div>
