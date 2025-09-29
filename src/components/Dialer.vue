@@ -32,7 +32,7 @@
           </template>
 
           <!-- Real estate context tags -->
-          <div class="mt-2 flex flex-wrap items-center justify-center text-center gap-1 w-full">
+          <div class="mt-1 flex flex-wrap items-center justify-center text-center gap-1 w-full">
             <Tag
               v-for="(t, i) in line.tags"
               :key="i"
