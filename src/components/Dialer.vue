@@ -803,6 +803,13 @@ const handleHoldKeydown = (event: KeyboardEvent) => {
   }
   // Let Tab key work normally for navigation
 }
+
+const showContactInfo = computed(() => {
+  if (props.multiLine) {
+    return lines.value.some(l => l.state === 'connected')
+  }
+  return props.callState === 'connected'
+})
 </script>
 
 <style scoped>
