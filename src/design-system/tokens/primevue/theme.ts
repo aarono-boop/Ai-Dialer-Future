@@ -7,7 +7,7 @@ import toggleswitch from './toggleswitch'
 import tooltip from './tooltip'
 import dropdown from './dropdown'
 
-export const customTheme = definePreset(base, {
+export const customTheme = definePreset(base as any, {
     components: {
         button,
         dialog,
@@ -16,6 +16,6 @@ export const customTheme = definePreset(base, {
         tooltip,
         dropdown
     }
-})
+} as any)
 
 export default customTheme
