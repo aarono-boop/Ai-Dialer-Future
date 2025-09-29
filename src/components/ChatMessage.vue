@@ -227,7 +227,7 @@ const { currentCoach } = useCoaches()
 // Typing animation state
 const typedContent = ref<string[]>(props.message.typing ? props.message.content.map(() => '') : [])
 const isTyping = ref(false)
-let typingInterval: NodeJS.Timeout | null = null
+let typingInterval: ReturnType<typeof setInterval> | null = null
 
 // Helper methods
 const getCoachInitials = (name: string): string => {
