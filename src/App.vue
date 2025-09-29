@@ -573,7 +573,7 @@
     />
 
     <!-- Footer -->
-    <Footer v-if="currentPage === 'main' && !managementMode" :style="(showDialer || showCoachInfoPanel) ? 'margin-right: 33.333333%' : ''" :showDialer="showDialer" :queuePaused="queuePaused" @skip-to-dialer="skipToDialer" />
+    <Footer v-if="currentPage === 'main' && !managementMode" :style="(showDialer || showCoachInfoPanel) ? 'margin-right: 33.333333%' : ''" :showDialer="showDialer" :queuePaused="queuePaused" @skip-to-dialer="skipToDialer" @multi-line="startMultiLineDialing" />
 
     <!-- Screen Reader Live Region for Announcements -->
     <div
