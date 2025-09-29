@@ -406,6 +406,7 @@
             :coachParameter="coachParameter"
             :aiCoachEnabled="aiCoachEnabled"
             :multiLine="multiLineActive"
+            :multiLineNames="multiLineNames"
             @call-back="handleCallBack"
             @next-contact="handleNextContact"
             @hang-up="handleHangUp"
@@ -416,6 +417,7 @@
             @complete-queue="handleCompleteQueue"
             @ai-coach-toggle="handleAICoachToggle"
             @multi-line-connected="handleMultiLineConnected"
+            @start-next-trio="handleStartNextTrio"
           />
         </div>
 
