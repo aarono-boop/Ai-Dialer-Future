@@ -17,7 +17,7 @@
           <div class="flex items-start gap-3">
             <!-- Left thumbnail -->
             <div class="shrink-0">
-              <Image :src="line.imageUrl" alt="Property preview" :pt="{ image: { style: { width: '72px', height: '72px', objectFit: 'cover', borderRadius: '6px' } } }" />
+              <Image :src="line.imageUrl" alt="Property preview" @error="onImageError(line)" :pt="{ image: { style: { width: '72px', height: '72px', objectFit: 'cover', borderRadius: '6px' } } }" />
             </div>
             <!-- Right content -->
             <div class="flex-1">
@@ -443,18 +443,27 @@ const { currentCoach } = useCoaches()
 
 // Multi-line simulation state
 interface LineTag { label: string; severity?: 'success' | 'info' | 'warning' | 'danger' | 'secondary' | 'contrast' }
-interface LineState { id: number; name: string; state: 'ringing' | 'connected' | 'disconnected'; duration: number; tags: LineTag[]; endReason?: string; imageUrl: string }
+interface LineState { id: number; name: string; state: 'ringing' | 'connected' | 'disconnected'; duration: number; tags: LineTag[]; endReason?: string; imageUrl: string; imageIdx: number }
 
-const getRandomHouseImage = (seed?: string): string => {
+const CURATED_HOUSES = [
+  'https://images.unsplash.com/photo-1560185008-b033106af5e4?w=144&h=144&fit=crop&auto=format',
+  'https://images.unsplash.com/photo-1502005229762-cf1b2da7c52f?w=144&h=144&fit=crop&auto=format',
+  'https://images.unsplash.com/photo-1599427303058-f04cbcf4756f?w=144&h=144&fit=crop&auto=format',
+  'https://images.unsplash.com/photo-1570129477492-45c003edd2be?w=144&h=144&fit=crop&auto=format',
+  'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=144&h=144&fit=crop&auto=format',
+  'https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=144&h=144&fit=crop&auto=format'
+]
+
+const getHouseIndexFromSeed = (seed?: string): number => {
   const s = seed || Math.random().toString(36).slice(2)
   let hash = 0
   for (let i = 0; i < s.length; i++) {
     hash = (hash * 31 + s.charCodeAt(i)) >>> 0
   }
-  const lock = hash % 10000
-  // Realistic house thumbnails from loremflickr, locked per contact
-  return `https://loremflickr.com/144/144/house,home?lock=${lock}`
+  return hash % CURATED_HOUSES.length
 }
+
+const getHouseUrlByIndex = (idx: number): string => CURATED_HOUSES[idx % CURATED_HOUSES.length]
 
 const generateRandomTags = (): LineTag[] => {
   const listingTypes: LineTag[] = [
@@ -505,9 +514,9 @@ const generateRandomTags = (): LineTag[] => {
 }
 
 const lines = ref<LineState[]>([
-  { id: 1, name: props.multiLineNames?.[0] || 'Sam Sample', state: 'ringing', duration: 0, tags: generateRandomTags(), endReason: undefined, imageUrl: getRandomHouseImage(props.multiLineNames?.[0] || 'Sam Sample') },
-  { id: 2, name: props.multiLineNames?.[1] || 'Jordan Lee', state: 'ringing', duration: 0, tags: generateRandomTags(), endReason: undefined, imageUrl: getRandomHouseImage(props.multiLineNames?.[1] || 'Jordan Lee') },
-  { id: 3, name: props.multiLineNames?.[2] || 'Taylor Kim', state: 'ringing', duration: 0, tags: generateRandomTags(), endReason: undefined, imageUrl: getRandomHouseImage(props.multiLineNames?.[2] || 'Taylor Kim') }
+  (() => { const idx = getHouseIndexFromSeed(props.multiLineNames?.[0] || 'Sam Sample'); return { id: 1, name: props.multiLineNames?.[0] || 'Sam Sample', state: 'ringing', duration: 0, tags: generateRandomTags(), endReason: undefined, imageIdx: idx, imageUrl: getHouseUrlByIndex(idx) } })(),
+  (() => { const idx = getHouseIndexFromSeed(props.multiLineNames?.[1] || 'Jordan Lee'); return { id: 2, name: props.multiLineNames?.[1] || 'Jordan Lee', state: 'ringing', duration: 0, tags: generateRandomTags(), endReason: undefined, imageIdx: idx, imageUrl: getHouseUrlByIndex(idx) } })(),
+  (() => { const idx = getHouseIndexFromSeed(props.multiLineNames?.[2] || 'Taylor Kim'); return { id: 3, name: props.multiLineNames?.[2] || 'Taylor Kim', state: 'ringing', duration: 0, tags: generateRandomTags(), endReason: undefined, imageIdx: idx, imageUrl: getHouseUrlByIndex(idx) } })()
 ])
 let lineTimers: Array<ReturnType<typeof setInterval> | null> = [null, null, null]
 let transitionTimeout: ReturnType<typeof setTimeout> | null = null
@@ -515,9 +524,9 @@ let transitionTimeout: ReturnType<typeof setTimeout> | null = null
 const startMultiLineSimulation = () => {
   // Reset
   lines.value = [
-    { id: 1, name: props.multiLineNames?.[0] || 'Sam Sample', state: 'ringing', duration: 0, tags: generateRandomTags(), endReason: undefined, imageUrl: getRandomHouseImage(props.multiLineNames?.[0] || 'Sam Sample') },
-    { id: 2, name: props.multiLineNames?.[1] || 'Jordan Lee', state: 'ringing', duration: 0, tags: generateRandomTags(), endReason: undefined, imageUrl: getRandomHouseImage(props.multiLineNames?.[1] || 'Jordan Lee') },
-    { id: 3, name: props.multiLineNames?.[2] || 'Taylor Kim', state: 'ringing', duration: 0, tags: generateRandomTags(), endReason: undefined, imageUrl: getRandomHouseImage(props.multiLineNames?.[2] || 'Taylor Kim') }
+    (() => { const idx = getHouseIndexFromSeed(props.multiLineNames?.[0] || 'Sam Sample'); return { id: 1, name: props.multiLineNames?.[0] || 'Sam Sample', state: 'ringing', duration: 0, tags: generateRandomTags(), endReason: undefined, imageIdx: idx, imageUrl: getHouseUrlByIndex(idx) } })(),
+    (() => { const idx = getHouseIndexFromSeed(props.multiLineNames?.[1] || 'Jordan Lee'); return { id: 2, name: props.multiLineNames?.[1] || 'Jordan Lee', state: 'ringing', duration: 0, tags: generateRandomTags(), endReason: undefined, imageIdx: idx, imageUrl: getHouseUrlByIndex(idx) } })(),
+    (() => { const idx = getHouseIndexFromSeed(props.multiLineNames?.[2] || 'Taylor Kim'); return { id: 3, name: props.multiLineNames?.[2] || 'Taylor Kim', state: 'ringing', duration: 0, tags: generateRandomTags(), endReason: undefined, imageIdx: idx, imageUrl: getHouseUrlByIndex(idx) } })()
   ]
 
   // After 2 seconds, connect line 1 and disconnect lines 2 and 3
@@ -577,6 +586,11 @@ const dialQueueText = computed(() => {
 })
 
 const tagFontSize = dsFontSize.xs[0]
+
+const onImageError = (line: LineState) => {
+  line.imageIdx = (line.imageIdx + 1) % CURATED_HOUSES.length
+  line.imageUrl = getHouseUrlByIndex(line.imageIdx)
+}
 
 const progressWidth = computed(() => {
   if (props.multiLine) {
