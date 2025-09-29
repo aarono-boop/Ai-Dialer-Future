@@ -447,8 +447,13 @@ interface LineState { id: number; name: string; state: 'ringing' | 'connected' |
 
 const getRandomHouseImage = (seed?: string): string => {
   const s = seed || Math.random().toString(36).slice(2)
-  // Small, cacheable placeholder images that reliably load
-  return `https://picsum.photos/seed/${encodeURIComponent(s)}/144/144`
+  let hash = 0
+  for (let i = 0; i < s.length; i++) {
+    hash = (hash * 31 + s.charCodeAt(i)) >>> 0
+  }
+  const lock = hash % 10000
+  // Realistic house thumbnails from loremflickr, locked per contact
+  return `https://loremflickr.com/144/144/house,home?lock=${lock}`
 }
 
 const generateRandomTags = (): LineTag[] => {
