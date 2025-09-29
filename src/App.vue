@@ -2801,7 +2801,7 @@ const handleMultiLineConnected = (contactName: string): void => {
   if (idx >= 0) currentContactIndex.value = idx
 
   // Add green call separator and begin the same flow as single-line
-  addSeparatorMessage(contactName)
+  addSeparatorMessage(contactName, `${contactName} Connected`)
   showCallConnectedMessages(contacts[currentContactIndex.value])
   scrollToBottom()
 }
