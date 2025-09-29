@@ -16,7 +16,7 @@
         >
           <template v-if="line.state === 'ringing'">
             <div class="flex items-center justify-center gap-2 text-gray-300">
-              <div class="font-medium">Calling (Jordan Lee)</div>
+              <div class="font-medium">Calling ({{ line.name }})</div>
               <div class="flex items-center">
                 <div class="animate-pulse w-2 h-2 bg-green-400 rounded-full mx-1"></div>
                 <div class="animate-pulse w-2 h-2 bg-green-400 rounded-full mx-1" style="animation-delay: 0.2s"></div>
@@ -417,10 +417,10 @@ const keypadButtonRef = ref<any>(null)
 const { currentCoach } = useCoaches()
 
 // Multi-line simulation state
-const lines = ref<Array<{ id: number; state: 'ringing' | 'connected' | 'disconnected'; duration: number }>>([
-  { id: 1, state: 'ringing', duration: 0 },
-  { id: 2, state: 'ringing', duration: 0 },
-  { id: 3, state: 'ringing', duration: 0 }
+const lines = ref<Array<{ id: number; name: string; state: 'ringing' | 'connected' | 'disconnected'; duration: number }>>([
+  { id: 1, name: 'Sam Sample', state: 'ringing', duration: 0 },
+  { id: 2, name: 'Jordan Lee', state: 'ringing', duration: 0 },
+  { id: 3, name: 'Taylor Kim', state: 'ringing', duration: 0 }
 ])
 let lineTimers: Array<ReturnType<typeof setInterval> | null> = [null, null, null]
 let transitionTimeout: ReturnType<typeof setTimeout> | null = null
@@ -428,9 +428,9 @@ let transitionTimeout: ReturnType<typeof setTimeout> | null = null
 const startMultiLineSimulation = () => {
   // Reset
   lines.value = [
-    { id: 1, state: 'ringing', duration: 0 },
-    { id: 2, state: 'ringing', duration: 0 },
-    { id: 3, state: 'ringing', duration: 0 }
+    { id: 1, name: 'Sam Sample', state: 'ringing', duration: 0 },
+    { id: 2, name: 'Jordan Lee', state: 'ringing', duration: 0 },
+    { id: 3, name: 'Taylor Kim', state: 'ringing', duration: 0 }
   ]
 
   // After 2 seconds, connect line 1 and disconnect lines 2 and 3
