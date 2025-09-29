@@ -415,6 +415,7 @@
             @pause-queue="handlePauseQueue"
             @complete-queue="handleCompleteQueue"
             @ai-coach-toggle="handleAICoachToggle"
+            @multi-line-connected="handleMultiLineConnected"
           />
         </div>
 
