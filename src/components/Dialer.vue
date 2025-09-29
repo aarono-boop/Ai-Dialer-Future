@@ -449,6 +449,15 @@ const getMenuItems = (line: LineState) => [
   { label: 'Move to End of Queue', icon: 'pi pi-angle-double-right', command: () => emit('line-menu-action', { lineId: line.id, action: 'move-to-end' }) }
 ]
 
+const menuPT = {
+  root: { style: { background: 'var(--p-surface-800)', border: '1px solid rgba(255,255,255,0.12)', borderRadius: '6px' } },
+  menu: { style: { background: 'var(--p-surface-800)', borderRadius: '6px' } },
+  list: { style: { padding: '0.25rem' } },
+  item: { class: 'hover:bg-white/10', style: { borderRadius: '6px' } },
+  itemContent: { style: { padding: '0.5rem 0.75rem' } },
+  itemLabel: { style: { fontSize: '0.875rem' } }
+}
+
 // Template refs for PrimeVue buttons
 const muteButtonRef = ref<any>(null)
 const holdButtonRef = ref<any>(null)
