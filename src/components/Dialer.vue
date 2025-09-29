@@ -32,8 +32,14 @@
           </template>
 
           <!-- Real estate context tags -->
-          <div class="mt-2 flex flex-wrap items-center justify-center gap-2">
-            <Tag v-for="(t, i) in line.tags" :key="i" :value="t.label" :icon="t.icon" :severity="t.severity" />
+          <div class="mt-2 flex flex-wrap items-center justify-end gap-1">
+            <Tag
+              v-for="(t, i) in line.tags"
+              :key="i"
+              :value="t.label"
+              :severity="t.severity"
+              :pt="{ root: { style: { fontSize: '10px', padding: '2px 6px', lineHeight: '1.1' } } }"
+            />
           </div>
         </div>
       </div>
@@ -425,16 +431,16 @@ const keypadButtonRef = ref<any>(null)
 const { currentCoach } = useCoaches()
 
 // Multi-line simulation state
-interface LineTag { label: string; severity?: 'success' | 'info' | 'warning' | 'danger' | 'secondary' | 'contrast'; icon?: string }
+interface LineTag { label: string; severity?: 'success' | 'info' | 'warning' | 'danger' | 'secondary' | 'contrast' }
 interface LineState { id: number; name: string; state: 'ringing' | 'connected' | 'disconnected'; duration: number; tags: LineTag[] }
 
 const generateRandomTags = (): LineTag[] => {
   const listingTypes: LineTag[] = [
-    { label: 'FSBO', severity: 'warning', icon: 'pi pi-home' },
-    { label: 'Expired', severity: 'danger', icon: 'pi pi-clock' },
-    { label: 'Withdrawn', severity: 'secondary', icon: 'pi pi-refresh' },
-    { label: 'Pre‑foreclosure', severity: 'contrast', icon: 'pi pi-exclamation-triangle' },
-    { label: 'Absentee Owner', severity: 'info', icon: 'pi pi-user-minus' }
+    { label: 'FSBO', severity: 'warning' },
+    { label: 'Expired', severity: 'danger' },
+    { label: 'Withdrawn', severity: 'secondary' },
+    { label: 'Pre‑foreclosure', severity: 'contrast' },
+    { label: 'Absentee Owner', severity: 'info' }
   ]
   const priceBands = ['$325k', '$449k', '$585k', '$799k', '$1.2M']
   const bedBath = ['2bd/1ba', '3bd/2ba', '4bd/3ba', '5bd/4ba']
@@ -445,10 +451,10 @@ const generateRandomTags = (): LineTag[] => {
 
   const tags: LineTag[] = []
   tags.push(pick(listingTypes))
-  tags.push({ label: pick(priceBands), severity: 'success', icon: 'pi pi-dollar' })
-  if (Math.random() > 0.3) tags.push({ label: pick(bedBath), severity: 'info', icon: 'pi pi-clone' })
-  if (Math.random() > 0.5) tags.push({ label: pick(sizes), severity: 'secondary', icon: 'pi pi-chart-bar' })
-  if (Math.random() > 0.6) tags.push({ label: pick(dom), severity: 'contrast', icon: 'pi pi-calendar' })
+  tags.push({ label: pick(priceBands), severity: 'success' })
+  if (Math.random() > 0.3) tags.push({ label: pick(bedBath), severity: 'info' })
+  if (Math.random() > 0.5) tags.push({ label: pick(sizes), severity: 'secondary' })
+  if (Math.random() > 0.6) tags.push({ label: pick(dom), severity: 'contrast' })
   return tags
 }
 
