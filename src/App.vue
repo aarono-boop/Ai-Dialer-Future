@@ -2185,6 +2185,9 @@ const handleStartNextTrio = (): void => {
 
   // Reset state visuals
   callState.value = 'idle'
+
+  // Show immediate green divider for the trio
+  addSeparatorMessage('3 Contacts', 'Calling 3 Contacts')
 }
 
 const handleNextContact = (): void => {
