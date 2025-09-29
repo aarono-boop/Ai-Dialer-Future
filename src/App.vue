@@ -2729,6 +2729,7 @@ const startMultiLineDialing = (): void => {
   currentContactIndex.value = 0
 
   messages.value = []
+  addSeparatorMessage('3 Contacts', 'Calling 3 Contacts')
   addAIMessage('Multi-Line dialing enabled. Simulating 3 concurrent calls...')
 }
 
