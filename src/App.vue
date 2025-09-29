@@ -866,6 +866,7 @@ const phoneVerified = ref<boolean>(false) // Track if phone has been verified in
 const showStartDialingButton = ref<boolean>(false)
 const showCallerIdChoiceButtons = ref<boolean>(false)
 const showDialer = ref<boolean>(false)
+const multiLineActive = ref<boolean>(false)
 const showCoachInfoPanel = ref<boolean>(false)
 const selectedCoachForInfo = ref<Coach | null>(null)
 const showDispositionButtons = ref<boolean>(false)
