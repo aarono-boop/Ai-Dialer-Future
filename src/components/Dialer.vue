@@ -399,6 +399,7 @@ const props = defineProps<{
   aiCoachEnabled: boolean
   multiLine?: boolean
   multiLineNames?: string[]
+  multiLineSetIndex?: number
 }>()
 
 // Define emits
