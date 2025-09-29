@@ -22,7 +22,7 @@
             <!-- Right content -->
             <div class="flex-1">
               <template v-if="line.state === 'ringing'">
-                <div class="flex items-center justify-start gap-2 text-green-400 text-left w-full">
+                <div class="flex items-center justify-start gap-2 text-green-400 text-left w-full pl-1.5">
                   <div class="font-medium">Calling ({{ line.name }})</div>
                   <div class="flex items-center">
                     <div class="animate-pulse w-2 h-2 bg-green-400 rounded-full mx-1"></div>
@@ -32,10 +32,10 @@
                 </div>
               </template>
               <template v-else-if="line.state === 'disconnected'">
-                <div class="text-red-400 font-medium text-left">{{ line.endReason ? (line.endReason + ' (' + line.name + ')') : ('Call Ended (' + line.name + ')') }}</div>
+                <div class="text-red-400 font-medium text-left pl-1.5">{{ line.endReason ? (line.endReason + ' (' + line.name + ')') : ('Call Ended (' + line.name + ')') }}</div>
               </template>
               <template v-else>
-                <div class="text-green-400 font-medium text-left">Live Call ({{ line.name }}): <span class="font-mono">{{ formatTime(line.duration) }}</span></div>
+                <div class="text-green-400 font-medium text-left pl-1.5">Live Call ({{ line.name }}): <span class="font-mono">{{ formatTime(line.duration) }}</span></div>
               </template>
 
               <!-- Real estate context tags -->
