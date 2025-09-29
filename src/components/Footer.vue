@@ -14,6 +14,15 @@
         class="ml-4 underline"
         label="Skip to Dialer"
       />
+      <Button
+        v-if="!showDialer && !queuePaused"
+        severity="secondary"
+        outlined
+        size="small"
+        class="ml-2 underline"
+        label="Multi-Line"
+        aria-label="Multi-Line"
+      />
     </div>
   </footer>
 </template>
