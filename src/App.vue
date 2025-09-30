@@ -1044,6 +1044,10 @@ const handleMultiLineChoice = (label: 'Leave Voicemail' | 'Hang Up'): void => {
   awaitingMultiLineChoice.value = false
   multiLinePickupPolicy.value = label === 'Leave Voicemail' ? 'voicemail' : 'hangup'
   addUserMessage(label)
+  // Show divider only after choice, then start multi-line simulation
+  addSeparatorMessage('3 Contacts', 'Calling 3 Contacts')
+  multiLineActive.value = false
+  nextTick(() => { multiLineActive.value = true })
 }
 
 // Helper function to identify if a message is the "Ready to upload" message for returning users
@@ -2753,7 +2757,6 @@ const startMultiLineDialing = (): void => {
 
   showDialer.value = true
   multiLineActive.value = false
-  nextTick(() => { multiLineActive.value = true })
 
   // Reset single-line call state; Dialer handles multi-line simulation
   callState.value = 'idle'
@@ -2762,7 +2765,6 @@ const startMultiLineDialing = (): void => {
 
   messages.value = []
   addAIMessage('Multi-Line dialing enabled.')
-  addSeparatorMessage('3 Contacts', 'Calling 3 Contacts')
   addAIMessage('What would you like me to do when someone picks up at the same time as a live call?')
   awaitingMultiLineChoice.value = true
 }
