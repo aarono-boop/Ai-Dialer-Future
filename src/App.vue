@@ -116,7 +116,7 @@
                     <!-- Multi-line pre-prompt buttons -->
                     <div v-if="awaitingMultiLineChoice && index === messages.length - 1" class="mt-4 flex flex-wrap gap-2">
                       <Button label="Leave Voicemail" icon="pi pi-volume-down" @click="handleMultiLineChoice('Leave Voicemail')" />
-                      <Button label="Hang Up" severity="secondary" @click="handleMultiLineChoice('Hang Up')" />
+                      <Button label="End Call" severity="secondary" @click="handleMultiLineChoice('End Call')" />
                     </div>
                   </template>
                 </ChatMessage>
@@ -1040,7 +1040,7 @@ const promptMultiLineOptions = (): void => {
   awaitingMultiLineChoice.value = true
 }
 
-const handleMultiLineChoice = (label: 'Leave Voicemail' | 'Hang Up'): void => {
+const handleMultiLineChoice = (label: 'Leave Voicemail' | 'End Call'): void => {
   awaitingMultiLineChoice.value = false
   multiLinePickupPolicy.value = label === 'Leave Voicemail' ? 'voicemail' : 'hangup'
   addUserMessage(label)
