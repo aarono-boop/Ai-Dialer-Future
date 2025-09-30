@@ -277,7 +277,7 @@
           class="w-full flex items-center justify-center gap-2 py-3"
         >
           <i class="pi pi-phone" style="transform: rotate(135deg);"></i>
-          Hang Up
+          End Call
         </Button>
       </div>
 
