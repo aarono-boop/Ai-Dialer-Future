@@ -430,6 +430,7 @@ const props = defineProps<{
   multiLine?: boolean
   multiLineNames?: string[]
   multiLineSetIndex?: number
+  suppressContactDetails?: boolean
 }>()
 
 // Define emits
@@ -970,6 +971,8 @@ watch(
 )
 
 const showContactInfo = computed(() => {
+  // Suppress contact details (used during multi-line pre-start)
+  if (props.suppressContactDetails) return false
   if (props.multiLine) {
     // Multi-line: only show after a contact answers
     return lines.value.some(l => l.state === 'connected')
