@@ -960,9 +960,11 @@ const handleHoldKeydown = (event: KeyboardEvent) => {
 
 const showContactInfo = computed(() => {
   if (props.multiLine) {
+    // Multi-line: only show after a contact answers
     return lines.value.some(l => l.state === 'connected')
   }
-  return props.callState === 'connected'
+  // Single-line: show as soon as dialing starts (ringing) and when connected
+  return props.callState === 'connected' || props.callState === 'ringing'
 })
 
 const isActiveCall = computed(() => {
