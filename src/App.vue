@@ -583,7 +583,7 @@
     />
 
     <!-- Footer -->
-    <Footer v-if="currentPage === 'main' && !managementMode" :style="(showDialer || showCoachInfoPanel) ? 'margin-right: 33.333333%' : ''" :showDialer="showDialer" :queuePaused="queuePaused" @skip-to-dialer="skipToDialer" @multi-line="promptMultiLineOptions" />
+    <Footer v-if="currentPage === 'main' && !managementMode" :style="(showDialer || showCoachInfoPanel) ? 'margin-right: 33.333333%' : ''" :showDialer="showDialer" :queuePaused="queuePaused" @skip-to-dialer="skipToDialer" @multi-line="startMultiLineDialing" />
 
     <!-- Screen Reader Live Region for Announcements -->
     <div
@@ -1044,8 +1044,6 @@ const handleMultiLineChoice = (label: 'Leave Voicemail' | 'Hang Up'): void => {
   awaitingMultiLineChoice.value = false
   multiLinePickupPolicy.value = label === 'Leave Voicemail' ? 'voicemail' : 'hangup'
   addUserMessage(label)
-  // Proceed to start multi-line dialing after selection
-  startMultiLineDialing()
 }
 
 // Helper function to identify if a message is the "Ready to upload" message for returning users
@@ -2765,6 +2763,8 @@ const startMultiLineDialing = (): void => {
   messages.value = []
   addAIMessage('Multi-Line dialing enabled.')
   addSeparatorMessage('3 Contacts', 'Calling 3 Contacts')
+  addAIMessage('What would you like me to do when someone picks up at the same time as a live call?')
+  awaitingMultiLineChoice.value = true
 }
 
 const loadNewFile = (preserveQueueState: boolean = false): void => {
