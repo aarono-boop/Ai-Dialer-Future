@@ -427,6 +427,7 @@
             :multiLine="multiLineActive"
             :multiLineNames="multiLineNames"
             :multiLineSetIndex="multiLineSetIndex"
+            :suppressContactDetails="awaitingMultiLineChoice || awaitingRememberChoice || awaitingPacingChoice"
             @call-back="handleCallBack"
             @next-contact="handleNextContact"
             @hang-up="handleHangUp"
