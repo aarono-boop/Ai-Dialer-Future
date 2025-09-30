@@ -974,9 +974,8 @@ const showContactInfo = computed(() => {
     // Multi-line: only show after a contact answers
     return lines.value.some(l => l.state === 'connected')
   }
-  // Single-line: keep showing after call ends until next call begins; also show during ringing and connected
-  if (props.callState === 'connected' || props.callState === 'ringing') return true
-  return hasDialedOnce.value && (props.callState === 'ended' || props.callState === 'idle')
+  // Single-line: always show contact details (idle, ringing, connected, ended)
+  return true
 })
 
 const isActiveCall = computed(() => {
