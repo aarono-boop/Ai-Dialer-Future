@@ -118,6 +118,12 @@
                       <Button label="Leave Voicemail" icon="pi pi-volume-down" @click="handleMultiLineChoice('Leave Voicemail')" />
                       <Button label="End Call" severity="secondary" @click="handleMultiLineChoice('End Call')" />
                     </div>
+
+                    <!-- Remember preference buttons -->
+                    <div v-if="awaitingRememberChoice && index === messages.length - 1" class="mt-4 flex flex-wrap gap-2">
+                      <Button label="Yes, remember" icon="pi pi-bookmark" @click="handleRememberChoice(true)" />
+                      <Button label="No, just this time" severity="secondary" @click="handleRememberChoice(false)" />
+                    </div>
                   </template>
                 </ChatMessage>
 
@@ -1031,6 +1037,7 @@ const { scrollToBottom, scrollToBottomDuringTyping, scrollToUserMessage, scrollT
 
 // Multi-line pre-prompt state
 const awaitingMultiLineChoice = ref(false)
+const awaitingRememberChoice = ref(false)
 const multiLinePickupPolicy = ref<'voicemail' | 'hangup' | null>(null)
 
 const promptMultiLineOptions = (): void => {
@@ -1048,6 +1055,9 @@ const handleMultiLineChoice = (label: 'Leave Voicemail' | 'End Call'): void => {
   addSeparatorMessage('3 Contacts', 'Calling 3 Contacts')
   multiLineActive.value = false
   nextTick(() => { multiLineActive.value = true })
+  // Ask to remember preference
+  addAIMessage('Would you like me to remember this for next time?')
+  awaitingRememberChoice.value = true
 }
 
 // Helper function to identify if a message is the "Ready to upload" message for returning users
@@ -2830,6 +2840,18 @@ const handleCompleteQueue = (): void => {
 
 const handleAICoachToggle = (enabled: boolean): void => {
   aiCoachEnabled.value = enabled
+}
+
+const handleRememberChoice = (remember: boolean): void => {
+  awaitingRememberChoice.value = false
+  addUserMessage(remember ? 'Yes, remember' : 'No, just this time')
+  try {
+    if (remember && multiLinePickupPolicy.value) {
+      localStorage.setItem('multiLinePickupPolicy', multiLinePickupPolicy.value)
+    } else {
+      localStorage.removeItem('multiLinePickupPolicy')
+    }
+  } catch {}
 }
 
 const handleMultiLineConnected = (contactName: string): void => {
