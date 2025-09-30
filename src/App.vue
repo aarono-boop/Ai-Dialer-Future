@@ -1051,11 +1051,7 @@ const handleMultiLineChoice = (label: 'Leave Voicemail' | 'End Call'): void => {
   awaitingMultiLineChoice.value = false
   multiLinePickupPolicy.value = label === 'Leave Voicemail' ? 'voicemail' : 'hangup'
   addUserMessage(label)
-  // Show divider only after choice, then start multi-line simulation
-  addSeparatorMessage('3 Contacts', 'Calling 3 Contacts')
-  multiLineActive.value = false
-  nextTick(() => { multiLineActive.value = true })
-  // Ask to remember preference
+  // Do NOT start dialing yet; ask to remember first
   addAIMessage('Would you like me to remember this for next time?')
   awaitingRememberChoice.value = true
 }
