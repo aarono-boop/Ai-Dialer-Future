@@ -1904,7 +1904,7 @@ const handleGoogleSignin = (): void => {
   messages.value = []
   // Show brief prior welcome bubble, then welcome-back bubble
   addAIMessage("Hey there! Welcome to ARMOR® Ai Dialer. I'm Marcus, your Ai calling assistant. <br><br>To get started, login to your account or sign up with Google.")
-  addAIMessageWithTyping("Welcome back! You're signed in with Google.<br><br>What would you like to do?")
+  addAIMessageWithTyping("Welcome! I'm Marcus, your Ai calling assistant. <br><br>To get started, drop your contact file below and I'll organize your contacts based on who is most likely to pick up.")
   // Do not prompt for upload; assume user already connected/uploaded previously
   showFileUploadForReturningUser.value = false
 
@@ -2302,7 +2302,7 @@ const sendMessage = (message: string): void => {
         'I can configure your session with:',
         '• <strong>Target audience:</strong> High-priority prospects, warm leads, or follow-ups',
         '• <strong>Call duration:</strong> 30 min, 1 hour, or 2-hour session',
-        '��� <strong>Connect goals:</strong> Number of conversations you want to have',
+        '• <strong>Connect goals:</strong> Number of conversations you want to have',
         'What type of prospects do you want to focus on for this session?'
       ])
     } else if (lowerMessage.includes('set a reminder') || lowerMessage.includes('reminder')) {
