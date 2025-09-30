@@ -124,6 +124,13 @@
                       <Button label="Yes, remember" icon="pi pi-bookmark" @click="handleRememberChoice(true)" />
                       <Button label="No, just this time" severity="secondary" @click="handleRememberChoice(false)" />
                     </div>
+
+                    <!-- Call Pacing buttons -->
+                    <div v-if="awaitingPacingChoice && index === messages.length - 1" class="mt-4 flex flex-col gap-2">
+                      <Button label="Conservative – Dials fewer lines at once (better for quality conversations, fewer dropped calls)" icon="pi pi-shield" @click="handlePacingChoice('Conservative')" />
+                      <Button label="Balanced – Dials a moderate number of lines (good mix of talk time and efficiency)" icon="pi pi-equals" @click="handlePacingChoice('Balanced')" />
+                      <Button label="Aggressive – Dials the maximum lines allowed (highest chance of live connects, but risk of more dropped calls)" icon="pi pi-bolt" @click="handlePacingChoice('Aggressive')" />
+                    </div>
                   </template>
                 </ChatMessage>
 
@@ -535,7 +542,7 @@
                 <div class="space-y-2 pl-5 border-t border-white/10 pt-[22px] pb-[10px] mt-3">
                   <h4 class="text-xl font-medium">Testimonials</h4>
                   <div class="text-xs text-gray-300 space-y-2">
-                    <p>��Our connect rate and meetings doubled in 60 days.” — VP Sales, SaaS</p>
+                    <p>“Our connect rate and meetings doubled in 60 days.” — VP Sales, SaaS</p>
                     <p>“The talk tracks are simple and deadly effective.�� — SDR Lead, Insurance</p>
                   </div>
                 <div v-if="selectedCoachForInfo?.websiteUrl" class="sticky bottom-0 -mb-4 -mx-4 px-4 py-3 border-t border-gray-700 bg-gray-900/90 flex justify-center">
@@ -1038,7 +1045,9 @@ const { scrollToBottom, scrollToBottomDuringTyping, scrollToUserMessage, scrollT
 // Multi-line pre-prompt state
 const awaitingMultiLineChoice = ref(false)
 const awaitingRememberChoice = ref(false)
+const awaitingPacingChoice = ref(false)
 const multiLinePickupPolicy = ref<'voicemail' | 'hangup' | null>(null)
+const callPacingPolicy = ref<'conservative' | 'balanced' | 'aggressive' | null>(null)
 
 const promptMultiLineOptions = (): void => {
   currentPage.value = 'main'
@@ -2838,6 +2847,17 @@ const handleAICoachToggle = (enabled: boolean): void => {
   aiCoachEnabled.value = enabled
 }
 
+const handlePacingChoice = (label: 'Conservative' | 'Balanced' | 'Aggressive'): void => {
+  const key = label.toLowerCase() as 'conservative' | 'balanced' | 'aggressive'
+  callPacingPolicy.value = key
+  awaitingPacingChoice.value = false
+  addUserMessage(label)
+  // Start session now
+  addSeparatorMessage('3 Contacts', 'Calling 3 Contacts')
+  multiLineActive.value = false
+  nextTick(() => { multiLineActive.value = true })
+}
+
 const handleRememberChoice = (remember: boolean): void => {
   awaitingRememberChoice.value = false
   addUserMessage(remember ? 'Yes, remember' : 'No, just this time')
@@ -2848,10 +2868,9 @@ const handleRememberChoice = (remember: boolean): void => {
       localStorage.removeItem('multiLinePickupPolicy')
     }
   } catch {}
-  // Now show divider and start multi-line dialing
-  addSeparatorMessage('3 Contacts', 'Calling 3 Contacts')
-  multiLineActive.value = false
-  nextTick(() => { multiLineActive.value = true })
+  // Ask pacing before starting
+  addAIMessage('What would you like your Call Pacing (Speed Controls) to be?')
+  awaitingPacingChoice.value = true
 }
 
 const handleMultiLineConnected = (contactName: string): void => {
