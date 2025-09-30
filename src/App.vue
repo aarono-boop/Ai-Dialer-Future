@@ -127,9 +127,9 @@
 
                     <!-- Call Pacing buttons -->
                     <div v-if="awaitingPacingChoice && index === messages.length - 1" class="mt-4 flex flex-col gap-2">
-                      <Button label="Conservative – Dials fewer lines at once (better for quality conversations, fewer dropped calls)" icon="pi pi-shield" @click="handlePacingChoice('Conservative')" />
-                      <Button label="Balanced – Dials a moderate number of lines (good mix of talk time and efficiency)" icon="pi pi-equals" @click="handlePacingChoice('Balanced')" />
-                      <Button label="Aggressive – Dials the maximum lines allowed (highest chance of live connects, but risk of more dropped calls)" icon="pi pi-bolt" @click="handlePacingChoice('Aggressive')" />
+                      <Button label="Conservative – Dials fewer lines at once (better for quality conversations, fewer dropped calls)" severity="secondary" @click="handlePacingChoice('Conservative')" />
+                      <Button label="Balanced – Dials a moderate number of lines (good mix of talk time and efficiency)" severity="secondary" @click="handlePacingChoice('Balanced')" />
+                      <Button label="Aggressive – Dials the maximum lines allowed (highest chance of live connects, but risk of more dropped calls)" severity="secondary" @click="handlePacingChoice('Aggressive')" />
                     </div>
                   </template>
                 </ChatMessage>
