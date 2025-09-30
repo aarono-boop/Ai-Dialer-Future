@@ -112,6 +112,12 @@
                         </Card>
                       </div>
                     </div>
+
+                    <!-- Multi-line pre-prompt buttons -->
+                    <div v-if="awaitingMultiLineChoice && index === messages.length - 1" class="mt-4 flex flex-wrap gap-2">
+                      <Button label="Leave Voicemail" icon="pi pi-volume-down" @click="handleMultiLineChoice('Leave Voicemail')" />
+                      <Button label="Hang Up" severity="secondary" @click="handleMultiLineChoice('Hang Up')" />
+                    </div>
                   </template>
                 </ChatMessage>
 
