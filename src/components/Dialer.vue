@@ -958,13 +958,25 @@ const handleHoldKeydown = (event: KeyboardEvent) => {
   // Let Tab key work normally for navigation
 }
 
+const hasDialedOnce = ref(false)
+watch(
+  () => props.callState,
+  (state) => {
+    if (state === 'ringing' || state === 'connected') {
+      hasDialedOnce.value = true
+    }
+  },
+  { immediate: true }
+)
+
 const showContactInfo = computed(() => {
   if (props.multiLine) {
     // Multi-line: only show after a contact answers
     return lines.value.some(l => l.state === 'connected')
   }
-  // Single-line: show as soon as dialing starts (ringing) and when connected
-  return props.callState === 'connected' || props.callState === 'ringing'
+  // Single-line: keep showing after call ends until next call begins; also show during ringing and connected
+  if (props.callState === 'connected' || props.callState === 'ringing') return true
+  return hasDialedOnce.value && (props.callState === 'ended' || props.callState === 'idle')
 })
 
 const isActiveCall = computed(() => {
