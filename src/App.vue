@@ -535,7 +535,7 @@
                 <div class="space-y-2 pl-5 border-t border-white/10 pt-[22px] pb-[10px] mt-3">
                   <h4 class="text-xl font-medium">Testimonials</h4>
                   <div class="text-xs text-gray-300 space-y-2">
-                    <p>“Our connect rate and meetings doubled in 60 days.” — VP Sales, SaaS</p>
+                    <p>��Our connect rate and meetings doubled in 60 days.” — VP Sales, SaaS</p>
                     <p>“The talk tracks are simple and deadly effective.�� — SDR Lead, Insurance</p>
                   </div>
                 <div v-if="selectedCoachForInfo?.websiteUrl" class="sticky bottom-0 -mb-4 -mx-4 px-4 py-3 border-t border-gray-700 bg-gray-900/90 flex justify-center">
@@ -2848,6 +2848,10 @@ const handleRememberChoice = (remember: boolean): void => {
       localStorage.removeItem('multiLinePickupPolicy')
     }
   } catch {}
+  // Now show divider and start multi-line dialing
+  addSeparatorMessage('3 Contacts', 'Calling 3 Contacts')
+  multiLineActive.value = false
+  nextTick(() => { multiLineActive.value = true })
 }
 
 const handleMultiLineConnected = (contactName: string): void => {
