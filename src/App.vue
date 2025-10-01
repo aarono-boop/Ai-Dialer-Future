@@ -914,6 +914,7 @@ import { showContactPreview } from './utils/contactPreview'
 import { clearFocusAndEstablishContext, focusChatInput, announceToScreenReader } from './utils/focus'
 import { createChatUtils, type Message } from './utils/chat'
 import { getResponseForKeywords, AI_RESPONSES } from './utils/aiResponses'
+import { askChatGPT } from './services/openai'
 import { useCoaches } from './composables/useCoaches'
 import type { CoachManagementMode, CoachCreateData } from './types/coach'
 
@@ -2257,6 +2258,20 @@ const sendMessage = (message: string): void => {
     }, 1000)
     return
   }
+
+  // ChatGPT integration
+  askChatGPT(message)
+    .then((reply) => {
+      if (reply && reply.trim()) {
+        addAIMessage(reply)
+      } else {
+        addAIMessage('I did not receive a response.')
+      }
+    })
+    .catch(() => {
+      addAIMessage('Sorry, I could not reach ChatGPT right now.')
+    })
+  return
 
   // Simulate AI processing for regular messages
   setTimeout(() => {
