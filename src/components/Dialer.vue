@@ -69,12 +69,12 @@
           </div>
           <div class="flex-1 flex justify-center gap-2">
             <template v-if="currentContactIndex !== 1 && currentContactIndex !== 2">
-              <!-- First caller: show Coaching Help to the left of Objection Help -->
+              <!-- First caller: Coaching Help turns red when objection is detected (>=5s) -->
               <template v-if="currentContactIndex === 0">
                 <Button
                   @click="onCoachingHelpClick"
-                  :disabled="callState !== 'connected'"
-                  severity="secondary"
+                  :disabled="callState !== 'connected' || callDuration < 5"
+                  :severity="callDuration >= 5 ? 'danger' : 'secondary'"
                   size="small"
                   class="pause-queue-compact"
                   aria-label="Get coaching help"
@@ -83,18 +83,6 @@
                   <span class="text-xs">Get Coaching Help</span>
                 </Button>
               </template>
-              <Button
-                v-if="callState === 'connected' && callDuration >= 5"
-                @click="onObjectionHelpClick"
-                :disabled="objectionClicked"
-                :severity="!objectionClicked ? 'danger' : 'secondary'"
-                size="small"
-                class="pause-queue-compact"
-                aria-label="Show objection handling guidance"
-              >
-                <i class="pi pi-exclamation-triangle"></i>
-                <span class="text-xs">Objection Help</span>
-              </Button>
             </template>
           </div>
           <Button
@@ -921,6 +909,8 @@ const onObjectionHelpClick = () => {
 const onCoachingHelpClick = () => {
   emit('coaching-help')
 }
+
+// Remove Objection Help pathway; show objection via coaching help instead
 
 const handleHangUpTab = (event: KeyboardEvent) => {
   // If not holding Shift (forward tab), go back to ARKON logo
