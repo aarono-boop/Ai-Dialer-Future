@@ -6,8 +6,17 @@
   >
     <div v-if="message.type === 'ai'" class="flex gap-[10px] items-start w-full">
       <div class="flex items-start justify-center flex-shrink-0 pt-1" role="img" :aria-label="getAvatarLabel()">
+        <!-- Contact avatar for AI lines spoken by the contact -->
+        <template v-if="message.contactSpeaker">
+          <div
+            class="w-[26px] h-[26px] rounded-full bg-gradient-to-br from-blue-400 to-purple-500 flex items-center justify-center"
+            aria-hidden="true"
+          >
+            <i class="pi pi-user text-white text-sm"></i>
+          </div>
+        </template>
         <!-- Dynamic Coach Avatar when coach is set and not an AI Dialer AI system message -->
-        <template v-if="shouldUseCoachAvatar() && currentCoach">
+        <template v-else-if="shouldUseCoachAvatar() && currentCoach">
           <img
             v-if="currentCoach.avatarUrl"
             :src="currentCoach.avatarUrl"
@@ -147,6 +156,7 @@ interface Message {
   typing?: boolean
   typingSpeed?: number
   highlightObjection?: boolean
+  contactSpeaker?: boolean
 }
 
 // Define props
