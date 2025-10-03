@@ -818,7 +818,7 @@
                 <div class="space-y-2 pl-5 border-t border-white/10 pt-[22px] pb-[10px] mt-3">
                   <h4 class="text-xl font-medium">Testimonials</h4>
                   <div class="text-xs text-gray-300 space-y-2">
-                    <p>“Our connect rate and meetings doubled in 60 days.” ��� VP Sales, SaaS</p>
+                    <p>“Our connect rate and meetings doubled in 60 days.” — VP Sales, SaaS</p>
                     <p>“The talk tracks are simple and deadly effective.���� — SDR Lead, Insurance</p>
                   </div>
                 <div v-if="selectedCoachForInfo?.websiteUrl" class="sticky bottom-0 -mb-4 -mx-4 px-4 py-3 border-t border-gray-700 bg-gray-900/90 flex justify-center">
@@ -1139,7 +1139,7 @@ const showRegularConnectedMessages = (contact: any): void => {
   if (currentContactIndex.value === 0) {
     setTimeout(() => {
       // Type at 1/3 speed (default 5ms -> 15ms)
-      addUserMessageWithTyping('Hi Sam, this is Aaron from PhoneBurner do you have a quick minute?', 500)
+      addUserMessageWithTyping('Hi Sam, this is Aaron from PhoneBurner do you have a quick minute?', 100)
       scrollToBottom()
     }, 400)
   }
