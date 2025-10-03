@@ -3018,6 +3018,12 @@ const handleKeypad = (): void => {
   addAIMessage('�� Keypad opened')
 }
 
+const handleObjectionHelp = (): void => {
+  if (!aiCoachEnabled.value) return
+  addAIMessageWithTyping(AI_RESPONSES.OBJECTION_RESPONSE)
+  scrollToBottom()
+}
+
 const handlePauseQueue = (): void => {
   // Set paused state
   queuePaused.value = true
