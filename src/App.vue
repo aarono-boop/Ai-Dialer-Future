@@ -2948,9 +2948,7 @@ const handleHangUp = (): void => {
     addAIMessageWithTyping([
       getCoachRecapTitle(),
       '<br>',
-      getDynamicCoachingFeedback(),
-      '<br>',
-      'Delivery: 9/10<br>Pace: 9/10<br>Confidence: 9/10'
+      getDynamicCoachingFeedback()
     ])
   }
 
