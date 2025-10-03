@@ -86,7 +86,7 @@
             <Button
               @click="onObjectionHelpClick"
               :disabled="callState !== 'connected' || callDuration < 10 || objectionClicked"
-              :severity="objectionAttention ? 'danger' : 'secondary'"
+              :severity="(objectionAttention && !(callState !== 'connected' || callDuration < 10 || objectionClicked)) ? 'danger' : 'secondary'"
               size="small"
               class="pause-queue-compact"
               aria-label="Show objection handling guidance"
