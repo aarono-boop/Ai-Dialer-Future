@@ -1155,6 +1155,8 @@ const chatInputRef = ref<any>(null)
 const chatMessages = ref<HTMLElement | null>(null)
 // Prevent repeated auto-replies from Sam on first contact
 const firstContactSamReplied = ref<boolean>(false)
+const samQuestionResponded = ref<boolean>(false)
+const aaronPitchReplied = ref<boolean>(false)
 const screenReaderAnnouncements = ref<HTMLElement | null>(null)
 const headerRef = ref<any>(null)
 const hasUploadedFile = ref<boolean>(false)
@@ -1609,6 +1611,36 @@ const handleTypingComplete = (index: number): void => {
       addAIMessageWithTyping("Hi Aaron, what's this call about?", 150, 'word')
       scrollToBottom()
     }, 250)
+  }
+
+  // After Sam's question, have Aaron respond with a pitch (word-by-word @150ms)
+  if (
+    messages.value[index] &&
+    messages.value[index].type === 'ai' &&
+    typeof messages.value[index].content[0] === 'string' &&
+    messages.value[index].content[0].includes("what's this call about") &&
+    currentContactIndex.value === 0 && callState.value === 'connected' && !samQuestionResponded.value
+  ) {
+    samQuestionResponded.value = true
+    setTimeout(() => {
+      addUserMessageWithTyping('I have an amazing new AI phone dialer I want to tell you about.', 150, 'word')
+      scrollToBottom()
+    }, 250)
+  }
+
+  // After Aaron's pitch, have Sam object (word-by-word @150ms)
+  if (
+    messages.value[index] &&
+    messages.value[index].type === 'user' &&
+    typeof messages.value[index].content[0] === 'string' &&
+    messages.value[index].content[0].includes('amazing new AI phone dialer') &&
+    currentContactIndex.value === 0 && callState.value === 'connected' && !aaronPitchReplied.value
+  ) {
+    aaronPitchReplied.value = true
+    setTimeout(() => {
+      addAIMessageWithTyping('I already have a phone dialer, I am using Aircall.', 150, 'word')
+      scrollToBottom()
+    }, 300)
   }
 }
 
@@ -2918,6 +2950,8 @@ const handleNextContact = (): void => {
   if (currentContactIndex.value < contacts.length - 1) {
     currentContactIndex.value++
     firstContactSamReplied.value = false
+    samQuestionResponded.value = false
+    aaronPitchReplied.value = false
 
     callState.value = 'idle'
     callDuration.value = 0
