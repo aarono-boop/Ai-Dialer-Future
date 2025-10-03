@@ -477,6 +477,7 @@ const props = defineProps<{
   totalContacts: number
   coachParameter: string
   aiCoachEnabled: boolean
+  firstContactObjectionDetected: boolean
 }>()
 
 // Define emits
