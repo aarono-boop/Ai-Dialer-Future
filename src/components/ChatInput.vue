@@ -27,11 +27,11 @@
       <Button
         v-if="showPromptLibraryIcon"
         @click="emit('toggle-transcription')"
-        v-tooltip.top="'Toggle the real time transcription view in the chat window'"
+        v-tooltip.top="'Toggle closed captions in the chat window'"
         text
-        icon="pi pi-microphone"
+        icon="pi pi-comment"
         class="w-10 h-10 flex items-center justify-center text-white transition-colors duration-200 hover:opacity-80"
-        aria-label="Toggle the real time transcription view in the chat window"
+        aria-label="Toggle closed captions in the chat window"
       />
     </div>
     <div id="chat-input-help" class="sr-only">
