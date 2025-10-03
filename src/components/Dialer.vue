@@ -82,18 +82,20 @@
               class="ai-coach-toggle"
             />
           </div>
-          <div class="flex-1 flex justify-center" v-if="currentContactIndex !== 1 && currentContactIndex !== 2">
-            <Button
-              @click="onObjectionHelpClick"
-              :disabled="callState !== 'connected' || callDuration < 10 || objectionClicked"
-              :severity="(objectionAttention && !(callState !== 'connected' || callDuration < 10 || objectionClicked)) ? 'danger' : 'secondary'"
-              size="small"
-              class="pause-queue-compact"
-              aria-label="Show objection handling guidance"
-            >
-              <i class="pi pi-exclamation-triangle"></i>
-              <span class="text-xs">Objection Help</span>
-            </Button>
+          <div class="flex-1 flex justify-center">
+            <template v-if="currentContactIndex !== 1 && currentContactIndex !== 2">
+              <Button
+                @click="onObjectionHelpClick"
+                :disabled="callState !== 'connected' || callDuration < 10 || objectionClicked"
+                :severity="(objectionAttention && !(callState !== 'connected' || callDuration < 10 || objectionClicked)) ? 'danger' : 'secondary'"
+                size="small"
+                class="pause-queue-compact"
+                aria-label="Show objection handling guidance"
+              >
+                <i class="pi pi-exclamation-triangle"></i>
+                <span class="text-xs">Objection Help</span>
+              </Button>
+            </template>
           </div>
           <Button
             v-if="!shouldCompleteQueue"
