@@ -569,8 +569,8 @@
             </div>
           </div>
 
-          <!-- Objection Help above chat input for 3rd call only, and only after detection (10s into live call). Hide after click. -->
-          <div v-if="showDialer && currentContactIndex === 2 && callState === 'connected' && callDuration >= 10 && !hideObjectionHelpButton" class="mt-2 pt-3 flex justify-center">
+          <!-- Objection Help above chat input for 3rd call only, and only after detection (5s into live call). Hide after click. -->
+          <div v-if="showDialer && currentContactIndex === 2 && callState === 'connected' && callDuration >= 5 && !hideObjectionHelpButton" class="mt-2 pt-3 flex justify-center">
             <div class="w-[70%] flex justify-center">
               <Button
                 @click="handleObjectionHelp"
