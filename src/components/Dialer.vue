@@ -286,6 +286,18 @@
           </Button>
         </div>
 
+        <!-- Objection Help Button (shown during live call) -->
+        <Button
+          v-if="callState === 'connected'"
+          @click="$emit('objection-help')"
+          :severity="objectionAttention ? 'danger' : 'secondary'"
+          class="w-full flex items-center justify-center gap-2 py-3"
+          aria-label="Show objection handling guidance"
+        >
+          <i class="pi pi-exclamation-triangle"></i>
+          Objection Help
+        </Button>
+
         <!-- Hang Up Button -->
         <Button
           @click="hangUp"
@@ -493,12 +505,15 @@ const props = defineProps<{
 }>()
 
 // Define emits
-const emit = defineEmits(['call-back', 'next-contact', 'hang-up', 'mute', 'hold', 'keypad', 'keypad-press', 'pause-queue', 'complete-queue', 'ai-coach-toggle', 'transfer'])
+const emit = defineEmits(['call-back', 'next-contact', 'hang-up', 'mute', 'hold', 'keypad', 'keypad-press', 'pause-queue', 'complete-queue', 'ai-coach-toggle', 'transfer', 'objection-help'])
 
 // Reactive data
 const isMuted = ref(false)
 const isOnHold = ref(false)
 const showKeypadModal = ref(false)
+
+// After 10s into a live call, draw attention to objection help
+const objectionAttention = computed(() => props.callState === 'connected' && props.callDuration >= 10)
 
 // Template refs for PrimeVue buttons
 const muteButtonRef = ref<any>(null)
