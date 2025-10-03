@@ -1102,12 +1102,9 @@ const showRegularConnectedMessages = (contact: any): void => {
     return
   }
 
-  // Combine connection message and script into single bubble with proper spacing
+  // Connection status message
   const combinedMessage = [
-    'Great! You\'re connected!',
-    '<br>',
-    'Script:',
-    '<span style="color: #fbbf24; font-style: italic;">[The AI learns the nuances of this coach\'s approach to generate contextual scripts that reflect their unique sales philosophy, language patterns, and proven conversation starters tailored to this specific prospect.]</span>'
+    `You are not connected with ${contact.name}.`
   ]
 
   addAIMessageWithTyping(combinedMessage)
