@@ -950,7 +950,6 @@ import PaymentPage from './components/PaymentPage.vue'
 import Footer from './components/Footer.vue'
 import Dialer from './components/Dialer.vue'
 import CallSeparator from './components/CallSeparator.vue'
-import Button from 'primevue/button'
 import YouTubeVideo from './components/YouTubeVideo.vue'
 import CoachManagement from './components/CoachManagement.vue'
 import CoachCreationPage from './components/CoachCreationPage.vue'
@@ -959,7 +958,7 @@ import CoachDashboard from './components/CoachDashboard.vue'
 import StudentDashboard from './components/StudentDashboard.vue'
 import MicSpeakerCheck from './components/modals/MicSpeakerCheck.vue'
 
-// PrimeVue Components (adding Button)
+// PrimeVue Components
 import Button from 'primevue/button'
 import Card from 'primevue/card'
 import Dialog from 'primevue/dialog'
