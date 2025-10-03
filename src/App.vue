@@ -569,6 +569,20 @@
             </div>
           </div>
 
+          <!-- Objection Help above chat input for second call -->
+          <div v-if="showDialer && currentContactIndex === 1" class="mt-2 pt-3 flex justify-center">
+            <div class="w-[70%] flex justify-center">
+              <Button
+                @click="handleObjectionHelp"
+                :disabled="callState !== 'connected'"
+                :severity="callState === 'connected' && callDuration >= 10 ? 'danger' : 'secondary'"
+                label="Objection Help"
+                icon="pi pi-exclamation-triangle"
+                class="w-1/2 px-6 py-3 font-semibold flex items-center justify-center gap-2"
+              />
+            </div>
+          </div>
+
           <!-- Chat Input - positioned at bottom -->
           <div class="mt-2 pt-2.5 mb-4">
             <ChatInput
@@ -936,6 +950,7 @@ import PaymentPage from './components/PaymentPage.vue'
 import Footer from './components/Footer.vue'
 import Dialer from './components/Dialer.vue'
 import CallSeparator from './components/CallSeparator.vue'
+import Button from 'primevue/button'
 import YouTubeVideo from './components/YouTubeVideo.vue'
 import CoachManagement from './components/CoachManagement.vue'
 import CoachCreationPage from './components/CoachCreationPage.vue'
