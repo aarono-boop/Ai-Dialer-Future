@@ -3007,7 +3007,7 @@ const handleCoachingHelp = (highlightedFromDialer?: boolean): void => {
   if (!aiCoachEnabled.value) return
 
   // Always show user's action in chat
-  addUserMessage('Get Coach Help')
+  addUserMessage('Get Coaching Help')
 
   // Prefer Dialer-provided highlight state when available; otherwise compute for above-chat button
   const highlighted = highlightedFromDialer !== undefined
