@@ -1135,6 +1135,13 @@ const showRegularConnectedMessages = (contact: any): void => {
   addAIMessageWithTyping(combinedMessage)
   scrollToBottom()
 
+  // For first contact, follow up with a user message
+  if (currentContactIndex.value === 0) {
+    setTimeout(() => {
+      addUserMessage('Hi Sam, this is Aaron from PhoneBurner do you have a quick minute?')
+      scrollToBottom()
+    }, 400)
+  }
 }
 
 // Reactive data
