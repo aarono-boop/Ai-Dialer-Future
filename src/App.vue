@@ -2990,12 +2990,15 @@ const handleObjectionHelp = (): void => {
   scrollToBottom()
 }
 
-const handleCoachingHelp = (): void => {
+const handleCoachingHelp = (highlightedFromDialer?: boolean): void => {
   if (!aiCoachEnabled.value) return
 
-  const highlighted = callState.value === 'connected' && callDuration.value >= 5
+  // Prefer Dialer-provided highlight state when available; otherwise compute for above-chat button
+  const highlighted = highlightedFromDialer !== undefined
+    ? highlightedFromDialer
+    : (callState.value === 'connected' && callDuration.value >= 5)
 
-  // Third call above-chat button hides after click
+  // Third call above-chat button hides after click when highlighted
   if (currentContactIndex.value === 2 && highlighted) {
     hideObjectionHelpButton.value = true
     addAIMessageWithTyping(AI_RESPONSES.OBJECTION_RESPONSE)
@@ -3004,11 +3007,9 @@ const handleCoachingHelp = (): void => {
   }
 
   if (highlighted) {
-    // Objection detected path
     addAIMessageWithTyping(AI_RESPONSES.OBJECTION_RESPONSE)
     scrollToBottom()
   } else {
-    // General coaching guidance based on current contact context
     const c = currentContact.value
     const tip = getDynamicCoachingFeedback()
     const probe = c?.company
