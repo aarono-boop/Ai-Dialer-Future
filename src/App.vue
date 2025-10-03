@@ -569,8 +569,8 @@
             </div>
           </div>
 
-          <!-- Objection Help above chat input for 3rd call only, and only after detection (10s into live call) -->
-          <div v-if="showDialer && currentContactIndex === 2 && callState === 'connected' && callDuration >= 10" class="mt-2 pt-3 flex justify-center">
+          <!-- Objection Help above chat input for 3rd call only, and only after detection (10s into live call). Hide after click. -->
+          <div v-if="showDialer && currentContactIndex === 2 && callState === 'connected' && callDuration >= 10 && !hideObjectionHelpButton" class="mt-2 pt-3 flex justify-center">
             <div class="w-[70%] flex justify-center">
               <Button
                 @click="handleObjectionHelp"
@@ -1175,6 +1175,7 @@ const aiCoachEnabled = ref<boolean>(true)
 const showSessionSummary = ref<boolean>(false)
 const showContinueQueueButton = ref<boolean>(false)
 const waitingForTryAgainResponse = ref<boolean>(false)
+const hideObjectionHelpButton = ref<boolean>(false)
 const waitingForNotesInput = ref<boolean>(false)
 const currentDisposition = ref<string>('')
 const dispositionSet = ref<boolean>(false)
@@ -2887,6 +2888,9 @@ const handleCallBack = (): void => {
 }
 
 const handleNextContact = (): void => {
+  // Reset third-call objection help visibility
+  hideObjectionHelpButton.value = false
+
   // Stop current timers
   if (callTimer) {
     clearInterval(callTimer)
@@ -3021,6 +3025,7 @@ const handleKeypad = (): void => {
 
 const handleObjectionHelp = (): void => {
   if (!aiCoachEnabled.value) return
+  hideObjectionHelpButton.value = true
   addAIMessageWithTyping(AI_RESPONSES.OBJECTION_RESPONSE)
   scrollToBottom()
 }
