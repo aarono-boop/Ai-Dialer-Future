@@ -3042,7 +3042,7 @@ const handleCoachingHelp = (highlightedFromDialer?: boolean): void => {
 }
 
 const handleSecondCoachingClick = (): void => {
-  const highlighted = (callState.value === 'connected' && callDuration.value >= 5)
+  const highlighted = (callState.value === 'connected' && callDuration.value >= 5 && !secondCoachingHelpClicked.value)
   handleCoachingHelp(highlighted)
   if (highlighted) {
     secondCoachingHelpClicked.value = true
