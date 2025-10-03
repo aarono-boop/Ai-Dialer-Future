@@ -1,6 +1,6 @@
 <template>
   <div class="mt-4" role="region" aria-label="Chat input area">
-    <div class="flex items-center backdrop-blur-[10px] rounded-xl px-3 py-2 gap-2 w-[70%] mx-auto chat-input-container">
+    <div class="flex items-center backdrop-blur-[10px] rounded-xl px-3 py-2 gap-2 w-[70%] mx-auto chat-input-container relative">
       <InputText
         ref="inputRef"
         v-model="inputValue"
@@ -52,7 +52,6 @@
           :image="props.coachAvatarUrl"
           shape="circle"
           :pt="{ root: { style: { width: '28px', height: '28px', border: props.showObjectionTooltip ? '2px solid var(--p-red-500)' : 'none', cursor: 'pointer' } } }"
-          v-tooltip.top="props.showObjectionTooltip ? 'Get Coaching Help (Objection Detected)' : ''"
           @click="emit('coach-avatar-click')"
         />
         <Avatar
@@ -60,9 +59,11 @@
           icon="pi pi-user"
           shape="circle"
           :pt="{ root: { style: { width: '28px', height: '28px', backgroundColor: 'var(--p-primary-color)', color: 'white', border: props.showObjectionTooltip ? '2px solid var(--p-red-500)' : 'none', cursor: 'pointer' } } }"
-          v-tooltip.top="props.showObjectionTooltip ? 'Get Coaching Help (Objection Detected)' : ''"
           @click="emit('coach-avatar-click')"
         />
+        <div v-if="props.showObjectionTooltip" class="absolute -top-8 right-2">
+          <span class="px-2 py-1 rounded text-xs" :style="{ backgroundColor: 'var(--p-red-500)', color: 'white' }">Get Coaching Help (Objection Detected)</span>
+        </div>
       </div>
     </div>
     <div id="chat-input-help" class="sr-only">
@@ -78,7 +79,7 @@
 import { ref, onMounted, onUnmounted, nextTick } from 'vue'
 import Button from 'primevue/button'
 import InputText from 'primevue/inputtext'
-
+import Badge from 'primevue/badge'
 // Define props
 import Avatar from 'primevue/avatar'
 
