@@ -596,6 +596,9 @@
               ref="chatInputRef"
               :customPlaceholder="getPlaceholderText()"
               :showPromptLibraryIcon="isSignedIn"
+              :currentContactIndex="currentContactIndex"
+              :coachAvatarUrl="currentCoach?.avatarUrl || null"
+              :coachDisplayName="currentCoach?.displayName || null"
               @send-message="sendMessage"
               @voice-input="handleVoiceInput"
             />
@@ -2392,7 +2395,7 @@ const sendMessage = (message: string): void => {
         '• Follow up with specific prospects at optimal times',
         '• Call back prospects who didn\'t answer',
         '�� Review and update your call notes',
-        '���� Start your daily calling sessions',
+        '�� Start your daily calling sessions',
         'What would you like to be reminded about and when?'
       ])
     } else if (lowerMessage.includes('practice a call') || lowerMessage.includes('practice')) {
