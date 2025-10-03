@@ -70,10 +70,11 @@ const props = defineProps<{
   currentContactIndex?: number
   coachAvatarUrl?: string | null
   coachDisplayName?: string | null
+  showObjectionTooltip?: boolean
 }>()
 
 // Define emits
-const emit = defineEmits(['send-message', 'voice-input', 'toggle-transcription'])
+const emit = defineEmits(['send-message', 'voice-input', 'toggle-transcription', 'coach-avatar-click'])
 
 // Captions toggle visual state: start ON (light), click -> OFF (dark), click again -> ON (light)
 const captionsOn = ref<boolean>(true)
