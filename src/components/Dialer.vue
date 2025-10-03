@@ -84,8 +84,8 @@
           </div>
           <div class="flex-1 flex justify-center" v-if="currentContactIndex !== 1 && currentContactIndex !== 2">
             <Button
-              @click="$emit('objection-help')"
-              :disabled="callState !== 'connected' || callDuration < 10"
+              @click="onObjectionHelpClick"
+              :disabled="callState !== 'connected' || callDuration < 10 || objectionClicked"
               :severity="objectionAttention ? 'danger' : 'secondary'"
               size="small"
               class="pause-queue-compact"
@@ -448,7 +448,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, nextTick, computed, onMounted } from 'vue'
+import { ref, nextTick, computed, onMounted, watch } from 'vue'
 import Button from 'primevue/button'
 import ToggleSwitch from 'primevue/toggleswitch'
 import TabView from 'primevue/tabview'
@@ -509,6 +509,10 @@ const emit = defineEmits(['call-back', 'next-contact', 'hang-up', 'mute', 'hold'
 const isMuted = ref(false)
 const isOnHold = ref(false)
 const showKeypadModal = ref(false)
+
+// Track if objection help was clicked for current contact
+const objectionClicked = ref(false)
+watch(() => props.currentContactIndex, () => { objectionClicked.value = false })
 
 // After 10s into a live call, draw attention to objection help
 const objectionAttention = computed(() => props.callState === 'connected' && props.callDuration >= 10)
@@ -905,6 +909,12 @@ const completeQueue = () => {
 
 const toggleAICoach = (newValue: boolean) => {
   emit('ai-coach-toggle', newValue)
+}
+
+const onObjectionHelpClick = () => {
+  if (objectionClicked.value) return
+  emit('objection-help')
+  objectionClicked.value = true
 }
 
 const handleHangUpTab = (event: KeyboardEvent) => {
