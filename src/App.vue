@@ -1153,6 +1153,8 @@ const showStudentDashboard = ref(false)
 const studentCoachName = ref<string | null>(null)
 const chatInputRef = ref<any>(null)
 const chatMessages = ref<HTMLElement | null>(null)
+// Prevent repeated auto-replies from Sam on first contact
+const firstContactSamReplied = ref<boolean>(false)
 const screenReaderAnnouncements = ref<HTMLElement | null>(null)
 const headerRef = ref<any>(null)
 const hasUploadedFile = ref<boolean>(false)
@@ -1600,8 +1602,9 @@ const handleTypingComplete = (index: number): void => {
     messages.value[index] &&
     messages.value[index].type === 'user' &&
     messages.value[index].content[0] === 'Hi Sam, this is Aaron from PhoneBurner do you have a quick minute?' &&
-    currentContactIndex.value === 0 && callState.value === 'connected'
+    currentContactIndex.value === 0 && callState.value === 'connected' && !firstContactSamReplied.value
   ) {
+    firstContactSamReplied.value = true
     setTimeout(() => {
       addAIMessageWithTyping("Hi Aaron, what's this call about?", 150, 'word')
       scrollToBottom()
@@ -2914,6 +2917,7 @@ const handleNextContact = (): void => {
   // Move to next contact
   if (currentContactIndex.value < contacts.length - 1) {
     currentContactIndex.value++
+    firstContactSamReplied.value = false
 
     callState.value = 'idle'
     callDuration.value = 0
