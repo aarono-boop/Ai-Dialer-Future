@@ -806,7 +806,7 @@
                   <h4 class="text-xl font-medium">Testimonials</h4>
                   <div class="text-xs text-gray-300 space-y-2">
                     <p>“Our connect rate and meetings doubled in 60 days.” — VP Sales, SaaS</p>
-                    <p>“The talk tracks are simple and deadly effective.���� — SDR Lead, Insurance</p>
+                    <p>“The talk tracks are simple and deadly effective.������ — SDR Lead, Insurance</p>
                   </div>
                 <div v-if="selectedCoachForInfo?.websiteUrl" class="sticky bottom-0 -mb-4 -mx-4 px-4 py-3 border-t border-gray-700 bg-gray-900/90 flex justify-center">
                   <a :href="selectedCoachForInfo.websiteUrl" target="_blank" rel="noopener" class="text-link text-sm inline-flex items-center gap-2 text-center"><i class="pi pi-external-link text-sm" aria-hidden="true"></i>Visit {{ selectedCoachForInfo?.displayName }}'s Website</a>
@@ -1082,7 +1082,7 @@ const generateCallScript = (contact: any): string[] => {
 
 // Show call connected message followed by script and objection handling
 const showCallConnectedMessages = (contact: any): void => {
-  // Add coach-specific intro message when coach parameter is set AND AI Coach is enabled
+  // Add coach-specific intro message only once at the very start of the first call in a session
   if (coachParameter.value && aiCoachEnabled.value) {
     const getCoachCallMessage = (): string => {
       const name = currentCoach.value?.displayName || ''
@@ -1092,16 +1092,19 @@ const showCallConnectedMessages = (contact: any): void => {
         : `I\'m on the call with you...`
     }
 
-    addAIMessageWithTyping(getCoachCallMessage())
+    if (currentContactIndex.value === 0 && !initialWelcomeMessageSent.value) {
+      addAIMessageWithTyping(getCoachCallMessage())
+      initialWelcomeMessageSent.value = true
 
-    // Delay before showing connection message
-    setTimeout(() => {
-      showRegularConnectedMessages(contact)
-    }, 1500)
-    return
+      // Delay before showing connection message
+      setTimeout(() => {
+        showRegularConnectedMessages(contact)
+      }, 1500)
+      return
+    }
   }
 
-  // Show regular messages for no coach or other coaches
+  // Show regular messages for no coach or other coaches, or after the first call
   showRegularConnectedMessages(contact)
 }
 
@@ -1218,6 +1221,7 @@ const secondCoachingHelpClicked = ref<boolean>(false)
 const isManualHangUp = ref<boolean>(false) // Track if hang up was manual vs automatic
 const queueTime = ref<number>(14)
 const showLoadNewFileButton = ref<boolean>(false)
+const initialWelcomeMessageSent = ref<boolean>(false)
 
 // Prompt Library state
 const showPromptLibrary = ref<boolean>(false)
@@ -2357,7 +2361,7 @@ const sendMessage = (message: string): void => {
     } else if (lowerMessage.includes('connected to more calls') || lowerMessage.includes('get connected')) {
       addAIMessage([
         '<i class="pi pi-chart-line"></i> Great question! Here are AI Dialer\'s proven strategies to boost your connect rates:',
-        '��� <strong>Smart Timing:</strong> Calls prospects when they\'re most likely to answer',
+        '���� <strong>Smart Timing:</strong> Calls prospects when they\'re most likely to answer',
         '• <strong>Local Presence:</strong> Uses local numbers to increase pickup rates',
         '• <strong>Voicemail Drop:</strong> Leaves personalized messages when they don\'t answer',
         '• <strong>Follow-up Sequences:</strong> Automatically schedules optimal callback times',
@@ -2861,6 +2865,9 @@ const startDialSession = (): void => {
 
   // Reset queue completion state
   queueCompletionReady.value = false
+
+  // Reset first-call coach welcome flag for a new session
+  initialWelcomeMessageSent.value = false
 
   // Add user message showing what button was clicked
   addUserMessage('Start Dialing')
@@ -3682,6 +3689,7 @@ const skipToDialer = (): void => {
   // Initialize dialer state
   callState.value = 'idle'
   currentContactIndex.value = 0
+  initialWelcomeMessageSent.value = false
 
   // Clear messages and add dialer startup message
   messages.value = []
