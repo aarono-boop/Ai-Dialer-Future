@@ -503,6 +503,10 @@ const showKeypadModal = ref(false)
 const objectionClicked = ref(false)
 watch(() => props.currentContactIndex, () => { objectionClicked.value = false })
 
+// Track if coaching help was clicked (first caller). Reset per contact
+const coachingHelpClicked = ref(false)
+watch(() => props.currentContactIndex, () => { coachingHelpClicked.value = false })
+
 // After 5s into a live call, draw attention to objection help
 const objectionAttention = computed(() => props.callState === 'connected' && props.callDuration >= 5)
 
