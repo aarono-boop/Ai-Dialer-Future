@@ -1614,6 +1614,9 @@ const handleTypingComplete = (index: number): void => {
     firstContactSamReplied.value = true
     setTimeout(() => {
       addAIMessageWithTyping("Hi Aaron, what's this call about?", 150, 'word')
+      // Mark this AI line as spoken by the contact (use generic user avatar)
+      const lastMsg = messages.value[messages.value.length - 1]
+      if (lastMsg) (lastMsg as any).contactSpeaker = true
       scrollToBottom()
     }, 250)
   }
@@ -1644,6 +1647,9 @@ const handleTypingComplete = (index: number): void => {
     aaronPitchReplied.value = true
     setTimeout(() => {
       addAIMessageWithTyping('I already have a phone dialer, I am using Aircall.', 150, 'word')
+      // Mark this AI line as spoken by the contact (use generic user avatar)
+      const lastMsg = messages.value[messages.value.length - 1]
+      if (lastMsg) (lastMsg as any).contactSpeaker = true
       // Objection flag will be set after typing completes (see below)
       scrollToBottom()
     }, 300)
