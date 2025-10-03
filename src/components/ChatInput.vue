@@ -27,11 +27,11 @@
       <Button
         v-if="showPromptLibraryIcon"
         @click="emit('open-prompt-library')"
-        v-tooltip.top="'Open prompt library'"
+        v-tooltip.top="'Open transcription'"
         text
-        icon="pi pi-book"
+        icon="pi pi-microphone"
         class="w-10 h-10 flex items-center justify-center text-white transition-colors duration-200 hover:opacity-80"
-        aria-label="Open prompt library"
+        aria-label="Open transcription"
       />
     </div>
     <div id="chat-input-help" class="sr-only">
