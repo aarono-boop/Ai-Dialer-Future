@@ -50,23 +50,7 @@
       <!-- AI Coach Controls -->
       <div class="mt-3">
         <div class="flex items-center" style="min-height: 32px; box-sizing: border-box;">
-          <div class="flex items-center gap-2" style="flex-shrink: 0;">
-            <!-- Dynamic Coach Avatar and Name (hidden on 2nd contact) -->
-            <div v-if="currentCoach && currentContactIndex !== 1" class="flex items-center gap-2">
-              <img
-                v-if="currentCoach.avatarUrl"
-                :src="currentCoach.avatarUrl"
-                :alt="currentCoach.displayName"
-                class="w-6 h-6 rounded-full object-cover"
-              />
-              <div
-                v-else
-                class="w-6 h-6 rounded-full bg-gradient-to-br from-blue-400 to-purple-500 flex items-center justify-center text-white text-xs font-semibold"
-              >
-                {{ getCoachInitials(currentCoach.displayName) }}
-              </div>
-            </div>
-          </div>
+          <div class="flex items-center gap-2" style="flex-shrink: 0;"></div>
           <div class="flex-1 flex justify-start gap-2">
             <template v-if="currentContactIndex !== 1 && currentContactIndex !== 2">
               <!-- First caller: Coaching Help turns red when objection is detected (>=5s) -->
