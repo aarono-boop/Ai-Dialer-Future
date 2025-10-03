@@ -66,21 +66,14 @@
                 {{ getCoachInitials(currentCoach.displayName) }}
               </div>
               <span
-                class="text-gray-300 text-sm cursor-pointer select-none"
-                @click="toggleAICoach(!props.aiCoachEnabled)"
+                class="text-gray-300 text-sm select-none"
               >{{ currentCoach.displayName }}'s AI Coach</span>
             </div>
             <!-- Default AI Coach when no coach parameter -->
             <span
               v-else
-              class="text-gray-300 text-sm cursor-pointer select-none"
-              @click="toggleAICoach(!props.aiCoachEnabled)"
+              class="text-gray-300 text-sm select-none"
             >AI Coach</span>
-            <ToggleSwitch
-              :model-value="props.aiCoachEnabled"
-              @update:model-value="toggleAICoach"
-              class="ai-coach-toggle"
-            />
           </div>
           <div class="flex-1 flex justify-center">
             <template v-if="currentContactIndex !== 1 && currentContactIndex !== 2">
@@ -452,7 +445,6 @@
 <script setup lang="ts">
 import { ref, nextTick, computed, onMounted, watch } from 'vue'
 import Button from 'primevue/button'
-import ToggleSwitch from 'primevue/toggleswitch'
 import TabView from 'primevue/tabview'
 import TabPanel from 'primevue/tabpanel'
 import Textarea from 'primevue/textarea'
