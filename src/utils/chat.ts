@@ -175,13 +175,14 @@ export const createChatUtils = (
     })
   }
 
-  const addUserMessageWithTyping = (content: string, typingSpeed: number = 5): void => {
-    messages.value.push({
-      type: 'user',
-      content: [content],
-      typing: true,
-      typingSpeed
-    })
+  const addUserMessageWithTyping = (content: string, typingSpeed: number = 5, typingMode: 'char' | 'word' = 'char'): void => {
+  messages.value.push({
+    type: 'user',
+    content: [content],
+    typing: true,
+    typingSpeed,
+    typingMode
+  })
 
     // Position during typing
     nextTick(() => {
