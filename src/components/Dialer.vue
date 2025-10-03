@@ -39,10 +39,10 @@
         <div class="bg-gray-700 rounded-full h-5 w-full relative flex items-center">
           <div
             class="h-5 rounded-full transition-all duration-300"
-            :style="{ width: `${((currentContactIndex + 1) / 3) * 100}%`, background: 'linear-gradient(to right, #60a5fa, #7b68ee)' }"
+            :style="{ width: `${((currentContactIndex + 1) / Math.max(totalContacts, 1)) * 100}%`, background: 'linear-gradient(to right, #60a5fa, #7b68ee)' }"
           ></div>
           <div class="absolute inset-0 flex items-center justify-center text-white text-xs font-medium">
-            Dial Queue {{ currentContactIndex + 1 }} of 3
+            Dial Queue {{ currentContactIndex + 1 }} of {{ totalContacts }} (Queue Time: {{ formatTime(queueTime) }})
           </div>
         </div>
       </div>
@@ -93,9 +93,6 @@
               <i class="pi pi-exclamation-triangle"></i>
               <span class="text-xs">Objection Help</span>
             </Button>
-          </div>
-          <div class="text-gray-400 text-sm text-center w-[160px] flex-shrink-0">
-            Queue Time: <span class="text-white font-mono tabular-nums">{{ formatTime(queueTime) }}</span>
           </div>
           <Button
             v-if="!shouldCompleteQueue"
