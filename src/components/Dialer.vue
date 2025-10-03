@@ -910,7 +910,9 @@ const onObjectionHelpClick = () => {
 }
 
 const onCoachingHelpClick = () => {
-  emit('coaching-help')
+  // Determine if button is visually highlighted (red) at click time
+  const isHighlighted = props.callState === 'connected' && props.callDuration >= 5 && (props.currentContactIndex !== 0 || !coachingHelpClicked.value)
+  emit('coaching-help', isHighlighted)
   coachingHelpClicked.value = true
 }
 
