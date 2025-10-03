@@ -40,6 +40,12 @@
           </svg>
         </span>
       </Button>
+
+      <!-- Coach avatar on far right for 3rd contact -->
+      <div v-if="props.currentContactIndex === 2" class="flex items-center justify-center ml-1" aria-label="Coach avatar in input">
+        <Avatar v-if="props.coachAvatarUrl" :image="props.coachAvatarUrl" shape="circle" :pt="{ root: { style: { width: '28px', height: '28px' } } }" />
+        <Avatar v-else icon="pi pi-user" shape="circle" :pt="{ root: { style: { width: '28px', height: '28px', backgroundColor: 'var(--p-primary-color)', color: 'white' } } }" />
+      </div>
     </div>
     <div id="chat-input-help" class="sr-only">
       Press Enter to send your message or use the send button
@@ -56,9 +62,14 @@ import Button from 'primevue/button'
 import InputText from 'primevue/inputtext'
 
 // Define props
+import Avatar from 'primevue/avatar'
+
 const props = defineProps<{
   customPlaceholder?: string
   showPromptLibraryIcon?: boolean
+  currentContactIndex?: number
+  coachAvatarUrl?: string | null
+  coachDisplayName?: string | null
 }>()
 
 // Define emits
