@@ -589,25 +589,6 @@
             </div>
           </div>
 
-          <!-- Coaching Help above chat for 3rd call only; turns red at detection (>=5s) and shows objection bubble on click. Hide after click. -->
-          <div v-if="showDialer && currentContactIndex === 2 && callState === 'connected' && callDuration >= 5 && !hideObjectionHelpButton" class="mt-2 pt-3 flex justify-center">
-            <div class="w-[70%] flex justify-center">
-              <Button
-                @click="handleCoachingHelp"
-                severity="danger"
-                class="w-1/2 px-6 py-3 font-semibold flex items-center justify-center gap-2"
-              >
-                <template v-if="currentCoach">
-                  <img v-if="currentCoach.avatarUrl" :src="currentCoach.avatarUrl" :alt="currentCoach.displayName" class="w-4 h-4 rounded-full object-cover" />
-                  <div v-else class="w-4 h-4 rounded-full bg-gradient-to-br from-blue-400 to-purple-500 flex items-center justify-center text-white text-[10px] font-semibold">
-                    {{ currentCoach.displayName.split(' ').map(w => w.charAt(0)).join('').toUpperCase().slice(0,2) }}
-                  </div>
-                </template>
-                <i v-else class="pi pi-user"></i>
-                <span class="text-sm">Get Coaching Help (Objection Detected)</span>
-              </Button>
-            </div>
-          </div>
 
           <!-- Chat Input - positioned at bottom -->
           <div class="mt-2 pt-2.5 mb-4">
@@ -2411,7 +2392,7 @@ const sendMessage = (message: string): void => {
         '• Follow up with specific prospects at optimal times',
         '• Call back prospects who didn\'t answer',
         '�� Review and update your call notes',
-        '�� Start your daily calling sessions',
+        '���� Start your daily calling sessions',
         'What would you like to be reminded about and when?'
       ])
     } else if (lowerMessage.includes('practice a call') || lowerMessage.includes('practice')) {
