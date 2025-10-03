@@ -569,8 +569,8 @@
             </div>
           </div>
 
-          <!-- Objection Help above chat input for second call -->
-          <div v-if="showDialer && currentContactIndex === 1" class="mt-2 pt-3 flex justify-center">
+          <!-- Objection Help above chat input for 2nd and 3rd calls -->
+          <div v-if="showDialer && (currentContactIndex === 1 || currentContactIndex === 2)" class="mt-2 pt-3 flex justify-center">
             <div class="w-[70%] flex justify-center">
               <Button
                 @click="handleObjectionHelp"
@@ -2284,7 +2284,7 @@ const sendMessage = (message: string): void => {
       addAIMessage([
         '<i class="pi pi-chart-line"></i> Great question! Here are AI Dialer\'s proven strategies to boost your connect rates:',
         '��� <strong>Smart Timing:</strong> Calls prospects when they\'re most likely to answer',
-        '• <strong>Local Presence:</strong> Uses local numbers to increase pickup rates',
+        '��� <strong>Local Presence:</strong> Uses local numbers to increase pickup rates',
         '• <strong>Voicemail Drop:</strong> Leaves personalized messages when they don\'t answer',
         '• <strong>Follow-up Sequences:</strong> Automatically schedules optimal callback times',
         'On average, users see a 40% increase in connect rates within their first week!'
