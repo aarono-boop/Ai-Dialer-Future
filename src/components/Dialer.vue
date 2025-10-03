@@ -85,7 +85,7 @@
           <div class="flex-1 flex justify-center" v-if="currentContactIndex !== 1 && currentContactIndex !== 2">
             <Button
               @click="$emit('objection-help')"
-              :disabled="callState !== 'connected'"
+              :disabled="callState !== 'connected' || callDuration < 10"
               :severity="objectionAttention ? 'danger' : 'secondary'"
               size="small"
               class="pause-queue-compact"
