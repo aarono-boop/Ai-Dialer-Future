@@ -1454,8 +1454,8 @@ const nextContactName = computed(() => {
 })
 
 const shouldCompleteQueue = computed(() => {
-  // Show "Queue Completed" button when on 3rd contact (index 2) or have 3+ calls
-  return currentContactIndex.value >= 2 || callLog.value.length >= 3
+  // Show "Queue Completed" button only when on last contact in the queue
+  return currentContactIndex.value >= contacts.length - 1
 })
 
 const isLastContact = computed(() => {
@@ -2207,7 +2207,7 @@ const sendMessage = (message: string): void => {
     // Complete the disposition process
     setTimeout(() => {
       // Check if this is the 3rd contact (index 2) - if so, enable queue completion
-      if (currentContactIndex.value >= 2) {
+      if (currentContactIndex.value >= contacts.length - 1) {
         queueCompletionReady.value = true
         addAIMessageWithTyping(`The call outcome and notes have been saved for ${currentContact.value.name}. Click "Queue Completed" to finish your dialing session.`)
       } else {
@@ -2332,7 +2332,7 @@ const sendMessage = (message: string): void => {
 
     setTimeout(() => {
       // Check if this is the 3rd contact (index 2) - if so, enable queue completion
-      if (currentContactIndex.value >= 2) {
+      if (currentContactIndex.value >= contacts.length - 1) {
         queueCompletionReady.value = true
         addAIMessageWithTyping(`The notes have been saved for ${currentContact.value.name}. Click "Queue Completed" to finish your dialing session.`)
       } else {
@@ -2418,7 +2418,7 @@ const sendMessage = (message: string): void => {
       addAIMessage([
         '<i class="pi pi-users"></i> Great idea! Call practice makes perfect.',
         'AI Dialer\'s practice mode can help you:',
-        '• Rehearse your opening pitch with AI feedback',
+        '�� Rehearse your opening pitch with AI feedback',
         '• Practice handling common objections',
         '��� Test different conversation flows',
         '�� Record and review your delivery',
