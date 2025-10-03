@@ -84,9 +84,10 @@
                 </Button>
               </template>
               <Button
+                v-if="callState === 'connected' && callDuration >= 5"
                 @click="onObjectionHelpClick"
-                :disabled="callState !== 'connected' || callDuration < 5 || objectionClicked"
-                :severity="(objectionAttention && !(callState !== 'connected' || callDuration < 5 || objectionClicked)) ? 'danger' : 'secondary'"
+                :disabled="objectionClicked"
+                :severity="!objectionClicked ? 'danger' : 'secondary'"
                 size="small"
                 class="pause-queue-compact"
                 aria-label="Show objection handling guidance"
