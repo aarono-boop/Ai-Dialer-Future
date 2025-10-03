@@ -57,7 +57,7 @@
               <template v-if="currentContactIndex === 0">
                 <Button
                   @click="onCoachingHelpClick"
-                  :severity="(callDuration >= 5 && !coachingHelpClicked) ? 'danger' : 'secondary'"
+                  :severity="(currentContactIndex === 0 ? (firstContactObjectionDetected && !coachingHelpClicked) : (callDuration >= 5)) ? 'danger' : 'secondary'"
                   size="small"
                   class="pause-queue-compact"
                   aria-label="Get coaching help"
@@ -69,7 +69,7 @@
                     </div>
                   </template>
                   <i v-else class="pi pi-user"></i>
-                  <span class="text-xs">{{ (callDuration >= 5 && !coachingHelpClicked) ? 'Get Coaching Help (Objection Detected)' : 'Get Coaching Help' }}</span>
+                  <span class="text-xs">{{ ((currentContactIndex === 0 ? firstContactObjectionDetected : callDuration >= 5) && !coachingHelpClicked) ? 'Get Coaching Help (Objection Detected)' : 'Get Coaching Help' }}</span>
                 </Button>
               </template>
             </template>
@@ -497,7 +497,7 @@ const coachingHelpClicked = ref(false)
 watch(() => props.currentContactIndex, () => { coachingHelpClicked.value = false })
 
 // After 5s into a live call, draw attention to objection help
-const objectionAttention = computed(() => props.callState === 'connected' && props.callDuration >= 5)
+const objectionAttention = computed(() => props.callState === 'connected' && (props.currentContactIndex === 0 ? props.firstContactObjectionDetected : props.callDuration >= 5))
 
 // Template refs for PrimeVue buttons
 const muteButtonRef = ref<any>(null)
@@ -515,7 +515,7 @@ const newNote = ref('')
 const showTransferDialog = ref(false)
 const transferSelection = ref<string | null>(null)
 const transferOptions = [
-  { label: 'Alex Johnson (ext 201) — (312) 555-1201', value: 'Alex Johnson|201|(312) 555-1201' },
+  { label: 'Alex Johnson (ext 201) ��� (312) 555-1201', value: 'Alex Johnson|201|(312) 555-1201' },
   { label: 'Morgan Lee (ext 225) — (415) 555-2225', value: 'Morgan Lee|225|(415) 555-2225' },
   { label: 'Priya Singh (ext 233) — (646) 555-1233', value: 'Priya Singh|233|(646) 555-1233' },
   { label: 'Diego Alvarez (ext 244) — (213) 555-1244', value: 'Diego Alvarez|244|(213) 555-1244' },
@@ -901,7 +901,9 @@ const onObjectionHelpClick = () => {
 
 const onCoachingHelpClick = () => {
   // Determine if button is visually highlighted (red) at click time
-  const isHighlighted = props.callState === 'connected' && props.callDuration >= 5 && (props.currentContactIndex !== 0 || !coachingHelpClicked.value)
+  const highlightedFirst = props.currentContactIndex === 0 && props.firstContactObjectionDetected && !coachingHelpClicked.value
+  const highlightedOthers = props.currentContactIndex !== 0 && props.callState === 'connected' && props.callDuration >= 5
+  const isHighlighted = highlightedFirst || highlightedOthers
   emit('coaching-help', isHighlighted)
   coachingHelpClicked.value = true
 }
