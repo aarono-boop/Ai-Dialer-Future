@@ -1098,13 +1098,6 @@ const showRegularConnectedMessages = (contact: any): void => {
   addAIMessageWithTyping(combinedMessage)
   scrollToBottom()
 
-  // Wait 3 seconds then show objection handling (only if AI Coach is still enabled)
-  setTimeout(() => {
-    if (aiCoachEnabled.value) {
-      addAIMessageWithTyping(AI_RESPONSES.OBJECTION_RESPONSE)
-      scrollToBottom()
-    }
-  }, 3000)
 }
 
 // Reactive data
