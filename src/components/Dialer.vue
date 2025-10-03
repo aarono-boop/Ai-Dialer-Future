@@ -67,7 +67,7 @@
               </div>
             </div>
           </div>
-          <div class="flex-1 flex justify-center gap-2">
+          <div class="flex-1 flex justify-start gap-2">
             <template v-if="currentContactIndex !== 1 && currentContactIndex !== 2">
               <!-- First caller: Coaching Help turns red when objection is detected (>=5s) -->
               <template v-if="currentContactIndex === 0">
