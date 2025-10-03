@@ -914,6 +914,7 @@ import { showContactPreview } from './utils/contactPreview'
 import { clearFocusAndEstablishContext, focusChatInput, announceToScreenReader } from './utils/focus'
 import { createChatUtils, type Message } from './utils/chat'
 import { getResponseForKeywords, AI_RESPONSES } from './utils/aiResponses'
+import { askChatGPT } from './services/openai'
 import { useCoaches } from './composables/useCoaches'
 import type { CoachManagementMode, CoachCreateData } from './types/coach'
 
@@ -1903,8 +1904,8 @@ const handleGoogleSignin = (): void => {
   // Remove initial long welcome bubble when returning
   messages.value = []
   // Show brief prior welcome bubble, then welcome-back bubble
-  addAIMessage("Hey there! Welcome to ARMOR® Ai Dialer. I'm Marcus, your Ai calling assistant. <br><br>To get started, upload your contact file below or connect your CRM and I'll organize your contacts based on who is most likely to pick up.")
-  addAIMessageWithTyping("Welcome back! You're signed in with Google.<br><br>What would you like to do?")
+  addAIMessage("Hey there! Welcome to ARMOR® Ai Dialer. I'm Marcus, your Ai calling assistant. <br><br>To get started, login to your account or sign up with Google.")
+  addAIMessageWithTyping("Welcome! I'm Marcus, your Ai calling assistant. <br><br>To get started, drop your contact file below and I'll organize your contacts based on who is most likely to pick up.")
   // Do not prompt for upload; assume user already connected/uploaded previously
   showFileUploadForReturningUser.value = false
 
@@ -1933,7 +1934,7 @@ const handleLoginSuccess = (userData: any): void => {
   messages.value = []
 
   // Show brief prior welcome bubble, then welcome-back bubble
-  addAIMessage("Hey there! Welcome to ARMOR® Ai Dialer. I'm Marcus, your Ai calling assistant. <br><br>To get started, upload your contact file below or connect your CRM and I'll organize your contacts based on who is most likely to pick up.")
+  addAIMessage("Hey there! Welcome to ARMOR® Ai Dialer. I'm Marcus, your Ai calling assistant. <br><br>To get started, login to your account or sign up with Google.")
   addAIMessage(`Welcome back, ${userData.name}!`)
   // Returning user: do not show upload prompt
   showFileUploadForReturningUser.value = false
@@ -2257,6 +2258,20 @@ const sendMessage = (message: string): void => {
     }, 1000)
     return
   }
+
+  // ChatGPT integration
+  askChatGPT(message)
+    .then((reply) => {
+      if (reply && reply.trim()) {
+        addAIMessage(reply)
+      } else {
+        addAIMessage('I did not receive a response.')
+      }
+    })
+    .catch(() => {
+      addAIMessage('Sorry, I could not reach ChatGPT right now.')
+    })
+  return
 
   // Simulate AI processing for regular messages
   setTimeout(() => {
