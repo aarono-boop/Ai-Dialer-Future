@@ -26,12 +26,12 @@
       />
       <Button
         v-if="showPromptLibraryIcon"
-        @click="emit('open-prompt-library')"
-        v-tooltip.top="'Open transcription'"
+        @click="emit('toggle-transcription')"
+        v-tooltip.top="'Toggle the real time transcription view in the chat window'"
         text
         icon="pi pi-microphone"
         class="w-10 h-10 flex items-center justify-center text-white transition-colors duration-200 hover:opacity-80"
-        aria-label="Open transcription"
+        aria-label="Toggle the real time transcription view in the chat window"
       />
     </div>
     <div id="chat-input-help" class="sr-only">
@@ -55,7 +55,7 @@ const props = defineProps<{
 }>()
 
 // Define emits
-const emit = defineEmits(['send-message', 'voice-input', 'open-prompt-library'])
+const emit = defineEmits(['send-message', 'voice-input', 'toggle-transcription'])
 
 // Reactive data
 const inputValue = ref<string>('')
