@@ -30,7 +30,7 @@
         v-tooltip.top="'Toggle closed captions in the chat window'"
         text
         class="w-10 h-10 flex items-center justify-center transition-colors duration-200 hover:opacity-80"
-        :style="{ color: captionsLight ? 'var(--p-surface-400)' : 'var(--p-surface-0)' }"
+        :style="{ color: captionsOn ? 'var(--p-surface-0)' : 'var(--p-surface-600)' }"
         aria-label="Toggle closed captions in the chat window"
       >
         <span aria-hidden="true" class="inline-block" style="line-height:0; display:inline-flex; align-items:center; justify-content:center;">
@@ -63,10 +63,10 @@ const props = defineProps<{
 // Define emits
 const emit = defineEmits(['send-message', 'voice-input', 'toggle-transcription'])
 
-// Captions toggle visual state
-const captionsLight = ref<boolean>(false)
+// Captions toggle visual state: start ON (light), click -> OFF (dark), click again -> ON (light)
+const captionsOn = ref<boolean>(true)
 const onToggleCaptions = (): void => {
-  captionsLight.value = !captionsLight.value
+  captionsOn.value = !captionsOn.value
   emit('toggle-transcription')
 }
 
