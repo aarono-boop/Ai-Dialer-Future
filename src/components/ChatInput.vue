@@ -30,7 +30,7 @@
         v-tooltip.top="'Toggle closed captions in the chat window'"
         text
         class="w-10 h-10 flex items-center justify-center transition-colors duration-200 hover:opacity-80"
-        :style="{ color: 'var(--p-surface-0)', opacity: captionsOn ? 1 : 0.5 }"
+        :style="{ color: 'var(--p-surface-0)', opacity: captionsOn ? 1 : 0.2 }"
         :aria-pressed="captionsOn ? 'true' : 'false'"
         aria-label="Toggle closed captions in the chat window"
       >
