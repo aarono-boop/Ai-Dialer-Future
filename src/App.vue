@@ -1659,6 +1659,8 @@ const handleTypingComplete = (index: number): void => {
     currentContactIndex.value === 0
   ) {
     firstContactObjectionDetected.value = true
+    // Visually highlight the objection bubble
+    ;(completed as any).highlightObjection = true
   }
 }
 
