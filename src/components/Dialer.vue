@@ -73,8 +73,8 @@
               <template v-if="currentContactIndex === 0">
                 <Button
                   @click="onCoachingHelpClick"
-                  :disabled="callState !== 'connected' || callDuration < 5"
-                  :severity="callDuration >= 5 ? 'danger' : 'secondary'"
+                  :disabled="callState !== 'connected' || callDuration < 5 || coachingHelpClicked"
+                  :severity="(callDuration >= 5 && !coachingHelpClicked) ? 'danger' : 'secondary'"
                   size="small"
                   class="pause-queue-compact"
                   aria-label="Get coaching help"
@@ -912,6 +912,7 @@ const onObjectionHelpClick = () => {
 
 const onCoachingHelpClick = () => {
   emit('coaching-help')
+  coachingHelpClicked.value = true
 }
 
 // Remove Objection Help pathway; show objection via coaching help instead
