@@ -820,7 +820,7 @@
                   <h4 class="text-xl font-medium">Testimonials</h4>
                   <div class="text-xs text-gray-300 space-y-2">
                     <p>“Our connect rate and meetings doubled in 60 days.” — VP Sales, SaaS</p>
-                    <p>“The talk tracks are simple and deadly effective.������ — SDR Lead, Insurance</p>
+                    <p>“The talk tracks are simple and deadly effective.���� — SDR Lead, Insurance</p>
                   </div>
                 <div v-if="selectedCoachForInfo?.websiteUrl" class="sticky bottom-0 -mb-4 -mx-4 px-4 py-3 border-t border-gray-700 bg-gray-900/90 flex justify-center">
                   <a :href="selectedCoachForInfo.websiteUrl" target="_blank" rel="noopener" class="text-link text-sm inline-flex items-center gap-2 text-center"><i class="pi pi-external-link text-sm" aria-hidden="true"></i>Visit {{ selectedCoachForInfo?.displayName }}'s Website</a>
@@ -2959,6 +2959,7 @@ const handleNextContact = (): void => {
     firstContactSamReplied.value = false
     samQuestionResponded.value = false
     aaronPitchReplied.value = false
+    firstContactObjectionDetected.value = false
 
     callState.value = 'idle'
     callDuration.value = 0
