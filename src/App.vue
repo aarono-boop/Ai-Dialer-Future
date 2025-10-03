@@ -575,10 +575,17 @@
               <Button
                 @click="handleSecondCoachingClick"
                 :severity="(callDuration >= 5 && !secondCoachingHelpClicked) ? 'danger' : 'secondary'"
-                :label="(callDuration >= 5 && !secondCoachingHelpClicked) ? 'Get Coaching Help (Objection Detected)' : 'Get Coaching Help'"
-                icon="pi pi-user"
                 class="w-1/2 px-6 py-3 font-semibold flex items-center justify-center gap-2"
-              />
+              >
+                <template v-if="currentCoach">
+                  <img v-if="currentCoach.avatarUrl" :src="currentCoach.avatarUrl" :alt="currentCoach.displayName" class="w-4 h-4 rounded-full object-cover" />
+                  <div v-else class="w-4 h-4 rounded-full bg-gradient-to-br from-blue-400 to-purple-500 flex items-center justify-center text-white text-[10px] font-semibold">
+                    {{ currentCoach.displayName.split(' ').map(w => w.charAt(0)).join('').toUpperCase().slice(0,2) }}
+                  </div>
+                </template>
+                <i v-else class="pi pi-user"></i>
+                <span class="text-sm">{{ (callDuration >= 5 && !secondCoachingHelpClicked) ? 'Get Coaching Help (Objection Detected)' : 'Get Coaching Help' }}</span>
+              </Button>
             </div>
           </div>
 
@@ -588,10 +595,17 @@
               <Button
                 @click="handleCoachingHelp"
                 severity="danger"
-                label="Get Coaching Help (Objection Detected)"
-                icon="pi pi-user"
                 class="w-1/2 px-6 py-3 font-semibold flex items-center justify-center gap-2"
-              />
+              >
+                <template v-if="currentCoach">
+                  <img v-if="currentCoach.avatarUrl" :src="currentCoach.avatarUrl" :alt="currentCoach.displayName" class="w-4 h-4 rounded-full object-cover" />
+                  <div v-else class="w-4 h-4 rounded-full bg-gradient-to-br from-blue-400 to-purple-500 flex items-center justify-center text-white text-[10px] font-semibold">
+                    {{ currentCoach.displayName.split(' ').map(w => w.charAt(0)).join('').toUpperCase().slice(0,2) }}
+                  </div>
+                </template>
+                <i v-else class="pi pi-user"></i>
+                <span class="text-sm">Get Coaching Help (Objection Detected)</span>
+              </Button>
             </div>
           </div>
 
