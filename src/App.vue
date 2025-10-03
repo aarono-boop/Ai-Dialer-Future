@@ -615,7 +615,6 @@
               ref="chatInputRef"
               :customPlaceholder="getPlaceholderText()"
               :showPromptLibraryIcon="isSignedIn"
-              @open-prompt-library="openPromptLibrary"
               @send-message="sendMessage"
               @voice-input="handleVoiceInput"
             />
@@ -3304,7 +3303,7 @@ const addSessionSummaryToChat = (isCompleted: boolean = false): void => {
                  <div style="margin-bottom: 16px;"><strong style="color: #fbbf24;"><i class="pi pi-check" style="margin-right: 8px;"></i>Active listening</strong> - You picked up on buying signals and pain points effectively</div>
                  <div style="margin-bottom: 16px;"><strong style="color: #fbbf24;"><i class="pi pi-check" style="margin-right: 8px;"></i>Confident close attempts</strong> - You weren't afraid to ask for the appointment when the timing was right</div>
                </div>
-               For your next session, focus on slowing down your pace slightly during objection handling—give prospects more time to process your responses. This will increase your conversion rate even further.<br><br>
+               For your next session, focus on slowing down your pace slightly during objection handling���give prospects more time to process your responses. This will increase your conversion rate even further.<br><br>
                <button style="background-color: rgb(59, 130, 246); color: white; border: none; border-radius: 6px; padding: 8px 16px; font-size: 14px; font-weight: 500; cursor: pointer; display: inline-flex; align-items: center; gap: 8px;" onclick="handleExportFile()">
                  <i class="pi pi-download"></i> Export Enriched File
                </button>` :
