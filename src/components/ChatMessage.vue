@@ -35,9 +35,10 @@
       </div>
       <div :class="getMessageWidth()" class="flex flex-col">
         <div
-          class="bg-gray-800/90 border border-white/20 rounded-lg p-5 text-sm overflow-hidden"
+          class="bg-gray-800/90 border rounded-lg p-5 text-sm overflow-hidden"
           role="region"
-          aria-label="AI message content"
+          :aria-label="message.highlightObjection ? 'AI message content (objection)' : 'AI message content'"
+          :style="{ borderColor: message.highlightObjection ? 'var(--p-red-500)' : 'rgba(255,255,255,0.2)' }"
         >
           <template v-for="(item, itemIndex) in processedContent" :key="`processed-${itemIndex}`">
             <div v-if="item.type === 'text' && item.content.trim()" v-html="item.content"></div>
@@ -145,6 +146,7 @@ interface Message {
   content: string[]
   typing?: boolean
   typingSpeed?: number
+  highlightObjection?: boolean
 }
 
 // Define props
