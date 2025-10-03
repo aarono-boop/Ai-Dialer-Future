@@ -144,6 +144,7 @@ interface Message {
   type: 'ai' | 'user'
   content: string[]
   typing?: boolean
+  typingSpeed?: number
 }
 
 // Define props
@@ -290,7 +291,7 @@ const processedContent = computed(() => {
 
 // Start typing animation
 const startTypingAnimation = (): void => {
-  if (!props.message.typing || props.message.type !== 'ai') return
+  if (!props.message.typing) return
 
   isTyping.value = true
   // Reset to empty strings
@@ -348,7 +349,8 @@ const startTypingAnimation = (): void => {
     }
   }
 
-  typingInterval = setInterval(typeNextCharacter, 5) // Typing speed
+  const speed = props.message.typingSpeed ?? 5
+  typingInterval = setInterval(typeNextCharacter, speed)
 }
 
 // Stop typing animation
