@@ -42,9 +42,27 @@
       </Button>
 
       <!-- Coach avatar on far right for 3rd contact -->
-      <div v-if="props.currentContactIndex === 2" class="flex items-center justify-center ml-1" aria-label="Coach avatar in input">
-        <Avatar v-if="props.coachAvatarUrl" :image="props.coachAvatarUrl" shape="circle" :pt="{ root: { style: { width: '28px', height: '28px' } } }" />
-        <Avatar v-else icon="pi pi-user" shape="circle" :pt="{ root: { style: { width: '28px', height: '28px', backgroundColor: 'var(--p-primary-color)', color: 'white' } } }" />
+      <div
+        v-if="props.currentContactIndex === 2"
+        class="flex items-center justify-center ml-1"
+        :aria-label="props.showObjectionTooltip ? 'Get Coaching Help (Objection Detected)' : 'Coach avatar in input'"
+      >
+        <Avatar
+          v-if="props.coachAvatarUrl"
+          :image="props.coachAvatarUrl"
+          shape="circle"
+          :pt="{ root: { style: { width: '28px', height: '28px', border: props.showObjectionTooltip ? '2px solid var(--p-red-500)' : 'none', cursor: 'pointer' } } }"
+          v-tooltip.top="props.showObjectionTooltip ? 'Get Coaching Help (Objection Detected)' : ''"
+          @click="emit('coach-avatar-click')"
+        />
+        <Avatar
+          v-else
+          icon="pi pi-user"
+          shape="circle"
+          :pt="{ root: { style: { width: '28px', height: '28px', backgroundColor: 'var(--p-primary-color)', color: 'white', border: props.showObjectionTooltip ? '2px solid var(--p-red-500)' : 'none', cursor: 'pointer' } } }"
+          v-tooltip.top="props.showObjectionTooltip ? 'Get Coaching Help (Objection Detected)' : ''"
+          @click="emit('coach-avatar-click')"
+        />
       </div>
     </div>
     <div id="chat-input-help" class="sr-only">
