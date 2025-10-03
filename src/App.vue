@@ -818,7 +818,7 @@
                 <div class="space-y-2 pl-5 border-t border-white/10 pt-[22px] pb-[10px] mt-3">
                   <h4 class="text-xl font-medium">Testimonials</h4>
                   <div class="text-xs text-gray-300 space-y-2">
-                    <p>“Our connect rate and meetings doubled in 60 days.” — VP Sales, SaaS</p>
+                    <p>“Our connect rate and meetings doubled in 60 days.” ��� VP Sales, SaaS</p>
                     <p>“The talk tracks are simple and deadly effective.���� — SDR Lead, Insurance</p>
                   </div>
                 <div v-if="selectedCoachForInfo?.websiteUrl" class="sticky bottom-0 -mb-4 -mx-4 px-4 py-3 border-t border-gray-700 bg-gray-900/90 flex justify-center">
@@ -1139,7 +1139,7 @@ const showRegularConnectedMessages = (contact: any): void => {
   if (currentContactIndex.value === 0) {
     setTimeout(() => {
       // Type at 1/3 speed (default 5ms -> 15ms)
-      addUserMessageWithTyping('Hi Sam, this is Aaron from PhoneBurner do you have a quick minute?', 50)
+      addUserMessageWithTyping('Hi Sam, this is Aaron from PhoneBurner do you have a quick minute?', 500)
       scrollToBottom()
     }, 400)
   }
@@ -2606,7 +2606,7 @@ const handleLooksGood = (): void => {
     // Regular flow for new users
     setTimeout(() => {
       addAIMessageWithTyping([
-        'I\'ve analyzed your contact\'s phone numbers using real connection data from 900M+ calls, recent phone engagement, calling patterns, and carrier signals��so you only dial numbers likely to connect.<br><br>I\'ve prioritized the phone numbers most likely to connect so you spend time talking, not hitting dead lines.<br><br>Here\'s what I found:<br><div style="margin-left: 1em; text-indent: -1em;">• 40 numbers have \'High\' Connect Scores and show consistent calling activity in the last 12 months. These are highly likely to be connected and assigned to active subscribers.</div><br><div style="margin-left: 1em; text-indent: -1em;">• 67 numbers have \'Medium\' Connect Scores and are worth calling after you exhaust your \'High\' Connect Score numbers.</div><br><div style="margin-left: 1em; text-indent: -1em;">• 54 numbers have \'Low\' Connect Scores and are likely disconnected or inactive lines that won\'t answer when dialed.</div>'
+        'I\'ve analyzed your contact\'s phone numbers using real connection data from 900M+ calls, recent phone engagement, calling patterns, and carrier signals—so you only dial numbers likely to connect.<br><br>I\'ve prioritized the phone numbers most likely to connect so you spend time talking, not hitting dead lines.<br><br>Here\'s what I found:<br><div style="margin-left: 1em; text-indent: -1em;">• 40 numbers have \'High\' Connect Scores and show consistent calling activity in the last 12 months. These are highly likely to be connected and assigned to active subscribers.</div><br><div style="margin-left: 1em; text-indent: -1em;">• 67 numbers have \'Medium\' Connect Scores and are worth calling after you exhaust your \'High\' Connect Score numbers.</div><br><div style="margin-left: 1em; text-indent: -1em;">• 54 numbers have \'Low\' Connect Scores and are likely disconnected or inactive lines that won\'t answer when dialed.</div>'
       ])
 
       // Phone verification button will be shown automatically when typing completes
