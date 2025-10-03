@@ -1104,7 +1104,7 @@ const showRegularConnectedMessages = (contact: any): void => {
 
   // Connection status message
   const combinedMessage = [
-    `You are now<br> connected with ${contact.name}.`
+    `You are now connected with ${contact.name}.`
   ]
 
   addAIMessageWithTyping(combinedMessage)
