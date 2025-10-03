@@ -569,12 +569,12 @@
             </div>
           </div>
 
-          <!-- Coaching Help above chat for 2nd call only; turns red at detection (>=5s). -->
-          <div v-if="showDialer && currentContactIndex === 1 && callState === 'connected' && callDuration >= 5" class="mt-2 pt-3 flex justify-center">
+          <!-- Coaching Help above chat for 2nd call: appears immediately when connected, turns red at 5s, reverts to normal after red click. -->
+          <div v-if="showDialer && currentContactIndex === 1 && callState === 'connected'" class="mt-2 pt-3 flex justify-center">
             <div class="w-[70%] flex justify-center">
               <Button
-                @click="handleCoachingHelp"
-                severity="danger"
+                @click="handleSecondCoachingClick"
+                :severity="(callDuration >= 5 && !secondCoachingHelpClicked) ? 'danger' : 'secondary'"
                 label="Get Coaching Help"
                 icon="pi pi-user"
                 class="w-1/2 px-6 py-3 font-semibold flex items-center justify-center gap-2"
@@ -1199,6 +1199,7 @@ const connectedCalls = ref<number>(0)
 const skippedNumbers = ref<number>(3) // Default for demo
 const callState = ref<string>('idle') // 'idle', 'ringing', 'connected', 'ended'
 const callDuration = ref<number>(0)
+const secondCoachingHelpClicked = ref<boolean>(false)
 const isManualHangUp = ref<boolean>(false) // Track if hang up was manual vs automatic
 const queueTime = ref<number>(14)
 const showLoadNewFileButton = ref<boolean>(false)
@@ -1397,6 +1398,7 @@ const contacts = [
 ]
 
 const currentContactIndex = ref<number>(0)
+watch(currentContactIndex, () => { secondCoachingHelpClicked.value = false })
 const currentContact = computed(() => contacts[currentContactIndex.value])
 const nextContactName = computed(() => {
   const nextIndex = currentContactIndex.value + 1
@@ -3036,6 +3038,14 @@ const handleCoachingHelp = (highlightedFromDialer?: boolean): void => {
       probe
     ])
     scrollToBottom()
+  }
+}
+
+const handleSecondCoachingClick = (): void => {
+  const highlighted = (callState.value === 'connected' && callDuration.value >= 5)
+  handleCoachingHelp(highlighted)
+  if (highlighted) {
+    secondCoachingHelpClicked.value = true
   }
 }
 
