@@ -399,6 +399,7 @@ const shouldUseCoachAvatar = (): boolean => {
     messageText.includes('Moving to next contact') ||
     messageText.includes('Preparing to dial') ||
     messageText.includes('Voicemail detected') ||
+    messageText.includes('You are now connected with') ||
     messageText.includes('Call with') && messageText.includes('ended') ||
     messageText.includes('Please select a call outcome') ||
     messageText.includes('Congratulations! You have completed your entire call queue') ||
