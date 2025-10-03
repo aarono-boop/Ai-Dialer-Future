@@ -86,8 +86,8 @@
             <template v-if="currentContactIndex !== 1 && currentContactIndex !== 2">
               <Button
                 @click="onObjectionHelpClick"
-                :disabled="callState !== 'connected' || callDuration < 10 || objectionClicked"
-                :severity="(objectionAttention && !(callState !== 'connected' || callDuration < 10 || objectionClicked)) ? 'danger' : 'secondary'"
+                :disabled="callState !== 'connected' || callDuration < 5 || objectionClicked"
+                :severity="(objectionAttention && !(callState !== 'connected' || callDuration < 5 || objectionClicked)) ? 'danger' : 'secondary'"
                 size="small"
                 class="pause-queue-compact"
                 aria-label="Show objection handling guidance"
@@ -516,8 +516,8 @@ const showKeypadModal = ref(false)
 const objectionClicked = ref(false)
 watch(() => props.currentContactIndex, () => { objectionClicked.value = false })
 
-// After 10s into a live call, draw attention to objection help
-const objectionAttention = computed(() => props.callState === 'connected' && props.callDuration >= 10)
+// After 5s into a live call, draw attention to objection help
+const objectionAttention = computed(() => props.callState === 'connected' && props.callDuration >= 5)
 
 // Template refs for PrimeVue buttons
 const muteButtonRef = ref<any>(null)
