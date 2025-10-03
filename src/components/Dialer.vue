@@ -67,8 +67,22 @@
               </div>
             </div>
           </div>
-          <div class="flex-1 flex justify-center">
+          <div class="flex-1 flex justify-center gap-2">
             <template v-if="currentContactIndex !== 1 && currentContactIndex !== 2">
+              <!-- First caller: show Coaching Help to the left of Objection Help -->
+              <template v-if="currentContactIndex === 0">
+                <Button
+                  @click="onCoachingHelpClick"
+                  :disabled="callState !== 'connected'"
+                  severity="secondary"
+                  size="small"
+                  class="pause-queue-compact"
+                  aria-label="Get coaching help"
+                >
+                  <i class="pi pi-user"></i>
+                  <span class="text-xs">Get Coaching Help</span>
+                </Button>
+              </template>
               <Button
                 @click="onObjectionHelpClick"
                 :disabled="callState !== 'connected' || callDuration < 5 || objectionClicked"
@@ -489,7 +503,7 @@ const props = defineProps<{
 }>()
 
 // Define emits
-const emit = defineEmits(['call-back', 'next-contact', 'hang-up', 'mute', 'hold', 'keypad', 'keypad-press', 'pause-queue', 'complete-queue', 'ai-coach-toggle', 'transfer', 'objection-help'])
+const emit = defineEmits(['call-back', 'next-contact', 'hang-up', 'mute', 'hold', 'keypad', 'keypad-press', 'pause-queue', 'complete-queue', 'ai-coach-toggle', 'transfer', 'objection-help', 'coaching-help'])
 
 // Reactive data
 const isMuted = ref(false)
@@ -901,6 +915,10 @@ const onObjectionHelpClick = () => {
   if (objectionClicked.value) return
   emit('objection-help')
   objectionClicked.value = true
+}
+
+const onCoachingHelpClick = () => {
+  emit('coaching-help')
 }
 
 const handleHangUpTab = (event: KeyboardEvent) => {
