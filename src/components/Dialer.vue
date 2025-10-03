@@ -42,14 +42,14 @@
             :style="{ width: `${((currentContactIndex + 1) / Math.max(totalContacts, 1)) * 100}%`, background: 'linear-gradient(to right, #60a5fa, #7b68ee)' }"
           ></div>
           <div class="absolute inset-0 flex items-center justify-center text-white text-xs font-medium">
-            Dial Queue {{ currentContactIndex + 1 }} of {{ totalContacts }} (Queue Time: {{ formatTime(queueTime) }})
+            Dial Queue {{ currentContactIndex + 1 }} of {{ totalContacts }} ({{ formatTime(queueTime) }})
           </div>
         </div>
       </div>
 
       <!-- AI Coach Controls -->
       <div class="mt-3">
-        <div class="flex items-center justify-between" style="min-height: 32px; box-sizing: border-box;">
+        <div class="flex items-center" style="min-height: 32px; box-sizing: border-box;">
           <div class="flex items-center gap-2" style="flex-shrink: 0;">
             <!-- Dynamic Coach Avatar and Name -->
             <div v-if="currentCoach" class="flex items-center gap-2">
@@ -81,7 +81,8 @@
               @update:model-value="toggleAICoach"
               class="ai-coach-toggle"
             />
-            <!-- Objection Help Button next to AI Coach toggle -->
+          </div>
+          <div class="flex-1 flex justify-center">
             <Button
               @click="$emit('objection-help')"
               :disabled="callState !== 'connected'"
