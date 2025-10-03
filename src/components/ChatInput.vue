@@ -30,10 +30,11 @@
         v-tooltip.top="'Toggle closed captions in the chat window'"
         text
         class="w-10 h-10 flex items-center justify-center transition-colors duration-200 hover:opacity-80"
-        :style="{ color: captionsOn ? 'var(--p-surface-0)' : 'var(--p-surface-600)' }"
+        :style="{ color: captionsOn ? 'var(--p-surface-0)' : 'var(--p-surface-500)' }"
+        :aria-pressed="captionsOn ? 'true' : 'false'"
         aria-label="Toggle closed captions in the chat window"
       >
-        <span aria-hidden="true" class="inline-block" style="line-height:0; display:inline-flex; align-items:center; justify-content:center;">
+        <span aria-hidden="true" class="inline-block" :style="{ lineHeight: 0, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', opacity: captionsOn ? 1 : 0.6 }">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" width="20" height="20" fill="currentColor">
             <path d="M200-160q-33 0-56.5-23.5T120-240v-480q0-33 23.5-56.5T200-800h560q33 0 56.5 23.5T840-720v480q0 33-23.5 56.5T760-160H200Zm0-80h560v-480H200v480Zm80-120h120q17 0 28.5-11.5T440-400v-40h-60v20h-80v-120h80v20h60v-40q0-17-11.5-28.5T400-600H280q-17 0-28.5 11.5T240-560v160q0 17 11.5 28.5T280-360Zm280 0h120q17 0 28.5-11.5T720-400v-40h-60v20h-80v-120h80v20h60v-40q0-17-11.5-28.5T680-600H560q-17 0-28.5 11.5T520-560v160q0 17 11.5 28.5T560-360ZM200-240v-480 480Z" />
           </svg>
