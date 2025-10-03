@@ -2320,7 +2320,7 @@ const sendMessage = (message: string): void => {
         'AI Dialer can remind you to:',
         '• Follow up with specific prospects at optimal times',
         '• Call back prospects who didn\'t answer',
-        '• Review and update your call notes',
+        '�� Review and update your call notes',
         '�� Start your daily calling sessions',
         'What would you like to be reminded about and when?'
       ])
@@ -3030,13 +3030,37 @@ const handleObjectionHelp = (): void => {
 
 const handleCoachingHelp = (): void => {
   if (!aiCoachEnabled.value) return
-  // For 3rd call above-chat button, hide after click
-  if (currentContactIndex.value === 2) {
+
+  const highlighted = callState.value === 'connected' && callDuration.value >= 5
+
+  // Third call above-chat button hides after click
+  if (currentContactIndex.value === 2 && highlighted) {
     hideObjectionHelpButton.value = true
+    addAIMessageWithTyping(AI_RESPONSES.OBJECTION_RESPONSE)
+    scrollToBottom()
+    return
   }
-  // Show objection handling bubble
-  addAIMessageWithTyping(AI_RESPONSES.OBJECTION_RESPONSE)
-  scrollToBottom()
+
+  if (highlighted) {
+    // Objection detected path
+    addAIMessageWithTyping(AI_RESPONSES.OBJECTION_RESPONSE)
+    scrollToBottom()
+  } else {
+    // General coaching guidance based on current contact context
+    const c = currentContact.value
+    const tip = getDynamicCoachingFeedback()
+    const probe = c?.company
+      ? `Try: "Out of curiosity, what would make a real difference for ${c.company} this quarter?"`
+      : `Try: "What would make a real difference for your team this quarter?"`
+    addAIMessageWithTyping([
+      `<strong>Coaching Help</strong> — based on your conversation so far with ${c?.name || 'this contact'}:`,
+      '<br>',
+      tip,
+      '<br>',
+      probe
+    ])
+    scrollToBottom()
+  }
 }
 
 const handlePauseQueue = (): void => {
