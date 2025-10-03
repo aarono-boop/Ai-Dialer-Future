@@ -1424,6 +1424,25 @@ const contacts = [
     sourceUrl: 'https://docs.google.com/spreadsheets/d/1AbCdEfGhIjKlMnOpQrStUvWxYz1234567890/edit#gid=0',
     notes: ''
   },
+  {
+    name: 'Alex Carter',
+    title: 'Head of Operations',
+    company: 'BrightWave Labs',
+    phone: '(646) 555-0199',
+    connectScore: 'High',
+    email: 'alex.carter@brightwave.io',
+    address: '77 Hudson St, New York, NY 10013',
+    localTime: '2:15 PM (NEW YORK, NY)',
+    website: 'https://www.brightwave.io',
+    linkedin: 'https://www.linkedin.com/in/alex-carter-ops',
+    industry: 'Biotech',
+    companySize: '500-1000 employees',
+    leadSource: 'Conference Booth',
+    sourceType: 'crm',
+    sourceName: 'HubSpot',
+    sourceUrl: 'https://app.hubspot.com/contacts/1234567/contact/7654321',
+    notes: ''
+  },
 ]
 
 const currentContactIndex = ref<number>(0)
