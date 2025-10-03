@@ -1138,7 +1138,8 @@ const showRegularConnectedMessages = (contact: any): void => {
   // For first contact, follow up with a user message
   if (currentContactIndex.value === 0) {
     setTimeout(() => {
-      addUserMessage('Hi Sam, this is Aaron from PhoneBurner do you have a quick minute?')
+      // Type at 1/3 speed (default 5ms -> 15ms)
+      addUserMessageWithTyping('Hi Sam, this is Aaron from PhoneBurner do you have a quick minute?', 15)
       scrollToBottom()
     }, 400)
   }
