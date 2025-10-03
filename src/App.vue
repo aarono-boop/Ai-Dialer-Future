@@ -1085,12 +1085,11 @@ const showCallConnectedMessages = (contact: any): void => {
   // Add coach-specific intro message when coach parameter is set AND AI Coach is enabled
   if (coachParameter.value && aiCoachEnabled.value) {
     const getCoachCallMessage = (): string => {
-      switch (coachParameter.value) {
-        case 'jordan-stupar':
-          return 'I\'m on the call with you - let\'s crush this together!'
-        default:
-          return 'I\'m on the call with you...'
-      }
+      const name = currentCoach.value?.displayName || ''
+      const first = name ? name.split(' ')[0] : ''
+      return first
+        ? `I\'m ${first} AI assistant and on the call with you - let\'s crush this together!`
+        : `I\'m on the call with you...`
     }
 
     addAIMessageWithTyping(getCoachCallMessage())
