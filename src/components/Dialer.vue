@@ -93,7 +93,7 @@
             size="small"
             class="pause-queue-compact"
           >
-            <span class="text-xs">Pause Queue</span>
+            <span class="text-xs">End Queue</span>
           </Button>
         </div>
       </div>
