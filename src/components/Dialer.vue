@@ -81,6 +81,18 @@
               @update:model-value="toggleAICoach"
               class="ai-coach-toggle"
             />
+            <!-- Objection Help Button next to AI Coach toggle -->
+            <Button
+              @click="$emit('objection-help')"
+              :disabled="callState !== 'connected'"
+              :severity="objectionAttention ? 'danger' : 'secondary'"
+              size="small"
+              class="pause-queue-compact"
+              aria-label="Show objection handling guidance"
+            >
+              <i class="pi pi-exclamation-triangle"></i>
+              <span class="text-xs">Objection Help</span>
+            </Button>
           </div>
           <div class="text-gray-400 text-sm text-center w-[160px] flex-shrink-0">
             Queue Time: <span class="text-white font-mono tabular-nums">{{ formatTime(queueTime) }}</span>
@@ -285,18 +297,6 @@
             <span class="text-xs">Transfer</span>
           </Button>
         </div>
-
-        <!-- Objection Help Button (shown during live call) -->
-        <Button
-          v-if="callState === 'connected'"
-          @click="$emit('objection-help')"
-          :severity="objectionAttention ? 'danger' : 'secondary'"
-          class="w-full flex items-center justify-center gap-2 py-3"
-          aria-label="Show objection handling guidance"
-        >
-          <i class="pi pi-exclamation-triangle"></i>
-          Objection Help
-        </Button>
 
         <!-- Hang Up Button -->
         <Button
