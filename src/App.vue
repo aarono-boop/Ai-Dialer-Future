@@ -1139,7 +1139,7 @@ const showRegularConnectedMessages = (contact: any): void => {
   if (currentContactIndex.value === 0) {
     setTimeout(() => {
       // Type at 1/3 speed (default 5ms -> 15ms)
-      addUserMessageWithTyping('Hi Sam, this is Aaron from PhoneBurner do you have a quick minute?', 50)
+      addUserMessageWithTyping('Hi Sam, this is Aaron from PhoneBurner do you have a quick minute?', 50, 'word')
       scrollToBottom()
     }, 400)
   }
@@ -2307,7 +2307,7 @@ const sendMessage = (message: string): void => {
         '<i class="pi pi-bolt"></i> Let\'s fire up a power dialing session!',
         'I can configure your session with:',
         '• <strong>Target audience:</strong> High-priority prospects, warm leads, or follow-ups',
-        '��� <strong>Call duration:</strong> 30 min, 1 hour, or 2-hour session',
+        '• <strong>Call duration:</strong> 30 min, 1 hour, or 2-hour session',
         '• <strong>Connect goals:</strong> Number of conversations you want to have',
         'What type of prospects do you want to focus on for this session?'
       ])
