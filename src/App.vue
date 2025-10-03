@@ -1882,18 +1882,6 @@ const goToMainApp = () => {
   })
 }
 
-// Accessibility helper for screen reader announcements
-const announceToScreenReader = (message: string) => {
-  if (screenReaderAnnouncements.value) {
-    screenReaderAnnouncements.value.textContent = message
-    // Clear after announcement to allow repeat announcements
-    setTimeout(() => {
-      if (screenReaderAnnouncements.value) {
-        screenReaderAnnouncements.value.textContent = ''
-      }
-    }, 1000)
-  }
-}
 
 // Redirect focus from tab trap to AI Dialer logo
 const redirectToArkonLogo = () => {
