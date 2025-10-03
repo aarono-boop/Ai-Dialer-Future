@@ -1644,10 +1644,21 @@ const handleTypingComplete = (index: number): void => {
     aaronPitchReplied.value = true
     setTimeout(() => {
       addAIMessageWithTyping('I already have a phone dialer, I am using Aircall.', 150, 'word')
-      // Mark objection detected for first contact
-      firstContactObjectionDetected.value = true
+      // Objection flag will be set after typing completes (see below)
       scrollToBottom()
     }, 300)
+  }
+
+  // If the completed message is Sam's Aircall objection on first contact, enable red Coaching Help
+  const completed = messages.value[index]
+  if (
+    completed &&
+    completed.type === 'ai' &&
+    typeof completed.content?.[0] === 'string' &&
+    completed.content[0].includes('I already have a phone dialer, I am using Aircall.') &&
+    currentContactIndex.value === 0
+  ) {
+    firstContactObjectionDetected.value = true
   }
 }
 
