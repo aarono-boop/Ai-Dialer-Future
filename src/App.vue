@@ -569,6 +569,19 @@
             </div>
           </div>
 
+          <!-- Coaching Help above chat for 2nd call only; turns red at detection (>=5s). -->
+          <div v-if="showDialer && currentContactIndex === 1 && callState === 'connected' && callDuration >= 5" class="mt-2 pt-3 flex justify-center">
+            <div class="w-[70%] flex justify-center">
+              <Button
+                @click="handleCoachingHelp"
+                severity="danger"
+                label="Get Coaching Help"
+                icon="pi pi-user"
+                class="w-1/2 px-6 py-3 font-semibold flex items-center justify-center gap-2"
+              />
+            </div>
+          </div>
+
           <!-- Coaching Help above chat for 3rd call only; turns red at detection (>=5s) and shows objection bubble on click. Hide after click. -->
           <div v-if="showDialer && currentContactIndex === 2 && callState === 'connected' && callDuration >= 5 && !hideObjectionHelpButton" class="mt-2 pt-3 flex justify-center">
             <div class="w-[70%] flex justify-center">
