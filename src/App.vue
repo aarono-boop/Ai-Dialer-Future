@@ -3033,11 +3033,12 @@ const handleObjectionHelp = (): void => {
 
 const handleCoachingHelp = (): void => {
   if (!aiCoachEnabled.value) return
-  addAIMessageWithTyping([
-    '<strong>Coaching Help</strong>',
-    '<br>',
-    getDynamicCoachingFeedback()
-  ])
+  // For 3rd call above-chat button, hide after click
+  if (currentContactIndex.value === 2) {
+    hideObjectionHelpButton.value = true
+  }
+  // Show objection handling bubble
+  addAIMessageWithTyping(AI_RESPONSES.OBJECTION_RESPONSE)
   scrollToBottom()
 }
 
