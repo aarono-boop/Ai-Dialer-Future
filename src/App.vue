@@ -3031,6 +3031,16 @@ const handleObjectionHelp = (): void => {
   scrollToBottom()
 }
 
+const handleCoachingHelp = (): void => {
+  if (!aiCoachEnabled.value) return
+  addAIMessageWithTyping([
+    '<strong>Coaching Help</strong>',
+    '<br>',
+    getDynamicCoachingFeedback()
+  ])
+  scrollToBottom()
+}
+
 const handlePauseQueue = (): void => {
   // Set paused state
   queuePaused.value = true
