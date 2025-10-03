@@ -1594,6 +1594,19 @@ const handleTypingComplete = (index: number): void => {
       }, 200) // Small delay for better UX
     }
   }
+
+  // When first-contact greeting finishes typing, have Sam reply at same speed and style
+  if (
+    messages.value[index] &&
+    messages.value[index].type === 'user' &&
+    messages.value[index].content[0] === 'Hi Sam, this is Aaron from PhoneBurner do you have a quick minute?' &&
+    currentContactIndex.value === 0 && callState.value === 'connected'
+  ) {
+    setTimeout(() => {
+      addAIMessageWithTyping("Hi Aaron, what's this call about?", 150, 'word')
+      scrollToBottom()
+    }, 250)
+  }
 }
 
 // Update welcome message typing status based on user status
