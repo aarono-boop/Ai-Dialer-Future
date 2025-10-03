@@ -301,6 +301,10 @@ const startTypingAnimation = (): void => {
 
   let lineIndex = 0
   let charIndex = 0
+  let wordIndex = 0
+  let words: string[] = []
+
+  const isWordMode = props.message.typingMode === 'word'
 
   // Helper function to detect if content is a contact table that should load instantly
   const isContactTableContent = (content: string): boolean => {
@@ -308,7 +312,7 @@ const startTypingAnimation = (): void => {
     return content.includes('<table')
   }
 
-  const typeNextCharacter = () => {
+  const tick = () => {
     if (lineIndex >= props.message.content.length) {
       isTyping.value = false
       emit('typingComplete')
@@ -318,41 +322,53 @@ const startTypingAnimation = (): void => {
     const currentLine = props.message.content[lineIndex]
 
     // Check if this line contains contact table content - if so, display it instantly
-    if (charIndex === 0 && isContactTableContent(currentLine)) {
+    if (!isWordMode && charIndex === 0 && isContactTableContent(currentLine)) {
       typedContent.value[lineIndex] = currentLine
       lineIndex++
       charIndex = 0
 
-      // Scroll when displaying contact table instantly
-      if (props.onTypingProgress) {
-        props.onTypingProgress()
-      }
+      if (props.onTypingProgress) props.onTypingProgress()
       return
     }
 
-    if (charIndex < currentLine.length) {
-      // Add character to current line
-      typedContent.value[lineIndex] = currentLine.substring(0, charIndex + 1)
-      charIndex++
+    if (isWordMode) {
+      if (wordIndex === 0) {
+        words = currentLine.trim().split(/\s+/)
+      }
+      const nextCount = Math.min(wordIndex + 1, words.length)
+      typedContent.value[lineIndex] = words.slice(0, nextCount).join(' ')
+      wordIndex++
 
-      // Scroll to bottom every few characters to keep new content visible
-      if (charIndex % 10 === 0 && props.onTypingProgress) {
-        props.onTypingProgress()
+      if (wordIndex >= words.length) {
+        lineIndex++
+        wordIndex = 0
+        if (props.onTypingProgress) props.onTypingProgress()
       }
     } else {
-      // Move to next line
-      lineIndex++
-      charIndex = 0
+      if (charIndex < currentLine.length) {
+        // Add character to current line
+        typedContent.value[lineIndex] = currentLine.substring(0, charIndex + 1)
+        charIndex++
 
-      // Always scroll when starting a new line
-      if (props.onTypingProgress) {
-        props.onTypingProgress()
+        // Scroll to bottom every few characters to keep new content visible
+        if (charIndex % 10 === 0 && props.onTypingProgress) {
+          props.onTypingProgress()
+        }
+      } else {
+        // Move to next line
+        lineIndex++
+        charIndex = 0
+
+        // Always scroll when starting a new line
+        if (props.onTypingProgress) {
+          props.onTypingProgress()
+        }
       }
     }
   }
 
   const speed = props.message.typingSpeed ?? 5
-  typingInterval = setInterval(typeNextCharacter, speed)
+  typingInterval = setInterval(tick, speed)
 }
 
 // Stop typing animation
