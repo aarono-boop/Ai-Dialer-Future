@@ -599,7 +599,7 @@
               :currentContactIndex="currentContactIndex"
               :coachAvatarUrl="currentCoach?.avatarUrl || null"
               :coachDisplayName="currentCoach?.displayName || null"
-              :showObjectionTooltip="(currentContactIndex === 2 && callState === 'connected' && callDuration >= 5)"
+              :showObjectionTooltip="(currentContactIndex === 2 && callState === 'connected' && callDuration >= 5 && !hideObjectionHelpButton)"
               @coach-avatar-click="handleObjectionHelp"
               @send-message="sendMessage"
               @voice-input="handleVoiceInput"
