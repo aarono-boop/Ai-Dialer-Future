@@ -575,7 +575,7 @@
               <Button
                 @click="handleSecondCoachingClick"
                 :severity="(callDuration >= 5 && !secondCoachingHelpClicked) ? 'danger' : 'secondary'"
-                label="Get Coaching Help"
+                :label="(callDuration >= 5 && !secondCoachingHelpClicked) ? 'Get Coaching Help (Objection Detected)' : 'Get Coaching Help'"
                 icon="pi pi-user"
                 class="w-1/2 px-6 py-3 font-semibold flex items-center justify-center gap-2"
               />
@@ -588,7 +588,7 @@
               <Button
                 @click="handleCoachingHelp"
                 severity="danger"
-                label="Get Coaching Help"
+                label="Get Coaching Help (Objection Detected)"
                 icon="pi pi-user"
                 class="w-1/2 px-6 py-3 font-semibold flex items-center justify-center gap-2"
               />

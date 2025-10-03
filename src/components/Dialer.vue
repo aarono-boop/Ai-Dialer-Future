@@ -79,7 +79,7 @@
                   aria-label="Get coaching help"
                 >
                   <i class="pi pi-user"></i>
-                  <span class="text-xs">Get Coaching Help</span>
+                  <span class="text-xs">{{ (callDuration >= 5 && !coachingHelpClicked) ? 'Get Coaching Help (Objection Detected)' : 'Get Coaching Help' }}</span>
                 </Button>
               </template>
             </template>
