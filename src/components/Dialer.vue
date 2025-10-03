@@ -85,7 +85,6 @@
             </template>
           </div>
           <Button
-            v-if="callState !== 'ended'"
             @click="pauseQueue"
             :disabled="callState === 'connected'"
             tabindex="8"
