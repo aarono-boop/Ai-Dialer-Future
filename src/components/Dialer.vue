@@ -73,7 +73,6 @@
               <template v-if="currentContactIndex === 0">
                 <Button
                   @click="onCoachingHelpClick"
-                  :disabled="callState !== 'connected' || callDuration < 5 || coachingHelpClicked"
                   :severity="(callDuration >= 5 && !coachingHelpClicked) ? 'danger' : 'secondary'"
                   size="small"
                   class="pause-queue-compact"
