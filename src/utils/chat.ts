@@ -295,12 +295,14 @@ export const createChatUtils = (
     }, delay)
   }
 
-  const addAIMessageWithTyping = (content: string | string[]): void => {
+  const addAIMessageWithTyping = (content: string | string[], typingSpeed: number = 5, typingMode: 'char' | 'word' = 'char'): void => {
     const contentArray = Array.isArray(content) ? content : [content]
     messages.value.push({
       type: 'ai',
       content: contentArray,
-      typing: true
+      typing: true,
+      typingSpeed,
+      typingMode
     })
 
     // Initial scroll to position the new message
