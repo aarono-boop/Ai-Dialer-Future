@@ -673,6 +673,7 @@
             @complete-queue="handleCompleteQueue"
             @ai-coach-toggle="handleAICoachToggle"
             @transfer="handleTransfer"
+            @objection-help="handleObjectionHelp"
           />
         </div>
 
