@@ -51,8 +51,8 @@
       <div class="mt-3">
         <div class="flex items-center" style="min-height: 32px; box-sizing: border-box;">
           <div class="flex items-center gap-2" style="flex-shrink: 0;">
-            <!-- Dynamic Coach Avatar and Name -->
-            <div v-if="currentCoach" class="flex items-center gap-2">
+            <!-- Dynamic Coach Avatar and Name (hidden on 2nd contact) -->
+            <div v-if="currentCoach && currentContactIndex !== 1" class="flex items-center gap-2">
               <img
                 v-if="currentCoach.avatarUrl"
                 :src="currentCoach.avatarUrl"
@@ -78,7 +78,13 @@
                   class="pause-queue-compact"
                   aria-label="Get coaching help"
                 >
-                  <i class="pi pi-user"></i>
+                  <template v-if="currentCoach">
+                    <img v-if="currentCoach.avatarUrl" :src="currentCoach.avatarUrl" :alt="currentCoach.displayName" class="w-4 h-4 rounded-full object-cover" />
+                    <div v-else class="w-4 h-4 rounded-full bg-gradient-to-br from-blue-400 to-purple-500 flex items-center justify-center text-white text-[10px] font-semibold">
+                      {{ getCoachInitials(currentCoach.displayName) }}
+                    </div>
+                  </template>
+                  <i v-else class="pi pi-user"></i>
                   <span class="text-xs">{{ (callDuration >= 5 && !coachingHelpClicked) ? 'Get Coaching Help (Objection Detected)' : 'Get Coaching Help' }}</span>
                 </Button>
               </template>
