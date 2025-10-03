@@ -687,6 +687,7 @@
             @ai-coach-toggle="handleAICoachToggle"
             @transfer="handleTransfer"
             @objection-help="handleObjectionHelp"
+            @coaching-help="handleCoachingHelp"
           />
         </div>
 
