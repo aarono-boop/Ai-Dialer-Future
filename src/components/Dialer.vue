@@ -82,7 +82,7 @@
               class="ai-coach-toggle"
             />
           </div>
-          <div class="flex-1 flex justify-center">
+          <div class="flex-1 flex justify-center" v-if="currentContactIndex !== 1">
             <Button
               @click="$emit('objection-help')"
               :disabled="callState !== 'connected'"
