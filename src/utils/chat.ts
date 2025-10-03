@@ -175,6 +175,28 @@ export const createChatUtils = (
     })
   }
 
+  const addUserMessageWithTyping = (content: string, typingSpeed: number = 5): void => {
+    messages.value.push({
+      type: 'user',
+      content: [content],
+      typing: true,
+      typingSpeed
+    })
+
+    // Position during typing
+    nextTick(() => {
+      scrollToUserMessage()
+    })
+
+    nextTick(() => {
+      setTimeout(() => {
+        if (headerRef.value?.establishFocusContext) {
+          headerRef.value.establishFocusContext()
+        }
+      }, 100)
+    })
+  }
+
   const addUserGoalMessage = (content: string): void => {
     messages.value.push({
       type: 'user',
@@ -324,6 +346,7 @@ export const createChatUtils = (
     addAIMessage,
     addAIMessageWithoutScroll,
     addUserMessage,
+    addUserMessageWithTyping,
     addUserGoalMessage,
     addUserQueuePausedMessage,
     addUserQueueCompletedMessage,
