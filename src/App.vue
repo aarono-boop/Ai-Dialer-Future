@@ -569,14 +569,14 @@
             </div>
           </div>
 
-          <!-- Objection Help above chat input for 3rd call only, and only after detection (5s into live call). Hide after click. -->
+          <!-- Coaching Help above chat for 3rd call only; turns red at detection (>=5s) and shows objection bubble on click. Hide after click. -->
           <div v-if="showDialer && currentContactIndex === 2 && callState === 'connected' && callDuration >= 5 && !hideObjectionHelpButton" class="mt-2 pt-3 flex justify-center">
             <div class="w-[70%] flex justify-center">
               <Button
-                @click="handleObjectionHelp"
+                @click="handleCoachingHelp"
                 severity="danger"
-                label="Objection Help"
-                icon="pi pi-exclamation-triangle"
+                label="Get Coaching Help"
+                icon="pi pi-user"
                 class="w-1/2 px-6 py-3 font-semibold flex items-center justify-center gap-2"
               />
             </div>
