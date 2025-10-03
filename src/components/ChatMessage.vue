@@ -124,7 +124,7 @@
         role="region"
         aria-label="User message content"
       >
-        <div v-for="(line, lineIndex) in message.content" :key="lineIndex" v-html="line"></div>
+        <div v-for="(line, lineIndex) in userDisplayedContent" :key="lineIndex" v-html="line"></div>
       </div>
     </div>
   </div>
@@ -251,6 +251,8 @@ const getAvatarLabel = (): string => {
 }
 
 // Process message content to extract video information
+const userDisplayedContent = computed(() => (props.message.typing ? typedContent.value : props.message.content))
+
 const processedContent = computed(() => {
   const content = props.message.typing ? typedContent.value : props.message.content
   const processedLines: Array<{type: 'text' | 'video', content: string, videoId?: string, autoplay?: boolean}> = []
