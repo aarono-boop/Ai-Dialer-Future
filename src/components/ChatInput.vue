@@ -1,6 +1,6 @@
 <template>
   <div class="mt-4" role="region" aria-label="Chat input area">
-    <div class="flex items-center backdrop-blur-[10px] rounded-xl px-3 py-2 gap-2 w-[70%] mx-auto chat-input-container">
+    <div class="flex items-center backdrop-blur-[10px] rounded-xl px-3 py-2 gap-2 w-[70%] mx-auto chat-input-container relative">
       <InputText
         ref="inputRef"
         v-model="inputValue"
@@ -26,13 +26,45 @@
       />
       <Button
         v-if="showPromptLibraryIcon"
-        @click="emit('open-prompt-library')"
-        v-tooltip.top="'Open prompt library'"
+        @click="onToggleCaptions"
+        v-tooltip.top="'Toggle closed captions in the chat window'"
         text
-        icon="pi pi-book"
-        class="w-10 h-10 flex items-center justify-center text-white transition-colors duration-200 hover:opacity-80"
-        aria-label="Open prompt library"
-      />
+        class="w-10 h-10 flex items-center justify-center transition-colors duration-200 hover:opacity-80"
+        :style="{ color: 'var(--p-surface-0)', opacity: captionsOn ? 1 : 0.2 }"
+        :aria-pressed="captionsOn ? 'true' : 'false'"
+        aria-label="Toggle closed captions in the chat window"
+      >
+        <span aria-hidden="true" class="inline-block" :style="{ lineHeight: 0, display: 'inline-flex', alignItems: 'center', justifyContent: 'center' }">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" width="20" height="20" fill="currentColor">
+            <path d="M200-160q-33 0-56.5-23.5T120-240v-480q0-33 23.5-56.5T200-800h560q33 0 56.5 23.5T840-720v480q0 33-23.5 56.5T760-160H200Zm0-80h560v-480H200v480Zm80-120h120q17 0 28.5-11.5T440-400v-40h-60v20h-80v-120h80v20h60v-40q0-17-11.5-28.5T400-600H280q-17 0-28.5 11.5T240-560v160q0 17 11.5 28.5T280-360Zm280 0h120q17 0 28.5-11.5T720-400v-40h-60v20h-80v-120h80v20h60v-40q0-17-11.5-28.5T680-600H560q-17 0-28.5 11.5T520-560v160q0 17 11.5 28.5T560-360ZM200-240v-480 480Z" />
+          </svg>
+        </span>
+      </Button>
+
+      <!-- Coach avatar on far right for 3rd contact -->
+      <div
+        v-if="props.currentContactIndex === 2"
+        class="flex items-center justify-center ml-1"
+        :aria-label="props.showObjectionTooltip ? 'Get Coaching Help (Objection Detected)' : 'Coach avatar in input'"
+      >
+        <Avatar
+          v-if="props.coachAvatarUrl"
+          :image="props.coachAvatarUrl"
+          shape="circle"
+          :pt="{ root: { style: { width: '28px', height: '28px', border: props.showObjectionTooltip ? '2px solid var(--p-red-500)' : 'none', cursor: 'pointer' } } }"
+          @click="emit('coach-avatar-click')"
+        />
+        <Avatar
+          v-else
+          icon="pi pi-user"
+          shape="circle"
+          :pt="{ root: { style: { width: '28px', height: '28px', backgroundColor: 'var(--p-primary-color)', color: 'white', border: props.showObjectionTooltip ? '2px solid var(--p-red-500)' : 'none', cursor: 'pointer' } } }"
+          @click="emit('coach-avatar-click')"
+        />
+        <div v-if="props.showObjectionTooltip" class="absolute -top-8 right-2">
+          <span class="px-2 py-1 rounded text-xs" :style="{ backgroundColor: 'var(--p-red-500)', color: 'white' }">Get Coaching Help (Objection Detected)</span>
+        </div>
+      </div>
     </div>
     <div id="chat-input-help" class="sr-only">
       Press Enter to send your message or use the send button
@@ -47,15 +79,28 @@
 import { ref, onMounted, onUnmounted, nextTick } from 'vue'
 import Button from 'primevue/button'
 import InputText from 'primevue/inputtext'
-
+import Badge from 'primevue/badge'
 // Define props
+import Avatar from 'primevue/avatar'
+
 const props = defineProps<{
   customPlaceholder?: string
   showPromptLibraryIcon?: boolean
+  currentContactIndex?: number
+  coachAvatarUrl?: string | null
+  coachDisplayName?: string | null
+  showObjectionTooltip?: boolean
 }>()
 
 // Define emits
-const emit = defineEmits(['send-message', 'voice-input', 'open-prompt-library'])
+const emit = defineEmits(['send-message', 'voice-input', 'toggle-transcription', 'coach-avatar-click'])
+
+// Captions toggle visual state: start ON (light), click -> OFF (dark), click again -> ON (light)
+const captionsOn = ref<boolean>(true)
+const onToggleCaptions = (): void => {
+  captionsOn.value = !captionsOn.value
+  emit('toggle-transcription')
+}
 
 // Reactive data
 const inputValue = ref<string>('')

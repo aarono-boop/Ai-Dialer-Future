@@ -6,8 +6,17 @@
   >
     <div v-if="message.type === 'ai'" class="flex gap-[10px] items-start w-full">
       <div class="flex items-start justify-center flex-shrink-0 pt-1" role="img" :aria-label="getAvatarLabel()">
+        <!-- Contact avatar for AI lines spoken by the contact -->
+        <template v-if="message.contactSpeaker">
+          <div
+            class="w-[26px] h-[26px] rounded-full bg-gradient-to-br from-blue-400 to-purple-500 flex items-center justify-center"
+            aria-hidden="true"
+          >
+            <i class="pi pi-user text-white text-sm"></i>
+          </div>
+        </template>
         <!-- Dynamic Coach Avatar when coach is set and not an AI Dialer AI system message -->
-        <template v-if="shouldUseCoachAvatar() && currentCoach">
+        <template v-else-if="shouldUseCoachAvatar() && currentCoach">
           <img
             v-if="currentCoach.avatarUrl"
             :src="currentCoach.avatarUrl"
@@ -35,9 +44,10 @@
       </div>
       <div :class="getMessageWidth()" class="flex flex-col">
         <div
-          class="bg-gray-800/90 border border-white/20 rounded-lg p-5 text-sm overflow-hidden"
+          class="bg-gray-800/90 border rounded-lg p-5 text-sm overflow-hidden"
           role="region"
-          aria-label="AI message content"
+          :aria-label="message.highlightObjection ? 'AI message content (objection)' : 'AI message content'"
+          :style="{ borderColor: message.highlightObjection ? 'var(--p-red-500)' : 'rgba(255,255,255,0.2)' }"
         >
           <template v-for="(item, itemIndex) in processedContent" :key="`processed-${itemIndex}`">
             <div v-if="item.type === 'text' && item.content.trim()" v-html="item.content"></div>
@@ -124,7 +134,7 @@
         role="region"
         aria-label="User message content"
       >
-        <div v-for="(line, lineIndex) in message.content" :key="lineIndex" v-html="line"></div>
+        <div v-for="(line, lineIndex) in userDisplayedContent" :key="lineIndex" v-html="line"></div>
       </div>
     </div>
   </div>
@@ -144,6 +154,9 @@ interface Message {
   type: 'ai' | 'user'
   content: string[]
   typing?: boolean
+  typingSpeed?: number
+  highlightObjection?: boolean
+  contactSpeaker?: boolean
 }
 
 // Define props
@@ -250,6 +263,8 @@ const getAvatarLabel = (): string => {
 }
 
 // Process message content to extract video information
+const userDisplayedContent = computed(() => (props.message.typing ? typedContent.value : props.message.content))
+
 const processedContent = computed(() => {
   const content = props.message.typing ? typedContent.value : props.message.content
   const processedLines: Array<{type: 'text' | 'video', content: string, videoId?: string, autoplay?: boolean}> = []
@@ -290,7 +305,7 @@ const processedContent = computed(() => {
 
 // Start typing animation
 const startTypingAnimation = (): void => {
-  if (!props.message.typing || props.message.type !== 'ai') return
+  if (!props.message.typing) return
 
   isTyping.value = true
   // Reset to empty strings
@@ -298,6 +313,10 @@ const startTypingAnimation = (): void => {
 
   let lineIndex = 0
   let charIndex = 0
+  let wordIndex = 0
+  let words: string[] = []
+
+  const isWordMode = props.message.typingMode === 'word'
 
   // Helper function to detect if content is a contact table that should load instantly
   const isContactTableContent = (content: string): boolean => {
@@ -305,7 +324,7 @@ const startTypingAnimation = (): void => {
     return content.includes('<table')
   }
 
-  const typeNextCharacter = () => {
+  const tick = () => {
     if (lineIndex >= props.message.content.length) {
       isTyping.value = false
       emit('typingComplete')
@@ -315,40 +334,53 @@ const startTypingAnimation = (): void => {
     const currentLine = props.message.content[lineIndex]
 
     // Check if this line contains contact table content - if so, display it instantly
-    if (charIndex === 0 && isContactTableContent(currentLine)) {
+    if (!isWordMode && charIndex === 0 && isContactTableContent(currentLine)) {
       typedContent.value[lineIndex] = currentLine
       lineIndex++
       charIndex = 0
 
-      // Scroll when displaying contact table instantly
-      if (props.onTypingProgress) {
-        props.onTypingProgress()
-      }
+      if (props.onTypingProgress) props.onTypingProgress()
       return
     }
 
-    if (charIndex < currentLine.length) {
-      // Add character to current line
-      typedContent.value[lineIndex] = currentLine.substring(0, charIndex + 1)
-      charIndex++
+    if (isWordMode) {
+      if (wordIndex === 0) {
+        words = currentLine.trim().split(/\s+/)
+      }
+      const nextCount = Math.min(wordIndex + 1, words.length)
+      typedContent.value[lineIndex] = words.slice(0, nextCount).join(' ')
+      wordIndex++
 
-      // Scroll to bottom every few characters to keep new content visible
-      if (charIndex % 10 === 0 && props.onTypingProgress) {
-        props.onTypingProgress()
+      if (wordIndex >= words.length) {
+        lineIndex++
+        wordIndex = 0
+        if (props.onTypingProgress) props.onTypingProgress()
       }
     } else {
-      // Move to next line
-      lineIndex++
-      charIndex = 0
+      if (charIndex < currentLine.length) {
+        // Add character to current line
+        typedContent.value[lineIndex] = currentLine.substring(0, charIndex + 1)
+        charIndex++
 
-      // Always scroll when starting a new line
-      if (props.onTypingProgress) {
-        props.onTypingProgress()
+        // Scroll to bottom every few characters to keep new content visible
+        if (charIndex % 10 === 0 && props.onTypingProgress) {
+          props.onTypingProgress()
+        }
+      } else {
+        // Move to next line
+        lineIndex++
+        charIndex = 0
+
+        // Always scroll when starting a new line
+        if (props.onTypingProgress) {
+          props.onTypingProgress()
+        }
       }
     }
   }
 
-  typingInterval = setInterval(typeNextCharacter, 5) // Typing speed
+  const speed = props.message.typingSpeed ?? 5
+  typingInterval = setInterval(tick, speed)
 }
 
 // Stop typing animation
@@ -399,6 +431,7 @@ const shouldUseCoachAvatar = (): boolean => {
     messageText.includes('Moving to next contact') ||
     messageText.includes('Preparing to dial') ||
     messageText.includes('Voicemail detected') ||
+    messageText.includes('You are now connected with') ||
     messageText.includes('Call with') && messageText.includes('ended') ||
     messageText.includes('Please select a call outcome') ||
     messageText.includes('Congratulations! You have completed your entire call queue') ||

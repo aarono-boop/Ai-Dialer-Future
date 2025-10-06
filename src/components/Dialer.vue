@@ -39,54 +39,42 @@
         <div class="bg-gray-700 rounded-full h-5 w-full relative flex items-center">
           <div
             class="h-5 rounded-full transition-all duration-300"
-            :style="{ width: `${((currentContactIndex + 1) / 3) * 100}%`, background: 'linear-gradient(to right, #60a5fa, #7b68ee)' }"
+            :style="{ width: `${((currentContactIndex + 1) / Math.max(totalContacts, 1)) * 100}%`, background: 'linear-gradient(to right, #60a5fa, #7b68ee)' }"
           ></div>
           <div class="absolute inset-0 flex items-center justify-center text-white text-xs font-medium">
-            Dial Queue {{ currentContactIndex + 1 }} of 3
+            Dial Queue {{ currentContactIndex + 1 }} of {{ totalContacts }} ({{ formatTime(queueTime) }})
           </div>
         </div>
       </div>
 
       <!-- AI Coach Controls -->
       <div class="mt-3">
-        <div class="flex items-center justify-between" style="min-height: 32px; box-sizing: border-box;">
-          <div class="flex items-center gap-2" style="flex-shrink: 0;">
-            <!-- Dynamic Coach Avatar and Name -->
-            <div v-if="currentCoach" class="flex items-center gap-2">
-              <img
-                v-if="currentCoach.avatarUrl"
-                :src="currentCoach.avatarUrl"
-                :alt="currentCoach.displayName"
-                class="w-6 h-6 rounded-full object-cover"
-              />
-              <div
-                v-else
-                class="w-6 h-6 rounded-full bg-gradient-to-br from-blue-400 to-purple-500 flex items-center justify-center text-white text-xs font-semibold"
-              >
-                {{ getCoachInitials(currentCoach.displayName) }}
-              </div>
-              <span
-                class="text-gray-300 text-sm cursor-pointer select-none"
-                @click="toggleAICoach(!props.aiCoachEnabled)"
-              >{{ currentCoach.displayName }}'s AI Coach</span>
-            </div>
-            <!-- Default AI Coach when no coach parameter -->
-            <span
-              v-else
-              class="text-gray-300 text-sm cursor-pointer select-none"
-              @click="toggleAICoach(!props.aiCoachEnabled)"
-            >AI Coach</span>
-            <ToggleSwitch
-              :model-value="props.aiCoachEnabled"
-              @update:model-value="toggleAICoach"
-              class="ai-coach-toggle"
-            />
-          </div>
-          <div class="text-gray-400 text-sm text-center w-[160px] flex-shrink-0">
-            Queue Time: <span class="text-white font-mono tabular-nums">{{ formatTime(queueTime) }}</span>
+        <div class="flex items-center" style="min-height: 32px; box-sizing: border-box;">
+          <div class="flex items-center gap-2" style="flex-shrink: 0;"></div>
+          <div class="flex-1 flex justify-start gap-2">
+            <template v-if="currentContactIndex !== 1 && currentContactIndex !== 2">
+              <!-- First caller: Coaching Help turns red when objection is detected (>=5s) -->
+              <template v-if="currentContactIndex === 0">
+                <Button
+                  @click="onCoachingHelpClick"
+                  :severity="(currentContactIndex === 0 ? (firstContactObjectionDetected && !coachingHelpClicked) : (callDuration >= 5)) ? 'danger' : 'secondary'"
+                  size="small"
+                  class="pause-queue-compact"
+                  aria-label="Get coaching help"
+                >
+                  <template v-if="currentCoach">
+                    <img v-if="currentCoach.avatarUrl" :src="currentCoach.avatarUrl" :alt="currentCoach.displayName" class="w-4 h-4 rounded-full object-cover" />
+                    <div v-else class="w-4 h-4 rounded-full bg-gradient-to-br from-blue-400 to-purple-500 flex items-center justify-center text-white text-[10px] font-semibold">
+                      {{ getCoachInitials(currentCoach.displayName) }}
+                    </div>
+                  </template>
+                  <i v-else class="pi pi-user"></i>
+                  <span class="text-xs">{{ ((currentContactIndex === 0 ? firstContactObjectionDetected : callDuration >= 5) && !coachingHelpClicked) ? 'Get Coaching Help (Objection Detected)' : 'Get Coaching Help' }}</span>
+                </Button>
+              </template>
+            </template>
           </div>
           <Button
-            v-if="!shouldCompleteQueue"
             @click="pauseQueue"
             :disabled="callState === 'connected'"
             tabindex="8"
@@ -94,7 +82,7 @@
             size="small"
             class="pause-queue-compact"
           >
-            <span class="text-xs">Pause Queue</span>
+            <span class="text-xs">End Queue</span>
           </Button>
         </div>
       </div>
@@ -438,9 +426,8 @@
 </template>
 
 <script setup lang="ts">
-import { ref, nextTick, computed, onMounted } from 'vue'
+import { ref, nextTick, computed, onMounted, watch } from 'vue'
 import Button from 'primevue/button'
-import ToggleSwitch from 'primevue/toggleswitch'
 import TabView from 'primevue/tabview'
 import TabPanel from 'primevue/tabpanel'
 import Textarea from 'primevue/textarea'
@@ -490,15 +477,27 @@ const props = defineProps<{
   totalContacts: number
   coachParameter: string
   aiCoachEnabled: boolean
+  firstContactObjectionDetected: boolean
 }>()
 
 // Define emits
-const emit = defineEmits(['call-back', 'next-contact', 'hang-up', 'mute', 'hold', 'keypad', 'keypad-press', 'pause-queue', 'complete-queue', 'ai-coach-toggle', 'transfer'])
+const emit = defineEmits(['call-back', 'next-contact', 'hang-up', 'mute', 'hold', 'keypad', 'keypad-press', 'pause-queue', 'complete-queue', 'ai-coach-toggle', 'transfer', 'objection-help', 'coaching-help'])
 
 // Reactive data
 const isMuted = ref(false)
 const isOnHold = ref(false)
 const showKeypadModal = ref(false)
+
+// Track if objection help was clicked for current contact
+const objectionClicked = ref(false)
+watch(() => props.currentContactIndex, () => { objectionClicked.value = false })
+
+// Track if coaching help was clicked (first caller). Reset per contact
+const coachingHelpClicked = ref(false)
+watch(() => props.currentContactIndex, () => { coachingHelpClicked.value = false })
+
+// After 5s into a live call, draw attention to objection help
+const objectionAttention = computed(() => props.callState === 'connected' && (props.currentContactIndex === 0 ? props.firstContactObjectionDetected : props.callDuration >= 5))
 
 // Template refs for PrimeVue buttons
 const muteButtonRef = ref<any>(null)
@@ -516,7 +515,7 @@ const newNote = ref('')
 const showTransferDialog = ref(false)
 const transferSelection = ref<string | null>(null)
 const transferOptions = [
-  { label: 'Alex Johnson (ext 201) — (312) 555-1201', value: 'Alex Johnson|201|(312) 555-1201' },
+  { label: 'Alex Johnson (ext 201) ��� (312) 555-1201', value: 'Alex Johnson|201|(312) 555-1201' },
   { label: 'Morgan Lee (ext 225) — (415) 555-2225', value: 'Morgan Lee|225|(415) 555-2225' },
   { label: 'Priya Singh (ext 233) — (646) 555-1233', value: 'Priya Singh|233|(646) 555-1233' },
   { label: 'Diego Alvarez (ext 244) — (213) 555-1244', value: 'Diego Alvarez|244|(213) 555-1244' },
@@ -893,6 +892,23 @@ const completeQueue = () => {
 const toggleAICoach = (newValue: boolean) => {
   emit('ai-coach-toggle', newValue)
 }
+
+const onObjectionHelpClick = () => {
+  if (objectionClicked.value) return
+  emit('objection-help')
+  objectionClicked.value = true
+}
+
+const onCoachingHelpClick = () => {
+  // Determine if button is visually highlighted (red) at click time
+  const highlightedFirst = props.currentContactIndex === 0 && props.firstContactObjectionDetected && !coachingHelpClicked.value
+  const highlightedOthers = props.currentContactIndex !== 0 && props.callState === 'connected' && props.callDuration >= 5
+  const isHighlighted = highlightedFirst || highlightedOthers
+  emit('coaching-help', isHighlighted)
+  coachingHelpClicked.value = true
+}
+
+// Remove Objection Help pathway; show objection via coaching help instead
 
 const handleHangUpTab = (event: KeyboardEvent) => {
   // If not holding Shift (forward tab), go back to ARKON logo

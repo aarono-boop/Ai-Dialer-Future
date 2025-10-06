@@ -569,13 +569,38 @@
             </div>
           </div>
 
+          <!-- Coaching Help above chat for 2nd call: appears immediately when connected, turns red at 5s, reverts to normal after red click. -->
+          <div v-if="showDialer && currentContactIndex === 1 && callState === 'connected'" class="mt-2 pt-3 flex justify-center">
+            <div class="w-[70%] flex justify-center">
+              <Button
+                @click="handleSecondCoachingClick"
+                :severity="(callDuration >= 5 && !secondCoachingHelpClicked) ? 'danger' : 'secondary'"
+                class="w-1/2 px-6 py-3 font-semibold flex items-center justify-center gap-2"
+              >
+                <template v-if="currentCoach">
+                  <img v-if="currentCoach.avatarUrl" :src="currentCoach.avatarUrl" :alt="currentCoach.displayName" class="w-4 h-4 rounded-full object-cover" />
+                  <div v-else class="w-4 h-4 rounded-full bg-gradient-to-br from-blue-400 to-purple-500 flex items-center justify-center text-white text-[10px] font-semibold">
+                    {{ currentCoach.displayName.split(' ').map(w => w.charAt(0)).join('').toUpperCase().slice(0,2) }}
+                  </div>
+                </template>
+                <i v-else class="pi pi-user"></i>
+                <span class="text-sm">{{ (callDuration >= 5 && !secondCoachingHelpClicked) ? 'Get Coaching Help (Objection Detected)' : 'Get Coaching Help' }}</span>
+              </Button>
+            </div>
+          </div>
+
+
           <!-- Chat Input - positioned at bottom -->
           <div class="mt-2 pt-2.5 mb-4">
             <ChatInput
               ref="chatInputRef"
               :customPlaceholder="getPlaceholderText()"
               :showPromptLibraryIcon="isSignedIn"
-              @open-prompt-library="openPromptLibrary"
+              :currentContactIndex="currentContactIndex"
+              :coachAvatarUrl="currentCoach?.avatarUrl || null"
+              :coachDisplayName="currentCoach?.displayName || null"
+              :showObjectionTooltip="(currentContactIndex === 2 && callState === 'connected' && callDuration >= 5 && !hideObjectionHelpButton)"
+              @coach-avatar-click="handleObjectionHelp"
               @send-message="sendMessage"
               @voice-input="handleVoiceInput"
             />
@@ -663,6 +688,7 @@
             :totalContacts="contacts.length"
             :coachParameter="coachParameter"
             :aiCoachEnabled="aiCoachEnabled"
+            :firstContactObjectionDetected="firstContactObjectionDetected"
             @call-back="handleCallBack"
             @next-contact="handleNextContact"
             @hang-up="handleHangUp"
@@ -673,6 +699,8 @@
             @complete-queue="handleCompleteQueue"
             @ai-coach-toggle="handleAICoachToggle"
             @transfer="handleTransfer"
+            @objection-help="handleObjectionHelp"
+            @coaching-help="handleCoachingHelp"
           />
         </div>
 
@@ -778,7 +806,7 @@
                   <h4 class="text-xl font-medium">Testimonials</h4>
                   <div class="text-xs text-gray-300 space-y-2">
                     <p>“Our connect rate and meetings doubled in 60 days.” — VP Sales, SaaS</p>
-                    <p>“The talk tracks are simple and deadly effective.���� — SDR Lead, Insurance</p>
+                    <p>“The talk tracks are simple and deadly effective.������ — SDR Lead, Insurance</p>
                   </div>
                 <div v-if="selectedCoachForInfo?.websiteUrl" class="sticky bottom-0 -mb-4 -mx-4 px-4 py-3 border-t border-gray-700 bg-gray-900/90 flex justify-center">
                   <a :href="selectedCoachForInfo.websiteUrl" target="_blank" rel="noopener" class="text-link text-sm inline-flex items-center gap-2 text-center"><i class="pi pi-external-link text-sm" aria-hidden="true"></i>Visit {{ selectedCoachForInfo?.displayName }}'s Website</a>
@@ -943,7 +971,7 @@ import CoachDashboard from './components/CoachDashboard.vue'
 import StudentDashboard from './components/StudentDashboard.vue'
 import MicSpeakerCheck from './components/modals/MicSpeakerCheck.vue'
 
-// PrimeVue Components (adding Button)
+// PrimeVue Components
 import Button from 'primevue/button'
 import Card from 'primevue/card'
 import Dialog from 'primevue/dialog'
@@ -1054,27 +1082,29 @@ const generateCallScript = (contact: any): string[] => {
 
 // Show call connected message followed by script and objection handling
 const showCallConnectedMessages = (contact: any): void => {
-  // Add coach-specific intro message when coach parameter is set AND AI Coach is enabled
+  // Add coach-specific intro message only once at the very start of the first call in a session
   if (coachParameter.value && aiCoachEnabled.value) {
     const getCoachCallMessage = (): string => {
-      switch (coachParameter.value) {
-        case 'jordan-stupar':
-          return 'I\'m on the call with you - let\'s crush this together!'
-        default:
-          return 'I\'m on the call with you...'
-      }
+      const name = currentCoach.value?.displayName || ''
+      const first = name ? name.split(' ')[0] : ''
+      return first
+        ? `I\'m ${first}'s AI assistant and on the call with you - let\'s crush this together!`
+        : `I\'m on the call with you...`
     }
 
-    addAIMessageWithTyping(getCoachCallMessage())
+    if (currentContactIndex.value === 0 && !initialWelcomeMessageSent.value) {
+      addAIMessageWithTyping(getCoachCallMessage())
+      initialWelcomeMessageSent.value = true
 
-    // Delay before showing connection message
-    setTimeout(() => {
-      showRegularConnectedMessages(contact)
-    }, 1500)
-    return
+      // Delay before showing connection message
+      setTimeout(() => {
+        showRegularConnectedMessages(contact)
+      }, 1500)
+      return
+    }
   }
 
-  // Show regular messages for no coach or other coaches
+  // Show regular messages for no coach or other coaches, or after the first call
   showRegularConnectedMessages(contact)
 }
 
@@ -1087,24 +1117,25 @@ const showRegularConnectedMessages = (contact: any): void => {
     return
   }
 
-  // Combine connection message and script into single bubble with proper spacing
+  // Reset first-contact objection flag on new connection
+  if (currentContactIndex.value === 0) firstContactObjectionDetected.value = false
+
+  // Connection status message
   const combinedMessage = [
-    'Great! You\'re connected!',
-    '<br>',
-    'Script:',
-    '<span style="color: #fbbf24; font-style: italic;">[The AI learns the nuances of this coach\'s approach to generate contextual scripts that reflect their unique sales philosophy, language patterns, and proven conversation starters tailored to this specific prospect.]</span>'
+    `You are now connected with ${contact.name}.`
   ]
 
   addAIMessageWithTyping(combinedMessage)
   scrollToBottom()
 
-  // Wait 3 seconds then show objection handling (only if AI Coach is still enabled)
-  setTimeout(() => {
-    if (aiCoachEnabled.value) {
-      addAIMessageWithTyping(AI_RESPONSES.OBJECTION_RESPONSE)
+  // For first contact, follow up with a user message
+  if (currentContactIndex.value === 0) {
+    setTimeout(() => {
+      // Type at 1/3 speed (default 5ms -> 15ms)
+      addUserMessageWithTyping('Hi Sam, this is Aaron from PhoneBurner do you have a quick minute?', 150, 'word')
       scrollToBottom()
-    }
-  }, 3000)
+    }, 400)
+  }
 }
 
 // Reactive data
@@ -1115,6 +1146,11 @@ const showStudentDashboard = ref(false)
 const studentCoachName = ref<string | null>(null)
 const chatInputRef = ref<any>(null)
 const chatMessages = ref<HTMLElement | null>(null)
+// Prevent repeated auto-replies from Sam on first contact
+const firstContactSamReplied = ref<boolean>(false)
+const samQuestionResponded = ref<boolean>(false)
+const aaronPitchReplied = ref<boolean>(false)
+const firstContactObjectionDetected = ref<boolean>(false)
 const screenReaderAnnouncements = ref<HTMLElement | null>(null)
 const headerRef = ref<any>(null)
 const hasUploadedFile = ref<boolean>(false)
@@ -1168,6 +1204,7 @@ const aiCoachEnabled = ref<boolean>(true)
 const showSessionSummary = ref<boolean>(false)
 const showContinueQueueButton = ref<boolean>(false)
 const waitingForTryAgainResponse = ref<boolean>(false)
+const hideObjectionHelpButton = ref<boolean>(false)
 const waitingForNotesInput = ref<boolean>(false)
 const currentDisposition = ref<string>('')
 const dispositionSet = ref<boolean>(false)
@@ -1180,9 +1217,11 @@ const connectedCalls = ref<number>(0)
 const skippedNumbers = ref<number>(3) // Default for demo
 const callState = ref<string>('idle') // 'idle', 'ringing', 'connected', 'ended'
 const callDuration = ref<number>(0)
+const secondCoachingHelpClicked = ref<boolean>(false)
 const isManualHangUp = ref<boolean>(false) // Track if hang up was manual vs automatic
 const queueTime = ref<number>(14)
 const showLoadNewFileButton = ref<boolean>(false)
+const initialWelcomeMessageSent = ref<boolean>(false)
 
 // Prompt Library state
 const showPromptLibrary = ref<boolean>(false)
@@ -1357,25 +1396,6 @@ const contacts = [
     notes: ''
   },
   {
-    name: 'George Sample',
-    title: 'Marketing Manager',
-    company: 'Solutions Co.',
-    phone: '(202) 744-9556',
-    connectScore: 'High',
-    email: 'george@solutions.co',
-    address: '123 Fake Street, Suite 100, Washington, DC 20001',
-    localTime: '1:59 PM (WASHINGTON, DC)',
-    website: 'https://www.solutions.co',
-    linkedin: 'https://www.linkedin.com/in/georgesample-fake',
-    industry: 'Marketing & Advertising',
-    companySize: '11-50 employees',
-    leadSource: 'Conference Booth',
-    sourceType: 'crm',
-    sourceName: 'HubSpot',
-    sourceUrl: 'https://app.hubspot.com/contacts/1234567/record/0-1/987654321',
-    notes: ''
-  },
-  {
     name: 'Jennifer Martinez',
     title: 'VP of Sales',
     company: 'TechFlow Inc.',
@@ -1395,27 +1415,28 @@ const contacts = [
     notes: ''
   },
   {
-    name: 'David Wilson',
-    title: 'Operations Director',
-    company: 'Global Systems',
-    phone: '(555) 321-0987',
+    name: 'Alex Carter',
+    title: 'Head of Operations',
+    company: 'BrightWave Labs',
+    phone: '(646) 555-0199',
     connectScore: 'High',
-    email: 'david@globalsystems.com',
-    address: '789 Corporate Blvd, Austin, TX 78701',
-    localTime: '1:30 PM (AUSTIN, TX)',
-    website: 'https://www.globalsystems.com',
-    linkedin: 'https://www.linkedin.com/in/davidwilson',
-    industry: 'Enterprise Solutions',
-    companySize: '500+ employees',
-    leadSource: 'Trade Show',
+    email: 'alex.carter@brightwave.io',
+    address: '77 Hudson St, New York, NY 10013',
+    localTime: '2:15 PM (NEW YORK, NY)',
+    website: 'https://www.brightwave.io',
+    linkedin: 'https://www.linkedin.com/in/alex-carter-ops',
+    industry: 'Biotech',
+    companySize: '500-1000 employees',
+    leadSource: 'Conference Booth',
     sourceType: 'crm',
-    sourceName: 'Pipedrive',
-    sourceUrl: 'https://example.pipedrive.com/person/42',
+    sourceName: 'HubSpot',
+    sourceUrl: 'https://app.hubspot.com/contacts/1234567/contact/7654321',
     notes: ''
-  }
+  },
 ]
 
 const currentContactIndex = ref<number>(0)
+watch(currentContactIndex, () => { secondCoachingHelpClicked.value = false })
 const currentContact = computed(() => contacts[currentContactIndex.value])
 const nextContactName = computed(() => {
   const nextIndex = currentContactIndex.value + 1
@@ -1423,8 +1444,8 @@ const nextContactName = computed(() => {
 })
 
 const shouldCompleteQueue = computed(() => {
-  // Show "Queue Completed" button when on 3rd contact (index 2) or have 3+ calls
-  return currentContactIndex.value >= 2 || callLog.value.length >= 3
+  // Show "Queue Completed" button only when on last contact in the queue
+  return currentContactIndex.value >= contacts.length - 1
 })
 
 const isLastContact = computed(() => {
@@ -1451,7 +1472,7 @@ const messages: Ref<Message[]> = ref([
 
 // Initialize chat utilities
 const chatUtils = createChatUtils(messages, chatMessages, headerRef)
-const { scrollToBottom, scrollToBottomDuringTyping, scrollToUserMessage, scrollToTopForGoals, addAIMessage, addAIMessageWithoutScroll, addUserMessage, addUserGoalMessage, addUserQueuePausedMessage, addUserQueueCompletedMessage, addSeparatorMessage, addAIMessageWithTyping, addAIMessageWithTypingNoScroll, suppressScrolling } = chatUtils
+const { scrollToBottom, scrollToBottomDuringTyping, scrollToUserMessage, scrollToTopForGoals, addAIMessage, addAIMessageWithoutScroll, addUserMessage, addUserMessageWithTyping, addUserGoalMessage, addUserQueuePausedMessage, addUserQueueCompletedMessage, addSeparatorMessage, addAIMessageWithTyping, addAIMessageWithTypingNoScroll, suppressScrolling } = chatUtils
 
 // Hide the Call Now CTA automatically when the dialer is shown
 watch(() => showDialer.value, (val) => {
@@ -1590,6 +1611,71 @@ const handleTypingComplete = (index: number): void => {
         }, 100)
       }, 200) // Small delay for better UX
     }
+  }
+
+  // When first-contact greeting finishes typing, have Sam reply at same speed and style
+  if (
+    messages.value[index] &&
+    messages.value[index].type === 'user' &&
+    messages.value[index].content[0] === 'Hi Sam, this is Aaron from PhoneBurner do you have a quick minute?' &&
+    currentContactIndex.value === 0 && callState.value === 'connected' && !firstContactSamReplied.value
+  ) {
+    firstContactSamReplied.value = true
+    setTimeout(() => {
+      addAIMessageWithTyping("Hi Aaron, what's this call about?", 150, 'word')
+      // Mark this AI line as spoken by the contact (use generic user avatar)
+      const lastMsg = messages.value[messages.value.length - 1]
+      if (lastMsg) (lastMsg as any).contactSpeaker = true
+      scrollToBottom()
+    }, 250)
+  }
+
+  // After Sam's question, have Aaron respond with a pitch (word-by-word @150ms)
+  if (
+    messages.value[index] &&
+    messages.value[index].type === 'ai' &&
+    typeof messages.value[index].content[0] === 'string' &&
+    messages.value[index].content[0].includes("what's this call about") &&
+    currentContactIndex.value === 0 && callState.value === 'connected' && !samQuestionResponded.value
+  ) {
+    samQuestionResponded.value = true
+    setTimeout(() => {
+      addUserMessageWithTyping('I have an amazing new AI phone dialer I want to tell you about.', 150, 'word')
+      scrollToBottom()
+    }, 250)
+  }
+
+  // After Aaron's pitch, have Sam object (word-by-word @150ms)
+  if (
+    messages.value[index] &&
+    messages.value[index].type === 'user' &&
+    typeof messages.value[index].content[0] === 'string' &&
+    messages.value[index].content[0].includes('amazing new AI phone dialer') &&
+    currentContactIndex.value === 0 && callState.value === 'connected' && !aaronPitchReplied.value
+  ) {
+    aaronPitchReplied.value = true
+    setTimeout(() => {
+      addAIMessageWithTyping('I already have a phone dialer, I am using Aircall.', 150, 'word')
+      // Mark this AI line as spoken by the contact (use generic user avatar)
+      const lastMsg = messages.value[messages.value.length - 1]
+      if (lastMsg) (lastMsg as any).contactSpeaker = true
+      // Objection flag will be set after typing completes (see below)
+      scrollToBottom()
+    }, 300)
+  }
+
+  // If the completed message is Sam's Aircall objection on first contact, enable red Coaching Help
+  const completed = messages.value[index]
+  if (
+    completed &&
+    completed.type === 'ai' &&
+    typeof completed.content?.[0] === 'string' &&
+    completed.content[0].includes('I already have a phone dialer, I am using Aircall.') &&
+    currentContactIndex.value === 0
+  ) {
+    firstContactObjectionDetected.value = true
+    // Visually highlight the objection bubble
+    ;(completed as any).highlightObjection = true
   }
 }
 
@@ -1873,18 +1959,6 @@ const goToMainApp = () => {
   })
 }
 
-// Accessibility helper for screen reader announcements
-const announceToScreenReader = (message: string) => {
-  if (screenReaderAnnouncements.value) {
-    screenReaderAnnouncements.value.textContent = message
-    // Clear after announcement to allow repeat announcements
-    setTimeout(() => {
-      if (screenReaderAnnouncements.value) {
-        screenReaderAnnouncements.value.textContent = ''
-      }
-    }, 1000)
-  }
-}
 
 // Redirect focus from tab trap to AI Dialer logo
 const redirectToArkonLogo = () => {
@@ -2123,7 +2197,7 @@ const sendMessage = (message: string): void => {
     // Complete the disposition process
     setTimeout(() => {
       // Check if this is the 3rd contact (index 2) - if so, enable queue completion
-      if (currentContactIndex.value >= 2) {
+      if (currentContactIndex.value >= contacts.length - 1) {
         queueCompletionReady.value = true
         addAIMessageWithTyping(`The call outcome and notes have been saved for ${currentContact.value.name}. Click "Queue Completed" to finish your dialing session.`)
       } else {
@@ -2248,7 +2322,7 @@ const sendMessage = (message: string): void => {
 
     setTimeout(() => {
       // Check if this is the 3rd contact (index 2) - if so, enable queue completion
-      if (currentContactIndex.value >= 2) {
+      if (currentContactIndex.value >= contacts.length - 1) {
         queueCompletionReady.value = true
         addAIMessageWithTyping(`The notes have been saved for ${currentContact.value.name}. Click "Queue Completed" to finish your dialing session.`)
       } else {
@@ -2287,7 +2361,7 @@ const sendMessage = (message: string): void => {
     } else if (lowerMessage.includes('connected to more calls') || lowerMessage.includes('get connected')) {
       addAIMessage([
         '<i class="pi pi-chart-line"></i> Great question! Here are AI Dialer\'s proven strategies to boost your connect rates:',
-        '��� <strong>Smart Timing:</strong> Calls prospects when they\'re most likely to answer',
+        '���� <strong>Smart Timing:</strong> Calls prospects when they\'re most likely to answer',
         '• <strong>Local Presence:</strong> Uses local numbers to increase pickup rates',
         '• <strong>Voicemail Drop:</strong> Leaves personalized messages when they don\'t answer',
         '• <strong>Follow-up Sequences:</strong> Automatically schedules optimal callback times',
@@ -2326,7 +2400,7 @@ const sendMessage = (message: string): void => {
         'AI Dialer can remind you to:',
         '• Follow up with specific prospects at optimal times',
         '• Call back prospects who didn\'t answer',
-        '• Review and update your call notes',
+        '�� Review and update your call notes',
         '�� Start your daily calling sessions',
         'What would you like to be reminded about and when?'
       ])
@@ -2334,7 +2408,7 @@ const sendMessage = (message: string): void => {
       addAIMessage([
         '<i class="pi pi-users"></i> Great idea! Call practice makes perfect.',
         'AI Dialer\'s practice mode can help you:',
-        '• Rehearse your opening pitch with AI feedback',
+        '�� Rehearse your opening pitch with AI feedback',
         '• Practice handling common objections',
         '��� Test different conversation flows',
         '�� Record and review your delivery',
@@ -2792,6 +2866,9 @@ const startDialSession = (): void => {
   // Reset queue completion state
   queueCompletionReady.value = false
 
+  // Reset first-call coach welcome flag for a new session
+  initialWelcomeMessageSent.value = false
+
   // Add user message showing what button was clicked
   addUserMessage('Start Dialing')
 
@@ -2892,6 +2969,9 @@ const handleCallBack = (): void => {
 }
 
 const handleNextContact = (): void => {
+  // Reset third-call objection help visibility
+  hideObjectionHelpButton.value = false
+
   // Stop current timers
   if (callTimer) {
     clearInterval(callTimer)
@@ -2907,6 +2987,10 @@ const handleNextContact = (): void => {
   // Move to next contact
   if (currentContactIndex.value < contacts.length - 1) {
     currentContactIndex.value++
+    firstContactSamReplied.value = false
+    samQuestionResponded.value = false
+    aaronPitchReplied.value = false
+    firstContactObjectionDetected.value = false
 
     callState.value = 'idle'
     callDuration.value = 0
@@ -2974,9 +3058,7 @@ const handleHangUp = (): void => {
     addAIMessageWithTyping([
       getCoachRecapTitle(),
       '<br>',
-      getDynamicCoachingFeedback(),
-      '<br>',
-      'Delivery: 9/10<br>Pace: 9/10<br>Confidence: 9/10'
+      getDynamicCoachingFeedback()
     ])
   }
 
@@ -3022,6 +3104,60 @@ const handleTransfer = (selection: string): void => {
 
 const handleKeypad = (): void => {
   addAIMessage('�� Keypad opened')
+}
+
+const handleObjectionHelp = (): void => {
+  if (!aiCoachEnabled.value) return
+  hideObjectionHelpButton.value = true
+  addAIMessageWithTyping(AI_RESPONSES.OBJECTION_RESPONSE)
+  scrollToBottom()
+}
+
+const handleCoachingHelp = (highlightedFromDialer?: boolean): void => {
+  if (!aiCoachEnabled.value) return
+
+  // Always show user's action in chat
+  addUserMessage('Get Coaching Help')
+
+  // Prefer Dialer-provided highlight state when available; otherwise compute for above-chat button
+  const highlighted = highlightedFromDialer !== undefined
+    ? highlightedFromDialer
+    : (callState.value === 'connected' && callDuration.value >= 5)
+
+  // Third call above-chat button hides after click when highlighted
+  if (currentContactIndex.value === 2 && highlighted) {
+    hideObjectionHelpButton.value = true
+    addAIMessageWithTyping(AI_RESPONSES.OBJECTION_RESPONSE)
+    scrollToBottom()
+    return
+  }
+
+  if (highlighted) {
+    addAIMessageWithTyping(AI_RESPONSES.OBJECTION_RESPONSE)
+    scrollToBottom()
+  } else {
+    const c = currentContact.value
+    const tip = getDynamicCoachingFeedback()
+    const probe = c?.company
+      ? `Try: "Out of curiosity, what would make a real difference for ${c.company} this quarter?"`
+      : `Try: "What would make a real difference for your team this quarter?"`
+    addAIMessageWithTyping([
+      `<strong>Coaching Help</strong> — based on your conversation so far with ${c?.name || 'this contact'}:`,
+      '<br>',
+      tip,
+      '<br>',
+      probe
+    ])
+    scrollToBottom()
+  }
+}
+
+const handleSecondCoachingClick = (): void => {
+  const highlighted = (callState.value === 'connected' && callDuration.value >= 5 && !secondCoachingHelpClicked.value)
+  handleCoachingHelp(highlighted)
+  if (highlighted) {
+    secondCoachingHelpClicked.value = true
+  }
 }
 
 const handlePauseQueue = (): void => {
@@ -3265,7 +3401,7 @@ const addSessionSummaryToChat = (isCompleted: boolean = false): void => {
                  <div style="margin-bottom: 16px;"><strong style="color: #fbbf24;"><i class="pi pi-check" style="margin-right: 8px;"></i>Active listening</strong> - You picked up on buying signals and pain points effectively</div>
                  <div style="margin-bottom: 16px;"><strong style="color: #fbbf24;"><i class="pi pi-check" style="margin-right: 8px;"></i>Confident close attempts</strong> - You weren't afraid to ask for the appointment when the timing was right</div>
                </div>
-               For your next session, focus on slowing down your pace slightly during objection handling—give prospects more time to process your responses. This will increase your conversion rate even further.<br><br>
+               For your next session, focus on slowing down your pace slightly during objection handling���give prospects more time to process your responses. This will increase your conversion rate even further.<br><br>
                <button style="background-color: rgb(59, 130, 246); color: white; border: none; border-radius: 6px; padding: 8px 16px; font-size: 14px; font-weight: 500; cursor: pointer; display: inline-flex; align-items: center; gap: 8px;" onclick="handleExportFile()">
                  <i class="pi pi-download"></i> Export Enriched File
                </button>` :
@@ -3553,6 +3689,7 @@ const skipToDialer = (): void => {
   // Initialize dialer state
   callState.value = 'idle'
   currentContactIndex.value = 0
+  initialWelcomeMessageSent.value = false
 
   // Clear messages and add dialer startup message
   messages.value = []
