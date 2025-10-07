@@ -26,16 +26,6 @@
         <div class="text-gray-400 text-sm" style="flex-shrink: 0;">
           Queue Time: <span class="text-white">{{ formatTime(queueTime) }}</span>
         </div>
-        <Button
-          v-if="!shouldCompleteQueue"
-          @click="pauseQueue"
-          :disabled="callState === 'connected'"
-          tabindex="8"
-          severity="secondary"
-          size="small"
-          label="Pause Queue"
-          style="flex-shrink: 0; position: relative;"
-        />
       </div>
     </div>
 
