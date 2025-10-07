@@ -73,7 +73,7 @@
 
     <!-- Contact Info -->
     <div class="flex-1 p-4 overflow-y-auto">
-      <Card class="bg-gray-800 border border-gray-700 rounded-lg">
+      <Card :pt="{ root: { style: 'background: var(--p-content-background); border: 1px solid var(--p-content-border-color); border-radius: var(--p-content-border-radius);' } }">
         <template #title>
           <div class="text-white text-lg font-bold">{{ currentContact.name }}</div>
           <div class="text-white text-sm">{{ currentContact.title }} at {{ currentContact.company }}</div>
