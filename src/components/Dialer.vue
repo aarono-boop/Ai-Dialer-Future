@@ -382,6 +382,10 @@ const scrollTranscriptToBottom = () => {
   })
 }
 
+watch(transcriptionEnabled, (enabled) => {
+  if (enabled) scrollTranscriptToBottom()
+})
+
 const transcriptScript: { speaker: 'You' | 'Contact'; text: string }[] = [
   { speaker: 'You', text: 'Hi Sam, this is Aaron from PhoneBurner do you have a quick minute?' },
   { speaker: 'Contact', text: "Hi Aaron, what's this call about?" },
