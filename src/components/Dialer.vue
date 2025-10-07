@@ -73,65 +73,64 @@
 
     <!-- Contact Info -->
     <div class="flex-1 p-4 overflow-y-auto">
-      <div class="space-y-4">
-        <!-- Contact Header -->
-        <div>
-          <h3 class="text-white text-lg font-bold">{{ currentContact.name }}</h3>
-          <p class="text-white text-sm">{{ currentContact.title }} at {{ currentContact.company }}</p>
-        </div>
-
-        <!-- Contact Details -->
-        <div class="text-sm">
-          <table style="width: 100%; border-collapse: collapse;">
-            <tbody>
-              <tr>
-                <td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af;">Phone:</td>
-                <td style="padding: 4px 0; color: white;">{{ currentContact.phone }}</td>
-              </tr>
-              <tr>
-                <td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af;"><span class="connect-score-tooltip" :data-tooltip="connectScoreTooltip">Connect Score</span>:</td>
-                <td style="padding: 4px 0; color: white;">{{ currentContact.connectScore }}</td>
-              </tr>
-              <tr>
-                <td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af;">Email:</td>
-                <td style="padding: 4px 0; color: white;">{{ currentContact.email }}</td>
-              </tr>
-              <tr>
-                <td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af;">Address:</td>
-                <td style="padding: 4px 0; color: white;">{{ currentContact.address }}</td>
-              </tr>
-              <tr>
-                <td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af;">Local Time:</td>
-                <td style="padding: 4px 0; color: white;">{{ currentContact.localTime }}</td>
-              </tr>
-              <tr>
-                <td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af;">Website:</td>
-                <td style="padding: 4px 0; color: white;">{{ currentContact.website }}</td>
-              </tr>
-              <tr>
-                <td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af;">LinkedIn Profile:</td>
-                <td style="padding: 4px 0; color: white;">{{ currentContact.linkedin }}</td>
-              </tr>
-              <tr>
-                <td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af;">Industry:</td>
-                <td style="padding: 4px 0; color: white;">{{ currentContact.industry }}</td>
-              </tr>
-              <tr>
-                <td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af;">Company Size:</td>
-                <td style="padding: 4px 0; color: white;">{{ currentContact.companySize }}</td>
-              </tr>
-              <tr>
-                <td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af;">Lead Source:</td>
-                <td style="padding: 4px 0; color: white;">{{ currentContact.leadSource }}</td>
-              </tr>
-              <tr v-if="currentContact.notes">
-                <td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af;">Notes:</td>
-                <td style="padding: 4px 0; color: white; white-space: pre-wrap;">{{ currentContact.notes }}</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
+      <Card class="bg-gray-800 border border-gray-700 rounded-lg">
+        <template #title>
+          <div class="text-white text-lg font-bold">{{ currentContact.name }}</div>
+          <div class="text-white text-sm">{{ currentContact.title }} at {{ currentContact.company }}</div>
+        </template>
+        <template #content>
+          <div class="text-sm">
+            <table style="width: 100%; border-collapse: collapse;">
+              <tbody>
+                <tr>
+                  <td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af;">Phone:</td>
+                  <td style="padding: 4px 0; color: white;">{{ currentContact.phone }}</td>
+                </tr>
+                <tr>
+                  <td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af;"><span class="connect-score-tooltip" :data-tooltip="connectScoreTooltip">Connect Score</span>:</td>
+                  <td style="padding: 4px 0; color: white;">{{ currentContact.connectScore }}</td>
+                </tr>
+                <tr>
+                  <td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af;">Email:</td>
+                  <td style="padding: 4px 0; color: white;">{{ currentContact.email }}</td>
+                </tr>
+                <tr>
+                  <td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af;">Address:</td>
+                  <td style="padding: 4px 0; color: white;">{{ currentContact.address }}</td>
+                </tr>
+                <tr>
+                  <td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af;">Local Time:</td>
+                  <td style="padding: 4px 0; color: white;">{{ currentContact.localTime }}</td>
+                </tr>
+                <tr>
+                  <td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af;">Website:</td>
+                  <td style="padding: 4px 0; color: white;">{{ currentContact.website }}</td>
+                </tr>
+                <tr>
+                  <td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af;">LinkedIn Profile:</td>
+                  <td style="padding: 4px 0; color: white;">{{ currentContact.linkedin }}</td>
+                </tr>
+                <tr>
+                  <td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af;">Industry:</td>
+                  <td style="padding: 4px 0; color: white;">{{ currentContact.industry }}</td>
+                </tr>
+                <tr>
+                  <td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af;">Company Size:</td>
+                  <td style="padding: 4px 0; color: white;">{{ currentContact.companySize }}</td>
+                </tr>
+                <tr>
+                  <td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af;">Lead Source:</td>
+                  <td style="padding: 4px 0; color: white;">{{ currentContact.leadSource }}</td>
+                </tr>
+                <tr v-if="currentContact.notes">
+                  <td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af;">Notes:</td>
+                  <td style="padding: 4px 0; color: white; white-space: pre-wrap;">{{ currentContact.notes }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </template>
+      </Card>
     </div>
 
     <!-- Action Buttons -->
@@ -281,6 +280,7 @@
 <script setup lang="ts">
 import { ref, nextTick } from 'vue'
 import Button from 'primevue/button'
+import Card from 'primevue/card'
 
 // Connect Score tooltip content
 const connectScoreTooltip = `Connect Score is a premium add-on feature that uses real-world signals to help users prioritize high-value contacts and skip low-quality leads. It scores each phone number as High, Medium, or Low based on:
