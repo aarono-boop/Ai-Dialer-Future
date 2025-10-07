@@ -7,6 +7,16 @@
           <div class="w-2 h-2 bg-green-500 rounded-full"></div>
           <span class="text-white font-medium">Dial Queue</span>
         </div>
+        <Button
+          v-if="!shouldCompleteQueue"
+          @click="pauseQueue"
+          :disabled="callState === 'connected'"
+          tabindex="8"
+          severity="secondary"
+          size="small"
+          label="Pause Queue"
+          style="flex-shrink: 0; position: relative;"
+        />
       </div>
 
       <!-- Contact Progress -->
