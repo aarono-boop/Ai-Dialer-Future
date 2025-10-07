@@ -5,6 +5,10 @@ export default {
     color: "{content.color}",
     borderRadius: "{form.field.border.radius}"
   },
+  body: {
+    padding: "1.25rem",
+    gap: "0.5rem"
+  },
   header: {
     padding: "{form.field.padding.y} {form.field.padding.x}",
     gap: "0.5rem"
