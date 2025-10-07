@@ -364,7 +364,18 @@ const transcriptScript: { speaker: 'You' | 'Contact'; text: string }[] = [
   { speaker: 'You', text: 'Hi Sam, this is Aaron from PhoneBurner do you have a quick minute?' },
   { speaker: 'Contact', text: "Hi Aaron, what's this call about?" },
   { speaker: 'You', text: 'I have an amazing new AI phone dialer I want to tell you about.' },
-  { speaker: 'Contact', text: 'I already have a phone dialer, I am using Aircall.' }
+  { speaker: 'Contact', text: 'I already have a phone dialer, I am using Aircall.' },
+  { speaker: 'You', text: 'Totally understand. Many teams use us alongside Aircall to boost answer rates.' },
+  { speaker: 'Contact', text: 'How would that work, exactly?' },
+  { speaker: 'You', text: 'We prioritize numbers with the highest chance of picking up and automate the dialing.' },
+  { speaker: 'Contact', text: 'Does it integrate with Salesforce?' },
+  { speaker: 'You', text: 'Yes, native Salesforce logging plus outcome and notes synced automatically.' },
+  { speaker: 'Contact', text: 'Interesting. What kind of lift do users see?' },
+  { speaker: 'You', text: 'Typical teams see 20-35% more live conversations in week one.' },
+  { speaker: 'Contact', text: 'Okay, can you show me a quick demo later today?' },
+  { speaker: 'You', text: 'Absolutely. Does 3:30 PM your time work?' },
+  { speaker: 'Contact', text: '3:30 works. Send me the invite.' },
+  { speaker: 'You', text: 'Great, I just sent a calendar invite and a one-pager. Talk then!' }
 ]
 
 const resetTranscription = () => {
