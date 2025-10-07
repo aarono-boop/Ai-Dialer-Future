@@ -136,9 +136,12 @@
       <!-- Live Transcription Card -->
       <Card class="flex-1 min-h-0" :pt="{ root: { style: 'height:100%; min-height:0; overflow:hidden;' }, body: { style: 'height:100%; display:flex; flex-direction:column; flex:1; min-height:0;' }, content: { style: 'flex:1; min-height:0; overflow-y:auto; scrollbar-gutter: stable both-edges;' } }">
         <template #title>
-          <div class="flex items-center gap-2">
-            <i class="pi pi-microphone text-sm" aria-hidden="true"></i>
-            <span>Live Transcription</span>
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-2">
+              <i class="pi pi-microphone text-sm" aria-hidden="true"></i>
+              <span>Live Transcription</span>
+            </div>
+            <ToggleSwitch v-model="transcriptionEnabled" aria-label="Toggle live transcription" />
           </div>
         </template>
         <template #content>
@@ -301,6 +304,7 @@
 import { ref, nextTick, watch, onUnmounted } from 'vue'
 import Button from 'primevue/button'
 import Card from 'primevue/card'
+import ToggleSwitch from 'primevue/toggleswitch'
 
 // Connect Score tooltip content
 const connectScoreTooltip = `Connect Score is a premium add-on feature that uses real-world signals to help users prioritize high-value contacts and skip low-quality leads. It scores each phone number as High, Medium, or Low based on:
@@ -357,6 +361,7 @@ const keypadButtonRef = ref<any>(null)
 // Live transcription state
 const displayedTranscript = ref<{ speaker: 'You' | 'Contact'; text: string }[]>([])
 const transcriptContainer = ref<HTMLElement | null>(null)
+const transcriptionEnabled = ref(true)
 let transcriptionHandle: number | null = null
 let scriptIndex = 0
 let wordIndex = 0
@@ -407,6 +412,10 @@ const resetTranscription = () => {
 
 const stepTranscription = () => {
   if (scriptIndex >= transcriptScript.length) return
+  if (!transcriptionEnabled.value) {
+    transcriptionHandle = window.setTimeout(stepTranscription, 150)
+    return
+  }
   const current = transcriptScript[scriptIndex]
   const words = current.text.split(' ')
 
