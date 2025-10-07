@@ -145,7 +145,7 @@
           </div>
         </template>
         <template #content>
-          <div ref="transcriptContainer" class="space-y-2 text-sm h-full overflow-y-auto min-h-0" style="scroll-behavior: smooth;">
+          <div ref="transcriptContainer" :class="['space-y-2 text-sm min-h-0', transcriptionEnabled ? 'h-full overflow-y-auto' : 'hidden']" style="scroll-behavior: smooth;">
             <div v-for="(line, idx) in displayedTranscript" :key="idx" class="flex gap-2">
               <span class="text-gray-400 min-w-[64px]">{{ line.speaker }}:</span>
               <span class="text-white">{{ line.text }}</span>
