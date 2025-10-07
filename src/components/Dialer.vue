@@ -72,14 +72,15 @@
     </div>
 
     <!-- Contact Info -->
-    <div class="flex-1 p-4 overflow-y-auto">
-      <Card>
+    <div class="flex-1 p-4 overflow-hidden">
+      <div class="h-full flex flex-col gap-4">
+      <Card class="flex-1 min-h-0" :pt="{ root: { style: 'height:100%; display:flex; flex-direction:column;' }, content: { style: 'flex:1; overflow:auto;' } }">
         <template #title>
           <div class="text-white text-lg font-bold">{{ currentContact.name }}</div>
           <div class="text-white text-sm">{{ currentContact.title }} at {{ currentContact.company }}</div>
         </template>
         <template #content>
-          <div class="text-sm">
+          <div class="text-sm overflow-auto min-h-0">
             <table style="width: 100%; border-collapse: collapse;">
               <tbody>
                 <tr>
@@ -133,7 +134,7 @@
       </Card>
 
       <!-- Live Transcription Card -->
-      <Card class="mt-4">
+      <Card class="flex-1 min-h-0" :pt="{ root: { style: 'height:100%; display:flex; flex-direction:column;' }, content: { style: 'flex:1; overflow:auto;' } }">
         <template #title>
           <div class="flex items-center gap-2">
             <i class="pi pi-microphone text-sm" aria-hidden="true"></i>
@@ -141,7 +142,7 @@
           </div>
         </template>
         <template #content>
-          <div class="space-y-2 text-sm">
+          <div class="space-y-2 text-sm overflow-auto min-h-0">
             <div v-for="(line, idx) in displayedTranscript" :key="idx" class="flex gap-2">
               <span class="text-gray-400 min-w-[64px]">{{ line.speaker }}:</span>
               <span class="text-white">{{ line.text }}</span>
@@ -149,6 +150,7 @@
           </div>
         </template>
       </Card>
+      </div>
     </div>
 
     <!-- Action Buttons -->
