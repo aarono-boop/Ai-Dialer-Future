@@ -134,7 +134,7 @@
       </Card>
 
       <!-- Live Transcription Card -->
-      <Card class="flex-1 min-h-0" :pt="{ root: { style: 'height:100%; min-height:0; overflow:hidden;' }, body: { style: 'height:100%; display:flex; flex-direction:column; flex:1; min-height:0;' }, content: { style: transcriptionEnabled ? 'flex:1; min-height:0; overflow-y:auto; scrollbar-gutter: stable both-edges;' : 'flex:0; height:0; padding:0; overflow:hidden;' } }">
+      <Card :class="['min-h-0', transcriptionEnabled ? 'flex-1' : '']" :pt="{ root: { style: transcriptionEnabled ? 'height:100%; min-height:0; overflow:hidden;' : 'height:auto; min-height:0; overflow:hidden;' }, body: { style: transcriptionEnabled ? 'height:100%; display:flex; flex-direction:column; flex:1; min-height:0;' : 'display:flex; flex-direction:column; min-height:0;' }, content: { style: transcriptionEnabled ? 'flex:1; min-height:0; overflow-y:auto; scrollbar-gutter: stable both-edges;' : 'flex:0; height:0; padding:0; overflow:hidden;' } }">
         <template #title>
           <div class="flex items-center justify-between">
             <div class="flex items-center gap-2">
