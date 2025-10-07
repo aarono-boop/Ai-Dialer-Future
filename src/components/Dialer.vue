@@ -73,7 +73,7 @@
 
     <!-- Contact Info -->
     <div class="flex-1 p-4 overflow-hidden">
-      <div class="h-full flex flex-col gap-4">
+      <div class="h-full min-h-0 flex flex-col gap-4">
       <Card class="flex-1 min-h-0" :pt="{ root: { style: 'height:100%; display:flex; flex-direction:column;' }, content: { style: 'flex:1; overflow-y:auto;' } }">
         <template #title>
           <div class="text-white text-lg font-bold">{{ currentContact.name }}</div>
