@@ -73,86 +73,175 @@
 
     <!-- Contact Info -->
     <div class="flex-1 p-4 overflow-hidden min-h-0">
-      <div class="h-full min-h-0 flex flex-col gap-4">
-      <Card class="flex-1 min-h-0" :pt="{ root: { style: 'height:100%; min-height:0; overflow:hidden;' }, body: { style: 'height:100%; display:flex; flex-direction:column; flex:1; min-height:0;' }, content: { style: 'flex:1; min-height:0; overflow-y:auto; scrollbar-gutter: stable both-edges;' } }">
-        <template #title>
-          <div class="text-white text-lg font-bold">{{ currentContact.name }}</div>
-          <div class="text-white text-sm">{{ currentContact.title }} at {{ currentContact.company }}</div>
-        </template>
-        <template #content>
-          <div class="text-sm overflow-y-auto min-h-0">
-            <table style="width: 100%; border-collapse: collapse;">
-              <tbody>
-                <tr>
-                  <td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af;">Phone:</td>
-                  <td style="padding: 4px 0; color: white;">{{ currentContact.phone }}</td>
-                </tr>
-                <tr>
-                  <td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af;"><span class="connect-score-tooltip" :data-tooltip="connectScoreTooltip">Connect Score</span>:</td>
-                  <td style="padding: 4px 0; color: white;">{{ currentContact.connectScore }}</td>
-                </tr>
-                <tr>
-                  <td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af;">Email:</td>
-                  <td style="padding: 4px 0; color: white;">{{ currentContact.email }}</td>
-                </tr>
-                <tr>
-                  <td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af;">Address:</td>
-                  <td style="padding: 4px 0; color: white;">{{ currentContact.address }}</td>
-                </tr>
-                <tr>
-                  <td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af;">Local Time:</td>
-                  <td style="padding: 4px 0; color: white;">{{ currentContact.localTime }}</td>
-                </tr>
-                <tr>
-                  <td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af;">Website:</td>
-                  <td style="padding: 4px 0; color: white;">{{ currentContact.website }}</td>
-                </tr>
-                <tr>
-                  <td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af;">LinkedIn Profile:</td>
-                  <td style="padding: 4px 0; color: white;">{{ currentContact.linkedin }}</td>
-                </tr>
-                <tr>
-                  <td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af;">Industry:</td>
-                  <td style="padding: 4px 0; color: white;">{{ currentContact.industry }}</td>
-                </tr>
-                <tr>
-                  <td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af;">Company Size:</td>
-                  <td style="padding: 4px 0; color: white;">{{ currentContact.companySize }}</td>
-                </tr>
-                <tr>
-                  <td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af;">Lead Source:</td>
-                  <td style="padding: 4px 0; color: white;">{{ currentContact.leadSource }}</td>
-                </tr>
-                <tr v-if="currentContact.notes">
-                  <td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af;">Notes:</td>
-                  <td style="padding: 4px 0; color: white; white-space: pre-wrap;">{{ currentContact.notes }}</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </template>
-      </Card>
+      <!-- For contacts other than the 3rd, show both cards -->
+      <div v-if="currentContactIndex !== 2" class="h-full min-h-0 flex flex-col gap-4">
+        <Card class="flex-1 min-h-0" :pt="{ root: { style: 'height:100%; min-height:0; overflow:hidden;' }, body: { style: 'height:100%; display:flex; flex-direction:column; flex:1; min-height:0;' }, content: { style: 'flex:1; min-height:0; overflow-y:auto; scrollbar-gutter: stable both-edges;' } }">
+          <template #title>
+            <div class="text-white text-lg font-bold">{{ currentContact.name }}</div>
+            <div class="text-white text-sm">{{ currentContact.title }} at {{ currentContact.company }}</div>
+          </template>
+          <template #content>
+            <div class="text-sm overflow-y-auto min-h-0">
+              <table style="width: 100%; border-collapse: collapse;">
+                <tbody>
+                  <tr>
+                    <td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af;">Phone:</td>
+                    <td style="padding: 4px 0; color: white;">{{ currentContact.phone }}</td>
+                  </tr>
+                  <tr>
+                    <td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af;"><span class="connect-score-tooltip" :data-tooltip="connectScoreTooltip">Connect Score</span>:</td>
+                    <td style="padding: 4px 0; color: white;">{{ currentContact.connectScore }}</td>
+                  </tr>
+                  <tr>
+                    <td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af;">Email:</td>
+                    <td style="padding: 4px 0; color: white;">{{ currentContact.email }}</td>
+                  </tr>
+                  <tr>
+                    <td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af;">Address:</td>
+                    <td style="padding: 4px 0; color: white;">{{ currentContact.address }}</td>
+                  </tr>
+                  <tr>
+                    <td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af;">Local Time:</td>
+                    <td style="padding: 4px 0; color: white;">{{ currentContact.localTime }}</td>
+                  </tr>
+                  <tr>
+                    <td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af;">Website:</td>
+                    <td style="padding: 4px 0; color: white;">{{ currentContact.website }}</td>
+                  </tr>
+                  <tr>
+                    <td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af;">LinkedIn Profile:</td>
+                    <td style="padding: 4px 0; color: white;">{{ currentContact.linkedin }}</td>
+                  </tr>
+                  <tr>
+                    <td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af;">Industry:</td>
+                    <td style="padding: 4px 0; color: white;">{{ currentContact.industry }}</td>
+                  </tr>
+                  <tr>
+                    <td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af;">Company Size:</td>
+                    <td style="padding: 4px 0; color: white;">{{ currentContact.companySize }}</td>
+                  </tr>
+                  <tr>
+                    <td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af;">Lead Source:</td>
+                    <td style="padding: 4px 0; color: white;">{{ currentContact.leadSource }}</td>
+                  </tr>
+                  <tr v-if="currentContact.notes">
+                    <td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af;">Notes:</td>
+                    <td style="padding: 4px 0; color: white; white-space: pre-wrap;">{{ currentContact.notes }}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </template>
+        </Card>
 
-      <!-- Live Transcription Card -->
-      <Card :class="['min-h-0', transcriptionEnabled ? 'flex-1' : '']" :pt="{ root: { style: transcriptionEnabled ? 'height:100%; min-height:0; overflow:hidden;' : 'height:auto; min-height:0; overflow:hidden;' }, body: { style: transcriptionEnabled ? 'height:100%; display:flex; flex-direction:column; flex:1; min-height:0;' : 'display:flex; flex-direction:column; min-height:0;' }, content: { style: transcriptionEnabled ? 'flex:1; min-height:0; overflow-y:auto; scrollbar-gutter: stable both-edges;' : 'flex:0; height:0; padding:0; overflow:hidden;' } }">
-        <template #title>
-          <div class="flex items-center justify-between">
-            <div class="flex items-center gap-2">
-              <i class="pi pi-microphone text-sm" aria-hidden="true"></i>
-              <span>Live Transcription</span>
+        <!-- Live Transcription Card -->
+        <Card :class="['min-h-0', transcriptionEnabled ? 'flex-1' : '']" :pt="{ root: { style: transcriptionEnabled ? 'height:100%; min-height:0; overflow:hidden;' : 'height:auto; min-height:0; overflow:hidden;' }, body: { style: transcriptionEnabled ? 'height:100%; display:flex; flex-direction:column; flex:1; min-height:0;' : 'display:flex; flex-direction:column; min-height:0;' }, content: { style: transcriptionEnabled ? 'flex:1; min-height:0; overflow-y:auto; scrollbar-gutter: stable both-edges;' : 'flex:0; height:0; padding:0; overflow:hidden;' } }">
+          <template #title>
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-2">
+                <i class="pi pi-microphone text-sm" aria-hidden="true"></i>
+                <span>Live Transcription</span>
+              </div>
+              <ToggleSwitch v-model="transcriptionEnabled" aria-label="Toggle live transcription" />
             </div>
-            <ToggleSwitch v-model="transcriptionEnabled" aria-label="Toggle live transcription" />
-          </div>
-        </template>
-        <template #content>
-          <div ref="transcriptContainer" :class="['space-y-2 text-sm min-h-0', transcriptionEnabled ? 'h-full overflow-y-auto' : 'hidden']" style="scroll-behavior: smooth;">
-            <div v-for="(line, idx) in displayedTranscript" :key="idx" class="flex gap-2">
-              <span class="text-gray-400 min-w-[64px]">{{ line.speaker }}:</span>
-              <span class="text-white">{{ line.text }}</span>
+          </template>
+          <template #content>
+            <div ref="transcriptContainer" :class="['space-y-2 text-sm min-h-0', transcriptionEnabled ? 'h-full overflow-y-auto' : 'hidden']" style="scroll-behavior: smooth;">
+              <div v-for="(line, idx) in displayedTranscript" :key="idx" class="flex gap-2">
+                <span class="text-gray-400 min-w-[64px]">{{ line.speaker }}:</span>
+                <span class="text-white">{{ line.text }}</span>
+              </div>
             </div>
-          </div>
-        </template>
-      </Card>
+          </template>
+        </Card>
+      </div>
+
+      <!-- For 3rd contact, show tabs (no toggle) -->
+      <div v-else class="h-full min-h-0 flex flex-col">
+        <TabView class="flex-1 min-h-0">
+          <TabPanel header="Contact Details">
+            <div class="h-full min-h-0">
+              <Card class="h-full min-h-0" :pt="{ root: { style: 'height:100%; min-height:0; overflow:hidden;' }, body: { style: 'height:100%; display:flex; flex-direction:column; flex:1; min-height:0;' }, content: { style: 'flex:1; min-height:0; overflow-y:auto;' } }">
+                <template #title>
+                  <div class="text-white text-lg font-bold">{{ currentContact.name }}</div>
+                  <div class="text-white text-sm">{{ currentContact.title }} at {{ currentContact.company }}</div>
+                </template>
+                <template #content>
+                  <div class="text-sm overflow-y-auto min-h-0">
+                    <table style="width: 100%; border-collapse: collapse;">
+                      <tbody>
+                        <tr>
+                          <td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af;">Phone:</td>
+                          <td style="padding: 4px 0; color: white;">{{ currentContact.phone }}</td>
+                        </tr>
+                        <tr>
+                          <td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af;"><span class="connect-score-tooltip" :data-tooltip="connectScoreTooltip">Connect Score</span>:</td>
+                          <td style="padding: 4px 0; color: white;">{{ currentContact.connectScore }}</td>
+                        </tr>
+                        <tr>
+                          <td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af;">Email:</td>
+                          <td style="padding: 4px 0; color: white;">{{ currentContact.email }}</td>
+                        </tr>
+                        <tr>
+                          <td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af;">Address:</td>
+                          <td style="padding: 4px 0; color: white;">{{ currentContact.address }}</td>
+                        </tr>
+                        <tr>
+                          <td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af;">Local Time:</td>
+                          <td style="padding: 4px 0; color: white;">{{ currentContact.localTime }}</td>
+                        </tr>
+                        <tr>
+                          <td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af;">Website:</td>
+                          <td style="padding: 4px 0; color: white;">{{ currentContact.website }}</td>
+                        </tr>
+                        <tr>
+                          <td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af;">LinkedIn Profile:</td>
+                          <td style="padding: 4px 0; color: white;">{{ currentContact.linkedin }}</td>
+                        </tr>
+                        <tr>
+                          <td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af;">Industry:</td>
+                          <td style="padding: 4px 0; color: white;">{{ currentContact.industry }}</td>
+                        </tr>
+                        <tr>
+                          <td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af;">Company Size:</td>
+                          <td style="padding: 4px 0; color: white;">{{ currentContact.companySize }}</td>
+                        </tr>
+                        <tr>
+                          <td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af;">Lead Source:</td>
+                          <td style="padding: 4px 0; color: white;">{{ currentContact.leadSource }}</td>
+                        </tr>
+                        <tr v-if="currentContact.notes">
+                          <td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af;">Notes:</td>
+                          <td style="padding: 4px 0; color: white; white-space: pre-wrap;">{{ currentContact.notes }}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </template>
+              </Card>
+            </div>
+          </TabPanel>
+          <TabPanel header="Live Transcription">
+            <div class="h-full min-h-0">
+              <Card class="h-full min-h-0" :pt="{ root: { style: 'height:100%; min-height:0; overflow:hidden;' }, body: { style: 'height:100%; display:flex; flex-direction:column; flex:1; min-height:0;' }, content: { style: 'flex:1; min-height:0; overflow:hidden;' } }">
+                <template #title>
+                  <div class="flex items-center gap-2">
+                    <i class="pi pi-microphone text-sm" aria-hidden="true"></i>
+                    <span>Live Transcription</span>
+                  </div>
+                </template>
+                <template #content>
+                  <div ref="transcriptContainer" class="space-y-2 text-sm h-full overflow-y-auto min-h-0" style="scroll-behavior: smooth;">
+                    <div v-for="(line, idx) in displayedTranscript" :key="idx" class="flex gap-2">
+                      <span class="text-gray-400 min-w-[64px]">{{ line.speaker }}:</span>
+                      <span class="text-white">{{ line.text }}</span>
+                    </div>
+                  </div>
+                </template>
+              </Card>
+            </div>
+          </TabPanel>
+        </TabView>
       </div>
     </div>
 
@@ -305,6 +394,8 @@ import { ref, nextTick, watch, onUnmounted } from 'vue'
 import Button from 'primevue/button'
 import Card from 'primevue/card'
 import ToggleSwitch from 'primevue/toggleswitch'
+import TabView from 'primevue/tabview'
+import TabPanel from 'primevue/tabpanel'
 
 // Connect Score tooltip content
 const connectScoreTooltip = `Connect Score is a premium add-on feature that uses real-world signals to help users prioritize high-value contacts and skip low-quality leads. It scores each phone number as High, Medium, or Low based on:
