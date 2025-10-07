@@ -402,7 +402,7 @@ const stepTranscription = () => {
     const prefix = displayedTranscript.value[scriptIndex].text ? ' ' : ''
     displayedTranscript.value[scriptIndex].text += prefix + words[wordIndex]
     wordIndex++
-    transcriptionHandle = window.setTimeout(stepTranscription, 300)
+    transcriptionHandle = window.setTimeout(stepTranscription, 500)
   } else {
     // Move to next line after a short pause
     scriptIndex++
