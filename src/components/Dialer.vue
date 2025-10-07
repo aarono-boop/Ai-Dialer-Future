@@ -74,7 +74,7 @@
     <!-- Contact Info -->
     <div class="flex-1 p-4 overflow-hidden min-h-0">
       <div class="h-full min-h-0 flex flex-col gap-4">
-      <Card class="flex-1 min-h-0" :pt="{ root: { style: 'height:100%; min-height:0; overflow:hidden; display:flex; flex-direction:column;' }, content: { style: 'flex:1; min-height:0; overflow-y:auto; scrollbar-gutter: stable both-edges;' } }">
+      <Card class="flex-1 min-h-0" :pt="{ root: { style: 'height:100%; min-height:0; overflow:hidden;' }, body: { style: 'height:100%; display:flex; flex-direction:column; flex:1; min-height:0;' }, content: { style: 'flex:1; min-height:0; overflow-y:auto; scrollbar-gutter: stable both-edges;' } }">
         <template #title>
           <div class="text-white text-lg font-bold">{{ currentContact.name }}</div>
           <div class="text-white text-sm">{{ currentContact.title }} at {{ currentContact.company }}</div>
@@ -134,7 +134,7 @@
       </Card>
 
       <!-- Live Transcription Card -->
-      <Card class="flex-1 min-h-0" :pt="{ root: { style: 'height:100%; min-height:0; overflow:hidden; display:flex; flex-direction:column;' }, content: { style: 'flex:1; min-height:0; overflow-y:auto; scrollbar-gutter: stable both-edges;' } }">
+      <Card class="flex-1 min-h-0" :pt="{ root: { style: 'height:100%; min-height:0; overflow:hidden;' }, body: { style: 'height:100%; display:flex; flex-direction:column; flex:1; min-height:0;' }, content: { style: 'flex:1; min-height:0; overflow-y:auto; scrollbar-gutter: stable both-edges;' } }">
         <template #title>
           <div class="flex items-center gap-2">
             <i class="pi pi-microphone text-sm" aria-hidden="true"></i>
