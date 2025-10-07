@@ -438,10 +438,12 @@ const startTranscription = () => {
 }
 
 watch(() => props.callState, (state) => {
+  if (state === 'ringing') {
+    // Next call is starting; clear previous transcript now
+    resetTranscription()
+  }
   if (state === 'connected') {
     startTranscription()
-  } else if (state === 'ended' || state === 'idle') {
-    resetTranscription()
   }
 })
 
