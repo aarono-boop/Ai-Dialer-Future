@@ -142,7 +142,7 @@
           </div>
         </template>
         <template #content>
-          <div ref="transcriptContainer" class="space-y-2 text-sm overflow-y-auto min-h-0">
+          <div ref="transcriptContainer" class="space-y-2 text-sm overflow-y-auto min-h-0" style="scroll-behavior: smooth;">
             <div v-for="(line, idx) in displayedTranscript" :key="idx" class="flex gap-2">
               <span class="text-gray-400 min-w-[64px]">{{ line.speaker }}:</span>
               <span class="text-white">{{ line.text }}</span>
@@ -362,10 +362,10 @@ let scriptIndex = 0
 let wordIndex = 0
 
 const scrollTranscriptToBottom = () => {
-  requestAnimationFrame(() => {
+  nextTick(() => {
     const el = transcriptContainer.value
     if (el) {
-      el.scrollTop = el.scrollHeight
+      el.scrollTo({ top: el.scrollHeight, behavior: 'smooth' })
     }
   })
 }
@@ -437,6 +437,11 @@ watch(() => props.callState, (state) => {
     resetTranscription()
   }
 })
+
+// Also scroll whenever transcript array updates
+watch(displayedTranscript, () => {
+  scrollTranscriptToBottom()
+}, { deep: true })
 
 onUnmounted(() => resetTranscription())
 
