@@ -142,7 +142,7 @@
           </div>
         </template>
         <template #content>
-          <div class="space-y-2 text-sm overflow-auto min-h-0">
+          <div ref="transcriptContainer" class="space-y-2 text-sm overflow-y-auto min-h-0">
             <div v-for="(line, idx) in displayedTranscript" :key="idx" class="flex gap-2">
               <span class="text-gray-400 min-w-[64px]">{{ line.speaker }}:</span>
               <span class="text-white">{{ line.text }}</span>
@@ -356,9 +356,19 @@ const keypadButtonRef = ref<any>(null)
 
 // Live transcription state
 const displayedTranscript = ref<{ speaker: 'You' | 'Contact'; text: string }[]>([])
+const transcriptContainer = ref<HTMLElement | null>(null)
 let transcriptionHandle: number | null = null
 let scriptIndex = 0
 let wordIndex = 0
+
+const scrollTranscriptToBottom = () => {
+  requestAnimationFrame(() => {
+    const el = transcriptContainer.value
+    if (el) {
+      el.scrollTop = el.scrollHeight
+    }
+  })
+}
 
 const transcriptScript: { speaker: 'You' | 'Contact'; text: string }[] = [
   { speaker: 'You', text: 'Hi Sam, this is Aaron from PhoneBurner do you have a quick minute?' },
@@ -402,11 +412,13 @@ const stepTranscription = () => {
     const prefix = displayedTranscript.value[scriptIndex].text ? ' ' : ''
     displayedTranscript.value[scriptIndex].text += prefix + words[wordIndex]
     wordIndex++
+    scrollTranscriptToBottom()
     transcriptionHandle = window.setTimeout(stepTranscription, 150)
   } else {
     // Move to next line after a short pause
     scriptIndex++
     wordIndex = 0
+    scrollTranscriptToBottom()
     if (scriptIndex < transcriptScript.length) {
       transcriptionHandle = window.setTimeout(stepTranscription, 300)
     }
