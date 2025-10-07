@@ -131,6 +131,24 @@
           </div>
         </template>
       </Card>
+
+      <!-- Live Transcription Card -->
+      <Card class="mt-4">
+        <template #title>
+          <div class="flex items-center gap-2">
+            <i class="pi pi-microphone text-sm" aria-hidden="true"></i>
+            <span>Live Transcription</span>
+          </div>
+        </template>
+        <template #content>
+          <div class="space-y-2 text-sm">
+            <div v-for="(line, idx) in displayedTranscript" :key="idx" class="flex gap-2">
+              <span class="text-gray-400 min-w-[64px]">{{ line.speaker }}:</span>
+              <span class="text-white">{{ line.text }}</span>
+            </div>
+          </div>
+        </template>
+      </Card>
     </div>
 
     <!-- Action Buttons -->
@@ -278,7 +296,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, nextTick } from 'vue'
+import { ref, nextTick, watch, onUnmounted } from 'vue'
 import Button from 'primevue/button'
 import Card from 'primevue/card'
 
@@ -333,6 +351,69 @@ const showKeypadModal = ref(false)
 const muteButtonRef = ref<any>(null)
 const holdButtonRef = ref<any>(null)
 const keypadButtonRef = ref<any>(null)
+
+// Live transcription state
+const displayedTranscript = ref<{ speaker: 'You' | 'Contact'; text: string }[]>([])
+let transcriptionHandle: number | null = null
+let scriptIndex = 0
+let wordIndex = 0
+
+const transcriptScript: { speaker: 'You' | 'Contact'; text: string }[] = [
+  { speaker: 'You', text: 'Hi Sam, this is Aaron from PhoneBurner do you have a quick minute?' },
+  { speaker: 'Contact', text: "Hi Aaron, what's this call about?" },
+  { speaker: 'You', text: 'I have an amazing new AI phone dialer I want to tell you about.' },
+  { speaker: 'Contact', text: 'I already have a phone dialer, I am using Aircall.' }
+]
+
+const resetTranscription = () => {
+  displayedTranscript.value = []
+  scriptIndex = 0
+  wordIndex = 0
+  if (transcriptionHandle) {
+    clearTimeout(transcriptionHandle)
+    transcriptionHandle = null
+  }
+}
+
+const stepTranscription = () => {
+  if (scriptIndex >= transcriptScript.length) return
+  const current = transcriptScript[scriptIndex]
+  const words = current.text.split(' ')
+
+  // Ensure current line exists
+  if (!displayedTranscript.value[scriptIndex]) {
+    displayedTranscript.value.push({ speaker: current.speaker, text: '' })
+  }
+
+  if (wordIndex < words.length) {
+    const prefix = displayedTranscript.value[scriptIndex].text ? ' ' : ''
+    displayedTranscript.value[scriptIndex].text += prefix + words[wordIndex]
+    wordIndex++
+    transcriptionHandle = window.setTimeout(stepTranscription, 300)
+  } else {
+    // Move to next line after a short pause
+    scriptIndex++
+    wordIndex = 0
+    if (scriptIndex < transcriptScript.length) {
+      transcriptionHandle = window.setTimeout(stepTranscription, 600)
+    }
+  }
+}
+
+const startTranscription = () => {
+  resetTranscription()
+  transcriptionHandle = window.setTimeout(stepTranscription, 500)
+}
+
+watch(() => props.callState, (state) => {
+  if (state === 'connected') {
+    startTranscription()
+  } else if (state === 'ended' || state === 'idle') {
+    resetTranscription()
+  }
+})
+
+onUnmounted(() => resetTranscription())
 
 // Methods
 const formatTime = (seconds: number): string => {
