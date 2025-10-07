@@ -139,7 +139,7 @@
       <!-- Call Controls (visible when not ended) -->
       <div v-if="callState !== 'ended'" class="space-y-3">
         <!-- Call Control Buttons -->
-        <div class="grid grid-cols-3 gap-3">
+        <div class="grid grid-cols-2 gap-3">
           <Button
             ref="muteButtonRef"
             @click="toggleMute"
@@ -165,18 +165,6 @@
             <span class="text-xs">Keypad</span>
           </Button>
 
-          <Button
-            ref="holdButtonRef"
-            @click="toggleHold"
-            @keydown="handleHoldKeydown"
-            tabindex="11"
-            :disabled="callState === 'idle'"
-            :severity="isOnHold ? 'warn' : 'secondary'"
-            class="flex flex-col items-center justify-center gap-1 py-3"
-          >
-            <i class="pi pi-pause"></i>
-            <span class="text-xs">{{ isOnHold ? 'Resume' : 'Hold' }}</span>
-          </Button>
         </div>
 
         <!-- Hang Up Button -->
