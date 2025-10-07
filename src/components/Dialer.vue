@@ -402,20 +402,20 @@ const stepTranscription = () => {
     const prefix = displayedTranscript.value[scriptIndex].text ? ' ' : ''
     displayedTranscript.value[scriptIndex].text += prefix + words[wordIndex]
     wordIndex++
-    transcriptionHandle = window.setTimeout(stepTranscription, 200)
+    transcriptionHandle = window.setTimeout(stepTranscription, 150)
   } else {
     // Move to next line after a short pause
     scriptIndex++
     wordIndex = 0
     if (scriptIndex < transcriptScript.length) {
-      transcriptionHandle = window.setTimeout(stepTranscription, 600)
+      transcriptionHandle = window.setTimeout(stepTranscription, 300)
     }
   }
 }
 
 const startTranscription = () => {
   resetTranscription()
-  transcriptionHandle = window.setTimeout(stepTranscription, 200)
+  transcriptionHandle = window.setTimeout(stepTranscription, 150)
 }
 
 watch(() => props.callState, (state) => {
