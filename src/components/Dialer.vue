@@ -1347,4 +1347,19 @@ const handleHoldKeydown = (event: KeyboardEvent) => {
 :deep([tabindex="12"]:hover) {
   background-color: #b91c1c !important; /* red-700 - darker red for hover */
 }
+  /* TabView styling: underline active tab, neutral label color */
+  :deep(.p-tabview .p-tabview-nav) {
+    border-bottom: 1px solid var(--p-content-border-color) !important;
+  }
+  :deep(.p-tabview .p-tabview-nav li .p-tabview-nav-link) {
+    color: var(--p-text-color) !important;
+    border-bottom: 2px solid transparent !important;
+    border-radius: 0 !important;
+  }
+  :deep(.p-tabview .p-tabview-nav li.p-highlight .p-tabview-nav-link),
+  :deep(.p-tabview .p-tabview-nav li[aria-selected="true"] .p-tabview-nav-link) {
+    color: var(--p-text-color) !important;
+    border-bottom-color: var(--p-primary-color) !important;
+  }
+  :deep(.p-tabview-ink-bar) { display: none !important; }
 </style>
