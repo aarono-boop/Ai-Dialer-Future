@@ -402,7 +402,7 @@ const stepTranscription = () => {
     const prefix = displayedTranscript.value[scriptIndex].text ? ' ' : ''
     displayedTranscript.value[scriptIndex].text += prefix + words[wordIndex]
     wordIndex++
-    transcriptionHandle = window.setTimeout(stepTranscription, 500)
+    transcriptionHandle = window.setTimeout(stepTranscription, 200)
   } else {
     // Move to next line after a short pause
     scriptIndex++
@@ -415,7 +415,7 @@ const stepTranscription = () => {
 
 const startTranscription = () => {
   resetTranscription()
-  transcriptionHandle = window.setTimeout(stepTranscription, 500)
+  transcriptionHandle = window.setTimeout(stepTranscription, 200)
 }
 
 watch(() => props.callState, (state) => {
