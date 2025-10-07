@@ -9,12 +9,12 @@
         </div>
         <Button
           v-if="!shouldCompleteQueue"
-          @click="pauseQueue"
-          :disabled="callState === 'connected'"
+          @click="completeQueue"
+          :disabled="false"
           tabindex="8"
           severity="secondary"
           size="small"
-          label="Pause Queue"
+          label="End Queue"
           style="flex-shrink: 0; position: relative;"
         />
       </div>
