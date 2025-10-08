@@ -1352,7 +1352,7 @@ const handleHoldKeydown = (event: KeyboardEvent) => {
     border-bottom: 1px solid var(--p-content-border-color) !important;
   }
   :deep(.p-tabview .p-tabview-nav .p-tabview-nav-link) {
-    color: var(--p-text-color) !important;
+    color: var(--p-surface-0) !important; /* white for inactive */
     background: transparent !important;
     border: 0 !important;
     border-radius: 0 !important;
@@ -1361,7 +1361,7 @@ const handleHoldKeydown = (event: KeyboardEvent) => {
   :deep(.p-tabview .p-tabview-nav .p-tabview-nav-link:focus),
   :deep(.p-tabview .p-tabview-nav li.p-highlight .p-tabview-nav-link),
   :deep(.p-tabview .p-tabview-nav li[aria-selected="true"] .p-tabview-nav-link) {
-    color: var(--p-text-color) !important;
+    color: var(--p-surface-0) !important; /* keep active text white too */
     background: transparent !important;
   }
   :deep(.p-tabview .p-tabview-nav .p-tabview-nav-link .p-tabview-nav-title),
@@ -1370,7 +1370,7 @@ const handleHoldKeydown = (event: KeyboardEvent) => {
   }
   :deep(.p-tabview-ink-bar) {
     display: block !important;
-    background-color: var(--p-primary-color) !important;
+    background-color: var(--p-blue-500) !important; /* blue underline */
     height: 2px !important;
   }
 </style>
