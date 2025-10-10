@@ -588,7 +588,7 @@ const messages: Ref<Message[]> = ref([
   {
     type: 'ai',
     content: [
-      'Welcome! I\'m Marcus, your Ai calling assistant.  <br><br>To get started, drop your contact file below and I\'ll organize your contacts based on who is most likely to pick up.'
+      'Hey there! Welcome to ARMOR® Ai Dialer.<br><br>I\'m Marcus, your Ai calling assistant.  To get started, login to your account or sign up with Google.'
     ]
   }
 ])
@@ -681,7 +681,7 @@ const handleLogout = () => {
     {
       type: 'ai',
       content: [
-        'Welcome! I\'m Marcus, your Ai calling assistant.  <br><br>To get started, drop your contact file below and I\'ll organize your contacts based on who is most likely to pick up.'
+        'Hey there! Welcome to ARMOR® Ai Dialer.<br><br>I\'m Marcus, your Ai calling assistant.  To get started, login to your account or sign up with Google.'
       ]
     }
   ]
@@ -781,7 +781,7 @@ const goToMainApp = () => {
       {
         type: 'ai',
         content: [
-          'Welcome! I\'m Marcus, your Ai calling assistant.  <br><br>To get started, drop your contact file below and I\'ll organize your contacts based on who is most likely to pick up.'
+          'Hey there! Welcome to ARMOR® Ai Dialer.<br><br>I\'m Marcus, your Ai calling assistant.  To get started, login to your account or sign up with Google.'
         ]
       }
     ]
