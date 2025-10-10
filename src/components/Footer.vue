@@ -4,7 +4,7 @@
       Ai Dialer can make mistakes. Please double-check responses.
     </div>
     <div class="flex justify-center items-center">
-      <p>bbb</p>
+      <p>&copy;2025 ARMOR® AI Dialer. All rights reserved.</p>
       <Button
         v-if="!showDialer && !queuePaused"
         @click="$emit('skip-to-dialer')"
