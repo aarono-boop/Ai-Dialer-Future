@@ -26,15 +26,7 @@
               <template v-for="(message, index) in messages" :key="index">
                 <!-- Regular Chat Message -->
                 <ChatMessage v-if="message.type !== 'separator'" :message="message" :isWide="shouldBeWideMessage(message, index)">
-                  <template #additional-content>
-                    <!-- File Upload Area - shown inside welcome message for new users or ready to upload message for returning users -->
-                    <FileUpload
-                      v-if="(index === 0 && (!isSignedIn || (isSignedIn && showFileUploadForReturningUser))) || (isSignedIn && showFileUploadForReturningUser && isReadyToUploadMessage(message, index))"
-                      @trigger-upload="simulateFileUpload"
-                      @file-selected="onFileSelect"
-                      @file-dropped="simulateFileUpload"
-                    />
-                  </template>
+                  <template #additional-content></template>
                 </ChatMessage>
 
                 <!-- Call Separator -->
@@ -213,6 +205,17 @@
                 label="Load New File"
                 icon="pi pi-upload"
                 class="w-1/2 px-6 py-3 font-semibold flex items-center justify-center gap-2"
+              />
+            </div>
+          </div>
+
+          <!-- File Upload - moved outside chat bubble and placed above chat input -->
+          <div v-if="!isSignedIn || showFileUploadForReturningUser" class="mt-2 pt-5 flex justify-center">
+            <div class="w-[70%]">
+              <FileUpload
+                @trigger-upload="simulateFileUpload"
+                @file-selected="onFileSelect"
+                @file-dropped="simulateFileUpload"
               />
             </div>
           </div>
