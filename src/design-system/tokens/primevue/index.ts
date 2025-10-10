@@ -18,7 +18,6 @@ export { default as vulcan7Theme } from './vulcan7'
 
 // Export individual token categories for easy access
 export const tokens = {
-    base: baseTokens,
     button: buttonTokens,
     dialog: dialogTokens,
     inputtext: inputtextTokens,

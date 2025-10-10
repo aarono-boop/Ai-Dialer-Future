@@ -569,6 +569,17 @@
             </div>
           </div>
 
+          <!-- File Upload - moved outside chat bubble and placed above chat input -->
+          <div v-if="!isSignedIn || showFileUploadForReturningUser" class="mt-2 pt-5 flex justify-center">
+            <div class="w-[70%]">
+              <FileUpload
+                @trigger-upload="simulateFileUpload"
+                @file-selected="onFileSelect"
+                @file-dropped="simulateFileUpload"
+              />
+            </div>
+          </div>
+
           <!-- Chat Input - positioned at bottom -->
           <div class="mt-2 pt-2.5 mb-4">
             <ChatInput
@@ -1844,6 +1855,51 @@ const goToMainApp = () => {
     const qs = url.searchParams.toString()
     window.history.replaceState({}, '', qs ? `${url.pathname}?${qs}` : url.pathname)
   } catch {}
+
+  if (isSignedIn.value) {
+    // Reset UI state but keep user signed in
+    showDialer.value = false
+    showActionButtons.value = false
+    showContactPreviewButtons.value = false
+    showPhoneVerificationButton.value = false
+    showStartDialingButton.value = false
+    showDispositionButtons.value = false
+    showContinueQueueButton.value = false
+    waitingForNotesInput.value = false
+    currentDisposition.value = ''
+    showSessionSummary.value = false
+    showLoadNewFileButton.value = false
+    hasUploadedFile.value = false
+
+    // Reset calling state
+    callState.value = 'ended'
+    callDuration.value = 0
+    queueTime.value = 14
+    currentContactIndex.value = 0
+    dispositionSet.value = false
+    queuePaused.value = false
+    queueCompletionReady.value = false
+    waitingForTryAgainResponse.value = false
+    dispositionButtonClicked.value = false
+
+    // Reset messages to welcome
+    messages.value = [
+      {
+        type: 'ai',
+        content: [
+          'Hey there! Welcome to ARMOR® Ai Dialer.<br><br>I\'m Marcus, your Ai calling assistant.  To get started, login to your account or sign up with Google.'
+        ]
+      }
+    ]
+
+    // Show file upload under welcome for signed-in users
+    showFileUploadForReturningUser.value = true
+
+    // Clear any timers
+    if (callTimer) { clearInterval(callTimer); callTimer = null }
+    if (queueTimer) { clearInterval(queueTimer); queueTimer = null }
+    if (callSimulationTimeout) { clearTimeout(callSimulationTimeout); callSimulationTimeout = null }
+  }
 
   // Clear any existing focus when navigating to main app
   nextTick(() => {
