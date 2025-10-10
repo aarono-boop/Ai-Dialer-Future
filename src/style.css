@@ -9,13 +9,10 @@
 body {
   color: white !important;
   font-family: system-ui, -apple-system, sans-serif !important;
-  background-color: #242733;
-  background-image:
-    /* A vignette to create the radial gradient effect for the dots */
-    radial-gradient(ellipse at center, transparent 0%, #242733 80%),
-    /* The dot pattern */
-    radial-gradient(circle, #5D5F69 1px, transparent 1px);
-  background-size: 100% 100%, 16px 16px;
+  /* Match Coach Dashboard background */
+  background-color: #111827 !important; /* Tailwind gray-900 */
+  /* Allow page-specific background images; do not force to none */
+  background-size: auto;
 }
 
 /* CSS Variables */
@@ -26,6 +23,86 @@ body {
 /* PrimeVue button transition */
 .p-button {
   transition: all 0.5s ease-in-out;
+}
+
+/* Global ToggleSwitch styling for AI Coach toggle - Override PrimeVue theme */
+.p-toggleswitch {
+  --p-toggleswitch-background: #374151 !important;
+  --p-toggleswitch-checked-background: #8b5cf6 !important;
+  --p-toggleswitch-handle-background: #ffffff !important;
+  --p-toggleswitch-border-color: #6b7280 !important;
+  --p-toggleswitch-checked-border-color: #8b5cf6 !important;
+}
+
+/* Direct element targeting with highest specificity */
+.p-toggleswitch .p-toggleswitch-slider,
+div[data-pc-name="toggleswitch"] .p-toggleswitch-slider {
+  background: #374151 !important;
+  border: 1px solid #6b7280 !important;
+}
+
+.p-toggleswitch[data-p-checked="true"] .p-toggleswitch-slider,
+.p-toggleswitch-checked .p-toggleswitch-slider,
+div[data-pc-name="toggleswitch"][data-p-checked="true"] .p-toggleswitch-slider {
+  background: #8b5cf6 !important;
+  border: 1px solid #8b5cf6 !important;
+}
+
+.p-toggleswitch .p-toggleswitch-handle,
+div[data-pc-name="toggleswitch"] .p-toggleswitch-handle {
+  background: #ffffff !important;
+  border: 1px solid #ffffff !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3) !important;
+}
+
+/* Force white handle in all states */
+.p-toggleswitch[data-p-checked="true"] .p-toggleswitch-handle,
+.p-toggleswitch-checked .p-toggleswitch-handle,
+div[data-pc-name="toggleswitch"][data-p-checked="true"] .p-toggleswitch-handle,
+div[data-pc-name="toggleswitch"] .p-toggleswitch-handle {
+  background: #ffffff !important;
+  border: 1px solid #ffffff !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3) !important;
+}
+
+/* Additional fallback with inline styles simulation */
+[data-pc-name="toggleswitch"] {
+  --p-primary-color: #8b5cf6 !important;
+  --p-surface-0: #374151 !important;
+}
+
+/* AI Coach Toggle Specific Styling */
+.ai-coach-toggle.p-toggleswitch .p-toggleswitch-slider {
+  background: #374151 !important;
+  border: 1px solid #6b7280 !important;
+}
+
+.ai-coach-toggle.p-toggleswitch[data-p-checked="true"] .p-toggleswitch-slider,
+.ai-coach-toggle.p-toggleswitch-checked .p-toggleswitch-slider {
+  background: #8b5cf6 !important;
+  border: 1px solid #8b5cf6 !important;
+}
+
+.ai-coach-toggle.p-toggleswitch .p-toggleswitch-handle {
+  background: #ffffff !important;
+  border: 1px solid #ffffff !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3) !important;
+}
+
+/* Nuclear option - highest possible specificity */
+body .ai-coach-toggle.p-toggleswitch .p-toggleswitch-slider {
+  background-color: #374151 !important;
+  background: #374151 !important;
+}
+
+body .ai-coach-toggle.p-toggleswitch[data-p-checked="true"] .p-toggleswitch-slider {
+  background-color: #8b5cf6 !important;
+  background: #8b5cf6 !important;
+}
+
+body .ai-coach-toggle.p-toggleswitch .p-toggleswitch-handle {
+  background-color: #ffffff !important;
+  background: #ffffff !important;
 }
 
 /* Design System - Text Links */
@@ -100,3 +177,95 @@ div[class*="overflow-y-auto"]::-webkit-scrollbar-thumb {
 div[class*="overflow-y-auto"]::-webkit-scrollbar-thumb:hover {
   background: #6b7280 !important;
 }
+
+/* Dropdown label extra left padding for certain dropdowns */
+.mic-like-dropdown .p-dropdown-label,
+.mic-like-dropdown .p-select-label {
+  text-indent: 5px !important;
+}
+
+/* Prevent hover padding collapse for all modal footer buttons */
+.p-dialog .p-dialog-footer .p-button,
+.p-dialog .p-dialog-footer .p-button:hover,
+.p-dialog .p-dialog-footer .p-button:focus,
+.p-dialog .p-dialog-footer .p-button:active,
+div[data-pc-name="dialog"] .p-dialog-footer .p-button,
+div[data-pc-name="dialog"] .p-dialog-footer .p-button:hover,
+div[data-pc-name="dialog"] .p-dialog-footer .p-button:focus,
+div[data-pc-name="dialog"] .p-dialog-footer .p-button:active {
+  padding: 0.5rem 0.75rem !important;
+  box-sizing: border-box;
+}
+
+/* PrimeVue Tooltip dark styling */
+/* Prefer token variables when supported, with direct rules as fallback */
+.p-tooltip {
+  --p-tooltip-background: #111827;
+  --p-tooltip-text-color: #ffffff;
+  --p-tooltip-padding: 0.25rem 0.5rem;
+  --p-tooltip-border-radius: 6px;
+  --p-tooltip-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
+  z-index: 9999;
+}
+.p-tooltip .p-tooltip-text {
+  background: #111827 !important;
+  color: #ffffff !important;
+  border: 1px solid #374151 !important;
+  border-radius: 6px !important;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6) !important;
+  padding: 0.25rem 0.5rem !important;
+  font-size: 0.75rem !important; /* 12px */
+}
+/* Arrow colors for each side */
+.p-tooltip.p-tooltip-top .p-tooltip-arrow { border-top-color: #111827 !important; }
+.p-tooltip.p-tooltip-bottom .p-tooltip-arrow { border-bottom-color: #111827 !important; }
+.p-tooltip.p-tooltip-left .p-tooltip-arrow { border-left-color: #111827 !important; }
+.p-tooltip.p-tooltip-right .p-tooltip-arrow { border-right-color: #111827 !important; }
+
+/* App background pattern using PrimeVue design tokens */
+.bg-app-pattern {
+  background-color: var(--p-surface-900) !important;
+  background-image:
+    radial-gradient(ellipse at center, transparent 0%, color-mix(in oklab, var(--p-surface-900) 85%, transparent) 80%),
+    radial-gradient(circle at 1px 1px, color-mix(in oklab, var(--p-surface-0) 15%, transparent) 1px, transparent 1px);
+  background-size: 100% 100%, 20px 20px;
+  background-attachment: fixed;
+}
+
+/* PrimeVue DataTable typography overrides (global, outside tokens) */
+.p-datatable .p-datatable-thead > tr > th,
+div[data-pc-name="datatable"] .p-datatable-thead > tr > th,
+div[data-pc-name="datatable"] [data-pc-section="headercell"] {
+  font-size: 0.875rem !important; /* 16px */
+}
+
+.p-datatable .p-datatable-tbody > tr > td,
+div[data-pc-name="datatable"] .p-datatable-tbody > tr > td,
+div[data-pc-name="datatable"] [data-pc-section="bodycell"] {
+  font-size: 0.875rem !important; /* 14px */
+  font-weight: 100 !important; /* extra-light body text */
+}
+
+/* Remove background color from sorted column header (PrimeVue v3/v4 selectors) */
+.p-datatable .p-datatable-thead > tr > th.p-sortable-column.p-highlight,
+.p-datatable .p-datatable-thead > tr > th[aria-sort="ascending"],
+.p-datatable .p-datatable-thead > tr > th[aria-sort="descending"],
+div[data-pc-name="datatable"] [data-pc-section="headercell"][data-p-highlight="true"],
+div[data-pc-name="datatable"] [data-pc-section="headercell"][aria-sort="ascending"],
+div[data-pc-name="datatable"] [data-pc-section="headercell"][aria-sort="descending"] {
+  background: transparent !important;
+  background-color: transparent !important;
+}
+
+/* Show sort icon only on the active (sorted) column */
+/* PrimeVue v3 */
+.p-datatable .p-datatable-thead > tr > th .p-sortable-column-icon { display: none !important; }
+.p-datatable .p-datatable-thead > tr > th.p-highlight .p-sortable-column-icon { display: inline-flex !important; }
+.p-datatable .p-datatable-thead > tr > th[aria-sort="ascending"] .p-sortable-column-icon,
+.p-datatable .p-datatable-thead > tr > th[aria-sort="descending"] .p-sortable-column-icon { display: inline-flex !important; }
+
+/* PrimeVue v4 */
+div[data-pc-name="datatable"] [data-pc-section="headercell"] [data-pc-section="sorticon"] { display: none !important; }
+div[data-pc-name="datatable"] [data-pc-section="headercell"][data-p-highlight="true"] [data-pc-section="sorticon"],
+div[data-pc-name="datatable"] [data-pc-section="headercell"][aria-sort="ascending"] [data-pc-section="sorticon"],
+div[data-pc-name="datatable"] [data-pc-section="headercell"][aria-sort="descending"] [data-pc-section="sorticon"] { display: inline-flex !important; }

@@ -1,6 +1,6 @@
 <template>
   <!-- Test change for PR functionality -->
-  <div class="min-h-screen text-white relative overflow-x-hidden dark" :class="showDialer ? 'dialer-active' : ''">
+  <div class="min-h-screen text-white relative overflow-x-hidden dark" :class="[{ 'bg-app-pattern': !(showCoachDashboard || showStudentDashboard), 'bg-gray-900': (showCoachDashboard || showStudentDashboard) }, showDialer ? 'dialer-active' : '']">
     
     <!-- Sidebar Navigation -->
     <Sidebar
@@ -11,22 +11,116 @@
       @logout="handleLogout"
       @show-product="showProductPage"
       @go-home="goToMainApp"
+      @show-student-dashboard="openStudentDashboard"
     />
 
     <!-- Main App Content -->
-    <main v-if="currentPage === 'main'" class="ml-16 flex-1 flex items-start justify-center p-8 relative z-[5]" :style="showDialer ? 'margin-right: 33.333333%' : ''">
+    <main v-if="currentPage === 'main' && !managementMode && !showCoachDashboard && !showStudentDashboard" class="ml-16 flex-1 flex items-start justify-center p-8 relative z-[5]" :style="(showDialer || showCoachInfoPanel) ? 'margin-right: 33.333333%' : ''">
       <div class="flex gap-6 w-full max-w-[1400px] h-[80vh] mt-2.5">
         <!-- Chat Container -->
         <div class="w-full max-w-6xl mx-auto rounded-xl px-5">
           <div class="w-full h-full flex flex-col">
           <!-- Top content area - scrollable -->
-          <div class="flex-1 overflow-y-auto flex flex-col gap-8 pr-2 pb-4" ref="chatMessages">
+          <div class="flex-1 flex flex-col gap-8 pr-2 overflow-x-hidden" :class="[showDialer ? 'pb-10' : 'pb-32', showCoachCarousel ? 'overflow-y-hidden' : 'overflow-y-auto']" ref="chatMessages">
             <!-- Chat Messages Area -->
             <div class="flex flex-col">
               <template v-for="(message, index) in messages" :key="index">
                 <!-- Regular Chat Message -->
-                <ChatMessage v-if="message.type !== 'separator'" :message="message" :isWide="shouldBeWideMessage(message, index)">
-                  <template #additional-content></template>
+                <ChatMessage v-if="message.type !== 'separator'" :message="message" :isWide="shouldBeWideMessage(message, index)" :fullWidth="showCoachCarousel && index === 0" :onTypingProgress="message.preserveUserPosition ? undefined : scrollToBottomDuringTyping" :coachParameter="coachParameter" :aiCoachEnabled="aiCoachEnabled" @typing-complete="handleTypingComplete(index)">
+                  <template #additional-content>
+                    <!-- File Upload Area - shown inside welcome message for new users or ready to upload message for returning users -->
+                    <CoachCarousel v-if="index === 0 && showCoachCarousel" @learn-more="openCoachInfoPanel" @practice="startPracticeCall" />
+                    <!-- Email drafts selector inside AI bubble -->
+                    <div v-if="showEmailDraftsCta && message.type === 'ai' && message.content.some(c => c.includes('What email drafts would you like use?'))" class="mt-3">
+                      <Listbox v-model="selectedEmailTemplate" :options="emailTemplates" optionLabel="label" optionValue="value" class="w-full email-drafts-listbox" :pt="{ root: { style: { width: '100%' } } }" />
+                    </div>
+                    <div v-if="false" class="mt-5">
+                      <div class="flex flex-col gap-4 items-stretch">
+                        <div class="w-full" style="order: 3;">
+                          <FileUpload
+                            height="calc(8.6667rem - 20px)"
+                            :no-top-margin="true"
+                            @trigger-upload="simulateFileUpload"
+                            @file-selected="onFileSelect"
+                            @file-dropped="simulateFileUpload"
+                          />
+                        </div>
+                        <div class="flex items-center justify-center my-1" style="order: 2;">
+                          <span class="text-sm" style="color: var(--p-surface-200);">OR</span>
+                        </div>
+                        <Card class="w-full" :pt="{ root: { style: { background: 'var(--p-surface-800)', border: '1px solid var(--p-surface-600)', borderRadius: '8px', height: 'calc(13rem - 20px)', display: 'flex', flexDirection: 'column', order: 1 } }, body: { style: { flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' } } }">
+                          <template #title>
+                      <div class="flex items-center justify-between" style="padding-bottom: 10px;">
+                        <span>Connect your CRM</span>
+                        <Button text severity="secondary" icon="pi pi-times" aria-label="Close selection" @click="selectedInteraction = null" />
+                      </div>
+                    </template>
+                          <template #content>
+                            <div class="grid grid-cols-4 w-full h-full items-center justify-items-center" style="column-gap: 18px; row-gap: 6px;">
+                              <Button
+                                v-for="n in 8"
+                                :key="n"
+                                text
+                                class="p-0"
+                                :pt="{ root: { style: { background: 'transparent', border: 'none', padding: 0 } } }"
+                                :aria-label="n === 1 ? 'Connect Follow Up Boss' : n === 2 ? 'Connect HubSpot' : n === 3 ? 'Connect Insightly' : n === 4 ? 'Connect Pipedrive' : n === 5 ? 'Connect Salesforce' : n === 6 ? 'Connect SugarCRM' : n === 7 ? 'Connect Zendesk' : 'Connect Zoho'"
+                                @click="n === 1 ? openCrmModal('Follow Up Boss') : n === 2 ? openCrmModal('HubSpot') : n === 3 ? openCrmModal('Insightly') : n === 4 ? openCrmModal('Pipedrive') : n === 5 ? openCrmModal('Salesforce') : n === 6 ? openCrmModal('SugarCRM') : n === 7 ? openCrmModal('Zendesk') : openCrmModal('Zoho')"
+                              >
+                                <img
+                                  v-if="n === 1"
+                                  src="https://cdn.builder.io/api/v1/image/assets%2F5aeb07ce25f84dbc869290880d07b71e%2Fe999ed7796124b4ba95e483edf6cc182?format=webp&width=800"
+                                  alt="Follow Up Boss logo"
+                                  style="height: 28px; width: auto; display: block; object-fit: contain;"
+                                />
+                                <img
+                                  v-else-if="n === 2"
+                                  src="https://cdn.builder.io/api/v1/image/assets%2F5aeb07ce25f84dbc869290880d07b71e%2Fe1e0d2b2dedf4f5c99650544aa5db11f?format=webp&width=800"
+                                  alt="HubSpot logo"
+                                  style="height: 28px; width: auto; display: block; object-fit: contain;"
+                                />
+                                <img
+                                  v-else-if="n === 3"
+                                  src="https://cdn.builder.io/api/v1/image/assets%2F5aeb07ce25f84dbc869290880d07b71e%2F12a89d7381b9422bb8e5b31e99815f59?format=webp&width=800"
+                                  alt="Insightly logo"
+                                  style="height: 33px; width: auto; display: block; object-fit: contain;"
+                                />
+                                <img
+                                  v-else-if="n === 4"
+                                  src="https://commons.wikimedia.org/wiki/Special:FilePath/Pipedrive_logo.svg"
+                                  alt="Pipedrive logo"
+                                  style="height: 56px; width: auto; display: block; object-fit: contain; filter: brightness(0) invert(1);"
+                                />
+                                <img
+                                  v-else-if="n === 5"
+                                  src="https://cdn.builder.io/api/v1/image/assets%2F5aeb07ce25f84dbc869290880d07b71e%2F3019387748a04b48af354bc9f50e69b2?format=webp&width=800"
+                                  alt="Salesforce logo"
+                                  style="height: 56px; width: auto; display: block; object-fit: contain;"
+                                />
+                                <img
+                                  v-else-if="n === 6"
+                                  src="https://cdn.builder.io/api/v1/image/assets%2F5aeb07ce25f84dbc869290880d07b71e%2Fc76e447676844822add4c32826ad616f?format=webp&width=800"
+                                  alt="SugarCRM logo"
+                                  style="height: 28px; width: auto; display: block; object-fit: contain;"
+                                />
+                                <img
+                                  v-else-if="n === 7"
+                                  src="https://cdn.builder.io/api/v1/image/assets%2F5aeb07ce25f84dbc869290880d07b71e%2Ffeb76e03801644de813c9e6913bb9fc7?format=webp&width=800"
+                                  alt="Zendesk logo"
+                                  style="height: 28px; width: auto; display: block; object-fit: contain;"
+                                />
+                                <img
+                                  v-else
+                                  src="https://cdn.builder.io/api/v1/image/assets%2F5aeb07ce25f84dbc869290880d07b71e%2F711ac6df51024c5c9eabc4321b5595a1?format=webp&width=800"
+                                  alt="Zoho logo"
+                                  style="height: calc(28px * 4 / 3); width: auto; display: block; object-fit: contain; background: transparent;"
+                                />
+                              </Button>
+                            </div>
+                          </template>
+                        </Card>
+                      </div>
+                    </div>
+                  </template>
                 </ChatMessage>
 
                 <!-- Call Separator -->
@@ -34,13 +128,129 @@
               </template>
             </div>
 
-            <!-- File Upload for Returning Users - now embedded in chat message instead -->
+            <!-- Interaction content (file upload/CRM) moved to panel above chat input -->
 
 
           </div>
 
+          <!-- CRM Sign-in Modal -->
+          <Dialog v-model:visible="showCrmModal" modal :header="`Connect ${selectedCrmName}`" :style="{ width: '28rem' }" :breakpoints="{ '960px': '90vw' }">
+            <div class="flex flex-col gap-3">
+              <div class="text-sm" style="color: var(--p-surface-200)">Sign in to your {{ selectedCrmName }} account</div>
+              <div class="flex flex-col gap-2">
+                <label class="text-sm" for="crm-email">Email</label>
+                <InputText id="crm-email" v-model="crmEmail" class="w-full" placeholder="you@company.com" />
+              </div>
+              <div class="flex flex-col gap-2">
+                <label class="text-sm" for="crm-pass">Password / API Key</label>
+                <Password id="crm-pass" v-model="crmPassword" toggleMask :feedback="false" class="w-full" :inputStyle="{ width: '100%' }" />
+              </div>
+            </div>
+            <template #footer>
+              <div class="flex items-center justify-end gap-2 w-full">
+                <Button label="Cancel" severity="secondary" @click="showCrmModal = false" />
+                <Button label="Connect" icon="pi pi-check" @click="connectCrm" :disabled="!crmEmail || !crmPassword" />
+              </div>
+            </template>
+          </Dialog>
+
+          <!-- Interaction Panel: File Upload & CRM Connect -->
+          <div v-if="!showCoachCarousel && !showDialer && !hasUploadedFile && !crmConnected && ((welcomeTypingComplete && !isSignedIn) || (isSignedIn && showFileUploadForReturningUser))" class="mt-2 pt-5 flex justify-center">
+            <div class="w-[70%]">
+              <div v-if="!selectedInteraction" class="grid grid-cols-2 gap-3">
+                <Button label="Upload contacts" icon="pi pi-upload" severity="secondary" class="w-full" @click="selectedInteraction = 'upload'" />
+                <Button label="Connect your CRM" icon="pi pi-database" severity="primary" class="w-full" @click="selectedInteraction = 'crm'" />
+              </div>
+              <div v-else>
+                <div v-if="selectedInteraction === 'upload'" class="w-full">
+                  <FileUpload
+                    closable
+                    @close="selectedInteraction = null"
+                    height="calc(8.6667rem - 20px)"
+                    :no-top-margin="true"
+                    @trigger-upload="simulateFileUpload"
+                    @file-selected="onFileSelect"
+                    @file-dropped="simulateFileUpload"
+                  />
+                </div>
+                <div v-else class="w-full">
+                  <Card class="w-full" :pt="{ root: { style: { background: 'var(--p-surface-800)', border: '1px solid var(--p-surface-600)', borderRadius: '8px', height: 'calc(13rem - 20px)', display: 'flex', flexDirection: 'column' } }, body: { style: { flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' } } }">
+                    <template #title>
+                      <div class="flex items-center justify-between" style="padding-bottom: 10px;">
+                        <span>Connect your CRM</span>
+                        <Button text severity="secondary" icon="pi pi-times" aria-label="Close selection" @click="selectedInteraction = null" />
+                      </div>
+                    </template>
+                    <template #content>
+                      <div class="grid grid-cols-4 w-full h-full items-center justify-items-center" style="column-gap: 18px; row-gap: 6px;">
+                        <Button
+                          v-for="n in 8"
+                          :key="n"
+                          text
+                          class="p-0"
+                          :pt="{ root: { style: { background: 'transparent', border: 'none', padding: 0 } } }"
+                          :aria-label="n === 1 ? 'Connect Follow Up Boss' : n === 2 ? 'Connect HubSpot' : n === 3 ? 'Connect Insightly' : n === 4 ? 'Connect Pipedrive' : n === 5 ? 'Connect Salesforce' : n === 6 ? 'Connect SugarCRM' : n === 7 ? 'Connect Zendesk' : 'Connect Zoho'"
+                          @click="n === 1 ? openCrmModal('Follow Up Boss') : n === 2 ? openCrmModal('HubSpot') : n === 3 ? openCrmModal('Insightly') : n === 4 ? openCrmModal('Pipedrive') : n === 5 ? openCrmModal('Salesforce') : n === 6 ? openCrmModal('SugarCRM') : n === 7 ? openCrmModal('Zendesk') : openCrmModal('Zoho')"
+                        >
+                          <img
+                            v-if="n === 1"
+                            src="https://cdn.builder.io/api/v1/image/assets%2F5aeb07ce25f84dbc869290880d07b71e%2Fe999ed7796124b4ba95e483edf6cc182?format=webp&width=800"
+                            alt="Follow Up Boss logo"
+                            style="height: 28px; width: auto; display: block; object-fit: contain;"
+                          />
+                          <img
+                            v-else-if="n === 2"
+                            src="https://cdn.builder.io/api/v1/image/assets%2F5aeb07ce25f84dbc869290880d07b71e%2Fe1e0d2b2dedf4f5c99650544aa5db11f?format=webp&width=800"
+                            alt="HubSpot logo"
+                            style="height: 28px; width: auto; display: block; object-fit: contain;"
+                          />
+                          <img
+                            v-else-if="n === 3"
+                            src="https://cdn.builder.io/api/v1/image/assets%2F5aeb07ce25f84dbc869290880d07b71e%2F12a89d7381b9422bb8e5b31e99815f59?format=webp&width=800"
+                            alt="Insightly logo"
+                            style="height: 33px; width: auto; display: block; object-fit: contain;"
+                          />
+                          <img
+                            v-else-if="n === 4"
+                            src="https://commons.wikimedia.org/wiki/Special:FilePath/Pipedrive_logo.svg"
+                            alt="Pipedrive logo"
+                            style="height: 56px; width: auto; display: block; object-fit: contain; filter: brightness(0) invert(1);"
+                          />
+                          <img
+                            v-else-if="n === 5"
+                            src="https://cdn.builder.io/api/v1/image/assets%2F5aeb07ce25f84dbc869290880d07b71e%2F3019387748a04b48af354bc9f50e69b2?format=webp&width=800"
+                            alt="Salesforce logo"
+                            style="height: 56px; width: auto; display: block; object-fit: contain;"
+                          />
+                          <img
+                            v-else-if="n === 6"
+                            src="https://cdn.builder.io/api/v1/image/assets%2F5aeb07ce25f84dbc869290880d07b71e%2Fc76e447676844822add4c32826ad616f?format=webp&width=800"
+                            alt="SugarCRM logo"
+                            style="height: 28px; width: auto; display: block; object-fit: contain;"
+                          />
+                          <img
+                            v-else-if="n === 7"
+                            src="https://cdn.builder.io/api/v1/image/assets%2F5aeb07ce25f84dbc869290880d07b71e%2Ffeb76e03801644de813c9e6913bb9fc7?format=webp&width=800"
+                            alt="Zendesk logo"
+                            style="height: 28px; width: auto; display: block; object-fit: contain;"
+                          />
+                          <img
+                            v-else
+                            src="https://cdn.builder.io/api/v1/image/assets%2F5aeb07ce25f84dbc869290880d07b71e%2F711ac6df51024c5c9eabc4321b5595a1?format=webp&width=800"
+                            alt="Zoho logo"
+                            style="height: calc(28px * 4 / 3); width: auto; display: block; object-fit: contain; background: transparent;"
+                          />
+                        </Button>
+                      </div>
+                    </template>
+                  </Card>
+                </div>
+              </div>
+            </div>
+          </div>
+
           <!-- Action Buttons - positioned above chat input -->
-          <div v-if="showActionButtons" class="mt-2 pt-5 flex justify-center">
+          <div v-if="showActionButtons && !actionButtonsUsed" class="mt-2 pt-5 flex justify-center">
             <div class="w-[70%]">
               <ActionButtons
                 @action-selected="handleActionButton"
@@ -62,12 +272,12 @@
           </div>
 
           <!-- Contact Preview Buttons - always visible when active -->
-          <div v-if="showContactPreviewButtons" class="mt-2 pt-5 flex justify-center">
+          <div v-if="showContactPreviewButtons && !contactPreviewButtonsUsed" class="mt-2 pt-5 flex justify-center">
             <div class="w-[70%] flex gap-3">
               <Button
                 @click="handleLooksGood"
                 severity="primary"
-                label="Looks Good"
+                label="Contact Looks Good"
                 class="flex-1 px-6 py-3 font-semibold"
                 tabindex="3"
               />
@@ -81,8 +291,111 @@
             </div>
           </div>
 
+          <!-- Call Now CTA - appears after leads list response -->
+          <div v-if="showCallNowCta && !showEmailDraftsCta && lastAIContains('Here are 10 leads not called in the last 3 weeks')" class="mt-2 pt-5 flex justify-center">
+            <div class="w-[70%] flex justify-center">
+              <div class="w-full grid grid-cols-2 gap-3">
+                <!-- Top-left primary -->
+                <Button label="Yes let's call them now" icon="pi pi-phone" @click="startDialerFromPrompt" class="w-full px-6 py-3 font-semibold" />
+                <!-- Top-right secondary -->
+                <Button v-if="isSignedIn" label="Send Follow-up Emails" severity="secondary" @click="sendFollowUpEmails" class="w-full px-5 py-3 font-medium" />
+                <!-- Bottom-left secondary -->
+                <Button v-if="isSignedIn" label="Save as Call List" severity="secondary" @click="saveAsCallList" class="w-full px-5 py-3 font-medium" />
+                <!-- Bottom-right secondary -->
+                <Button v-if="isSignedIn" label="Not Now" severity="secondary" @click="dismissCallOptions" class="w-full px-5 py-3 font-medium" />
+              </div>
+            </div>
+          </div>
+
+          <!-- New Leads Added This Week CTA -->
+          <div v-if="showNewLeadsCta && lastAIContains(`Here are new leads added this week that haven't been contacted yet`)" class="mt-2 pt-5 flex justify-center">
+            <div class="w-[70%] flex justify-center">
+              <div class="w-full grid grid-cols-2 gap-3">
+                <!-- Top-left primary -->
+                <Button label="Start New Lead Dial Session" icon="pi pi-phone" @click="startNewLeadDialSession" class="w-full px-6 py-3 font-semibold" />
+                <!-- Top-right secondary -->
+                <Button v-if="isSignedIn" label="Send Welcome Emails First" severity="secondary" @click="sendWelcomeEmailsFirst" class="w-full px-5 py-3 font-medium" />
+                <!-- Bottom-left secondary -->
+                <Button v-if="isSignedIn" label="Schedule for Later" severity="secondary" @click="scheduleForLater" class="w-full px-5 py-3 font-medium" />
+                <!-- Bottom-right secondary -->
+                <Button v-if="isSignedIn" label="Not Now" severity="secondary" @click="dismissNewLeadOptions" class="w-full px-5 py-3 font-medium" />
+              </div>
+            </div>
+          </div>
+
+          <!-- Email Drafts Actions (buttons only) -->
+          <div v-if="showEmailDraftsCta" class="mt-2 pt-3 flex justify-center">
+            <div class="w-[70%] flex justify-center">
+              <div class="w-full grid grid-cols-2 gap-3">
+                <Button label="Send Emails" icon="pi pi-send" @click="sendSelectedEmails" class="w-full px-6 py-3 font-semibold" />
+                <Button label="Save For Later" severity="secondary" @click="saveEmailsForLater" class="w-full px-6 py-3 font-medium" />
+              </div>
+            </div>
+          </div>
+
+          <!-- Yesterday No-Answer CTA -->
+          <div v-if="showYesterdayNoAnswerCta && lastAIContains(`Here are prospects you called yesterday who didn't answer`)" class="mt-2 pt-5 flex justify-center">
+            <div class="w-[70%] flex justify-center">
+              <div class="w-full grid grid-cols-2 gap-3">
+                <!-- Top-left primary -->
+                <Button label="Start Follow-up Calls" icon="pi pi-phone" @click="startFollowUpCalls" class="w-full px-6 py-3 font-semibold" />
+                <!-- Top-right secondary -->
+                <Button v-if="isSignedIn" label="Send Text Messages" severity="secondary" @click="sendTextsToNoAnswers" class="w-full px-5 py-3 font-medium" />
+                <!-- Bottom-left secondary -->
+                <Button v-if="isSignedIn" label="Try at Different Time" severity="secondary" @click="tryDifferentTime" class="w-full px-5 py-3 font-medium" />
+                <!-- Bottom-right secondary -->
+                <Button v-if="isSignedIn" label="Skip These" severity="secondary" @click="skipTheseNoAnswers" class="w-full px-5 py-3 font-medium" />
+              </div>
+            </div>
+          </div>
+
+          <!-- Today's Follow-ups CTA -->
+          <div v-if="showTodayFollowupsCta && lastAIContains(`Here are today's scheduled callbacks`)" class="mt-2 pt-5 flex justify-center">
+            <div class="w-[70%] flex justify-center">
+              <div class="w-full grid grid-cols-2 gap-3">
+                <!-- Top-left primary -->
+                <Button label="Call in Order of Time" icon="pi pi-phone" @click="callInOrderOfTime" class="w-full px-6 py-3 font-semibold" />
+                <!-- Top-right secondary -->
+                <Button v-if="isSignedIn" label="Call Highest Priority First" severity="secondary" @click="callHighestPriorityFirst" class="w-full px-5 py-3 font-medium" />
+                <!-- Bottom-left secondary -->
+                <Button v-if="isSignedIn" label="Send Reminder Emails" severity="secondary" @click="sendReminderEmails" class="w-full px-5 py-3 font-medium" />
+                <!-- Bottom-right secondary -->
+                <Button v-if="isSignedIn" label="Reschedule All" severity="secondary" @click="rescheduleAllFollowups" class="w-full px-5 py-3 font-medium" />
+              </div>
+            </div>
+          </div>
+
+          <!-- High Attempts Without Live Answer CTA -->
+          <div v-if="showHighAttemptsCta && lastAIContains('Here are contacts with 5+ call attempts without a live answer')" class="mt-2 pt-5 flex justify-center">
+            <div class="w-[70%] flex justify-center">
+              <div class="w-full grid grid-cols-2 gap-3">
+                <!-- Top-left primary -->
+                <Button label="Switch to Email" icon="pi pi-envelope" @click="switchToEmailHighAttempts" class="w-full px-6 py-3 font-semibold" />
+                <!-- Top-right secondary -->
+                <Button v-if="isSignedIn" label="Try SMS Instead" severity="secondary" @click="trySmsInsteadHighAttempts" class="w-full px-5 py-3 font-medium" />
+                <!-- Bottom-left secondary -->
+                <Button v-if="isSignedIn" label="Try Different Times" severity="secondary" @click="tryDifferentTimesHighAttempts" class="w-full px-5 py-3 font-medium" />
+                <!-- Bottom-right secondary -->
+                <Button v-if="isSignedIn" label="Move to Inactive" severity="secondary" @click="moveToInactiveHighAttempts" class="w-full px-5 py-3 font-medium" />
+              </div>
+            </div>
+          </div>
+
+          <!-- Create Account CTA - shown after upload or CRM connect for new users -->
+          <div v-if="showCreateAccountCTA && !isSignedIn" class="mt-2 pt-5 flex justify-center">
+            <div class="w-[70%] flex justify-center">
+              <Button
+                @click="proceedToCreateAccount"
+                severity="primary"
+                label="Create Account to Continue"
+                class="w-1/2 px-8 py-3 font-semibold"
+                tabindex="3"
+              />
+            </div>
+          </div>
+
           <!-- Phone Verification Button - always visible when active -->
-          <div v-if="showPhoneVerificationButton" class="mt-2 pt-5 flex justify-center">
+          <div v-if="showPhoneVerificationButton && verificationStep === 'default'" class="mt-2 pt-5 flex justify-center">
             <div class="w-[70%] flex justify-center">
               <Button
                 @click="handlePhoneVerification"
@@ -95,7 +408,7 @@
           </div>
 
           <!-- Verification Code Buttons - always visible when active -->
-          <div v-if="showVerificationButtons" class="mt-2 pt-5 flex justify-center">
+          <div v-if="showVerificationButtons && verificationCodeTypingComplete && !phoneVerified && verificationStep === 'enter-code'" class="mt-2 pt-5 flex justify-center">
             <div class="w-[70%] flex gap-3">
               <Button
                 @click="handleResendCode"
@@ -114,8 +427,46 @@
             </div>
           </div>
 
-          <!-- Start Dialing Button - always visible when active -->
-          <div v-if="showStartDialingButton" class="mt-2 pt-5 flex justify-center">
+          <!-- Caller ID Choice Buttons (shown after verification message) -->
+          <div v-if="showCallerIdChoiceButtons" class="mt-2 pt-5 flex justify-center">
+            <div class="w-[70%] flex gap-3">
+              <Button
+                @click="selectCallerId('personal')"
+                severity="secondary"
+                label="Use Personal Caller ID"
+                class="flex-1 px-6 py-3 font-semibold"
+                tabindex="3"
+              />
+              <Button
+                @click="selectCallerId('armor')"
+                severity="primary"
+                label="Use ARMOR® Number (Recommended)"
+                class="flex-1 px-6 py-3 font-semibold"
+                tabindex="4"
+              />
+            </div>
+          </div>
+
+          <!-- Audio Check Step (shown before Start Dialing) -->
+          <div v-if="showStartDialingButton && !audioCheckPassed" class="mt-2 pt-5 flex justify-center">
+            <div class="w-[70%] flex flex-col items-center gap-3">
+              <div class="text-sm text-gray-300 flex items-center gap-2">
+                <i class="pi pi-microphone" aria-hidden="true"></i>
+                <i class="pi pi-volume-up" aria-hidden="true"></i>
+                <span>Before you start, please test your mic and speakers.</span>
+              </div>
+              <Button
+                icon="pi pi-check"
+                label="Run Audio Check"
+                class="w-1/2 py-3 font-semibold"
+                @click="showMicSpeakerCheck = true"
+                tabindex="3"
+              />
+            </div>
+          </div>
+
+          <!-- Start Dialing Button (only after audio check passes) -->
+          <div v-if="showStartDialingButton && audioCheckPassed" class="mt-2 pt-5 flex justify-center">
             <div class="w-[70%] flex justify-center">
               <Button
                 @click="handleStartDialing"
@@ -128,7 +479,7 @@
           </div>
 
           <!-- Disposition Buttons - always visible when active -->
-          <div v-if="showDispositionButtons && showDialer && !showContinueQueueButton" class="mt-2 pt-5 flex justify-center">
+          <div v-if="showDispositionButtons && showDialer && !showContinueQueueButton" class="mt-1 pt-2 flex justify-center">
             <!-- Voicemail Disposition Buttons for George Sample -->
             <div v-if="isVoicemailScenario" class="w-[70%] grid grid-cols-3 gap-3">
               <Button
@@ -197,13 +548,22 @@
           </div>
 
           <!-- Load New File Button - shown when queue is completed -->
-          <div v-if="showLoadNewFileButton" class="mt-2 pt-5 flex justify-center">
+          <div v-if="showLoadNewFileButton || (isPracticeMode && !showDialer)" class="mt-2 pt-5 flex justify-center">
             <div class="w-[70%] flex justify-center">
               <Button
+                v-if="!isPracticeMode"
                 @click="triggerFileUpload"
                 severity="secondary"
                 label="Load New File"
                 icon="pi pi-upload"
+                class="w-1/2 px-6 py-3 font-semibold flex items-center justify-center gap-2"
+              />
+              <Button
+                v-else
+                @click="returnToCoachesSelection"
+                severity="secondary"
+                label="Return to coaches selection"
+                icon="pi pi-users"
                 class="w-1/2 px-6 py-3 font-semibold flex items-center justify-center gap-2"
               />
             </div>
@@ -221,14 +581,79 @@
           </div>
 
           <!-- Chat Input - positioned at bottom -->
-          <div class="mt-2 pt-2.5">
+          <div class="mt-2 pt-2.5 mb-4">
             <ChatInput
               ref="chatInputRef"
               :customPlaceholder="getPlaceholderText()"
+              :showPromptLibraryIcon="isSignedIn"
+              @open-prompt-library="openPromptLibrary"
               @send-message="sendMessage"
               @voice-input="handleVoiceInput"
             />
           </div>
+
+          <!-- Prompt Library Dialog -->
+          <Dialog v-model:visible="showPromptLibrary" modal appendTo="body" header="Prompt Library" :style="{ width: '51%', zIndex: 1000 }" :pt="{ root: { style: { marginLeft: '50px', overflow: 'hidden' } }, header: { style: { padding: '20px 20px 10px' } }, content: { style: { height: '345px', overflowY: 'auto', overflowX: 'hidden', paddingRight: '12px', paddingBottom: '10px', boxSizing: 'border-box', scrollbarGutter: 'stable', borderBottomRightRadius: 'inherit' } } }" :breakpoints="{ '960px': '95vw' }">
+            <div class="flex flex-col gap-3 text-left w-full">
+              <div class="sticky top-0 z-10 pt-1 pb-1">
+                <InputText v-model="promptSearch" placeholder="Search prompts..." class="w-full" :pt="{ root: { style: { background: 'var(--p-surface-800)', border: '1px solid var(--p-surface-600)', color: 'var(--p-surface-0)' } } }" />
+              </div>
+              <div v-if="filteredFavoritePrompts.length" class="w-full">
+                <div class="mb-2 font-semibold" style="color: var(--p-blue-500); font-size: 14px;">Favorites</div>
+                <div class="flex flex-col gap-1 w-full">
+                  <div v-for="(p, i) in filteredFavoritePrompts" :key="'fav-'+i" class="w-full flex items-center justify-between" :style="{ fontSize: '14px', lineHeight: '18px' }">
+                    <a href="#" @click.prevent="selectPrompt(p)" class="inline-flex items-center gap-2 no-underline hover:no-underline" style="padding-left: 25px;" :aria-label="p">
+                      <i class="pi pi-circle-fill" aria-hidden="true" style="font-size: 0.3rem; color: var(--p-surface-0);"></i>
+                      <span style="color: var(--p-surface-0);">{{ p }}</span>
+                    </a>
+                    <Button
+                      @click="toggleFavorite(p)"
+                      link
+                      rounded
+                      severity="secondary"
+                      class="w-5 h-5"
+                      :pt="{ root: { style: { padding: '0', width: '20px', height: '20px', minWidth: '20px !important', minHeight: '20px !important', lineHeight: '20px', borderRadius: '50%', background: 'transparent', boxShadow: 'none', '--p-button-hover-background': 'transparent', '--p-button-active-background': 'transparent', '--p-button-padding-x': '0', '--p-button-padding-y': '0', '--p-button-icon-only-width': '20px' } }, icon: { style: { fontSize: '1rem' } } }"
+                      :icon="isFavorite(p) ? 'pi pi-star-fill' : 'pi pi-star'"
+                      :aria-label="isFavorite(p) ? 'Remove from favorites' : 'Add to favorites'"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div v-for="(section, si) in filteredPromptSections" :key="si" class="w-full">
+                <div class="mb-2 text-sm font-semibold">
+                  <Button
+                    @click="toggleSection(section.title)"
+                    link
+                    severity="secondary"
+                    :label="section.title"
+                    icon="pi pi-chevron-right"
+                    class="p-0 inline-flex items-center gap-2 no-underline hover:no-underline"
+                    :pt="{ root: { style: { padding: '0', background: 'transparent', boxShadow: 'none', color: 'var(--p-blue-500)', minWidth: '20px !important', minHeight: '20px !important', textDecoration: 'none' } }, icon: { style: { fontSize: '0.8rem', color: 'var(--p-blue-500)', transform: isSectionCollapsed(section.title) ? 'rotate(0deg)' : 'rotate(90deg)' } }, label: { style: { color: 'var(--p-blue-500)', textDecoration: 'none', fontSize: '14px' } } }"
+                    :aria-label="(isSectionCollapsed(section.title) ? 'Expand ' : 'Collapse ') + section.title"
+                  />
+                </div>
+                <div v-if="!isSectionCollapsed(section.title) || promptSearch.trim()" class="flex flex-col gap-1 w-full">
+                  <div v-for="(p, i) in section.items" :key="i" class="w-full flex items-center justify-between" :style="{ fontSize: '14px', lineHeight: '18px' }">
+                    <a href="#" @click.prevent="selectPrompt(p)" class="inline-flex items-center gap-2 no-underline hover:no-underline" style="padding-left: 25px;" :aria-label="p">
+                      <i class="pi pi-circle-fill" aria-hidden="true" style="font-size: 0.3rem; color: var(--p-surface-0);"></i>
+                      <span style="color: var(--p-surface-0);">{{ p }}</span>
+                    </a>
+                    <Button
+                      @click="toggleFavorite(p)"
+                      link
+                      rounded
+                      severity="secondary"
+                      class="w-5 h-5"
+                      :pt="{ root: { style: { padding: '0', width: '20px', height: '20px', minWidth: '20px !important', minHeight: '20px !important', lineHeight: '20px', borderRadius: '50%', background: 'transparent', boxShadow: 'none', '--p-button-hover-background': 'transparent', '--p-button-active-background': 'transparent', '--p-button-padding-x': '0', '--p-button-padding-y': '0', '--p-button-icon-only-width': '20px' } }, icon: { style: { fontSize: '1rem' } } }"
+                      :icon="isFavorite(p) ? 'pi pi-star-fill' : 'pi pi-star'"
+                      :aria-label="isFavorite(p) ? 'Remove from favorites' : 'Add to favorites'"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </Dialog>
 
           </div>
         </div>
@@ -247,6 +672,8 @@
             :queueCompletionReady="queueCompletionReady"
             :currentContactIndex="currentContactIndex"
             :totalContacts="contacts.length"
+            :coachParameter="coachParameter"
+            :aiCoachEnabled="aiCoachEnabled"
             @call-back="handleCallBack"
             @next-contact="handleNextContact"
             @hang-up="handleHangUp"
@@ -255,10 +682,140 @@
             @keypad="handleKeypad"
             @pause-queue="handlePauseQueue"
             @complete-queue="handleCompleteQueue"
+            @ai-coach-toggle="handleAICoachToggle"
+            @transfer="handleTransfer"
           />
+        </div>
+
+        <!-- Coach Info Panel -->
+        <div v-if="showCoachInfoPanel" class="fixed top-0 right-0 w-1/3 h-screen z-20 bg-gray-900 border-l border-gray-700">
+          <div class="h-full flex flex-col">
+            <div class="flex items-center justify-between p-4 border-b border-gray-700 bg-gray-900/90 sticky top-0 z-10">
+              <div class="flex items-center gap-3 min-w-0">
+                <img v-if="selectedCoachForInfo?.avatarUrl" :src="selectedCoachForInfo.avatarUrl" :alt="selectedCoachForInfo.displayName" class="w-24 h-24 rounded-full object-cover" />
+                <div v-else class="w-24 h-24 rounded-full bg-gradient-to-br from-blue-400 to-purple-500 flex items-center justify-center text-white font-semibold text-3xl">
+                  {{ selectedCoachForInfo?.displayName?.charAt(0) || 'C' }}
+                </div>
+                <h3 class="text-2xl font-semibold truncate">{{ selectedCoachForInfo?.displayName || 'Coach' }}</h3>
+              </div>
+              <div class="flex items-center gap-2">
+                <Button v-if="selectedCoachForInfo" :label="'Select ' + selectedCoachFirstName + ' as your coach'" size="small" severity="primary" @click="selectCoachFromPanel" :aria-label="'Select ' + selectedCoachFirstName + ' as your coach'" />
+                <Button icon="pi pi-times" text severity="secondary" @click="closeCoachInfoPanel" aria-label="Close coach info" />
+              </div>
+            </div>
+            <div class="p-4 overflow-y-auto flex-1 space-y-4">
+              <div v-if="selectedCoachForInfo" class="space-y-4">
+
+                <div v-if="selectedCoachForInfo.videoId" class="space-y-2">
+                  <div class="aspect-video rounded-lg overflow-hidden bg-black/30">
+                    <iframe
+                      :src="`https://www.youtube.com/embed/${selectedCoachForInfo.videoId}?autoplay=1&mute=1&playsinline=1`"
+                      frameborder="0"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allowfullscreen
+                      class="w-full h-full"
+                    ></iframe>
+                  </div>
+                </div>
+
+                <div v-if="selectedCoachForInfo.highlights && selectedCoachForInfo.highlights.length" class="space-y-1 pl-5 py-[10px]">
+                  <label class="text-xl font-medium">Highlights</label>
+                  <ul class="text-xs text-gray-300 list-disc list-inside">
+                    <li v-for="(h,i) in selectedCoachForInfo.highlights" :key="i">{{ h }}</li>
+                  </ul>
+                </div>
+
+
+                <!-- Basic Information -->
+                <div class="space-y-2 pl-5 border-t border-white/10 pt-[22px] pb-[10px] mt-3">
+                  <h4 class="text-xl font-medium">Basic Information</h4>
+                  <ul class="text-xs text-gray-300 list-disc list-inside">
+                    <li>Role: Sales Coach & Speaker</li>
+                    <li>Experience: 12+ years</li>
+                    <li>Signature Program: Momentum Calls Framework</li>
+                  </ul>
+                </div>
+
+                <!-- Key Statistics -->
+                <div class="space-y-2 pl-5 border-t border-white/10 pt-[22px] pb-[10px] mt-3">
+                  <h4 class="text-xl font-medium">Key Statistics</h4>
+                  <ul class="text-xs text-gray-300 list-disc list-inside">
+                    <li>Avg. connect-rate lift: 27%</li>
+                    <li>Time-to-first-meeting reduced: 34%</li>
+                    <li>Teams coached: 250+; reps impacted: 10,000+</li>
+                  </ul>
+                </div>
+
+                <!-- Platform Impact -->
+                <div class="space-y-2 pl-5 border-t border-white/10 pt-[22px] pb-[10px] mt-3">
+                  <h4 class="text-xl font-medium">Platform Impact</h4>
+                  <ul class="text-xs text-gray-300 list-disc list-inside">
+                    <li>Prioritizes best-time-to-call windows</li>
+                    <li>Applies objection handling snippets in real time</li>
+                    <li>Auto-generates follow-up tasks with proven cadences</li>
+                  </ul>
+                </div>
+
+                <!-- About Coach -->
+                <div class="space-y-2 pl-5 border-t border-white/10 pt-[22px] pb-[10px] mt-3">
+                  <h4 class="text-xl font-medium">About {{ selectedCoachFirstName }}</h4>
+                  <p class="text-xs text-gray-300">{{ selectedCoachFirstName }} is known for disciplined daily call blocks, clean qualification, and tight follow‑up cycles. Their approach balances energy with structure so reps stay consistent and close more.</p>
+                </div>
+
+                <!-- Industries Served -->
+                <div class="space-y-2 pl-5 border-t border-white/10 pt-[22px] pb-[10px] mt-3">
+                  <h4 class="text-xl font-medium">Industries Served</h4>
+                  <ul class="text-xs text-gray-300 list-disc list-inside">
+                    <li>SaaS</li>
+                    <li>Insurance & Financial Services</li>
+                    <li>Real Estate</li>
+                    <li>Home Services</li>
+                    <li>B2B Services</li>
+                  </ul>
+                </div>
+
+                <!-- Sales Methodology -->
+                <div class="space-y-2 pl-5 border-t border-white/10 pt-[22px] pb-[10px] mt-3">
+                  <h4 class="text-xl font-medium">Sales Methodology</h4>
+                  <ul class="text-xs text-gray-300 list-disc list-inside">
+                    <li>Pattern interrupts to earn attention fast</li>
+                    <li>Discovery that surfaces business impact early</li>
+                    <li>Micro‑commitments that advance every call</li>
+                  </ul>
+                </div>
+
+                <!-- Testimonials -->
+                <div class="space-y-2 pl-5 border-t border-white/10 pt-[22px] pb-[10px] mt-3">
+                  <h4 class="text-xl font-medium">Testimonials</h4>
+                  <div class="text-xs text-gray-300 space-y-2">
+                    <p>“Our connect rate and meetings doubled in 60 days.” — VP Sales, SaaS</p>
+                    <p>“The talk tracks are simple and deadly effective.���� — SDR Lead, Insurance</p>
+                  </div>
+                <div v-if="selectedCoachForInfo?.websiteUrl" class="sticky bottom-0 -mb-4 -mx-4 px-4 py-3 border-t border-gray-700 bg-gray-900/90 flex justify-center">
+                  <a :href="selectedCoachForInfo.websiteUrl" target="_blank" rel="noopener" class="text-link text-sm inline-flex items-center gap-2 text-center"><i class="pi pi-external-link text-sm" aria-hidden="true"></i>Visit {{ selectedCoachForInfo?.displayName }}'s Website</a>
+                </div>
+            </div>
+          </div>
+            </div>
+          </div>
         </div>
       </div>
     </main>
+
+    <!-- Coach Dashboard Page -->
+    <div v-if="showCoachDashboard" class="ml-16 flex flex-col min-h-screen">
+      <div class="flex-1">
+        <CoachDashboard :coachName="dashboardCoachName" />
+      </div>
+      <Footer :showDialer="false" :queuePaused="queuePaused" @skip-to-dialer="skipToDialer" />
+    </div>
+
+    <!-- Student Dashboard Page (blank for now) -->
+    <div v-if="showStudentDashboard" class="ml-16 flex flex-col min-h-screen">
+      <div class="flex-1">
+        <StudentDashboard :coachName="studentCoachName" @back-to-app="closeStudentDashboard" />
+      </div>
+    </div>
 
     <!-- Product Page -->
     <div v-if="currentPage === 'product'" class="ml-16">
@@ -284,8 +841,18 @@
       />
     </div>
 
+    <!-- Coach Management Interface -->
+    <CoachManagement v-if="managementMode === 'admin' && currentPage === 'main' && !showCoachDashboard && !showStudentDashboard" />
+
+    <!-- Coach Creation Page for create-coach URL -->
+    <CoachCreationPage
+      v-if="managementMode === 'create'"
+      @coach-created="handleCoachCreated"
+      @cancel="handleCoachModalClose"
+    />
+
     <!-- Footer -->
-    <Footer v-if="currentPage === 'main'" :style="showDialer ? 'margin-right: 33.333333%' : ''" :showDialer="showDialer" :queuePaused="queuePaused" @skip-to-dialer="skipToDialer" />
+    <Footer v-if="currentPage === 'main' && !managementMode && !showStudentDashboard" :style="(showDialer || showCoachInfoPanel) ? 'margin-right: 33.333333%' : ''" :showDialer="showDialer" :queuePaused="queuePaused" @skip-to-dialer="skipToDialer" />
 
     <!-- Screen Reader Live Region for Announcements -->
     <div
@@ -316,12 +883,13 @@
     />
 
     <!-- Pricing Page -->
-    <PricingPage
-      v-if="showPricingPage"
-      @upgrade-selected="handleUpgradeSelected"
-      @show-payment="showPaymentFromPricing"
-      @close="closePricingPage"
-    />
+    <div v-if="currentPage === 'pricing'" class="ml-16">
+      <PricingPage
+        @upgrade-selected="handleUpgradeSelected"
+        @show-payment="showPaymentFromPricing"
+        @close="closePricingPage"
+      />
+    </div>
 
     <!-- Payment Page -->
     <PaymentPage
@@ -330,8 +898,12 @@
       @close="closePaymentPage"
     />
 
-    <!-- Toast for notifications -->
-    <Toast />
+    <!-- Mic/Speaker Check Modal -->
+    <MicSpeakerCheck
+      :visible="showMicSpeakerCheck"
+      @close="showMicSpeakerCheck = false"
+      @passed="onAudioCheckPassed"
+    />
 
     <!-- Session Summary now displayed in chat area -->
 
@@ -339,51 +911,6 @@
 </template>
 
 <style>
-/* Global Connect Score tooltip styles */
-.connect-score-tooltip {
-  position: relative;
-  cursor: help;
-  border-bottom: 1px dotted #60a5fa;
-  color: #60a5fa !important;
-}
-
-.connect-score-tooltip:hover::after {
-  content: attr(data-tooltip);
-  position: fixed;
-  top: calc(50% - 160px);
-  left: calc(50% + 250px);
-  transform: translate(-50%, -50%);
-  background: #1f2937;
-  color: white;
-  padding: 12px;
-  border-radius: 8px;
-  font-size: 14px;
-  line-height: 1.4;
-  width: 300px;
-  max-width: 90vw;
-  white-space: pre-line;
-  z-index: 99999;
-  border: 1px solid #374151;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-  pointer-events: none;
-}
-
-.connect-score-tooltip:hover::before {
-  content: '';
-  position: fixed;
-  top: calc(50% - 10px);
-  left: calc(50% + 250px);
-  transform: translateX(-50%);
-  border: 6px solid transparent;
-  border-top-color: #374151;
-  z-index: 100000;
-  pointer-events: none;
-}
-
-/* Ensure parent containers don't clip the tooltip */
-.connect-score-tooltip:hover {
-  overflow: visible;
-}
 
 /* Spinner animation for export buttons */
 @keyframes spin {
@@ -393,12 +920,14 @@
 </style>
 
 <script setup lang="ts">
-import { ref, nextTick, computed, onMounted, onUnmounted, type Ref } from 'vue'
-import { useToast } from 'primevue/usetoast'
+import { ref, nextTick, computed, onMounted, onUnmounted, watch, type Ref } from 'vue'
 import { showContactPreview } from './utils/contactPreview'
 import { clearFocusAndEstablishContext, focusChatInput, announceToScreenReader } from './utils/focus'
 import { createChatUtils, type Message } from './utils/chat'
-import { getResponseForKeywords } from './utils/aiResponses'
+import { getResponseForKeywords, AI_RESPONSES } from './utils/aiResponses'
+import { askChatGPT } from './services/openai'
+import { useCoaches } from './composables/useCoaches'
+import type { CoachManagementMode, CoachCreateData } from './types/coach'
 
 // Components
 import Sidebar from './components/Sidebar.vue'
@@ -417,42 +946,184 @@ import PaymentPage from './components/PaymentPage.vue'
 import Footer from './components/Footer.vue'
 import Dialer from './components/Dialer.vue'
 import CallSeparator from './components/CallSeparator.vue'
+import YouTubeVideo from './components/YouTubeVideo.vue'
+import CoachManagement from './components/CoachManagement.vue'
+import CoachCreationPage from './components/CoachCreationPage.vue'
+import CoachCarousel from './components/CoachCarousel.vue'
+import CoachDashboard from './components/CoachDashboard.vue'
+import StudentDashboard from './components/StudentDashboard.vue'
+import MicSpeakerCheck from './components/modals/MicSpeakerCheck.vue'
 
 // PrimeVue Components (adding Button)
 import Button from 'primevue/button'
+import Card from 'primevue/card'
+import Dialog from 'primevue/dialog'
+import InputText from 'primevue/inputtext'
+import Password from 'primevue/password'
+import Listbox from 'primevue/listbox'
 
 // PrimeVue Components
-import Toast from 'primevue/toast'
 
 // Types
+import type { Coach } from './types/coach'
+const selectedCoachFirstName = computed(() => selectedCoachForInfo.value?.displayName?.split(' ')[0] || 'Coach')
+const isPracticeMode = ref<boolean>(false)
+
+// CRM sign-in modal state
+const showCrmModal = ref(false)
+const selectedCrmName = ref('HubSpot')
+const crmConnected = ref<boolean>(false)
+const crmEmail = ref('')
+const crmPassword = ref('')
+const openCrmModal = (name: string) => {
+  selectedCrmName.value = name
+  showCrmModal.value = true
+}
+const connectCrm = () => {
+  showCrmModal.value = false
+  crmConnected.value = true
+  if (isSignedIn.value) {
+    addAIMessageWithTyping(`You're now connected to <strong>${selectedCrmName.value}</strong>. We'll start analyzing your data.`)
+    scrollToBottom()
+  } else {
+    addAIMessageWithTyping(`Success! <strong>${selectedCrmName.value}</strong> is connected. We'll begin analyzing your data, but first please create an account to continue.`)
+    showCreateAccountCTA.value = true
+    scrollToBottom()
+  }
+}
+
+const returnToCoachesSelection = (): void => {
+  isPracticeMode.value = false
+  showDialer.value = false
+  showLoadNewFileButton.value = false
+  showContinueQueueButton.value = false
+  setCurrentCoach(null)
+  showCoachCarousel.value = true
+  currentPage.value = 'main'
+  const newUrl = `${window.location.pathname}?coach=all`
+  window.history.replaceState({}, '', newUrl)
+  messages.value = [
+    {
+      type: 'ai',
+      content: [
+        'Welcome to AI Dialer by PhoneBurner.<br><br>I\'m here to help you call with confidence and close more deals.<br><br>Choose your sales coach first - everything from your scripts to follow-up strategies will be tailored to their winning approach.'
+      ],
+      typing: false
+    }
+  ]
+  nextTick(() => scrollToBottom())
+}
+
 interface Message {
   type: 'ai' | 'user' | 'separator'
   content: string[]
   contactName?: string
 }
 
-// Toast functionality (only for login/vulcan actions)
-const toast = useToast()
 
-// Connect Score tooltip content
-const connectScoreTooltip = `Connect Score is a premium add-on feature that uses real-world signals to help users prioritize high-value contacts and skip low-quality leads. It scores each phone number as High, Medium, or Low based on:
-
-• Carrier data
-• Engagement history
-• Phone metadata
-
-This lets teams focus their efforts on numbers with the greatest chance of a live answer—improving connect rates, morale, and performance.`
-
-// Helper function to wrap Connect Score text with tooltip
+// Helper function to handle Connect Score text (no tooltip)
 const wrapConnectScoreWithTooltip = (text: string): string => {
-  const tooltipContent = connectScoreTooltip.replace(/'/g, '&#39;').replace(/"/g, '&quot;')
-  return text
-    .replace(/Connect Scores/g, `<span class="connect-score-tooltip" data-tooltip="${tooltipContent}">Connect Scores</span>`)
-    .replace(/Connect Score/g, `<span class="connect-score-tooltip" data-tooltip="${tooltipContent}">Connect Score</span>`)
+  return text // Just return the original text without any wrapping
+}
+
+// Generate dynamic coaching feedback
+const getDynamicCoachingFeedback = (): string => {
+  const coachingMessages = [
+    'Great connection! I heard you building rapport early—that\'s your sweet spot. Next call, try mirroring their pace a bit more to deepen that connection.',
+    'Nice work staying patient through their objections. I noticed you got stronger as the call progressed. Carry that momentum into the next one.',
+    'You handled that beautifully! Your confidence really came through. Next time, try asking one more discovery question before presenting����it\'ll make your close even stronger.',
+    'I loved how you listened for their pain points. Your empathy is one of your strongest assets. Now let\'s work on creating more urgency in your next call.',
+    'Solid call! You kept them engaged throughout. I\'d love to see you slow down just a touch during the value proposition—let it sink in.',
+    'That was textbook rapport building! Your energy is infectious. Next call, try to qualify their budget earlier in the conversation.',
+    'Really strong finish! You didn\'t give up when they hesitated. For your next call, lead with a stronger hook to grab their attention faster.',
+    'I can tell you\'re finding your rhythm! Your questioning technique is improving with each call. Next one, focus on getting them to commit to a specific time.',
+    'Excellent persistence! You turned a \'no\' into a \'maybe\'—that\'s skill. Keep that same energy but try to get more specific about their timeline.',
+    'That call showed real growth! Your objection handling is getting smoother. Next call, trust your instincts and go for the close sooner.'
+  ]
+
+  return coachingMessages[Math.floor(Math.random() * coachingMessages.length)]
+}
+
+// Generate personalized call script
+const generateCallScript = (contact: any): string[] => {
+  const scriptTemplate = AI_RESPONSES.CALL_SCRIPT
+
+  // Replace template variables with actual contact information
+  return scriptTemplate.map(line =>
+    line
+      .replace(/\{\{ contact_name \}\}/g, contact.name || 'there')
+      .replace(/\{\{ your_name \}\}/g, '[Your Name]')
+      .replace(/\{\{ your_company \}\}/g, '[Your Company]')
+      .replace(/\{\{ industry \}\}/g, contact.industry || 'your industry')
+      .replace(/\{\{ contact_company \}\}/g, contact.company || 'your company')
+      .replace(/\{\{ value_statement \}\}/g, 'increase efficiency and reduce costs')
+      .replace(/\{\{ pain_point \}\}/g, contact.industry ? `${contact.industry.toLowerCase()} operations` : 'current processes')
+      .replace(/\{\{ process \}\}/g, contact.industry ? `${contact.industry.toLowerCase()} workflow` : 'your current workflow')
+      .replace(/\{\{ department \}\}/g, contact.title ? contact.title.toLowerCase().includes('sales') ? 'sales process' : 'your operations' : 'your operations')
+  )
+}
+
+// Show call connected message followed by script and objection handling
+const showCallConnectedMessages = (contact: any): void => {
+  // Add coach-specific intro message when coach parameter is set AND AI Coach is enabled
+  if (coachParameter.value && aiCoachEnabled.value) {
+    const getCoachCallMessage = (): string => {
+      switch (coachParameter.value) {
+        case 'jordan-stupar':
+          return 'I\'m on the call with you - let\'s crush this together!'
+        default:
+          return 'I\'m on the call with you...'
+      }
+    }
+
+    addAIMessageWithTyping(getCoachCallMessage())
+
+    // Delay before showing connection message
+    setTimeout(() => {
+      showRegularConnectedMessages(contact)
+    }, 1500)
+    return
+  }
+
+  // Show regular messages for no coach or other coaches
+  showRegularConnectedMessages(contact)
+}
+
+// Helper function for regular connected messages
+const showRegularConnectedMessages = (contact: any): void => {
+  if (!aiCoachEnabled.value) {
+    // Just show basic connection message if AI Coach is disabled
+    addAIMessageWithTyping('Great! You\'re connected!')
+    scrollToBottom()
+    return
+  }
+
+  // Combine connection message and script into single bubble with proper spacing
+  const combinedMessage = [
+    'Great! You\'re connected!',
+    '<br>',
+    'Script:',
+    '<span style="color: #fbbf24; font-style: italic;">[The AI learns the nuances of this coach\'s approach to generate contextual scripts that reflect their unique sales philosophy, language patterns, and proven conversation starters tailored to this specific prospect.]</span>'
+  ]
+
+  addAIMessageWithTyping(combinedMessage)
+  scrollToBottom()
+
+  // Wait 3 seconds then show objection handling (only if AI Coach is still enabled)
+  setTimeout(() => {
+    if (aiCoachEnabled.value) {
+      addAIMessageWithTyping(AI_RESPONSES.OBJECTION_RESPONSE)
+      scrollToBottom()
+    }
+  }, 3000)
 }
 
 // Reactive data
 const currentPage = ref<string>('main') // 'main', 'product', 'login', 'signup'
+const showCoachDashboard = ref(false)
+const dashboardCoachName = ref<string | null>(null)
+const showStudentDashboard = ref(false)
+const studentCoachName = ref<string | null>(null)
 const chatInputRef = ref<any>(null)
 const chatMessages = ref<HTMLElement | null>(null)
 const screenReaderAnnouncements = ref<HTMLElement | null>(null)
@@ -461,21 +1132,50 @@ const hasUploadedFile = ref<boolean>(false)
 const showSignupButtons = ref<boolean>(false)
 const showTermsModal = ref<boolean>(false)
 const showAccountCreation = ref<boolean>(false)
-const showPricingPage = ref<boolean>(false)
 const showPaymentPage = ref<boolean>(false)
+const showMicSpeakerCheck = ref<boolean>(false)
+const audioCheckPassed = ref<boolean>(false)
+const showCreateAccountCTA = ref<boolean>(false)
 const isSignedIn = ref<boolean>(false)
 const isReturningUser = ref<boolean>(false) // Track if user logged in vs created new account
 const showActionButtons = ref<boolean>(false)
+const showCallNowCta = ref<boolean>(false)
+const showNewLeadsCta = ref<boolean>(false)
+const showYesterdayNoAnswerCta = ref<boolean>(false)
+const showTodayFollowupsCta = ref<boolean>(false)
+const showHighAttemptsCta = ref<boolean>(false)
+const showEmailDraftsCta = ref<boolean>(false)
+const selectedInteraction = ref<'upload' | 'crm' | null>(null)
+const emailTemplates = ref<Array<{ label: string; value: string }>>([
+  { label: 'Polite Check-in', value: 'Polite Check-in' },
+  { label: 'We Missed You', value: 'We Missed You' },
+  { label: 'Value Follow-up', value: 'Value Follow-up' },
+  { label: 'Case Study Share', value: 'Case Study Share' },
+  { label: 'Last Attempt Before Pause', value: 'Last Attempt Before Pause' }
+])
+const selectedEmailTemplate = ref<string | null>(emailTemplates.value[0].value)
 const showFileUploadForReturningUser = ref<boolean>(false)
+const welcomeTypingComplete = ref<boolean>(false)
+const congratulationsTypingComplete = ref<boolean>(false)
+const actionButtonsUsed = ref<boolean>(false)
+const contactPreviewTypingComplete = ref<boolean>(false)
+const contactPreviewButtonsUsed = ref<boolean>(false)
+const connectionAnalysisTypingComplete = ref<boolean>(false)
 const showContactPreviewButtons = ref<boolean>(false)
 const showPhoneVerificationButton = ref<boolean>(false)
+const phoneVerificationButtonUsed = ref<boolean>(false)
+const verificationCodeTypingComplete = ref<boolean>(false)
 const verificationStep = ref<string>('default') // 'default', 'enter-phone', 'enter-code'
 const enteredPhoneNumber = ref<string>('')
 const showVerificationButtons = ref<boolean>(false)
 const phoneVerified = ref<boolean>(false) // Track if phone has been verified in this session
 const showStartDialingButton = ref<boolean>(false)
+const showCallerIdChoiceButtons = ref<boolean>(false)
 const showDialer = ref<boolean>(false)
+const showCoachInfoPanel = ref<boolean>(false)
+const selectedCoachForInfo = ref<Coach | null>(null)
 const showDispositionButtons = ref<boolean>(false)
+const aiCoachEnabled = ref<boolean>(true)
 const showSessionSummary = ref<boolean>(false)
 const showContinueQueueButton = ref<boolean>(false)
 const waitingForTryAgainResponse = ref<boolean>(false)
@@ -491,8 +1191,160 @@ const connectedCalls = ref<number>(0)
 const skippedNumbers = ref<number>(3) // Default for demo
 const callState = ref<string>('idle') // 'idle', 'ringing', 'connected', 'ended'
 const callDuration = ref<number>(0)
+const isManualHangUp = ref<boolean>(false) // Track if hang up was manual vs automatic
 const queueTime = ref<number>(14)
 const showLoadNewFileButton = ref<boolean>(false)
+
+// Prompt Library state
+const showPromptLibrary = ref<boolean>(false)
+const favoritePrompts = ref<string[]>([])
+const isFavorite = (p: string): boolean => favoritePrompts.value.includes(p)
+const toggleFavorite = (p: string): void => {
+  if (isFavorite(p)) {
+    favoritePrompts.value = favoritePrompts.value.filter(x => x !== p)
+  } else {
+    if (!favoritePrompts.value.includes(p)) favoritePrompts.value = [...favoritePrompts.value, p]
+  }
+}
+
+const promptSections = ref<{ title: string; items: string[] }[]>([
+  {
+    title: 'Time-Based Contact Queries',
+    items: [
+      "Show me leads not called in 3 weeks",
+      'Which leads were added this week but not contacted yet?',
+      "Find all prospects I called yesterday who didn't answer",
+      'Show me follow-ups scheduled for today',
+      'Which contacts have I called more than 5 times without a live answer?'
+    ]
+  },
+  {
+    title: 'Performance & Outcome Analysis',
+    items: [
+      'Show me my highest converting lead sources from last month',
+      "Which contacts answered my calls but haven't scheduled appointments?",
+      "Find leads that opened my emails but haven't been called",
+      "Show me contacts marked as 'interested' but no follow-up scheduled",
+      'Which prospects went to voicemail 3+ times in a row?'
+    ]
+  },
+  {
+    title: 'Lead Prioritization & Scoring',
+    items: [
+      'Show me my hottest prospects based on recent activity',
+      "Find contacts in my pipeline who haven't been touched in 2 weeks",
+      'Which leads responded positively to my last SMS?',
+      'Show me prospects from high-value companies I should call first',
+      'Find contacts who visited our website after my last call'
+    ]
+  },
+  {
+    title: 'Segmentation & Targeting',
+    items: [
+      'Show me all real estate contacts in California',
+      'Find prospects in the mortgage industry with upcoming renewals',
+      'Which contacts are decision makers vs. influencers?',
+      'Show me leads from referral partners who need follow-up',
+      "Find all contacts tagged as 'warm' but not called this month"
+    ]
+  },
+  {
+    title: 'Campaign & List Management',
+    items: [
+      "Create a call list of prospects who didn't answer last week",
+      'Show me contacts ready for my next nurture sequence',
+      'Which leads bounced from my email campaign?',
+      "Find prospects who fit my ideal customer profile but aren't being worked",
+      'Show me contacts who should be moved from cold to warm status'
+    ]
+  },
+  {
+    title: 'Relationship & Context Queries',
+    items: [
+      "What's the history with [contact name]?",
+      'Show me all contacts at [company name]',
+      'Which prospects mentioned budget concerns in my notes?',
+      'Find contacts who expressed interest in [specific product/service]',
+      'Show me leads who asked to be called back at specific times'
+    ]
+  },
+  {
+    title: 'Compliance & Data Quality',
+    items: [
+      'Show me contacts with missing phone numbers',
+      "Which leads haven't been dispositioned properly?",
+      'Find duplicate contacts in my database',
+      'Show me contacts who requested to be removed from calling',
+      'Which phone numbers are flagged as potentially spam?'
+    ]
+  },
+  {
+    title: 'Goal-Oriented Tasks',
+    items: [
+      'Help me build a call list to hit 100 dials today',
+      'Show me the 20 most promising prospects for this week',
+      'Find contacts most likely to convert based on my recent wins',
+      "Which prospects should I prioritize to hit my monthly quota?",
+      'Show me contacts that match my recent closed deals'
+    ]
+  }
+])
+const collapsedSections = ref<Record<string, boolean>>(
+  Object.fromEntries(promptSections.value.map(s => [s.title, true]))
+)
+const isSectionCollapsed = (title: string): boolean => collapsedSections.value[title] !== false
+const toggleSection = (title: string): void => { collapsedSections.value[title] = !isSectionCollapsed(title) }
+
+// Prompt Library search
+const promptSearch = ref<string>('')
+const normalize = (s: string) => s.toLowerCase()
+const getFilteredItems = (items: string[]): string[] => {
+  const q = promptSearch.value.trim().toLowerCase()
+  if (!q) return items
+  return items.filter(p => normalize(p).includes(q))
+}
+const filteredFavoritePrompts = computed(() => getFilteredItems(favoritePrompts.value))
+const filteredPromptSections = computed(() => {
+  const q = promptSearch.value.trim()
+  if (!q) return promptSections.value
+  return promptSections.value
+    .map(s => ({ title: s.title, items: getFilteredItems(s.items) }))
+    .filter(s => s.items.length)
+})
+
+const openPromptLibrary = (): void => {
+  showPromptLibrary.value = true
+}
+const selectPrompt = (text: string): void => {
+  if (chatInputRef.value && chatInputRef.value.setInputValue) {
+    chatInputRef.value.setInputValue(text)
+  }
+  nextTick(() => {
+    if (chatInputRef.value && chatInputRef.value.focus) {
+      chatInputRef.value.focus()
+    }
+  })
+  showPromptLibrary.value = false
+}
+
+// Initialize coach management system
+const {
+  currentCoachId,
+  currentCoach,
+  welcomeMessage,
+  managementMode,
+  setCurrentCoach,
+  setManagementMode,
+  addCoach,
+  coachList,
+  generateCoachUrl
+} = useCoaches()
+
+// Show carousel of all coaches when ?coach=all
+const showCoachCarousel = ref<boolean>(false)
+
+// Computed to maintain compatibility with existing code
+const coachParameter = computed(() => currentCoachId.value || '')
 
 // Contact data
 const contacts = [
@@ -510,6 +1362,9 @@ const contacts = [
     industry: 'Technology / SaaS',
     companySize: '250-500 employees',
     leadSource: 'Webinar Registration',
+    sourceType: 'crm',
+    sourceName: 'Salesforce',
+    sourceUrl: 'https://example.my.salesforce.com/lightning/r/Lead/00Q5g00000ABC123/view',
     notes: ''
   },
   {
@@ -526,6 +1381,9 @@ const contacts = [
     industry: 'Marketing & Advertising',
     companySize: '11-50 employees',
     leadSource: 'Conference Booth',
+    sourceType: 'crm',
+    sourceName: 'HubSpot',
+    sourceUrl: 'https://app.hubspot.com/contacts/1234567/record/0-1/987654321',
     notes: ''
   },
   {
@@ -542,6 +1400,9 @@ const contacts = [
     industry: 'Software Development',
     companySize: '100-250 employees',
     leadSource: 'LinkedIn Outreach',
+    sourceType: 'spreadsheet',
+    sourceName: 'Google Sheets',
+    sourceUrl: 'https://docs.google.com/spreadsheets/d/1AbCdEfGhIjKlMnOpQrStUvWxYz1234567890/edit#gid=0',
     notes: ''
   },
   {
@@ -558,6 +1419,9 @@ const contacts = [
     industry: 'Enterprise Solutions',
     companySize: '500+ employees',
     leadSource: 'Trade Show',
+    sourceType: 'crm',
+    sourceName: 'Pipedrive',
+    sourceUrl: 'https://example.pipedrive.com/person/42',
     notes: ''
   }
 ]
@@ -583,19 +1447,51 @@ const isVoicemailScenario = computed(() => {
   return currentContact.value && currentContact.value.name === 'George Sample'
 })
 
+// Use the welcome message from the coach system
+const getCoachWelcomeMessage = welcomeMessage
+
 // Chat messages array
 const messages: Ref<Message[]> = ref([
   {
     type: 'ai',
-    content: [
-      'Hey there! Welcome to ARMOR® Ai Dialer.<br><br>I\'m Marcus, your Ai calling assistant.  To get started, login to your account or sign up with Google.'
-    ]
+    content: [''], // Will be updated with coach-specific message after URL parsing
+    // Only show typing animation for completely new users (not signed in and not returning)
+    typing: !isSignedIn.value && !isReturningUser.value
   }
 ])
 
 // Initialize chat utilities
 const chatUtils = createChatUtils(messages, chatMessages, headerRef)
-const { scrollToBottom, scrollToUserMessage, addAIMessage, addAIMessageWithoutScroll, addUserMessage, addSeparatorMessage } = chatUtils
+const { scrollToBottom, scrollToBottomDuringTyping, scrollToUserMessage, scrollToTopForGoals, addAIMessage, addAIMessageWithoutScroll, addUserMessage, addUserGoalMessage, addUserQueuePausedMessage, addUserQueueCompletedMessage, addSeparatorMessage, addAIMessageWithTyping, addAIMessageWithTypingNoScroll, suppressScrolling } = chatUtils
+
+// Hide the Call Now CTA automatically when the dialer is shown
+watch(() => showDialer.value, (val) => {
+  if (val) { showCallNowCta.value = false; showNewLeadsCta.value = false; showYesterdayNoAnswerCta.value = false; showTodayFollowupsCta.value = false; showHighAttemptsCta.value = false; showEmailDraftsCta.value = false }
+})
+
+watch(() => showEmailDraftsCta.value, (on) => {
+  if (on) {
+    showCallNowCta.value = false
+    showNewLeadsCta.value = false
+    showYesterdayNoAnswerCta.value = false
+    showTodayFollowupsCta.value = false
+    showHighAttemptsCta.value = false
+  }
+})
+
+// Ensure chat container and window scroll are reset to the very top
+const scrollChatToTop = () => {
+  const el = chatMessages.value
+  if (el) {
+    el.scrollTop = 0
+    try {
+      el.scrollTo({ top: 0, behavior: 'auto' })
+    } catch {}
+  }
+  try {
+    window.scrollTo({ top: 0, behavior: 'auto' })
+  } catch {}
+}
 
 // Helper function to identify if a message is the "Ready to upload" message for returning users
 const isReadyToUploadMessage = (message: Message, index: number): boolean => {
@@ -608,8 +1504,188 @@ const isReadyToUploadMessage = (message: Message, index: number): boolean => {
 // Helper function to determine which messages should be wide (for file upload)
 const shouldBeWideMessage = (message: Message, index: number): boolean => {
   // Make message wide if it contains file upload content
-  return (index === 0 && (!isSignedIn.value || (isSignedIn.value && showFileUploadForReturningUser.value))) || // Welcome message or forced upload for signed-in users
+  return (index === 0 && (!isSignedIn.value || showCoachCarousel.value)) || // Welcome or All Coaches message
          (isSignedIn.value && showFileUploadForReturningUser.value && isReadyToUploadMessage(message, index)) // Upload message for returning users
+}
+
+// Handle typing completion for welcome message
+const handleTypingComplete = (index: number): void => {
+  // If this is the welcome message (index 0) and user is not signed in
+  if (index === 0 && !isSignedIn.value) {
+    welcomeTypingComplete.value = true
+  }
+
+  // Show call-now button after leads-not-called list finishes typing
+  if (!showDialer.value && messages.value[index] && messages.value[index].content.some(line => line.includes('Here are 10 leads not called in the last 3 weeks'))) {
+    setTimeout(() => {
+      if (!showDialer.value) showCallNowCta.value = true
+    }, 150)
+  }
+  if (!showDialer.value && messages.value[index] && messages.value[index].content.some(line => line.includes("Here are new leads added this week that haven't been contacted yet"))) {
+    setTimeout(() => {
+      if (!showDialer.value) showNewLeadsCta.value = true
+    }, 150)
+  }
+  if (!showDialer.value && messages.value[index] && messages.value[index].content.some(line => line.includes("Here are prospects you called yesterday who didn't answer"))) {
+    setTimeout(() => {
+      if (!showDialer.value) showYesterdayNoAnswerCta.value = true
+    }, 150)
+  }
+  if (!showDialer.value && messages.value[index] && messages.value[index].content.some(line => line.includes("Here are today's scheduled callbacks"))) {
+    setTimeout(() => {
+      if (!showDialer.value) showTodayFollowupsCta.value = true
+    }, 150)
+  }
+  if (!showDialer.value && messages.value[index] && messages.value[index].content.some(line => line.includes('Here are contacts with 5+ call attempts without a live answer'))) {
+    setTimeout(() => {
+      if (!showDialer.value) showHighAttemptsCta.value = true
+    }, 150)
+  }
+
+  // Check if this is the congratulations message
+  if (messages.value[index] && messages.value[index].content[0]?.includes('Congratulations! You\'ve successfully upgraded to the Pro plan')) {
+    congratulationsTypingComplete.value = true
+    // Only show action buttons if they haven't been used yet
+    if (!actionButtonsUsed.value) {
+      setTimeout(() => {
+        showActionButtons.value = true
+      }, 200) // Small delay for better UX
+    }
+  }
+
+  // Check if this is a contact preview message (starts with goal responses)
+  if (messages.value[index] && messages.value[index].content[0] && (
+    messages.value[index].content[0].includes('Perfect! Setting appointments is our bread and butter') ||
+    messages.value[index].content[0].includes('Outstanding! Closing live sales is where the magic happens') ||
+    messages.value[index].content[0].includes('Perfect! Creating opportunities is all about finding the right prospects') ||
+    messages.value[index].content[0].includes('Smart choice! Follow-ups are where deals are won') ||
+    messages.value[index].content[0].includes('Brilliant! Live transfers maximize your team\'s efficiency') ||
+    messages.value[index].content[0].includes('Fantastic! Live conversations are the heart of great sales')
+  )) {
+    contactPreviewTypingComplete.value = true
+    // Only show contact preview buttons if they haven't been used yet
+    if (!contactPreviewButtonsUsed.value) {
+      setTimeout(() => {
+        showContactPreviewButtons.value = true
+      }, 200) // Small delay for better UX
+    }
+  }
+
+  // Check if this is the connection analysis message
+  if (messages.value[index] && messages.value[index].content[0]?.includes('I\'ve analyzed your contact\'s phone numbers using real connection data')) {
+    connectionAnalysisTypingComplete.value = true
+    // Show phone verification button after typing completes (for new users only) and if not already used
+    if (!isReturningUser.value && !phoneVerified.value && !phoneVerificationButtonUsed.value) {
+      setTimeout(() => {
+        showPhoneVerificationButton.value = true
+      }, 200) // Small delay for better UX
+    }
+  }
+
+  // Check if this is the verification code message
+  if (messages.value[index] && messages.value[index].content[0]?.includes('Perfect. We\'ve sent a text with 6-digit verification code')) {
+    verificationCodeTypingComplete.value = true
+    // Show verification buttons after typing completes only if phone is not yet verified and we're still in verification step
+    if (!phoneVerified.value && verificationStep.value === 'enter-code') {
+      setTimeout(() => {
+        showVerificationButtons.value = true
+
+        // Focus the chat input after the buttons appear
+        setTimeout(() => {
+          if (chatInputRef.value && chatInputRef.value.focus) {
+            chatInputRef.value.focus()
+            console.log('Auto-focused chat input for verification code after typing')
+          } else {
+            console.log('Chat input ref not available for verification code auto-focus after typing')
+          }
+        }, 100)
+      }, 200) // Small delay for better UX
+    }
+  }
+}
+
+// Update welcome message typing status based on user status
+const lastAIContains = (substr: string): boolean => {
+  for (let i = messages.value.length - 1; i >= 0; i--) {
+    const m = messages.value[i]
+    if (m.type === 'ai') {
+      return m.content?.some((line: string) => typeof line === 'string' && line.includes(substr)) || false
+    }
+  }
+  return false
+}
+
+const updateWelcomeMessageTyping = (): void => {
+  if (messages.value.length > 0 && messages.value[0].type === 'ai') {
+    const welcomeMessage = messages.value[0]
+    if (welcomeMessage.content[0].includes('Welcome to <strong>AI Dialer</strong>') || welcomeMessage.content[0].includes('Drop your contact file here')) {
+      // Update typing property based on current user status
+      welcomeMessage.typing = !isSignedIn.value && !isReturningUser.value
+    }
+  }
+}
+
+const openCoachInfoPanel = (coach: Coach): void => {
+  selectedCoachForInfo.value = coach
+  showCoachInfoPanel.value = true
+}
+
+const closeCoachInfoPanel = (): void => {
+  showCoachInfoPanel.value = false
+}
+
+const selectCoachFromPanel = (): void => {
+  if (!selectedCoachForInfo.value) return
+  const url = generateCoachUrl(selectedCoachForInfo.value.name)
+  window.location.href = url
+}
+
+const startPracticeCall = (coach: Coach): void => {
+  // Set selected coach and hide carousel
+  isPracticeMode.value = true
+  setCurrentCoach(coach.id)
+  showCoachCarousel.value = false
+
+  // Ensure main app/dialer visible
+  currentPage.value = 'main'
+  isSignedIn.value = true
+  isReturningUser.value = true
+  hasUploadedFile.value = true
+  updateWelcomeMessageTyping()
+  showDialer.value = true
+
+  // Reset dialer state
+  callState.value = 'idle'
+  currentContactIndex.value = 0
+  totalCalls.value = 0
+  connectedCalls.value = 0
+  callLog.value = []
+
+  // Clear chat and announce practice
+  messages.value = []
+  addAIMessage(`Practice mode activated with <strong>${coach.displayName}</strong>. Placing a sample call...`)
+
+  // Start call after short delay
+  setTimeout(() => {
+    callState.value = 'ringing'
+    queueTimer = setInterval(() => { queueTime.value++ }, 1000)
+
+    // Add separator for the first (and only) practice contact
+    addSeparatorMessage(currentContact.value.name)
+
+    setTimeout(() => {
+      // Connect the call
+      callState.value = 'connected'
+      callDuration.value = 0
+      connectedCalls.value++
+      callTimer = setInterval(() => { callDuration.value++ }, 1000)
+
+      // Coach connection message + advice
+      showCallConnectedMessages(currentContact.value)
+
+      // Remain connected for manual user hang-up and disposition in practice mode
+    }, 2000) // ring duration
+  }, 800)
 }
 
 // Header Methods
@@ -640,9 +1716,19 @@ const handleLogout = () => {
   isSignedIn.value = false
   isReturningUser.value = false
   phoneVerified.value = false // Reset phone verification status
+  welcomeTypingComplete.value = false // Reset typing completion state
+  congratulationsTypingComplete.value = false // Reset congratulations typing state
+  actionButtonsUsed.value = false // Reset action buttons used state
+  contactPreviewTypingComplete.value = false // Reset contact preview typing state
+  contactPreviewButtonsUsed.value = false // Reset contact preview buttons used state
+  connectionAnalysisTypingComplete.value = false // Reset connection analysis typing state
+  phoneVerificationButtonUsed.value = false // Reset phone verification button used state
+  verificationCodeTypingComplete.value = false // Reset verification code typing state
 
   // Reset UI state
   showDialer.value = false
+  showCoachInfoPanel.value = false
+  selectedCoachForInfo.value = null
   showActionButtons.value = false
   showContactPreviewButtons.value = false
   showPhoneVerificationButton.value = false
@@ -676,13 +1762,23 @@ const handleLogout = () => {
   totalCalls.value = 0
   connectedCalls.value = 0
 
+  // Reset typing state
+  welcomeTypingComplete.value = false
+  congratulationsTypingComplete.value = false
+  actionButtonsUsed.value = false
+  contactPreviewTypingComplete.value = false
+  contactPreviewButtonsUsed.value = false
+  connectionAnalysisTypingComplete.value = false
+
   // Reset to welcome message
   messages.value = [
     {
       type: 'ai',
       content: [
-        'Hey there! Welcome to ARMOR® Ai Dialer.<br><br>I\'m Marcus, your Ai calling assistant.  To get started, login to your account or sign up with Google.'
-      ]
+        getCoachWelcomeMessage.value
+      ],
+      // Only show typing animation for completely new users (not signed in and not returning)
+      typing: !isSignedIn.value && !isReturningUser.value
     }
   ]
 
@@ -717,12 +1813,7 @@ const handleLogout = () => {
 }
 
 const handleSwitchToVulcan = () => {
-  toast.add({
-    severity: 'info',
-    summary: 'Switch to Vulcan',
-    detail: 'Switching to Vulcan...',
-    life: 3000
-  })
+  console.log('Switch to Vulcan')
 }
 
 const showProductPage = () => {
@@ -748,7 +1839,22 @@ const showProductPage = () => {
 }
 
 const goToMainApp = () => {
+  // Set page and clear any special modes/panels
   currentPage.value = 'main'
+  showCoachDashboard.value = false
+  dashboardCoachName.value = null
+  setManagementMode(null)
+  showDialer.value = false
+  showCoachInfoPanel.value = false
+  selectedCoachForInfo.value = null
+
+  // Clean URL of special parameters
+  try {
+    const url = new URL(window.location.href)
+    ;['coach-dashboard','coach-admin','create-coach','coach'].forEach(p => url.searchParams.delete(p))
+    const qs = url.searchParams.toString()
+    window.history.replaceState({}, '', qs ? `${url.pathname}?${qs}` : url.pathname)
+  } catch {}
 
   if (isSignedIn.value) {
     // Reset UI state but keep user signed in
@@ -809,6 +1915,15 @@ const goToMainApp = () => {
       }
     }, 100)
 
+    // Temporarily suppress auto-scroll-to-bottom from chat utils
+    suppressScrolling(2000)
+
+    // Ensure scroll position is at the very top (account for async rendering)
+    scrollChatToTop()
+    requestAnimationFrame(() => scrollChatToTop())
+    setTimeout(scrollChatToTop, 100)
+    setTimeout(scrollChatToTop, 300)
+
     // Announce page change to screen readers
     announceToScreenReader('Returned to main application. Press Tab to navigate with keyboard.')
   })
@@ -827,9 +1942,9 @@ const announceToScreenReader = (message: string) => {
   }
 }
 
-// Redirect focus from tab trap to ARKON logo
+// Redirect focus from tab trap to AI Dialer logo
 const redirectToArkonLogo = () => {
-  const arkonLogo = document.querySelector('button[aria-label="Return to ARKON home page"]') as HTMLElement
+  const arkonLogo = document.querySelector('button[aria-label="Return to AI Dialer home page"]') as HTMLElement
   if (arkonLogo) {
     arkonLogo.focus()
   }
@@ -842,12 +1957,13 @@ const handleGoogleSignin = (): void => {
   isSignedIn.value = true
   isReturningUser.value = true // This is a returning user
   phoneVerified.value = true // Returning users don't need to verify phone again
-  addAIMessage('Welcome back! You\'re signed in with Google.')
-  setTimeout(() => {
-    addAIMessage('Ready to upload your contact file and start dialing?')
-    showFileUploadForReturningUser.value = true
-    scrollToBottom()
-  }, 1000)
+  // Remove initial long welcome bubble when returning
+  messages.value = []
+  // Show brief prior welcome bubble, then welcome-back bubble
+  addAIMessage("Hey there! Welcome to ARMOR® Ai Dialer. I'm Marcus, your Ai calling assistant. <br><br>To get started, login to your account or sign up with Google.")
+  addAIMessageWithTyping("Welcome! I'm Marcus, your Ai calling assistant. <br><br>To get started, drop your contact file below and I'll organize your contacts based on who is most likely to pick up.")
+  // Do not prompt for upload; assume user already connected/uploaded previously
+  showFileUploadForReturningUser.value = false
 
   // Clear any existing focus when navigating back to main app
   nextTick(() => {
@@ -870,15 +1986,14 @@ const handleLoginSuccess = (userData: any): void => {
   isSignedIn.value = true
   isReturningUser.value = true // This is a returning user
   phoneVerified.value = true // Returning users don't need to verify phone again
+  // Remove initial long welcome bubble when returning
+  messages.value = []
 
-  // Since they're a returning user who has already set goals,
-  // skip directly to file upload stage
-  addAIMessage(`Welcome back, ${userData.name}! Ready to upload your contact file and start dialing?`)
-
-  setTimeout(() => {
-    showFileUploadForReturningUser.value = true
-    scrollToBottom()
-  }, 500)
+  // Show brief prior welcome bubble, then welcome-back bubble
+  addAIMessage("Hey there! Welcome to ARMOR® Ai Dialer. I'm Marcus, your Ai calling assistant. <br><br>To get started, login to your account or sign up with Google.")
+  addAIMessage(`Welcome back, ${userData.name}!`)
+  // Returning user: do not show upload prompt
+  showFileUploadForReturningUser.value = false
 
   // Clear any existing focus when navigating back to main app
   nextTick(() => {
@@ -935,6 +2050,38 @@ const switchToSigninFromSignup = (): void => {
   })
 }
 
+// Navigate to signup page helper
+const proceedToCreateAccount = (): void => {
+  // Stop any pending 'create an account' typing bubbles
+  messages.value.forEach((m: any) => {
+    if (m?.type === 'ai' && m?.typing && Array.isArray(m.content) && m.content.join(' ').toLowerCase().includes('create an account')) {
+      m.typing = false
+    }
+  })
+  currentPage.value = 'signup'
+  showCreateAccountCTA.value = false
+  nextTick(() => {
+    if (document.activeElement instanceof HTMLElement) {
+      document.activeElement.blur()
+    }
+    setTimeout(() => {
+      if (headerRef.value && headerRef.value.establishFocusContext) {
+        headerRef.value.establishFocusContext()
+      }
+    }, 100)
+    announceToScreenReader('Navigated to signup page. Press Tab to navigate with keyboard.')
+  })
+}
+
+const showCreateAccountPrompt = (type: 'upload' | 'crm'): void => {
+  const msg = type === 'upload'
+    ? "Success! Your contact sheet has been uploaded. We'll begin analyzing your data, but first please create an account to continue."
+    : "Success! You're connected to your CRM. We'll begin analyzing your data, but first please create an account to continue."
+  addAIMessageWithTyping(msg)
+  showCreateAccountCTA.value = true
+  scrollToBottom()
+}
+
 // File Upload Methods
 const simulateFileUpload = () => {
   hasUploadedFile.value = true
@@ -957,9 +2104,9 @@ const simulateFileUpload = () => {
         <br>
         <table style="width: 100%; border-collapse: collapse;">
           <tr><td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af;">Home Phone:</td><td style="padding: 4px 0;">(555) 123-4567</td></tr>
-          <tr><td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af;">${wrapConnectScoreWithTooltip('Connect Score')}:</td><td style="padding: 4px 0;">High</td></tr>
+          <tr><td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af;">Connect Score:</td><td style="padding: 4px 0;">High</td></tr>
           <tr><td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af;">Mobile Phone:</td><td style="padding: 4px 0;">(555) 123-4568</td></tr>
-          <tr><td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af;">${wrapConnectScoreWithTooltip('Connect Score')}:</td><td style="padding: 4px 0;">Medium</td></tr>
+          <tr><td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af;">Connect Score:</td><td style="padding: 4px 0;">Medium</td></tr>
           <tr><td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af;">Email:</td><td style="padding: 4px 0;">sarah.johnson@techcorp.com</td></tr>
           <tr><td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af;">Address:</td><td style="padding: 4px 0;">1234 Main St, Dallas, TX</td></tr>
           <tr><td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af;">Local Time:</td><td style="padding: 4px 0;">2:45 PM CST</td></tr>
@@ -979,21 +2126,7 @@ const simulateFileUpload = () => {
       scrollToBottom()
     }, 1500)
   } else {
-    // New user, go to signup page
-    currentPage.value = 'signup'
-
-    // Clear any existing focus when navigating to signup page
-    nextTick(() => {
-      if (document.activeElement instanceof HTMLElement) {
-        document.activeElement.blur()
-      }
-      setTimeout(() => {
-        if (headerRef.value && headerRef.value.establishFocusContext) {
-          headerRef.value.establishFocusContext()
-        }
-      }, 100)
-      announceToScreenReader('Navigated to signup page. Press Tab to navigate with keyboard.')
-    })
+    showCreateAccountPrompt('upload')
   }
 }
 
@@ -1007,21 +2140,7 @@ const onFileSelect = (file: File): void => {
       showContactPreview(addAIMessage, (show: boolean) => showContactPreviewButtons.value = show, scrollToBottom)
     }, 1500)
   } else {
-    // New user, go to signup page
-    currentPage.value = 'signup'
-
-    // Clear any existing focus when navigating to signup page
-    nextTick(() => {
-      if (document.activeElement instanceof HTMLElement) {
-        document.activeElement.blur()
-      }
-      setTimeout(() => {
-        if (headerRef.value && headerRef.value.establishFocusContext) {
-          headerRef.value.establishFocusContext()
-        }
-      }, 100)
-      announceToScreenReader('Navigated to signup page. Press Tab to navigate with keyboard.')
-    })
+    showCreateAccountPrompt('upload')
   }
 }
 
@@ -1029,6 +2148,15 @@ const onFileSelect = (file: File): void => {
 const sendMessage = (message: string): void => {
   // Add user message
   addUserMessage(message)
+
+  // If user says yes, start the dialer immediately
+  const trimmed = message.trim().toLowerCase()
+  if (trimmed === 'yes' || trimmed.startsWith('yes ')) {
+    addAIMessage('Great, starting the dialer now...')
+    showCallNowCta.value = false
+    setTimeout(() => skipToDialer(), 300)
+    return
+  }
 
   // Handle notes input for disposition (but not during session summary)
   if (waitingForNotesInput.value && showDialer.value && !showContinueQueueButton.value) {
@@ -1053,9 +2181,9 @@ const sendMessage = (message: string): void => {
       // Check if this is the 3rd contact (index 2) - if so, enable queue completion
       if (currentContactIndex.value >= 2) {
         queueCompletionReady.value = true
-        addAIMessage(`The call outcome and notes have been saved for ${currentContact.value.name}. Click "Queue Completed" to finish your dialing session.`)
+        addAIMessageWithTyping(`The call outcome and notes have been saved for ${currentContact.value.name}. Click "Queue Completed" to finish your dialing session.`)
       } else {
-        addAIMessage(`The call outcome and notes have been saved for ${currentContact.value.name}. Click "Next" to continue to the next contact.`)
+        addAIMessageWithTyping(`The call outcome and notes have been saved for ${currentContact.value.name}. Click "Next" to continue to the next contact.`)
       }
       scrollToBottom()
     }, 1000)
@@ -1079,36 +2207,66 @@ const sendMessage = (message: string): void => {
   if (verificationStep.value === 'enter-phone') {
     enteredPhoneNumber.value = message
     verificationStep.value = 'enter-code'
-    showVerificationButtons.value = true
+    verificationCodeTypingComplete.value = false // Reset typing state
 
     setTimeout(() => {
-      addAIMessage(`Perfect. We've sent a text with 6-digit verification code to ${message}. Please enter it below to continue.`)
-      scrollToBottom()
-
-      // Focus the chat input after the AI message appears
-      setTimeout(() => {
-        if (chatInputRef.value && chatInputRef.value.focus) {
-          chatInputRef.value.focus()
-          console.log('Auto-focused chat input for verification code')
-        } else {
-          console.log('Chat input ref not available for verification code auto-focus')
-        }
-      }, 500)
+      const fm = formatPhoneNumber(message)
+      // Maintain top position like goals while typing the verification prompt
+      const maintainTop = () => {
+        scrollToTopForGoals()
+      }
+      const maintainer = setInterval(maintainTop, 300)
+      // Add without auto-scroll to keep the phone input message pinned
+      addAIMessageWithTypingNoScroll(`Perfect. We've sent a text with 6-digit verification code to ${fm}. Please enter it below to continue.`)
+      // Stop maintaining after the typing starts
+      setTimeout(() => clearInterval(maintainer), 2000)
     }, 1000)
     return
   }
 
   if (verificationStep.value === 'enter-code') {
+    // Immediately hide all verification UI elements
     showVerificationButtons.value = false
-    verificationStep.value = 'default'
-    phoneVerified.value = true // Mark phone as verified
-    showStartDialingButton.value = true
+    showPhoneVerificationButton.value = false
+    verificationCodeTypingComplete.value = false
+    phoneVerificationButtonUsed.value = true
 
+    // Mark verification as complete and reset step
+    phoneVerified.value = true
+    verificationStep.value = 'default'
+
+    // Next: present caller ID choice instead of jumping to audio check
+    showCallerIdChoiceButtons.value = true
+    audioCheckPassed.value = false
+
+    // Pin the user's 6-digit code message to the top like goals/account-created flows
+    scrollToTopForGoals()
+    const maintainTop = () => {
+      scrollToTopForGoals()
+    }
+    const maintainer = setInterval(maintainTop, 300)
+
+    const formatted = formatPhoneNumber(enteredPhoneNumber.value)
     setTimeout(() => {
-      addAIMessage([
-        `Great! Your number ${enteredPhoneNumber.value} is verified and set as your Caller ID.<br><br>As the dialer calls each person, their contact information will be displayed. The first contact that will be called is Sam Sample.`
+      // Add AI response without auto-scrolling; keep the user message pinned
+      addAIMessageWithTypingNoScroll([
+        `Great! Your number ${formatted} is verified, but our ARMOR® test results across 3 carriers show 1 flag for spam on AT&T.<br><br><div style="margin: 4px 0 10px 0; color: var(--p-surface-200); font-size: 0.9em;">Carrier results</div><div style="display: flex; gap: 12px; justify-content: space-between;">
+  <div style="text-align: center; width: 32%; display: flex; flex-direction: column;">
+    <div style="font-weight: 600; margin-bottom: 6px;">AT&amp;T</div>
+    <img src="https://cdn.builder.io/api/v1/image/assets%2F5aeb07ce25f84dbc869290880d07b71e%2Fde975ceb671f4509ba23ee1c030bec02?format=webp&width=800" alt="AT&T flagged as spam" style="width: 100%; max-width: 140px; border-radius: 8px; margin: 0 auto; display: block;" />
+  </div>
+  <div style="text-align: center; width: 32%; display: flex; flex-direction: column; margin: 0 auto;">
+    <div style="font-weight: 600; margin-bottom: 6px;">T-Mobile</div>
+    <img src="https://cdn.builder.io/api/v1/image/assets%2F5aeb07ce25f84dbc869290880d07b71e%2Fe853c377f12e40d1ae7e549eb5a11cfa?format=webp&width=800" alt="T-Mobile clean" style="width: 100%; max-width: 140px; border-radius: 8px; margin: 0 auto; display: block;" />
+  </div>
+  <div style="text-align: center; width: 32%; display: flex; flex-direction: column;">
+    <div style="font-weight: 600; margin-bottom: 6px;">Verizon</div>
+    <img src="https://cdn.builder.io/api/v1/image/assets%2F5aeb07ce25f84dbc869290880d07b71e%2Fe853c377f12e40d1ae7e549eb5a11cfa?format=webp&width=800" alt="Verizon clean" style="width: 100%; max-width: 140px; border-radius: 8px; margin: 0 auto; display: block;" />
+  </div>
+</div><br>To ensure your calls connect, we've provided you with a free ARMOR® number to protect against false flags. This includes comprehensive number monitoring, remediation, and answer rate analytics.<br><br>Which number would you like to use for your Caller ID?`
       ])
-      scrollToBottom()
+      // Stop maintaining after typing starts
+      setTimeout(() => clearInterval(maintainer), 2000)
     }, 1000)
     return
   }
@@ -1148,14 +2306,28 @@ const sendMessage = (message: string): void => {
       // Check if this is the 3rd contact (index 2) - if so, enable queue completion
       if (currentContactIndex.value >= 2) {
         queueCompletionReady.value = true
-        addAIMessage(`The notes have been saved for ${currentContact.value.name}. Click "Queue Completed" to finish your dialing session.`)
+        addAIMessageWithTyping(`The notes have been saved for ${currentContact.value.name}. Click "Queue Completed" to finish your dialing session.`)
       } else {
-        addAIMessage(`The notes have been saved for ${currentContact.value.name}. Click "Next" to continue to the next contact.`)
+        addAIMessageWithTyping(`The notes have been saved for ${currentContact.value.name}. Click "Next" to continue to the next contact.`)
       }
       scrollToBottom()
     }, 1000)
     return
   }
+
+  // ChatGPT integration
+  askChatGPT(message)
+    .then((reply) => {
+      if (reply && reply.trim()) {
+        addAIMessage(reply)
+      } else {
+        addAIMessage('I did not receive a response.')
+      }
+    })
+    .catch(() => {
+      addAIMessage('Sorry, I could not reach ChatGPT right now.')
+    })
+  return
 
   // Simulate AI processing for regular messages
   setTimeout(() => {
@@ -1163,15 +2335,15 @@ const sendMessage = (message: string): void => {
 
     if (lowerMessage.includes('anything about arkon')) {
       addAIMessage([
-        '🚀 ARKON is PhoneBurner\'s revolutionary AI-powered dialer!',
+        '<i class="pi pi-rocket"></i> AI Dialer is PhoneBurner\'s revolutionary AI-powered dialer!',
         'It uses advanced algorithms to predict the best times to call prospects, automatically prioritizes your contact list, and helps you connect with more people in less time.',
         'Key features include smart scheduling, real-time connect predictions, and personalized calling strategies.',
-        'What specific aspect of ARKON would you like to know more about?'
+        'What specific aspect of AI Dialer would you like to know more about?'
       ])
     } else if (lowerMessage.includes('connected to more calls') || lowerMessage.includes('get connected')) {
       addAIMessage([
-        '📈 Great question! Here are ARKON\'s proven strategies to boost your connect rates:',
-        '• <strong>Smart Timing:</strong> Calls prospects when they\'re most likely to answer',
+        '<i class="pi pi-chart-line"></i> Great question! Here are AI Dialer\'s proven strategies to boost your connect rates:',
+        '��� <strong>Smart Timing:</strong> Calls prospects when they\'re most likely to answer',
         '• <strong>Local Presence:</strong> Uses local numbers to increase pickup rates',
         '• <strong>Voicemail Drop:</strong> Leaves personalized messages when they don\'t answer',
         '• <strong>Follow-up Sequences:</strong> Automatically schedules optimal callback times',
@@ -1179,16 +2351,16 @@ const sendMessage = (message: string): void => {
       ])
     } else if (lowerMessage.includes('setup a demo') || lowerMessage.includes('demo')) {
       addAIMessage([
-        '✨ I\'d love to show you ARKON in action!',
+        '<i class="pi pi-star"></i> I\'d love to show you AI Dialer in action!',
         'Let me set up a personalized demo where you can see:',
         '• Live contact scoring and prioritization',
         '• Real-time dialing with connect predictions',
-        '��� Smart call disposition and follow-up automation',
+        '���� Smart call disposition and follow-up automation',
         'What\'s your preferred time? I can schedule something for today or tomorrow.'
       ])
     } else if (lowerMessage.includes('who i should call now') || lowerMessage.includes('who should i call')) {
       addAIMessage([
-        '��� Based on your contact data and current time analysis:',
+        '<i class="pi pi-bullseye"></i> Based on your contact data and current time analysis:',
         '<strong>Top 3 prospects to call right now:</strong>',
         '1. Sarah Johnson - 92% connect probability (last spoke 3 days ago)',
         '2. Mike Chen - 89% connect probability (opened your email yesterday)',
@@ -1197,7 +2369,7 @@ const sendMessage = (message: string): void => {
       ])
     } else if (lowerMessage.includes('fire up a dial session') || lowerMessage.includes('dial session')) {
       addAIMessage([
-        '����� Let\'s fire up a power dialing session!',
+        '<i class="pi pi-bolt"></i> Let\'s fire up a power dialing session!',
         'I can configure your session with:',
         '• <strong>Target audience:</strong> High-priority prospects, warm leads, or follow-ups',
         '• <strong>Call duration:</strong> 30 min, 1 hour, or 2-hour session',
@@ -1206,39 +2378,39 @@ const sendMessage = (message: string): void => {
       ])
     } else if (lowerMessage.includes('set a reminder') || lowerMessage.includes('reminder')) {
       addAIMessage([
-        '⏰ I\'ll help you set up smart reminders!',
-        'ARKON can remind you to:',
+        '<i class="pi pi-clock"></i> I\'ll help you set up smart reminders!',
+        'AI Dialer can remind you to:',
         '• Follow up with specific prospects at optimal times',
         '• Call back prospects who didn\'t answer',
         '• Review and update your call notes',
-        '• Start your daily calling sessions',
+        '�� Start your daily calling sessions',
         'What would you like to be reminded about and when?'
       ])
     } else if (lowerMessage.includes('practice a call') || lowerMessage.includes('practice')) {
       addAIMessage([
-        '🎭 Great idea! Call practice makes perfect.',
-        'ARKON\'s practice mode can help you:',
+        '<i class="pi pi-users"></i> Great idea! Call practice makes perfect.',
+        'AI Dialer\'s practice mode can help you:',
         '• Rehearse your opening pitch with AI feedback',
         '• Practice handling common objections',
-        '• Test different conversation flows',
-        '• Record and review your delivery',
+        '��� Test different conversation flows',
+        '�� Record and review your delivery',
         'Would you like to practice a cold call opening or work on handling objections?'
       ])
     } else if (lowerMessage.includes('appointments') && lowerMessage.includes('today')) {
       addAIMessage([
-        '📅 Here\'s your schedule for today:',
+        '<i class="pi pi-calendar"></i> Here\'s your schedule for today:',
         '<strong>Upcoming appointments:</strong>',
-        '��� 2:00 PM - Demo call with Sarah Johnson (confirmed)',
+        '<i class="pi pi-check"></i> 2:00 PM - Demo call with Sarah Johnson (confirmed)',
         '• 3:30 PM - Follow-up with ABC Corp (needs confirmation)',
         '• 4:15 PM - Discovery call with new lead Mike Chen',
         'You have 45 minutes before your next call. Perfect time for some prospecting!'
       ])
     } else if (lowerMessage.includes('tell a joke') || lowerMessage.includes('joke')) {
       addAIMessage([
-        '😄 Why did the salesperson bring a ladder to work?',
+        '<i class="pi pi-heart"></i> Why did the salesperson bring a ladder to work?',
         'Because they heard the job was about making <strong>high-level</strong> connections!',
         '',
-        'Speaking of connections, did you know ARKON users make 3x more meaningful connections than traditional dialers?',
+        'Speaking of connections, did you know AI Dialer users make 3x more meaningful connections than traditional dialers?',
         'Ready to elevate your calling game?'
       ])
     } else if (lowerMessage.includes('jenn')) {
@@ -1248,9 +2420,190 @@ const sendMessage = (message: string): void => {
         'She has an <strong>89% pickup rate</strong> and is most likely available now.',
         'Ready to call Jenn?'
       ])
+    } else if (
+      (lowerMessage.includes('not called') && (lowerMessage.includes('3 weeks') || lowerMessage.includes('three weeks') || lowerMessage.includes('21 days')))
+      || lowerMessage.includes('leads not called in 3 weeks')
+    ) {
+      const names = ['Avery Collins','Noah Price','Mia Turner','Liam Brooks','Sofia Perez','Ethan Gray','Isabella Reed','Mason Clark','Olivia Hayes','James Walker']
+      const rows = names.map((n, i) => `
+        <tr>
+          <td style="padding: 6px 8px 6px 0; width: 28px; color: var(--p-surface-300);">${i + 1}.</td>
+          <td style="padding: 6px 0;">${n}</td>
+          <td style="padding: 6px 0; text-align: right; color: var(--p-surface-200);">${22 + i} days ago</td>
+        </tr>
+      `).join('')
+      const table = `
+        <table style="width: 100%; border-collapse: collapse; margin-top: 4px;">
+          <tbody>
+            ${rows}
+          </tbody>
+        </table>
+      `
+      addAIMessageWithTyping([
+        '<i class="pi pi-users"></i> Here are 10 leads not called in the last 3 weeks:<br><br>',
+        table,
+        '<br>Would you like me to start calling these now?'
+      ])
+    } else if (
+      (lowerMessage.includes('more than 5 times') || lowerMessage.includes('5+')) && (lowerMessage.includes('without a live answer') || lowerMessage.includes('no live answer'))
+    ) {
+      const records = [
+        { name: 'Taylor Reed', attempts: 7, disposition: 'No Answer' },
+        { name: 'Jamal Carter', attempts: 6, disposition: 'Voicemail' },
+        { name: 'Hannah Kim', attempts: 8, disposition: 'Busy' },
+        { name: 'Miguel Alvarez', attempts: 9, disposition: 'No Answer' },
+        { name: 'Ava Thompson', attempts: 6, disposition: 'Voicemail' },
+        { name: 'Ryan Patel', attempts: 7, disposition: 'No Answer' }
+      ]
+      const rows = records.map((r, i) => `
+        <tr>
+          <td style=\"padding: 6px 8px 6px 0; width: 28px; color: var(--p-surface-300);\">${i + 1}.</td>
+          <td style=\"padding: 6px 0;\">${r.name}</td>
+          <td style=\"padding: 6px 0; text-align: right; color: var(--p-surface-0); font-weight: 600;\">${r.attempts}</td>
+          <td style=\"padding: 6px 0; text-align: right; color: var(--p-surface-200);\">${r.disposition}</td>
+        </tr>
+      `).join('')
+      const table = `
+        <table style=\"width: 100%; border-collapse: collapse; margin-top: 4px;\">
+          <thead>
+            <tr>
+              <th style=\"text-align: left; color: var(--p-surface-200); font-weight: 500; padding-bottom: 6px;\"></th>
+              <th style=\"text-align: left; color: var(--p-surface-200); font-weight: 500; padding-bottom: 6px;\">Name</th>
+              <th style=\"text-align: right; color: var(--p-surface-200); font-weight: 600; padding-bottom: 6px;\">Attempts</th>
+              <th style=\"text-align: right; color: var(--p-surface-200); font-weight: 500; padding-bottom: 6px;\">Last Disposition</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${rows}
+          </tbody>
+        </table>
+      `
+      addAIMessageWithTyping([
+        '<i class="pi pi-chart-line"></i> Here are contacts with 5+ call attempts without a live answer:<br><br>',
+        table,
+        '<br>What would you like to do next?'
+      ])
+    } else if (
+      lowerMessage.includes('follow-ups') && lowerMessage.includes('today')
+    ) {
+      const callbacks = [
+        { time: '09:30 AM', name: 'Tanya Brooks', notes: 'Pricing follow-up' },
+        { time: '10:15 AM', name: 'Raj Kapoor', notes: 'Requested callback about onboarding' },
+        { time: '11:45 AM', name: 'Marta Lopez', notes: 'Send case studies before call' },
+        { time: '02:00 PM', name: 'Chris Young', notes: 'Demo recap and next steps' },
+        { time: '03:30 PM', name: 'Amelia Wright', notes: 'Budget approval check-in' }
+      ]
+      const rows = callbacks.map((c, i) => `
+        <tr>
+          <td style=\"padding: 6px 8px 6px 0; width: 28px; color: var(--p-surface-300);\">${i + 1}.</td>
+          <td style=\"padding: 6px 0; color: var(--p-surface-0); font-weight: 600;\">${c.time}</td>
+          <td style=\"padding: 6px 0;\">${c.name}</td>
+          <td style=\"padding: 6px 0; text-align: right; color: var(--p-surface-200);\">${c.notes}</td>
+        </tr>
+      `).join('')
+      const table = `
+        <table style=\"width: 100%; border-collapse: collapse; margin-top: 4px;\">
+          <thead>
+            <tr>
+              <th style=\"text-align: left; color: var(--p-surface-200); font-weight: 500; padding-bottom: 6px;\"></th>
+              <th style=\"text-align: left; color: var(--p-surface-200); font-weight: 600; padding-bottom: 6px;\">Time</th>
+              <th style=\"text-align: left; color: var(--p-surface-200); font-weight: 500; padding-bottom: 6px;\">Name</th>
+              <th style=\"text-align: right; color: var(--p-surface-200); font-weight: 500; padding-bottom: 6px;\">Notes</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${rows}
+          </tbody>
+        </table>
+      `
+      addAIMessageWithTyping([
+        '<i class="pi pi-calendar"></i> Here are today\'s scheduled callbacks:<br><br>',
+        table,
+        '<br>How would you like to proceed?'
+      ])
+    } else if (
+      lowerMessage.includes('yesterday') && (lowerMessage.includes("didn't answer") || lowerMessage.includes('did not answer') || lowerMessage.includes('no answer') || lowerMessage.includes('busy') || lowerMessage.includes('voicemail'))
+    ) {
+      const prospects = [
+        { name: 'Samantha Lee', disposition: 'Voicemail' },
+        { name: 'Marcus Allen', disposition: 'Busy' },
+        { name: 'Priya Desai', disposition: 'No Answer' },
+        { name: 'Diego Ramos', disposition: 'Voicemail' },
+        { name: 'Emily Chen', disposition: 'No Answer' },
+        { name: 'Owen Wright', disposition: 'Busy' }
+      ]
+      const rows = prospects.map((p, i) => `
+        <tr>
+          <td style=\"padding: 6px 8px 6px 0; width: 28px; color: var(--p-surface-300);\">${i + 1}.</td>
+          <td style=\"padding: 6px 0;\">${p.name}</td>
+          <td style=\"padding: 6px 0; text-align: right; color: var(--p-surface-200);\">Yesterday</td>
+          <td style=\"padding: 6px 0; text-align: right; color: var(--p-surface-0); font-weight: 600;\">${p.disposition}</td>
+        </tr>
+      `).join('')
+      const table = `
+        <table style=\"width: 100%; border-collapse: collapse; margin-top: 4px;\">
+          <thead>
+            <tr>
+              <th style=\"text-align: left; color: var(--p-surface-200); font-weight: 500; padding-bottom: 6px;\"></th>
+              <th style=\"text-align: left; color: var(--p-surface-200); font-weight: 500; padding-bottom: 6px;\">Name</th>
+              <th style=\"text-align: right; color: var(--p-surface-200); font-weight: 500; padding-bottom: 6px;\">Date</th>
+              <th style=\"text-align: right; color: var(--p-surface-200); font-weight: 600; padding-bottom: 6px;\">Disposition</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${rows}
+          </tbody>
+        </table>
+      `
+      addAIMessageWithTyping([
+        '<i class="pi pi-history"></i> Here are prospects you called yesterday who didn\'t answer:<br><br>',
+        table,
+        '<br>Would you like to start follow-up calls or take a different action?'
+      ])
+    } else if (
+      lowerMessage.includes('added this week') && (lowerMessage.includes('not contacted') || lowerMessage.includes('not contacted yet') || lowerMessage.includes('uncontacted'))
+    ) {
+      const leads = [
+        { name: 'Chloe Harris', date: 'Mon', source: 'Website' },
+        { name: 'Evan Brooks', date: 'Mon', source: 'HubSpot' },
+        { name: 'Zoe Mitchell', date: 'Tue', source: 'Referral' },
+        { name: 'Lucas Nguyen', date: 'Tue', source: 'LinkedIn' },
+        { name: 'Aiden Rivera', date: 'Wed', source: 'Salesforce' },
+        { name: 'Layla Scott', date: 'Wed', source: 'Website' },
+        { name: 'Henry Adams', date: 'Thu', source: 'Zoho' },
+        { name: 'Nora Bennett', date: 'Thu', source: 'Pipedrive' }
+      ]
+      const rows = leads.map((l, i) => `
+        <tr>
+          <td style=\"padding: 6px 8px 6px 0; width: 28px; color: var(--p-surface-300);\">${i + 1}.</td>
+          <td style=\"padding: 6px 0;\">${l.name}</td>
+          <td style=\"padding: 6px 0; text-align: right; color: var(--p-surface-200);\">${l.date}</td>
+          <td style=\"padding: 6px 0; text-align: right; color: var(--p-surface-200);\">${l.source}</td>
+        </tr>
+      `).join('')
+      const table = `
+        <table style=\"width: 100%; border-collapse: collapse; margin-top: 4px;\">
+          <thead>
+            <tr>
+              <th style=\"text-align: left; color: var(--p-surface-200); font-weight: 500; padding-bottom: 6px;\"></th>
+              <th style=\"text-align: left; color: var(--p-surface-200); font-weight: 500; padding-bottom: 6px;\">Name</th>
+              <th style=\"text-align: right; color: var(--p-surface-200); font-weight: 500; padding-bottom: 6px;\">Date Added</th>
+              <th style=\"text-align: right; color: var(--p-surface-200); font-weight: 500; padding-bottom: 6px;\">Source</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${rows}
+          </tbody>
+        </table>
+      `
+      addAIMessageWithTyping([
+        '<i class="pi pi-user-plus"></i> Here are new leads added this week that haven\'t been contacted yet:<br><br>',
+        table,
+        '<br>How would you like to proceed?'
+      ])
     } else if (lowerMessage.includes('call') || lowerMessage.includes('start')) {
       addAIMessage([
-        'Perfect! Let\'s start calling. 📞',
+        'Perfect! Let\'s start calling. <i class="pi pi-phone"></i>',
         'I\'ll prioritize contacts with the highest pickup probability.',
         'Shall I begin with the top 23 most likely to answer?'
       ])
@@ -1261,7 +2614,7 @@ const sendMessage = (message: string): void => {
 }
 
 const handleVoiceInput = () => {
-  addAIMessage('🎤 Listening... (voice recognition simulated)')
+  addAIMessage('<i class="pi pi-microphone"></i> Listening... (voice recognition simulated)')
 
   // Simulate voice input
   setTimeout(() => {
@@ -1272,26 +2625,43 @@ const handleVoiceInput = () => {
 
 // Contact Preview Button Methods
 const handleLooksGood = (): void => {
-  // Hide contact preview buttons
+  // Hide contact preview buttons and mark as used
   showContactPreviewButtons.value = false
+  contactPreviewButtonsUsed.value = true
+  // Reset connection analysis typing state for new message
+  connectionAnalysisTypingComplete.value = false
 
   // Add user message showing what button was clicked
-  addUserMessage('Looks Good')
+  addUserMessage('Contact Looks Good')
 
   if (isReturningUser.value || phoneVerified.value) {
     // Skip phone verification for returning users or if phone was already verified
     setTimeout(() => {
-      addAIMessage([
-        'I\'ve analyzed your contact\'s phone numbers using real connection data from 900M+ calls, recent phone engagement, calling patterns, and carrier signals—so you only dial numbers likely to connect.<br><br>I\'ve prioritized the phone numbers most likely to connect so you spend time talking, not hitting dead lines.<br><br>Here\'s what I found:<br><div style="margin-left: 1em; text-indent: -1em;">�� 40 numbers have \'High\' <span class="connect-score-tooltip" data-tooltip="' + connectScoreTooltip.replace(/'/g, '&#39;').replace(/"/g, '&quot;') + '">Connect Scores</span> and show consistent calling activity in the last 12 months. These are highly likely to be connected and assigned to active subscribers.</div><br><div style="margin-left: 1em; text-indent: -1em;">• 67 numbers have \'Medium\' Connect Scores and are worth calling after you exhaust your \'High\' Connect Score numbers.</div><br><div style="margin-left: 1em; text-indent: -1em;">• 54 numbers have \'Low\' Connect Scores and are likely disconnected or inactive lines that won\'t answer when dialed.</div>'
+      addAIMessageWithTyping([
+        'I\'ve analyzed your contact\'s phone numbers using real connection data from 900M+ calls, recent phone engagement, calling patterns, and carrier signals—so you only dial numbers likely to connect.<br><br>I\'ve prioritized the phone numbers most likely to connect so you spend time talking, not hitting dead lines.<br><br>Here\'s what I found:<br><div style="margin-left: 1em; text-indent: -1em;">• 40 numbers have \'High\' Connect Scores and show consistent calling activity in the last 12 months. These are highly likely to be connected and assigned to active subscribers.</div><br><div style="margin-left: 1em; text-indent: -1em;">• 67 numbers have \'Medium\' Connect Scores and are worth calling after you exhaust your \'High\' Connect Score numbers.</div><br><div style="margin-left: 1em; text-indent: -1em;">• 54 numbers have \'Low\' Connect Scores and are likely disconnected or inactive lines that won\'t answer when dialed.</div>'
       ])
 
-      // Skip directly to verified phone and start dialing
+      // Present caller ID choice after verification/returning user
       setTimeout(() => {
-        const phoneNumber = enteredPhoneNumber.value || '(971) 235-1723'
+        const personal = enteredPhoneNumber.value ? formatPhoneNumber(enteredPhoneNumber.value) : '(971) 235-1723'
         addAIMessage([
-          `Great! Your number ${phoneNumber} is verified and set as your Caller ID.<br><br>As the dialer calls each person, their contact information will be displayed. The first contact that will be called is Sam Sample.`
+          `Great! Your number ${personal} is verified, but our ARMOR® test results across 3 carriers show 1 flag for spam on AT&T.<br><br><div style="margin: 4px 0 10px 0; color: var(--p-surface-200); font-size: 0.9em;">Carrier results</div><div style="display: flex; gap: 12px; justify-content: space-between;">
+  <div style="text-align: center; width: 32%; display: flex; flex-direction: column;">
+    <div style="font-weight: 600; margin-bottom: 6px;">AT&amp;T</div>
+    <img src="https://cdn.builder.io/api/v1/image/assets%2F5aeb07ce25f84dbc869290880d07b71e%2Fde975ceb671f4509ba23ee1c030bec02?format=webp&width=800" alt="AT&T flagged as spam" style="width: 100%; max-width: 140px; border-radius: 8px; margin: 0 auto; display: block;" />
+  </div>
+  <div style="text-align: center; width: 32%; display: flex; flex-direction: column; margin: 0 auto;">
+    <div style="font-weight: 600; margin-bottom: 6px;">T-Mobile</div>
+    <img src="https://cdn.builder.io/api/v1/image/assets%2F5aeb07ce25f84dbc869290880d07b71e%2Fe853c377f12e40d1ae7e549eb5a11cfa?format=webp&width=800" alt="T-Mobile clean" style="width: 100%; max-width: 140px; border-radius: 8px; margin: 0 auto; display: block;" />
+  </div>
+  <div style="text-align: center; width: 32%; display: flex; flex-direction: column;">
+    <div style="font-weight: 600; margin-bottom: 6px;">Verizon</div>
+    <img src="https://cdn.builder.io/api/v1/image/assets%2F5aeb07ce25f84dbc869290880d07b71e%2Fe853c377f12e40d1ae7e549eb5a11cfa?format=webp&width=800" alt="Verizon clean" style="width: 100%; max-width: 140px; border-radius: 8px; margin: 0 auto; display: block;" />
+  </div>
+</div><br>To ensure your calls connect, we've provided you with a free ARMOR® number to protect against false flags. This includes comprehensive number monitoring, remediation, and answer rate analytics.<br><br>Which number would you like to use for your Caller ID?`
         ])
-        showStartDialingButton.value = true
+        showCallerIdChoiceButtons.value = true
+        audioCheckPassed.value = false
         scrollToBottom()
       }, 1500)
 
@@ -1300,20 +2670,19 @@ const handleLooksGood = (): void => {
   } else {
     // Regular flow for new users
     setTimeout(() => {
-      addAIMessage([
-        'I\'ve analyzed your contact\'s phone numbers using real connection data from 900M+ calls, recent phone engagement, calling patterns, and carrier signals—so you only dial numbers likely to connect.<br><br>I\'ve prioritized the phone numbers most likely to connect so you spend time talking, not hitting dead lines.<br><br>Here\'s what I found:<br><div style="margin-left: 1em; text-indent: -1em;">• 40 numbers have \'High\' <span class="connect-score-tooltip" data-tooltip="' + connectScoreTooltip.replace(/'/g, '&#39;').replace(/"/g, '&quot;') + '">Connect Scores</span> and show consistent calling activity in the last 12 months. These are highly likely to be connected and assigned to active subscribers.</div><br><div style="margin-left: 1em; text-indent: -1em;">• 67 numbers have \'Medium\' Connect Scores and are worth calling after you exhaust your \'High\' Connect Score numbers.</div><br><div style="margin-left: 1em; text-indent: -1em;">• 54 numbers have \'Low\' Connect Scores and are likely disconnected or inactive lines that won\'t answer when dialed.</div>'
+      addAIMessageWithTyping([
+        'I\'ve analyzed your contact\'s phone numbers using real connection data from 900M+ calls, recent phone engagement, calling patterns, and carrier signals—so you only dial numbers likely to connect.<br><br>I\'ve prioritized the phone numbers most likely to connect so you spend time talking, not hitting dead lines.<br><br>Here\'s what I found:<br><div style="margin-left: 1em; text-indent: -1em;">• 40 numbers have \'High\' Connect Scores and show consistent calling activity in the last 12 months. These are highly likely to be connected and assigned to active subscribers.</div><br><div style="margin-left: 1em; text-indent: -1em;">• 67 numbers have \'Medium\' Connect Scores and are worth calling after you exhaust your \'High\' Connect Score numbers.</div><br><div style="margin-left: 1em; text-indent: -1em;">• 54 numbers have \'Low\' Connect Scores and are likely disconnected or inactive lines that won\'t answer when dialed.</div>'
       ])
 
-      // Show phone verification button after the message
-      showPhoneVerificationButton.value = true
-      scrollToBottom()
+      // Phone verification button will be shown automatically when typing completes
     }, 1000)
   }
 }
 
 const handleTryAgain = (): void => {
-  // Hide contact preview buttons
+  // Hide contact preview buttons and mark as used
   showContactPreviewButtons.value = false
+  contactPreviewButtonsUsed.value = true
 
   // Add user message showing what button was clicked
   addUserMessage('Try Again')
@@ -1327,8 +2696,9 @@ const handleTryAgain = (): void => {
 }
 
 const handlePhoneVerification = (): void => {
-  // Hide phone verification button
+  // Hide phone verification button and mark as used
   showPhoneVerificationButton.value = false
+  phoneVerificationButtonUsed.value = true
 
   // Add user message showing what button was clicked
   addUserMessage('Now lets verify my phone number')
@@ -1404,7 +2774,8 @@ const handleResendCode = (): void => {
 
   // Add AI response
   setTimeout(() => {
-    addAIMessage(`We've sent a new verification code to ${enteredPhoneNumber.value}. Please check your messages.`)
+    const fm = formatPhoneNumber(enteredPhoneNumber.value)
+    addAIMessage(`We've sent a new verification code to ${fm}. Please check your messages.`)
   }, 1000)
 }
 
@@ -1418,6 +2789,7 @@ const handleTryAnotherNumber = (): void => {
   // Reset to phone entry step
   verificationStep.value = 'enter-phone'
   enteredPhoneNumber.value = ''
+  verificationCodeTypingComplete.value = false // Reset typing state
 
   // Add AI response
   setTimeout(() => {
@@ -1436,6 +2808,40 @@ const handleTryAnotherNumber = (): void => {
 }
 
 const handleStartDialing = (): void => {
+  startDialSession()
+}
+
+const onAudioCheckPassed = (): void => {
+  showMicSpeakerCheck.value = false
+  audioCheckPassed.value = true
+  addUserMessage('Audio check success')
+}
+
+const formatPhoneNumber = (input: string): string => {
+  if (!input) return input
+  const digits = input.replace(/\D/g, '')
+  const cleaned = digits.length >= 10 ? digits.slice(-10) : digits
+  if (cleaned.length === 10) {
+    const area = cleaned.slice(0, 3)
+    const prefix = cleaned.slice(3, 6)
+    const line = cleaned.slice(6)
+    return `(${area}) ${prefix}-${line}`
+  }
+  return input
+}
+
+const selectCallerId = (choice: 'personal' | 'armor'): void => {
+  if (choice === 'personal') {
+    addUserMessage('Use Personal Caller ID')
+  } else {
+    addUserMessage('Use ARMOR® Number (Recommended)')
+  }
+  showCallerIdChoiceButtons.value = false
+  showStartDialingButton.value = true
+  audioCheckPassed.value = false
+}
+
+const startDialSession = (): void => {
   // Hide start dialing button
   showStartDialingButton.value = false
 
@@ -1454,7 +2860,7 @@ const handleStartDialing = (): void => {
 
     // Add separator for the first call
     setTimeout(() => {
-      addSeparatorMessage(currentContact.value.name) // Sam Sample (current contact at index 0)
+      addSeparatorMessage(currentContact.value.name)
 
       // Start the call simulation after showing separator
       setTimeout(() => {
@@ -1471,6 +2877,9 @@ let callSimulationTimeout: number | null = null
 
 const simulateCall = (): void => {
   // Contact index should already be set by handleNextContact or other functions
+
+  // Reset manual hang up flag for new call
+  isManualHangUp.value = false
 
   // Start ringing
   callState.value = 'ringing'
@@ -1490,6 +2899,7 @@ const simulateCall = (): void => {
       }
 
       // Call goes to voicemail - don't set as connected
+      isManualHangUp.value = false // This is automatic, not manual
       callState.value = 'ended'
       showDispositionButtons.value = true
       totalCalls.value++
@@ -1502,9 +2912,8 @@ const simulateCall = (): void => {
         notes: ''
       })
 
-      // Show voicemail detected message
-      addAIMessage('Voicemail detected...')
-      addAIMessage('Please select a call outcome or enter notes about this call.')
+      // Show combined voicemail message (no separate call ended message)
+      addAIMessageWithTyping('Voicemail detected...<br><br>Please select a call outcome or enter notes about this call.')
       scrollToBottom()
     }, 4000)
   } else {
@@ -1526,8 +2935,8 @@ const simulateCall = (): void => {
       }, 1000)
 
       // Show AI message that call connected
-      addAIMessage(`Connected! You're now speaking with ${currentContact.value.name}.`)
-      scrollToBottom()
+      // Show connection message first, then script with delay
+      showCallConnectedMessages(currentContact.value)
     }, 3000)
   }
 }
@@ -1558,7 +2967,7 @@ const handleNextContact = (): void => {
     callState.value = 'idle'
     callDuration.value = 0
 
-    addAIMessage(`Moving to next contact: ${currentContact.value.name}. Preparing to dial...`)
+    addUserMessage('Next contact')
 
     // Add separator message for the new contact
     setTimeout(() => {
@@ -1584,6 +2993,12 @@ const handleNextContact = (): void => {
 }
 
 const handleHangUp = (): void => {
+  // Set flag to indicate this was a manual hang up
+  isManualHangUp.value = true
+
+  // Add user message to show they hung up
+  addUserMessage('Call ended')
+
   // Stop timers
   if (callTimer) {
     clearInterval(callTimer)
@@ -1603,20 +3018,66 @@ const handleHangUp = (): void => {
     notes: ''
   })
 
-  addAIMessage(`Call with ${currentContact.value.name} ended. Duration: ${duration}`)
-  addAIMessage('Please select a call outcome or enter notes about this call.')
+  // Only show coaching recap for manual hang ups and if AI Coach is enabled
+  if (isManualHangUp.value && aiCoachEnabled.value) {
+    // Get coach-specific recap title
+    const getCoachRecapTitle = (): string => {
+      const name = currentCoach.value?.displayName || 'Coach'
+      const first = name.split(' ')[0]
+      return `<strong>${first}'s Call Recap</strong>`
+    }
+
+    addAIMessageWithTyping([
+      getCoachRecapTitle(),
+      '<br>',
+      getDynamicCoachingFeedback(),
+      '<br>',
+      'Delivery: 9/10<br>Pace: 9/10<br>Confidence: 9/10'
+    ])
+  }
+
+  // Reset the flag
+  isManualHangUp.value = false
 }
 
 const handleMute = (muted: boolean): void => {
-  addAIMessage(muted ? '🔇 Microphone muted' : '🎤 Microphone unmuted')
+  addUserMessage(muted ? 'Microphone muted' : 'Microphone unmuted')
 }
 
 const handleHold = (onHold: boolean): void => {
-  addAIMessage(onHold ? 'Call placed on hold' : 'Call resumed')
+  addUserMessage(onHold ? 'Call placed on hold' : 'Call resumed')
+}
+
+const openStudentDashboard = (): void => {
+  showCoachDashboard.value = false
+  showStudentDashboard.value = true
+  studentCoachName.value = currentCoach.value?.name || null
+  currentPage.value = 'main'
+}
+
+const closeStudentDashboard = (): void => {
+  showStudentDashboard.value = false
+}
+
+const openUserDashboard = (): void => {
+  // If a coach is selected, open their dashboard; otherwise open generic dashboard view
+  if (currentCoach.value?.name) {
+    dashboardCoachName.value = currentCoach.value.name
+  } else {
+    dashboardCoachName.value = null
+  }
+  showCoachDashboard.value = true
+  currentPage.value = 'main'
+}
+
+const handleTransfer = (selection: string): void => {
+  const name = (selection || '').split('|')[0] || 'teammate'
+  addUserMessage(`Call transferred to ${name}.`)
+  handleNextContact()
 }
 
 const handleKeypad = (): void => {
-  addAIMessage('📱 Keypad opened')
+  addAIMessage('�� Keypad opened')
 }
 
 const handlePauseQueue = (): void => {
@@ -1643,7 +3104,7 @@ const handlePauseQueue = (): void => {
   showDialer.value = false
   waitingForNotesInput.value = false
 
-  addAIMessage('Queue paused. You can review your session summary.')
+  addUserQueuePausedMessage('Queue paused')
 
   // Add session summary content to chat
   setTimeout(() => {
@@ -1749,6 +3210,61 @@ const toggleCallLog = (uniqueId?: string): void => {
 
 // Ensure functions are available on mount
 onMounted(() => {
+  // Global go-home event from Sidebar (fallback)
+  window.addEventListener('arkon-go-home', goToMainApp)
+
+  // Parse URL parameters for coach functionality and management modes
+  const urlParams = new URLSearchParams(window.location.search)
+  const coach = urlParams.get('coach')
+  const createCoach = urlParams.get('create-coach')
+  const coachAdmin = urlParams.get('coach-admin')
+  const coachDashboard = urlParams.get('coach-dashboard')
+  const studentDashboard = urlParams.get('student-dashboard')
+
+  // Set coach if specified
+  if (coach === 'all') {
+    showCoachCarousel.value = true
+    setCurrentCoach(null)
+    console.log('Coach carousel mode enabled')
+  } else if (coach) {
+    setCurrentCoach(coach)
+    console.log('Coach parameter detected:', coach)
+  }
+
+  // Show coach dashboard if requested
+  if (coachDashboard) {
+    showCoachDashboard.value = true
+    dashboardCoachName.value = coachDashboard
+    setCurrentCoach(coachDashboard)
+  }
+
+  // Show student dashboard if requested
+  if (studentDashboard) {
+    showStudentDashboard.value = true
+    studentCoachName.value = studentDashboard
+    setCurrentCoach(studentDashboard)
+  }
+
+  // Set management mode based on URL parameters
+  if (createCoach === 'true') {
+    setManagementMode('create')
+    console.log('Coach creation mode enabled')
+  } else if (coachAdmin) {
+    setManagementMode('admin')
+    console.log('Coach admin mode enabled')
+  }
+
+  // Set the initial welcome message based on coach parameter
+  if (messages.value.length > 0 && messages.value[0].type === 'ai') {
+    if (showCoachCarousel.value) {
+      messages.value[0].content = [
+        'Welcome to AI Dialer by PhoneBurner.<br><br>I\'m here to help you call with confidence and close more deals.<br><br>Choose your sales coach first - everything from your scripts to follow-up strategies will be tailored to their winning approach.'
+      ]
+    } else {
+      messages.value[0].content = [getCoachWelcomeMessage.value]
+    }
+  }
+
   ;(window as any).triggerFileUpload = triggerFileUpload
   ;(window as any).handleExportFile = handleExportFile
   ;(window as any).toggleCallLog = toggleCallLog
@@ -1760,7 +3276,28 @@ onUnmounted(() => {
   delete (window as any).triggerFileUpload
   delete (window as any).handleExportFile
   delete (window as any).toggleCallLog
+  window.removeEventListener('arkon-go-home', goToMainApp)
 })
+
+// Helper functions for session summary
+const getCoachAvatarHtml = (): string => {
+  if (currentCoach.value?.avatarUrl) {
+    return `<img src="${currentCoach.value.avatarUrl}" alt="${currentCoach.value.displayName}" style="width: 18px; height: 18px; border-radius: 50%; object-fit: cover; margin-right: 8px;">`
+  } else if (currentCoach.value) {
+    const initials = currentCoach.value.displayName
+      .split(' ')
+      .map(word => word.charAt(0))
+      .join('')
+      .toUpperCase()
+      .slice(0, 2)
+    return `<div style="width: 18px; height: 18px; border-radius: 50%; background: linear-gradient(135deg, #60a5fa 0%, #7b68ee 100%); display: inline-flex; align-items: center; justify-content: center; margin-right: 8px; font-size: 10px; font-weight: bold; color: white;">${initials}</div>`
+  }
+  return '<i class="pi pi-check-circle" style="margin-right: 8px;"></i>'
+}
+
+const getCoachTitle = (): string => {
+  return currentCoach.value ? `${currentCoach.value.displayName}'s Session Recap` : 'AI Coaching'
+}
 
 const addSessionSummaryToChat = (isCompleted: boolean = false): void => {
   // Create session summary content as HTML
@@ -1768,36 +3305,48 @@ const addSessionSummaryToChat = (isCompleted: boolean = false): void => {
   const uniqueId = Date.now() // Create unique ID for this session summary
   const summaryHTML = `
     <div style="background-color: rgb(31, 41, 55); border-radius: 12px; padding: 16px; margin: 12px 0;">
-      <h2 style="color: white; font-size: 24px; font-weight: 600; margin-bottom: 32px;">${title}</h2>
+      <h2 style="color: white; font-size: 24px; font-weight: 600; margin-bottom: 16px;">${title}</h2>
+      ${isCompleted ? '<p style="color: rgb(209, 213, 219); font-size: 16px; margin-bottom: 32px;">Congratulations! You have completed your entire call queue. All contacts have been processed.</p>' : ''}
 
-      <!-- Results & Next Steps Section -->
+      <!-- Results & Next Steps Section - only show coaching if AI Coach is enabled -->
+      ${aiCoachEnabled.value ? `
       <div style="margin-bottom: 32px;">
-        <h3 style="color: white; font-size: 18px; font-weight: 600; margin-bottom: 16px;"><i class="pi pi-check-circle" style="margin-right: 8px;"></i>Next Steps</h3>
+        <h3 style="color: white; font-size: 18px; font-weight: 600; margin-bottom: 16px; display: flex; align-items: center;">${getCoachAvatarHtml()}${getCoachTitle()}</h3>
         <div style="background-color: rgb(55, 65, 81); border-radius: 8px; padding: 20px;">
           <div style="color: rgb(209, 213, 219); font-size: 14px; font-weight: normal; line-height: 1.5;">
             ${isCompleted ?
-              `Great work! Your queue is complete. Here's what to do next:<br><br>
+              `Outstanding work completing your queue! I observed some key strengths in your calling approach:<br><br>
                <div style="margin-left: 20px;">
-                 <div style="margin-bottom: 16px;"><strong style="color: #fbbf24;">• Schedule 2 appointments</strong> - Sam Sample and Jennifer Martinez requested follow-up calls</div>
-                 <div style="margin-bottom: 16px;"><strong style="color: #fbbf24;">• Schedule 1 follow-up</strong> - George Sample showed interest and needs additional outreach</div>
+                 <div style="margin-bottom: 16px;"><strong style="color: #fbbf24;"><i class="pi pi-check" style="margin-right: 8px;"></i>Strong opening rapport</strong> - You connected well with prospects and built trust quickly</div>
+                 <div style="margin-bottom: 16px;"><strong style="color: #fbbf24;"><i class="pi pi-check" style="margin-right: 8px;"></i>Active listening</strong> - You picked up on buying signals and pain points effectively</div>
+                 <div style="margin-bottom: 16px;"><strong style="color: #fbbf24;"><i class="pi pi-check" style="margin-right: 8px;"></i>Confident close attempts</strong> - You weren't afraid to ask for the appointment when the timing was right</div>
                </div>
-               Your contact data has been enriched with <span class="connect-score-tooltip" data-tooltip="${connectScoreTooltip.replace(/'/g, '&#39;').replace(/"/g, '&quot;')}">Connect Scores</span>, call outcomes, and notes.<br><br>
-               <button class="p-button p-component p-button-primary" style="background-color: var(--p-button-primary-background, var(--p-primary-color, rgb(59, 130, 246))); color: var(--p-button-primary-color, #fff); border: 1px solid var(--p-button-primary-border-color, transparent); border-radius: var(--p-button-border-radius, 6px); padding: var(--p-button-padding-y, 8px) var(--p-button-padding-x, 16px); font-size: var(--p-button-font-size, 14px); font-weight: var(--p-button-font-weight, 600); cursor: pointer; display: inline-flex; align-items: center; gap: 8px;" onclick="handleExportFile()">
+               For your next session, focus on slowing down your pace slightly during objection handling—give prospects more time to process your responses. This will increase your conversion rate even further.<br><br>
+               <button style="background-color: rgb(59, 130, 246); color: white; border: none; border-radius: 6px; padding: 8px 16px; font-size: 14px; font-weight: 500; cursor: pointer; display: inline-flex; align-items: center; gap: 8px;" onclick="handleExportFile()">
                  <i class="pi pi-download"></i> Export Enriched File
                </button>` :
-              `Great work! Your queue is currently paused. Here's what to do next:<br><br>
+              `Great progress so far! I've been listening to your calls and here's my coaching feedback:<br><br>
                <div style="margin-left: 20px;">
-                 <div style="margin-bottom: 16px;"><strong style="color: #fbbf24;">• Schedule 2 appointments</strong> - Sam Sample and Jennifer Martinez requested follow-up calls</div>
-                 <div style="margin-bottom: 16px;"><strong style="color: #fbbf24;">• Schedule 1 follow-up</strong> - George Sample showed interest and needs additional outreach</div>
+                 <div style="margin-bottom: 16px;"><strong style="color: #fbbf24;"><i class="pi pi-check" style="margin-right: 8px;"></i>Energy and enthusiasm</strong> - Your positive tone is engaging prospects right from the start</div>
+                 <div style="margin-bottom: 16px;"><strong style="color: #fbbf24;"><i class="pi pi-info-circle" style="margin-right: 8px;"></i>Opportunity area</strong> - Try asking more discovery questions before jumping into your pitch</div>
+                 <div style="margin-bottom: 16px;"><strong style="color: #fbbf24;"><i class="pi pi-lightbulb" style="margin-right: 8px;"></i>Key insight</strong> - When you slow down and really listen, your closing rate increases significantly</div>
                </div>
-               Your contact data has been enriched with <span class="connect-score-tooltip" data-tooltip="${connectScoreTooltip.replace(/'/g, '&#39;').replace(/"/g, '&quot;')}">Connect Scores</span>, call outcomes, and notes.<br>Keep calling to build even more value.<br><br>
-               <button class="p-button p-component p-button-primary" style="background-color: var(--p-button-primary-background, var(--p-primary-color, rgb(59, 130, 246))); color: var(--p-button-primary-color, #fff); border: 1px solid var(--p-button-primary-border-color, transparent); border-radius: var(--p-button-border-radius, 6px); padding: var(--p-button-padding-y, 8px) var(--p-button-padding-x, 16px); font-size: var(--p-button-font-size, 14px); font-weight: var(--p-button-font-weight, 600); cursor: pointer; display: inline-flex; align-items: center; gap: 8px;" onclick="handleExportFile()">
+               Take a quick break if needed, then get back in there! Your next few calls are primed for success—I can feel the momentum building.<br><br>
+               <button style="background-color: rgb(59, 130, 246); color: white; border: none; border-radius: 6px; padding: 8px 16px; font-size: 14px; font-weight: 500; cursor: pointer; display: inline-flex; align-items: center; gap: 8px;" onclick="handleExportFile()">
                  <i class="pi pi-download"></i> Export Enriched File
                </button>`
             }
           </div>
         </div>
       </div>
+      ` : `
+      <!-- Export button for when AI Coach is disabled -->
+      <div style="margin-bottom: 32px;">
+        <button style="background-color: rgb(59, 130, 246); color: white; border: none; border-radius: 6px; padding: 8px 16px; font-size: 14px; font-weight: 500; cursor: pointer; display: inline-flex; align-items: center; gap: 8px;" onclick="handleExportFile()">
+          <i class="pi pi-download"></i> Export Enriched File
+        </button>
+      </div>
+      `}
 
       <!-- Call Log Section -->
       <div style="margin-top: 8px;">
@@ -1865,14 +3414,14 @@ const addSessionSummaryToChat = (isCompleted: boolean = false): void => {
     </div>
   `
 
-  addAIMessage([summaryHTML])
+  addAIMessageWithoutScroll([summaryHTML])
 
   // Show action buttons for continuing or loading new file
   if (!shouldCompleteQueue.value) {
     showContinueQueueButton.value = true
   } else {
-    // Show Load New File button when queue is completed
-    showLoadNewFileButton.value = true
+    // Show Load New File button when queue is completed (not in practice mode)
+    showLoadNewFileButton.value = !isPracticeMode.value
   }
 }
 
@@ -1892,12 +3441,165 @@ const continueQueue = (): void => {
   addAIMessage('Resuming call queue where you left off.')
 }
 
+const startDialerFromPrompt = (): void => {
+  addUserMessage("Yes let's call them now")
+  showCallNowCta.value = false
+  skipToDialer()
+}
+
+const sendFollowUpEmails = (): void => {
+  addUserMessage('Send Follow-up Emails')
+  // Hide any other CTAs
+  showCallNowCta.value = false
+  showNewLeadsCta.value = false
+  showYesterdayNoAnswerCta.value = false
+  showTodayFollowupsCta.value = false
+  showHighAttemptsCta.value = false
+
+  addAIMessageWithTyping([
+    "What email drafts would you like use?"
+  ])
+  showEmailDraftsCta.value = true
+}
+
+const saveAsCallList = (): void => {
+  addUserMessage('Save as Call List')
+  showCallNowCta.value = false
+  addAIMessage("Saved these leads as a new call list: 'Leads not called in 3 weeks'. You can open it from the Dialer.")
+}
+
+const dismissCallOptions = (): void => {
+  addUserMessage('Not Now')
+  showCallNowCta.value = false
+  addAIMessage("Okay, I won't take action right now. Let me know when you're ready.")
+}
+
+// Handlers for Yesterday No-Answer CTA
+const startFollowUpCalls = (): void => {
+  addUserMessage('Start Follow-up Calls')
+  showYesterdayNoAnswerCta.value = false
+  skipToDialer()
+}
+const sendTextsToNoAnswers = (): void => {
+  addUserMessage('Send Text Messages')
+  showYesterdayNoAnswerCta.value = false
+  addAIMessage("I'll prepare text messages for these contacts to increase your chances of connecting.")
+}
+const tryDifferentTime = (): void => {
+  addUserMessage('Try at Different Time')
+  showYesterdayNoAnswerCta.value = false
+  addAIMessage("Okay, I'll suggest optimal times to try again based on recent pickup patterns.")
+}
+const skipTheseNoAnswers = (): void => {
+  addUserMessage('Skip These')
+  showYesterdayNoAnswerCta.value = false
+  addAIMessage("Skipping these for now. You can revisit them anytime.")
+}
+
+// Handlers for New Leads CTA
+const startNewLeadDialSession = (): void => {
+  addUserMessage('Start New Lead Dial Session')
+  showNewLeadsCta.value = false
+  skipToDialer()
+}
+
+const sendWelcomeEmailsFirst = (): void => {
+  addUserMessage('Send Welcome Emails First')
+  showNewLeadsCta.value = false
+  addAIMessage("I'll generate welcome emails for these new leads and queue them for your review.")
+}
+
+const scheduleForLater = (): void => {
+  addUserMessage('Schedule for Later')
+  showNewLeadsCta.value = false
+  addAIMessage("Scheduled a new lead dial session for later. You can adjust in your Dialer settings.")
+}
+
+const dismissNewLeadOptions = (): void => {
+  addUserMessage('Not Now')
+  showNewLeadsCta.value = false
+  addAIMessage("Okay, no action taken for now.")
+}
+
+// Handlers for Today's Follow-ups CTA
+const callInOrderOfTime = (): void => {
+  addUserMessage('Call in Order of Time')
+  showTodayFollowupsCta.value = false
+  skipToDialer()
+}
+const callHighestPriorityFirst = (): void => {
+  addUserMessage('Call Highest Priority First')
+  showTodayFollowupsCta.value = false
+  addAIMessage("I'll prioritize follow-ups by urgency and likelihood to convert.")
+}
+const sendReminderEmails = (): void => {
+  addUserMessage('Send Reminder Emails')
+  showTodayFollowupsCta.value = false
+  addAIMessage("Sending reminder emails to today’s follow-ups. You'll find drafts ready in your CRM.")
+}
+const rescheduleAllFollowups = (): void => {
+  addUserMessage('Reschedule All')
+  showTodayFollowupsCta.value = false
+  addAIMessage("All follow-ups have been queued for rescheduling. Adjust times in your calendar settings.")
+}
+
+// Handlers for Email Drafts CTA (from 3-weeks prompt)
+const sendSelectedEmails = (): void => {
+  addUserMessage('Send Emails')
+  // Hide all CTAs
+  showEmailDraftsCta.value = false
+  showCallNowCta.value = false
+  showNewLeadsCta.value = false
+  showYesterdayNoAnswerCta.value = false
+  showTodayFollowupsCta.value = false
+  showHighAttemptsCta.value = false
+  const tmpl = selectedEmailTemplate.value || 'Selected Template'
+  addAIMessage(`Sending '${tmpl}' emails to these contacts. You can review status in your CRM.`)
+}
+const saveEmailsForLater = (): void => {
+  addUserMessage('Save For Later')
+  // Hide all CTAs
+  showEmailDraftsCta.value = false
+  showCallNowCta.value = false
+  showNewLeadsCta.value = false
+  showYesterdayNoAnswerCta.value = false
+  showTodayFollowupsCta.value = false
+  showHighAttemptsCta.value = false
+  const tmpl = selectedEmailTemplate.value || 'Selected Template'
+  addAIMessage(`Saved '${tmpl}' email drafts for later. You can send them anytime from drafts.`)
+}
+
+// Handlers for High Attempts CTA
+const switchToEmailHighAttempts = (): void => {
+  addUserMessage('Switch to Email')
+  showHighAttemptsCta.value = false
+  addAIMessage("I'll prepare outreach emails for these contacts and move them to an email-first sequence.")
+}
+const trySmsInsteadHighAttempts = (): void => {
+  addUserMessage('Try SMS Instead')
+  showHighAttemptsCta.value = false
+  addAIMessage("I will generate SMS drafts to attempt re-engagement via text.")
+}
+const tryDifferentTimesHighAttempts = (): void => {
+  addUserMessage('Try Different Times')
+  showHighAttemptsCta.value = false
+  addAIMessage("I'll recommend alternative call windows based on historical pickup patterns.")
+}
+const moveToInactiveHighAttempts = (): void => {
+  addUserMessage('Move to Inactive')
+  showHighAttemptsCta.value = false
+  addAIMessage("These contacts have been moved to Inactive. You can restore them anytime from settings.")
+}
+
 const skipToDialer = (): void => {
+  // Hide Call Now CTA if visible
+  showCallNowCta.value = false
   // Skip all setup steps and go directly to dialer for internal testing
   currentPage.value = 'main'
   isSignedIn.value = true
   isReturningUser.value = true
   hasUploadedFile.value = true
+  updateWelcomeMessageTyping() // Update typing status for welcome message
   showActionButtons.value = false
   showContactPreviewButtons.value = false
   showPhoneVerificationButton.value = false
@@ -1946,8 +3648,8 @@ const skipToDialer = (): void => {
       }, 1000)
 
       // Show AI message that call connected
-      addAIMessage(`Connected! You're now speaking with ${currentContact.value.name}.`)
-      scrollToBottom()
+      // Show connection message first, then script with delay
+      showCallConnectedMessages(currentContact.value)
     }, 3000)
   }, 1500) // Brief delay to show the startup message
 }
@@ -1982,7 +3684,7 @@ const loadNewFile = (preserveQueueState: boolean = false): void => {
 }
 
 const exportFile = (): void => {
-  addAIMessage(wrapConnectScoreWithTooltip('Exporting your enriched contact file with Connect Scores and call results...'))
+  addAIMessage('Exporting your enriched contact file with Connect Scores and call results...')
 }
 
 const handleCompleteQueue = (): void => {
@@ -2000,14 +3702,19 @@ const handleCompleteQueue = (): void => {
   showDialer.value = false
   waitingForNotesInput.value = false
 
-  addAIMessage('Congratulations! You have completed your entire call queue. All contacts have been processed.')
+  // Add user message for queue completion with custom positioning
+  addUserQueueCompletedMessage('Queue completed')
 
-  // Add session summary content to chat
+  // Add session summary content to chat after a delay
   setTimeout(() => {
     addSessionSummaryToChat(true)
-    // Show Load New File button
-    showLoadNewFileButton.value = true
-  }, 1000)
+    // Show Load New File button (not in practice mode)
+    showLoadNewFileButton.value = !isPracticeMode.value
+  }, 500)
+}
+
+const handleAICoachToggle = (enabled: boolean): void => {
+  aiCoachEnabled.value = enabled
 }
 
 const handleDisposition = (disposition: string): void => {
@@ -2037,7 +3744,7 @@ const handleDisposition = (disposition: string): void => {
 
   // Add AI response prompting for notes
   setTimeout(() => {
-    addAIMessage('Great! Now please enter any notes about this call or continue to the next call.')
+    addAIMessageWithTyping('Great! Now please enter any notes about this call or continue to the next call.')
 
     // Focus the chat input for notes
     setTimeout(() => {
@@ -2113,7 +3820,7 @@ const handleTermsCancel = () => {
   showActionButtons.value = false
   // Clear messages and show welcome message
   messages.value = []
-  addAIMessage('��� Welcome to ARKON! I\'m your AI calling assistant. I\'ll help you connect with more prospects and close more deals. What would you like to accomplish today?')
+  addAIMessage('���� Welcome to AI Dialer! I\'m your AI calling assistant. I\'ll help you connect with more prospects and close more deals. What would you like to accomplish today?')
 
   // Set focus context for header
   nextTick(() => {
@@ -2125,45 +3832,71 @@ const handleTermsCancel = () => {
 
 const handleTermsAgree = () => {
   closeTermsModal()
-  // Show pricing page after terms agreement
-  showPricingPage.value = true
+  // Navigate to dedicated pricing page
+  currentPage.value = 'pricing'
+  // Ensure pricing page is brought into view and focused
+  nextTick(() => {
+    const pricingEl = document.getElementById('pricing-page')
+    if (pricingEl) {
+      pricingEl.scrollIntoView({ behavior: 'smooth', block: 'start' })
+      const upgradeBtn = pricingEl.querySelector('button.p-button') as HTMLElement | null
+      upgradeBtn?.focus()
+    }
+  })
 }
 
 // Pricing Page Methods
 const closePricingPage = () => {
-  showPricingPage.value = false
+  currentPage.value = 'main'
 }
 
 const showPaymentFromPricing = () => {
-  showPricingPage.value = false
   showPaymentPage.value = true
 }
 
 const closePaymentPage = () => {
   showPaymentPage.value = false
-  showPricingPage.value = true
 }
 
 const handlePurchaseCompleted = () => {
   // Close payment page and complete signup flow
   showPaymentPage.value = false
-  showPricingPage.value = false
   currentPage.value = 'main'
   isSignedIn.value = true
   isReturningUser.value = false // This is a new user
-  showActionButtons.value = true
+
+  // Ensure the initial welcome bubble does not retype
+  if (messages.value.length > 0 && messages.value[0].type === 'ai') {
+    messages.value[0].typing = false
+  }
+
+  // Reset congratulations typing completion and action buttons used state
+  congratulationsTypingComplete.value = false
+  actionButtonsUsed.value = false
+  showCreateAccountCTA.value = false
+
+  // Stop any pending 'create an account' typing bubbles (CRM/connect or upload)
+  messages.value.forEach((m: any) => {
+    if (m?.type === 'ai' && m?.typing && Array.isArray(m.content) && m.content.join(' ').toLowerCase().includes('create an account')) {
+      m.typing = false
+    }
+  })
 
   // Add user message confirming account creation and upgrade
   addUserMessage('Account created & upgraded')
 
-  // Add AI congratulations message
-  setTimeout(() => {
-    addAIMessage('Congratulations! You\'ve successfully upgraded to the Pro plan and have unlimited access to all features.<br><br>To help us understand what your goals are, what are you trying to accomplish?')
-  }, 500)
+  // Pin this flow to top like goals: maintain top position and add AI without auto-scroll
+  const maintainTop = () => {
+    scrollToTopForGoals()
+  }
+  const maintainer = setInterval(maintainTop, 300)
 
-  // Ensure scroll happens after action buttons are rendered
   setTimeout(() => {
-    scrollToBottom()
+    // One more forced top position before adding AI response
+    scrollToTopForGoals()
+    addAIMessageWithTypingNoScroll('Congratulations! You\'ve successfully upgraded to the Pro plan and have unlimited access to all features.<br><br>To help us understand what your goals are, what are you trying to accomplish?')
+    // Stop maintaining after typing starts
+    setTimeout(() => clearInterval(maintainer), 2000)
   }, 500)
 }
 
@@ -2171,7 +3904,7 @@ const handleUpgradeSelected = () => {
   closePricingPage()
   isSignedIn.value = true
   showActionButtons.value = true
-  addAIMessage('🎉 Welcome to ARKON! Your account has been created successfully. Let\'s start your first smart calling session! What are you trying to accomplish?')
+  addAIMessage('�� Welcome to AI Dialer! Your account has been created successfully. Let\'s start your first smart calling session! What are you trying to accomplish?')
 
   // Ensure scroll happens after action buttons are rendered
   setTimeout(() => {
@@ -2188,7 +3921,8 @@ const handleAccountCreated = (accountData: any) => {
   closeAccountCreation()
   isSignedIn.value = true
   showActionButtons.value = true
-  addAIMessage('🎉 Welcome to ARKON! Your account has been created successfully. Let\'s start your first smart calling session! What are you trying to accomplish?')
+  updateWelcomeMessageTyping() // Update typing status for welcome message
+  addAIMessage('���� Welcome to AI Dialer! Your account has been created successfully. Let\'s start your first smart calling session! What are you trying to accomplish?')
 
   // Ensure scroll happens after action buttons are rendered
   setTimeout(() => {
@@ -2203,11 +3937,12 @@ const showTermsFromAccount = () => {
 
 const handleGoogleSignupFromAccount = () => {
   closeAccountCreation()
-  addAIMessage('🚀 Great choice! Setting up your Google account integration...')
+  addAIMessage('<i class="pi pi-rocket"></i> Great choice! Setting up your Google account integration...')
   setTimeout(() => {
     isSignedIn.value = true
     showActionButtons.value = true
-    addAIMessage('🎉 Welcome to ARKON! Your account has been created successfully. Let\'s start your first smart calling session! What are you trying to accomplish?')
+    updateWelcomeMessageTyping() // Update typing status for welcome message
+    addAIMessage('������� Welcome to AI Dialer! Your account has been created successfully. Let\'s start your first smart calling session! What are you trying to accomplish?')
 
     // Ensure scroll happens after action buttons are rendered
   setTimeout(() => {
@@ -2218,19 +3953,28 @@ const handleGoogleSignupFromAccount = () => {
 
 // Action Button Methods
 const handleActionButton = (action: string): void => {
-  // Hide action buttons after selection
+  // Hide action buttons after selection and mark as used
   showActionButtons.value = false
-  // Don't show contact preview buttons yet - wait for AI message to appear
+  actionButtonsUsed.value = true
+  // Reset contact preview typing state for new message
+  contactPreviewTypingComplete.value = false
+  contactPreviewButtonsUsed.value = false
+  // Hide contact preview buttons initially - they'll show after typing completes
+  showContactPreviewButtons.value = false
   
   // Add user message showing their selection
-  addUserMessage(`I want to ${action.toLowerCase()}`)
+  addUserGoalMessage(`I want to ${action.toLowerCase()}`)
+
+  // Maintain scroll position for goal message even during AI response
+  const maintainGoalPosition = () => {
+    scrollToTopForGoals()
+  }
+
+  // Set up periodic maintenance of scroll position
+  const scrollMaintainer = setInterval(maintainGoalPosition, 300)
 
   // Wait for user message scroll to complete, then add AI response
   setTimeout(() => {
-    console.log('First timeout completed, waiting for scroll animation')
-    // Wait an additional moment for scroll animation to complete
-    setTimeout(() => {
-      console.log('About to add AI message without scroll')
       let response = []
       const sampleContacts = `
         <div style="color: #ffffff;">
@@ -2242,9 +3986,9 @@ const handleActionButton = (action: string): void => {
           <br>
           <table style="width: 100%; border-collapse: collapse;">
             <tr><td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af;">Home Phone:</td><td style="padding: 4px 0;">(555) 123-4567</td></tr>
-            <tr><td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af;">${wrapConnectScoreWithTooltip('Connect Score')}:</td><td style="padding: 4px 0;">High</td></tr>
+            <tr><td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af;">Connect Score:</td><td style="padding: 4px 0;">High</td></tr>
             <tr><td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af;">Mobile Phone:</td><td style="padding: 4px 0;">(555) 123-4568</td></tr>
-            <tr><td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af;">${wrapConnectScoreWithTooltip('Connect Score')}:</td><td style="padding: 4px 0;">Medium</td></tr>
+            <tr><td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af;">Connect Score:</td><td style="padding: 4px 0;">Medium</td></tr>
             <tr><td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af;">Email:</td><td style="padding: 4px 0;">sarah.johnson@techcorp.com</td></tr>
             <tr><td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af;">Address:</td><td style="padding: 4px 0;">1234 Main St, Dallas, TX</td></tr>
             <tr><td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af;">Local Time:</td><td style="padding: 4px 0;">2:45 PM CST</td></tr>
@@ -2259,7 +4003,7 @@ const handleActionButton = (action: string): void => {
       switch (action) {
       case 'Set Appointments':
         response = [
-          wrapConnectScoreWithTooltip('Perfect! Setting appointments is our bread and butter. We\'ll help you fill your calendar.<br><br>I\'ve analyzed your <strong style=\"color: #fbbf24;\">156 contacts</strong> and checked phone numbers with Connect Score.<br><br>Here\'s a preview of your data. Does this look correct?<br><br>'),
+          'Perfect! Setting appointments is our bread and butter. We\'ll help you fill your calendar.<br><br>I\'ve analyzed your <strong style=\"color: #fbbf24;\">156 contacts</strong> and checked phone numbers with Connect Score.<br><br>Here\'s a preview of your data. Does this look correct?<br><br>',
           sampleContacts
         ]
         break
@@ -2267,7 +4011,7 @@ const handleActionButton = (action: string): void => {
         response = [
           'Outstanding! Closing live sales is where the magic happens. We\'ll get you connected with your hottest prospects.',
           '',
-          wrapConnectScoreWithTooltip('Your trial is ready! I\'ve analyzed your <strong style="color: #fbbf24;">156 contacts</strong> and prioritized those ready to buy with Connect Score.'),
+          'Your trial is ready! I\'ve analyzed your <strong style="color: #fbbf24;">156 contacts</strong> and prioritized those ready to buy with Connect Score.',
           'Here\'s a preview of your highest-intent prospects. Does this look correct?',
           sampleContacts
         ]
@@ -2276,7 +4020,7 @@ const handleActionButton = (action: string): void => {
         response = [
           'Perfect! Creating opportunities is all about finding the right prospects at the right time. We\'ll build your pipeline.',
           '',
-          wrapConnectScoreWithTooltip('Your trial is ready! I\'ve analyzed your <strong style="color: #fbbf24;">156 contacts</strong> and identified potential opportunities with Connect Score.'),
+          'Your trial is ready! I\'ve analyzed your <strong style="color: #fbbf24;">156 contacts</strong> and identified potential opportunities with Connect Score.',
           'Here\'s a preview of your warmest leads. Does this look correct?',
           sampleContacts
         ]
@@ -2285,7 +4029,7 @@ const handleActionButton = (action: string): void => {
         response = [
           'Smart choice! Follow-ups are where deals are won. We\'ll help you reconnect with precision timing.',
           '',
-          wrapConnectScoreWithTooltip('Your trial is ready! I\'ve analyzed your <strong style="color: #fbbf24;">156 contacts</strong> and optimized follow-up timing with Connect Score.'),
+          'Your trial is ready! I\'ve analyzed your <strong style="color: #fbbf24;">156 contacts</strong> and optimized follow-up timing with Connect Score.',
           'Here\'s a preview of your follow-up targets. Does this look correct?',
           sampleContacts
         ]
@@ -2294,7 +4038,7 @@ const handleActionButton = (action: string): void => {
         response = [
           'Brilliant! Live transfers maximize your team\'s efficiency. We\'ll connect you with prospects ready to talk.',
           '',
-          wrapConnectScoreWithTooltip('Your trial is ready! I\'ve analyzed your <strong style="color: #fbbf24;">156 contacts</strong> and identified transfer-ready prospects with Connect Score.'),
+          'Your trial is ready! I\'ve analyzed your <strong style="color: #fbbf24;">156 contacts</strong> and identified transfer-ready prospects with Connect Score.',
           'Here\'s a preview of your transfer candidates. Does this look correct?',
           sampleContacts
         ]
@@ -2303,7 +4047,7 @@ const handleActionButton = (action: string): void => {
         response = [
           'Fantastic! Live conversations are the heart of great sales. We\'ll get you talking to the right people.',
           '',
-          wrapConnectScoreWithTooltip('Your trial is ready! I\'ve analyzed your <strong style="color: #fbbf24;">156 contacts</strong> and found conversation-ready prospects with Connect Score.'),
+          'Your trial is ready! I\'ve analyzed your <strong style="color: #fbbf24;">156 contacts</strong> and found conversation-ready prospects with Connect Score.',
           'Here\'s a preview of your best conversation targets. Does this look correct?',
           sampleContacts
         ]
@@ -2312,14 +4056,36 @@ const handleActionButton = (action: string): void => {
         response = [`I\'ll help you with ${action.toLowerCase()}. Let me prepare your optimal calling strategy.`]
       }
 
-      addAIMessageWithoutScroll(response)
+      // Force scroll position one more time before AI response
+      scrollToTopForGoals()
 
-      // Show contact preview buttons after AI message appears
+      addAIMessageWithTypingNoScroll(response)
+
+      // Stop maintaining scroll position after AI response starts
       setTimeout(() => {
-        showContactPreviewButtons.value = true
-      }, 200)
-    }, 1000) // Additional delay for scroll completion
-  }, 1500) // Initial delay
+        clearInterval(scrollMaintainer)
+      }, 2000)
+
+      // Contact preview buttons will be shown automatically when typing completes
+  }, 1500) // Increased delay to ensure user message scroll completes
+}
+
+// Coach Management Methods
+const handleCoachCreated = async (coachData: any) => {
+  try {
+    const newCoach = await addCoach(coachData)
+    const newUrl = generateCoachUrl(newCoach.name)
+    setTimeout(() => {
+      window.location.href = newUrl
+    }, 100)
+  } catch (error) {
+    console.error('Error creating coach:', error)
+  }
+}
+
+const handleCoachModalClose = () => {
+  // Simply set management mode to null for testing
+  setManagementMode(null)
 }
 
 // Lifecycle hook to establish focus context when app loads
@@ -2372,6 +4138,20 @@ onMounted(() => {
   background: transparent;
   border: none;
   padding: 0;
+}
+
+.email-drafts-listbox :deep(.p-listbox-option.p-listbox-option-selected),
+.email-drafts-listbox :deep(.p-listbox-option[aria-selected="true"]),
+.email-drafts-listbox :deep(.p-listbox-option.p-focus) {
+  background-color: var(--p-blue-600) !important;
+  color: var(--p-surface-0) !important;
+}
+.email-drafts-listbox :deep(.p-listbox-option:hover) {
+  background-color: var(--p-blue-800) !important;
+  color: var(--p-surface-0) !important;
+}
+.email-drafts-listbox :deep(.p-listbox-option) {
+  border-radius: 6px;
 }
 
 </style>

@@ -323,6 +323,11 @@ export default {
     formField: {
       paddingX: "0.75rem",
       paddingY: "0.5rem",
+      xs: {
+        fontSize: "0.75rem",
+        paddingX: "0.5rem",
+        paddingY: "0.25rem"
+      },
       sm: {
         fontSize: "0.875rem",
         paddingX: "0.625rem",

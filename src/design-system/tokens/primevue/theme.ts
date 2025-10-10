@@ -3,16 +3,20 @@ import base from './base'
 import button from './button'
 import dialog from './dialog'
 import inputtext from './inputtext'
-import card from './card'
 import toggleswitch from './toggleswitch'
+import tooltip from './tooltip'
+import dropdown from './dropdown'
+import datatable from './datatable'
 
 export const customTheme = definePreset(base, {
     components: {
         button,
         dialog,
         inputtext,
-        card,
-        toggleswitch
+        toggleswitch,
+        tooltip,
+        dropdown,
+        datatable
     }
 })
 

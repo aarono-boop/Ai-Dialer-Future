@@ -1,61 +1,25 @@
 <template>
-  <div class="w-full h-full bg-gray-900 rounded-lg border border-gray-700 flex flex-col">
-    <!-- Header -->
-    <div class="p-4 border-b border-gray-700">
-      <div class="flex items-center justify-between">
-        <div class="flex items-center gap-2">
-          <div class="w-2 h-2 bg-green-500 rounded-full"></div>
-          <span class="text-white font-medium">Dial Queue</span>
-        </div>
-        <Button
-          v-if="!shouldCompleteQueue"
-          @click="completeQueue"
-          :disabled="false"
-          tabindex="8"
-          severity="secondary"
-          size="small"
-          label="End Queue"
-          style="flex-shrink: 0; position: relative;"
-        />
-      </div>
-
-      <!-- Contact Progress -->
-      <div class="mt-2 text-center">
-        <div class="text-gray-400 text-xs">
-          Contact {{ currentContactIndex + 1 }} of 3
-        </div>
-        <div class="mt-1 bg-gray-700 rounded-full h-2">
-          <div
-            class="bg-blue-500 h-2 rounded-full transition-all duration-300"
-            :style="{ width: `${((currentContactIndex + 1) / 3) * 100}%` }"
-          ></div>
-        </div>
-      </div>
-
-      <div class="flex items-center justify-between mt-3" style="min-height: 32px; box-sizing: border-box;">
-        <div class="text-gray-400 text-sm" style="flex-shrink: 0;">
-          Queue Time: <span class="text-white">{{ formatTime(queueTime) }}</span>
-        </div>
-      </div>
-    </div>
-
-    <!-- Call Status -->
-    <div class="p-4 border-b border-gray-700">
+  <div class="w-full h-full bg-gray-900 rounded-r-lg border border-gray-700 flex flex-col pt-4 pb-[10px] px-3">
+    <!-- Call Status & Controls Card -->
+    <div class="mx-[5px] mb-4 bg-gray-800 border border-gray-600 rounded-lg p-[14px]">
+      <!-- Call Status -->
       <!-- Call Ended State -->
-      <div v-if="callState === 'ended'" class="bg-red-900/50 border border-red-700 rounded-lg p-3 text-center">
+      <div v-if="callState === 'ended'" class="bg-gray-900/50 border border-gray-600 rounded-lg p-3 text-center">
         <div class="text-red-400 font-medium">Call Ended</div>
         <div class="text-gray-300 text-sm">(312) 586-9748</div>
       </div>
 
       <!-- Ringing State -->
-      <div v-else-if="callState === 'ringing'" class="bg-yellow-900/50 border border-yellow-700 rounded-lg p-3 text-center">
-        <div class="text-yellow-400 font-medium">Calling...</div>
-        <div class="text-gray-300 text-sm">{{ currentContact.phone }}</div>
-        <div class="flex justify-center mt-2">
-          <div class="animate-pulse w-2 h-2 bg-yellow-400 rounded-full mx-1"></div>
-          <div class="animate-pulse w-2 h-2 bg-yellow-400 rounded-full mx-1" style="animation-delay: 0.2s"></div>
-          <div class="animate-pulse w-2 h-2 bg-yellow-400 rounded-full mx-1" style="animation-delay: 0.4s"></div>
+      <div v-else-if="callState === 'ringing'" class="bg-gray-900/50 border border-gray-600 rounded-lg p-3 text-center">
+        <div class="flex items-center justify-center gap-2">
+          <div class="text-green-400 font-medium">Calling</div>
+          <div class="flex items-center">
+            <div class="animate-pulse w-2 h-2 bg-green-400 rounded-full mx-1"></div>
+            <div class="animate-pulse w-2 h-2 bg-green-400 rounded-full mx-1" style="animation-delay: 0.2s"></div>
+            <div class="animate-pulse w-2 h-2 bg-green-400 rounded-full mx-1" style="animation-delay: 0.4s"></div>
+          </div>
         </div>
+        <div class="text-gray-300 text-sm">{{ currentContact.phone }}</div>
       </div>
 
       <!-- Connected State -->
@@ -69,176 +33,198 @@
         <div class="text-gray-400 font-medium">Ready to Dial</div>
         <div class="text-gray-300 text-sm">{{ currentContact.phone }}</div>
       </div>
+
+      <!-- Header -->
+      <div class="mt-[17px]">
+        <div class="bg-gray-700 rounded-full h-5 w-full relative flex items-center">
+          <div
+            class="h-5 rounded-full transition-all duration-300"
+            :style="{ width: `${((currentContactIndex + 1) / 3) * 100}%`, background: 'linear-gradient(to right, #60a5fa, #7b68ee)' }"
+          ></div>
+          <div class="absolute inset-0 flex items-center justify-center text-white text-xs font-medium">
+            Dial Queue {{ currentContactIndex + 1 }} of 3
+          </div>
+        </div>
+      </div>
+
+      <!-- AI Coach Controls -->
+      <div class="mt-3">
+        <div class="flex items-center justify-between" style="min-height: 32px; box-sizing: border-box;">
+          <div class="flex items-center gap-2" style="flex-shrink: 0;">
+            <!-- Dynamic Coach Avatar and Name -->
+            <div v-if="currentCoach" class="flex items-center gap-2">
+              <img
+                v-if="currentCoach.avatarUrl"
+                :src="currentCoach.avatarUrl"
+                :alt="currentCoach.displayName"
+                class="w-6 h-6 rounded-full object-cover"
+              />
+              <div
+                v-else
+                class="w-6 h-6 rounded-full bg-gradient-to-br from-blue-400 to-purple-500 flex items-center justify-center text-white text-xs font-semibold"
+              >
+                {{ getCoachInitials(currentCoach.displayName) }}
+              </div>
+              <span
+                class="text-gray-300 text-sm cursor-pointer select-none"
+                @click="toggleAICoach(!props.aiCoachEnabled)"
+              >{{ currentCoach.displayName }}'s AI Coach</span>
+            </div>
+            <!-- Default AI Coach when no coach parameter -->
+            <span
+              v-else
+              class="text-gray-300 text-sm cursor-pointer select-none"
+              @click="toggleAICoach(!props.aiCoachEnabled)"
+            >AI Coach</span>
+            <ToggleSwitch
+              :model-value="props.aiCoachEnabled"
+              @update:model-value="toggleAICoach"
+              class="ai-coach-toggle"
+            />
+          </div>
+          <div class="text-gray-400 text-sm text-center w-[160px] flex-shrink-0">
+            Queue Time: <span class="text-white font-mono tabular-nums">{{ formatTime(queueTime) }}</span>
+          </div>
+          <Button
+            v-if="!shouldCompleteQueue"
+            @click="pauseQueue"
+            :disabled="callState === 'connected'"
+            tabindex="8"
+            severity="secondary"
+            size="small"
+            class="pause-queue-compact"
+          >
+            <span class="text-xs">Pause Queue</span>
+          </Button>
+        </div>
+      </div>
     </div>
 
     <!-- Contact Info -->
-    <div class="flex-1 p-4 overflow-hidden min-h-0">
-      <!-- For contacts other than the 3rd, show both cards -->
-      <div v-if="currentContactIndex !== 2" class="h-full min-h-0 flex flex-col gap-4">
-        <Card class="flex-1 min-h-0" :pt="{ root: { style: 'height:100%; min-height:0; overflow:hidden;' }, body: { style: 'height:100%; display:flex; flex-direction:column; flex:1; min-height:0;' }, content: { style: 'flex:1; min-height:0; overflow-y:auto; scrollbar-gutter: stable both-edges;' } }">
-          <template #title>
-            <div class="text-white text-lg font-bold">{{ currentContact.name }}</div>
-            <div class="text-white text-sm">{{ currentContact.title }} at {{ currentContact.company }}</div>
-          </template>
-          <template #content>
-            <div class="text-sm overflow-y-auto min-h-0">
+    <div class="flex-1 mx-[5px] mb-4 bg-gray-800 border border-gray-600 rounded-lg p-[14px] overflow-y-auto">
+      <div class="space-y-4">
+        <!-- Contact Header -->
+        <div>
+          <h3 class="text-white text-lg font-bold ml-[17px]">{{ currentContact.name }}</h3>
+          <p class="text-white text-sm ml-[17px]">{{ currentContact.title }} at {{ currentContact.company }}</p>
+        </div>
+
+        <TabView :pt="{ inkbar: { style: { display: 'none' } } }">
+          <TabPanel value="details">
+            <template #header>
+              <span class="flex items-center gap-2 text-xs"><i class="pi pi-id-card"></i><span>Details</span></span>
+            </template>
+            <div class="text-sm">
               <table style="width: 100%; border-collapse: collapse;">
                 <tbody>
                   <tr>
-                    <td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af;">Phone:</td>
+                    <td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af; white-space: nowrap;">Phone:</td>
                     <td style="padding: 4px 0; color: white;">{{ currentContact.phone }}</td>
                   </tr>
                   <tr>
-                    <td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af;"><span class="connect-score-tooltip" :data-tooltip="connectScoreTooltip">Connect Score</span>:</td>
+                    <td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af; white-space: nowrap;">Connect Score:</td>
                     <td style="padding: 4px 0; color: white;">{{ currentContact.connectScore }}</td>
                   </tr>
                   <tr>
-                    <td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af;">Email:</td>
-                    <td style="padding: 4px 0; color: white;">{{ currentContact.email }}</td>
+                    <td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af; white-space: nowrap;">Email:</td>
+                    <td style="padding: 4px 0; color: white;"><a :href="`mailto:${currentContact.email}`" class="underline" aria-label="Send email">{{ currentContact.email }}</a></td>
                   </tr>
                   <tr>
-                    <td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af;">Address:</td>
+                    <td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af; white-space: nowrap;">Address:</td>
                     <td style="padding: 4px 0; color: white;">{{ currentContact.address }}</td>
                   </tr>
                   <tr>
-                    <td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af;">Local Time:</td>
+                    <td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af; white-space: nowrap;">Local Time:</td>
                     <td style="padding: 4px 0; color: white;">{{ currentContact.localTime }}</td>
                   </tr>
                   <tr>
-                    <td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af;">Website:</td>
-                    <td style="padding: 4px 0; color: white;">{{ currentContact.website }}</td>
+                    <td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af; white-space: nowrap;">Website:</td>
+                    <td style="padding: 4px 0; color: white;"><a :href="normalizeHref(currentContact.website)" target="_blank" rel="noopener noreferrer" class="underline" aria-label="Visit website">{{ displayUrl(currentContact.website) }}</a></td>
                   </tr>
                   <tr>
-                    <td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af;">LinkedIn Profile:</td>
-                    <td style="padding: 4px 0; color: white;">{{ currentContact.linkedin }}</td>
+                    <td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af; white-space: nowrap;">LinkedIn:</td>
+                    <td style="padding: 4px 0; color: white;"><a :href="normalizeHref(currentContact.linkedin)" target="_blank" rel="noopener noreferrer" class="underline" aria-label="View LinkedIn profile">{{ displayUrl(currentContact.linkedin) }}</a></td>
                   </tr>
                   <tr>
-                    <td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af;">Industry:</td>
+                    <td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af; white-space: nowrap;">Industry:</td>
                     <td style="padding: 4px 0; color: white;">{{ currentContact.industry }}</td>
                   </tr>
                   <tr>
-                    <td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af;">Company Size:</td>
+                    <td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af; white-space: nowrap;">Company Size:</td>
                     <td style="padding: 4px 0; color: white;">{{ currentContact.companySize }}</td>
                   </tr>
                   <tr>
-                    <td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af;">Lead Source:</td>
+                    <td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af; white-space: nowrap;">Lead Source:</td>
                     <td style="padding: 4px 0; color: white;">{{ currentContact.leadSource }}</td>
                   </tr>
-                  <tr v-if="currentContact.notes">
-                    <td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af;">Notes:</td>
-                    <td style="padding: 4px 0; color: white; white-space: pre-wrap;">{{ currentContact.notes }}</td>
+                  <tr v-if="currentContact.sourceUrl">
+                    <td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af; white-space: nowrap;">Data Source:</td>
+                    <td style="padding: 4px 0; color: white;">
+                      <a
+                        :href="currentContact.sourceUrl && currentContact.sourceUrl.startsWith('http') ? currentContact.sourceUrl : `https://${currentContact.sourceUrl}`"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="underline"
+                        :aria-label="currentContact.sourceType === 'crm' ? 'Open CRM record' : 'Open source spreadsheet'"
+                      >
+                        {{ currentContact.sourceName || (currentContact.sourceType === 'crm' ? 'CRM Record' : 'Spreadsheet') }}
+                      </a>
+                    </td>
                   </tr>
                 </tbody>
               </table>
             </div>
-          </template>
-        </Card>
-
-        <!-- Live Transcription Card -->
-        <Card :class="['min-h-0', transcriptionEnabled ? 'flex-1' : '']" :pt="{ root: { style: transcriptionEnabled ? 'height:100%; min-height:0; overflow:hidden;' : 'height:auto; min-height:0; overflow:hidden;' }, body: { style: transcriptionEnabled ? 'height:100%; display:flex; flex-direction:column; flex:1; min-height:0;' : 'display:flex; flex-direction:column; min-height:0;' }, content: { style: transcriptionEnabled ? 'flex:1; min-height:0; overflow-y:auto; scrollbar-gutter: stable both-edges;' : 'flex:0; height:0; padding:0; overflow:hidden;' } }">
-          <template #title>
-            <div class="flex items-center justify-between">
-              <div class="flex items-center gap-2">
-                <i class="pi pi-microphone text-sm" aria-hidden="true"></i>
-                <span>Live Transcription</span>
+          </TabPanel>
+          <TabPanel value="notes">
+            <template #header>
+              <span class="flex items-center gap-2 text-xs"><i class="pi pi-pencil"></i><span>Notes</span></span>
+            </template>
+            <div class="space-y-4 text-sm" style="color: var(--p-surface-0);">
+              <!-- Create Note -->
+              <div class="space-y-1">
+                <Textarea
+                  v-model="newNote"
+                  :autoResize="false"
+                  rows="2"
+                  placeholder="Type a note..."
+                  class="w-full"
+                  :pt="{ root: { style: { background: 'var(--p-surface-800)', border: '1px solid var(--p-surface-600)', color: 'var(--p-surface-0)', padding: '10px', fontSize: '.75rem', borderRadius: 'var(--p-border-radius-sm)' } } }"
+                  style="overflow: auto;"
+                />
+                <div class="flex justify-end">
+                  <Button
+                    :disabled="!newNote.trim()"
+                    size="small"
+                    icon="pi pi-plus"
+                    label="Add note"
+                    severity="secondary"
+                    class="pause-queue-compact"
+                    @click="addNote"
+                  />
+                </div>
               </div>
-              <ToggleSwitch v-model="transcriptionEnabled" aria-label="Toggle live transcription" />
-            </div>
-          </template>
-          <template #content>
-            <div ref="transcriptContainer" :class="['space-y-2 text-sm min-h-0', transcriptionEnabled ? 'h-full overflow-y-auto' : 'hidden']" style="scroll-behavior: smooth;">
-              <div v-for="(line, idx) in displayedTranscript" :key="idx" class="flex gap-2">
-                <span class="text-gray-400 min-w-[64px]">{{ line.speaker }}:</span>
-                <span class="text-white">{{ line.text }}</span>
+              <!-- Notes List -->
+              <div v-for="(n, i) in notesList" :key="i" class="flex items-start gap-2">
+                <i class="pi pi-clock mt-1" style="color: var(--p-blue-400);"></i>
+                <div>
+                  <div class="text-xs" style="color: var(--p-surface-300);">{{ n.date }}</div>
+                  <div style="white-space: pre-wrap;">{{ n.text }}</div>
+                </div>
               </div>
-            </div>
-          </template>
-        </Card>
-      </div>
-
-      <!-- For 3rd contact, show tabs (no toggle) -->
-      <div v-else class="h-full min-h-0 flex flex-col">
-        <TabView class="flex-1 min-h-0">
-          <TabPanel header="Contact Details">
-            <div class="h-full min-h-0">
-              <Card class="h-full min-h-0" :pt="{ root: { style: 'height:100%; min-height:0; overflow:hidden;' }, body: { style: 'height:100%; display:flex; flex-direction:column; flex:1; min-height:0;' }, content: { style: 'flex:1; min-height:0; overflow-y:auto;' } }">
-                <template #title>
-                  <div class="text-white text-lg font-bold">{{ currentContact.name }}</div>
-                  <div class="text-white text-sm">{{ currentContact.title }} at {{ currentContact.company }}</div>
-                </template>
-                <template #content>
-                  <div class="text-sm overflow-y-auto min-h-0">
-                    <table style="width: 100%; border-collapse: collapse;">
-                      <tbody>
-                        <tr>
-                          <td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af;">Phone:</td>
-                          <td style="padding: 4px 0; color: white;">{{ currentContact.phone }}</td>
-                        </tr>
-                        <tr>
-                          <td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af;"><span class="connect-score-tooltip" :data-tooltip="connectScoreTooltip">Connect Score</span>:</td>
-                          <td style="padding: 4px 0; color: white;">{{ currentContact.connectScore }}</td>
-                        </tr>
-                        <tr>
-                          <td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af;">Email:</td>
-                          <td style="padding: 4px 0; color: white;">{{ currentContact.email }}</td>
-                        </tr>
-                        <tr>
-                          <td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af;">Address:</td>
-                          <td style="padding: 4px 0; color: white;">{{ currentContact.address }}</td>
-                        </tr>
-                        <tr>
-                          <td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af;">Local Time:</td>
-                          <td style="padding: 4px 0; color: white;">{{ currentContact.localTime }}</td>
-                        </tr>
-                        <tr>
-                          <td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af;">Website:</td>
-                          <td style="padding: 4px 0; color: white;">{{ currentContact.website }}</td>
-                        </tr>
-                        <tr>
-                          <td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af;">LinkedIn Profile:</td>
-                          <td style="padding: 4px 0; color: white;">{{ currentContact.linkedin }}</td>
-                        </tr>
-                        <tr>
-                          <td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af;">Industry:</td>
-                          <td style="padding: 4px 0; color: white;">{{ currentContact.industry }}</td>
-                        </tr>
-                        <tr>
-                          <td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af;">Company Size:</td>
-                          <td style="padding: 4px 0; color: white;">{{ currentContact.companySize }}</td>
-                        </tr>
-                        <tr>
-                          <td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af;">Lead Source:</td>
-                          <td style="padding: 4px 0; color: white;">{{ currentContact.leadSource }}</td>
-                        </tr>
-                        <tr v-if="currentContact.notes">
-                          <td style="font-weight: bold; padding: 4px 8px 4px 0; vertical-align: top; color: #9ca3af;">Notes:</td>
-                          <td style="padding: 4px 0; color: white; white-space: pre-wrap;">{{ currentContact.notes }}</td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                </template>
-              </Card>
             </div>
           </TabPanel>
-          <TabPanel header="Live Transcription">
-            <div class="h-full min-h-0">
-              <Card class="h-full min-h-0" :pt="{ root: { style: 'height:100%; min-height:0; overflow:hidden;' }, body: { style: 'height:100%; display:flex; flex-direction:column; flex:1; min-height:0;' }, content: { style: 'flex:1; min-height:0; overflow:hidden;' } }">
-                <template #title>
-                  <div class="flex items-center gap-2">
-                    <i class="pi pi-microphone text-sm" aria-hidden="true"></i>
-                    <span>Live Transcription</span>
-                  </div>
-                </template>
-                <template #content>
-                  <div ref="transcriptContainer" class="space-y-2 text-sm h-full overflow-y-auto min-h-0" style="scroll-behavior: smooth;">
-                    <div v-for="(line, idx) in displayedTranscript" :key="idx" class="flex gap-2">
-                      <span class="text-gray-400 min-w-[64px]">{{ line.speaker }}:</span>
-                      <span class="text-white">{{ line.text }}</span>
-                    </div>
-                  </div>
-                </template>
-              </Card>
+          <TabPanel value="activity">
+            <template #header>
+              <span class="flex items-center gap-2 text-xs"><i class="pi pi-history"></i><span>Activity</span></span>
+            </template>
+            <div class="space-y-3 text-sm" style="color: var(--p-surface-0);">
+              <div v-for="(a, i) in activities" :key="i" class="flex items-start gap-2">
+                <i :class="['pi', a.icon, 'mt-1']" style="color: var(--p-blue-400);"></i>
+                <div>
+                  <div class="text-xs" style="color: var(--p-surface-300);">{{ a.date }} · {{ a.type }}</div>
+                  <div style="white-space: pre-wrap;">{{ a.text }}</div>
+                </div>
+              </div>
             </div>
           </TabPanel>
         </TabView>
@@ -246,11 +232,11 @@
     </div>
 
     <!-- Action Buttons -->
-    <div class="p-4 border-t border-gray-700">
+    <div class="mx-[5px] mb-2 bg-gray-800 border border-gray-600 rounded-lg pt-[14px] px-[14px] pb-[4px]">
       <!-- Call Controls (visible when not ended) -->
       <div v-if="callState !== 'ended'" class="space-y-3">
         <!-- Call Control Buttons -->
-        <div class="grid grid-cols-2 gap-3">
+        <div class="grid grid-cols-4 gap-3">
           <Button
             ref="muteButtonRef"
             @click="toggleMute"
@@ -258,7 +244,7 @@
             tabindex="9"
             :disabled="callState === 'idle'"
             :severity="isMuted ? 'warn' : 'secondary'"
-            class="flex flex-col items-center justify-center gap-1 py-3"
+            class="flex flex-row items-center justify-center gap-1 py-3"
           >
             <i class="pi pi-microphone"></i>
             <span class="text-xs">{{ isMuted ? 'Unmute' : 'Mute' }}</span>
@@ -270,12 +256,34 @@
             tabindex="10"
             :disabled="callState === 'idle'"
             severity="secondary"
-            class="flex flex-col items-center justify-center gap-1 py-3"
+            class="flex flex-row items-center justify-center gap-1 py-3"
           >
             <i class="pi pi-calculator"></i>
             <span class="text-xs">Keypad</span>
           </Button>
 
+          <Button
+            ref="holdButtonRef"
+            @click="toggleHold"
+            @keydown="handleHoldKeydown"
+            tabindex="11"
+            :disabled="callState === 'idle'"
+            :severity="isOnHold ? 'warn' : 'secondary'"
+            class="flex flex-row items-center justify-center gap-1 py-3"
+          >
+            <i class="pi pi-pause"></i>
+            <span class="text-xs">{{ isOnHold ? 'Resume' : 'Hold' }}</span>
+          </Button>
+
+          <Button
+            @click="transferCall"
+            :disabled="callState === 'idle'"
+            severity="secondary"
+            class="flex flex-row items-center justify-center gap-1 py-3"
+          >
+            <i class="pi pi-share-alt"></i>
+            <span class="text-xs">Transfer</span>
+          </Button>
         </div>
 
         <!-- Hang Up Button -->
@@ -293,7 +301,7 @@
       </div>
 
       <!-- Call Ended Action Buttons (only when call ended) -->
-      <div v-if="callState === 'ended'" class="space-y-2">
+      <div v-if="callState === 'ended'" class="space-y-3">
         <Button
           @click="callBack"
           tabindex="13"
@@ -317,6 +325,46 @@
         </Button>
       </div>
     </div>
+
+    <!-- Transfer Modal -->
+    <Dialog
+      v-model:visible="showTransferDialog"
+      modal
+      header="Transfer Call"
+      :style="{ width: '28rem' }"
+      :breakpoints="{ '960px': '90vw' }"
+    >
+      <div class="space-y-3">
+        <label for="transfer-to" class="text-sm" style="color: var(--p-surface-0);">Who would you like to transfer the call to?</label>
+        <Dropdown
+          id="transfer-to"
+          v-model="transferSelection"
+          :options="transferOptions"
+          optionLabel="label"
+          optionValue="value"
+          filter
+          class="w-full mic-like-dropdown"
+          placeholder="Select teammate"
+          variant="filled"
+          appendTo="body"
+          :pt="{
+            root: { style: { background: 'var(--p-surface-800)', border: '1px solid rgba(255,255,255,0.15)', borderRadius: '4px', padding: '5px' } },
+            panel: { class: 'mic-dropdown-panel', style: { background: 'var(--p-surface-800)', border: '1px solid rgba(255,255,255,0.15)', borderRadius: '4px' } },
+            overlay: { class: 'mic-dropdown-panel', style: { background: 'var(--p-surface-800)', border: '1px solid rgba(255,255,255,0.15)', borderRadius: '4px' } },
+            content: { class: 'mic-dropdown-content', style: { background: 'var(--p-surface-800)', padding: '5px' } },
+            list: { class: 'mic-dropdown-list', style: { background: 'var(--p-surface-800)' } },
+            items: { class: 'mic-dropdown-list', style: { background: 'var(--p-surface-800)' } },
+            item: { class: 'mic-dropdown-item hover:bg-white/10', style: { padding: '5px' } }
+          }"
+        />
+      </div>
+      <template #footer>
+        <div class="flex items-center justify-end gap-2 w-full">
+          <Button label="Cancel" severity="secondary" @click="cancelTransfer" class="fixed-padding-button" />
+          <Button label="Transfer" icon="pi pi-share-alt" :disabled="!transferSelection" @click="confirmTransfer" class="fixed-padding-button" />
+        </div>
+      </template>
+    </Dialog>
 
     <!-- Keypad Modal -->
     <div v-if="showKeypadModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50" @click="closeKeypad" @keydown="handleKeypadKeydown" tabindex="-1">
@@ -390,21 +438,24 @@
 </template>
 
 <script setup lang="ts">
-import { ref, nextTick, watch, onUnmounted } from 'vue'
+import { ref, nextTick, computed, onMounted } from 'vue'
 import Button from 'primevue/button'
-import Card from 'primevue/card'
 import ToggleSwitch from 'primevue/toggleswitch'
 import TabView from 'primevue/tabview'
 import TabPanel from 'primevue/tabpanel'
+import Textarea from 'primevue/textarea'
+import Dialog from 'primevue/dialog'
+import Dropdown from 'primevue/dropdown'
+import { useCoaches } from '../composables/useCoaches'
 
 // Connect Score tooltip content
 const connectScoreTooltip = `Connect Score is a premium add-on feature that uses real-world signals to help users prioritize high-value contacts and skip low-quality leads. It scores each phone number as High, Medium, or Low based on:
 
 • Carrier data
 • Engagement history
-• Phone metadata
+�� Phone metadata
 
-This lets teams focus their efforts on numbers with the greatest chance of a live answer—improving connect rates, morale, and performance.`
+This lets teams focus their efforts on numbers with the greatest chance of a live answer���improving connect rates, morale, and performance.`
 
 // Define props
 const props = defineProps<{
@@ -426,6 +477,9 @@ const props = defineProps<{
     companySize: string
     leadSource: string
     notes: string
+    sourceUrl?: string
+    sourceType?: string
+    sourceName?: string
   }
   nextContactName: string
   shouldCompleteQueue: boolean
@@ -434,10 +488,12 @@ const props = defineProps<{
   queueCompletionReady: boolean
   currentContactIndex: number
   totalContacts: number
+  coachParameter: string
+  aiCoachEnabled: boolean
 }>()
 
 // Define emits
-const emit = defineEmits(['call-back', 'next-contact', 'hang-up', 'mute', 'hold', 'keypad', 'keypad-press', 'pause-queue', 'complete-queue'])
+const emit = defineEmits(['call-back', 'next-contact', 'hang-up', 'mute', 'hold', 'keypad', 'keypad-press', 'pause-queue', 'complete-queue', 'ai-coach-toggle', 'transfer'])
 
 // Reactive data
 const isMuted = ref(false)
@@ -449,114 +505,98 @@ const muteButtonRef = ref<any>(null)
 const holdButtonRef = ref<any>(null)
 const keypadButtonRef = ref<any>(null)
 
-// Live transcription state
-const displayedTranscript = ref<{ speaker: 'You' | 'Contact'; text: string }[]>([])
-const transcriptContainer = ref<HTMLElement | null>(null)
-const transcriptionEnabled = ref(true)
-let transcriptionHandle: number | null = null
-let scriptIndex = 0
-let wordIndex = 0
+// Coach system integration
+const { currentCoach } = useCoaches()
 
-const scrollTranscriptToBottom = () => {
-  nextTick(() => {
-    const el = transcriptContainer.value
-    if (el) {
-      try {
-        el.scrollTo({ top: el.scrollHeight, behavior: 'smooth' })
-      } catch {
-        el.scrollTop = el.scrollHeight
-      }
-      if (el.parentElement) {
-        el.parentElement.scrollTop = el.parentElement.scrollHeight
-      }
-    }
+// Notes for contact (sample history if none present)
+const notesList = ref<{ date: string; text: string }[]>([])
+const newNote = ref('')
+
+// Transfer modal state
+const showTransferDialog = ref(false)
+const transferSelection = ref<string | null>(null)
+const transferOptions = [
+  { label: 'Alex Johnson (ext 201) — (312) 555-1201', value: 'Alex Johnson|201|(312) 555-1201' },
+  { label: 'Morgan Lee (ext 225) — (415) 555-2225', value: 'Morgan Lee|225|(415) 555-2225' },
+  { label: 'Priya Singh (ext 233) — (646) 555-1233', value: 'Priya Singh|233|(646) 555-1233' },
+  { label: 'Diego Alvarez (ext 244) — (213) 555-1244', value: 'Diego Alvarez|244|(213) 555-1244' },
+  { label: 'Samantha Park (ext 257) — (617) 555-1257', value: 'Samantha Park|257|(617) 555-1257' }
+] as const
+
+const formatDateTime = (d = new Date()): string => {
+  const f = new Intl.DateTimeFormat('en-US', {
+    month: 'short', day: 'numeric', year: 'numeric', hour: 'numeric', minute: '2-digit'
   })
+  return f.format(d)
 }
 
-watch(transcriptionEnabled, (enabled) => {
-  if (enabled) scrollTranscriptToBottom()
-})
-
-const transcriptScript: { speaker: 'You' | 'Contact'; text: string }[] = [
-  { speaker: 'You', text: 'Hi Sam, this is Aaron from PhoneBurner do you have a quick minute?' },
-  { speaker: 'Contact', text: "Hi Aaron, what's this call about?" },
-  { speaker: 'You', text: 'I have an amazing new AI phone dialer I want to tell you about.' },
-  { speaker: 'Contact', text: 'I already have a phone dialer, I am using Aircall.' },
-  { speaker: 'You', text: 'Totally understand. Many teams use us alongside Aircall to boost answer rates.' },
-  { speaker: 'Contact', text: 'How would that work, exactly?' },
-  { speaker: 'You', text: 'We prioritize numbers with the highest chance of picking up and automate the dialing.' },
-  { speaker: 'Contact', text: 'Does it integrate with Salesforce?' },
-  { speaker: 'You', text: 'Yes, native Salesforce logging plus outcome and notes synced automatically.' },
-  { speaker: 'Contact', text: 'Interesting. What kind of lift do users see?' },
-  { speaker: 'You', text: 'Typical teams see 20-35% more live conversations in week one.' },
-  { speaker: 'Contact', text: 'Okay, can you show me a quick demo later today?' },
-  { speaker: 'You', text: 'Absolutely. Does 3:30 PM your time work?' },
-  { speaker: 'Contact', text: '3:30 works. Send me the invite.' },
-  { speaker: 'You', text: 'Great, I just sent a calendar invite and a one-pager. Talk then!' }
-]
-
-const resetTranscription = () => {
-  displayedTranscript.value = []
-  scriptIndex = 0
-  wordIndex = 0
-  if (transcriptionHandle) {
-    clearTimeout(transcriptionHandle)
-    transcriptionHandle = null
-  }
-}
-
-const stepTranscription = () => {
-  if (scriptIndex >= transcriptScript.length) return
-  if (!transcriptionEnabled.value) {
-    transcriptionHandle = window.setTimeout(stepTranscription, 150)
-    return
-  }
-  const current = transcriptScript[scriptIndex]
-  const words = current.text.split(' ')
-
-  // Ensure current line exists
-  if (!displayedTranscript.value[scriptIndex]) {
-    displayedTranscript.value.push({ speaker: current.speaker, text: '' })
-  }
-
-  if (wordIndex < words.length) {
-    const prefix = displayedTranscript.value[scriptIndex].text ? ' ' : ''
-    displayedTranscript.value[scriptIndex].text += prefix + words[wordIndex]
-    wordIndex++
-    scrollTranscriptToBottom()
-    transcriptionHandle = window.setTimeout(stepTranscription, 150)
+const initNotes = () => {
+  notesList.value = []
+  if (props.currentContact && props.currentContact.notes) {
+    notesList.value.push({ date: `Today ${new Date().toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' })}` , text: props.currentContact.notes })
   } else {
-    // Move to next line after a short pause
-    scriptIndex++
-    wordIndex = 0
-    scrollTranscriptToBottom()
-    if (scriptIndex < transcriptScript.length) {
-      transcriptionHandle = window.setTimeout(stepTranscription, 300)
-    }
+    notesList.value = [
+      { date: 'Mar 4, 2025 3:42 PM', text: 'Call answered. Spoke with Sam; interested in a quick demo next week. Sent follow-up email with calendar link.' },
+      { date: 'Feb 26, 2025 11:08 AM', text: 'Left voicemail #2. Mentioned recent product updates and invited to book time.' },
+      { date: 'Feb 19, 2025 9:31 AM', text: 'Left voicemail #1. Number rang 5 times; no pickup.' }
+    ]
   }
 }
 
-const startTranscription = () => {
-  resetTranscription()
-  transcriptionHandle = window.setTimeout(stepTranscription, 150)
+onMounted(initNotes)
+
+const transferCall = () => {
+  showTransferDialog.value = true
 }
 
-watch(() => props.callState, (state) => {
-  if (state === 'ringing') {
-    // Next call is starting; clear previous transcript now
-    resetTranscription()
-  }
-  if (state === 'connected') {
-    startTranscription()
-  }
+const confirmTransfer = () => {
+  if (!transferSelection.value) return
+  emit('transfer', transferSelection.value)
+  showTransferDialog.value = false
+  transferSelection.value = null
+}
+
+const cancelTransfer = () => {
+  showTransferDialog.value = false
+  transferSelection.value = null
+}
+
+const addNote = () => {
+  const text = newNote.value.trim()
+  if (!text) return
+  notesList.value.unshift({ date: formatDateTime(new Date()), text })
+  newNote.value = ''
+}
+
+// URL helpers: keep href intact but simplify visible text
+const normalizeHref = (url?: string) => {
+  if (!url) return ''
+  return url.startsWith('http') ? url : `https://${url}`
+}
+const displayUrl = (url?: string) => {
+  if (!url) return ''
+  return url.replace(/^https?:\/\/(www\.)?/i, '')
+}
+
+// Activity timeline (sample data)
+const activities = computed(() => {
+  return [
+    { date: 'Mar 6, 2025 9:04 AM', type: 'Call Connected', icon: 'pi-phone', text: 'Spoke 6m 12s. Qualified interest; scheduled demo for Tue 10:00 AM.' },
+    { date: 'Mar 5, 2025 3:18 PM', type: 'Email Sent', icon: 'pi-envelope', text: 'Intro email sent with case study and calendar link.' },
+    { date: 'Mar 5, 2025 3:12 PM', type: 'Voicemail', icon: 'pi-volume-up', text: 'No answer; left voicemail with callback number.' },
+    { date: 'Mar 4, 2025 11:45 AM', type: 'Call Attempt', icon: 'pi-phone', text: 'Rang 5 times; no pickup.' }
+  ]
 })
 
-// Also scroll whenever transcript array updates
-watch(displayedTranscript, () => {
-  scrollTranscriptToBottom()
-}, { deep: true })
-
-onUnmounted(() => resetTranscription())
+// Helper method for coach initials
+const getCoachInitials = (name: string): string => {
+  return name
+    .split(' ')
+    .map(word => word.charAt(0))
+    .join('')
+    .toUpperCase()
+    .slice(0, 2)
+}
 
 // Methods
 const formatTime = (seconds: number): string => {
@@ -850,6 +890,10 @@ const completeQueue = () => {
   emit('complete-queue')
 }
 
+const toggleAICoach = (newValue: boolean) => {
+  emit('ai-coach-toggle', newValue)
+}
+
 const handleHangUpTab = (event: KeyboardEvent) => {
   // If not holding Shift (forward tab), go back to ARKON logo
   if (!event.shiftKey) {
@@ -894,6 +938,12 @@ const handleHoldKeydown = (event: KeyboardEvent) => {
 </script>
 
 <style scoped>
+:deep(.fixed-padding-button.p-button),
+:deep(.fixed-padding-button.p-button:hover),
+:deep(.fixed-padding-button.p-button:focus),
+:deep(.fixed-padding-button.p-button:active) {
+  padding: 0.5rem 0.75rem !important;
+}
 /* Custom scrollbar for contact details */
 ::-webkit-scrollbar {
   width: 4px;
@@ -1101,145 +1151,7 @@ const handleHoldKeydown = (event: KeyboardEvent) => {
   flex-grow: 0 !important;
 }
 
-/* Parent container stabilization for Pause Queue button */
-:deep(.flex.items-center.justify-between.mt-3) {
-  min-height: 32px !important;
-  max-height: 32px !important;
-  box-sizing: border-box !important;
-  overflow: hidden !important;
-  position: relative !important;
-}
 
-:deep(.flex.items-center.justify-between.mt-3:hover) {
-  min-height: 32px !important;
-  max-height: 32px !important;
-  box-sizing: border-box !important;
-  overflow: hidden !important;
-  position: relative !important;
-}
-
-/* Nuclear option: Override all global button styles for Pause Queue button */
-:deep([tabindex="8"].btn-secondary),
-:deep([tabindex="8"].ds-button),
-:deep([tabindex="8"].p-button),
-:deep([tabindex="8"]) {
-  transition: none !important;
-  animation: none !important;
-  transform: none !important;
-  box-sizing: border-box !important;
-  flex-shrink: 0 !important;
-  flex-grow: 0 !important;
-  border: 1px solid rgba(255, 255, 255, 0.3) !important;
-  vertical-align: top !important;
-  width: auto !important;
-  height: auto !important;
-  min-width: auto !important;
-  min-height: auto !important;
-  max-width: none !important;
-  max-height: none !important;
-  position: relative !important;
-  top: 0 !important;
-  left: 0 !important;
-  right: auto !important;
-  bottom: auto !important;
-  margin: 0 !important;
-  padding: 8px 12px !important;
-  font-size: 0.875rem !important;
-  line-height: 1.25rem !important;
-  background-color: #344054 !important;
-  color: white !important;
-}
-
-:deep([tabindex="8"].btn-secondary:hover),
-:deep([tabindex="8"].ds-button:hover),
-:deep([tabindex="8"].p-button:hover),
-:deep([tabindex="8"]:hover) {
-  transition: none !important;
-  animation: none !important;
-  transform: none !important;
-  box-sizing: border-box !important;
-  flex-shrink: 0 !important;
-  flex-grow: 0 !important;
-  border: 1px solid rgba(255, 255, 255, 0.3) !important;
-  vertical-align: top !important;
-  width: auto !important;
-  height: auto !important;
-  min-width: auto !important;
-  min-height: auto !important;
-  max-width: none !important;
-  max-height: none !important;
-  position: relative !important;
-  top: 0 !important;
-  left: 0 !important;
-  right: auto !important;
-  bottom: auto !important;
-  margin: 0 !important;
-  padding: 8px 12px !important;
-  font-size: 0.875rem !important;
-  line-height: 1.25rem !important;
-  background-color: #475467 !important;
-  color: white !important;
-}
-
-:deep([tabindex="8"].btn-secondary:focus),
-:deep([tabindex="8"].ds-button:focus),
-:deep([tabindex="8"].p-button:focus),
-:deep([tabindex="8"]:focus) {
-  transition: none !important;
-  animation: none !important;
-  transform: none !important;
-  box-sizing: border-box !important;
-  flex-shrink: 0 !important;
-  flex-grow: 0 !important;
-  border: 1px solid rgba(255, 255, 255, 0.3) !important;
-  vertical-align: top !important;
-  outline: none !important;
-  box-shadow: inset 0 0 0 2px #6b7280 !important;
-  width: auto !important;
-  height: auto !important;
-  min-width: auto !important;
-  min-height: auto !important;
-  max-width: none !important;
-  max-height: none !important;
-  position: relative !important;
-  top: 0 !important;
-  left: 0 !important;
-  right: auto !important;
-  bottom: auto !important;
-  margin: 0 !important;
-  padding: 8px 12px !important;
-  font-size: 0.875rem !important;
-  line-height: 1.25rem !important;
-  background-color: #475467 !important;
-  color: white !important;
-}
-
-:deep([tabindex="8"].btn-secondary:active),
-:deep([tabindex="8"].ds-button:active),
-:deep([tabindex="8"].p-button:active),
-:deep([tabindex="8"]:active) {
-  transition: none !important;
-  animation: none !important;
-  transform: none !important;
-  box-sizing: border-box !important;
-  flex-shrink: 0 !important;
-  flex-grow: 0 !important;
-  border: 1px solid rgba(255, 255, 255, 0.3) !important;
-  vertical-align: top !important;
-  width: auto !important;
-  height: auto !important;
-  position: relative !important;
-  top: 0 !important;
-  left: 0 !important;
-  right: auto !important;
-  bottom: auto !important;
-  margin: 0 !important;
-  padding: 8px 12px !important;
-  font-size: 0.875rem !important;
-  line-height: 1.25rem !important;
-  background-color: #475467 !important;
-  color: white !important;
-}
 
 /* Specific targeting for call control buttons (mute, keypad, hold, hang up) */
 :deep([tabindex="11"]),
@@ -1347,30 +1259,160 @@ const handleHoldKeydown = (event: KeyboardEvent) => {
 :deep([tabindex="12"]:hover) {
   background-color: #b91c1c !important; /* red-700 - darker red for hover */
 }
-  /* TabView styling: neutral label color with primary ink bar underline */
-  :deep(.p-tabview .p-tabview-nav) {
-    border-bottom: 1px solid var(--p-content-border-color) !important;
-  }
-  :deep(.p-tabview .p-tabview-nav .p-tabview-nav-link) {
-    color: var(--p-surface-0) !important; /* white for inactive */
-    background: transparent !important;
-    border: 0 !important;
-    border-radius: 0 !important;
-  }
-  :deep(.p-tabview .p-tabview-nav .p-tabview-nav-link:hover),
-  :deep(.p-tabview .p-tabview-nav .p-tabview-nav-link:focus),
-  :deep(.p-tabview .p-tabview-nav li.p-highlight .p-tabview-nav-link),
-  :deep(.p-tabview .p-tabview-nav li[aria-selected="true"] .p-tabview-nav-link) {
-    color: var(--p-surface-0) !important; /* keep active text white too */
-    background: transparent !important;
-  }
-  :deep(.p-tabview .p-tabview-nav .p-tabview-nav-link .p-tabview-nav-title),
-  :deep(.p-tabview .p-tabview-nav .p-tabview-nav-link span) {
-    color: inherit !important;
-  }
-  :deep(.p-tabview-ink-bar) {
-    display: block !important;
-    background-color: var(--p-blue-500) !important; /* blue underline */
-    height: 2px !important;
-  }
+
+/* TabView active tab underline and base nav styling */
+:deep(.p-tabview .p-tabview-nav) {
+  border-bottom: none;
+}
+
+:deep(.p-tabview .p-tabview-ink-bar) {
+  display: none;
+}
+
+:deep(.p-tabview .p-tabview-tablist) {
+  border-bottom: none !important;
+}
+
+:deep(.p-tabview .p-tabview-tablist .p-tabview-tablist-item > a.p-tabview-tab-header),
+:deep(.p-tabview .p-tabview-nav .p-tabview-tablist-item > a.p-tabview-tab-header) {
+  border-bottom: 1px solid transparent !important;
+  padding-bottom: 6px !important;
+}
+
+:deep(.p-tabview .p-tabview-tablist .p-tabview-tablist-item[data-p-active="true"] > a.p-tabview-tab-header),
+:deep(.p-tabview .p-tabview-nav .p-tabview-tablist-item[data-p-active="true"] > a.p-tabview-tab-header) {
+  border-bottom-color: var(--p-blue-400) !important;
+  box-shadow: inset 0 -1px 0 var(--p-blue-400) !important;
+  color: var(--p-blue-400) !important;
+}
+
+:deep(.p-tabview .p-tabview-tablist .p-tabview-tablist-item[data-p-active="true"] > a.p-tabview-tab-header .p-tabview-tab-title),
+:deep(.p-tabview .p-tabview-nav .p-tabview-tablist-item[data-p-active="true"] > a.p-tabview-tab-header .p-tabview-tab-title) {
+  color: var(--p-blue-400) !important;
+}
+
+:deep(.p-tabview .p-tabview-tablist .p-tabview-tablist-item:not([data-p-active="true"]) > a.p-tabview-tab-header),
+:deep(.p-tabview .p-tabview-nav .p-tabview-tablist-item:not([data-p-active="true"]) > a.p-tabview-tab-header) {
+  color: var(--p-surface-0) !important;
+}
+
+:deep(.p-tabview .p-tabview-tablist .p-tabview-tablist-item:not([data-p-active="true"]) > a.p-tabview-tab-header .p-tabview-tab-title),
+:deep(.p-tabview .p-tabview-nav .p-tabview-tablist-item:not([data-p-active="true"]) > a.p-tabview-tab-header .p-tabview-tab-title) {
+  color: var(--p-surface-0) !important;
+}
+
+/* Custom ToggleSwitch styling - try multiple approaches */
+.custom-toggle .p-toggleswitch-slider {
+  background-color: #374151 !important; /* Default background - gray-700 */
+  border-color: #6b7280 !important; /* gray-500 */
+}
+
+.custom-toggle.p-toggleswitch-checked .p-toggleswitch-slider {
+  background-color: #8b5cf6 !important; /* Purple when checked */
+  border-color: #8b5cf6 !important;
+}
+
+.custom-toggle .p-toggleswitch-handle {
+  background-color: #ffffff !important; /* White handle always */
+  border-color: #ffffff !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3) !important; /* Add shadow for better visibility */
+}
+
+::deep(.custom-toggle .p-toggleswitch-slider) {
+  background-color: #374151 !important; /* Default background - gray-700 */
+  border-color: #6b7280 !important; /* gray-500 */
+}
+
+::deep(.custom-toggle.p-toggleswitch-checked .p-toggleswitch-slider) {
+  background-color: #8b5cf6 !important; /* Purple when checked */
+  border-color: #8b5cf6 !important;
+}
+
+::deep(.custom-toggle .p-toggleswitch-handle) {
+  background-color: #ffffff !important; /* White handle always */
+  border-color: #ffffff !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3) !important; /* Add shadow for better visibility */
+}
+</style>
+
+<style>
+/* Unscoped global styles for AI Coach Toggle - Maximum specificity */
+body .ai-coach-toggle.p-toggleswitch {
+  height: 20px !important;
+  width: 40px !important;
+}
+
+html body .ai-coach-toggle.p-toggleswitch .p-toggleswitch-slider {
+  background-color: #374151 !important;
+  background: #374151 !important;
+  border-color: #6b7280 !important;
+  height: 20px !important;
+  width: 40px !important;
+  border-radius: 10px !important;
+  position: relative !important;
+  display: flex !important;
+  align-items: center !important;
+}
+
+html body .ai-coach-toggle.p-toggleswitch[data-p-checked="true"] .p-toggleswitch-slider,
+html body .ai-coach-toggle.p-toggleswitch-checked .p-toggleswitch-slider {
+  background-color: #8b5cf6 !important;
+  background: #8b5cf6 !important;
+  border-color: #8b5cf6 !important;
+  height: 20px !important;
+  width: 40px !important;
+  border-radius: 10px !important;
+  position: relative !important;
+  display: flex !important;
+  align-items: center !important;
+}
+
+html body .ai-coach-toggle.p-toggleswitch .p-toggleswitch-handle {
+  background-color: #ffffff !important;
+  background: #ffffff !important;
+  border-color: #ffffff !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3) !important;
+  height: 16px !important;
+  width: 16px !important;
+  position: absolute !important;
+  top: 13px !important;
+  left: 2px !important;
+  transform: none !important;
+  transition: left 0.2s ease !important;
+}
+
+html body .ai-coach-toggle.p-toggleswitch[data-p-checked="true"] .p-toggleswitch-handle,
+html body .ai-coach-toggle.p-toggleswitch-checked .p-toggleswitch-handle {
+  background-color: #ffffff !important;
+  background: #ffffff !important;
+  border-color: #ffffff !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3) !important;
+  height: 16px !important;
+  width: 16px !important;
+  position: absolute !important;
+  top: 13px !important;
+  left: 22px !important;
+  transform: none !important;
+  transition: left 0.2s ease !important;
+}
+
+/* Compact styling for Pause Queue button */
+html body .pause-queue-compact.p-button {
+  padding: 4px 8px !important;
+  font-size: 0.75rem !important;
+  min-height: 24px !important;
+  height: 24px !important;
+  line-height: 1 !important;
+}
+
+html body .pause-queue-compact.p-button .text-xs {
+  font-size: 0.75rem !important;
+  line-height: 1 !important;
+}
+
+html body .pause-queue-compact.p-button:hover {
+  padding: 4px 8px !important;
+  min-height: 24px !important;
+  height: 24px !important;
+}
 </style>

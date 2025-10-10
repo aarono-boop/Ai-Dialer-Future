@@ -1,10 +1,10 @@
 <template>
   <footer class="flex flex-col justify-center items-center p-6 text-gray-500 text-xs relative z-[5] mt-[10px]">
     <div class="text-center text-gray-500 text-xs mb-2">
-      ARKON can make mistakes. Please double-check responses.
+      Ai Dialer can make mistakes. Please double-check responses.
     </div>
     <div class="flex justify-center items-center">
-      <p>&copy; 2025 ARMOR® AI Dialer. All rights reserved.</p>
+      <p>&copy;2025 ARMOR® AI Dialer. All rights reserved.</p>
       <Button
         v-if="!showDialer && !queuePaused"
         @click="$emit('skip-to-dialer')"

@@ -1,18 +1,23 @@
 import { createApp } from 'vue'
 import PrimeVue from 'primevue/config'
-import ToastService from 'primevue/toastservice'
-import { customTheme } from './design-system/tokens/primevue'
+import ConfirmationService from 'primevue/confirmationservice'
+import Tooltip from 'primevue/tooltip'
+import { customTheme, vulcan7Theme } from './design-system/tokens/primevue'
 import 'primeicons/primeicons.css'
 import App from './App.vue'
 import './style.css'
 
 const app = createApp(App)
 
-// PrimeVue design tokens are now handled by the theme system
+// Decide theme based on URL parameter ?v7=true
+const params = new URLSearchParams(window.location.search)
+const isV7 = params.get('v7') === 'true'
+const selectedTheme = isV7 ? vulcan7Theme : customTheme
 
+// PrimeVue design tokens are now handled by the theme system
 app.use(PrimeVue, {
   theme: {
-    preset: customTheme,
+    preset: selectedTheme,
     options: {
       prefix: 'p',
       darkModeSelector: '.dark',
@@ -22,7 +27,9 @@ app.use(PrimeVue, {
   }
 })
 
-app.use(ToastService)
+app.use(ConfirmationService)
+
+app.directive('tooltip', Tooltip)
 
 app.mount('#app')
 

@@ -11,28 +11,18 @@
     <!-- Logo at top -->
     <button
       class="flex items-center justify-center p-2 hover:bg-gray-800 rounded-lg transition-colors cursor-pointer bg-transparent border-none"
-      @click="$emit('go-home')"
-      aria-label="Return to ARKON home page"
+      @click="handleHomeClick"
+      aria-label="Return to AI Dialer home page"
       type="button"
       tabindex="1"
+      v-tooltip.right="'Home'"
     >
-      <svg 
-        class="logo-icon w-8 h-8" 
-        xmlns="http://www.w3.org/2000/svg" 
-        height="32px" 
-        viewBox="0 -960 960 960" 
-        width="32px"
+      <img
+        src="https://cdn.builder.io/api/v1/image/assets%2F5aeb07ce25f84dbc869290880d07b71e%2F971acdb98a6e45828a85c08e6de84643?format=webp&width=800"
+        alt="ARMOR logo"
+        class="w-8 h-8 object-contain"
         aria-hidden="true"
-        focusable="false"
-      >
-        <defs>
-          <linearGradient id="arkonGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" style="stop-color:#60a5fa;stop-opacity:1" />
-            <stop offset="100%" style="stop-color:#7b68ee;stop-opacity:1" />
-          </linearGradient>
-        </defs>
-        <path fill="url(#arkonGradient)" d="M240-400q0 52 21 98.5t60 81.5q-1-5-1-9v-9q0-32 12-60t35-51l113-111 113 111q23 23 35 51t12 60v9q0 4-1 9 39-35 60-81.5t21-98.5q0-50-18.5-94.5T648-574q-20 13-42 19.5t-45 6.5q-62 0-107.5-41T401-690q-39 33-69 68.5t-50.5 72Q261-513 250.5-475T240-400Zm240 52-57 56q-11 11-17 25t-6 29q0 32 23.5 55t56.5 23q33 0 56.5-23t23.5-55q0-16-6-29.5T537-292l-57-56Zm0-492v132q0 34 23.5 57t57.5 23q18 0 33.5-7.5T622-658l18-22q74 42 117 117t43 163q0 134-93 227T480-80q-134 0-227-93t-93-227q0-129 86.5-245T480-840Z"/>
-      </svg>
+      />
     </button>
 
     <!-- Product link -->
@@ -48,8 +38,25 @@
       aria-label="View product information"
       type="button"
       tabindex="2"
+      v-tooltip.right="'About'"
     >
       <i class="pi pi-info-circle text-xl"></i>
+    </button>
+
+    <!-- Dashboard link (only when signed in under a coach) -->
+    <button
+      v-if="isSignedIn && currentCoach"
+      :class="[
+        'flex items-center justify-center p-2 mt-2 rounded-lg transition-colors cursor-pointer border-none',
+        'bg-transparent text-gray-400 hover:bg-gray-800 hover:text-white'
+      ]"
+      @click="$emit('show-student-dashboard')"
+      aria-label="Open Student Dashboard"
+      type="button"
+      tabindex="3"
+      v-tooltip.right="`Student Dashboard`"
+    >
+      <i class="pi pi-chart-bar text-xl"></i>
     </button>
 
     <!-- Spacer to push user actions to bottom -->
@@ -67,7 +74,7 @@
           tabindex="3"
           ref="userMenuButton"
         >
-          <i class="pi pi-user text-white text-sm" aria-hidden="true"></i>
+          <i class="pi pi-user text-white text-lg" aria-hidden="true"></i>
         </button>
 
         <!-- User Dropdown Menu -->
@@ -101,13 +108,14 @@
 
       <!-- Login button when not signed in -->
       <button
-        v-else
-        class="flex items-center justify-center p-2 hover:bg-gray-800 rounded-lg transition-colors cursor-pointer bg-transparent border-none text-gray-400 hover:text-white"
-        @click="$emit('login')"
-        aria-label="Sign in to your account"
-        type="button"
-        tabindex="3"
-      >
+      v-else
+      class="flex items-center justify-center p-2 hover:bg-gray-800 rounded-lg transition-colors cursor-pointer bg-transparent border-none text-gray-400 hover:text-white"
+      @click="$emit('login')"
+      aria-label="Sign in to your account"
+      type="button"
+      tabindex="3"
+      v-tooltip.right="'Login'"
+    >
         <i class="pi pi-sign-in text-xl"></i>
       </button>
     </div>
@@ -115,7 +123,8 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted } from 'vue'
+import { ref, onMounted, onUnmounted, computed } from 'vue'
+import { useCoaches } from '../composables/useCoaches'
 
 // Define props
 const props = defineProps<{
@@ -124,7 +133,7 @@ const props = defineProps<{
 }>()
 
 // Define emits for parent component communication
-const emit = defineEmits(['login', 'logout', 'show-product', 'go-home'])
+const emitSidebar = defineEmits(['login', 'logout', 'show-product', 'go-home', 'show-student-dashboard'])
 
 // Template refs
 const focusAnchor = ref<HTMLElement | null>(null)
@@ -133,15 +142,26 @@ const userMenuButton = ref<HTMLElement | null>(null)
 // User menu state
 const showUserMenu = ref(false)
 
+// Coach context
+const { currentCoach } = useCoaches()
+
 // Toggle user menu
 const toggleUserMenu = () => {
   showUserMenu.value = !showUserMenu.value
 }
 
+// Robust home click: emit event and broadcast global event
+const handleHomeClick = () => {
+  emitSidebar('go-home')
+  try {
+    window.dispatchEvent(new CustomEvent('arkon-go-home'))
+  } catch {}
+}
+
 // Handle logout
 const handleLogout = () => {
   showUserMenu.value = false
-  emit('logout')
+  emitSidebar('logout')
 }
 
 // Close menu when clicking outside
@@ -158,6 +178,8 @@ const handleEscapeKey = (event: KeyboardEvent) => {
     userMenuButton.value?.focus()
   }
 }
+
+const isV7 = computed(() => new URLSearchParams(window.location.search).get('v7') === 'true')
 
 // Add event listeners
 onMounted(() => {
