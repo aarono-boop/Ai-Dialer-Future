@@ -588,7 +588,7 @@ const messages: Ref<Message[]> = ref([
   {
     type: 'ai',
     content: [
-      'Welcome! I\'m <strong>ARKON</strong>, your AI calling assistant.<br><br>Drop your contact file here and I\'ll show you exactly who\'s most likely to pick up right now.'
+      'Welcome! I\'m Marcus, your Ai calling assistant.  <br><br>To get started, drop your contact file below and I\'ll organize your contacts based on who is most likely to pick up.'
     ]
   }
 ])
@@ -681,7 +681,7 @@ const handleLogout = () => {
     {
       type: 'ai',
       content: [
-        'Welcome! I\'m <strong>ARKON</strong>, your AI calling assistant.<br><br>Drop your contact file here and I\'ll show you exactly who\'s most likely to pick up right now.'
+        'Welcome! I\'m Marcus, your Ai calling assistant.  <br><br>To get started, drop your contact file below and I\'ll organize your contacts based on who is most likely to pick up.'
       ]
     }
   ]
@@ -781,7 +781,7 @@ const goToMainApp = () => {
       {
         type: 'ai',
         content: [
-          'Welcome! I\'m <strong>ARKON</strong>, your AI calling assistant.<br><br>Drop your contact file here and I\'ll show you exactly who\'s most likely to pick up right now.'
+          'Welcome! I\'m Marcus, your Ai calling assistant.  <br><br>To get started, drop your contact file below and I\'ll organize your contacts based on who is most likely to pick up.'
         ]
       }
     ]
@@ -1197,7 +1197,7 @@ const sendMessage = (message: string): void => {
       ])
     } else if (lowerMessage.includes('fire up a dial session') || lowerMessage.includes('dial session')) {
       addAIMessage([
-        '���� Let\'s fire up a power dialing session!',
+        '����� Let\'s fire up a power dialing session!',
         'I can configure your session with:',
         '• <strong>Target audience:</strong> High-priority prospects, warm leads, or follow-ups',
         '• <strong>Call duration:</strong> 30 min, 1 hour, or 2-hour session',
