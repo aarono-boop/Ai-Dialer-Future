@@ -3,6 +3,7 @@ export interface Coach {
   name: string
   displayName: string
   videoId?: string
+  youtubeUrl?: string
   avatarUrl?: string
   websiteUrl?: string
   highlights?: string[]

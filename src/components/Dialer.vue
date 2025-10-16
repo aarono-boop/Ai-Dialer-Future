@@ -2,36 +2,95 @@
   <div class="w-full h-full bg-gray-900 rounded-r-lg border border-gray-700 flex flex-col pt-4 pb-[10px] px-3">
     <!-- Call Status & Controls Card -->
     <div class="mx-[5px] mb-4 bg-gray-800 border border-gray-600 rounded-lg p-[14px]">
-      <!-- Call Status -->
-      <!-- Call Ended State -->
-      <div v-if="callState === 'ended'" class="bg-gray-900/50 border border-gray-600 rounded-lg p-3 text-center">
-        <div class="text-red-400 font-medium">Call Ended</div>
-        <div class="text-gray-300 text-sm">(312) 586-9748</div>
-      </div>
+      <!-- Multi-Line Status -->
+      <div v-if="multiLine" class="grid grid-cols-1 gap-2">
+        <div
+          v-for="line in lines"
+          :key="line.id"
+          class="bg-gray-900/50 rounded-lg p-3 text-center border relative"
+          :class="{
+            'border-gray-600': line.state === 'ringing',
+            'border-green-400': line.state === 'connected',
+            'border-red-400': line.state === 'disconnected'
+          }"
+        >
+          <!-- Card menu for non-connected lines -->
+          <div v-if="line.state === 'disconnected'" class="absolute top-1 right-1">
+            <Button size="small" text rounded severity="secondary" aria-label="Line actions" icon="pi pi-ellipsis-v" @click="menuRefs[line.id]?.toggle($event)" />
+            <Menu :model="getMenuItems(line)" :popup="true" appendTo="body" :pt="menuPT" :ref="(el: any) => (menuRefs[line.id] = el)" />
+          </div>
 
-      <!-- Ringing State -->
-      <div v-else-if="callState === 'ringing'" class="bg-gray-900/50 border border-gray-600 rounded-lg p-3 text-center">
-        <div class="flex items-center justify-center gap-2">
-          <div class="text-green-400 font-medium">Calling</div>
-          <div class="flex items-center">
-            <div class="animate-pulse w-2 h-2 bg-green-400 rounded-full mx-1"></div>
-            <div class="animate-pulse w-2 h-2 bg-green-400 rounded-full mx-1" style="animation-delay: 0.2s"></div>
-            <div class="animate-pulse w-2 h-2 bg-green-400 rounded-full mx-1" style="animation-delay: 0.4s"></div>
+          <div class="flex items-center gap-3">
+            <!-- Left thumbnail -->
+            <div class="shrink-0">
+              <Image :src="line.imageUrl" alt="Property preview" @error="onImageError(line)" :pt="{ image: { style: { width: '72px', height: '72px', objectFit: 'cover', borderRadius: '6px' } } }" />
+            </div>
+            <!-- Right content -->
+            <div class="flex-1 flex flex-col justify-center">
+              <template v-if="line.state === 'ringing'">
+                <div class="flex items-center justify-start gap-2 text-green-400 text-left w-full pl-1.5">
+                  <div class="font-medium">Calling ({{ line.name }})</div>
+                  <div class="flex items-center">
+                    <div class="animate-pulse w-2 h-2 bg-green-400 rounded-full mx-1"></div>
+                    <div class="animate-pulse w-2 h-2 bg-green-400 rounded-full mx-1" style="animation-delay: 0.2s"></div>
+                    <div class="animate-pulse w-2 h-2 bg-green-400 rounded-full mx-1" style="animation-delay: 0.4s"></div>
+                  </div>
+                </div>
+              </template>
+              <template v-else-if="line.state === 'disconnected'">
+                <div class="text-red-400 font-medium text-left pl-1.5">{{ line.endReason ? (line.endReason + ' (' + line.name + ')') : ('Call Ended (' + line.name + ')') }}</div>
+              </template>
+              <template v-else>
+                <div class="text-green-400 font-medium text-left pl-1.5">Live Call ({{ line.name }}): <span class="font-mono">{{ formatTime(line.duration) }}</span></div>
+              </template>
+
+              <!-- Real estate context tags -->
+              <div class="mt-1 flex flex-wrap items-center justify-start text-left gap-1 w-full">
+                <Tag
+                  v-for="(t, i) in line.tags"
+                  :key="i"
+                  :value="t.label"
+                  :severity="t.severity"
+                  :pt="{ root: { style: { fontSize: tagFontSize, padding: '2px 6px', lineHeight: '1.15' } } }"
+                />
+              </div>
+            </div>
           </div>
         </div>
-        <div class="text-gray-300 text-sm">{{ currentContact.phone }}</div>
       </div>
 
-      <!-- Connected State -->
-      <div v-else-if="callState === 'connected'" class="bg-green-900/50 border border-green-400 rounded-lg p-3 text-center animate-pulse" style="border-width: 1px;">
-        <div class="text-green-400 font-medium">Live Call: <span class="font-mono">{{ formatTime(callDuration) }}</span></div>
-        <div class="text-gray-300 text-sm">{{ currentContact.phone }}</div>
-      </div>
+      <!-- Single-Line Call Status -->
+      <div v-else>
+        <!-- Call Ended State -->
+        <div v-if="callState === 'ended'" class="bg-gray-900/50 border border-gray-600 rounded-lg p-3 text-center">
+          <div class="text-red-400 font-medium">Call Ended</div>
+          <div class="text-gray-300 text-sm">(312) 586-9748</div>
+        </div>
 
-      <!-- Idle State (initial state before any calls) -->
-      <div v-else-if="callState === 'idle'" class="bg-gray-900/50 border border-gray-600 rounded-lg p-3 text-center">
-        <div class="text-gray-400 font-medium">Ready to Dial</div>
-        <div class="text-gray-300 text-sm">{{ currentContact.phone }}</div>
+        <!-- Ringing State -->
+        <div v-else-if="callState === 'ringing'" class="bg-gray-900/50 border border-gray-600 rounded-lg p-3 text-center">
+          <div class="flex items-center justify-center gap-2">
+            <div class="text-green-400 font-medium">Calling</div>
+            <div class="flex items-center">
+              <div class="animate-pulse w-2 h-2 bg-green-400 rounded-full mx-1"></div>
+              <div class="animate-pulse w-2 h-2 bg-green-400 rounded-full mx-1" style="animation-delay: 0.2s"></div>
+              <div class="animate-pulse w-2 h-2 bg-green-400 rounded-full mx-1" style="animation-delay: 0.4s"></div>
+            </div>
+          </div>
+          <div class="text-gray-300 text-sm">{{ currentContact.phone }}</div>
+        </div>
+
+        <!-- Connected State -->
+        <div v-else-if="callState === 'connected'" class="bg-green-900/50 border border-green-400 rounded-lg p-3 text-center animate-pulse" style="border-width: 1px;">
+          <div class="text-green-400 font-medium">Live Call: <span class="font-mono">{{ formatTime(callDuration) }}</span></div>
+          <div class="text-gray-300 text-sm">{{ currentContact.phone }}</div>
+        </div>
+
+        <!-- Idle State (initial state before any calls) -->
+        <div v-else-if="callState === 'idle'" class="bg-gray-900/50 border border-gray-600 rounded-lg p-3 text-center">
+          <div class="text-gray-400 font-medium">Ready to Dial</div>
+          <div class="text-gray-300 text-sm">{{ currentContact.phone }}</div>
+        </div>
       </div>
 
       <!-- Header -->
@@ -39,10 +98,14 @@
         <div class="bg-gray-700 rounded-full h-5 w-full relative flex items-center">
           <div
             class="h-5 rounded-full transition-all duration-300"
-            :style="{ width: `${((currentContactIndex + 1) / 3) * 100}%`, background: 'linear-gradient(to right, #60a5fa, #7b68ee)' }"
+            :style="{ width: progressWidth, background: 'linear-gradient(to right, #60a5fa, #7b68ee)' }"
           ></div>
           <div class="absolute inset-0 flex items-center justify-center text-white text-xs font-medium">
+<<<<<<< HEAD
             Dial Session {{ currentContactIndex + 1 }} of 3
+=======
+            {{ dialQueueText }}
+>>>>>>> refs/remotes/origin/ai_ai_base_f92b2d20f03b_4fbc46d48946
           </div>
         </div>
       </div>
@@ -105,6 +168,7 @@
       <div class="space-y-4">
         <!-- Contact Header -->
         <div>
+<<<<<<< HEAD
           <h3 class="text-white text-lg font-bold ml-[17px]">{{ currentContact.name }}</h3>
           <p class="text-white text-sm ml-[17px]">{{ currentContact.title }} at {{ currentContact.company }}</p>
         </div>
@@ -242,7 +306,7 @@
             @click="toggleMute"
             @keydown="handleMuteKeydown"
             tabindex="9"
-            :disabled="callState === 'idle'"
+            :disabled="!isActiveCall"
             :severity="isMuted ? 'warn' : 'secondary'"
             class="flex flex-row items-center justify-center gap-1 py-3"
           >
@@ -254,7 +318,7 @@
             ref="keypadButtonRef"
             @click="showKeypad"
             tabindex="10"
-            :disabled="callState === 'idle'"
+            :disabled="!isActiveCall"
             severity="secondary"
             class="flex flex-row items-center justify-center gap-1 py-3"
           >
@@ -267,7 +331,7 @@
             @click="toggleHold"
             @keydown="handleHoldKeydown"
             tabindex="11"
-            :disabled="callState === 'idle'"
+            :disabled="!isActiveCall"
             :severity="isOnHold ? 'warn' : 'secondary'"
             class="flex flex-row items-center justify-center gap-1 py-3"
           >
@@ -291,12 +355,12 @@
           @click="hangUp"
           @keydown.tab="handleHangUpTab"
           tabindex="12"
-          :disabled="callState === 'idle'"
+          :disabled="!isActiveCall"
           severity="danger"
           class="w-full flex items-center justify-center gap-2 py-3"
         >
           <i class="pi pi-phone" style="transform: rotate(135deg);"></i>
-          Hang Up
+          End Call
         </Button>
       </div>
 
@@ -313,7 +377,7 @@
         </Button>
 
         <Button
-          @click="shouldCompleteQueue ? completeQueue() : nextContact()"
+          @click="handleNextActionClick"
           @keydown.tab="handleNextContactTab"
           tabindex="14"
           :disabled="shouldCompleteQueue ? !dispositionSet : (callState === 'ended' && !dispositionSet)"
@@ -321,7 +385,7 @@
           class="w-full flex items-center justify-center gap-2 py-3"
         >
           <i :class="shouldCompleteQueue ? 'pi pi-check' : 'pi pi-arrow-right'"></i>
-          {{ shouldCompleteQueue ? 'Queue Completed' : `Next: ${nextContactName}` }}
+          {{ nextActionLabel }}
         </Button>
       </div>
     </div>
@@ -438,6 +502,7 @@
 </template>
 
 <script setup lang="ts">
+<<<<<<< HEAD
 import { ref, nextTick, computed, onMounted } from 'vue'
 import Button from 'primevue/button'
 import ToggleSwitch from 'primevue/toggleswitch'
@@ -446,7 +511,16 @@ import TabPanel from 'primevue/tabpanel'
 import Textarea from 'primevue/textarea'
 import Dialog from 'primevue/dialog'
 import Dropdown from 'primevue/dropdown'
+=======
+import { ref, nextTick, computed, watch, onUnmounted } from 'vue'
+import Button from 'primevue/button'
+import ToggleSwitch from 'primevue/toggleswitch'
+import Tag from 'primevue/tag'
+import Image from 'primevue/image'
+import Menu from 'primevue/menu'
+>>>>>>> refs/remotes/origin/ai_ai_base_f92b2d20f03b_4fbc46d48946
 import { useCoaches } from '../composables/useCoaches'
+import { fontSize as dsFontSize } from '../design-system/tokens/typography'
 
 // Connect Score tooltip content
 const connectScoreTooltip = `Connect Score is a premium add-on feature that uses real-world signals to help users prioritize high-value contacts and skip low-quality leads. It scores each phone number as High, Medium, or Low based on:
@@ -490,15 +564,41 @@ const props = defineProps<{
   totalContacts: number
   coachParameter: string
   aiCoachEnabled: boolean
+  multiLine?: boolean
+  multiLineNames?: string[]
+  multiLineSetIndex?: number
+  suppressContactDetails?: boolean
 }>()
 
 // Define emits
+<<<<<<< HEAD
 const emit = defineEmits(['call-back', 'next-contact', 'hang-up', 'mute', 'hold', 'keypad', 'keypad-press', 'pause-queue', 'complete-queue', 'ai-coach-toggle', 'transfer'])
+=======
+const emit = defineEmits(['call-back', 'next-contact', 'hang-up', 'mute', 'hold', 'keypad', 'keypad-press', 'pause-queue', 'complete-queue', 'ai-coach-toggle', 'multi-line-connected', 'start-next-trio', 'line-menu-action'])
+>>>>>>> refs/remotes/origin/ai_ai_base_f92b2d20f03b_4fbc46d48946
 
 // Reactive data
 const isMuted = ref(false)
 const isOnHold = ref(false)
 const showKeypadModal = ref(false)
+
+// Menu refs per line
+const menuRefs = ref<Record<number, any>>({})
+
+const getMenuItems = (line: LineState) => [
+  { label: 'Leave Note', command: () => emit('line-menu-action', { lineId: line.id, action: 'leave-note' }) },
+  { label: 'Call Back Next', command: () => emit('line-menu-action', { lineId: line.id, action: 'call-back-next' }) },
+  { label: 'Move to End of Queue', command: () => emit('line-menu-action', { lineId: line.id, action: 'move-to-end' }) }
+]
+
+const menuPT = {
+  root: { style: { background: 'var(--p-surface-800)', border: '1px solid rgba(255,255,255,0.12)', borderRadius: '6px' } },
+  menu: { style: { background: 'var(--p-surface-800)', borderRadius: '6px' } },
+  list: { style: { padding: '0.25rem' } },
+  item: { class: 'hover:bg-white/10', style: { borderRadius: '6px' } },
+  itemContent: { style: { padding: '0.5rem 0.75rem' } },
+  itemLabel: { style: { fontSize: '0.875rem', color: '#ffffff' } }
+}
 
 // Template refs for PrimeVue buttons
 const muteButtonRef = ref<any>(null)
@@ -508,6 +608,7 @@ const keypadButtonRef = ref<any>(null)
 // Coach system integration
 const { currentCoach } = useCoaches()
 
+<<<<<<< HEAD
 // Notes for contact (sample history if none present)
 const notesList = ref<{ date: string; text: string }[]>([])
 const newNote = ref('')
@@ -588,6 +689,125 @@ const activities = computed(() => {
   ]
 })
 
+=======
+// Multi-line simulation state
+interface LineTag { label: string; severity?: 'success' | 'info' | 'warning' | 'danger' | 'secondary' | 'contrast' }
+interface LineState { id: number; name: string; state: 'ringing' | 'connected' | 'disconnected'; duration: number; tags: LineTag[]; endReason?: string; imageUrl: string; imageIdx: number }
+
+const CURATED_HOUSES = [
+  'https://images.unsplash.com/photo-1560185008-b033106af5e4?w=144&h=144&fit=crop&auto=format',
+  'https://images.unsplash.com/photo-1502005229762-cf1b2da7c52f?w=144&h=144&fit=crop&auto=format',
+  'https://images.unsplash.com/photo-1599427303058-f04cbcf4756f?w=144&h=144&fit=crop&auto=format',
+  'https://images.unsplash.com/photo-1570129477492-45c003edd2be?w=144&h=144&fit=crop&auto=format',
+  'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=144&h=144&fit=crop&auto=format',
+  'https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=144&h=144&fit=crop&auto=format'
+]
+
+const getHouseIndexFromSeed = (seed?: string): number => {
+  const s = seed || Math.random().toString(36).slice(2)
+  let hash = 0
+  for (let i = 0; i < s.length; i++) {
+    hash = (hash * 31 + s.charCodeAt(i)) >>> 0
+  }
+  return hash % CURATED_HOUSES.length
+}
+
+const getHouseUrlByIndex = (idx: number): string => CURATED_HOUSES[idx % CURATED_HOUSES.length]
+
+const generateRandomTags = (): LineTag[] => {
+  const listingTypes: LineTag[] = [
+    { label: 'FSBO', severity: 'warning' },
+    { label: 'Expired', severity: 'danger' },
+    { label: 'Withdrawn', severity: 'secondary' },
+    { label: 'Pre‑foreclosure', severity: 'contrast' },
+    { label: 'Absentee Owner', severity: 'info' }
+  ]
+  const priceBands = ['$325k', '$449k', '$585k', '$799k', '$1.2M']
+  const sizes = ['1,120 sqft', '1,540 sqft', '2,280 sqft', '3,050 sqft']
+  const dom = ['DOM 7', 'DOM 22', 'DOM 45', 'DOM 63']
+  const zips = ['ZIP 90028', 'ZIP 60606', 'ZIP 75201', 'ZIP 98101']
+  const years = ['Built 1978', 'Built 1992', 'Built 2005', 'Built 2016']
+
+  const pick = <T,>(arr: T[]) => arr[Math.floor(Math.random() * arr.length)]
+
+  const tags: LineTag[] = []
+  const used = new Set<string>()
+
+  // Always include listing type and price
+  const lt = pick(listingTypes)
+  tags.push(lt)
+  used.add(lt.label)
+  const price = { label: pick(priceBands), severity: 'success' as const }
+  tags.push(price)
+  used.add(price.label)
+
+  // Pools for remaining metadata
+  const pools: LineTag[][] = [
+    sizes.map((s) => ({ label: s, severity: 'secondary' as const })),
+    dom.map((d) => ({ label: d, severity: 'contrast' as const })),
+    zips.map((z) => ({ label: z, severity: 'info' as const })),
+    years.map((y) => ({ label: y, severity: 'secondary' as const }))
+  ]
+
+  // Fill until exactly 4 tags
+  while (tags.length < 4) {
+    const pool = pick(pools)
+    const candidate = pick(pool)
+    if (!used.has(candidate.label)) {
+      tags.push(candidate)
+      used.add(candidate.label)
+    }
+  }
+
+  return tags
+}
+
+const lines = ref<LineState[]>([
+  (() => { const idx = getHouseIndexFromSeed(props.multiLineNames?.[0] || 'Sam Sample'); return { id: 1, name: props.multiLineNames?.[0] || 'Sam Sample', state: 'ringing', duration: 0, tags: generateRandomTags(), endReason: undefined, imageIdx: idx, imageUrl: getHouseUrlByIndex(idx) } })(),
+  (() => { const idx = getHouseIndexFromSeed(props.multiLineNames?.[1] || 'Jordan Lee'); return { id: 2, name: props.multiLineNames?.[1] || 'Jordan Lee', state: 'ringing', duration: 0, tags: generateRandomTags(), endReason: undefined, imageIdx: idx, imageUrl: getHouseUrlByIndex(idx) } })(),
+  (() => { const idx = getHouseIndexFromSeed(props.multiLineNames?.[2] || 'Taylor Kim'); return { id: 3, name: props.multiLineNames?.[2] || 'Taylor Kim', state: 'ringing', duration: 0, tags: generateRandomTags(), endReason: undefined, imageIdx: idx, imageUrl: getHouseUrlByIndex(idx) } })()
+])
+let lineTimers: Array<ReturnType<typeof setInterval> | null> = [null, null, null]
+let transitionTimeout: ReturnType<typeof setTimeout> | null = null
+
+const startMultiLineSimulation = () => {
+  // Reset
+  lines.value = [
+    (() => { const idx = getHouseIndexFromSeed(props.multiLineNames?.[0] || 'Sam Sample'); return { id: 1, name: props.multiLineNames?.[0] || 'Sam Sample', state: 'ringing', duration: 0, tags: generateRandomTags(), endReason: undefined, imageIdx: idx, imageUrl: getHouseUrlByIndex(idx) } })(),
+    (() => { const idx = getHouseIndexFromSeed(props.multiLineNames?.[1] || 'Jordan Lee'); return { id: 2, name: props.multiLineNames?.[1] || 'Jordan Lee', state: 'ringing', duration: 0, tags: generateRandomTags(), endReason: undefined, imageIdx: idx, imageUrl: getHouseUrlByIndex(idx) } })(),
+    (() => { const idx = getHouseIndexFromSeed(props.multiLineNames?.[2] || 'Taylor Kim'); return { id: 3, name: props.multiLineNames?.[2] || 'Taylor Kim', state: 'ringing', duration: 0, tags: generateRandomTags(), endReason: undefined, imageIdx: idx, imageUrl: getHouseUrlByIndex(idx) } })()
+  ]
+
+  // After 2 seconds, connect line 1 and disconnect lines 2 and 3
+  transitionTimeout = setTimeout(() => {
+    lines.value[0].state = 'connected'
+    lines.value[0].duration = 0
+    lines.value[1].state = 'disconnected'
+    lines.value[1].endReason = 'No Answer'
+    lines.value[2].state = 'disconnected'
+    lines.value[2].endReason = 'Voicemail Left'
+    emit('multi-line-connected', lines.value[0].name)
+    lineTimers[0] = setInterval(() => { lines.value[0].duration++ }, 1000)
+  }, 5000)
+}
+
+const stopMultiLineSimulation = () => {
+  lineTimers.forEach((t, i) => { if (t) { clearInterval(t); lineTimers[i] = null } })
+  if (transitionTimeout) { clearTimeout(transitionTimeout); transitionTimeout = null }
+}
+
+watch(() => props.multiLine, (val) => {
+  if (val) startMultiLineSimulation()
+  else stopMultiLineSimulation()
+}, { immediate: true })
+
+watch(() => props.multiLineNames, () => {
+  if (props.multiLine) startMultiLineSimulation()
+})
+
+onUnmounted(() => stopMultiLineSimulation())
+
+>>>>>>> refs/remotes/origin/ai_ai_base_f92b2d20f03b_4fbc46d48946
 // Helper method for coach initials
 const getCoachInitials = (name: string): string => {
   return name
@@ -604,6 +824,33 @@ const formatTime = (seconds: number): string => {
   const secs = seconds % 60
   return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`
 }
+
+const dialQueueText = computed(() => {
+  if (props.multiLine) {
+    const set = Math.min(Math.max(props.multiLineSetIndex ?? 1, 1), 3)
+    const numerator = Math.min(set * 3, 9)
+    const denominator = set === 1 ? 6 : 9
+    return `Dial Queue ${numerator} of ${denominator}`
+  }
+  return `Dial Queue ${props.currentContactIndex + 1} of 3`
+})
+
+const tagFontSize = dsFontSize.xs[0]
+
+const onImageError = (line: LineState) => {
+  line.imageIdx = (line.imageIdx + 1) % CURATED_HOUSES.length
+  line.imageUrl = getHouseUrlByIndex(line.imageIdx)
+}
+
+const progressWidth = computed(() => {
+  if (props.multiLine) {
+    const set = Math.min(Math.max(props.multiLineSetIndex ?? 1, 1), 3)
+    const pct = (Math.min(set, 3) / 3) * 100
+    return `${pct}%`
+  }
+  const pct = ((props.currentContactIndex + 1) / 3) * 100
+  return `${pct}%`
+})
 
 const getConnectScoreColor = (score: string): string => {
   switch (score.toLowerCase()) {
@@ -934,6 +1181,54 @@ const handleHoldKeydown = (event: KeyboardEvent) => {
     toggleHold()
   }
   // Let Tab key work normally for navigation
+}
+
+const hasDialedOnce = ref(false)
+watch(
+  () => props.callState,
+  (state) => {
+    if (state === 'ringing' || state === 'connected') {
+      hasDialedOnce.value = true
+    }
+  },
+  { immediate: true }
+)
+
+const showContactInfo = computed(() => {
+  // Suppress contact details (used during multi-line pre-start)
+  if (props.suppressContactDetails) return false
+  if (props.multiLine) {
+    // Multi-line: only show after a contact answers
+    return lines.value.some(l => l.state === 'connected')
+  }
+  // Single-line: always show contact details (idle, ringing, connected, ended)
+  return true
+})
+
+const isActiveCall = computed(() => {
+  if (props.multiLine) {
+    return lines.value.some(l => l.state === 'connected')
+  }
+  return props.callState === 'connected'
+})
+
+const nextActionLabel = computed(() => {
+  if (props.shouldCompleteQueue) return 'Queue Completed'
+  return props.multiLine ? 'Call Next 3 Contacts' : `Next: ${props.nextContactName}`
+})
+
+const handleNextActionClick = () => {
+  // If queue is complete, finalize regardless of mode
+  if (props.shouldCompleteQueue) {
+    emit('complete-queue')
+    return
+  }
+  // Otherwise proceed to next step depending on mode
+  if (props.multiLine) {
+    emit('start-next-trio')
+  } else {
+    emit('next-contact')
+  }
 }
 </script>
 

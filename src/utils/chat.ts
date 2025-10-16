@@ -5,6 +5,7 @@ export interface Message {
   type: 'ai' | 'user' | 'separator'
   content: string[]
   contactName?: string
+  overrideText?: string
   typing?: boolean
   preserveUserPosition?: boolean
 }
@@ -232,11 +233,12 @@ export const createChatUtils = (
     })
   }
 
-  const addSeparatorMessage = (contactName: string): void => {
+  const addSeparatorMessage = (contactName: string, overrideText?: string): void => {
     messages.value.push({
       type: 'separator',
       content: [],
-      contactName: contactName
+      contactName,
+      ...(overrideText ? { overrideText } : {})
     })
     scrollToBottom()
   }
@@ -315,6 +317,22 @@ export const createChatUtils = (
     })
   }
 
+  const updateLastSeparator = (overrideText: string, newContactName?: string): void => {
+    // Find the last separator message
+    for (let i = messages.value.length - 1; i >= 0; i--) {
+      const m = messages.value[i]
+      if (m && m.type === 'separator') {
+        if (newContactName) m.contactName = newContactName
+        ;(m as any).overrideText = overrideText
+        scrollToBottom()
+        return
+      }
+    }
+
+    // Fallback: if none exists, create one
+    addSeparatorMessage(newContactName || '3 Contacts', overrideText)
+  }
+
   return {
     scrollToBottom,
     scrollToBottomDuringTyping,
@@ -331,8 +349,8 @@ export const createChatUtils = (
     addAIMessageWithDelay,
     addAIMessageWithTyping,
     addAIMessageWithTypingNoScroll,
-    // Controls for scroll suppression
     setScrollSuppressed,
-    suppressScrolling
+    suppressScrolling,
+    updateLastSeparator
   }
 }

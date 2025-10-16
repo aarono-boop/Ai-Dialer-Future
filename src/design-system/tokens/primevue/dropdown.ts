@@ -1,5 +1,3 @@
-import type { DropdownDesignTokens } from '@primeuix/themes/types/dropdown'
-
 export default {
   root: {
     borderRadius: '{primitive.borderRadius.md}'
@@ -19,4 +17,4 @@ export default {
     focusBackground: '{surface.200}',
     focusColor: '{text.color}'
   }
-} satisfies DropdownDesignTokens
+} as any

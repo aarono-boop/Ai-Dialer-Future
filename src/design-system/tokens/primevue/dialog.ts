@@ -1,5 +1,3 @@
-import type { DialogDesignTokens } from '@primeuix/themes/types/dialog';
-
 export default {
     root: {
         background: "{overlay.modal.background}",
@@ -29,4 +27,4 @@ export default {
         display: "flex",
         justifyContent: "flex-end"
     }
-} satisfies DialogDesignTokens;
+} as any;
