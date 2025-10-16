@@ -42,7 +42,7 @@
             :style="{ width: `${((currentContactIndex + 1) / 3) * 100}%`, background: 'linear-gradient(to right, #60a5fa, #7b68ee)' }"
           ></div>
           <div class="absolute inset-0 flex items-center justify-center text-white text-xs font-medium">
-            Dial Queue {{ currentContactIndex + 1 }} of 3
+            Dial Session {{ currentContactIndex + 1 }} of 3
           </div>
         </div>
       </div>
