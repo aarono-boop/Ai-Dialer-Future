@@ -163,13 +163,12 @@
     <div class="flex-1 mx-[5px] mb-4 bg-gray-800 border border-gray-600 rounded-lg p-[14px] overflow-y-auto">
       <div class="space-y-4">
         <!-- Contact Header -->
-        <div>
-<<<<<<< HEAD
+        <div v-if="!props.suppressContactDetails">
           <h3 class="text-white text-lg font-bold ml-[17px]">{{ currentContact.name }}</h3>
           <p class="text-white text-sm ml-[17px]">{{ currentContact.title }} at {{ currentContact.company }}</p>
         </div>
 
-        <TabView :pt="{ inkbar: { style: { display: 'none' } } }">
+        <TabView v-if="!props.suppressContactDetails" :pt="{ inkbar: { style: { display: 'none' } } }">
           <TabPanel value="details">
             <template #header>
               <span class="flex items-center gap-2 text-xs"><i class="pi pi-id-card"></i><span>Details</span></span>
