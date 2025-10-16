@@ -794,6 +794,7 @@ const cancelEdit = () => {
   editImagePreview.value = null
   editCustomMessage.value = ''
   editWebsiteUrl.value = ''
+  editYoutubeUrl.value = ''
   editHighlight1.value = ''
   editHighlight2.value = ''
   if (editFileInput.value) {
