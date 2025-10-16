@@ -396,11 +396,11 @@
           <small class="text-gray-400">
             Enter a YouTube URL (youtube.com or youtu.be) or just the video ID
           </small>
-          <div v-if="editYoutubeUrl && extractVideoIdFromUrl(editYoutubeUrl)" class="mt-2 border border-gray-600 rounded-lg p-3 bg-gray-700">
+          <div v-if="editYoutubeUrl && extractYouTubeVideoId(editYoutubeUrl)" class="mt-2 border border-gray-600 rounded-lg p-3 bg-gray-700">
             <label class="text-sm font-semibold text-gray-300">Video Preview:</label>
             <div class="aspect-video bg-gray-800 rounded-lg overflow-hidden mt-2">
               <iframe
-                :src="`https://www.youtube.com/embed/${extractVideoIdFromUrl(editYoutubeUrl)}`"
+                :src="`https://www.youtube.com/embed/${extractYouTubeVideoId(editYoutubeUrl)}`"
                 frameborder="0"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowfullscreen
