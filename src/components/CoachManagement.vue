@@ -466,6 +466,7 @@ import Message from 'primevue/message'
 import { useConfirm } from 'primevue/useconfirm'
 import type { Coach, CoachCreateData } from '../types/coach'
 import { useCoaches } from '../composables/useCoaches'
+import { extractYouTubeVideoId } from '../config/coaches'
 
 // Composables
 const {
