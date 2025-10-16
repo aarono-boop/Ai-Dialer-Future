@@ -689,7 +689,6 @@ const activities = computed(() => {
   ]
 })
 
-=======
 // Multi-line simulation state
 interface LineTag { label: string; severity?: 'success' | 'info' | 'warning' | 'danger' | 'secondary' | 'contrast' }
 interface LineState { id: number; name: string; state: 'ringing' | 'connected' | 'disconnected'; duration: number; tags: LineTag[]; endReason?: string; imageUrl: string; imageIdx: number }
@@ -806,8 +805,6 @@ watch(() => props.multiLineNames, () => {
 })
 
 onUnmounted(() => stopMultiLineSimulation())
-
->>>>>>> refs/remotes/origin/ai_ai_base_f92b2d20f03b_4fbc46d48946
 // Helper method for coach initials
 const getCoachInitials = (name: string): string => {
   return name
