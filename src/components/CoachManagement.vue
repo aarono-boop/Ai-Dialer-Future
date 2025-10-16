@@ -758,7 +758,7 @@ const saveCoachEdit = async () => {
       updates.youtubeUrl = editYoutubeUrl.value || undefined
       // Extract video ID from the URL
       if (editYoutubeUrl.value) {
-        const videoId = extractVideoIdFromUrl(editYoutubeUrl.value)
+        const videoId = extractYouTubeVideoId(editYoutubeUrl.value)
         if (videoId) {
           updates.videoId = videoId
         } else {
