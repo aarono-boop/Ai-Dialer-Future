@@ -101,11 +101,7 @@
             :style="{ width: progressWidth, background: 'linear-gradient(to right, #60a5fa, #7b68ee)' }"
           ></div>
           <div class="absolute inset-0 flex items-center justify-center text-white text-xs font-medium">
-<<<<<<< HEAD
-            Dial Session {{ currentContactIndex + 1 }} of 3
-=======
             {{ dialQueueText }}
->>>>>>> refs/remotes/origin/ai_ai_base_f92b2d20f03b_4fbc46d48946
           </div>
         </div>
       </div>

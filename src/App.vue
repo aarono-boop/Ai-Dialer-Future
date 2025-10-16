@@ -1476,8 +1476,7 @@ const messages: Ref<Message[]> = ref([
 
 // Initialize chat utilities
 const chatUtils = createChatUtils(messages, chatMessages, headerRef)
-<<<<<<< HEAD
-const { scrollToBottom, scrollToBottomDuringTyping, scrollToUserMessage, scrollToTopForGoals, addAIMessage, addAIMessageWithoutScroll, addUserMessage, addUserGoalMessage, addUserQueuePausedMessage, addUserQueueCompletedMessage, addSeparatorMessage, addAIMessageWithTyping, addAIMessageWithTypingNoScroll, suppressScrolling } = chatUtils
+const { scrollToBottom, scrollToBottomDuringTyping, scrollToUserMessage, scrollToTopForGoals, addAIMessage, addAIMessageWithoutScroll, addUserMessage, addUserGoalMessage, addUserQueuePausedMessage, addUserQueueCompletedMessage, addSeparatorMessage, addAIMessageWithTyping, addAIMessageWithTypingNoScroll, suppressScrolling, updateLastSeparator } = chatUtils
 
 // Hide the Call Now CTA automatically when the dialer is shown
 watch(() => showDialer.value, (val) => {
@@ -1506,8 +1505,7 @@ const scrollChatToTop = () => {
   try {
     window.scrollTo({ top: 0, behavior: 'auto' })
   } catch {}
-=======
-const { scrollToBottom, scrollToBottomDuringTyping, scrollToUserMessage, scrollToTopForGoals, addAIMessage, addAIMessageWithoutScroll, addUserMessage, addUserGoalMessage, addUserQueuePausedMessage, addUserQueueCompletedMessage, addSeparatorMessage, addAIMessageWithTyping, addAIMessageWithTypingNoScroll, updateLastSeparator } = chatUtils
+}
 
 // Multi-line pre-prompt state
 const awaitingMultiLineChoice = ref(false)
@@ -1530,7 +1528,6 @@ const handleMultiLineChoice = (label: 'Leave Voicemail' | 'End Call'): void => {
   // Do NOT start dialing yet; ask to remember first
   addAIMessage('Would you like me to remember this for next time?')
   awaitingRememberChoice.value = true
->>>>>>> refs/remotes/origin/ai_ai_base_f92b2d20f03b_4fbc46d48946
 }
 
 // Helper function to identify if a message is the "Ready to upload" message for returning users
