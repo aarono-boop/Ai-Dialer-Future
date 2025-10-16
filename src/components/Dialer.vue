@@ -811,9 +811,9 @@ const dialQueueText = computed(() => {
     const set = Math.min(Math.max(props.multiLineSetIndex ?? 1, 1), 3)
     const numerator = Math.min(set * 3, 9)
     const denominator = set === 1 ? 6 : 9
-    return `Dial Queue ${numerator} of ${denominator}`
+    return `Dial Session ${numerator} of ${denominator}`
   }
-  return `Dial Queue ${props.currentContactIndex + 1} of 3`
+  return `Dial Session ${props.currentContactIndex + 1} of 3`
 })
 
 const tagFontSize = dsFontSize.xs[0]
