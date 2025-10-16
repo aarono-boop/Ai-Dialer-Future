@@ -497,8 +497,7 @@
 </template>
 
 <script setup lang="ts">
-<<<<<<< HEAD
-import { ref, nextTick, computed, onMounted } from 'vue'
+import { ref, nextTick, computed, onMounted, watch, onUnmounted } from 'vue'
 import Button from 'primevue/button'
 import ToggleSwitch from 'primevue/toggleswitch'
 import TabView from 'primevue/tabview'
@@ -506,14 +505,9 @@ import TabPanel from 'primevue/tabpanel'
 import Textarea from 'primevue/textarea'
 import Dialog from 'primevue/dialog'
 import Dropdown from 'primevue/dropdown'
-=======
-import { ref, nextTick, computed, watch, onUnmounted } from 'vue'
-import Button from 'primevue/button'
-import ToggleSwitch from 'primevue/toggleswitch'
 import Tag from 'primevue/tag'
 import Image from 'primevue/image'
 import Menu from 'primevue/menu'
->>>>>>> refs/remotes/origin/ai_ai_base_f92b2d20f03b_4fbc46d48946
 import { useCoaches } from '../composables/useCoaches'
 import { fontSize as dsFontSize } from '../design-system/tokens/typography'
 
@@ -566,11 +560,7 @@ const props = defineProps<{
 }>()
 
 // Define emits
-<<<<<<< HEAD
-const emit = defineEmits(['call-back', 'next-contact', 'hang-up', 'mute', 'hold', 'keypad', 'keypad-press', 'pause-queue', 'complete-queue', 'ai-coach-toggle', 'transfer'])
-=======
-const emit = defineEmits(['call-back', 'next-contact', 'hang-up', 'mute', 'hold', 'keypad', 'keypad-press', 'pause-queue', 'complete-queue', 'ai-coach-toggle', 'multi-line-connected', 'start-next-trio', 'line-menu-action'])
->>>>>>> refs/remotes/origin/ai_ai_base_f92b2d20f03b_4fbc46d48946
+const emit = defineEmits(['call-back', 'next-contact', 'hang-up', 'mute', 'hold', 'keypad', 'keypad-press', 'pause-queue', 'complete-queue', 'ai-coach-toggle', 'transfer', 'multi-line-connected', 'start-next-trio', 'line-menu-action'])
 
 // Reactive data
 const isMuted = ref(false)
