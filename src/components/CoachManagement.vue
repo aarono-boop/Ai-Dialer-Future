@@ -627,6 +627,7 @@ const editCoach = (coach: Coach) => {
   editImagePreview.value = null
   editCustomMessage.value = coach.welcomeMessage || ''
   editWebsiteUrl.value = coach.websiteUrl || ''
+  editYoutubeUrl.value = coach.youtubeUrl || ''
   editHighlight1.value = coach.highlights?.[0] || ''
   editHighlight2.value = coach.highlights?.[1] || ''
   showEditModal.value = true
