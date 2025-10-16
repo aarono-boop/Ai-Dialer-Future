@@ -606,7 +606,7 @@ const transferOptions = [
   { label: 'Priya Singh (ext 233) — (646) 555-1233', value: 'Priya Singh|233|(646) 555-1233' },
   { label: 'Diego Alvarez (ext 244) — (213) 555-1244', value: 'Diego Alvarez|244|(213) 555-1244' },
   { label: 'Samantha Park (ext 257) — (617) 555-1257', value: 'Samantha Park|257|(617) 555-1257' }
-] as const
+]
 
 const formatDateTime = (d = new Date()): string => {
   const f = new Intl.DateTimeFormat('en-US', {
