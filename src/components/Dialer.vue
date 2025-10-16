@@ -132,7 +132,7 @@
             <!-- Default AI Coach when no coach parameter -->
             <span
               v-else
-              class="text-gray-300 text-sm cursor-pointer select-none"
+              class="text-gray-300 text-xs cursor-pointer select-none"
               @click="toggleAICoach(!props.aiCoachEnabled)"
             >AI Coach</span>
             <ToggleSwitch
@@ -141,7 +141,7 @@
               class="ai-coach-toggle"
             />
           </div>
-          <div class="text-gray-400 text-sm text-center w-[160px] flex-shrink-0">
+          <div class="text-gray-400 text-xs text-center w-[160px] flex-shrink-0">
             Dial Session Time: <span class="text-white font-mono tabular-nums">{{ formatTime(queueTime) }}</span>
           </div>
           <Button
