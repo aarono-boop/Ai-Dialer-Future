@@ -384,6 +384,35 @@
           <InputText id="editWebsiteUrl" v-model="editWebsiteUrl" class="w-full" placeholder="https://example.com" />
         </div>
 
+        <!-- YouTube Video URL -->
+        <div class="flex flex-col gap-2 mt-4">
+          <label for="editYoutubeUrl" class="font-semibold text-white">YouTube Video URL</label>
+          <InputText
+            id="editYoutubeUrl"
+            v-model="editYoutubeUrl"
+            class="w-full"
+            placeholder="https://www.youtube.com/watch?v=... or https://youtu.be/..."
+          />
+          <small class="text-gray-400">
+            Enter a YouTube URL (youtube.com or youtu.be) or just the video ID
+          </small>
+          <div v-if="editYoutubeUrl && extractVideoIdFromUrl(editYoutubeUrl)" class="mt-2 border border-gray-600 rounded-lg p-3 bg-gray-700">
+            <label class="text-sm font-semibold text-gray-300">Video Preview:</label>
+            <div class="aspect-video bg-gray-800 rounded-lg overflow-hidden mt-2">
+              <iframe
+                :src="`https://www.youtube.com/embed/${extractVideoIdFromUrl(editYoutubeUrl)}`"
+                frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen
+                class="w-full h-full"
+              ></iframe>
+            </div>
+          </div>
+          <div v-else-if="editYoutubeUrl" class="mt-2 border border-red-600 rounded-lg p-3 bg-red-900/20">
+            <p class="text-sm text-red-400">Invalid YouTube URL. Please check and try again.</p>
+          </div>
+        </div>
+
         <!-- Highlights (2 bullets) -->
         <div class="flex flex-col gap-2 mt-4">
           <label class="font-semibold text-white">Highlights (2 bullets)</label>
