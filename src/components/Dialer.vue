@@ -593,7 +593,6 @@ const keypadButtonRef = ref<any>(null)
 // Coach system integration
 const { currentCoach } = useCoaches()
 
-<<<<<<< HEAD
 // Notes for contact (sample history if none present)
 const notesList = ref<{ date: string; text: string }[]>([])
 const newNote = ref('')
