@@ -383,6 +383,35 @@
           <InputText id="editWebsiteUrl" v-model="editWebsiteUrl" class="w-full" placeholder="https://example.com" />
         </div>
 
+        <!-- YouTube Video URL -->
+        <div class="flex flex-col gap-2 mt-4">
+          <label for="editYoutubeUrl" class="font-semibold text-white">YouTube Video URL</label>
+          <InputText
+            id="editYoutubeUrl"
+            v-model="editYoutubeUrl"
+            class="w-full"
+            placeholder="https://www.youtube.com/watch?v=... or https://youtu.be/..."
+          />
+          <small class="text-gray-400">
+            Enter a YouTube URL (youtube.com or youtu.be) or just the video ID
+          </small>
+          <div v-if="editYoutubeUrl && extractYouTubeVideoId(editYoutubeUrl)" class="mt-2 border border-gray-600 rounded-lg p-3 bg-gray-700">
+            <label class="text-sm font-semibold text-gray-300">Video Preview:</label>
+            <div class="aspect-video bg-gray-800 rounded-lg overflow-hidden mt-2">
+              <iframe
+                :src="`https://www.youtube.com/embed/${extractYouTubeVideoId(editYoutubeUrl)}`"
+                frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen
+                class="w-full h-full"
+              ></iframe>
+            </div>
+          </div>
+          <div v-else-if="editYoutubeUrl" class="mt-2 border border-red-600 rounded-lg p-3 bg-red-900/20">
+            <p class="text-sm text-red-400">Invalid YouTube URL. Please check and try again.</p>
+          </div>
+        </div>
+
         <!-- Highlights (2 bullets) -->
         <div class="flex flex-col gap-2 mt-4">
           <label class="font-semibold text-white">Highlights (2 bullets)</label>
@@ -435,6 +464,7 @@ import ConfirmDialog from 'primevue/confirmdialog'
 import { useConfirm } from 'primevue/useconfirm'
 import type { Coach, CoachCreateData } from '../types/coach'
 import { useCoaches } from '../composables/useCoaches'
+import { extractYouTubeVideoId } from '../config/coaches'
 
 // Composables
 const {
@@ -459,6 +489,7 @@ const editingCoach = ref<Coach | null>(null)
 const editImagePreview = ref<string | null>(null)
 const editCustomMessage = ref<string>('')
 const editWebsiteUrl = ref<string>('')
+const editYoutubeUrl = ref<string>('')
 const editHighlight1 = ref<string>('')
 const editHighlight2 = ref<string>('')
 const editFileInput = ref<HTMLInputElement | null>(null)
@@ -479,10 +510,11 @@ const hasChanges = computed(() => {
   const hasImageChange = editImagePreview.value || isBrokenAvatar.value
   const hasMessageChange = editCustomMessage.value !== (editingCoach.value.welcomeMessage || '')
   const hasWebsiteChange = editWebsiteUrl.value !== (editingCoach.value.websiteUrl || '')
+  const hasYoutubeChange = editYoutubeUrl.value !== (editingCoach.value.youtubeUrl || '')
   const origH1 = editingCoach.value.highlights?.[0] || ''
   const origH2 = editingCoach.value.highlights?.[1] || ''
   const hasHighlightsChange = editHighlight1.value !== origH1 || editHighlight2.value !== origH2
-  return hasImageChange || hasMessageChange || hasWebsiteChange || hasHighlightsChange
+  return hasImageChange || hasMessageChange || hasWebsiteChange || hasYoutubeChange || hasHighlightsChange
 })
 
 // Methods
@@ -605,6 +637,7 @@ const editCoach = (coach: Coach) => {
   editImagePreview.value = null
   editCustomMessage.value = coach.welcomeMessage || ''
   editWebsiteUrl.value = coach.websiteUrl || ''
+  editYoutubeUrl.value = coach.youtubeUrl || ''
   editHighlight1.value = coach.highlights?.[0] || ''
   editHighlight2.value = coach.highlights?.[1] || ''
   showEditModal.value = true
@@ -669,13 +702,14 @@ const saveCoachEdit = async () => {
   const hasImageChange = editImagePreview.value || isBrokenAvatar.value
   const hasMessageChange = editCustomMessage.value !== (editingCoach.value.welcomeMessage || '')
   const hasWebsiteChange = editWebsiteUrl.value !== (editingCoach.value.websiteUrl || '')
+  const hasYoutubeChange = editYoutubeUrl.value !== (editingCoach.value.youtubeUrl || '')
   const onlyHighlightsChanged = (() => {
     const newH = [editHighlight1.value, editHighlight2.value].filter(h => h && h.trim().length > 0)
     const origH = (editingCoach.value?.highlights || []).slice(0,2)
     return newH.join('\n') !== origH.join('\n')
   })()
 
-  if (!hasImageChange && !hasMessageChange && !hasWebsiteChange && !onlyHighlightsChanged) {
+  if (!hasImageChange && !hasMessageChange && !hasWebsiteChange && !hasYoutubeChange && !onlyHighlightsChanged) {
     console.warn('No changes to save')
     return
   }
@@ -697,6 +731,25 @@ const saveCoachEdit = async () => {
 
     if (editWebsiteUrl.value !== (editingCoach.value.websiteUrl || '')) {
       updates.websiteUrl = editWebsiteUrl.value || undefined
+    }
+
+    if (hasYoutubeChange) {
+      updates.youtubeUrl = editYoutubeUrl.value || undefined
+      // Extract video ID from the URL
+      if (editYoutubeUrl.value) {
+        const videoId = extractYouTubeVideoId(editYoutubeUrl.value)
+        if (videoId) {
+          updates.videoId = videoId
+        } else {
+          // Invalid YouTube URL
+          console.warn('Invalid YouTube URL')
+          isUpdating.value = false
+          return
+        }
+      } else {
+        // Clear video ID if URL is removed
+        updates.videoId = undefined
+      }
     }
 
     const newHighlights = [editHighlight1.value, editHighlight2.value].filter(h => h && h.trim().length > 0)
@@ -727,6 +780,7 @@ const cancelEdit = () => {
   editImagePreview.value = null
   editCustomMessage.value = ''
   editWebsiteUrl.value = ''
+  editYoutubeUrl.value = ''
   editHighlight1.value = ''
   editHighlight2.value = ''
   if (editFileInput.value) {

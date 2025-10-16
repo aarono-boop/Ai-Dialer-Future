@@ -4,7 +4,7 @@
       Ai Dialer can make mistakes. Please double-check responses.
     </div>
     <div class="flex justify-center items-center">
-      <p>&copy;2025 ARMOR® AI Dialer. All rights reserved.</p>
+      <p>&copy;2035 ARMOR® AI Dialer. All rights reserved.</p>
       <Button
         v-if="!showDialer && !queuePaused"
         @click="$emit('skip-to-dialer')"
@@ -13,6 +13,16 @@
         size="small"
         class="ml-4 underline"
         label="Skip to Dialer"
+      />
+      <Button
+        v-if="!showDialer && !queuePaused"
+        @click="$emit('multi-line')"
+        severity="secondary"
+        outlined
+        size="small"
+        class="ml-2 underline"
+        label="Multi-Line"
+        aria-label="Multi-Line"
       />
     </div>
   </footer>
@@ -28,5 +38,5 @@ defineProps<{
 }>()
 
 // Define emits
-defineEmits(['skip-to-dialer'])
+defineEmits(['skip-to-dialer', 'multi-line'])
 </script>

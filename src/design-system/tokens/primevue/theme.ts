@@ -8,7 +8,7 @@ import tooltip from './tooltip'
 import dropdown from './dropdown'
 import datatable from './datatable'
 
-export const customTheme = definePreset(base, {
+export const customTheme = definePreset(base as any, {
     components: {
         button,
         dialog,
@@ -18,6 +18,6 @@ export const customTheme = definePreset(base, {
         dropdown,
         datatable
     }
-})
+} as any)
 
 export default customTheme

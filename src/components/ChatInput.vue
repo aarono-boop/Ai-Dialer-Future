@@ -164,11 +164,11 @@ const handleTabKey = (event: KeyboardEvent) => {
     event.preventDefault()
 
     // Check if dialer is showing and what controls are available
-    const pauseQueueButton = document.querySelector('[tabindex="8"]') as HTMLElement
-    const dialerButton9 = document.querySelector('[tabindex="9"]') as HTMLElement // Could be Mute or Call Back
-    const dialerButton10 = document.querySelector('[tabindex="10"]') as HTMLElement // Could be Keypad or Next
-    const dialerButton11 = document.querySelector('[tabindex="11"]') as HTMLElement // Could be Hold
-    const dialerButton12 = document.querySelector('[tabindex="12"]') as HTMLElement // Could be Hang Up
+    const pauseQueueButton = document.querySelector('[tabindex="8"]') as HTMLButtonElement | null
+    const dialerButton9 = document.querySelector('[tabindex="9"]') as HTMLButtonElement | null // Could be Mute or Call Back
+    const dialerButton10 = document.querySelector('[tabindex="10"]') as HTMLButtonElement | null // Could be Keypad or Next
+    const dialerButton11 = document.querySelector('[tabindex="11"]') as HTMLButtonElement | null // Could be Hold
+    const dialerButton12 = document.querySelector('[tabindex="12"]') as HTMLButtonElement | null // Could be Hang Up
 
     console.log('=== TAB NAVIGATION DEBUG ===')
     console.log('Pause Queue (8):', pauseQueueButton, 'visible:', pauseQueueButton?.offsetParent !== null)
@@ -178,12 +178,13 @@ const handleTabKey = (event: KeyboardEvent) => {
     console.log('Button 12:', dialerButton12, 'visible:', dialerButton12?.offsetParent !== null)
 
     // Helper function to check if a button is disabled (handles both standard and PrimeVue disabled states)
-    const isButtonDisabled = (button: HTMLElement): boolean => {
+    const isButtonDisabled = (button: HTMLButtonElement | null): boolean => {
       if (!button) return true
-      const disabled = button.disabled ||
-             button.getAttribute('disabled') === 'true' ||
-             button.getAttribute('data-p-disabled') === 'true' ||
-             button.hasAttribute('disabled')
+      const disabled =
+        button.disabled ||
+        button.getAttribute('disabled') !== null ||
+        button.getAttribute('data-p-disabled') === 'true' ||
+        button.hasAttribute('disabled')
       console.log(`Button with text "${button.textContent?.trim()}" disabled:`, disabled)
       return disabled
     }

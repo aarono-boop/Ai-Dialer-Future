@@ -120,11 +120,30 @@
                         </Card>
                       </div>
                     </div>
+
+                    <!-- Multi-line pre-prompt buttons -->
+                    <div v-if="awaitingMultiLineChoice && index === messages.length - 1" class="mt-4 flex flex-wrap gap-2">
+                      <Button label="Leave Voicemail" icon="pi pi-volume-down" @click="handleMultiLineChoice('Leave Voicemail')" />
+                      <Button label="End Call" severity="secondary" @click="handleMultiLineChoice('End Call')" />
+                    </div>
+
+                    <!-- Remember preference buttons -->
+                    <div v-if="awaitingRememberChoice && index === messages.length - 1" class="mt-4 flex flex-wrap gap-2">
+                      <Button label="Yes, remember" icon="pi pi-bookmark" @click="handleRememberChoice(true)" />
+                      <Button label="No, just this time" severity="secondary" @click="handleRememberChoice(false)" />
+                    </div>
+
+                    <!-- Call Pacing buttons -->
+                    <div v-if="awaitingPacingChoice && index === messages.length - 1" class="mt-4 flex flex-col gap-2">
+                      <Button label="Conservative – Dials fewer lines at once (better for quality conversations, fewer dropped calls)" severity="secondary" @click="handlePacingChoice('Conservative')" />
+                      <Button label="Balanced – Dials a moderate number of lines (good mix of talk time and efficiency)" severity="secondary" @click="handlePacingChoice('Balanced')" />
+                      <Button label="Aggressive – Dials the maximum lines allowed (highest chance of live connects, but risk of more dropped calls)" severity="secondary" @click="handlePacingChoice('Aggressive')" />
+                    </div>
                   </template>
                 </ChatMessage>
 
                 <!-- Call Separator -->
-                <CallSeparator v-else-if="message.type === 'separator'" :contactName="message.contactName || ''" />
+                <CallSeparator v-else-if="message.type === 'separator'" :contactName="message.contactName || ''" :overrideText="(message as any).overrideText || ''" />
               </template>
             </div>
 
@@ -663,6 +682,10 @@
             :totalContacts="contacts.length"
             :coachParameter="coachParameter"
             :aiCoachEnabled="aiCoachEnabled"
+            :multiLine="multiLineActive"
+            :multiLineNames="multiLineNames"
+            :multiLineSetIndex="multiLineSetIndex"
+            :suppressContactDetails="awaitingMultiLineChoice || awaitingRememberChoice || awaitingPacingChoice"
             @call-back="handleCallBack"
             @next-contact="handleNextContact"
             @hang-up="handleHangUp"
@@ -673,6 +696,8 @@
             @complete-queue="handleCompleteQueue"
             @ai-coach-toggle="handleAICoachToggle"
             @transfer="handleTransfer"
+            @multi-line-connected="handleMultiLineConnected"
+            @start-next-trio="handleStartNextTrio"
           />
         </div>
 
@@ -841,7 +866,7 @@
     />
 
     <!-- Footer -->
-    <Footer v-if="currentPage === 'main' && !managementMode && !showStudentDashboard" :style="(showDialer || showCoachInfoPanel) ? 'margin-right: 33.333333%' : ''" :showDialer="showDialer" :queuePaused="queuePaused" @skip-to-dialer="skipToDialer" />
+    <Footer v-if="currentPage === 'main' && !managementMode && !showStudentDashboard" :style="(showDialer || showCoachInfoPanel) ? 'margin-right: 33.333333%' : ''" :showDialer="showDialer" :queuePaused="queuePaused" @skip-to-dialer="skipToDialer" @multi-line="startMultiLineDialing" />
 
     <!-- Screen Reader Live Region for Announcements -->
     <div
@@ -1003,11 +1028,6 @@ const returnToCoachesSelection = (): void => {
   nextTick(() => scrollToBottom())
 }
 
-interface Message {
-  type: 'ai' | 'user' | 'separator'
-  content: string[]
-  contactName?: string
-}
 
 
 // Helper function to handle Connect Score text (no tooltip)
@@ -1161,6 +1181,9 @@ const phoneVerified = ref<boolean>(false) // Track if phone has been verified in
 const showStartDialingButton = ref<boolean>(false)
 const showCallerIdChoiceButtons = ref<boolean>(false)
 const showDialer = ref<boolean>(false)
+const multiLineActive = ref<boolean>(false)
+const multiLineNames = ref<string[]>(['Sam Sample', 'Jordan Lee', 'Taylor Kim'])
+const multiLineSetIndex = ref<number>(1)
 const showCoachInfoPanel = ref<boolean>(false)
 const selectedCoachForInfo = ref<Coach | null>(null)
 const showDispositionButtons = ref<boolean>(false)
@@ -1433,6 +1456,8 @@ const isLastContact = computed(() => {
 
 // Check if current contact is George Sample (voicemail scenario)
 const isVoicemailScenario = computed(() => {
+  // In multi-line sessions, use regular dispositions even for George
+  if (multiLineActive.value) return false
   return currentContact.value && currentContact.value.name === 'George Sample'
 })
 
@@ -1451,7 +1476,7 @@ const messages: Ref<Message[]> = ref([
 
 // Initialize chat utilities
 const chatUtils = createChatUtils(messages, chatMessages, headerRef)
-const { scrollToBottom, scrollToBottomDuringTyping, scrollToUserMessage, scrollToTopForGoals, addAIMessage, addAIMessageWithoutScroll, addUserMessage, addUserGoalMessage, addUserQueuePausedMessage, addUserQueueCompletedMessage, addSeparatorMessage, addAIMessageWithTyping, addAIMessageWithTypingNoScroll, suppressScrolling } = chatUtils
+const { scrollToBottom, scrollToBottomDuringTyping, scrollToUserMessage, scrollToTopForGoals, addAIMessage, addAIMessageWithoutScroll, addUserMessage, addUserGoalMessage, addUserQueuePausedMessage, addUserQueueCompletedMessage, addSeparatorMessage, addAIMessageWithTyping, addAIMessageWithTypingNoScroll, suppressScrolling, updateLastSeparator } = chatUtils
 
 // Hide the Call Now CTA automatically when the dialer is shown
 watch(() => showDialer.value, (val) => {
@@ -1480,6 +1505,29 @@ const scrollChatToTop = () => {
   try {
     window.scrollTo({ top: 0, behavior: 'auto' })
   } catch {}
+}
+
+// Multi-line pre-prompt state
+const awaitingMultiLineChoice = ref(false)
+const awaitingRememberChoice = ref(false)
+const awaitingPacingChoice = ref(false)
+const multiLinePickupPolicy = ref<'voicemail' | 'hangup' | null>(null)
+const callPacingPolicy = ref<'conservative' | 'balanced' | 'aggressive' | null>(null)
+
+const promptMultiLineOptions = (): void => {
+  currentPage.value = 'main'
+  showDialer.value = false
+  addAIMessage('What would you like me to do when someone picks up at the same time as a live call?')
+  awaitingMultiLineChoice.value = true
+}
+
+const handleMultiLineChoice = (label: 'Leave Voicemail' | 'End Call'): void => {
+  awaitingMultiLineChoice.value = false
+  multiLinePickupPolicy.value = label === 'Leave Voicemail' ? 'voicemail' : 'hangup'
+  addUserMessage(label)
+  // Do NOT start dialing yet; ask to remember first
+  addAIMessage('Would you like me to remember this for next time?')
+  awaitingRememberChoice.value = true
 }
 
 // Helper function to identify if a message is the "Ready to upload" message for returning users
@@ -1874,17 +1922,6 @@ const goToMainApp = () => {
 }
 
 // Accessibility helper for screen reader announcements
-const announceToScreenReader = (message: string) => {
-  if (screenReaderAnnouncements.value) {
-    screenReaderAnnouncements.value.textContent = message
-    // Clear after announcement to allow repeat announcements
-    setTimeout(() => {
-      if (screenReaderAnnouncements.value) {
-        screenReaderAnnouncements.value.textContent = ''
-      }
-    }, 1000)
-  }
-}
 
 // Redirect focus from tab trap to AI Dialer logo
 const redirectToArkonLogo = () => {
@@ -2317,7 +2354,7 @@ const sendMessage = (message: string): void => {
         'I can configure your session with:',
         '• <strong>Target audience:</strong> High-priority prospects, warm leads, or follow-ups',
         '• <strong>Call duration:</strong> 30 min, 1 hour, or 2-hour session',
-        '• <strong>Connect goals:</strong> Number of conversations you want to have',
+        '��� <strong>Connect goals:</strong> Number of conversations you want to have',
         'What type of prospects do you want to focus on for this session?'
       ])
     } else if (lowerMessage.includes('set a reminder') || lowerMessage.includes('reminder')) {
@@ -2582,7 +2619,7 @@ const handleLooksGood = (): void => {
     // Skip phone verification for returning users or if phone was already verified
     setTimeout(() => {
       addAIMessageWithTyping([
-        'I\'ve analyzed your contact\'s phone numbers using real connection data from 900M+ calls, recent phone engagement, calling patterns, and carrier signals—so you only dial numbers likely to connect.<br><br>I\'ve prioritized the phone numbers most likely to connect so you spend time talking, not hitting dead lines.<br><br>Here\'s what I found:<br><div style="margin-left: 1em; text-indent: -1em;">• 40 numbers have \'High\' Connect Scores and show consistent calling activity in the last 12 months. These are highly likely to be connected and assigned to active subscribers.</div><br><div style="margin-left: 1em; text-indent: -1em;">• 67 numbers have \'Medium\' Connect Scores and are worth calling after you exhaust your \'High\' Connect Score numbers.</div><br><div style="margin-left: 1em; text-indent: -1em;">• 54 numbers have \'Low\' Connect Scores and are likely disconnected or inactive lines that won\'t answer when dialed.</div>'
+        'I\'ve analyzed your contact\'s phone numbers using real connection data from 900M+ calls, recent phone engagement, calling patterns, and carrier signals—so you only dial numbers likely to connect.<br><br>I\'ve prioritized the phone numbers most likely to connect so you spend time talking, not hitting dead lines.<br><br>Here\'s what I found:<br><div style="margin-left: 1em; text-indent: -1em;">• 40 numbers have \'High\' Connect Scores and show consistent calling activity in the last 12 months. These are highly likely to be connected and assigned to active subscribers.</div><br><div style="margin-left: 1em; text-indent: -1em;">• 67 numbers have \'Medium\' Connect Scores and are worth calling after you exhaust your \'High\' Connect Score numbers.</div><br><div style="margin-left: 1em; text-indent: -1em;">��� 54 numbers have \'Low\' Connect Scores and are likely disconnected or inactive lines that won\'t answer when dialed.</div>'
       ])
 
       // Present caller ID choice after verification/returning user
@@ -2889,6 +2926,28 @@ const simulateCall = (): void => {
 const handleCallBack = (): void => {
   addAIMessage(`Calling ${currentContact.value.name} back on their number...`)
   simulateCall()
+}
+
+const handleStartNextTrio = (): void => {
+  // Build next trio starting with next contact (e.g., George Sample)
+  const nextIdx = Math.min(currentContactIndex.value + 1, contacts.length - 1)
+  const primary = contacts[nextIdx]?.name || 'Next Contact'
+  // Generate two fake names
+  const alternates = ['Avery Brooks', 'Casey Morgan']
+  multiLineNames.value = [primary, alternates[0], alternates[1]]
+
+  // Restart multi-line simulation
+  multiLineActive.value = false
+  nextTick(() => { multiLineActive.value = true })
+
+  // Advance the multi-line set index (max 3 for demo)
+  multiLineSetIndex.value = Math.min(multiLineSetIndex.value + 1, 3)
+
+  // Reset state visuals
+  callState.value = 'idle'
+
+  // Show immediate green divider for the trio
+  addSeparatorMessage('3 Contacts', 'Calling 3 Contacts')
 }
 
 const handleNextContact = (): void => {
@@ -3592,10 +3651,38 @@ const skipToDialer = (): void => {
       }, 1000)
 
       // Show AI message that call connected
-      // Show connection message first, then script with delay
-      showCallConnectedMessages(currentContact.value)
-    }, 3000)
-  }, 1500) // Brief delay to show the startup message
+    // Show connection message first, then script with delay
+    showCallConnectedMessages(currentContact.value)
+  }, 3000)
+}, 1500) // Brief delay to show the startup message
+}
+
+const startMultiLineDialing = (): void => {
+  currentPage.value = 'main'
+  isSignedIn.value = true
+  isReturningUser.value = true
+  hasUploadedFile.value = true
+  updateWelcomeMessageTyping()
+  showActionButtons.value = false
+  showContactPreviewButtons.value = false
+  showPhoneVerificationButton.value = false
+  showStartDialingButton.value = false
+
+  // First trio names
+  multiLineNames.value = ['Sam Sample', 'Jordan Lee', 'Taylor Kim']
+
+  showDialer.value = true
+  multiLineActive.value = false
+
+  // Reset single-line call state; Dialer handles multi-line simulation
+  callState.value = 'idle'
+  currentContactIndex.value = 0
+  multiLineSetIndex.value = 1
+
+  messages.value = []
+  addAIMessage('Multi-Line dialing enabled.')
+  addAIMessage('What would you like me to do when someone picks up at the same time as a live call?')
+  awaitingMultiLineChoice.value = true
 }
 
 const loadNewFile = (preserveQueueState: boolean = false): void => {
@@ -3659,6 +3746,43 @@ const handleCompleteQueue = (): void => {
 
 const handleAICoachToggle = (enabled: boolean): void => {
   aiCoachEnabled.value = enabled
+}
+
+const handlePacingChoice = (label: 'Conservative' | 'Balanced' | 'Aggressive'): void => {
+  const key = label.toLowerCase() as 'conservative' | 'balanced' | 'aggressive'
+  callPacingPolicy.value = key
+  awaitingPacingChoice.value = false
+  addUserMessage(label)
+  // Start session now
+  addSeparatorMessage('3 Contacts', 'Calling 3 Contacts')
+  multiLineActive.value = false
+  nextTick(() => { multiLineActive.value = true })
+}
+
+const handleRememberChoice = (remember: boolean): void => {
+  awaitingRememberChoice.value = false
+  addUserMessage(remember ? 'Yes, remember' : 'No, just this time')
+  try {
+    if (remember && multiLinePickupPolicy.value) {
+      localStorage.setItem('multiLinePickupPolicy', multiLinePickupPolicy.value)
+    } else {
+      localStorage.removeItem('multiLinePickupPolicy')
+    }
+  } catch {}
+  // Ask pacing before starting
+  addAIMessage('What would you like your Call Pacing (Speed Controls) to be?')
+  awaitingPacingChoice.value = true
+}
+
+const handleMultiLineConnected = (contactName: string): void => {
+  // Align current contact with the connected line
+  const idx = contacts.findIndex(c => c.name === contactName)
+  if (idx >= 0) currentContactIndex.value = idx
+
+  // Update the existing "Calling 3 Contacts" divider text to show connected contact
+  updateLastSeparator(`${contactName} Connected`, contactName)
+  showCallConnectedMessages(contacts[currentContactIndex.value])
+  scrollToBottom()
 }
 
 const handleDisposition = (disposition: string): void => {

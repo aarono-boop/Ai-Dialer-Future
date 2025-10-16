@@ -138,13 +138,7 @@ import Button from 'primevue/button'
 import Dialog from 'primevue/dialog'
 import Textarea from 'primevue/textarea'
 import Avatar from 'primevue/avatar'
-
-// Types
-interface Message {
-  type: 'ai' | 'user'
-  content: string[]
-  typing?: boolean
-}
+import type { Message } from '../utils/chat'
 
 // Define props
 const props = defineProps<{
@@ -230,7 +224,7 @@ const { currentCoach } = useCoaches()
 // Typing animation state
 const typedContent = ref<string[]>(props.message.typing ? props.message.content.map(() => '') : [])
 const isTyping = ref(false)
-let typingInterval: NodeJS.Timeout | null = null
+let typingInterval: ReturnType<typeof setInterval> | null = null
 
 // Helper methods
 const getCoachInitials = (name: string): string => {

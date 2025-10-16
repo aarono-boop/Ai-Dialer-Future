@@ -1,5 +1,3 @@
-import type { InputTextDesignTokens } from '@primeuix/themes/types/inputtext';
-
 export default {
     root: {
         background: "{form.field.background}",
@@ -38,4 +36,4 @@ export default {
             paddingY: "{form.field.lg.padding.y}"
         }
     }
-} satisfies InputTextDesignTokens;
+} as any;
