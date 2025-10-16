@@ -638,6 +638,29 @@ const getEditMessagePreview = () => {
   return editCustomMessage.value.replace(/\[Coach Name\]/g, editingCoach.value.displayName)
 }
 
+const extractVideoIdFromUrl = (url: string): string | null => {
+  if (!url) return null
+
+  try {
+    // Handle youtube.com URLs
+    const youtubeRegex = /(?:https?:\/\/)?(?:www\.)?youtube\.com\/watch\?v=([a-zA-Z0-9_-]{11})/
+    const youtubeMatch = url.match(youtubeRegex)
+    if (youtubeMatch) return youtubeMatch[1]
+
+    // Handle youtu.be URLs
+    const shortenedRegex = /(?:https?:\/\/)?(?:www\.)?youtu\.be\/([a-zA-Z0-9_-]{11})/
+    const shortenedMatch = url.match(shortenedRegex)
+    if (shortenedMatch) return shortenedMatch[1]
+
+    // If it's already a video ID (11 characters of letters, numbers, hyphens, underscores)
+    if (/^[a-zA-Z0-9_-]{11}$/.test(url)) return url
+
+    return null
+  } catch {
+    return null
+  }
+}
+
 const triggerEditFileUpload = () => {
   editFileInput.value?.click()
 }
