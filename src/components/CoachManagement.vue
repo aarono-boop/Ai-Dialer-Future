@@ -482,10 +482,11 @@ const hasChanges = computed(() => {
   const hasImageChange = editImagePreview.value || isBrokenAvatar.value
   const hasMessageChange = editCustomMessage.value !== (editingCoach.value.welcomeMessage || '')
   const hasWebsiteChange = editWebsiteUrl.value !== (editingCoach.value.websiteUrl || '')
+  const hasYoutubeChange = editYoutubeUrl.value !== (editingCoach.value.youtubeUrl || '')
   const origH1 = editingCoach.value.highlights?.[0] || ''
   const origH2 = editingCoach.value.highlights?.[1] || ''
   const hasHighlightsChange = editHighlight1.value !== origH1 || editHighlight2.value !== origH2
-  return hasImageChange || hasMessageChange || hasWebsiteChange || hasHighlightsChange
+  return hasImageChange || hasMessageChange || hasWebsiteChange || hasYoutubeChange || hasHighlightsChange
 })
 
 // Methods
