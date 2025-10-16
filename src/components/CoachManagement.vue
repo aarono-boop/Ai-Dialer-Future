@@ -716,13 +716,14 @@ const saveCoachEdit = async () => {
   const hasImageChange = editImagePreview.value || isBrokenAvatar.value
   const hasMessageChange = editCustomMessage.value !== (editingCoach.value.welcomeMessage || '')
   const hasWebsiteChange = editWebsiteUrl.value !== (editingCoach.value.websiteUrl || '')
+  const hasYoutubeChange = editYoutubeUrl.value !== (editingCoach.value.youtubeUrl || '')
   const onlyHighlightsChanged = (() => {
     const newH = [editHighlight1.value, editHighlight2.value].filter(h => h && h.trim().length > 0)
     const origH = (editingCoach.value?.highlights || []).slice(0,2)
     return newH.join('\n') !== origH.join('\n')
   })()
 
-  if (!hasImageChange && !hasMessageChange && !hasWebsiteChange && !onlyHighlightsChanged) {
+  if (!hasImageChange && !hasMessageChange && !hasWebsiteChange && !hasYoutubeChange && !onlyHighlightsChanged) {
     console.warn('No changes to save')
     return
   }
@@ -744,6 +745,25 @@ const saveCoachEdit = async () => {
 
     if (editWebsiteUrl.value !== (editingCoach.value.websiteUrl || '')) {
       updates.websiteUrl = editWebsiteUrl.value || undefined
+    }
+
+    if (hasYoutubeChange) {
+      updates.youtubeUrl = editYoutubeUrl.value || undefined
+      // Extract video ID from the URL
+      if (editYoutubeUrl.value) {
+        const videoId = extractVideoIdFromUrl(editYoutubeUrl.value)
+        if (videoId) {
+          updates.videoId = videoId
+        } else {
+          // Invalid YouTube URL
+          console.warn('Invalid YouTube URL')
+          isUpdating.value = false
+          return
+        }
+      } else {
+        // Clear video ID if URL is removed
+        updates.videoId = undefined
+      }
     }
 
     const newHighlights = [editHighlight1.value, editHighlight2.value].filter(h => h && h.trim().length > 0)
