@@ -396,7 +396,7 @@ const shouldUseCoachAvatar = (): boolean => {
     messageText.includes('Call with') && messageText.includes('ended') ||
     messageText.includes('Please select a call outcome') ||
     messageText.includes('Congratulations! You have completed your entire call queue') ||
-    messageText.includes('Queue Completed!') ||
+    messageText.includes('Dial Session Completed!') ||
     messageText.includes('Queue Paused!') ||
     messageText.includes('successfully upgraded to the Pro plan') ||
     messageText.includes('analyzed your') && messageText.includes('contacts') ||
@@ -417,7 +417,7 @@ const shouldUseCoachAvatar = (): boolean => {
 const getMessageWidth = (): string => {
   // Check if this is a session summary message
   const isSessionSummary = props.message.content.some(line =>
-    line.includes('Queue Paused!') || line.includes('Queue Completed!')
+    line.includes('Queue Paused!') || line.includes('Dial Session Completed!')
   )
 
   if (isSessionSummary) {

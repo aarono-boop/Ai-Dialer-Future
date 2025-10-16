@@ -1194,7 +1194,7 @@ const isActiveCall = computed(() => {
 })
 
 const nextActionLabel = computed(() => {
-  if (props.shouldCompleteQueue) return 'Queue Completed'
+  if (props.shouldCompleteQueue) return 'Dial Session Completed'
   return props.multiLine ? 'Call Next 3 Contacts' : `Next: ${props.nextContactName}`
 })
 

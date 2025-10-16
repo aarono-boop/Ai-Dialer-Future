@@ -3304,7 +3304,7 @@ const getCoachTitle = (): string => {
 
 const addSessionSummaryToChat = (isCompleted: boolean = false): void => {
   // Create session summary content as HTML
-  const title = isCompleted ? 'Queue Completed!' : 'Queue Paused!'
+  const title = isCompleted ? 'Dial Session Completed!' : 'Queue Paused!'
   const uniqueId = Date.now() // Create unique ID for this session summary
   const summaryHTML = `
     <div style="background-color: rgb(31, 41, 55); border-radius: 12px; padding: 16px; margin: 12px 0;">
@@ -3734,7 +3734,7 @@ const handleCompleteQueue = (): void => {
   waitingForNotesInput.value = false
 
   // Add user message for queue completion with custom positioning
-  addUserQueueCompletedMessage('Queue completed')
+  addUserQueueCompletedMessage('Dial Session completed')
 
   // Add session summary content to chat after a delay
   setTimeout(() => {
