@@ -132,7 +132,7 @@
             <!-- Default AI Coach when no coach parameter -->
             <span
               v-else
-              class="text-gray-300 text-sm cursor-pointer select-none"
+              class="text-gray-300 text-xs cursor-pointer select-none"
               @click="toggleAICoach(!props.aiCoachEnabled)"
             >AI Coach</span>
             <ToggleSwitch
@@ -141,8 +141,8 @@
               class="ai-coach-toggle"
             />
           </div>
-          <div class="text-gray-400 text-sm text-center w-[160px] flex-shrink-0">
-            Queue Time: <span class="text-white font-mono tabular-nums">{{ formatTime(queueTime) }}</span>
+          <div class="text-gray-400 text-xs text-center w-[160px] flex-shrink-0">
+            Dial Session Time: <span class="text-white font-mono tabular-nums">{{ formatTime(queueTime) }}</span>
           </div>
           <Button
             v-if="!shouldCompleteQueue"
@@ -153,7 +153,7 @@
             size="small"
             class="pause-queue-compact"
           >
-            <span class="text-xs">Pause Queue</span>
+            <span class="text-xs">Pause Dial Session</span>
           </Button>
         </div>
       </div>
@@ -811,9 +811,9 @@ const dialQueueText = computed(() => {
     const set = Math.min(Math.max(props.multiLineSetIndex ?? 1, 1), 3)
     const numerator = Math.min(set * 3, 9)
     const denominator = set === 1 ? 6 : 9
-    return `Dial Queue ${numerator} of ${denominator}`
+    return `Dial Session ${numerator} of ${denominator}`
   }
-  return `Dial Queue ${props.currentContactIndex + 1} of 3`
+  return `Dial Session ${props.currentContactIndex + 1} of 3`
 })
 
 const tagFontSize = dsFontSize.xs[0]
@@ -1194,7 +1194,7 @@ const isActiveCall = computed(() => {
 })
 
 const nextActionLabel = computed(() => {
-  if (props.shouldCompleteQueue) return 'Queue Completed'
+  if (props.shouldCompleteQueue) return 'Dial Session Completed'
   return props.multiLine ? 'Call Next 3 Contacts' : `Next: ${props.nextContactName}`
 })
 
